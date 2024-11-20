@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Localizador de Puertas Cercanas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #1a4488;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .input-section {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        input[type="text"], select {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #1a4488;
+            border-radius: 4px;
+            width: calc(50% - 10px); /* Ajustamos ancho */
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #1a4488;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #006338;
+        }
+        .result-section {
+            margin-top: 20px;
+            border-top: 2px solid #006338;
+            padding-top: 20px;
+        }
+        .result-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .result-item strong {
+            color: #006338;
+        }
+        .error {
+            color: #ff0000;
+            text-align: center;
+            font-weight: bold;
+        }
+        .history-section {
+            margin-top: 30px;
+        }
+        .history-section h3 {
+            color: #1a4488;
+            margin-bottom: 10px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        ul li {
+            color: #333;
+            cursor: pointer;
+            padding: 5px 0;
+            transition: background-color 0.3s;
+        }
+        ul li:hover {
+            background-color: #e0f7fa;
+        }
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+        @media (max-width: 600px) {
+            .input-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            input[type="text"], select, button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Localizador de Puertas</h1>
+        <div class="input-section">
+            <input type="text" id="pkInput" placeholder="Ingrese el PK (ej. 455.548)">
+            <select id="viaFilter">
+                <option value="Ambas">Ambas Vías</option>
+                <option value="Vía 1">Vía 1</option>
+                <option value="Vía 2">Vía 2</option>
+            </select>
+            <button onclick="buscarPuertasCercanas()">Buscar</button>
+        </div>
+        <div class="result-section" id="resultados"></div>
+
+        <div class="history-section">
+            <h3>Historial de Búsquedas</h3>
+            <ul id="historyList"></ul>
+        </div>
+    </div>
+
+    <footer>
+        Base de Mantenimiento de Monforte del Cid
+    </footer>
+
+    <script>
+        function obtenerBaseDatosPuertas() {
+            return [
+                {via: "Vía 1", pk: 364.30},
+                {via: "Vía 2", pk: 364.32},
+                {via: "Vía 1", pk: 364.88},
+                {via: "Vía 2", pk: 364.89},
+                {via: "Vía 2", pk: 365.42},
+                {via: "Vía 1", pk: 365.87},
+                {via: "Vía 1", pk: 365.89},
+                {via: "Vía 1", pk: 366.16},
+                {via: "Vía 1", pk: 366.65},
+                {via: "Vía 1", pk: 366.80},
+                {via: "Vía 1", pk: 367.17},
+                {via: "Vía 2", pk: 367.32},
+                {via: "Vía 2", pk: 367.57},
+                {via: "Vía 1", pk: 367.97},
+                {via: "Vía 2", pk: 368.01},
+                {via: "Vía 2", pk: 368.07},
+                {via: "Vía 2", pk: 368.11},
+                {via: "Vía 1", pk: 368.11},
+                {via: "Vía 1", pk: 368.40},
+                {via: "Vía 2", pk: 368.71},
+                {via: "Vía 1", pk: 368.97},
+                {via: "Vía 2", pk: 369.03},
+                {via: "Vía 2", pk: 369.74},
+                {via: "Vía 1", pk: 370.45},
+                {via: "Vía 2", pk: 371.08},
+                {via: "Vía 2", pk: 372.10},
+                {via: "Vía 2", pk: 373.05},
+                {via: "Vía 2", pk: 373.57},
+                {via: "Vía 1", pk: 373.83},
+                {via: "Vía 2", pk: 373.95},
+                {via: "Vía 1", pk: 485.98}
+            ];
+        }
+
+        function normalizarPK(pk) {
+            return parseFloat(String(pk).replace(',', '.').replace(/\s/g, ''));
+        }
+
+        function buscarPuertasCercanas() {
+            const pkInput = document.getElementById('pkInput').value;
+            const viaFilter = document.getElementById('viaFilter').value;
+            const pkNormalizado = normalizarPK(pkInput);
+            const resultadosDiv = document.getElementById('resultados');
+            resultadosDiv.innerHTML = '';
+
+            if (isNaN(pkNormalizado)) {
+                resultadosDiv.innerHTML = '<p class="error">Por favor, ingrese un PK válido.</p>';
+                return;
+            }
+
+            const puertas = obtenerBaseDatosPuertas();
+            const puertasFiltradas = puertas.filter(puerta => viaFilter === "Ambas" || puerta.via === viaFilter);
+
+            const puertasConDistancia = puertasFiltradas.map(puerta => ({
+                ...puerta,
+                distancia: puerta.pk - pkNormalizado,
+                distanciaAbsoluta: Math.abs(puerta.pk - pkNormalizado)
+            }));
+
+            const puertasOrdenadas = puertasConDistancia.sort((a, b) => a.distanciaAbsoluta - b.distanciaAbsoluta);
+
+            puertasOrdenadas.slice(0, 2).forEach(puerta => {
+                const resultado = document.createElement('div');
+                resultado.className = 'result-item';
+
+                const distancia = puerta.distanciaAbsoluta < 1 
+                    ? `${(puerta.distanciaAbsoluta * 1000).toFixed(0)} metros` 
+                    : `${puerta.distancia.toFixed(2)} km`;
+
+                resultado.innerHTML = `
+                    <strong>${puerta.via}</strong><br>
+                    PK más cercano: ${puerta.pk.toFixed(2)}<br>
+                    Distancia: ${distancia}
+                `;
+                resultadosDiv.appendChild(resultado);
+            });
+
+            guardarHistorial(pkNormalizado, puertasOrdenadas.slice(0, 2));
+        }
+
+        function guardarHistorial(pk, resultados) {
+            let history = JSON.parse(localStorage.getItem('history')) || [];
+            history.unshift({ pk, resultados });
+            if (history.length > 5) history.pop();
+            localStorage.setItem('history', JSON.stringify(history));
+            actualizarHistorial();
+        }
+
+        function actualizarHistorial() {
+            const historyList = document.getElementById('historyList');
+            const history = JSON.parse(localStorage.getItem('history')) || [];
+
+            historyList.innerHTML = '';
+            history.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `PK: ${item.pk.toFixed(2)}`;
+                listItem.onclick = () => recuperarDeHistorial(item);
+                historyList.appendChild(listItem);
+            });
+        }
+
+        function recuperarDeHistorial(item) {
+            document.getElementById('pkInput').value = item.pk.toFixed(2);
+            document.getElementById('viaFilter').value = "Ambas";
+            const resultadosDiv = document.getElementById('resultados');
+            resultadosDiv.innerHTML = '';
+            item.resultados.forEach(resultado => {
+                const distancia = resultado.distanciaAbsoluta < 1 
+                    ? `${(resultado.distanciaAbsoluta * 1000).toFixed(0)} metros` 
+                    : `${resultado.distancia.toFixed(2)} km`;
+
+                const div = document.createElement('div');
+                div.className = 'result-item';
+                div.innerHTML = `
+                    <strong>${resultado.via}</strong><br>
+                    PK más cercano: ${resultado.pk.toFixed(2)}<br>
+                    Distancia: ${distancia}
+                `;
+                resultadosDiv.appendChild(div);
+            });
+        }
+
+        actualizarHistorial();
+    </script>
+</body>
+</html>
