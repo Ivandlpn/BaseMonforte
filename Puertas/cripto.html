@@ -14,6 +14,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: column;
         }
 
         .container {
@@ -69,9 +70,53 @@
             color: red;
         }
 
-        @media (max-width: 600px) {
+        /* Adaptación para dispositivos móviles */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .container {
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                margin: 10px;
+            }
+
             .card {
                 width: 90%;
+                max-width: 350px;
+            }
+
+            .card h3 {
+                font-size: 1.2em;
+            }
+
+            .card .price {
+                font-size: 1.5em;
+            }
+
+            .card .variation {
+                font-size: 1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card img {
+                width: 40px;
+            }
+
+            .card h3 {
+                font-size: 1em;
+            }
+
+            .card .price {
+                font-size: 1.2em;
+            }
+
+            .card .variation {
+                font-size: 0.9em;
             }
         }
     </style>
@@ -146,7 +191,12 @@
         function updateCard(crypto, data, referencePrice) {
             // Función para formatear el número con punto como separador de miles y coma como decimales
             const formatCurrency = (value) => {
-                return value.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace(',', '.');
+                // Convertir el valor a string y dividir la parte entera de la parte decimal
+                let [integer, decimal] = value.toFixed(2).split('.');
+                // Formatear la parte entera con puntos como separadores de miles
+                integer = integer.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                // Unir la parte entera con la parte decimal usando coma
+                return `${integer},${decimal}`;
             };
 
             // Calculamos el porcentaje de variación basado en el precio de referencia
