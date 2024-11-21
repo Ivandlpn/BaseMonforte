@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuadro de Mando - Precios de Criptomonedas</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 15px;
+            margin: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 250px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card img {
+            width: 50px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+
+        .card .price {
+            font-size: 2em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .card .variation {
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        .positive {
+            color: green;
+        }
+
+        .negative {
+            color: red;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="crypto-container">
+        <div class="card" id="btc-card">
+            <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="Bitcoin Logo">
+            <h3>Bitcoin (BTC)</h3>
+            <div class="price" id="btc-price">€0.00</div>
+            <div class="variation" id="btc-variation">0.00%</div>
+        </div>
+        <div class="card" id="eth-card">
+            <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="Ethereum Logo">
+            <h3>Ethereum (ETH)</h3>
+            <div class="price" id="eth-price">€0.00</div>
+            <div class="variation" id="eth-variation">0.00%</div>
+        </div>
+        <div class="card" id="ada-card">
+            <img src="https://cryptologos.cc/logos/cardano-ada-logo.png" alt="Cardano Logo">
+            <h3>Cardano (ADA)</h3>
+            <div class="price" id="ada-price">€0.00</div>
+            <div class="variation" id="ada-variation">0.00%</div>
+        </div>
+        <div class="card" id="dot-card">
+            <!-- Nuevo logo de Polkadot -->
+            <img src="https://i.pinimg.com/736x/e1/bb/20/e1bb208a7252b1e3c3cd58a85d6e06c7.jpg" alt="Polkadot Logo">
+            <h3>Polkadot (DOT)</h3>
+            <div class="price" id="dot-price">€0.00</div>
+            <div class="variation" id="dot-variation">0.00%</div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchCryptoData() {
+            // URL de la API pública de CoinGecko para obtener los precios de las criptomonedas
+            const url = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,cardano,polkadot&vs_currencies=eur&include_24hr_change=true';
+
+            try {
+                console.log('Haciendo la llamada a la API...');
+                const response = await fetch(url);
+                console.log('Respuesta de la API recibida');
+                
+                // Verificamos si la respuesta es exitosa
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta de la API: ' + response.status);
+                }
+
+                const data = await response.json();
+                console.log('Datos obtenidos:', data);
+
+                // Precios de referencia
+                const referencePrices = {
+                    btc: 28669.83,
+                    eth: 1882.85,
+                    ada: 0.3508,
+                    dot: 7.1397
+                };
+
+                // Actualizamos los precios y variaciones
+                updateCard('btc', data.bitcoin, referencePrices.btc);
+                updateCard('eth', data.ethereum, referencePrices.eth);
+                updateCard('ada', data.cardano, referencePrices.ada);
+                updateCard('dot', data.polkadot, referencePrices.dot);
+            } catch (error) {
+                console.error('Error al obtener los datos:', error);
+                alert("Hubo un problema al cargar los precios de las criptomonedas. Verifica la consola para más detalles.");
+            }
+        }
+
+        function updateCard(crypto, data, referencePrice) {
+            // Función para formatear el número con punto como separador de miles y coma como decimales
+            const formatCurrency = (value) => {
+                return value.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace(',', '.');
+            };
+
+            // Calculamos el porcentaje de variación basado en el precio de referencia
+            const percentageChange = ((data.eur - referencePrice) / referencePrice) * 100;
+
+            // Actualizamos el precio y la variación de cada criptomoneda
+            const priceElement = document.getElementById(`${crypto}-price`);
+            const variationElement = document.getElementById(`${crypto}-variation`);
+
+            if (data) {
+                priceElement.innerText = `€${formatCurrency(data.eur)}`;
+                variationElement.innerText = `${formatCurrency(percentageChange)}%`;
+
+                // Cambiamos el color según si es positivo o negativo
+                if (percentageChange > 0) {
+                    variationElement.classList.add('positive');
+                    variationElement.classList.remove('negative');
+                } else {
+                    variationElement.classList.add('negative');
+                    variationElement.classList.remove('positive');
+                }
+            } else {
+                priceElement.innerText = 'No disponible';
+                variationElement.innerText = 'No disponible';
+            }
+        }
+
+        // Llamar a la función para cargar los datos al iniciar la página
+        fetchCryptoData();
+    </script>
+
+</body>
+</html>
