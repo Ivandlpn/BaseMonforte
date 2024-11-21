@@ -112,10 +112,17 @@
             font-size: 14px;
             color: #1a4488;
             border-top: 1px solid #1a4488;
+            flex-wrap: wrap;
         }
         footer img {
             width: 120px;
             height: auto;
+            margin: 5px;
+        }
+        footer span {
+            flex-grow: 1;
+            text-align: center;
+            margin-top: 5px;
         }
         .history-controls {
             display: flex;
@@ -133,6 +140,20 @@
         }
         .history-controls button:hover {
             background-color: #006338;
+        }
+
+        /* Estilo específico para dispositivos móviles */
+        @media (max-width: 600px) {
+            footer {
+                justify-content: center;
+                text-align: center;
+            }
+            footer img {
+                width: 100px;
+            }
+            footer span {
+                margin-top: 10px;
+            }
         }
     </style>
 </head>
@@ -253,23 +274,18 @@
                 ...puerta,
                 distancia: puerta.pk - pkNormalizado,
                 distanciaAbsoluta: Math.abs(puerta.pk - pkNormalizado)
-            }));
+            })).sort((a, b) => a.distanciaAbsoluta - b.distanciaAbsoluta);
 
-            const puertasOrdenadas = puertasConDistancia.sort((a, b) => a.distanciaAbsoluta - b.distanciaAbsoluta);
+            if (puertasConDistancia.length === 0) {
+                resultadosDiv.innerHTML = '<p class="error">No se encontraron puertas cercanas.</p>';
+                return;
+            }
 
-            puertasOrdenadas.slice(0, 2).forEach(puerta => {
-                const resultado = document.createElement('div');
-                resultado.className = 'result-item';
-
-                const distancia = puerta.distanciaAbsoluta < 1 
-                    ? `${(puerta.distanciaAbsoluta * 1000).toFixed(0)} metros` 
-                    : `${puerta.distancia.toFixed(2)} km`;
-
-                resultado.innerHTML = 
-                    `<strong>Vía:</strong> ${puerta.via.replace('Vía ', '')} <br>
-                     <strong>PK:</strong> ${puerta.pk} <br>
-                     <strong>Distancia:</strong> ${distancia}`;
-                resultadosDiv.appendChild(resultado);
+            puertasConDistancia.forEach(puerta => {
+                const puertaDiv = document.createElement('div');
+                puertaDiv.classList.add('result-item');
+                puertaDiv.innerHTML = `<strong>${puerta.via}</strong>: PK ${puerta.pk} (${puerta.distancia.toFixed(2)} m)`;
+                resultadosDiv.appendChild(puertaDiv);
             });
 
             // Actualizar historial
