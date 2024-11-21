@@ -12,9 +12,10 @@
             padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
+            align-items: flex-start;
+            height: auto;
             flex-direction: column;
+            min-height: 100vh; /* Asegura que al menos ocupe toda la pantalla */
         }
 
         .container {
@@ -23,7 +24,8 @@
             justify-content: center;
             width: 90%;
             max-width: 1000px;
-            margin: 20px;
+            margin-top: 20px; /* Añadir margen superior para que se vea el contenido */
+            margin-bottom: 20px; /* Asegura que el contenido no esté pegado al final */
         }
 
         .card {
@@ -73,15 +75,16 @@
         /* Adaptación para dispositivos móviles */
         @media (max-width: 768px) {
             body {
-                flex-direction: column;
                 align-items: flex-start;
+                min-height: auto;
             }
 
             .container {
                 flex-direction: column;
                 align-items: center;
                 width: 100%;
-                margin: 10px;
+                margin-top: 10px;
+                margin-bottom: 10px;
             }
 
             .card {
