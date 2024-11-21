@@ -113,15 +113,15 @@
             color: #1a4488;
             border-top: 1px solid #1a4488;
             flex-wrap: wrap;
+            text-align: center;
         }
         footer img {
-            width: 120px;
+            width: 100px;
             height: auto;
             margin: 5px;
         }
-        footer span {
+        footer .footer-text {
             flex-grow: 1;
-            text-align: center;
             margin-top: 5px;
         }
         .history-controls {
@@ -145,14 +145,12 @@
         /* Estilo específico para dispositivos móviles */
         @media (max-width: 600px) {
             footer {
+                flex-direction: column;
                 justify-content: center;
                 text-align: center;
             }
             footer img {
-                width: 100px;
-            }
-            footer span {
-                margin-top: 10px;
+                width: 90px;
             }
         }
     </style>
@@ -183,8 +181,8 @@
     </div>
 
     <footer>
+        <div class="footer-text">Base de Mantenimiento de Monforte del CID</div>
         <img src="https://ivandlpn.github.io/BaseMonforte/Puertas/Logo%20ADIF.jpg" alt="Logo ADIF">
-        <span>Base de Mantenimiento de Monforte del CID</span>
         <img src="https://ivandlpn.github.io/BaseMonforte/Puertas/Logo-Ineco.png" alt="Logo INECO">
     </footer>
 
@@ -270,9 +268,14 @@
                 return viaSelect === "ambas" || viaPuerta === viaSelect;
             });
 
+            if (puertasFiltradas.length === 0) {
+                resultadosDiv.innerHTML = '<p class="error">No se encontraron puertas para la vía seleccionada.</p>';
+                return;
+            }
+
             const puertasConDistancia = puertasFiltradas.map(puerta => ({
                 ...puerta,
-                distancia: puerta.pk - pkNormalizado,
+                distancia: Math.abs(puerta.pk - pkNormalizado),
                 distanciaAbsoluta: Math.abs(puerta.pk - pkNormalizado)
             })).sort((a, b) => a.distanciaAbsoluta - b.distanciaAbsoluta);
 
