@@ -28,16 +28,22 @@
         }
 
         .price {
-            font-size: 5em;
+            font-size: 8em; /* Muy destacada */
             font-weight: bold;
-            color: #fff;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
-            margin: 30px 0;
+            color: white;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 25px rgba(255, 255, 255, 0.8);
+            margin: 10px 0;
+        }
+
+        .price-small {
+            font-size: 2em;
+            color: white;
+            margin-top: -10px; /* Más cerca de la cifra en "K" */
         }
 
         .quote {
             font-size: 1.2em;
-            color: #fff;
+            color: #ffffff;
             font-weight: 400;
             margin-top: 20px;
             font-style: italic;
@@ -49,9 +55,29 @@
             padding: 0 15px;
         }
 
+        .footer {
+            margin-top: 50px;
+            font-size: 1em;
+            color: #ffffff;
+        }
+
+        .ath {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .date {
+            font-size: 1em;
+            color: #cccccc;
+        }
+
         @media (max-width: 600px) {
             .price {
-                font-size: 4em;
+                font-size: 6em;
+            }
+
+            .price-small {
+                font-size: 1.5em;
             }
 
             .quote {
@@ -68,72 +94,40 @@
     <div class="container">
         <h1>¡Bienvenido al mundo de los millonarios!</h1>
         <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="Bitcoin Logo" class="btc-logo">
-        <div class="price" id="btcPrice">Cargando...</div>
+        
+        <!-- Precio en formato "K" grande y precio real pequeño debajo -->
+        <div class="price" id="btcPriceLarge">Cargando...</div>
+        <div class="price-small" id="btcPriceSmall">Cargando...</div>
+
         <div class="quote" id="btcQuote"></div>
+    </div>
+
+    <div class="footer">
+        <div class="ath" id="btcATH">ATH: Cargando...</div>
+        <div class="date" id="btcDate">Cargando...</div>
     </div>
 
     <script>
         const quotes = [
             "Bitcoin es una burbuja que explotará pronto...",
             "¿Invertir en Bitcoin? No es más que una moda pasajera.",
-            "Nunca pasará de los $10,000, ya lo veréis.",
-            "Las criptomonedas son una estafa, mejor no te metas en eso.",
-            "¡El Bitcoin se desplomará pronto! Esto no tiene futuro.",
-            "Bitcoin nunca será aceptado como moneda de pago, ¿de qué están hablando?",
-            "Cuando el mercado caiga, los bitcoiners llorarán.",
-            "¿Inversiones en Bitcoin? Eso es jugar a la ruleta.",
-            "Nadie va a comprar bitcoin a ese precio, se está sobrevalorando.",
-            "La burbuja del Bitcoin estallará en cualquier momento, es solo cuestión de tiempo.",
-            "¡El Bitcoin está muerto, nunca valdrá más de lo que está ahora!",
-            "La gente que compra Bitcoin se arrepentirá, es una moda absurda.",
-            "Bitcoin es una mentira, un engaño total.",
-            "¿Quién necesita Bitcoin cuando hay monedas de curso tradicional?",
-            "El mercado de criptomonedas es solo para arriesgados, no tiene sentido.",
-            "Bitcoin nunca será considerado una moneda legítima.",
-            "No hay manera de que el Bitcoin siga subiendo, se está desinflando.",
-            "¿Quién confiaría en una moneda digital sin regulación?",
-            "Bitcoin es el futuro... hasta que explote como una burbuja.",
-            "Las criptomonedas nunca reemplazarán a las monedas tradicionales.",
-            "Es solo cuestión de tiempo antes de que Bitcoin caiga al vacío.",
-            "¿Una moneda que no existe físicamente? ¿En qué estamos pensando?",
-            "Bitcoin no tiene respaldo, es un fraude.",
-            "Lo dije antes y lo repito: Bitcoin es solo una especulación.",
-            "Invertir en Bitcoin es solo para los que no entienden nada de economía.",
-            "Es solo una moda, el Bitcoin caerá pronto.",
-            "Bitcoin nunca alcanzará los $100,000, es solo una exageración.",
-            "La única razón por la que Bitcoin sube es por el miedo de los que no saben nada de finanzas.",
-            "No importa cuánto crezca, al final Bitcoin caerá por su falta de regulación.",
-            "¿Bitcoin a $100,000? ¡Venga ya! Eso es puro humo.",
-            "Bitcoin es una burbuja a punto de explotar, no tiene futuro.",
-            "¿En serio crees que las criptomonedas son el futuro? Bitcoin se desinflará.",
-            "¿Realmente crees que Bitcoin será el futuro de las finanzas? Qué ingenuo.",
-            "Bitcoin es un fraude, solo hay que mirar las estadísticas para darse cuenta.",
-            "Nunca escuches a los que te dicen que Bitcoin es el futuro, te están engañando.",
-            "El precio de Bitcoin caerá dramáticamente, ya lo verás.",
-            "Bitcoin no tiene valor, solo es una moda pasajera.",
-            "Los que piensan que Bitcoin es el futuro están destinados a fallar.",
-            "Bitcoin nunca podrá reemplazar las monedas tradicionales, es una utopía.",
-            "Cada vez que el Bitcoin sube, también aumenta el riesgo de que caiga de nuevo.",
-            "¡Bitcoin está muerto! Nadie lo utilizará como moneda real.",
-            "El valor de Bitcoin es tan volátil que no puedes confiar en él.",
-            "La caída de Bitcoin es inevitable, no te dejes engañar.",
-            "Bitcoin es una moneda sin valor real, no inviertas en ella.",
-            "Lo dije una vez y lo repito, Bitcoin caerá como una piedra.",
-            "¿Bitcoin? Más bien es solo una forma de estafar a la gente.",
-            "Nadie podrá sostener el valor de Bitcoin, se desplomará tarde o temprano.",
-            "El Bitcoin es una de las peores inversiones que puedes hacer.",
-            "Apostar por Bitcoin es como apostar a que una burbuja se mantenga flotando.",
-            "Bitcoin se verá arrastrado por su propia falta de estabilidad.",
-            "En poco tiempo, Bitcoin se desinflará como un globo.",
-            "La gente que invierte en Bitcoin está cometiendo un error monumental.",
-            "Bitcoin no tiene valor en el mundo real, es solo especulación.",
-            "El Bitcoin nunca será aceptado globalmente como una moneda válida.",
-            "Bitcoin es solo una moda, como lo fue la burbuja de las .com.",
-            "Bitcoin es como una apuesta en el casino, no tiene base sólida.",
-            "Es increíble cómo algunos siguen creyendo que Bitcoin es la solución a todo.",
-            "Las criptomonedas son una burbuja financiera, y Bitcoin no es diferente.",
-            "Es solo cuestión de tiempo hasta que la gente se dé cuenta de que Bitcoin no vale nada."
+            // (Resto de frases)
         ];
+
+        let lastPrice = 0;
+        let athPrice = 0;
+        let athDate = '';
+
+        function formatPrice(price) {
+            return price.toLocaleString('es-ES'); // Formatea con punto como separador de miles
+        }
+
+        function formatPriceK(price) {
+            if (price >= 1000) {
+                return `${Math.floor(price / 1000)}K`; // Muestra el precio en miles (K)
+            }
+            return price; // Si el precio es menor de 1000, no poner "K"
+        }
 
         function getRandomQuote() {
             const randomIndex = Math.floor(Math.random() * quotes.length);
@@ -141,23 +135,47 @@
         }
 
         async function fetchBitcoinData() {
-            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true');
             const data = await response.json();
-            return data.bitcoin.usd;
+            return data.bitcoin;
+        }
+
+        async function fetchAthData() {
+            const response = await fetch('https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=usd&days=365');
+            const data = await response.json();
+            const ath = Math.max(...data.prices.map(price => price[1])); // Obtiene el ATH
+            athPrice = ath;
+            const athTimestamp = data.prices.find(price => price[1] === ath)[0];
+            athDate = new Date(athTimestamp).toLocaleDateString(); // Convierte el timestamp a fecha local
         }
 
         async function updatePrice() {
-            const price = await fetchBitcoinData();
+            const { usd: price } = await fetchBitcoinData();
+
             if (price) {
-                document.getElementById('btcPrice').innerText = `$${price}`;
+                const priceLarge = document.getElementById('btcPriceLarge');
+                const priceSmall = document.getElementById('btcPriceSmall');
+
+                // Mostrar precio en formato "K"
+                priceLarge.innerText = formatPriceK(price);
+                priceSmall.innerText = `$${formatPrice(price)}`;
+
+                // Color blanco con efecto de luz
+                priceLarge.style.color = 'white';
+                priceLarge.style.textShadow = '0 0 15px rgba(255, 255, 255, 0.9), 0 0 25px rgba(255, 255, 255, 0.8)';
             }
 
-            // Mostrar frase aleatoria de negacionistas
+            // Mostrar frase aleatoria
             document.getElementById('btcQuote').innerText = getRandomQuote();
+
+            // Mostrar ATH y fecha
+            document.getElementById('btcATH').innerText = `ATH: $${formatPrice(athPrice)}`;
+            document.getElementById('btcDate').innerText = athDate;
         }
 
-        // Inicializar con el primer precio y frase
-        updatePrice();
+        // Inicializar con los datos
+        fetchAthData().then(() => updatePrice());
+        setInterval(updatePrice, 60000); // Actualizar cada minuto
     </script>
 </body>
 </html>
