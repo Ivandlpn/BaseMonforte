@@ -4,14 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Precio de Bitcoin - Millonario Style</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://cryptologos.cc/logos/bitcoin-btc-logo.png">
     <style>
+        :root {
+            --primary-color: #ffcc00;
+            --secondary-color: #ff6600;
+            --text-color: white;
+            --neon-gradient: linear-gradient(45deg, #ffcc00, #ff6600, #ff0066, #6600cc);
+        }
+
         body {
-            background: linear-gradient(45deg, #ffcc00, #ff6600, #ff0066, #6600cc);
+            background: var(--neon-gradient);
             background-size: 400% 400%;
             animation: gradient 10s ease infinite;
             font-family: 'Calibri', sans-serif;
             text-align: center;
-            color: white;
+            color: var(--text-color);
             padding: 80px 0;
             margin: 0;
         }
@@ -25,40 +34,36 @@
         .btc-logo {
             width: 100px;
             margin: 20px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
 
         .price {
-            font-size: 8em; /* Muy destacado */
+            font-size: 8em;
             font-weight: bold;
-            color: white;
-            margin: 10px 0; /* Reducido el margen */
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+            margin: 10px 0;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.9), 0 0 30px rgba(255, 255, 255, 0.8);
+            color: white; /* Blanco brillante */
         }
 
         .price-small {
             font-size: 2em;
-            color: white;
-            margin-top: -25px; /* Reducido para acercarlo aún más */
+            margin-top: -15px;
         }
 
         .quote {
             font-size: 1.2em;
-            color: white;
-            font-weight: 400;
-            margin-top: 20px;
             font-style: italic;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 0 15px;
+            margin-top: 20px;
         }
 
         .footer {
             margin-top: 50px;
             font-size: 1em;
-            color: white;
         }
 
         .ath {
@@ -68,7 +73,25 @@
 
         .date {
             font-size: 0.9em;
-            color: white;
+        }
+
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h1:hover {
+            text-shadow: 0 0 20px rgba(255, 255, 0, 0.8), 0 0 30px rgba(255, 100, 0, 0.6);
         }
 
         @media (max-width: 600px) {
@@ -78,11 +101,6 @@
 
             .price-small {
                 font-size: 1.5em;
-                margin-top: -20px;
-            }
-
-            .quote {
-                font-size: 1em;
             }
 
             .btc-logo {
@@ -95,10 +113,13 @@
     <div class="container">
         <h1>¡Bitcoin...ahora!</h1>
         <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="Bitcoin Logo" class="btc-logo">
-        
+
+        <!-- Loader -->
+        <div id="loader" class="loader"></div>
+
         <!-- Precio en formato "K" grande y precio real pequeño debajo -->
-        <div class="price" id="btcPriceLarge">Cargando...</div>
-        <div class="price-small" id="btcPriceSmall">Cargando...</div>
+        <div class="price" id="btcPriceLarge" style="display: none;">Cargando...</div>
+        <div class="price-small" id="btcPriceSmall" style="display: none;">Cargando...</div>
 
         <div class="quote" id="btcQuote"></div>
     </div>
@@ -121,24 +142,20 @@
         let athDate = '';
 
         function formatPrice(price) {
-            return price.toLocaleString('es-ES'); // Formatea con punto como separador de miles
+            return price.toLocaleString('es-ES');
         }
 
         function formatPriceK(price) {
-            if (price >= 1000) {
-                return `${Math.floor(price / 1000)}K`; // Muestra el precio en miles (K)
-            }
-            return price; // Si el precio es menor de 1000, no poner "K"
+            return price >= 1000 ? `${Math.floor(price / 1000)}K` : price;
         }
 
         function formatDate(dateString) {
             const date = new Date(dateString);
-            return date.toLocaleDateString('es-ES'); // Convierte la fecha al formato local
+            return date.toLocaleDateString('es-ES');
         }
 
         function getRandomQuote() {
-            const randomIndex = Math.floor(Math.random() * quotes.length);
-            return quotes[randomIndex];
+            return quotes[Math.floor(Math.random() * quotes.length)];
         }
 
         async function fetchBitcoinData() {
@@ -151,8 +168,6 @@
             try {
                 const response = await fetch('https://api.coingecko.com/api/v3/coins/bitcoin');
                 const data = await response.json();
-
-                // Extraer el ATH histórico y su fecha
                 athPrice = data.market_data.ath.usd;
                 athDate = formatDate(data.market_data.ath_date.usd);
             } catch (error) {
@@ -161,31 +176,29 @@
         }
 
         async function updatePrice() {
-            const { usd: price, usd_24h_change: priceChange } = await fetchBitcoinData();
+            const loader = document.getElementById('loader');
+            const priceLarge = document.getElementById('btcPriceLarge');
+            const priceSmall = document.getElementById('btcPriceSmall');
 
-            if (price) {
-                const priceLarge = document.getElementById('btcPriceLarge');
-                const priceSmall = document.getElementById('btcPriceSmall');
-
-                // Mostrar precio en formato "K"
+            try {
+                const { usd: price, usd_24h_change: priceChange } = await fetchBitcoinData();
                 priceLarge.innerText = formatPriceK(price);
-                priceSmall.innerText = `$${formatPrice(price)}`;
-
-                // Mantener el color en blanco llamativo
-                priceLarge.style.color = 'white';
+                priceSmall.innerHTML = `$${formatPrice(price)} <span style="color: ${priceChange > 0 ? '#00FF00' : '#FF0000'};">${priceChange > 0 ? '▲' : '▼'} ${priceChange.toFixed(2)}%</span>`;
+            } catch (error) {
+                console.error("Error al actualizar el precio:", error);
+            } finally {
+                loader.style.display = 'none';
+                priceLarge.style.display = 'block';
+                priceSmall.style.display = 'block';
             }
 
-            // Mostrar frase aleatoria
             document.getElementById('btcQuote').innerText = getRandomQuote();
-
-            // Mostrar ATH y fecha
-            document.getElementById('btcATH').innerText = `ATH: $${formatPrice(athPrice)}`;
+            document.getElementById('btcATH').innerText = `🚀 ATH: $${formatPrice(athPrice)}`;
             document.getElementById('btcDate').innerText = athDate;
         }
 
-        // Inicializar con los datos
         fetchAthData().then(() => updatePrice());
-        setInterval(updatePrice, 60000); // Actualizar cada minuto
+        setInterval(updatePrice, 60000);
     </script>
 </body>
 </html>
