@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Localizador de Puertas Cercanas</title>
     <style>
-        /* Estilos previos, no se modifican */
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
@@ -22,7 +21,7 @@
             border-radius: 8px;
         }
         h1 {
-            color: #1a4488;
+            color: #1a4488; /* Color INECO */
             text-align: center;
             margin-bottom: 20px;
         }
@@ -89,9 +88,13 @@
         .history-section h3 {
             color: #1a4488;
             margin-bottom: 10px;
-            display: inline-block;
         }
-        #historyList {
+        .history-section .line-green {
+            height: 2px;
+            background-color: #006338;
+            margin-bottom: 10px;
+        }
+        ul {
             padding-left: 20px;
         }
         ul li {
@@ -107,61 +110,36 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 40px;
-            padding: 10px;
+            padding: 10px 20px;
+            background-color: #f0f0f0;
             font-size: 14px;
-            color: #1a4488;
-            border-top: 1px solid #1a4488;
-            flex-wrap: wrap;
-            text-align: center;
+            color: #666;
+            margin-top: 40px;
+            border-top: 1px solid #ddd;
         }
         footer img {
-            width: 100px;
-            height: auto;
-            margin: 5px;
-        }
-        footer .footer-text {
-            flex-grow: 1;
-            margin-top: 5px;
-        }
-        .history-controls {
-            display: flex;
-            gap: 5px;
-            align-items: center;
-        }
-        .history-controls button {
-            font-size: 18px;
-            padding: 2px 6px;
-            border-radius: 50%;
-            background-color: #1a4488;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .history-controls button:hover {
-            background-color: #006338;
+            height: 40px;
         }
 
-        /* Estilo específico para dispositivos móviles */
+        /* Media Queries para mejorar la vista en dispositivos móviles */
         @media (max-width: 600px) {
-            footer {
+            .input-section {
                 flex-direction: column;
-                justify-content: center;
-                text-align: center;
+                align-items: stretch;
             }
-            footer img {
-                width: 90px;
+            button {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Localizador de Puertas</h1>
+        <h1>Localizador de Puertas Cercanas</h1>
         <div class="input-section">
             <input type="text" id="pkInput" placeholder="Ingrese el PK (ej. 455.548)">
             <select id="viaSelect">
-                <option value="ambas" selected>Ambas</option>
+                <option value="ambas" selected>Ambas Vías</option>
                 <option value="via1">Vía 1</option>
                 <option value="via2">Vía 2</option>
             </select>
@@ -170,130 +148,177 @@
         <div class="result-section" id="resultados"></div>
 
         <div class="history-section">
-            <div class="history-controls">
-                <h3>Historial de Búsquedas</h3>
-                <button onclick="limpiarHistorial()">🗑️</button>
-                <button onclick="contraerHistorial()">⬇️</button>
-                <button onclick="expandirHistorial()">⬆️</button>
-            </div>
+            <div class="line-green"></div>
+            <h3>Historial de Búsquedas</h3>
             <ul id="historyList"></ul>
+            <button class="expand-toggle" onclick="toggleHistorial()">&#9660; Expandir Historial</button>
+            <button onclick="limpiarHistorial()">&#128465; Limpiar Historial</button>
         </div>
     </div>
 
     <footer>
-        <div class="footer-text">Base de Mantenimiento de Monforte del CID</div>
-        <img src="https://ivandlpn.github.io/BaseMonforte/Puertas/Logo%20ADIF.jpg" alt="Logo ADIF">
-        <img src="https://ivandlpn.github.io/BaseMonforte/Puertas/Logo-Ineco.png" alt="Logo INECO">
+        <div>
+            <img src="https://ivandlpn.github.io/BaseMonforte/Puertas/Logo%20ADIF.jpg" alt="Logo ADIF">
+        </div>
+        <div>
+            <p>Base de Mantenimiento de Monforte del Cid</p>
+        </div>
+        <div>
+            <img src="https://ivandlpn.github.io/BaseMonforte/Puertas/Logo-Ineco.png" alt="Logo INECO">
+        </div>
     </footer>
 
     <script>
-        let historial = [];
-        let historialVisible = true;
-
+        // Base de datos de puertas con PK y vía
         function obtenerBaseDatosPuertas() {
             return [
                 {via: "Vía 1", pk: 364.30},
                 {via: "Vía 2", pk: 364.32},
-                // ... resto de datos
+                {via: "Vía 1", pk: 364.88},
+                {via: "Vía 2", pk: 364.89},
+                {via: "Vía 2", pk: 365.42},
+                {via: "Vía 1", pk: 365.87},
+                {via: "Vía 1", pk: 365.89},
+                {via: "Vía 1", pk: 366.16},
+                {via: "Vía 1", pk: 366.65},
+                {via: "Vía 1", pk: 366.80},
+                {via: "Vía 1", pk: 367.17},
+                {via: "Vía 2", pk: 367.32},
+                {via: "Vía 2", pk: 367.57},
+                {via: "Vía 1", pk: 367.97},
+                {via: "Vía 2", pk: 368.01},
+                {via: "Vía 2", pk: 368.07},
+                {via: "Vía 2", pk: 368.11},
+                {via: "Vía 1", pk: 368.11},
+                {via: "Vía 1", pk: 368.40},
+                {via: "Vía 2", pk: 368.71},
+                {via: "Vía 1", pk: 368.97},
+                {via: "Vía 2", pk: 369.03},
+                {via: "Vía 2", pk: 369.74},
+                {via: "Vía 1", pk: 370.45},
+                {via: "Vía 2", pk: 371.08},
+                {via: "Vía 2", pk: 372.10},
+                {via: "Vía 2", pk: 373.05},
+                {via: "Vía 2", pk: 373.57},
+                {via: "Vía 1", pk: 373.83},
+                {via: "Vía 2", pk: 373.95},
+                {via: "Vía 1", pk: 485.98}
             ];
         }
 
+        // Normaliza el valor de PK ingresado
         function normalizarPK(pk) {
             return parseFloat(String(pk).replace(',', '.').replace(/\s/g, ''));
         }
 
-        function actualizarHistorial(pk, via) {
-            const historyList = document.getElementById("historyList");
-
-            // Guardar en historial
-            const busqueda = `PK: ${pk}, Vía: ${via}`;
-            historial.unshift(busqueda);
-
-            // Limitar tamaño del historial a 5 elementos
-            if (historial.length > 5) historial.pop();
-
-            // Actualizar la lista visible
-            historyList.innerHTML = historial.map((item, index) => 
-                `<li onclick="repetirBusqueda(${index})">${item}</li>`
-            ).join('');
-        }
-
-        function repetirBusqueda(indice) {
-            const [pkPart, viaPart] = historial[indice].split(", ");
-            const pk = pkPart.split(": ")[1];
-            const via = viaPart.split(": ")[1].toLowerCase();
-
-            // Actualizar inputs con los valores del historial
-            document.getElementById('pkInput').value = pk;
-            document.getElementById('viaSelect').value = via === "ambas" ? "ambas" : via;
-            
-            // Ejecutar búsqueda
-            buscarPuertasCercanas();
-        }
-
-        function limpiarHistorial() {
-            historial = [];
-            document.getElementById("historyList").innerHTML = '';
-        }
-
-        function expandirHistorial() {
-            if (historialVisible) {
-                document.getElementById("historyList").style.display = 'none';
-                historialVisible = false;
+        // Función para formatear la distancia
+        function formatearDistancia(distanciaKm) {
+            if (distanciaKm < 1) {
+                // Si la distancia es menor a 1 km, convertirla a metros
+                return `${(distanciaKm * 1000).toFixed(0)} metros`;
+            } else {
+                // Si la distancia es mayor o igual a 1 km, mostrarla en kilómetros
+                return `${distanciaKm.toFixed(2)} km`;
             }
         }
 
-        function contraerHistorial() {
-            if (!historialVisible) {
-                document.getElementById("historyList").style.display = 'block';
-                historialVisible = true;
-            }
-        }
-
+        // Función para buscar las puertas cercanas
         function buscarPuertasCercanas() {
             const pkInput = document.getElementById('pkInput').value;
+            const viasSeleccionadas = document.getElementById('viaSelect').value;
+
+            if (!pkInput || isNaN(pkInput)) {
+                alert('Por favor, ingrese un PK válido.');
+                return;
+            }
+
             const pkNormalizado = normalizarPK(pkInput);
-            const viaSelect = document.getElementById('viaSelect').value;
-            const resultadosDiv = document.getElementById('resultados');
+            const puertas = obtenerBaseDatosPuertas();
+            const puertasFiltradas = puertas.filter(puerta => 
+                viasSeleccionadas === "ambas" || puerta.via.toLowerCase() === viasSeleccionadas
+            );
+
+            // Ordenar las puertas por proximidad al PK ingresado
+            const puertasCercanas = puertasFiltradas.sort((a, b) =>
+                Math.abs(a.pk - pkNormalizado) - Math.abs(b.pk - pkNormalizado)
+            ).slice(0, 2);
+
+            if (puertasCercanas.length === 0) {
+                document.getElementById('resultados').innerHTML = "<p>No se encontraron puertas cercanas en la vía seleccionada.</p>";
+                return;
+            }
+
+            let resultadosDiv = document.getElementById('resultados');
             resultadosDiv.innerHTML = '';
 
-            if (isNaN(pkNormalizado)) {
-                resultadosDiv.innerHTML = '<p class="error">Por favor, ingrese un PK válido.</p>';
-                return;
-            }
-
-            const puertas = obtenerBaseDatosPuertas();
-            const puertasFiltradas = puertas.filter(puerta => {
-                const viaPuerta = puerta.via.toLowerCase().replace(' ', '').normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                return viaSelect === "ambas" || viaPuerta === viaSelect;
+            puertasCercanas.forEach(puerta => {
+                const distancia = formatearDistancia(Math.abs(puerta.pk - pkNormalizado));
+                resultadosDiv.innerHTML += `
+                    <div class="result-item">
+                        <strong>Vía: </strong>${puerta.via}<br>
+                        <strong>PK: </strong>${puerta.pk}<br>
+                        <strong>Distancia: </strong>${distancia}
+                    </div>`;
             });
 
-            if (puertasFiltradas.length === 0) {
-                resultadosDiv.innerHTML = '<p class="error">No se encontraron puertas para la vía seleccionada.</p>';
-                return;
-            }
-
-            const puertasConDistancia = puertasFiltradas.map(puerta => ({
-                ...puerta,
-                distancia: Math.abs(puerta.pk - pkNormalizado),
-                distanciaAbsoluta: Math.abs(puerta.pk - pkNormalizado)
-            })).sort((a, b) => a.distanciaAbsoluta - b.distanciaAbsoluta);
-
-            if (puertasConDistancia.length === 0) {
-                resultadosDiv.innerHTML = '<p class="error">No se encontraron puertas cercanas.</p>';
-                return;
-            }
-
-            puertasConDistancia.forEach(puerta => {
-                const puertaDiv = document.createElement('div');
-                puertaDiv.classList.add('result-item');
-                puertaDiv.innerHTML = `<strong>${puerta.via}</strong>: PK ${puerta.pk} (${puerta.distancia.toFixed(2)} m)`;
-                resultadosDiv.appendChild(puertaDiv);
-            });
-
-            // Actualizar historial
-            actualizarHistorial(pkNormalizado, viaSelect);
+            guardarHistorial(pkInput, viasSeleccionadas);
         }
+
+        // Función para guardar el historial de búsqueda en el localStorage
+        function guardarHistorial(pk, via) {
+            const historial = JSON.parse(localStorage.getItem('historial')) || [];
+            const nuevaEntrada = `${pk} - ${via}`;
+            if (!historial.includes(nuevaEntrada)) {
+                historial.unshift(nuevaEntrada);
+            }
+            if (historial.length > 5) {
+                historial.pop();
+            }
+            localStorage.setItem('historial', JSON.stringify(historial));
+            mostrarHistorial();
+        }
+
+        // Función para mostrar el historial
+        function mostrarHistorial() {
+            const historial = JSON.parse(localStorage.getItem('historial')) || [];
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = '';
+            historial.forEach(entry => {
+                const li = document.createElement('li');
+                li.textContent = entry;
+                li.onclick = function() {
+                    const [pk, via] = entry.split(' - ');
+                    document.getElementById('pkInput').value = pk;
+                    document.getElementById('viaSelect').value = via.toLowerCase();
+                    buscarPuertasCercanas();
+                };
+                historyList.appendChild(li);
+            });
+        }
+
+        // Función para limpiar el historial
+        function limpiarHistorial() {
+            localStorage.removeItem('historial');
+            mostrarHistorial();
+        }
+
+        // Mostrar/ocultar historial expandido
+        function toggleHistorial() {
+            const button = document.querySelector('.expand-toggle');
+            const historyList = document.getElementById('historyList');
+            const maxHeight = historyList.style.maxHeight;
+
+            if (!maxHeight || maxHeight === '150px') {
+                historyList.style.maxHeight = '300px';
+                button.innerHTML = '&#9650; Colapsar Historial';
+            } else {
+                historyList.style.maxHeight = '150px';
+                button.innerHTML = '&#9660; Expandir Historial';
+            }
+        }
+
+        // Mostrar historial al cargar la página
+        window.onload = mostrarHistorial;
     </script>
 </body>
 </html>
