@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi CriptoCartera</title>
+    <style>
+/* Estilo base */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f4f7;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    width: 100%;
+    max-width: 1300px;
+}
+.card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    width: 220px;
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+.card img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 15px;
+    transition: transform 0.3s;
+}
+.card img:hover {
+    transform: scale(1.1);
+}
+.card .crypto-name {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+.card .price {
+    font-size: 18px;
+    margin: 15px 0;
+    color: #444;
+    font-weight: bold;
+}
+.card .performance {
+    font-size: 16px;
+    margin-top: 10px;
+    font-weight: 600;
+}
+.positive {
+    color: #4caf50;
+}
+.negative {
+    color: #f44336;
+}
+.positive-arrow {
+    color: #4caf50;
+}
+.negative-arrow {
+    color: #f44336;
+}
+.large-card {
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 500px;
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    flex: 1;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.large-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+.large-card .total {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+.large-card .total-portfolio {
+    font-size: 26px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Medias Queries para móviles y tablets */
+@media screen and (max-width: 768px) {
+    .card {
+        width: 90%; /* Ajusta el ancho de las tarjetas */
+        padding: 20px;
+    }
+    .card .crypto-name {
+        font-size: 20px;
+    }
+    .card .price {
+        font-size: 16px;
+    }
+    .card .performance {
+        font-size: 14px;
+    }
+    .large-card {
+        width: 90%; /* Ajusta el ancho de la tarjeta de cartera */
+        padding: 30px;
+    }
+    .large-card .total {
+        font-size: 28px;
+    }
+    .large-card .total-portfolio {
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body {
+        flex-direction: column; /* Organiza los elementos verticalmente */
+        padding: 10px;
+    }
+    .container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .card {
+        width: 100%; /* Las tarjetas ocupan todo el ancho disponible */
+        margin-bottom: 20px;
+        padding: 15px;
+    }
+    .card .crypto-name {
+        font-size: 18px;
+    }
+    .card .price {
+        font-size: 14px;
+    }
+    .card .performance {
+        font-size: 12px;
+    }
+    .large-card {
+        width: 100%; /* La tarjeta de cartera ocupa todo el ancho */
+        padding: 20px;
+    }
+    .large-card .total {
+        font-size: 26px;
+    }
+    .large-card .total-portfolio {
+        font-size: 22px;
+    }
+}
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Criptomonedas -->
+    <div class="card" id="card-bitcoin">
+        <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="Bitcoin Logo">
+        <div class="crypto-name">Bitcoin</div>
+        <div class="price" id="price-bitcoin"></div>
+        <div class="performance" id="performance-bitcoin"></div>
+        <div class="performance" id="benefits-bitcoin"></div>
+    </div>
+
+    <div class="card" id="card-eth">
+        <img src="https://img.icons8.com/?size=512&id=IhWBOFHtv6vx&format=png" alt="ETH Logo">
+        <div class="crypto-name">ETH</div>
+        <div class="price" id="price-eth"></div>
+        <div class="performance" id="performance-eth"></div>
+        <div class="performance" id="benefits-eth"></div>
+    </div>
+
+    <div class="card" id="card-ada">
+        <img src="https://cryptologos.cc/logos/cardano-ada-logo.png" alt="ADA Logo">
+        <div class="crypto-name">ADA</div>
+        <div class="price" id="price-ada"></div>
+        <div class="performance" id="performance-ada"></div>
+        <div class="performance" id="benefits-ada"></div>
+    </div>
+
+    <div class="card" id="card-pdotn">
+        <img src="https://cryptologos.cc/logos/polkadot-new-dot-logo.png" alt="pDOTn Logo">
+        <div class="crypto-name">pDOTn</div>
+        <div class="price" id="price-pdotn"></div>
+        <div class="performance" id="performance-pdotn"></div>
+        <div class="performance" id="benefits-pdotn"></div>
+    </div>
+
+    <!-- Tarjeta de Cartera -->
+    <div class="large-card" id="card-total">
+        <div class="total" id="total-value"></div>
+        <div id="performance-total"></div>
+    </div>
+</div>
+
+<script>
+    // Definir las cantidades y precios medios
+    const portfolio = {
+        "pDOTn": { quantity: 50, avgPrice: 7.48 },
+        "ADA": { quantity: 1000, avgPrice: 0.34 },
+        "ETH": { quantity: 1, avgPrice: 1972.15 },
+        "Bitcoin": { quantity: 0.14285714, avgPrice: 28040.50 }
+    };
+
+    // Función para formatear las cifras con punto para miles y coma para decimales
+    const formatCurrency = (value) => {
+        return value.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })
+            .replace('€', '') // Eliminar el símbolo del euro por ahora
+            .replace(',', '.') // Cambiar la coma de los miles a punto
+            .replace('.', ',') // Cambiar el punto decimal por coma
+            .trim() + ' €'; // Añadir el símbolo del euro al final
+    }
+
+    // Obtener los precios actuales de las criptomonedas en tiempo real desde CoinGecko
+    const getCryptoData = async () => {
+        const url = "https://api.coingecko.com/api/v3/simple/price?ids=polkadot,cardano,ethereum,bitcoin&vs_currencies=eur&include_24hr_change=true";
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const cryptos = {
+            "pDOTn": data.polkadot,
+            "ADA": data.cardano,
+            "ETH": data.ethereum,
+            "Bitcoin": data.bitcoin
+        };
+
+        let totalValue = 0;
+        let totalInitialValue = 0; // Para calcular el rendimiento total de la cartera
+
+        for (const [crypto, info] of Object.entries(cryptos)) {
+            const price = formatCurrency(info.eur);
+            const change = info.eur_24h_change.toFixed(2);
+            const performanceClass = change >= 0 ? 'positive' : 'negative';
+            const arrow = change >= 0 ? '▲' : '▼';
+
+            // Mostrar precio y rendimiento
+            document.getElementById(`price-${crypto.toLowerCase()}`).textContent = `${price} (${arrow} ${Math.abs(change)}%)`;
+
+            // Cálculo de ganancias en euros y porcentaje
+            const quantity = portfolio[crypto].quantity;
+            const avgPrice = portfolio[crypto].avgPrice;
+            const currentPrice = info.eur;
+            const currentValue = quantity * currentPrice;
+            const initialValue = quantity * avgPrice;
+            const profitInEuros = currentValue - initialValue;
+            const profitInPercentage = ((profitInEuros / initialValue) * 100).toFixed(2);
+
+            // Establecer color según si es ganancia o pérdida
+            const profitClass = profitInEuros >= 0 ? 'positive' : 'negative';
+            const profitArrow = profitInEuros >= 0 ? '▲' : '▼';
+            document.getElementById(`benefits-${crypto.toLowerCase()}`).textContent = `+ ${formatCurrency(profitInEuros)} (${profitArrow} ${profitInPercentage}%)`;
+
+            // Cambiar el color de los beneficios según si son positivos o negativos
+            document.getElementById(`benefits-${crypto.toLowerCase()}`).classList.add(profitClass);
+
+            // Sumar el valor para la cartera total
+            totalValue += currentValue;
+            totalInitialValue += initialValue;
+        }
+
+        // Calcular rendimiento total de la cartera
+        const totalProfit = totalValue - totalInitialValue;
+        const totalPerformance = ((totalProfit / totalInitialValue) * 100).toFixed(2);
+        const totalArrow = totalProfit >= 0 ? '▲' : '▼';
+        const totalProfitClass = totalProfit >= 0 ? 'positive' : 'negative';
+
+        document.getElementById("total-value").textContent = `Total: ${formatCurrency(totalValue)}`;
+        document.getElementById("performance-total").textContent = `+ ${formatCurrency(totalProfit)} (${totalArrow} ${Math.abs(totalPerformance)}%)`;
+
+        // Cambiar el color de la cartera según si es ganancia o pérdida
+        document.getElementById("performance-total").classList.add(totalProfitClass);
+    }
+
+    // Llamada para obtener los datos
+    getCryptoData();
+</script>
+
+</body>
+</html>
