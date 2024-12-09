@@ -1,92 +1,71 @@
 /* Estilo general para la página */
 body {
-  background: linear-gradient(to bottom, #eaf3fc, #ffffff);
-  font-family: 'Roboto', sans-serif;
+  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  color: #333;
+  background-color: #f4f4f9;
 }
 
-/* Encabezado */
+/* Estilo para la barra superior (header) */
 header {
-  background: linear-gradient(135deg, #003f5c, #2f4b7c);
+  background-color: #003f5c;
   color: white;
   padding: 15px;
   text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
   margin: 0;
   font-size: 1.8em;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
+  font-family: 'Arial', sans-serif;
 }
 
 header p {
   font-size: 1em;
   margin-top: 5px;
+  font-family: 'Arial', sans-serif;
   color: #cce4f7;
 }
 
-/* Mapa */
+/* Estilo para el mapa */
 #map {
   margin-top: 20px;
 }
 
 /* Lista de PKs cercanos */
-#listaPKs li {
-  padding: 15px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #ffffff, #eaf3fc);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
-  font-family: 'Roboto', sans-serif;
-  color: #003f5c;
-  text-align: center;
-  font-size: 1.2em;
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-#listaPKs li strong {
-  color: #007aff;
-}
-
-/* Barra inferior fija */
-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #003f5c;
-  color: white;
-  text-align: center;
-  padding: 10px 0;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-}
-
-footer ul {
-  list-style: none;
-  margin: 0;
+ul {
+  list-style-type: none;
   padding: 0;
-  display: flex;
-  justify-content: space-around;
 }
 
-footer ul li a {
-  text-decoration: none;
-  color: #ffffff;
+ul li {
+  background-color: #ffffff;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+ul li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Estilo para la lista de PKs */
+#listaPKs {
   font-size: 1.2em;
-  font-family: 'Roboto', sans-serif;
+  margin-top: 20px;
 }
 
-/* Animación */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Estilo para los items de la lista */
+#listaPKs li {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+/* Resaltar la distancia con color */
+#listaPKs li strong {
+  color: green;
 }
