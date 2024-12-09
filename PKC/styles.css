@@ -6,33 +6,53 @@ body {
   background-color: #f4f4f9;
 }
 
-/* Estilo para la barra superior (header) */
+/* Estilo para el encabezado */
 header {
   background-color: #003f5c;
   color: white;
   padding: 15px;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
+/* Contenedor del contenido del header */
+.header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilo para el logo */
+.logo {
+  max-width: 120px; /* Ajusta el tamaño del logo */
+  margin-bottom: 10px;
+}
+
+/* Estilo para el título */
 header h1 {
   margin: 0;
-  font-size: 24px;
+  font-size: 1.8em;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
 }
 
+/* Estilo para el subtítulo */
 header p {
   font-size: 1em;
   margin-top: 5px;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: #cce4f7;
 }
-
 
 /* Estilo para el mapa */
 #map {
   margin-top: 20px;
 }
 
-/* Lista de PKs cercanos */
+/* Lista de PK más cercanos */
 ul {
   list-style-type: none;
   padding: 0;
