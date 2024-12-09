@@ -19,6 +19,14 @@ header h1 {
   font-size: 24px;
 }
 
+header p {
+  font-size: 1em;
+  margin-top: 5px;
+  font-family: 'Arial', sans-serif;
+  color: #cce4f7;
+}
+
+
 /* Estilo para el mapa */
 #map {
   margin-top: 20px;
