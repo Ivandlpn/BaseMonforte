@@ -1,71 +1,84 @@
 navigator.geolocation.getCurrentPosition((position) => {
-  const lat = position.coords.latitude;
-  const lon = position.coords.longitude;
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
 
-  // Inicializar el mapa centrado en la ubicación del usuario
-  const mapa = L.map('map', {
-      center: [lat, lon],
-      zoom: 13,  // Puedes ajustar el nivel de zoom según lo que prefieras
-      maxZoom: 19
-  });
+    // Inicializar el mapa centrado en la ubicación del usuario
+    const mapa = L.map('map', {
+        center: [lat, lon],
+        zoom: 13,  // Ajusta el nivel de zoom si es necesario
+        maxZoom: 19
+    });
 
-  // Añadir capa de OpenStreetMap
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19
-  }).addTo(mapa);
+    // Añadir capa de OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19
+    }).addTo(mapa);
 
-  // Crear un icono personalizado para la ubicación del usuario
-  const iconoUsuario = L.icon({
-      iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/svgs/solid/map-marker-alt.svg',
-      iconSize: [30, 30],
-      iconAnchor: [15, 30],
-      popupAnchor: [0, -30]
-  });
+    // Crear un icono personalizado para la ubicación del usuario
+    const iconoUsuario = L.icon({
+        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/svgs/solid/map-marker-alt.svg',
+        iconSize: [30, 30],
+        iconAnchor: [15, 30],
+        popupAnchor: [0, -30]
+    });
 
-  // Añadir el marcador para la ubicación del usuario
-  const marcadorActual = L.marker([lat, lon], { icon: iconoUsuario }).addTo(mapa)
-      .bindPopup('Tu ubicación')
-      .openPopup();
+    // Añadir el marcador para la ubicación del usuario
+    const marcadorActual = L.marker([lat, lon], { icon: iconoUsuario }).addTo(mapa)
+        .bindPopup('Mi Ubicación')
+        .openPopup();
 
-  // Cargar datos PK y calcular el más cercano
-  fetch("./PKCoordenas.json")
-      .then(response => response.json())
-      .then(data => {
-          const puntosCercanos = calcularPKMasCercano(lat, lon, data);
-          mostrarPKCercanos(puntosCercanos);
-      });
+    // Cargar datos PK y calcular el más cercano
+    fetch("./PKCoordenas.json")
+        .then(response => response.json())
+        .then(data => {
+            const puntosCercanos = calcularPKMasCercano(lat, lon, data);
+            const pkMasCercano = puntosCercanos[0]; // Obtener solo el más cercano
+
+            // Mostrar en la lista solo el PK más cercano
+            mostrarPKMasCercano(pkMasCercano);
+            
+            // Añadir marcador para el PK más cercano en el mapa
+            const marcadorPK = L.marker([pkMasCercano.latitud, pkMasCercano.longitud]).addTo(mapa)
+                .bindPopup('PK más cercano')
+                .openPopup();
+        });
 });
 
-
 // Función para calcular el PK más cercano
-function calcularPKMasCercano(lat, lon, datosPK) {
-  const puntosCercanos = [];
-  datosPK.forEach(punto => {
-      const distancia = calcularDistancia(lat, lon, punto.Latitud, punto.Longitud);
-      puntosCercanos.push({ ...punto, distancia });
-  });
-  puntosCercanos.sort((a, b) => a.distancia - b.distancia);
-  return puntosCercanos;
+function calcularPKMasCercano(lat, lon, data) {
+    let puntosCercanos = data.map(pk => {
+        const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
+        return { pk: pk.PK, latitud: pk.Latitud, longitud: pk.Longitud, distancia: distancia };
+    });
+
+    // Ordenar los PKs por distancia más cercana y devolver el más cercano
+    puntosCercanos.sort((a, b) => a.distancia - b.distancia);
+    return puntosCercanos.slice(0, 1); // Retornar solo el más cercano
 }
 
-// Función para calcular la distancia entre dos puntos
+// Función para calcular la distancia entre dos puntos geográficos en metros
 function calcularDistancia(lat1, lon1, lat2, lon2) {
-  const R = 6371; // Radio de la Tierra en km
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c * 1000; // Distancia en metros
+    const R = 6371000; // Radio de la Tierra en metros
+    const φ1 = lat1 * Math.PI / 180; // Latitud en radianes
+    const φ2 = lat2 * Math.PI / 180; // Latitud en radianes
+    const Δφ = (lat2 - lat1) * Math.PI / 180; // Diferencia de latitudes
+    const Δλ = (lon2 - lon1) * Math.PI / 180; // Diferencia de longitudes
+
+    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+              Math.cos(φ1) * Math.cos(φ2) *
+              Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c; // Distancia en metros
 }
 
-// Mostrar PK más cercanos en la interfaz
-function mostrarPKCercanos(puntosCercanos) {
-  const lista = document.getElementById('listaPKs');
-  puntosCercanos.slice(0, 5).forEach(punto => {
-      const li = document.createElement('li');
-      li.textContent = `PK: ${punto.PK}, Distancia: ${punto.distancia.toFixed(2)} m`;
-      lista.appendChild(li);
-  });
+// Función para mostrar el PK más cercano en la lista
+function mostrarPKMasCercano(pk) {
+    const lista = document.getElementById("listaPKs");
+    lista.innerHTML = ''; // Limpiar lista anterior
+
+    // Crear un nuevo item en la lista con la información del PK
+    const item = document.createElement('li');
+    item.innerHTML = `PK más cercano: <strong>${pk.pk}</strong><br>Distancia: <strong>${(pk.distancia).toFixed(2)} metros</strong>`;
+    lista.appendChild(item);
 }

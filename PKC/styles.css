@@ -41,3 +41,23 @@ ul li {
 ul li:hover {
   background-color: #f0f0f0;
 }
+
+/* Estilo para la lista de PKs */
+#listaPKs {
+  font-size: 1.2em;
+  margin-top: 20px;
+}
+
+/* Estilo para los items de la lista */
+#listaPKs li {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+/* Resaltar la distancia con color */
+#listaPKs li strong {
+  color: green;
+}
