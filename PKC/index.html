@@ -7,7 +7,6 @@
 
     <link rel="icon" href="favicon.jpeg" type="image/png">
 
-
     <!-- Incluir Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -17,29 +16,30 @@
 
     <!-- Estilos adicionales -->
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Incluir Leaflet.js (agregar en <head>) -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- Incluir FontAwesome para los iconos (agregar en <head>) -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
 </head>
 <body>
     <!-- Header -->
     <header>
-        <h1>PK + Cercano - Base Monforte</h1>
-        <button id="modoOscuro">Cambiar a modo oscuro</button>
+        <h1>PK Más Cercano</h1>
+        <p>Base Monforte · Localiza tu posición con precisión</p>
     </header>
 
     <!-- Mapa -->
-    <!-- Contenedor del mapa (agregar en <body>) -->
-<div id="map" style="height: 400px; width: 100%;"></div>
-
+    <div id="map" style="height: 400px; width: 100%;"></div>
 
     <!-- Lista de PK más cercanos -->
     <ul id="listaPKs"></ul>
+
+    <!-- Barra inferior fija -->
+    <footer>
+        <nav>
+            <ul>
+                <li><a href="#map">Mapa</a></li>
+                <li><a href="#listaPKs">Lista</a></li>
+                <li><a href="#info">Información</a></li>
+            </ul>
+        </nav>
+    </footer>
 
     <!-- Script con la lógica de la aplicación -->
     <script src="script.js"></script>
