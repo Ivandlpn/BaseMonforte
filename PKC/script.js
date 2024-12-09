@@ -16,7 +16,7 @@ navigator.geolocation.getCurrentPosition((position) => {
 
     // Crear un icono personalizado para la ubicación del usuario
     const iconoUsuario = L.icon({
-        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/svgs/solid/map-marker-alt.svg',
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/1783/1783356.png',
         iconSize: [30, 30],
         iconAnchor: [15, 30],
         popupAnchor: [0, -30]
