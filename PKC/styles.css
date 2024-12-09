@@ -16,15 +16,7 @@ header {
 
 header h1 {
   margin: 0;
-  font-size: 1.8em;
-  font-family: 'Arial', sans-serif;
-}
-
-header p {
-  font-size: 1em;
-  margin-top: 5px;
-  font-family: 'Arial', sans-serif;
-  color: #cce4f7;
+  font-size: 24px;
 }
 
 /* Estilo para el mapa */
