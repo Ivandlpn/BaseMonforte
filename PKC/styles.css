@@ -27,7 +27,9 @@ header {
 
 /* Estilo para el logo */
 .logo {
-  max-width: 120px; /* Ajusta el tamaño del logo */
+  max-width: 80%;  /* Redimensiona el logo al 80% del tamaño del contenedor */
+  width: 150px;    /* Asegura que el logo no exceda 150px de ancho */
+  height: auto;    /* Mantiene las proporciones del logo */
   margin-bottom: 10px;
 }
 
