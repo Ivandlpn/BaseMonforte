@@ -14,6 +14,14 @@
 
     <!-- Estilos adicionales -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Incluir Leaflet.js (agregar en <head>) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Incluir FontAwesome para los iconos (agregar en <head>) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
 </head>
 <body>
     <!-- Header -->
@@ -23,7 +31,9 @@
     </header>
 
     <!-- Mapa -->
-    <div id="map" style="height: 400px; width: 100%;"></div>
+    <!-- Contenedor del mapa (agregar en <body>) -->
+<div id="map" style="height: 400px; width: 100%;"></div>
+
 
     <!-- Lista de PK más cercanos -->
     <ul id="listaPKs"></ul>

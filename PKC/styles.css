@@ -19,22 +19,7 @@ header h1 {
   font-size: 24px;
 }
 
-/* Botón de modo oscuro */
-button {
-  padding: 10px 20px;
-  background-color: #0066cc;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 5px;
-}
-
-button:hover {
-  background-color: #005bb5;
-}
-
-/* Estilo del mapa */
+/* Estilo para el mapa */
 #map {
   margin-top: 20px;
 }
@@ -55,23 +40,4 @@ ul li {
 
 ul li:hover {
   background-color: #f0f0f0;
-}
-
-/* Modo oscuro */
-body.oscuro {
-  background-color: #121212;
-  color: #ffffff;
-}
-
-header.oscuro {
-  background-color: #1c1c1c;
-}
-
-button.oscuro {
-  background-color: #333333;
-}
-
-ul li.oscuro {
-  background-color: #333333;
-  color: white;
 }
