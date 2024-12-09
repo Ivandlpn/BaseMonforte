@@ -72,6 +72,22 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
     return R * c; // Distancia en metros
 }
 
+// Función para formatear el PK en formato XXX+XXX
+function formatearPK(pk) {
+    const pkStr = pk.toString();
+    if (pkStr.includes('+')) {
+        return pkStr; // Ya está en el formato correcto
+    }
+
+    // Si el PK no tiene el formato XXX+XXX, lo convertimos
+    const longitud = pkStr.length;
+    if (longitud >= 6) {
+        return pkStr.slice(0, 3) + '+' + pkStr.slice(3);
+    } else {
+        return pkStr; // No se puede formatear si el PK no es suficientemente largo
+    }
+}
+
 // Función para mostrar el PK más cercano en la lista
 function mostrarPKMasCercano(pk) {
     const lista = document.getElementById("listaPKs");
@@ -79,6 +95,7 @@ function mostrarPKMasCercano(pk) {
 
     // Crear un nuevo item en la lista con la información del PK
     const item = document.createElement('li');
-    item.innerHTML = `PK más cercano: <strong>${pk.pk}</strong><br>Distancia: <strong>${(pk.distancia).toFixed(2)} metros</strong>`;
+    const pkFormateado = formatearPK(pk.pk);  // Aplicar el formato XXX+XXX
+    item.innerHTML = `PK más cercano: <strong>${pkFormateado}</strong><br>Distancia: <strong>${(pk.distancia).toFixed(2)} metros</strong>`;
     lista.appendChild(item);
 }
