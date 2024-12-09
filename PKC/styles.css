@@ -4,6 +4,9 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f4f4f9;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;  /* Esto asegura que la altura mínima sea 100vh */
 }
 
 /* Estilo para el encabezado */
@@ -12,25 +15,18 @@ header {
   color: white;
   padding: 15px;
   text-align: center;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 1.8em;
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-}
-
-header p {
-  font-size: 1em;
-  margin-top: 5px;
-  font-family: 'Poppins', sans-serif;
-  color: #cce4f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-shrink: 0; /* Para que no se reduzca */
 }
 
 /* Estilo para el mapa */
 #map {
   margin-top: 20px;
+  flex-grow: 1;  /* El mapa crecerá para ocupar el espacio restante */
+  max-height: 400px;  /* Ajustamos la altura máxima del mapa */
 }
 
 /* Lista de PK más cercanos */
@@ -51,38 +47,17 @@ ul li:hover {
   background-color: #f0f0f0;
 }
 
-/* Estilo para la lista de PKs */
-#listaPKs {
-  font-size: 1.2em;
-  margin-top: 20px;
-}
-
-/* Estilo para los items de la lista */
-#listaPKs li {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
-}
-
-/* Resaltar la distancia con color */
-#listaPKs li strong {
-  color: green;
-}
-
 /* Estilo para el pie de página */
 footer {
   background-color: #003f5c;
   color: white;
   padding: 10px 0;
   text-align: center;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;  /* El pie de página no se reduce */
+  margin-top: auto; /* Esto asegura que el pie de página se quede al final */
 }
 
+/* Ajustar el logo en el pie de página */
 .footer-content {
   display: flex;
   justify-content: center;
