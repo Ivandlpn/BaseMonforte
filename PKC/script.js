@@ -3,7 +3,11 @@ navigator.geolocation.getCurrentPosition((position) => {
   const lon = position.coords.longitude;
 
   // Inicializar el mapa centrado en la ubicación del usuario
-  const mapa = L.map('map').setView([lat, lon], 13);
+  const mapa = L.map('map', {
+      center: [lat, lon],
+      zoom: 13,  // Puedes ajustar el nivel de zoom según lo que prefieras
+      maxZoom: 19
+  });
 
   // Añadir capa de OpenStreetMap
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -31,6 +35,7 @@ navigator.geolocation.getCurrentPosition((position) => {
           mostrarPKCercanos(puntosCercanos);
       });
 });
+
 
 // Función para calcular el PK más cercano
 function calcularPKMasCercano(lat, lon, datosPK) {
