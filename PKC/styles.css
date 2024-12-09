@@ -65,8 +65,22 @@ footer {
 }
 
 .logo-footer {
-  max-width: 20vw;  /* El logo ocupará un máximo del 20% del ancho de la ventana */
+  max-width: 100px;  /* Ajusta el tamaño del logo en pantallas grandes */
   height: auto;     /* Mantiene las proporciones */
-  max-height: 80px; /* Limita la altura máxima del logo */
   margin: 0 auto;   /* Asegura que el logo esté centrado */
+}
+
+/* Media query para pantallas pequeñas (móviles) */
+@media screen and (max-width: 768px) {
+  .logo-footer {
+    max-width: 50px;  /* Reduzco el logo a un tamaño más pequeño en móviles */
+    max-height: 50px; /* Limito la altura del logo */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .logo-footer {
+    max-width: 40px;  /* Aún más pequeño en pantallas muy pequeñas */
+    max-height: 40px; /* Limito aún más el logo */
+  }
 }
