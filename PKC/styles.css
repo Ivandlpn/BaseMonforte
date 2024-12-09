@@ -4,32 +4,35 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f4f4f9;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;  /* Asegura que la altura mínima sea 100vh */
 }
 
-/* Estilo para el encabezado */
+/* Estilo para la barra superior (header) */
 header {
   background-color: #003f5c;
   color: white;
-  padding: 15px;
+  padding: 12px;
   text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  flex-shrink: 0; /* Para que no se reduzca */
 }
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+header p {
+  font-size: 1em;
+  margin-top: 5px;
+  font-family: 'Arial', sans-serif;
+  color: #cce4f7;
+}
+
 
 /* Estilo para el mapa */
 #map {
   margin-top: 20px;
-  flex-grow: 1;  /* El mapa crecerá para ocupar el espacio restante */
-  max-height: 400px;  /* Ajustamos la altura máxima del mapa */
 }
 
-/* Lista de PK más cercanos */
+/* Lista de PKs cercanos */
 ul {
   list-style-type: none;
   padding: 0;
@@ -47,40 +50,22 @@ ul li:hover {
   background-color: #f0f0f0;
 }
 
-/* Estilo para el pie de página */
-footer {
-  background-color: #003f5c;
-  color: white;
-  padding: 10px 0;
-  text-align: center;
-  flex-shrink: 0;  /* El pie de página no se reduce */
-  margin-top: auto; /* Esto asegura que el pie de página se quede al final */
+/* Estilo para la lista de PKs */
+#listaPKs {
+  font-size: 1.2em;
+  margin-top: 20px;
 }
 
-/* Ajustar el logo en el pie de página */
-.footer-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Estilo para los items de la lista */
+#listaPKs li {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
 }
 
-.logo-footer {
-  max-width: 100px;  /* Ajusta el tamaño del logo en pantallas grandes */
-  height: auto;     /* Mantiene las proporciones */
-  margin: 0 auto;   /* Asegura que el logo esté centrado */
-}
-
-/* Media query para pantallas pequeñas (móviles) */
-@media screen and (max-width: 768px) {
-  .logo-footer {
-    max-width: 50px;  /* Reduzco el logo a un tamaño más pequeño en móviles */
-    max-height: 50px; /* Limito la altura del logo */
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .logo-footer {
-    max-width: 40px;  /* Aún más pequeño en pantallas muy pequeñas */
-    max-height: 40px; /* Limito aún más el logo */
-  }
+/* Resaltar la distancia con color */
+#listaPKs li strong {
+  color: green;
 }
