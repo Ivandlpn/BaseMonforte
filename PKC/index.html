@@ -3,45 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi PK</title>
+    <title>PK + Cercano - Base Monforte</title>
 
-    <link rel="icon" href="favicon.jpeg" type="image/png">
-
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
     <!-- Incluir Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <!-- Incluir FontAwesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
     <!-- Estilos adicionales -->
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Incluir Leaflet.js (agregar en <head>) -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- Incluir FontAwesome para los iconos (agregar en <head>) -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
 </head>
 <body>
-    <!-- Header -->
+    <!-- Encabezado -->
     <header>
-        <h1>Mi PK📍</h1>
-        <p>Base Monforte</p>
+        <h1>PK Más Cercano</h1>
+        <p>Base Monforte · Localiza tu posición con precisión</p>
     </header>
 
     <!-- Mapa -->
-    <!-- Contenedor del mapa (agregar en <body>) -->
-<div id="map" style="height: 400px; width: 100%;"></div>
+    <div id="map"></div>
 
+    <!-- Pie de página -->
+    <footer>
+        <img src="Logo-Ineco.png" alt="Logo Ineco">
+    </footer>
 
-    <!-- Lista de PK más cercanos -->
-    <ul id="listaPKs"></ul>
-
-    <!-- Script con la lógica de la aplicación -->
+    <!-- Script -->
     <script src="script.js"></script>
 </body>
 </html>
