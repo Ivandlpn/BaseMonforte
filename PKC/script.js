@@ -39,7 +39,7 @@ function inicializarMapa(lat, lon) {
 
     // Añadir capa de satélite ESRI World Imagery (gratuito sin registro)
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '© ESRI, © OpenStreetMap contributors',
+        attribution: '',
         maxZoom: 19
     }).addTo(mapa);
 
