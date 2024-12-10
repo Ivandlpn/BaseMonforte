@@ -1,56 +1,63 @@
-// Inicializamos el mapa cuando se carga la página
-let mapa = L.map('map', {
-    center: [40.3000, -0.5617],  // Coordenadas iniciales
-    zoom: 16,  // Ajustamos el zoom inicial para acercar el mapa
-    maxZoom: 17,  // Aseguramos que el zoom máximo sea 19
-    attributionControl: false // Eliminar la atribución
-});
+// Inicializa el mapa y las variables globales
+let mapa, marcadorActual, marcadorPK, iconoUsuario;
 
-// Capa de satélite de Esri (sin necesidad de API Key)
-L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-    attribution: '' // Eliminamos la atribución aquí también
-}).addTo(mapa);
+// Función principal para rastrear la posición del usuario
+navigator.geolocation.watchPosition((position) => {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
 
+    // Inicializar el mapa solo la primera vez
+    if (!mapa) {
+        mapa = L.map('map', {
+            center: [lat, lon],
+            zoom: 13,
+            maxZoom: 19
+        });
 
-// Crear un icono personalizado para la ubicación del usuario
-const iconoUsuario = L.icon({
-    iconUrl: 'https://cdn-icons-png.flaticon.com/512/1783/1783356.png',
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
-    popupAnchor: [0, -30]
-});
+        // Añadir capa de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(mapa);
 
-// Función para obtener la ubicación del usuario y actualizar el mapa
-function obtenerUbicacion() {
-    navigator.geolocation.getCurrentPosition((position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
+        // Crear un icono personalizado para la ubicación del usuario
+        iconoUsuario = L.icon({
+            iconUrl: 'https://cdn-icons-png.flaticon.com/512/1783/1783356.png',
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+            popupAnchor: [0, -30]
+        });
 
-        // Actualizamos el centro del mapa a la nueva ubicación
-        mapa.setView([lat, lon], 19);  // Usamos el zoom 19 para acercarnos más
-
-        // Añadimos el marcador de la ubicación del usuario
-        const marcadorActual = L.marker([lat, lon], { icon: iconoUsuario }).addTo(mapa)
+        // Añadir marcador para la ubicación del usuario
+        marcadorActual = L.marker([lat, lon], { icon: iconoUsuario }).addTo(mapa)
             .bindPopup('Mi Ubicación')
             .openPopup();
+    } else {
+        // Actualizar la posición del marcador del usuario
+        marcadorActual.setLatLng([lat, lon]);
+        mapa.setView([lat, lon]);
+    }
 
-        // Cargar datos PK y calcular el más cercano
-        fetch("./PKCoordenas.json")
-            .then(response => response.json())
-            .then(data => {
-                const puntosCercanos = calcularPKMasCercano(lat, lon, data);
-                const pkMasCercano = puntosCercanos[0]; // Obtener solo el más cercano
+    // Cargar datos PK y calcular el más cercano
+    fetch("./PKCoordenas.json")
+        .then(response => response.json())
+        .then(data => {
+            const puntosCercanos = calcularPKMasCercano(lat, lon, data);
+            const pkMasCercano = puntosCercanos[0]; // Obtener solo el más cercano
 
-                // Mostrar en la tarjeta
-                mostrarPKMasCercano(pkMasCercano);
+            // Mostrar en la tarjeta
+            mostrarPKMasCercano(pkMasCercano);
 
-                // Añadir marcador para el PK más cercano en el mapa
-                const marcadorPK = L.marker([pkMasCercano.latitud, pkMasCercano.longitud]).addTo(mapa)
+            // Añadir o actualizar el marcador para el PK más cercano
+            if (!marcadorPK) {
+                marcadorPK = L.marker([pkMasCercano.latitud, pkMasCercano.longitud]).addTo(mapa)
                     .bindPopup('PK más cercano')
                     .openPopup();
-            });
-    });
-}
+            } else {
+                marcadorPK.setLatLng([pkMasCercano.latitud, pkMasCercano.longitud]);
+            }
+        })
+        .catch(error => console.error('Error cargando los datos de PK:', error));
+});
 
 // Función para calcular el PK más cercano
 function calcularPKMasCercano(lat, lon, data) {
@@ -104,10 +111,3 @@ function mostrarPKMasCercano(pk) {
     pkElement.textContent = pkFormateado;
     distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`;
 }
-
-// Inicializamos la ubicación al cargar la página
-obtenerUbicacion();
-
-// Función para actualizar la ubicación y el PK más cercano al hacer clic en el botón
-document.getElementById('actualizarUbicacion').addEventListener('click', obtenerUbicacion);
-
