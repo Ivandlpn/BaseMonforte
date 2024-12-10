@@ -1,129 +1,57 @@
-/* Estilo general para la página */
-body {
-  font-family: Arial, sans-serif;
+/* Estilo general para que todo encaje en una sola pantalla */
+html, body {
   margin: 0;
   padding: 0;
-  background-color: #f4f4f9;
+  height: 100%;
+  overflow: hidden; /* Deshabilitar el scroll */
+  font-family: Arial, sans-serif;
+}
+
+/* Contenedor principal con diseño de flexbox */
+.contenedor {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100%; /* Ocupa toda la pantalla */
 }
 
 /* Encabezado */
 header {
   background-color: #003f5c;
   color: white;
-  padding: 10px 15px;
   text-align: center;
+  padding: 10px;
+  flex: 0 0 auto; /* Altura fija */
 }
 
 header h1 {
   margin: 0;
   font-size: 1.8em;
-  font-family: 'Poppins', sans-serif;
 }
 
 header p {
   margin: 5px 0 0;
   font-size: 1em;
-  font-family: 'Poppins', sans-serif;
   color: #cce4f7;
 }
 
-/* Mapa */
-@media screen and (max-width: 480px) {
-  #map {
-    height: 130px; /* Mapa más pequeño en móviles */
-  }
+/* Contenedor del mapa */
+#map-container {
+  flex: 1 1 auto; /* Toma todo el espacio disponible */
+  position: relative;
 }
 
-/* Estilo para la tarjeta del PK más cercano */
-#calculoPK {
-  text-align: center;
-  padding: 20px 0;
-  margin: 0;
+#map {
+  height: 100%; /* Ocupa todo el espacio disponible del contenedor */
+  width: 100%;
+  position: relative;
 }
 
-#calculoPK .tarjeta {
-  display: inline-block;
-  background-color: #ffffff;
-  border: 2px solid #003f5c;
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  max-width: 400px;
-}
-
-#calculoPK .tarjeta h2 {
-  margin: 0;
-  font-size: 1.8em;
-  color: #003f5c;
-}
-
-#calculoPK .tarjeta p {
-  margin: 10px 0 0;
-  font-size: 1.5em;
-  color: #007aff;
-}
-
-/* Pie de página */
-footer {
-  background-color: #ffffff;
-  padding: 10px 0;
-  text-align: center;
-  margin-top: auto;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-}
-
-footer img {
-  max-width: 80px;
-  height: auto;
-}
-
-/* Ajustes para móviles */
-@media screen and (max-width: 768px) {
-  header h1 {
-    font-size: 1.5em;
-  }
-
-  header p {
-    font-size: 0.9em;
-  }
-
-  footer img {
-    max-width: 60px;
-  }
-
-  #calculoPK .tarjeta h2 {
-    font-size: 1.6em;
-  }
-
-  #calculoPK .tarjeta p {
-    font-size: 1.2em;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  header {
-    padding: 8px 10px;
-  }
-
-  footer img {
-    max-width: 50px;
-  }
-
-  #calculoPK .tarjeta {
-    padding: 15px;
-  }
-}
-
-/* Estilo del botón de "Actualizar ubicación" */
+/* Botón de "Actualizar ubicación" */
 #actualizarUbicacion {
   position: absolute;
   bottom: 10px;
   right: 10px;
-  z-index: 1000; /* Asegura que esté encima del mapa */
+  z-index: 1000;
   background-color: #007aff;
   color: white;
   border: none;
@@ -135,4 +63,50 @@ footer img {
 
 #actualizarUbicacion:hover {
   background-color: #005f99;
+}
+
+/* Tarjeta del PK más cercano */
+#calculoPK {
+  text-align: center;
+  padding: 10px;
+  background-color: #ffffff;
+  flex: 0 0 auto; /* Altura fija */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#calculoPK .tarjeta {
+  display: inline-block;
+  background-color: #ffffff;
+  border: 2px solid #003f5c;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 400px;
+}
+
+#calculoPK .tarjeta h2 {
+  margin: 0;
+  font-size: 1.4em;
+  color: #003f5c;
+}
+
+#calculoPK .tarjeta p {
+  margin: 5px 0 0;
+  font-size: 1.2em;
+  color: #007aff;
+}
+
+/* Pie de página */
+footer {
+  background-color: #ffffff;
+  padding: 10px 0;
+  text-align: center;
+  flex: 0 0 auto; /* Altura fija */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+footer img {
+  max-width: 80px;
+  height: auto;
 }
