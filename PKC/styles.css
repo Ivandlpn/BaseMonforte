@@ -33,7 +33,7 @@ header p {
 /* Mapa */
 #map {
   flex-grow: 1;
-  height: 200px; /* Altura normal para pantallas grandes */
+  height: 150px; /* Altura normal para pantallas grandes */
 }
 
 /* Media query para pantallas móviles */
