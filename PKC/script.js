@@ -11,7 +11,7 @@ navigator.geolocation.getCurrentPosition((position) => {
 
     // Capa de satélite de Esri (sin necesidad de API Key)
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '© Esri, Maxar, GeoIQ, USGS, FAO, NPS, NRCAN, GeoBase, NOAA, and contributors'
+        attribution: ''
     }).addTo(mapa);
 
     // Crear un icono personalizado para la ubicación del usuario
