@@ -33,7 +33,7 @@ navigator.geolocation.watchPosition((position) => {
 function inicializarMapa(lat, lon) {
     mapa = L.map('map', {
         center: [lat, lon],
-        zoom: 13,
+        zoom: 18,
         maxZoom: 19
     });
 
