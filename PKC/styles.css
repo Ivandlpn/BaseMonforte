@@ -13,82 +13,106 @@ body {
 header {
   background-color: #003f5c;
   color: white;
-  padding: 10px 15px; /* Reducimos espacio superior e inferior */
+  padding: 10px 15px;
   text-align: center;
 }
 
 header h1 {
   margin: 0;
-  font-size: 1.8em; /* Tamaño del título */
+  font-size: 1.8em;
   font-family: 'Poppins', sans-serif;
 }
 
 header p {
-  margin: 5px 0 0; /* Reducimos espacio entre título y subtítulo */
-  font-size: 1em; /* Tamaño del subtítulo */
+  margin: 5px 0 0;
+  font-size: 1em;
   font-family: 'Poppins', sans-serif;
   color: #cce4f7;
 }
 
 /* Mapa */
 #map {
-  flex-grow: 1; /* Ocupa el espacio restante */
-  height: 300px; /* Reducimos altura del mapa */
+  flex-grow: 1;
+  height: 300px;
 }
 
-/* PK más cercano */
+/* Estilo para la tarjeta del PK más cercano */
 #calculoPK {
   text-align: center;
-  padding: 10px 0;
+  padding: 20px 0;
   margin: 0;
 }
 
-#calculoPK ul {
-  list-style-type: none;
-  padding: 0;
+#calculoPK .tarjeta {
+  display: inline-block;
+  background-color: #ffffff;
+  border: 2px solid #003f5c;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 400px;
 }
 
-#calculoPK li {
-  font-size: 1.5em; /* Destacamos el tamaño del texto */
-  color: #003f5c; /* Azul corporativo */
-  margin: 5px 0; /* Reducimos espacio entre elementos */
+#calculoPK .tarjeta h2 {
+  margin: 0;
+  font-size: 1.8em;
+  color: #003f5c;
+}
+
+#calculoPK .tarjeta p {
+  margin: 10px 0 0;
+  font-size: 1.5em;
+  color: #007aff;
 }
 
 /* Pie de página */
 footer {
-  background-color: #ffffff; /* Fondo blanco brillante */
+  background-color: #ffffff;
   padding: 10px 0;
   text-align: center;
-  margin-top: auto; /* Mantiene el pie al fondo */
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  margin-top: auto;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
 footer img {
-  max-width: 80px; /* Ajustamos el tamaño del logo */
-  height: auto; /* Mantiene las proporciones */
+  max-width: 80px;
+  height: auto;
 }
 
-/* Media queries para pantallas móviles */
+/* Ajustes para móviles */
 @media screen and (max-width: 768px) {
   header h1 {
-    font-size: 1.5em; /* Reducimos un poco el tamaño del título */
+    font-size: 1.5em;
   }
 
   header p {
-    font-size: 0.9em; /* Ajustamos el subtítulo */
+    font-size: 0.9em;
   }
 
   footer img {
-    max-width: 60px; /* Logo más pequeño en móviles */
+    max-width: 60px;
+  }
+
+  #calculoPK .tarjeta h2 {
+    font-size: 1.6em;
+  }
+
+  #calculoPK .tarjeta p {
+    font-size: 1.2em;
   }
 }
 
 @media screen and (max-width: 480px) {
   header {
-    padding: 8px 10px; /* Reducimos espacio en móviles pequeños */
+    padding: 8px 10px;
   }
 
   footer img {
-    max-width: 50px; /* Ajustamos aún más el tamaño del logo */
+    max-width: 50px;
+  }
+
+  #calculoPK .tarjeta {
+    padding: 15px;
   }
 }
