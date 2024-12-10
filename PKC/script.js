@@ -1,7 +1,7 @@
 // Inicializamos el mapa cuando se carga la página
 let mapa = L.map('map', {
     center: [40.3000, -0.5617],  // Coordenadas iniciales (puedes ajustarlas a las que quieras)
-    zoom: 25,  // Aumentamos el zoom inicial para acercarnos más al PK
+    zoom: 19,  // Aumentamos el zoom inicial para acercarnos más al PK
     maxZoom: 19,
     attributionControl: false // Eliminar la atribución
 });
