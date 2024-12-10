@@ -33,13 +33,13 @@ header p {
 /* Mapa */
 #map {
   flex-grow: 1;
-  height: 150px; /* Altura normal para pantallas grandes */
+  height: 100px; /* Altura normal para pantallas grandes */
 }
 
 /* Media query para pantallas móviles */
 @media screen and (max-width: 768px) {
   #map {
-    height: 150px; /* Reducimos la altura del mapa en pantallas más pequeñas */
+    height: 100px; /* Reducimos la altura del mapa en pantallas más pequeñas */
   }
 }
 
