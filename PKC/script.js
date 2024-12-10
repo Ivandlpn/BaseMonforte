@@ -1,8 +1,8 @@
 // Inicializamos el mapa cuando se carga la página
 let mapa = L.map('map', {
     center: [40.3000, -0.5617],  // Coordenadas iniciales
-    zoom: 19,  // Ajustamos el zoom inicial para acercar el mapa
-    maxZoom: 19,
+    zoom: 18,  // Ajustamos el zoom inicial para acercar el mapa
+    maxZoom: 19,  // Aseguramos que el zoom máximo sea 19
     attributionControl: false // Eliminar la atribución
 });
 
@@ -10,6 +10,7 @@ let mapa = L.map('map', {
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
     attribution: '' // Eliminamos la atribución aquí también
 }).addTo(mapa);
+
 
 // Crear un icono personalizado para la ubicación del usuario
 const iconoUsuario = L.icon({
