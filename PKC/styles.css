@@ -16,12 +16,12 @@ header {
 
 header h1 {
   margin: 0;
-  font-size: 24px;
+  font-size: 32px;
 }
 
 header p {
   font-size: 1em;
-  margin-top: 5px;
+  margin-top: 10px;
   font-family: 'Arial', sans-serif;
   color: #cce4f7;
 }
