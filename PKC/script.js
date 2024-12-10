@@ -125,3 +125,23 @@ function formatearPK(pk) {
         return pkStr; // Si no tiene 6 dígitos, se devuelve tal cual
     }
 }
+
+// Funcionalidad del botón "Actualizar ubicación"
+document.getElementById("actualizarUbicacion").addEventListener("click", () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        // Actualizar el mapa y la ubicación
+        actualizarPosicionUsuario(lat, lon);
+        
+        // Recargar el PK más cercano
+        fetch("./PKCoordenas.json")
+            .then(response => response.json())
+            .then(data => {
+                const pkMasCercano = calcularPKMasCercano(lat, lon, data)[0]; // Solo el más cercano
+                mostrarPKMasCercano(pkMasCercano);
+                actualizarPosicionPK(pkMasCercano);
+            });
+    });
+});
