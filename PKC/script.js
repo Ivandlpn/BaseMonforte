@@ -29,7 +29,7 @@ navigator.geolocation.watchPosition((position) => {
     timeout: 10000            // Tiempo de espera razonable
 });
 
-// Función para inicializar el mapa
+// Función para inicializar el mapa con la capa de satélite de ESRI
 function inicializarMapa(lat, lon) {
     mapa = L.map('map', {
         center: [lat, lon],
@@ -37,8 +37,9 @@ function inicializarMapa(lat, lon) {
         maxZoom: 19
     });
 
-    // Añadir capa de OpenStreetMap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // Añadir capa de satélite ESRI World Imagery (gratuito sin registro)
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '© ESRI, © OpenStreetMap contributors',
         maxZoom: 19
     }).addTo(mapa);
 
