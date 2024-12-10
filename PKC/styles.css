@@ -33,7 +33,7 @@ header p {
 /* Mapa */
 @media screen and (max-width: 480px) {
   #map {
-    height: 120px; /* Mapa más pequeño en móviles */
+    height: 130px; /* Mapa más pequeño en móviles */
   }
 }
 
