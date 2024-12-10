@@ -19,8 +19,8 @@ const iconoUsuario = L.icon({
     popupAnchor: [0, -30]
 });
 
-// Función para actualizar la ubicación y el PK más cercano
-document.getElementById('actualizarUbicacion').addEventListener('click', () => {
+// Función para obtener la ubicación del usuario y actualizar el mapa
+function obtenerUbicacion() {
     navigator.geolocation.getCurrentPosition((position) => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
@@ -49,7 +49,7 @@ document.getElementById('actualizarUbicacion').addEventListener('click', () => {
                     .openPopup();
             });
     });
-});
+}
 
 // Función para calcular el PK más cercano
 function calcularPKMasCercano(lat, lon, data) {
@@ -103,3 +103,9 @@ function mostrarPKMasCercano(pk) {
     pkElement.textContent = pkFormateado;
     distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`;
 }
+
+// Inicializamos la ubicación al cargar la página
+obtenerUbicacion();
+
+// Función para actualizar la ubicación y el PK más cercano al hacer clic en el botón
+document.getElementById('actualizarUbicacion').addEventListener('click', obtenerUbicacion);
