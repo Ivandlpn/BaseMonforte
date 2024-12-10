@@ -9,9 +9,9 @@ navigator.geolocation.getCurrentPosition((position) => {
         maxZoom: 19
     });
 
-    // Añadir capa de OpenStreetMap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19
+    // Capa de satélite de Esri (sin necesidad de API Key)
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '© Esri, Maxar, GeoIQ, USGS, FAO, NPS, NRCAN, GeoBase, NOAA, and contributors'
     }).addTo(mapa);
 
     // Crear un icono personalizado para la ubicación del usuario
