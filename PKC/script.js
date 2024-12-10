@@ -5,7 +5,7 @@ navigator.geolocation.getCurrentPosition((position) => {
     // Inicializar el mapa centrado en la ubicación del usuario
     const mapa = L.map('map', {
         center: [lat, lon],
-        zoom: 13,  // Ajusta el nivel de zoom si es necesario
+        zoom: 13,
         maxZoom: 19
     });
 
@@ -34,9 +34,9 @@ navigator.geolocation.getCurrentPosition((position) => {
             const puntosCercanos = calcularPKMasCercano(lat, lon, data);
             const pkMasCercano = puntosCercanos[0]; // Obtener solo el más cercano
 
-            // Mostrar en la lista solo el PK más cercano
+            // Mostrar en la tarjeta
             mostrarPKMasCercano(pkMasCercano);
-            
+
             // Añadir marcador para el PK más cercano en el mapa
             const marcadorPK = L.marker([pkMasCercano.latitud, pkMasCercano.longitud]).addTo(mapa)
                 .bindPopup('PK más cercano')
@@ -53,49 +53,30 @@ function calcularPKMasCercano(lat, lon, data) {
 
     // Ordenar los PKs por distancia más cercana y devolver el más cercano
     puntosCercanos.sort((a, b) => a.distancia - b.distancia);
-    return puntosCercanos.slice(0, 1); // Retornar solo el más cercano
+    return puntosCercanos.slice(0, 1);
 }
 
-// Función para calcular la distancia entre dos puntos geográficos en metros
+// Función para mostrar el PK más cercano en la tarjeta
+function mostrarPKMasCercano(pk) {
+    const pkElement = document.getElementById("pkCercano");
+    const distanciaElement = document.getElementById("distancia");
+
+    pkElement.textContent = pk.pk;
+    distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`;
+}
+
+// Función para calcular la distancia entre dos puntos
 function calcularDistancia(lat1, lon1, lat2, lon2) {
     const R = 6371000; // Radio de la Tierra en metros
-    const φ1 = lat1 * Math.PI / 180; // Latitud en radianes
-    const φ2 = lat2 * Math.PI / 180; // Latitud en radianes
-    const Δφ = (lat2 - lat1) * Math.PI / 180; // Diferencia de latitudes
-    const Δλ = (lon2 - lon1) * Math.PI / 180; // Diferencia de longitudes
+    const φ1 = lat1 * Math.PI / 180;
+    const φ2 = lat2 * Math.PI / 180;
+    const Δφ = (lat2 - lat1) * Math.PI / 180;
+    const Δλ = (lon2 - lon1) * Math.PI / 180;
 
-    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    const a = Math.sin(Δφ / 2) ** 2 +
               Math.cos(φ1) * Math.cos(φ2) *
-              Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+              Math.sin(Δλ / 2) ** 2;
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return R * c; // Distancia en metros
-}
-
-// Función para formatear el PK en formato XXX+XXX
-function formatearPK(pk) {
-    const pkStr = pk.toString();
-    if (pkStr.includes('+')) {
-        return pkStr; // Ya está en el formato correcto
-    }
-
-    // Si el PK no tiene el formato XXX+XXX, lo convertimos
-    const longitud = pkStr.length;
-    if (longitud >= 6) {
-        return pkStr.slice(0, 3) + '+' + pkStr.slice(3);
-    } else {
-        return pkStr; // No se puede formatear si el PK no es suficientemente largo
-    }
-}
-
-// Función para mostrar el PK más cercano en la lista
-function mostrarPKMasCercano(pk) {
-    const lista = document.getElementById("listaPKs");
-    lista.innerHTML = ''; // Limpiar lista anterior
-
-    // Crear un nuevo item en la lista con la información del PK
-    const item = document.createElement('li');
-    const pkFormateado = formatearPK(pk.pk);  // Aplicar el formato XXX+XXX
-    item.innerHTML = `PK más cercano: <strong>${pkFormateado}</strong><br>Distancia: <strong>${(pk.distancia).toFixed(2)} metros</strong>`;
-    lista.appendChild(item);
+    return R * c;
 }
