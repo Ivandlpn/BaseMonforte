@@ -2,7 +2,7 @@
 let mapa = L.map('map', {
     center: [40.3000, -0.5617],  // Coordenadas iniciales
     zoom: 17,  // Ajustamos el zoom inicial para acercar el mapa
-    maxZoom: 19,  // Aseguramos que el zoom máximo sea 19
+    maxZoom: 22,  // Aseguramos que el zoom máximo sea 19
     attributionControl: false // Eliminar la atribución
 });
 
