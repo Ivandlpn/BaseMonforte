@@ -31,10 +31,9 @@ header p {
 }
 
 /* Mapa */
-@media screen and (max-width: 480px) {
-  #map {
-    height: 130px; /* Mapa más pequeño en móviles */
-  }
+#map {
+  flex-grow: 1;
+  height: 300px;
 }
 
 /* Estilo para la tarjeta del PK más cercano */
