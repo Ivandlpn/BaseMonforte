@@ -36,7 +36,8 @@ header p {
 
 /* Contenedor del mapa */
 #map-container {
-  flex: 1 1 auto; /* Toma todo el espacio disponible */
+  flex: 1 1 auto; /* Toma espacio restante */
+  min-height: 50%; /* Mínimo 50% de la pantalla */
   position: relative;
 }
 
