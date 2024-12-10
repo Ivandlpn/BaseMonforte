@@ -1,7 +1,7 @@
 // Inicializamos el mapa cuando se carga la página
 let mapa = L.map('map', {
-    center: [40.3000, -0.5617],  // Coordenadas iniciales (puedes ajustarlas a las que quieras)
-    zoom: 19,  // Aumentamos el zoom inicial para acercarnos más al PK
+    center: [40.3000, -0.5617],  // Coordenadas iniciales
+    zoom: 19,  // Ajustamos el zoom inicial para acercar el mapa
     maxZoom: 19,
     attributionControl: false // Eliminar la atribución
 });
@@ -26,7 +26,7 @@ function obtenerUbicacion() {
         const lon = position.coords.longitude;
 
         // Actualizamos el centro del mapa a la nueva ubicación
-        mapa.setView([lat, lon], 15);  // Usamos el zoom 15 para acercarnos más
+        mapa.setView([lat, lon], 19);  // Usamos el zoom 19 para acercarnos más
 
         // Añadimos el marcador de la ubicación del usuario
         const marcadorActual = L.marker([lat, lon], { icon: iconoUsuario }).addTo(mapa)
