@@ -33,7 +33,7 @@ header p {
 /* Mapa */
 #map {
   flex-grow: 1;
-  height: 150px;
+  height: 300px;
 }
 
 /* Estilo para la tarjeta del PK más cercano */
@@ -64,6 +64,30 @@ header p {
   margin: 10px 0 0;
   font-size: 1.5em;
   color: #007aff;
+}
+
+/* Estilo para el botón de actualización */
+#actualizarUbicacion {
+  background-color: #003f5c; /* Azul */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+  position: fixed;
+  bottom: 20px; /* Ubicación al fondo */
+  right: 20px; /* Ubicación a la derecha */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+#actualizarUbicacion:hover {
+  background-color: #005b7f; /* Color más oscuro al pasar el ratón */
+}
+
+#actualizarUbicacion:active {
+  background-color: #003f5c; /* Color al hacer clic */
 }
 
 /* Pie de página */
@@ -101,6 +125,12 @@ footer img {
   #calculoPK .tarjeta p {
     font-size: 1.2em;
   }
+
+  #actualizarUbicacion {
+    font-size: 0.9em;
+    bottom: 15px;
+    right: 15px;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -114,5 +144,10 @@ footer img {
 
   #calculoPK .tarjeta {
     padding: 15px;
+  }
+
+  #actualizarUbicacion {
+    bottom: 10px;
+    right: 10px;
   }
 }
