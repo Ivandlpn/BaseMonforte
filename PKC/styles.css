@@ -33,7 +33,7 @@ header p {
 /* Mapa */
 #map {
   flex-grow: 1;
-  height: 200px;
+  height: 150px;
 }
 
 /* Estilo para la tarjeta del PK más cercano */
