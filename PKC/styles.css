@@ -13,19 +13,19 @@ body {
 header {
   background-color: #003f5c;
   color: white;
-  padding: 10px 15px; /* Reducimos el espacio superior e inferior */
+  padding: 10px 15px; /* Reducimos espacio superior e inferior */
   text-align: center;
 }
 
 header h1 {
   margin: 0;
-  font-size: 1.5em; /* Ajustamos el tamaño del texto */
+  font-size: 1.8em; /* Tamaño del título */
   font-family: 'Poppins', sans-serif;
 }
 
 header p {
-  margin: 5px 0 0; /* Reducimos el espacio entre el título y el subtítulo */
-  font-size: 0.9em; /* Ajustamos el tamaño del subtítulo */
+  margin: 5px 0 0; /* Reducimos espacio entre título y subtítulo */
+  font-size: 1em; /* Tamaño del subtítulo */
   font-family: 'Poppins', sans-serif;
   color: #cce4f7;
 }
@@ -33,7 +33,25 @@ header p {
 /* Mapa */
 #map {
   flex-grow: 1; /* Ocupa el espacio restante */
-  max-height: 400px; /* Ajustamos la altura máxima del mapa */
+  height: 300px; /* Reducimos altura del mapa */
+}
+
+/* PK más cercano */
+#calculoPK {
+  text-align: center;
+  padding: 10px 0;
+  margin: 0;
+}
+
+#calculoPK ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#calculoPK li {
+  font-size: 1.5em; /* Destacamos el tamaño del texto */
+  color: #003f5c; /* Azul corporativo */
+  margin: 5px 0; /* Reducimos espacio entre elementos */
 }
 
 /* Pie de página */
@@ -53,11 +71,11 @@ footer img {
 /* Media queries para pantallas móviles */
 @media screen and (max-width: 768px) {
   header h1 {
-    font-size: 1.3em; /* Reducimos un poco el tamaño del título */
+    font-size: 1.5em; /* Reducimos un poco el tamaño del título */
   }
 
   header p {
-    font-size: 0.8em; /* Ajustamos el subtítulo para pantallas más pequeñas */
+    font-size: 0.9em; /* Ajustamos el subtítulo */
   }
 
   footer img {
@@ -67,7 +85,7 @@ footer img {
 
 @media screen and (max-width: 480px) {
   header {
-    padding: 8px 10px; /* Reducimos aún más el espacio en móviles pequeños */
+    padding: 8px 10px; /* Reducimos espacio en móviles pequeños */
   }
 
   footer img {
