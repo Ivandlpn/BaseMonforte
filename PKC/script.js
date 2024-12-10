@@ -56,15 +56,6 @@ function calcularPKMasCercano(lat, lon, data) {
     return puntosCercanos.slice(0, 1);
 }
 
-// Función para mostrar el PK más cercano en la tarjeta
-function mostrarPKMasCercano(pk) {
-    const pkElement = document.getElementById("pkCercano");
-    const distanciaElement = document.getElementById("distancia");
-
-    pkElement.textContent = pk.pk;
-    distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`;
-}
-
 // Función para calcular la distancia entre dos puntos
 function calcularDistancia(lat1, lon1, lat2, lon2) {
     const R = 6371000; // Radio de la Tierra en metros
@@ -79,4 +70,29 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     return R * c;
+}
+
+// Función para formatear el PK en formato XXX+XXX
+function formatearPK(pk) {
+    const pkStr = pk.toString();
+    if (pkStr.length > 6) {
+        return pkStr.slice(0, 3) + '+' + pkStr.slice(3, 6); // Aseguramos un formato consistente
+    } else if (pkStr.length === 6) {
+        return pkStr.slice(0, 3) + '+' + pkStr.slice(3); // Formato normal
+    } else {
+        return pkStr; // Si no tiene 6 dígitos, se devuelve tal cual
+    }
+}
+
+// Función para mostrar el PK más cercano en la tarjeta
+function mostrarPKMasCercano(pk) {
+    const pkElement = document.getElementById("pkCercano");
+    const distanciaElement = document.getElementById("distancia");
+
+    // Formatear el PK al formato XXX+XXX
+    const pkFormateado = formatearPK(pk.pk);
+
+    // Actualizamos los valores dinámicamente
+    pkElement.textContent = pkFormateado;
+    distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`;
 }
