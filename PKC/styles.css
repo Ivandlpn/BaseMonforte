@@ -4,68 +4,73 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f4f4f9;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-/* Estilo para la barra superior (header) */
+/* Encabezado */
 header {
-  background-color: #1d4289;
+  background-color: #003f5c;
   color: white;
-  padding: 12px;
+  padding: 10px 15px; /* Reducimos el espacio arriba y abajo */
   text-align: center;
 }
 
 header h1 {
   margin: 0;
-  font-size: 32px;
+  font-size: 1.5em; /* Ajustamos el tamaño del texto */
+  font-family: 'Poppins', sans-serif;
 }
 
 header p {
-  font-size: 1em;
-  margin-top: 10px;
-  font-family: 'Arial', sans-serif;
+  margin: 5px 0 0; /* Reducimos el espacio entre el título y el subtítulo */
+  font-size: 0.9em; /* Ajustamos el tamaño del subtítulo */
+  font-family: 'Poppins', sans-serif;
   color: #cce4f7;
 }
 
-
-/* Estilo para el mapa */
+/* Mapa */
 #map {
-  margin-top: 20px;
+  flex-grow: 1; /* Ocupa el espacio restante */
+  max-height: 400px; /* Ajustamos la altura máxima del mapa */
 }
 
-/* Lista de PKs cercanos */
-ul {
-  list-style-type: none;
-  padding: 0;
+/* Pie de página */
+footer {
+  background-color: #ffffff; /* Fondo blanco brillante */
+  padding: 10px 0;
+  text-align: center;
+  margin-top: auto; /* Mantiene el pie al fondo */
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
-ul li {
-  background-color: #ffffff;
-  margin: 5px 0;
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+footer img {
+  max-width: 80px; /* Ajustamos el tamaño del logo */
+  height: auto; /* Mantiene las proporciones */
 }
 
-ul li:hover {
-  background-color: #f0f0f0;
+/* Media queries para pantallas móviles */
+@media screen and (max-width: 768px) {
+  header h1 {
+    font-size: 1.3em; /* Reducimos un poco el tamaño del título */
+  }
+
+  header p {
+    font-size: 0.8em; /* Ajustamos el subtítulo para pantallas más pequeñas */
+  }
+
+  footer img {
+    max-width: 60px; /* Logo más pequeño en móviles */
+  }
 }
 
-/* Estilo para la lista de PKs */
-#listaPKs {
-  font-size: 1.2em;
-  margin-top: 20px;
-}
+@media screen and (max-width: 480px) {
+  header {
+    padding: 8px 10px; /* Reducimos aún más el espacio en móviles pequeños */
+  }
 
-/* Estilo para los items de la lista */
-#listaPKs li {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
-}
-
-/* Resaltar la distancia con color */
-#listaPKs li strong {
-  color: green;
+  footer img {
+    max-width: 50px; /* Ajustamos aún más el tamaño del logo */
+  }
 }
