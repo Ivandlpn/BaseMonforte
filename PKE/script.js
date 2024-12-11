@@ -81,7 +81,7 @@ function calcularPKMasCercano(lat, lon, data) {
         const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
         return {
             pk: pk.PK,
-            linea: pk.Linea,
+            linea: pk.Línea,
             latitud: pk.Latitud,
             longitud: pk.Longitud,
             distancia: distancia
@@ -111,7 +111,7 @@ function mostrarPKMasCercano(pk) {
     const pkElement = document.getElementById("pkCercano");
     const distanciaElement = document.getElementById("distancia");
 
-    const pkFormateado = `${formatearPK(pk.pk)} - L${pk.linea}`;
+    const pkFormateado = `${formatearPK(pk.pk)} - Linea${pk.linea}`;
     pkElement.textContent = pkFormateado;
     distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`;
 }
