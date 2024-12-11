@@ -81,7 +81,7 @@ function calcularPKMasCercano(lat, lon, data) {
         const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
         return {
             pk: pk.PK,
-            linea: pk.Línea,
+            linea: pk.Linea,
             latitud: pk.Latitud,
             longitud: pk.Longitud,
             distancia: distancia
