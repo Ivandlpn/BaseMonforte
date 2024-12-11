@@ -106,7 +106,7 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
     return R * c;
 }
 
-// Mostrar el PK más cercano en el HTML (ahora incluye la línea en el formato correcto)
+// Mostrar el PK más cercano en el HTML (ahora incluye la línea)
 function mostrarPKMasCercano(pk) {
     const pkElement = document.getElementById("pkCercano");
     const distanciaElement = document.getElementById("distancia");
@@ -117,13 +117,15 @@ function mostrarPKMasCercano(pk) {
     distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`;
 }
 
-// Actualizar la posición del marcador del PK
+// Actualizar la posición del marcador del PK más cercano
 function actualizarPosicionPK(pk) {
     if (!marcadorPK) {
+        // Si no existe el marcador, lo creamos
         marcadorPK = L.marker([pk.latitud, pk.longitud]).addTo(mapa)
             .bindPopup('PK más cercano')
             .openPopup();
     } else {
+        // Si ya existe el marcador, solo actualizamos su posición
         marcadorPK.setLatLng([pk.latitud, pk.longitud]);
     }
 }
