@@ -1,48 +1,30 @@
 let mapa, marcadorActual, marcadorPK, iconoUsuario;
 
-// Función para cargar múltiples archivos JSON
-toggleLoading(true);
-fetch('./')
-    .then(response => response.text())
-    .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const archivosJSON = Array.from(doc.querySelectorAll('a'))
-            .map(a => a.href)
-            .filter(href => href.endsWith('.json'));
+// Rastrear la posición continuamente con watchPosition
+navigator.geolocation.watchPosition((position) => {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
 
-        Promise.all(archivosJSON.map(url => fetch(url).then(res => res.json())))
-            .then(dataSets => {
-                const datosCombinados = dataSets.flat();
-                inicializarGeolocalizacion(datosCombinados);
-            })
-            .catch(error => console.error('Error al cargar datos:', error))
-            .finally(() => toggleLoading(false));
-    });
+    if (!mapa) {
+        inicializarMapa(lat, lon);
+    }
 
-function inicializarGeolocalizacion(data) {
-    navigator.geolocation.watchPosition(
-        position => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
+    actualizarPosicionUsuario(lat, lon);
 
-            if (!mapa) {
-                inicializarMapa(lat, lon);
-            }
-
-            actualizarPosicionUsuario(lat, lon);
+    fetch("./PKCoordenas.json")
+        .then(response => response.json())
+        .then(data => {
             const pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
             mostrarPKMasCercano(pkMasCercano);
             actualizarPosicionPK(pkMasCercano);
-        },
-        error => console.error('Error al obtener ubicación:', error),
-        {
-            enableHighAccuracy: true,
-            maximumAge: 0,
-            timeout: 10000
-        }
-    );
-}
+        })
+        .catch(error => console.error('Error al cargar los datos de PK:', error));
+}, 
+(error) => console.error('Error al obtener ubicación:', error), {
+    enableHighAccuracy: true,
+    maximumAge: 0,
+    timeout: 10000
+});
 
 function inicializarMapa(lat, lon) {
     mapa = L.map('map', {
@@ -51,13 +33,10 @@ function inicializarMapa(lat, lon) {
         maxZoom: 19
     });
 
-    L.tileLayer(
-        'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
-        {
-            attribution: '',
-            maxZoom: 19
-        }
-    ).addTo(mapa);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '',
+        maxZoom: 19
+    }).addTo(mapa);
 
     iconoUsuario = L.icon({
         iconUrl: 'https://cdn-icons-png.flaticon.com/512/1783/1783356.png',
@@ -77,15 +56,9 @@ function actualizarPosicionUsuario(lat, lon) {
 }
 
 function calcularPKMasCercano(lat, lon, data) {
-    const puntosCercanos = data.map(pk => {
+    let puntosCercanos = data.map(pk => {
         const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
-        return {
-            pk: pk.PK,
-            linea: pk.Línea,
-            latitud: pk.Latitud,
-            longitud: pk.Longitud,
-            distancia: distancia
-        };
+        return { pk: pk.PK, latitud: pk.Latitud, longitud: pk.Longitud, distancia: distancia };
     });
 
     puntosCercanos.sort((a, b) => a.distancia - b.distancia);
@@ -110,8 +83,7 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
 function mostrarPKMasCercano(pk) {
     const pkElement = document.getElementById("pkCercano");
     const distanciaElement = document.getElementById("distancia");
-    const pkFormateado = formatearPK(pk.pk) + ' - L' + pk.linea;
-
+    const pkFormateado = formatearPK(pk.pk);
     pkElement.textContent = pkFormateado;
     distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`;
 }
@@ -137,6 +109,19 @@ function formatearPK(pk) {
     }
 }
 
-function toggleLoading(show) {
-    document.body.classList.toggle('loading', show);
-}
+document.getElementById("actualizarUbicacion").addEventListener("click", () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        actualizarPosicionUsuario(lat, lon);
+
+        fetch("./PKCoordenas.json")
+            .then(response => response.json())
+            .then(data => {
+                const pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
+                mostrarPKMasCercano(pkMasCercano);
+                actualizarPosicionPK(pkMasCercano);
+            });
+    });
+});
