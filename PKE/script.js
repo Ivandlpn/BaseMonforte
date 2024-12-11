@@ -1,37 +1,5 @@
 let mapa, marcadorActual, marcadorPK, iconoUsuario;
 
-// Archivos JSON
-const archivos = [
-    "ALB-ALI.json",
-    "BFM-MUR.json",
-    "CUE-GAB.json",
-    "GAB-ALB.json",
-    "GAB-VAL.json",
-    "MAD-CUE.json"
-];
-
-// Función para cargar todos los archivos JSON y combinar los datos
-function cargarDatosPK() {
-    const promesas = archivos.map(archivo => 
-        fetch(`./${archivo}`).then(response => response.json())
-    );
-
-    Promise.all(promesas)
-        .then(datos => {
-            // Combina todos los datos de los diferentes archivos
-            const datosCombinados = [].concat(...datos);
-            // Calcular el PK más cercano usando los datos combinados
-            const pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
-
-            // Verificar si los datos del PK más cercano son correctos
-            console.log("PK más cercano: ", pkMasCercano);
-
-            mostrarPKMasCercano(pkMasCercano);
-            actualizarPosicionPK(pkMasCercano);
-        })
-        .catch(error => console.error('Error al cargar los archivos JSON:', error));
-}
-
 // Rastrear la posición continuamente con watchPosition
 navigator.geolocation.watchPosition((position) => {
     const lat = position.coords.latitude;
@@ -43,8 +11,14 @@ navigator.geolocation.watchPosition((position) => {
 
     actualizarPosicionUsuario(lat, lon);
 
-    // Llamamos a la función para cargar todos los archivos JSON y buscar el PK más cercano
-    cargarDatosPK();
+    fetch("./PKCoordenas.json")
+        .then(response => response.json())
+        .then(data => {
+            const pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
+            mostrarPKMasCercano(pkMasCercano);
+            actualizarPosicionPK(pkMasCercano);
+        })
+        .catch(error => console.error('Error al cargar los datos de PK:', error));
 }, 
 (error) => console.error('Error al obtener ubicación:', error), {
     enableHighAccuracy: true,
@@ -52,7 +26,6 @@ navigator.geolocation.watchPosition((position) => {
     timeout: 10000
 });
 
-// Inicializar el mapa
 function inicializarMapa(lat, lon) {
     mapa = L.map('map', {
         center: [lat, lon],
@@ -77,26 +50,23 @@ function inicializarMapa(lat, lon) {
         .openPopup();
 }
 
-// Actualizar la ubicación del usuario en el mapa
 function actualizarPosicionUsuario(lat, lon) {
     marcadorActual.setLatLng([lat, lon]);
     mapa.setView([lat, lon]);
 }
 
-// Calcular el PK más cercano
 function calcularPKMasCercano(lat, lon, data) {
     let puntosCercanos = data.map(pk => {
         const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
-        return { pk: pk.PK, latitud: pk.Latitud, longitud: pk.Longitud, distancia: distancia, Linea: pk.Linea };
+        return { pk: pk.PK, latitud: pk.Latitud, longitud: pk.Longitud, distancia: distancia };
     });
 
     puntosCercanos.sort((a, b) => a.distancia - b.distancia);
     return puntosCercanos.slice(0, 1);
 }
 
-// Función para calcular distancia entre dos puntos geográficos
 function calcularDistancia(lat1, lon1, lat2, lon2) {
-    const R = 6371000; // Radio de la Tierra en metros
+    const R = 6371000;
     const φ1 = lat1 * Math.PI / 180;
     const φ2 = lat2 * Math.PI / 180;
     const Δφ = (lat2 - lat1) * Math.PI / 180;
@@ -110,35 +80,24 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
     return R * c;
 }
 
-// Mostrar el PK más cercano en el HTML (ahora incluye la línea)
 function mostrarPKMasCercano(pk) {
     const pkElement = document.getElementById("pkCercano");
     const distanciaElement = document.getElementById("distancia");
     const pkFormateado = formatearPK(pk.pk);
-    
-    // Aquí se incluye la línea en el formato solicitado: PK más cercano: 475+174 - LXX
-    pkElement.textContent = `${pkFormateado} - L${pk.Linea}`;
+    pkElement.textContent = pkFormateado;
     distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`;
 }
 
-// Actualizar la posición del marcador del PK más cercano
 function actualizarPosicionPK(pk) {
-    console.log("Actualizar marcador PK con latitud:", pk.latitud, "y longitud:", pk.longitud);
-
     if (!marcadorPK) {
-        // Si no existe el marcador, lo creamos
         marcadorPK = L.marker([pk.latitud, pk.longitud]).addTo(mapa)
             .bindPopup('PK más cercano')
             .openPopup();
-        console.log("Marcador creado para el PK más cercano.");
     } else {
-        // Si ya existe el marcador, solo actualizamos su posición
         marcadorPK.setLatLng([pk.latitud, pk.longitud]);
-        console.log("Posición del marcador del PK actualizado.");
     }
 }
 
-// Formatear el PK para mostrar en el formato correcto
 function formatearPK(pk) {
     const pkStr = pk.toString();
     if (pkStr.length > 6) {
@@ -150,13 +109,19 @@ function formatearPK(pk) {
     }
 }
 
-// Actualizar ubicación manualmente al hacer clic en el botón
 document.getElementById("actualizarUbicacion").addEventListener("click", () => {
     navigator.geolocation.getCurrentPosition((position) => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
 
         actualizarPosicionUsuario(lat, lon);
-        cargarDatosPK();
+
+        fetch("./PKCoordenas.json")
+            .then(response => response.json())
+            .then(data => {
+                const pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
+                mostrarPKMasCercano(pkMasCercano);
+                actualizarPosicionPK(pkMasCercano);
+            });
     });
 });
