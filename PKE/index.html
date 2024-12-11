@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi PK 📍</title>
 
+    <!-- Favicon -->
+    <link rel="icon" href="faviconmini.png?v=1" type="image/png">
+
+    <!-- Open Graph (Facebook y otras plataformas) -->
+    <meta property="og:title" content="Mi PK 📍" />
+    <meta property="og:description" content="Consulta el PK más cercano" />
+    <meta property="og:image" content="faviconmini.png" />
+    <meta property="og:url" content="https://ivandlpn.github.io/BaseMonforte/PKC/" />
+    <meta property="og:type" content="website" />
+
+        <!-- Facebook App ID (opcional) -->
+    <meta property="fb:app_id" content="tu_app_id_de_facebook" />
+
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="contenedor">
+        <header>
+            <img src="CabeceraMiPKmini.png" alt="Cabecera Mi PK">
+        </header>
+        <div id="map-container">
+            <div id="map">
+                <button id="actualizarUbicacion">Actualizar ubicación</button>
+            </div>
+        </div>
+        <div id="calculoPK">
+            <div class="tarjeta">
+                <h2>PK más cercano: <span id="pkCercano">471+500</span></h2>
+                <p>Distancia: <span id="distancia">1289.73 metros</span></p>
+            </div>
+        </div>
+        <footer>
+            <img src="Logo-Ineco.png" alt="Logo Ineco">
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
