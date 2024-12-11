@@ -111,6 +111,8 @@ function mostrarPKMasCercano(pk) {
     const pkElement = document.getElementById("pkCercano");
     const distanciaElement = document.getElementById("distancia");
     const pkFormateado = formatearPK(pk.pk);
+    
+    // Aquí se incluye la línea en el formato solicitado: PK más cercano: 475+174 - LXX
     pkElement.textContent = `${pkFormateado} - L${pk.Linea}`;
     distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`;
 }
