@@ -4,46 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi PK 📍 - Base de Mantenimiento Monforte del Cid</title>
-
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-
-    <!-- Incluir Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <!-- Estilos adicionales -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="contenedor">
-        <!-- Encabezado -->
         <header>
-            <h1>Mi PK 📍</h1>
-            <p>Base de Mantenimiento Monforte del Cid</p>
+            <img src="CabeceraMiPK.png" alt="Cabecera Mi PK">
         </header>
-
-        <!-- Mapa -->
         <div id="map-container">
             <div id="map">
                 <button id="actualizarUbicacion">Actualizar ubicación</button>
             </div>
         </div>
-
-        <!-- Tarjeta del PK más cercano -->
         <div id="calculoPK">
             <div class="tarjeta">
                 <h2>PK más cercano: <span id="pkCercano">471+500</span></h2>
                 <p>Distancia: <span id="distancia">1289.73 metros</span></p>
             </div>
         </div>
-
-        <!-- Pie de página -->
         <footer>
             <img src="Logo-Ineco.png" alt="Logo Ineco">
         </footer>
     </div>
-
-    <!-- Script -->
     <script src="script.js"></script>
 </body>
 </html>
