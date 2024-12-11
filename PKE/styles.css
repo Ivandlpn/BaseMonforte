@@ -16,15 +16,14 @@ header {
   text-align: center;
   padding: 0;
   flex: 0 0 auto;
-  height: 100px; /* Puedes ajustar esta altura según tus necesidades */
+  height: 100px;
 }
 
 header img {
   width: 100%;
-  height: 100%; /* La imagen ocupará toda la altura del header */
-  object-fit: cover; /* Mantendrá la proporción de la imagen */
+  height: 100%;
+  object-fit: cover;
 }
-
 
 #map-container {
   flex: 1 1 auto;
