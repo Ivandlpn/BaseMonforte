@@ -22,6 +22,10 @@ function cargarDatosPK() {
             const datosCombinados = [].concat(...datos);
             // Calcular el PK más cercano usando los datos combinados
             const pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
+
+            // Verificar si los datos del PK más cercano son correctos
+            console.log("PK más cercano: ", pkMasCercano);
+
             mostrarPKMasCercano(pkMasCercano);
             actualizarPosicionPK(pkMasCercano);
         })
@@ -119,14 +123,18 @@ function mostrarPKMasCercano(pk) {
 
 // Actualizar la posición del marcador del PK más cercano
 function actualizarPosicionPK(pk) {
+    console.log("Actualizar marcador PK con latitud:", pk.latitud, "y longitud:", pk.longitud);
+
     if (!marcadorPK) {
         // Si no existe el marcador, lo creamos
         marcadorPK = L.marker([pk.latitud, pk.longitud]).addTo(mapa)
             .bindPopup('PK más cercano')
             .openPopup();
+        console.log("Marcador creado para el PK más cercano.");
     } else {
         // Si ya existe el marcador, solo actualizamos su posición
         marcadorPK.setLatLng([pk.latitud, pk.longitud]);
+        console.log("Posición del marcador del PK actualizado.");
     }
 }
 
