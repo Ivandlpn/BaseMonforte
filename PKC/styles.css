@@ -1,53 +1,40 @@
-/* Estilo general para que todo encaje en una sola pantalla */
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden; /* Deshabilitar el scroll */
+  overflow: hidden;
   font-family: Arial, sans-serif;
 }
 
-/* Contenedor principal con diseño de flexbox */
 .contenedor {
   display: flex;
   flex-direction: column;
-  height: 100%; /* Ocupa toda la pantalla */
+  height: 100%;
 }
 
-/* Encabezado */
 header {
-  background-color: #003f5c;
-  color: white;
   text-align: center;
-  padding: 10px;
-  flex: 0 0 auto; /* Altura fija */
+  padding: 0;
+  flex: 0 0 auto;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 1.8em;
+header img {
+  width: 100%;
+  height: auto;
 }
 
-header p {
-  margin: 5px 0 0;
-  font-size: 1em;
-  color: #cce4f7;
-}
-
-/* Contenedor del mapa */
 #map-container {
-  flex: 1 1 auto; /* Toma espacio restante */
-  min-height: 50%; /* Mínimo 50% de la pantalla */
+  flex: 1 1 auto;
+  min-height: 50%;
   position: relative;
 }
 
 #map {
-  height: 100%; /* Ocupa todo el espacio disponible del contenedor */
+  height: 100%;
   width: 100%;
   position: relative;
 }
 
-/* Botón de "Actualizar ubicación" */
 #actualizarUbicacion {
   position: absolute;
   bottom: 10px;
@@ -66,12 +53,11 @@ header p {
   background-color: #005f99;
 }
 
-/* Tarjeta del PK más cercano */
 #calculoPK {
   text-align: center;
   padding: 10px;
   background-color: #ffffff;
-  flex: 0 0 auto; /* Altura fija */
+  flex: 0 0 auto;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -98,12 +84,11 @@ header p {
   color: #007aff;
 }
 
-/* Pie de página */
 footer {
   background-color: #ffffff;
   padding: 10px 0;
   text-align: center;
-  flex: 0 0 auto; /* Altura fija */
+  flex: 0 0 auto;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
