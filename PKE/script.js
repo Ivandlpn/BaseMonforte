@@ -106,7 +106,7 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
     return R * c;
 }
 
-// Mostrar el PK más cercano en el HTML (ahora incluye la línea)
+// Mostrar el PK más cercano en el HTML (ahora incluye la línea en el formato correcto)
 function mostrarPKMasCercano(pk) {
     const pkElement = document.getElementById("pkCercano");
     const distanciaElement = document.getElementById("distancia");
