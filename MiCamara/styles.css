@@ -89,10 +89,6 @@ footer img {
   margin-left: 10px;
 }
 
-img {
-  cursor: pointer;
-}
-
 @media screen and (max-width: 768px) {
   #map-container {
     min-height: 60%;
