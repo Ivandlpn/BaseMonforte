@@ -231,7 +231,7 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 `;
 
                 const botonGuardar = document.createElement("button");
-                botonGuardar.textContent = "Guardar";
+                botonGuardar.textContent = "💾 Guardar";
                 botonGuardar.style.cssText = estiloBoton;
                 contenedorBotones.appendChild(botonGuardar);
                 botonGuardar.addEventListener("click", () => {
@@ -266,7 +266,7 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 });
 
                 const botonVolver = document.createElement("button");
-                botonVolver.textContent = "Volver";
+                botonVolver.textContent = "↪️ Volver";
                 botonVolver.style.cssText = estiloBoton;
                 contenedorBotones.appendChild(botonVolver);
                 botonVolver.addEventListener("click", () => {
