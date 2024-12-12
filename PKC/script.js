@@ -30,11 +30,12 @@ function inicializarMapa(lat, lon) {
     mapa = L.map('map', {
         center: [lat, lon],
         zoom: 18,
-        maxZoom: 19
+        maxZoom: 19,
+        attributionControl: false // Desactiva la atribución de Leaflet
     });
 
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '',
+        attribution: '', // Vacía la atribución de la capa del mapa
         maxZoom: 19
     }).addTo(mapa);
 
