@@ -6,7 +6,6 @@ navigator.geolocation.watchPosition((position) => {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
 
-
     if (!mapa) {
         inicializarMapa(lat, lon);
     }
@@ -15,14 +14,14 @@ navigator.geolocation.watchPosition((position) => {
         actualizarPosicionUsuario(lat, lon);
     }
 
-fetch("./PKCoordenas.json")
-    .then(response => response.json())
-    .then(data => {
-        window.pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
-        mostrarPKMasCercano(window.pkMasCercano);
-        actualizarPosicionPK(window.pkMasCercano);
-    })
-    .catch(error => console.error('Error al cargar los datos de PK:', error));
+    fetch("./PKCoordenas.json")
+        .then(response => response.json())
+        .then(data => {
+            window.pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
+            mostrarPKMasCercano(window.pkMasCercano);
+            actualizarPosicionPK(window.pkMasCercano);
+        })
+        .catch(error => console.error('Error al cargar los datos de PK:', error));
 }, 
 (error) => console.error('Error al obtener ubicación:', error), {
     enableHighAccuracy: true,
@@ -150,139 +149,132 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
             video.style.objectFit = "cover";
             contenedor.appendChild(video);
 
-const botonFoto = document.createElement("button");
-botonFoto.textContent = "Hacer Foto";
-botonFoto.style.position = "absolute";
-botonFoto.style.bottom = "10px";
-botonFoto.style.left = "50%";
-botonFoto.style.transform = "translateX(-50%)";
-botonFoto.style.padding = "10px 20px";
-botonFoto.style.fontSize = "16px";
-botonFoto.style.color = "white";
-botonFoto.style.backgroundColor = "#007aff";
-botonFoto.style.border = "none";
-botonFoto.style.borderRadius = "5px";
-botonFoto.style.cursor = "pointer";
-botonFoto.style.zIndex = "1001";
-contenedor.appendChild(botonFoto);
+            const botonFoto = document.createElement("button");
+            botonFoto.textContent = "Hacer Foto";
+            botonFoto.style.position = "absolute";
+            botonFoto.style.bottom = "10px";
+            botonFoto.style.left = "50%";
+            botonFoto.style.transform = "translateX(-50%)";
+            botonFoto.style.padding = "10px 20px";
+            botonFoto.style.fontSize = "16px";
+            botonFoto.style.color = "white";
+            botonFoto.style.backgroundColor = "#007aff";
+            botonFoto.style.border = "none";
+            botonFoto.style.borderRadius = "5px";
+            botonFoto.style.cursor = "pointer";
+            botonFoto.style.zIndex = "1001";
+            contenedor.appendChild(botonFoto);
 
-botonFoto.addEventListener("click", () => {
-    // Crear un lienzo para capturar la imagen
-    const canvas = document.createElement("canvas");
-    canvas.width = video.videoWidth; // Ancho del video
-    canvas.height = video.videoHeight; // Alto del video
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height); // Dibuja el frame del video en el lienzo
+            botonFoto.addEventListener("click", () => {
+                const canvas = document.createElement("canvas");
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    // Mostrar la imagen capturada en pantalla
-    const imagenCapturada = document.createElement("img");
-    imagenCapturada.src = canvas.toDataURL("image/png"); // Generar imagen en base64
-    imagenCapturada.style.position = "absolute";
-    imagenCapturada.style.top = "0";
-    imagenCapturada.style.left = "0";
-    imagenCapturada.style.width = "100%";
-    imagenCapturada.style.height = "100%";
-    imagenCapturada.style.objectFit = "cover";
-    imagenCapturada.style.zIndex = "1002"; // Asegura que esté sobre el video
-    document.body.appendChild(imagenCapturada);
+                const textoPK = `PK ${formatearPK(window.pkMasCercano.pk)}`;
+                const padding = 20;
+                const fontSize = 24;
+                const tarjetaWidth = ctx.measureText(textoPK).width + padding * 2;
+                const tarjetaHeight = fontSize + padding * 2;
 
-    // Opcional: Ocultar el video después de capturar la foto
-    video.style.display = "none";
+                ctx.fillStyle = "#007aff";
+                ctx.fillRect(
+                    (canvas.width - tarjetaWidth) / 2,
+                    canvas.height - tarjetaHeight - 20,
+                    tarjetaWidth,
+                    tarjetaHeight
+                );
 
-// Crear un contenedor para los botones
-const contenedorBotones = document.createElement("div");
-contenedorBotones.style.position = "absolute";
-contenedorBotones.style.top = "10px";
-contenedorBotones.style.left = "50%";
-contenedorBotones.style.transform = "translateX(-50%)";
-contenedorBotones.style.display = "flex";
-contenedorBotones.style.gap = "10px";
-contenedorBotones.style.zIndex = "1003"; // Asegura que esté sobre la imagen
-document.body.appendChild(contenedorBotones);
+                ctx.fillStyle = "white";
+                ctx.font = `${fontSize}px Arial`;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(
+                    textoPK,
+                    canvas.width / 2,
+                    canvas.height - tarjetaHeight / 2 - 20
+                );
 
-// Estilo base para los botones
-const estiloBoton = `
-    padding: 8px 15px;
-    font-size: 14px;
-    color: white;
-    background-color: #007aff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-`;
+                const imagenCapturada = document.createElement("img");
+                imagenCapturada.src = canvas.toDataURL("image/png");
+                imagenCapturada.style.position = "absolute";
+                imagenCapturada.style.top = "0";
+                imagenCapturada.style.left = "0";
+                imagenCapturada.style.width = "100%";
+                imagenCapturada.style.height = "100%";
+                imagenCapturada.style.objectFit = "cover";
+                imagenCapturada.style.zIndex = "1002";
+                document.body.appendChild(imagenCapturada);
 
-// Botón "Guardar"
-const botonGuardar = document.createElement("button");
-botonGuardar.textContent = "Guardar";
-botonGuardar.style.cssText = estiloBoton;
-contenedorBotones.appendChild(botonGuardar);
-botonGuardar.addEventListener("click", () => {
-    const link = document.createElement("a");
-    link.href = canvas.toDataURL("image/png"); // Usar el canvas para guardar la imagen
-    link.download = "foto_con_pk.png";
-    link.click();
-});
+                video.style.display = "none";
 
-// Botón "Compartir"
-const botonCompartir = document.createElement("button");
-botonCompartir.textContent = "Compartir";
-botonCompartir.style.cssText = estiloBoton;
-contenedorBotones.appendChild(botonCompartir);
-botonCompartir.addEventListener("click", async () => {
-    try {
-        const dataUrl = canvas.toDataURL("image/png");
-        const blob = await (await fetch(dataUrl)).blob();
-        const file = new File([blob], "foto_con_pk.png", { type: "image/png" });
+                const contenedorBotones = document.createElement("div");
+                contenedorBotones.style.position = "absolute";
+                contenedorBotones.style.top = "10px";
+                contenedorBotones.style.left = "50%";
+                contenedorBotones.style.transform = "translateX(-50%)";
+                contenedorBotones.style.display = "flex";
+                contenedorBotones.style.gap = "10px";
+                contenedorBotones.style.zIndex = "1003";
+                document.body.appendChild(contenedorBotones);
 
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            await navigator.share({
-                files: [file],
-                title: "Foto con PK",
-                text: "Aquí está la foto con la información del PK."
+                const estiloBoton = `
+                    padding: 8px 15px;
+                    font-size: 14px;
+                    color: white;
+                    background-color: #007aff;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                `;
+
+                const botonGuardar = document.createElement("button");
+                botonGuardar.textContent = "Guardar";
+                botonGuardar.style.cssText = estiloBoton;
+                contenedorBotones.appendChild(botonGuardar);
+                botonGuardar.addEventListener("click", () => {
+                    const link = document.createElement("a");
+                    link.href = canvas.toDataURL("image/png");
+                    link.download = "foto_con_pk.png";
+                    link.click();
+                });
+
+                const botonCompartir = document.createElement("button");
+                botonCompartir.textContent = "Compartir";
+                botonCompartir.style.cssText = estiloBoton;
+                contenedorBotones.appendChild(botonCompartir);
+                botonCompartir.addEventListener("click", async () => {
+                    try {
+                        const dataUrl = canvas.toDataURL("image/png");
+                        const blob = await (await fetch(dataUrl)).blob();
+                        const file = new File([blob], "foto_con_pk.png", { type: "image/png" });
+
+                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                            await navigator.share({
+                                files: [file],
+                                title: "Foto con PK",
+                                text: "Aquí está la foto con la información del PK."
+                            });
+                        } else {
+                            alert("No se puede compartir esta imagen desde tu dispositivo.");
+                        }
+                    } catch (error) {
+                        console.error("Error al compartir:", error);
+                    }
+                });
+
+                const botonVolver = document.createElement("button");
+                botonVolver.textContent = "Volver";
+                botonVolver.style.cssText = estiloBoton;
+                contenedorBotones.appendChild(botonVolver);
+                botonVolver.addEventListener("click", () => {
+                    imagenCapturada.remove();
+                    contenedorBotones.remove();
+                    video.style.display = "block";
+                });
             });
-        } else {
-            alert("No se puede compartir esta imagen desde tu dispositivo.");
-        }
-    } catch (error) {
-        console.error("Error al compartir:", error);
-    }
-});
-
-// Botón "Volver"
-const botonVolver = document.createElement("button");
-botonVolver.textContent = "Volver";
-botonVolver.style.cssText = estiloBoton;
-contenedorBotones.appendChild(botonVolver);
-botonVolver.addEventListener("click", () => {
-    // Elimina todos los elementos creados (imagen, tarjeta, botones) y vuelve al mapa
-    imagenCapturada.remove();
-    tarjetaPK.remove();
-    contenedorBotones.remove();
-    video.style.display = "block"; // Vuelve a mostrar el video si es necesario
-});
-
-
-    
-
-    // Crear la tarjeta con información del PK
-    const tarjetaPK = document.createElement("div");
-    tarjetaPK.textContent = `PK ${formatearPK(window.pkMasCercano.pk)}`; // Formatea el PK
-    tarjetaPK.style.position = "absolute";
-    tarjetaPK.style.bottom = "20px";
-    tarjetaPK.style.left = "50%";
-    tarjetaPK.style.transform = "translateX(-50%)";
-    tarjetaPK.style.padding = "10px 20px";
-    tarjetaPK.style.fontSize = "18px";
-    tarjetaPK.style.color = "white";
-    tarjetaPK.style.backgroundColor = "#007aff";
-    tarjetaPK.style.borderRadius = "10px";
-    tarjetaPK.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.3)";
-    tarjetaPK.style.textAlign = "center";
-    tarjetaPK.style.zIndex = "1003"; // Asegura que esté sobre la imagen
-    document.body.appendChild(tarjetaPK);
-    
-});
 
             video.addEventListener("click", () => {
                 stream.getTracks().forEach(track => track.stop());
