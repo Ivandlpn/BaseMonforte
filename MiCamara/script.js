@@ -1,91 +1,130 @@
-// Variables para la cámara
-const abrirCamara = document.getElementById('abrirCamara');
-const cameraContainer = document.getElementById('cameraContainer');
-const video = document.getElementById('camera');
-const takePhoto = document.getElementById('takePhoto');
-const photoCanvas = document.getElementById('photoCanvas');
-const photoActions = document.getElementById('photoActions');
-const savePhoto = document.getElementById('savePhoto');
-const sharePhoto = document.getElementById('sharePhoto');
-const backHome = document.getElementById('backHome');
+let mapa, marcadorActual, marcadorPK, iconoUsuario;
+let centradoAutomaticamente = true;
 
-let stream = null;
-let pkTexto = "";
+// Rastrear la posición continuamente
+navigator.geolocation.watchPosition((position) => {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
 
-// Abrir cámara al hacer clic en el icono
-abrirCamara.addEventListener('click', async () => {
-    cameraContainer.classList.remove('oculto');
-    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-    video.srcObject = stream;
-});
-
-// Tomar foto
-takePhoto.addEventListener('click', () => {
-    const context = photoCanvas.getContext('2d');
-    photoCanvas.width = video.videoWidth;
-    photoCanvas.height = video.videoHeight;
-
-    // Dibujar la foto en el canvas
-    context.drawImage(video, 0, 0);
-
-    // Añadir tarjeta del PK
-    context.fillStyle = 'rgba(0, 51, 102, 0.8)';
-    context.fillRect(0, photoCanvas.height - 50, photoCanvas.width, 50);
-
-    context.fillStyle = 'white';
-    context.font = '20px Arial';
-    context.textAlign = 'center';
-    context.fillText(pkTexto, photoCanvas.width / 2, photoCanvas.height - 20);
-
-    photoCanvas.classList.remove('oculto');
-    photoActions.classList.remove('oculto');
-    video.classList.add('oculto');
-    takePhoto.classList.add('oculto');
-
-    // Detener la transmisión
-    stream.getTracks().forEach(track => track.stop());
-});
-
-// Guardar foto
-savePhoto.addEventListener('click', () => {
-    const link = document.createElement('a');
-    link.download = 'foto_pk.png';
-    link.href = photoCanvas.toDataURL('image/png');
-    link.click();
-});
-
-// Compartir foto
-sharePhoto.addEventListener('click', async () => {
-    const blob = await new Promise(resolve => photoCanvas.toBlob(resolve, 'image/png'));
-    const file = new File([blob], 'foto_pk.png', { type: 'image/png' });
-
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-        navigator.share({
-            files: [file],
-            title: 'Foto del PK',
-        });
-    } else {
-        alert('Tu navegador no soporta compartir archivos.');
+    if (!mapa) {
+        inicializarMapa(lat, lon);
     }
+
+    if (centradoAutomaticamente) {
+        actualizarPosicionUsuario(lat, lon);
+    }
+
+    fetch("./PKCoordenas.json")
+        .then(response => response.json())
+        .then(data => {
+            const pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
+            mostrarPKMasCercano(pkMasCercano);
+            actualizarPosicionPK(pkMasCercano);
+        })
+        .catch(error => console.error('Error al cargar los datos de PK:', error));
+}, 
+(error) => console.error('Error al obtener ubicación:', error), {
+    enableHighAccuracy: true,
+    maximumAge: 0,
+    timeout: 10000
 });
 
-// Volver a la página inicial
-backHome.addEventListener('click', () => {
-    cameraContainer.classList.add('oculto');
-    photoCanvas.classList.add('oculto');
-    photoActions.classList.add('oculto');
-    video.classList.remove('oculto');
-    takePhoto.classList.remove('oculto');
-});
+function inicializarMapa(lat, lon) {
+    mapa = L.map('map', {
+        center: [lat, lon],
+        zoom: 18,
+        maxZoom: 19,
+        attributionControl: false
+    });
 
-// Actualizar PK en la tarjeta al calcular el más cercano
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '',
+        maxZoom: 19
+    }).addTo(mapa);
+
+    iconoUsuario = L.icon({
+        iconUrl: 'https://cdn-icons-png.flaticon.com/512/1783/1783356.png',
+        iconSize: [30, 30],
+        iconAnchor: [15, 30],
+        popupAnchor: [0, -30]
+    });
+
+    marcadorActual = L.marker([lat, lon], { icon: iconoUsuario }).addTo(mapa)
+        .bindPopup('Mi Ubicación')
+        .openPopup();
+
+    mapa.on('move', () => {
+        centradoAutomaticamente = false;
+    });
+}
+
+function actualizarPosicionUsuario(lat, lon) {
+    marcadorActual.setLatLng([lat, lon]);
+    if (centradoAutomaticamente) {
+        mapa.setView([lat, lon], 18);
+    }
+}
+
+function calcularPKMasCercano(lat, lon, data) {
+    let puntosCercanos = data.map(pk => {
+        const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
+        return { pk: pk.PK, latitud: pk.Latitud, longitud: pk.Longitud, distancia: distancia };
+    });
+
+    puntosCercanos.sort((a, b) => a.distancia - b.distancia);
+    return puntosCercanos.slice(0, 1);
+}
+
+function calcularDistancia(lat1, lon1, lat2, lon2) {
+    const R = 6371000;
+    const φ1 = lat1 * Math.PI / 180;
+    const φ2 = lat2 * Math.PI / 180;
+    const Δφ = (lat2 - lat1) * Math.PI / 180;
+    const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+    const a = Math.sin(Δφ / 2) ** 2 +
+              Math.cos(φ1) * Math.cos(φ2) *
+              Math.sin(Δλ / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c;
+}
+
 function mostrarPKMasCercano(pk) {
     const pkElement = document.getElementById("pkCercano");
     const distanciaElement = document.getElementById("distancia");
     const pkFormateado = formatearPK(pk.pk);
     pkElement.textContent = pkFormateado;
     distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`;
-
-    // Actualizar el texto para la foto
-    pkTexto = `PK ${pkFormateado}`;
 }
+
+function actualizarPosicionPK(pk) {
+    if (!marcadorPK) {
+        marcadorPK = L.marker([pk.latitud, pk.longitud]).addTo(mapa)
+            .bindPopup('PK más cercano')
+            .openPopup();
+    } else {
+        marcadorPK.setLatLng([pk.latitud, pk.longitud]);
+    }
+}
+
+function formatearPK(pk) {
+    const pkStr = pk.toString();
+    if (pkStr.length > 6) {
+        return pkStr.slice(0, 3) + '+' + pkStr.slice(3, 6);
+    } else if (pkStr.length === 6) {
+        return pkStr.slice(0, 3) + '+' + pkStr.slice(3);
+    } else {
+        return pkStr;
+    }
+}
+
+document.getElementById("actualizarUbicacion").addEventListener("click", () => {
+    if (marcadorActual) {
+        const { lat, lng } = marcadorActual.getLatLng();
+        mapa.setView([lat, lng], 18);
+        centradoAutomaticamente = true;
+    } else {
+        console.error("No se ha encontrado la ubicación actual del usuario.");
+    }
+});
