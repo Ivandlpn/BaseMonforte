@@ -175,7 +175,8 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 const textoPK = `PK ${formatearPK(window.pkMasCercano.pk)}`;
                 const padding = 20;
                 const fontSize = 24;
-                const tarjetaWidth = ctx.measureText(textoPK).width + padding * 2;
+                const margenExtra = 20; // Ajusta este valor según sea necesario
+                const tarjetaWidth = ctx.measureText(textoPK).width + padding * 2 + margenExtra;
                 const tarjetaHeight = fontSize + padding * 2;
 
                 ctx.fillStyle = "#007aff";
