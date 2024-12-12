@@ -58,6 +58,12 @@ header img {
   background-color: #005f99;
 }
 
+#actualizarUbicacion:active,
+#actualizarUbicacion:focus {
+  font-size: 2em; /* Asegura que no cambie al ser pulsado */
+  outline: none; /* Opcional: elimina el contorno de foco */
+}
+
 /* Sección de la tarjeta con el icono */
 #calculoPK {
   display: flex;
