@@ -242,7 +242,7 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 });
 
                 const botonCompartir = document.createElement("button");
-                botonCompartir.textContent = "Compartir";
+                botonCompartir.textContent = "📨 Compartir";
                 botonCompartir.style.cssText = estiloBoton;
                 contenedorBotones.appendChild(botonCompartir);
                 botonCompartir.addEventListener("click", async () => {
