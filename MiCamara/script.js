@@ -223,7 +223,7 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                     padding: 8px 15px;
                     font-size: 14px;
                     color: white;
-                    background-color: #007aff;
+                    background-color: #edadbc;
                     border: none;
                     border-radius: 5px;
                     cursor: pointer;
