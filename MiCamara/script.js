@@ -187,6 +187,24 @@ botonFoto.addEventListener("click", () => {
 
     // Opcional: Ocultar el video después de capturar la foto
     video.style.display = "none";
+
+    // Crear la tarjeta con información del PK
+    const tarjetaPK = document.createElement("div");
+    tarjetaPK.textContent = `PK ${pkMasCercano.pk}`; // Muestra el PK más cercano
+    tarjetaPK.style.position = "absolute";
+    tarjetaPK.style.bottom = "20px";
+    tarjetaPK.style.left = "50%";
+    tarjetaPK.style.transform = "translateX(-50%)";
+    tarjetaPK.style.padding = "10px 20px";
+    tarjetaPK.style.fontSize = "18px";
+    tarjetaPK.style.color = "white";
+    tarjetaPK.style.backgroundColor = "#007aff";
+    tarjetaPK.style.borderRadius = "10px";
+    tarjetaPK.style.boxShadow = "0 4px 6px rgba(0, 0, 0, 0.3)";
+    tarjetaPK.style.textAlign = "center";
+    tarjetaPK.style.zIndex = "1003"; // Asegura que esté sobre la imagen
+    document.body.appendChild(tarjetaPK);
+    
 });
 
             video.addEventListener("click", () => {
