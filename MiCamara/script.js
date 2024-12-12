@@ -222,7 +222,7 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 const estiloBoton = `
                     padding: 8px 15px;
                     font-size: 14px;
-                    color: black;
+                    color: white;
                     background-color: #479af5;
                     border: none;
                     border-radius: 5px;
