@@ -14,14 +14,14 @@ navigator.geolocation.watchPosition((position) => {
         actualizarPosicionUsuario(lat, lon);
     }
 
-    fetch("./PKCoordenas.json")
-        .then(response => response.json())
-        .then(data => {
-            const pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
-            mostrarPKMasCercano(pkMasCercano);
-            actualizarPosicionPK(pkMasCercano);
-        })
-        .catch(error => console.error('Error al cargar los datos de PK:', error));
+fetch("./PKCoordenas.json")
+    .then(response => response.json())
+    .then(data => {
+        window.pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
+        mostrarPKMasCercano(window.pkMasCercano);
+        actualizarPosicionPK(window.pkMasCercano);
+    })
+    .catch(error => console.error('Error al cargar los datos de PK:', error));
 }, 
 (error) => console.error('Error al obtener ubicación:', error), {
     enableHighAccuracy: true,
