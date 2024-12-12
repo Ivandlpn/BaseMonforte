@@ -238,9 +238,22 @@ botonGuardar.style.cssText = estiloBoton;
 contenedorBotones.appendChild(botonGuardar);
                 
                 
-                botonGuardar.addEventListener("click", () => {
+botonGuardar.addEventListener("click", () => {
     try {
-        // Crear un Blob a partir del canvas
+        // Obtener el PK formateado
+        const pkFormateado = formatearPK(window.pkMasCercano.pk);
+
+        // Obtener la fecha actual
+        const fechaActual = new Date();
+        const dia = String(fechaActual.getDate()).padStart(2, "0");
+        const mes = String(fechaActual.getMonth() + 1).padStart(2, "0"); // Los meses comienzan en 0
+        const anio = fechaActual.getFullYear();
+        const fechaFormateada = `${dia}-${mes}-${anio}`;
+
+        // Crear el nombre del archivo
+        const nombreArchivo = `${pkFormateado} ${fechaFormateada}.jpg`;
+
+        // Crear un Blob a partir del canvas en formato JPG
         canvas.toBlob((blob) => {
             if (!blob) {
                 alert("Error al generar la imagen.");
@@ -251,7 +264,7 @@ contenedorBotones.appendChild(botonGuardar);
             const url = URL.createObjectURL(blob);
 
             link.href = url;
-            link.download = "foto_con_pk.png";
+            link.download = nombreArchivo;
 
             // Simular un clic para descargar
             document.body.appendChild(link);
@@ -260,12 +273,13 @@ contenedorBotones.appendChild(botonGuardar);
 
             // Liberar el objeto URL
             URL.revokeObjectURL(url);
-        }, "image/png");
+        }, "image/jpeg"); // Formato JPEG
     } catch (error) {
         console.error("Error al intentar guardar la imagen:", error);
         alert("No se puede guardar la imagen en este dispositivo.");
     }
 });
+
 
 
 
