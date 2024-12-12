@@ -142,12 +142,31 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
             video.style.zIndex = "1000";
             document.body.appendChild(video);
 
+            const botonFoto = document.createElement("button");
+            botonFoto.textContent = "Hacer Foto";
+            botonFoto.style.position = "absolute";
+            botonFoto.style.bottom = "10px";
+            botonFoto.style.left = "50%";
+            botonFoto.style.transform = "translateX(-50%)";
+            botonFoto.style.padding = "10px 20px";
+            botonFoto.style.fontSize = "16px";
+            botonFoto.style.color = "white";
+            botonFoto.style.backgroundColor = "#007aff";
+            botonFoto.style.border = "none";
+            botonFoto.style.borderRadius = "5px";
+            botonFoto.style.cursor = "pointer";
+            botonFoto.style.zIndex = "1001";
+            document.body.appendChild(botonFoto);
+
             video.addEventListener("click", () => {
                 stream.getTracks().forEach(track => track.stop());
                 video.remove();
+                botonFoto.remove();
             });
         })
         .catch((error) => {
             console.error("Error al acceder a la cámara: ", error);
         });
+});
+
 });
