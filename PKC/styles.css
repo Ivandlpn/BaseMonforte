@@ -27,7 +27,7 @@ header img {
 
 #map-container {
   flex: 1 1 auto;
-  min-height: 50%;
+  min-height: 50%; /* El mapa siempre tendrá al menos el 50% de la pantalla */
   position: relative;
 }
 
@@ -100,4 +100,25 @@ footer {
 footer img {
   max-width: 80px;
   height: auto;
+}
+
+/* Ajuste para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+  #map-container {
+    min-height: 60%; /* Aumenta el tamaño del mapa en dispositivos pequeños */
+  }
+
+  #actualizarUbicacion {
+    font-size: 0.9em; /* Ajusta el tamaño del botón en pantallas pequeñas */
+  }
+
+  header img {
+    height: auto; /* Asegura que la imagen en el header no se distorsione */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #map-container {
+    min-height: 70%; /* Asegura que el mapa ocupe aún más espacio en pantallas muy pequeñas */
+  }
 }
