@@ -7,8 +7,10 @@ const ctx = canvas.getContext("2d");
 // Evento para abrir la cámara y tomar la foto
 document.getElementById("tomarFoto").addEventListener("click", async () => {
     try {
-        // Solicitar acceso a la cámara
-        stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        // Solicitar acceso a la cámara trasera (cámara principal en dispositivos móviles)
+        stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "environment" } // Esto abre la cámara trasera
+        });
         video = document.createElement("video");
         video.srcObject = stream;
         video.play();
@@ -57,10 +59,27 @@ function sobreimprimirPK(imagen) {
         // Dibujar la imagen original en el canvas
         ctx.drawImage(img, 0, 0);
 
-        // Añadir el texto del PK en la esquina inferior derecha
-        ctx.font = "30px Arial";
-        ctx.fillStyle = "white";
-        ctx.fillText(`PK ${pk}`, canvas.width - 150, canvas.height - 20);
+        // Estilo para la tarjeta con el PK
+        const tarjetaColor = "rgba(0, 0, 0, 0.7)"; // Fondo oscuro para la tarjeta
+        const textoColor = "white"; // Texto blanco
+
+        // Añadir la tarjeta con el PK en la base inferior centrada
+        const tarjetaPadding = 15;
+        const tarjetaWidth = canvas.width * 0.8;
+        const tarjetaHeight = 50;
+        const tarjetaX = (canvas.width - tarjetaWidth) / 2;
+        const tarjetaY = canvas.height - tarjetaHeight - 10;
+
+        // Dibujar la tarjeta
+        ctx.fillStyle = tarjetaColor;
+        ctx.fillRect(tarjetaX, tarjetaY, tarjetaWidth, tarjetaHeight);
+
+        // Añadir el texto dentro de la tarjeta
+        ctx.font = "20px Arial";
+        ctx.fillStyle = textoColor;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(`PK ${pk}`, canvas.width / 2, tarjetaY + tarjetaHeight / 2);
 
         // Crear la imagen final
         const imagenFinal = canvas.toDataURL("image/png");
