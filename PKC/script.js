@@ -46,9 +46,10 @@ function inicializarMapa(lat, lon) {
         popupAnchor: [0, -30]
     });
 
-    // Asegurándonos de que el icono del PK se actualice con el nuevo archivo IconPK.png
+    // Verificar si el archivo del icono se carga correctamente
+    console.log('Cargando icono PK...');
     iconoPK = L.icon({
-        iconUrl: 'IconPK.png', // Ruta a tu nuevo icono para el PK
+        iconUrl: 'IconPK.png', // Asegúrate de que esta ruta sea correcta
         iconSize: [40, 40], // Ajusta el tamaño del icono si es necesario
         iconAnchor: [20, 40], // Ajusta el punto de anclaje del icono
         popupAnchor: [0, -40] // Ajusta la posición del popup respecto al icono
@@ -64,6 +65,42 @@ function actualizarPosicionUsuario(lat, lon) {
     mapa.setView([lat, lon]); // Centrar el mapa en la ubicación actual
 }
 
+// Función para calcular el PK más cercano
+function calcularPKMasCercano(lat, lon, data) {
+    let puntosCercanos = data.map(pk => {
+        const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
+        return { pk: pk.PK, latitud: pk.Latitud, longitud: pk.Longitud, distancia: distancia };
+    });
+
+    // Ordenamos por la distancia y devolvemos el más cercano
+    puntosCercanos.sort((a, b) => a.distancia - b.distancia);
+    return puntosCercanos.slice(0, 1); // Solo el más cercano
+}
+
+// Función para calcular la distancia entre dos puntos
+function calcularDistancia(lat1, lon1, lat2, lon2) {
+    const R = 6371000; // Radio de la Tierra en metros
+    const φ1 = lat1 * Math.PI / 180;
+    const φ2 = lat2 * Math.PI / 180;
+    const Δφ = (lat2 - lat1) * Math.PI / 180;
+    const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+    const a = Math.sin(Δφ / 2) ** 2 +
+              Math.cos(φ1) * Math.cos(φ2) *
+              Math.sin(Δλ / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c; // Distancia en metros
+}
+
+function mostrarPKMasCercano(pk) {
+    const pkElement = document.getElementById("pkCercano");
+    const distanciaElement = document.getElementById("distancia");
+    const pkFormateado = formatearPK(pk.pk);
+    pkElement.textContent = pkFormateado;
+    distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`;
+}
+
 function actualizarPosicionPK(pk) {
     if (!marcadorPK) {
         marcadorPK = L.marker([pk.latitud, pk.longitud], { icon: iconoPK }).addTo(mapa)
@@ -74,4 +111,23 @@ function actualizarPosicionPK(pk) {
     }
 }
 
-// Resto del código permanece igual
+function formatearPK(pk) {
+    const pkStr = pk.toString();
+    if (pkStr.length > 6) {
+        return pkStr.slice(0, 3) + '+' + pkStr.slice(3, 6);
+    } else if (pkStr.length === 6) {
+        return pkStr.slice(0, 3) + '+' + pkStr.slice(3);
+    } else {
+        return pkStr;
+    }
+}
+
+// Funcionalidad del botón "🔵 Centrar"
+document.getElementById("actualizarUbicacion").addEventListener("click", () => {
+    if (marcadorActual) {
+        const { lat, lng } = marcadorActual.getLatLng(); // Obtener la ubicación actual del marcador
+        mapa.setView([lat, lng], 18); // Centrar el mapa en la ubicación actual con zoom 18
+    } else {
+        console.error("No se ha encontrado la ubicación actual del usuario.");
+    }
+});
