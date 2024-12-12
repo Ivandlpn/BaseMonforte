@@ -131,17 +131,27 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
 document.getElementById("iconoCamara").addEventListener("click", () => {
     navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
         .then((stream) => {
+            // Contenedor para el video y el botón
+            const contenedor = document.createElement("div");
+            contenedor.style.position = "absolute";
+            contenedor.style.top = "0";
+            contenedor.style.left = "0";
+            contenedor.style.width = "100%";
+            contenedor.style.height = "100%";
+            contenedor.style.zIndex = "1000";
+            contenedor.style.backgroundColor = "black"; // Fondo negro para destacar la cámara
+            document.body.appendChild(contenedor);
+
+            // Elemento de video
             const video = document.createElement("video");
             video.srcObject = stream;
             video.autoplay = true;
-            video.style.position = "absolute";
-            video.style.top = "0";
-            video.style.left = "0";
             video.style.width = "100%";
             video.style.height = "100%";
-            video.style.zIndex = "1000";
-            document.body.appendChild(video);
+            video.style.objectFit = "cover";
+            contenedor.appendChild(video);
 
+            // Botón "Hacer Foto"
             const botonFoto = document.createElement("button");
             botonFoto.textContent = "Hacer Foto";
             botonFoto.style.position = "absolute";
@@ -156,17 +166,19 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
             botonFoto.style.borderRadius = "5px";
             botonFoto.style.cursor = "pointer";
             botonFoto.style.zIndex = "1001";
-            document.body.appendChild(botonFoto);
+            contenedor.appendChild(botonFoto);
 
+            // Cerrar la cámara y eliminar elementos al hacer clic en el video
             video.addEventListener("click", () => {
                 stream.getTracks().forEach(track => track.stop());
-                video.remove();
-                botonFoto.remove();
+                contenedor.remove();
             });
         })
         .catch((error) => {
             console.error("Error al acceder a la cámara: ", error);
         });
+});
+
 });
 
 
