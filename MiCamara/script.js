@@ -127,11 +127,10 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
     }
 });
 
-// Modificación para abrir la cámara trasera
+// Modificación para abrir la cámara y añadir un botón
 document.getElementById("iconoCamara").addEventListener("click", () => {
     navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
         .then((stream) => {
-            // Contenedor para el video y el botón
             const contenedor = document.createElement("div");
             contenedor.style.position = "absolute";
             contenedor.style.top = "0";
@@ -139,10 +138,9 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
             contenedor.style.width = "100%";
             contenedor.style.height = "100%";
             contenedor.style.zIndex = "1000";
-            contenedor.style.backgroundColor = "black"; // Fondo negro para destacar la cámara
+            contenedor.style.backgroundColor = "black";
             document.body.appendChild(contenedor);
 
-            // Elemento de video
             const video = document.createElement("video");
             video.srcObject = stream;
             video.autoplay = true;
@@ -151,11 +149,10 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
             video.style.objectFit = "cover";
             contenedor.appendChild(video);
 
-            // Botón "Hacer Foto"
             const botonFoto = document.createElement("button");
             botonFoto.textContent = "Hacer Foto";
             botonFoto.style.position = "absolute";
-            botonFoto.style.bottom = "30px";
+            botonFoto.style.bottom = "20px";
             botonFoto.style.left = "50%";
             botonFoto.style.transform = "translateX(-50%)";
             botonFoto.style.padding = "10px 20px";
@@ -168,7 +165,6 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
             botonFoto.style.zIndex = "1001";
             contenedor.appendChild(botonFoto);
 
-            // Cerrar la cámara y eliminar elementos al hacer clic en el video
             video.addEventListener("click", () => {
                 stream.getTracks().forEach(track => track.stop());
                 contenedor.remove();
@@ -178,7 +174,3 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
             console.error("Error al acceder a la cámara: ", error);
         });
 });
-
-});
-
-
