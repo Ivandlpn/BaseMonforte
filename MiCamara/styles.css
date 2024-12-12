@@ -26,6 +26,15 @@ header img {
   object-fit: cover;
 }
 
+.linea-gradiente {
+    height: 4px; /* Altura de la línea */
+    width: 100%; /* Ancho completo */
+    background: linear-gradient(to right, blue, red); /* Gradiente de azul a rojo */
+    margin: 0; /* Sin márgenes */
+    padding: 0; /* Sin relleno */
+}
+
+
 #map-container {
   flex: 1 1 auto;
   min-height: 50%;
