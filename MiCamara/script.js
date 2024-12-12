@@ -101,7 +101,7 @@ function mostrarPKMasCercano(pk) {
 function actualizarPosicionPK(pk) {
     if (!marcadorPK) {
         marcadorPK = L.marker([pk.latitud, pk.longitud]).addTo(mapa)
-            .bindPopup('PK más cercano')
+            .bindPopup('PK cercano')
             .openPopup();
     } else {
         marcadorPK.setLatLng([pk.latitud, pk.longitud]);
