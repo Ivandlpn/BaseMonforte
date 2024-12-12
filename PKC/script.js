@@ -46,36 +46,17 @@ function inicializarMapa(lat, lon) {
         popupAnchor: [0, -30]
     });
 
-    // Verificar si el archivo del icono se carga correctamente
-    console.log('Cargando icono PK...');
+    // Restauramos el icono original para el PK
     iconoPK = L.icon({
-        iconUrl: 'IconPK.png', // Asegúrate de que esta ruta sea correcta
-        iconSize: [40, 40], // Ajusta el tamaño del icono si es necesario
-        iconAnchor: [20, 40], // Ajusta el punto de anclaje del icono
-        popupAnchor: [0, -40] // Ajusta la posición del popup respecto al icono
+        iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Location_dot.svg/1024px-Location_dot.svg.png', // Icono original
+        iconSize: [30, 30], // Tamaño del icono original
+        iconAnchor: [15, 30], // Anclaje del icono
+        popupAnchor: [0, -30] // Posición del popup
     });
 
     marcadorActual = L.marker([lat, lon], { icon: iconoUsuario }).addTo(mapa)
-        .bindPopup('') // Inicialmente el popup está vacío
-        .on('click', togglePopup); // Agregar evento de clic para mostrar el popup
-
-    // Eliminar popup al hacer clic en el botón de cerrar
-    mapa.on('popupclose', () => {
-        popupAbierto = false;
-    });
-}
-
-let popupAbierto = false; // Variable para saber si el popup está abierto
-
-function togglePopup() {
-    if (popupAbierto) {
-        marcadorActual.closePopup(); // Cerrar el popup
-        popupAbierto = false;
-    } else {
-        marcadorActual.setPopupContent('<div style="font-size: 1.2em; color: #003f5c;">PK más cercano</div>'); // Contenido del popup
-        marcadorActual.openPopup(); // Abrir el popup
-        popupAbierto = true;
-    }
+        .bindPopup('Mi Ubicación')
+        .openPopup();
 }
 
 function actualizarPosicionUsuario(lat, lon) {
