@@ -109,19 +109,12 @@ function formatearPK(pk) {
     }
 }
 
+// Funcionalidad del botón "🔵 Centrar"
 document.getElementById("actualizarUbicacion").addEventListener("click", () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-
-        actualizarPosicionUsuario(lat, lon);
-
-        fetch("./PKCoordenas.json")
-            .then(response => response.json())
-            .then(data => {
-                const pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
-                mostrarPKMasCercano(pkMasCercano);
-                actualizarPosicionPK(pkMasCercano);
-            });
-    });
+    if (marcadorActual) {
+        const { lat, lng } = marcadorActual.getLatLng(); // Obtener la ubicación actual del marcador
+        mapa.setView([lat, lng], 18); // Centrar el mapa en la ubicación actual con zoom 18
+    } else {
+        console.error("No se ha encontrado la ubicación actual del usuario.");
+    }
 });
