@@ -1,20 +1,19 @@
-// Referencias a los elementos HTML
-const tomarFotoBtn = document.getElementById("tomarFoto");
+// Variables para la cámara y el canvas
+let stream;
+let video;
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-let fotoTomada = false;
-let imagenTomada = null;
 
 // Evento para abrir la cámara y tomar la foto
-tomarFotoBtn.addEventListener("click", async () => {
+document.getElementById("tomarFoto").addEventListener("click", async () => {
     try {
         // Solicitar acceso a la cámara
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        const video = document.createElement("video");
+        stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video = document.createElement("video");
         video.srcObject = stream;
         video.play();
 
-        // Crear un elemento de contenedor para mostrar la vista previa
+        // Crear un contenedor para el video
         const videoContainer = document.createElement("div");
         videoContainer.style.position = "fixed";
         videoContainer.style.top = "0";
@@ -25,28 +24,25 @@ tomarFotoBtn.addEventListener("click", async () => {
         // Añadir el video al body para mostrarlo
         document.body.appendChild(videoContainer);
 
-        // Tomar la foto después de 2 segundos para ajustar bien la cámara
+        // Tomar la foto después de 2 segundos
         setTimeout(() => {
-            // Configuramos el tamaño del canvas
+            // Configurar el tamaño del canvas
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
-            // Dibujar el video en el canvas
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-            // Obtener la imagen del canvas como una URL
-            imagenTomada = canvas.toDataURL("image/png");
 
             // Detener la cámara
             stream.getTracks().forEach(track => track.stop());
 
-            // Remover el contenedor del video
+            // Remover el video
             document.body.removeChild(videoContainer);
 
-            // Mostrar la imagen tomada y la información del PK
-            sobreimprimirPK(imagenTomada);
+            // Obtener la imagen y sobreimprimir la información del PK
+            const imagen = canvas.toDataURL("image/png");
+            sobreimprimirPK(imagen);
         }, 2000);
     } catch (error) {
-        console.error("Error al acceder a la cámara", error);
+        console.error("Error al acceder a la cámara:", error);
     }
 });
 
@@ -54,7 +50,7 @@ tomarFotoBtn.addEventListener("click", async () => {
 function sobreimprimirPK(imagen) {
     const pk = document.getElementById("pkCercano").textContent;
 
-    // Crear una nueva imagen para cargarla
+    // Crear la imagen y cargarla en el canvas
     const img = new Image();
     img.src = imagen;
     img.onload = () => {
@@ -66,13 +62,15 @@ function sobreimprimirPK(imagen) {
         ctx.fillStyle = "white";
         ctx.fillText(`PK ${pk}`, canvas.width - 150, canvas.height - 20);
 
-        // Mostrar la imagen final
+        // Crear la imagen final
         const imagenFinal = canvas.toDataURL("image/png");
+
+        // Mostrar la imagen final
         mostrarImagen(imagenFinal);
     };
 }
 
-// Función para mostrar la imagen con el PK sobreimpresionado
+// Función para mostrar la imagen final con la sobreimpresión
 function mostrarImagen(imagen) {
     const imgTag = document.createElement("img");
     imgTag.src = imagen;
@@ -83,8 +81,8 @@ function mostrarImagen(imagen) {
     imgTag.style.maxWidth = "100%";
     imgTag.style.maxHeight = "100%";
     document.body.appendChild(imgTag);
-    
-    // Opción para guardar o compartir
+
+    // Opción para guardar o compartir la imagen
     imgTag.addEventListener("click", () => {
         const a = document.createElement("a");
         a.href = imagen;
