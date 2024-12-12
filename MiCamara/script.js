@@ -169,4 +169,4 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
         });
 });
 
-});
+
