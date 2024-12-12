@@ -1,4 +1,5 @@
-let mapa, marcadorActual, marcadorPK, iconoUsuario, iconoPK;
+let mapa, marcadorActual, marcadorPK, iconoUsuario;
+let centradoAutomaticamente = true; // Variable para saber si el mapa está centrado automáticamente
 
 // Rastrear la posición continuamente con watchPosition
 navigator.geolocation.watchPosition((position) => {
@@ -9,7 +10,9 @@ navigator.geolocation.watchPosition((position) => {
         inicializarMapa(lat, lon);
     }
 
-    actualizarPosicionUsuario(lat, lon);
+    if (centradoAutomaticamente) {
+        actualizarPosicionUsuario(lat, lon);
+    }
 
     fetch("./PKCoordenas.json")
         .then(response => response.json())
@@ -46,37 +49,33 @@ function inicializarMapa(lat, lon) {
         popupAnchor: [0, -30]
     });
 
-    // Restauramos el icono original para el PK
-    iconoPK = L.icon({
-        iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Location_dot.svg/1024px-Location_dot.svg.png', // Icono original
-        iconSize: [30, 30], // Tamaño del icono original
-        iconAnchor: [15, 30], // Anclaje del icono
-        popupAnchor: [0, -30] // Posición del popup
-    });
-
     marcadorActual = L.marker([lat, lon], { icon: iconoUsuario }).addTo(mapa)
         .bindPopup('Mi Ubicación')
         .openPopup();
+
+    // Detectar cuando el usuario mueve el mapa
+    mapa.on('move', () => {
+        centradoAutomaticamente = false; // Desactivamos el centrado automático cuando el usuario mueve el mapa
+    });
 }
 
 function actualizarPosicionUsuario(lat, lon) {
     marcadorActual.setLatLng([lat, lon]);
-    mapa.setView([lat, lon]); // Centrar el mapa en la ubicación actual
+    if (centradoAutomaticamente) {
+        mapa.setView([lat, lon]); // Centrar el mapa solo si el centrado automático está activado
+    }
 }
 
-// Función para calcular el PK más cercano
 function calcularPKMasCercano(lat, lon, data) {
     let puntosCercanos = data.map(pk => {
         const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
         return { pk: pk.PK, latitud: pk.Latitud, longitud: pk.Longitud, distancia: distancia };
     });
 
-    // Ordenamos por la distancia y devolvemos el más cercano
     puntosCercanos.sort((a, b) => a.distancia - b.distancia);
-    return puntosCercanos.slice(0, 1); // Solo el más cercano
+    return puntosCercanos.slice(0, 1);
 }
 
-// Función para calcular la distancia entre dos puntos
 function calcularDistancia(lat1, lon1, lat2, lon2) {
     const R = 6371000; // Radio de la Tierra en metros
     const φ1 = lat1 * Math.PI / 180;
@@ -89,7 +88,7 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
               Math.sin(Δλ / 2) ** 2;
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return R * c; // Distancia en metros
+    return R * c;
 }
 
 function mostrarPKMasCercano(pk) {
@@ -102,7 +101,7 @@ function mostrarPKMasCercano(pk) {
 
 function actualizarPosicionPK(pk) {
     if (!marcadorPK) {
-        marcadorPK = L.marker([pk.latitud, pk.longitud], { icon: iconoPK }).addTo(mapa)
+        marcadorPK = L.marker([pk.latitud, pk.longitud]).addTo(mapa)
             .bindPopup('PK más cercano')
             .openPopup();
     } else {
@@ -126,6 +125,7 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
     if (marcadorActual) {
         const { lat, lng } = marcadorActual.getLatLng(); // Obtener la ubicación actual del marcador
         mapa.setView([lat, lng], 18); // Centrar el mapa en la ubicación actual con zoom 18
+        centradoAutomaticamente = true; // Reactivamos el centrado automático después de pulsar el botón
     } else {
         console.error("No se ha encontrado la ubicación actual del usuario.");
     }
