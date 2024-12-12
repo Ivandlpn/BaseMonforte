@@ -60,9 +60,10 @@ function inicializarMapa(lat, lon) {
 }
 
 function actualizarPosicionUsuario(lat, lon) {
+    // Actualiza la posición del marcador y centra el mapa en la nueva ubicación
     marcadorActual.setLatLng([lat, lon]);
     if (centradoAutomaticamente) {
-        mapa.setView([lat, lon]); // Centrar el mapa solo si el centrado automático está activado
+        mapa.setView([lat, lon], 18); // Centrar el mapa solo si el centrado automático está activado
     }
 }
 
@@ -88,7 +89,7 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
               Math.sin(Δλ / 2) ** 2;
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return R * c;
+    return R * c; // Distancia en metros
 }
 
 function mostrarPKMasCercano(pk) {
