@@ -231,7 +231,14 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
                 `;
 
-botonGuardar.addEventListener("click", () => {
+// Botón "Guardar"
+const botonGuardar = document.createElement("button");
+botonGuardar.textContent = "Guardar";
+botonGuardar.style.cssText = estiloBoton;
+contenedorBotones.appendChild(botonGuardar);
+                
+                
+                botonGuardar.addEventListener("click", () => {
     try {
         // Crear un Blob a partir del canvas
         canvas.toBlob((blob) => {
