@@ -125,11 +125,12 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
         mapa.setView([lat, lng], 18);
         centradoAutomaticamente = true;
     }
+});
 
+// Modificación para abrir la cámara trasera
 document.getElementById("iconoCamara").addEventListener("click", () => {
     navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
         .then((stream) => {
-            // Crea un elemento de video para mostrar la cámara (si es necesario)
             const video = document.createElement("video");
             video.srcObject = stream;
             video.autoplay = true;
@@ -141,7 +142,6 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
             video.style.zIndex = "1000";
             document.body.appendChild(video);
 
-            // Puedes detener el stream manualmente cuando ya no sea necesario
             video.addEventListener("click", () => {
                 stream.getTracks().forEach(track => track.stop());
                 video.remove();
@@ -150,5 +150,4 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
         .catch((error) => {
             console.error("Error al acceder a la cámara: ", error);
         });
-});
 });
