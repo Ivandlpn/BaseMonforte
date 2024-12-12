@@ -39,4 +39,16 @@ document.getElementById('iconoCamara').addEventListener('click', () => {
             // Botón "Cerrar"
             document.getElementById('cerrarCamara').addEventListener('click', () => {
                 stream.getTracks().forEach(track => track.stop());
-                contenedorCamara
+                contenedorCamara.remove();
+            });
+
+            // Botón "Hacer foto" - Sin funcionalidad adicional aún
+            document.getElementById('hacerFoto').addEventListener('click', () => {
+                alert("Botón 'Hacer foto' pulsado. Funcionalidad en desarrollo.");
+            });
+        })
+        .catch((error) => {
+            console.error('No se pudo acceder a la cámara:', error);
+            alert('Error al acceder a la cámara: ' + error.message);
+        });
+});
