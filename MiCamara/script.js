@@ -233,7 +233,7 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
 
 // Botón "Guardar"
 const botonGuardar = document.createElement("button");
-botonGuardar.textContent = "Guardar";
+botonGuardar.textContent = "💾 Guardar";
 botonGuardar.style.cssText = estiloBoton;
 contenedorBotones.appendChild(botonGuardar);
                 
