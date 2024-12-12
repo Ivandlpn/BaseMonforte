@@ -50,7 +50,7 @@ header img {
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 2em;
+  font-size: 1.5em;
   text-align: center;
 }
 
@@ -60,7 +60,7 @@ header img {
 
 #actualizarUbicacion:active,
 #actualizarUbicacion:focus {
-  font-size: 2em; /* Asegura que no cambie al ser pulsado */
+  font-size: 1.5em; /* Asegura que no cambie al ser pulsado */
   outline: none; /* Opcional: elimina el contorno de foco */
 }
 
