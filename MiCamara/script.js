@@ -191,7 +191,7 @@ botonFoto.addEventListener("click", () => {
 
     // Crear la tarjeta con información del PK
     const tarjetaPK = document.createElement("div");
-    tarjetaPK.textContent = `PK ${pkMasCercano.pk}`; // Muestra el PK más cercano
+    tarjetaPK.textContent = `PK ${formatearPK(window.pkMasCercano.pk)}`; // Formatea el PK
     tarjetaPK.style.position = "absolute";
     tarjetaPK.style.bottom = "20px";
     tarjetaPK.style.left = "50%";
