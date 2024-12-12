@@ -1,110 +1,73 @@
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
-}
-
-.contenedor {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-header {
-  text-align: center;
-  padding: 0;
-  flex: 0 0 auto;
-  height: 100px;
-}
-
-header img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-#map-container {
-  flex: 1 1 auto;
-  min-height: 50%;
-  position: relative;
-}
-
-#map {
-  height: 100%;
-  width: 100%;
-  position: relative;
-}
-
-#calculoPK {
-  text-align: center;
-  padding: 10px;
-  background-color: #ffffff;
-  flex: 0 0 auto;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-}
-
-#calculoPK .tarjeta {
-  display: inline-block;
-  background-color: #ffffff;
-  border: 2px solid #003f5c;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 80%;
-  max-width: 400px;
-}
-
-#calculoPK .tarjeta h2 {
-  margin: 0;
-  font-size: 1.4em;
-  color: #003f5c;
-}
-
-#calculoPK .tarjeta p {
-  margin: 5px 0 0;
-  font-size: 1.2em;
-  color: #007aff;
-}
-
-footer {
-  background-color: #ffffff;
-  padding: 10px 0;
-  text-align: center;
-  flex: 0 0 auto;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-}
-
-footer img {
-  max-width: 80px;
-  height: auto;
-}
-
 .icono-camara {
-  font-size: 2em;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
 }
 
-@media screen and (max-width: 768px) {
-  #map-container {
-    min-height: 60%;
-  }
-
-  #actualizarUbicacion {
-    font-size: 0.9em;
-  }
-
-  header img {
-    height: auto;
-  }
+.icono-camara img {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
 }
 
-@media screen and (max-width: 480px) {
-  #map-container {
-    min-height: 70%;
-  }
+#cameraContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+#camera {
+    width: 90%;
+    max-height: 70%;
+    border: 2px solid #007aff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+#takePhoto {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007aff;
+    color: white;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#photoCanvas {
+    display: none;
+    width: 90%;
+    max-height: 70%;
+    border: 2px solid #003f5c;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+#photoActions {
+    display: none;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#photoActions img {
+    width: 40px;
+    height: 40px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.oculto {
+    display: none !important;
 }
