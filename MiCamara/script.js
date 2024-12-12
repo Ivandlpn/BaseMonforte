@@ -189,6 +189,82 @@ botonFoto.addEventListener("click", () => {
     // Opcional: Ocultar el video después de capturar la foto
     video.style.display = "none";
 
+// Crear un contenedor para los botones
+const contenedorBotones = document.createElement("div");
+contenedorBotones.style.position = "absolute";
+contenedorBotones.style.top = "10px";
+contenedorBotones.style.left = "50%";
+contenedorBotones.style.transform = "translateX(-50%)";
+contenedorBotones.style.display = "flex";
+contenedorBotones.style.gap = "10px";
+contenedorBotones.style.zIndex = "1003"; // Asegura que esté sobre la imagen
+document.body.appendChild(contenedorBotones);
+
+// Estilo base para los botones
+const estiloBoton = `
+    padding: 8px 15px;
+    font-size: 14px;
+    color: white;
+    background-color: #007aff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+`;
+
+// Botón "Guardar"
+const botonGuardar = document.createElement("button");
+botonGuardar.textContent = "Guardar";
+botonGuardar.style.cssText = estiloBoton;
+contenedorBotones.appendChild(botonGuardar);
+botonGuardar.addEventListener("click", () => {
+    const link = document.createElement("a");
+    link.href = canvas.toDataURL("image/png"); // Usar el canvas para guardar la imagen
+    link.download = "foto_con_pk.png";
+    link.click();
+});
+
+// Botón "Compartir"
+const botonCompartir = document.createElement("button");
+botonCompartir.textContent = "Compartir";
+botonCompartir.style.cssText = estiloBoton;
+contenedorBotones.appendChild(botonCompartir);
+botonCompartir.addEventListener("click", async () => {
+    try {
+        const dataUrl = canvas.toDataURL("image/png");
+        const blob = await (await fetch(dataUrl)).blob();
+        const file = new File([blob], "foto_con_pk.png", { type: "image/png" });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({
+                files: [file],
+                title: "Foto con PK",
+                text: "Aquí está la foto con la información del PK."
+            });
+        } else {
+            alert("No se puede compartir esta imagen desde tu dispositivo.");
+        }
+    } catch (error) {
+        console.error("Error al compartir:", error);
+    }
+});
+
+// Botón "Volver"
+const botonVolver = document.createElement("button");
+botonVolver.textContent = "Volver";
+botonVolver.style.cssText = estiloBoton;
+contenedorBotones.appendChild(botonVolver);
+botonVolver.addEventListener("click", () => {
+    // Elimina todos los elementos creados (imagen, tarjeta, botones) y vuelve al mapa
+    imagenCapturada.remove();
+    tarjetaPK.remove();
+    contenedorBotones.remove();
+    video.style.display = "block"; // Vuelve a mostrar el video si es necesario
+});
+
+
+    
+
     // Crear la tarjeta con información del PK
     const tarjetaPK = document.createElement("div");
     tarjetaPK.textContent = `PK ${formatearPK(window.pkMasCercano.pk)}`; // Formatea el PK
