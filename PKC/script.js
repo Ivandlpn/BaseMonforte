@@ -56,8 +56,26 @@ function inicializarMapa(lat, lon) {
     });
 
     marcadorActual = L.marker([lat, lon], { icon: iconoUsuario }).addTo(mapa)
-        .bindPopup('Mi Ubicación')
-        .openPopup();
+        .bindPopup('') // Inicialmente el popup está vacío
+        .on('click', togglePopup); // Agregar evento de clic para mostrar el popup
+
+    // Eliminar popup al hacer clic en el botón de cerrar
+    mapa.on('popupclose', () => {
+        popupAbierto = false;
+    });
+}
+
+let popupAbierto = false; // Variable para saber si el popup está abierto
+
+function togglePopup() {
+    if (popupAbierto) {
+        marcadorActual.closePopup(); // Cerrar el popup
+        popupAbierto = false;
+    } else {
+        marcadorActual.setPopupContent('<div style="font-size: 1.2em; color: #003f5c;">PK más cercano</div>'); // Contenido del popup
+        marcadorActual.openPopup(); // Abrir el popup
+        popupAbierto = true;
+    }
 }
 
 function actualizarPosicionUsuario(lat, lon) {
