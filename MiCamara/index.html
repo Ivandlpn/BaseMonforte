@@ -3,35 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Cámara 📷</title>
+    <title>Mi PK 📍</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="faviconmini.png?v=1" type="image/png">
+
+    <!-- Open Graph (Facebook y otras plataformas) -->
+    <meta property="og:title" content="Mi PK 📍" />
+    <meta property="og:description" content="Consulta el PK más cercano" />
+    <meta property="og:image" content="faviconmini.png" />
+    <meta property="og:url" content="https://ivandlpn.github.io/BaseMonforte/PKC/" />
+    <meta property="og:type" content="website" />
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="contenedor">
         <header>
-            <h1>Mi Cámara 📷</h1>
+            <img src="CabeceraMiPKmini.png" alt="Cabecera Mi PK">
         </header>
-
         <div id="map-container">
-            <!-- Aquí irá el mapa -->
+            <div id="map">
+                <button id="actualizarUbicacion">🔵 Centrar</button>
+            </div>
         </div>
-
         <div id="calculoPK">
+            <div class="icono-camara">
+                <img src="camera-icon.png" alt="Cámara" id="abrirCamara">
+            </div>
             <div class="tarjeta">
                 <h2>PK más cercano: <span id="pkCercano">471+500</span></h2>
                 <p>Distancia: <span id="distancia">1289.73 metros</span></p>
-                <!-- Botón para abrir la cámara -->
-                <button id="tomarFoto" class="icono-camara">📷</button>
             </div>
         </div>
-
         <footer>
-            <img src="logo.png" alt="Logo">
+            <img src="Logo-Ineco.png" alt="Logo Ineco">
         </footer>
     </div>
 
-    <!-- Canvas para manipular la imagen -->
-    <canvas id="canvas" style="display: none;"></canvas>
+    <!-- Contenedor para la cámara -->
+    <div id="cameraContainer" class="oculto">
+        <video id="camera" autoplay></video>
+        <button id="takePhoto">📸 Hacer foto</button>
+        <canvas id="photoCanvas" class="oculto"></canvas>
+        <div id="photoActions" class="oculto">
+            <img id="savePhoto" src="save-icon.png" alt="Guardar">
+            <img id="sharePhoto" src="share-icon.png" alt="Compartir">
+            <img id="backHome" src="back-icon.png" alt="Volver">
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
