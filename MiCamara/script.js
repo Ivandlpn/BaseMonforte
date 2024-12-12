@@ -149,21 +149,45 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
             video.style.objectFit = "cover";
             contenedor.appendChild(video);
 
-            const botonFoto = document.createElement("button");
-            botonFoto.textContent = "Hacer Foto";
-            botonFoto.style.position = "absolute";
-            botonFoto.style.bottom = "20px";
-            botonFoto.style.left = "50%";
-            botonFoto.style.transform = "translateX(-50%)";
-            botonFoto.style.padding = "10px 20px";
-            botonFoto.style.fontSize = "16px";
-            botonFoto.style.color = "white";
-            botonFoto.style.backgroundColor = "#007aff";
-            botonFoto.style.border = "none";
-            botonFoto.style.borderRadius = "5px";
-            botonFoto.style.cursor = "pointer";
-            botonFoto.style.zIndex = "1001";
-            contenedor.appendChild(botonFoto);
+const botonFoto = document.createElement("button");
+botonFoto.textContent = "Hacer Foto";
+botonFoto.style.position = "absolute";
+botonFoto.style.bottom = "10px";
+botonFoto.style.left = "50%";
+botonFoto.style.transform = "translateX(-50%)";
+botonFoto.style.padding = "10px 20px";
+botonFoto.style.fontSize = "16px";
+botonFoto.style.color = "white";
+botonFoto.style.backgroundColor = "#007aff";
+botonFoto.style.border = "none";
+botonFoto.style.borderRadius = "5px";
+botonFoto.style.cursor = "pointer";
+botonFoto.style.zIndex = "1001";
+contenedor.appendChild(botonFoto);
+
+botonFoto.addEventListener("click", () => {
+    // Crear un lienzo para capturar la imagen
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth; // Ancho del video
+    canvas.height = video.videoHeight; // Alto del video
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height); // Dibuja el frame del video en el lienzo
+
+    // Mostrar la imagen capturada en pantalla
+    const imagenCapturada = document.createElement("img");
+    imagenCapturada.src = canvas.toDataURL("image/png"); // Generar imagen en base64
+    imagenCapturada.style.position = "absolute";
+    imagenCapturada.style.top = "0";
+    imagenCapturada.style.left = "0";
+    imagenCapturada.style.width = "100%";
+    imagenCapturada.style.height = "100%";
+    imagenCapturada.style.objectFit = "cover";
+    imagenCapturada.style.zIndex = "1002"; // Asegura que esté sobre el video
+    document.body.appendChild(imagenCapturada);
+
+    // Opcional: Ocultar el video después de capturar la foto
+    video.style.display = "none";
+});
 
             video.addEventListener("click", () => {
                 stream.getTracks().forEach(track => track.stop());
