@@ -1,4 +1,5 @@
 let mapa, marcadorActual, marcadorPK, iconoUsuario;
+let centradoAutomaticamente = true; // Variable para saber si el mapa está centrado automáticamente
 
 // Rastrear la posición continuamente con watchPosition
 navigator.geolocation.watchPosition((position) => {
@@ -9,7 +10,9 @@ navigator.geolocation.watchPosition((position) => {
         inicializarMapa(lat, lon);
     }
 
-    actualizarPosicionUsuario(lat, lon);
+    if (centradoAutomaticamente) {
+        actualizarPosicionUsuario(lat, lon);
+    }
 
     fetch("./PKCoordenas.json")
         .then(response => response.json())
@@ -49,11 +52,18 @@ function inicializarMapa(lat, lon) {
     marcadorActual = L.marker([lat, lon], { icon: iconoUsuario }).addTo(mapa)
         .bindPopup('Mi Ubicación')
         .openPopup();
+
+    // Detectar cuando el usuario mueve el mapa
+    mapa.on('move', () => {
+        centradoAutomaticamente = false; // Desactivamos el centrado automático cuando el usuario mueve el mapa
+    });
 }
 
 function actualizarPosicionUsuario(lat, lon) {
     marcadorActual.setLatLng([lat, lon]);
-    mapa.setView([lat, lon]);
+    if (centradoAutomaticamente) {
+        mapa.setView([lat, lon]); // Centrar el mapa solo si el centrado automático está activado
+    }
 }
 
 function calcularPKMasCercano(lat, lon, data) {
@@ -67,7 +77,7 @@ function calcularPKMasCercano(lat, lon, data) {
 }
 
 function calcularDistancia(lat1, lon1, lat2, lon2) {
-    const R = 6371000;
+    const R = 6371000; // Radio de la Tierra en metros
     const φ1 = lat1 * Math.PI / 180;
     const φ2 = lat2 * Math.PI / 180;
     const Δφ = (lat2 - lat1) * Math.PI / 180;
@@ -115,6 +125,7 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
     if (marcadorActual) {
         const { lat, lng } = marcadorActual.getLatLng(); // Obtener la ubicación actual del marcador
         mapa.setView([lat, lng], 18); // Centrar el mapa en la ubicación actual con zoom 18
+        centradoAutomaticamente = true; // Reactivamos el centrado automático después de pulsar el botón
     } else {
         console.error("No se ha encontrado la ubicación actual del usuario.");
     }
