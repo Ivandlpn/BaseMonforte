@@ -124,7 +124,5 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
         const { lat, lng } = marcadorActual.getLatLng();
         mapa.setView([lat, lng], 18);
         centradoAutomaticamente = true;
-    } else {
-        console.error("No se ha encontrado la ubicación actual del usuario.");
     }
 });
