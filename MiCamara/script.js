@@ -5,7 +5,6 @@ let centradoAutomaticamente = true;
 navigator.geolocation.watchPosition((position) => {
     const lat = position.coords.latitude;
     const lon = position.coords.longitude;
-    window.pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
 
 
     if (!mapa) {
