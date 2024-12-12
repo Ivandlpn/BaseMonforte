@@ -231,16 +231,26 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
                 `;
 
-                const botonGuardar = document.createElement("button");
-                botonGuardar.textContent = "💾 Guardar";
-                botonGuardar.style.cssText = estiloBoton;
-                contenedorBotones.appendChild(botonGuardar);
-                botonGuardar.addEventListener("click", () => {
-                    const link = document.createElement("a");
-                    link.href = canvas.toDataURL("image/png");
-                    link.download = "foto_con_pk.png";
-                    link.click();
-                });
+                    botonGuardar.addEventListener("click", () => {
+                        try {
+                            const link = document.createElement("a");
+                            link.href = canvas.toDataURL("image/png"); // Usar el canvas para guardar la imagen
+                            link.download = "foto_con_pk.png";
+                    
+                            // Verificar soporte para click automático en móviles
+                            if (typeof link.download === "string") {
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                            } else {
+                                alert("Tu navegador no soporta la descarga de imágenes.");
+                            }
+                        } catch (error) {
+                            console.error("Error al intentar guardar la imagen:", error);
+                            alert("No se puede guardar la imagen en este dispositivo.");
+                        }
+                    });
+
 
                 const botonCompartir = document.createElement("button");
                 botonCompartir.textContent = "📨 Compartir";
