@@ -100,3 +100,8 @@ footer img {
   max-width: 80px;
   height: auto;
 }
+
+.leaflet-control-attribution {
+  display: none !important;
+}
+
