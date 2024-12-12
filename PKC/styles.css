@@ -16,18 +16,18 @@ header {
   text-align: center;
   padding: 0;
   flex: 0 0 auto;
-  height: 100px; /* Puedes ajustar esta altura según tus necesidades */
+  height: 100px; /* Ajusta la altura del header si es necesario */
 }
 
 header img {
   width: 100%;
-  height: 100%; /* La imagen ocupará toda la altura del header */
-  object-fit: cover; /* Mantendrá la proporción de la imagen */
+  height: 100%;
+  object-fit: cover;
 }
 
 #map-container {
   flex: 1 1 auto;
-  min-height: 50%;
+  min-height: 50%; /* El mapa siempre tendrá al menos el 50% de la pantalla */
   position: relative;
 }
 
@@ -37,11 +37,12 @@ header img {
   position: relative;
 }
 
+/* Asegurarse de que el botón sigue centrado y visible en pantallas pequeñas */
 #actualizarUbicacion {
   position: absolute;
-  bottom: 10px; /* Parte inferior del mapa */
-  left: 50%; /* Centrado horizontalmente */
-  transform: translateX(-50%); /* Ajuste para centrar completamente */
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1000;
   background-color: #007aff;
   color: white;
@@ -101,7 +102,23 @@ footer img {
   height: auto;
 }
 
-.leaflet-control-attribution {
-  display: none !important;
+/* Ajuste para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+  #map-container {
+    min-height: 60%; /* Aumenta el tamaño del mapa en dispositivos pequeños */
+  }
+
+  #actualizarUbicacion {
+    font-size: 0.9em; /* Ajusta el tamaño del botón en pantallas pequeñas */
+  }
+
+  header img {
+    height: auto; /* Asegura que la imagen en el header no se distorsione */
+  }
 }
 
+@media screen and (max-width: 480px) {
+  #map-container {
+    min-height: 70%; /* Asegura que el mapa ocupe aún más espacio en pantallas muy pequeñas */
+  }
+}
