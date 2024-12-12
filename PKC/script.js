@@ -1,5 +1,5 @@
 let mapa, marcadorActual, marcadorPK, iconoUsuario;
-let centradoAutomaticamente = true; // Variable para saber si el mapa está centrado automáticamente
+let popupAbierto = false; // Variable para controlar si el popup está abierto o no
 
 // Rastrear la posición continuamente con watchPosition
 navigator.geolocation.watchPosition((position) => {
@@ -10,9 +10,7 @@ navigator.geolocation.watchPosition((position) => {
         inicializarMapa(lat, lon);
     }
 
-    if (centradoAutomaticamente) {
-        actualizarPosicionUsuario(lat, lon);
-    }
+    actualizarPosicionUsuario(lat, lon);
 
     fetch("./PKCoordenas.json")
         .then(response => response.json())
@@ -50,20 +48,29 @@ function inicializarMapa(lat, lon) {
     });
 
     marcadorActual = L.marker([lat, lon], { icon: iconoUsuario }).addTo(mapa)
-        .bindPopup('Mi Ubicación')
-        .openPopup();
+        .bindPopup('') // Inicialmente el popup está vacío
+        .on('click', togglePopup); // Agregar evento de clic para mostrar el popup
 
-    // Detectar cuando el usuario mueve el mapa
-    mapa.on('move', () => {
-        centradoAutomaticamente = false; // Desactivamos el centrado automático cuando el usuario mueve el mapa
+    // Eliminar popup al hacer clic en el botón de cerrar
+    mapa.on('popupclose', () => {
+        popupAbierto = false;
     });
+}
+
+function togglePopup() {
+    if (popupAbierto) {
+        marcadorActual.closePopup(); // Cerrar el popup
+        popupAbierto = false;
+    } else {
+        marcadorActual.setPopupContent('<div style="font-size: 1.2em; color: #003f5c;">PK más cercano</div>'); // Contenido del popup
+        marcadorActual.openPopup(); // Abrir el popup
+        popupAbierto = true;
+    }
 }
 
 function actualizarPosicionUsuario(lat, lon) {
     marcadorActual.setLatLng([lat, lon]);
-    if (centradoAutomaticamente) {
-        mapa.setView([lat, lon]); // Centrar el mapa solo si el centrado automático está activado
-    }
+    mapa.setView([lat, lon]); // Centrar el mapa en la ubicación actual
 }
 
 function calcularPKMasCercano(lat, lon, data) {
@@ -125,7 +132,8 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
     if (marcadorActual) {
         const { lat, lng } = marcadorActual.getLatLng(); // Obtener la ubicación actual del marcador
         mapa.setView([lat, lng], 18); // Centrar el mapa en la ubicación actual con zoom 18
-        centradoAutomaticamente = true; // Reactivamos el centrado automático después de pulsar el botón
+        popupAbierto = false; // Asegurarse de que el popup se cierre al centrar el mapa
+        marcadorActual.closePopup(); // Cerrar el popup cuando se vuelve a centrar
     } else {
         console.error("No se ha encontrado la ubicación actual del usuario.");
     }
