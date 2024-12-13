@@ -26,20 +26,29 @@ header {
     transform: translateX(-50%);
     background-color: rgba(0, 122, 255, 0.9);
     color: white;
-    border-radius: 10px;
-    padding: 20px;
+    border-radius: 20px; /* Bordes redondeados */
+    padding: 20px 30px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    font-size: 1.25em;
-    z-index: 1000;
+    font-family: Arial, sans-serif;
     text-align: center;
+    width: 80%; /* Asegura un tamaño adecuado en pantallas pequeñas */
+    max-width: 400px; /* Limita el tamaño en pantallas grandes */
+}
+
+.tarjeta h1 {
+    margin: 0;
+    font-size: 2em; /* Fuente grande para el PK */
+    font-weight: bold;
 }
 
 .tarjeta h2 {
-    margin: 0;
-    font-size: 1em;
+    margin: 10px 0 0;
+    font-size: 1.5em; /* Fuente mediana para la velocidad */
 }
 
 .tarjeta p {
     margin: 10px 0 0;
-    font-size: 0.7em;
+    font-size: 1em; /* Fuente pequeña para el lugar */
+    opacity: 0.9; /* Un poco menos destacada */
 }
+
