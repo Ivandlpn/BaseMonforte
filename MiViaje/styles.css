@@ -6,14 +6,18 @@ body {
     flex-direction: column;
 }
 
-<header>
-    <img src="img/CabeceraMiViaje.png" alt="Cabecera Mi Viaje" />
-</header>
 
 header img {
-    width: 100%;
-    height: auto; /* Mantiene la proporción */
+    width: 100%;      /* Hace que la imagen ocupe todo el ancho */
+    height: auto;     /* Mantiene la proporción */
+    display: block;   /* Elimina espacios en línea */
 }
+
+header {
+    padding: 0;        /* Elimina márgenes internos */
+    margin: 0;         /* Elimina márgenes externos */
+}
+
 
 #map {
     flex: 1;
