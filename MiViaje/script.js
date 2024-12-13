@@ -1,43 +1,5 @@
 let mapa, marcadorTren, iconoTren;
 
-// Cargar las coordenadas desde PKCoordenas.json
-async function dibujarVia() {
-            try {
-                const respuesta = await fetch('PKCoordenas.json');
-                const data = await respuesta.json();
-
-                const trazadoVia = data.map(pk => [pk.Latitud, pk.Longitud]);
-
-                L.polyline(trazadoVia, {
-                    color: 'red',
-                    weight: 5,
-                    opacity: 0.7,
-                }).addTo(mapa);
-            } catch (error) {
-                console.error("Error al cargar el trazado:", error);
-            }
-        }
-
-// Llamar a la función después de inicializar el mapa
-function inicializarMapa(lat, lon) {
-    mapa = L.map('map').setView([lat, lon], 16);
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        maxZoom: 19
-    }).addTo(mapa);
-
-    const iconoTren = L.icon({
-        iconUrl: 'img/MarcadorTren.png',
-        iconSize: [80, 80],
-        iconAnchor: [40, 80]
-    });
-
-    marcador = L.marker([lat, lon], { icon: iconoTren }).addTo(mapa);
-
-    // Llamar al trazado de la vía
-    dibujarVia();
-}
-
-
 // Inicializar el mapa
 function inicializarMapa(lat, lon) {
     mapa = L.map('map', {
