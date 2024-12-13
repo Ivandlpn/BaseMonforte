@@ -9,7 +9,7 @@ body {
 
 header {
     width: 100%;            /* Ocupa todo el ancho de la pantalla */
-    height: 25vh;           /* Un cuarto de la pantalla en altura */
+    height: 15vh;           /* Un cuarto de la pantalla en altura */
     display: flex;          
     justify-content: center;/* Centra la imagen horizontalmente */
     align-items: center;    /* Centra la imagen verticalmente */
