@@ -13,25 +13,26 @@ function inicializarMapa(lat, lon) {
     }).addTo(mapa);
 
 
-    // Dibujar el trazado ferroviario desde PKCoordenas.json
 async function dibujarTrazado() {
     try {
         const respuesta = await fetch('./PKCoordenas.json');
+        if (!respuesta.ok) {
+            throw new Error(`Error HTTP: ${respuesta.status}`);
+        }
         const data = await respuesta.json();
+        console.log("Datos cargados:", data);  // Depuración
 
-        // Extraer coordenadas del JSON
         const coordenadas = data.map(p => [p.Latitud, p.Longitud]);
-
-        // Dibujar una línea en el mapa
         L.polyline(coordenadas, {
-            color: 'red',   // Cambia el color si deseas
-            weight: 4,     // Grosor de la línea
-            opacity: 0.7   // Transparencia
+            color: 'red',
+            weight: 4,
+            opacity: 0.7
         }).addTo(mapa);
     } catch (error) {
         console.error("Error al cargar el trazado:", error);
     }
 }
+
 
 
 iconoTren = L.icon({
