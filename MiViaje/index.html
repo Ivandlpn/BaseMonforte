@@ -7,7 +7,6 @@
 
     <!-- Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         * {
@@ -92,27 +91,57 @@
     </div>
 
     <script>
+        let mapa, marcador;
         let ultimaLatitud = null;
         let ultimaLongitud = null;
+        let ultimaHora = null;
+
+        function inicializarMapa(lat, lon) {
+            mapa = L.map('map').setView([lat, lon], 16);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
+            marcador = L.marker([lat, lon]).addTo(mapa);
+        }
 
         function determinarVia(lat, lon) {
-            let via = "Desconocida";
-            if (ultimaLatitud !== null && ultimaLongitud !== null) {
-                if (lat > ultimaLatitud) {
-                    via = "Vía 1"; // Hacia Albacete
-                } else if (lat < ultimaLatitud) {
-                    via = "Vía 2"; // Hacia Alicante
-                }
+            if (ultimaLatitud !== null && lat !== ultimaLatitud) {
+                return lat > ultimaLatitud ? "Vía 1" : "Vía 2";
             }
-            ultimaLatitud = lat;
-            ultimaLongitud = lon;
-            return via;
+            return "Desconocida";
         }
 
         function actualizarPK(pk, lat, lon) {
             const via = determinarVia(lat, lon);
             document.getElementById("pk").textContent = `${pk} (${via})`;
         }
+
+        function calcularVelocidad(lat, lon) {
+            const ahora = Date.now();
+            if (ultimaLatitud !== null && ultimaLongitud !== null && ultimaHora !== null) {
+                const distancia = Math.sqrt(
+                    Math.pow(lat - ultimaLatitud, 2) + Math.pow(lon - ultimaLongitud, 2)
+                ) * 111139; // Convertir grados a metros
+                const tiempo = (ahora - ultimaHora) / 1000;
+                const velocidad = (distancia / tiempo) * 3.6;
+                document.getElementById("velocidad").textContent = `Velocidad: ${velocidad.toFixed(0)} Km/h`;
+            }
+            ultimaLatitud = lat;
+            ultimaLongitud = lon;
+            ultimaHora = ahora;
+        }
+
+        navigator.geolocation.watchPosition(
+            (pos) => {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+                if (!mapa) inicializarMapa(lat, lon);
+                marcador.setLatLng([lat, lon]);
+                mapa.setView([lat, lon]);
+                calcularVelocidad(lat, lon);
+                actualizarPK("123+456", lat, lon);
+            },
+            (err) => console.error("Error al obtener ubicación:", err),
+            { enableHighAccuracy: true, maximumAge: 0 }
+        );
     </script>
 </body>
 </html>
