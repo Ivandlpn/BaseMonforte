@@ -5,20 +5,18 @@ function inicializarMapa(lat, lon) {
     mapa = L.map('map', {
         center: [lat, lon],
         zoom: 16,
-        attributionControl: false // Desactiva el texto de atribución
+        attributionControl: false
     });
 
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         maxZoom: 19
     }).addTo(mapa);
 
-// Cambiar la ruta del ícono del tren
-iconoTren = L.icon({
-    iconUrl: 'img/MarcadorTren.png', // Nueva ruta
-    iconSize: [40, 40],    // Ajusta el tamaño según lo que necesites
-    iconAnchor: [20, 20]   // Punto de anclaje (centro del ícono)
-});
-
+    iconoTren = L.icon({
+        iconUrl: 'img/MarcadorTren.png',
+        iconSize: [40, 40],
+        iconAnchor: [20, 20]
+    });
 
     marcadorTren = L.marker([lat, lon], { icon: iconoTren }).addTo(mapa);
 }
@@ -40,11 +38,10 @@ function calcularVelocidad(lat, lon) {
         const distancia = calcularDistancia(
             ultimaPosicion.lat,
             ultimaPosicion.lon,
-            lat,
-            lon
+            lat, lon
         );
-        const tiempo = (ahora - ultimaHora) / 1000; // Segundos
-        const velocidad = (distancia / tiempo) * 3.6; // m/s a km/h
+        const tiempo = (ahora - ultimaHora) / 1000;
+        const velocidad = (distancia / tiempo) * 3.6;
 
         document.getElementById('velocidad').textContent = velocidad.toFixed(1);
     }
@@ -55,7 +52,7 @@ function calcularVelocidad(lat, lon) {
 
 // Calcular distancia entre dos coordenadas (Haversine)
 function calcularDistancia(lat1, lon1, lat2, lon2) {
-    const R = 6371000; // Radio de la Tierra en metros
+    const R = 6371000;
     const φ1 = lat1 * Math.PI / 180;
     const φ2 = lat2 * Math.PI / 180;
     const Δφ = (lat2 - lat1) * Math.PI / 180;
