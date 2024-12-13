@@ -131,21 +131,6 @@
             ultimaHora = ahora;
         }
 
-        navigator.geolocation.watchPosition(
-            (pos) => {
-                const lat = pos.coords.latitude;
-                const lon = pos.coords.longitude;
-                if (!mapa) inicializarMapa(lat, lon);
-                marcador.setLatLng([lat, lon]);
-                mapa.setView([lat, lon]);
-                calcularVelocidad(lat, lon);
-                actualizarPK("475+156", lat, lon);
-                document.getElementById("lugar").textContent = `Ubicación: (${lat.toFixed(5)}, ${lon.toFixed(5)})`;
-            },
-            (err) => console.error("Error al obtener ubicación:", err),
-            { enableHighAccuracy: true, maximumAge: 0 }
-        );
-    </script>
 async function obtenerMunicipio(lat, lon) {
     try {
         const respuesta = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
@@ -175,4 +160,3 @@ navigator.geolocation.watchPosition(
     </script>
 </body>
 </html>
-
