@@ -12,6 +12,28 @@ function inicializarMapa(lat, lon) {
         maxZoom: 19
     }).addTo(mapa);
 
+
+    // Dibujar el trazado ferroviario desde PKCoordenas.json
+async function dibujarTrazado() {
+    try {
+        const respuesta = await fetch('./PKCoordenas.json');
+        const data = await respuesta.json();
+
+        // Extraer coordenadas del JSON
+        const coordenadas = data.map(p => [p.Latitud, p.Longitud]);
+
+        // Dibujar una línea en el mapa
+        L.polyline(coordenadas, {
+            color: 'red',   // Cambia el color si deseas
+            weight: 4,     // Grosor de la línea
+            opacity: 0.7   // Transparencia
+        }).addTo(mapa);
+    } catch (error) {
+        console.error("Error al cargar el trazado:", error);
+    }
+}
+
+
 iconoTren = L.icon({
     iconUrl: 'img/MarcadorTren.png', // Ruta a la imagen local
     iconSize: [80, 80],
@@ -100,6 +122,7 @@ navigator.geolocation.watchPosition(
 
         if (!mapa) {
             inicializarMapa(lat, lon);
+            dibujarTrazado();  // Dibuja el trazado al inicializar el ma
         }
 
         actualizarPosicion(lat, lon);
