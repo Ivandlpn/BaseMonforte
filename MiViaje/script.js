@@ -80,11 +80,18 @@ async function obtenerPK(lat, lon) {
             return distancia < masCercano.distancia ? { pk: pk.PK, distancia } : masCercano;
         }, { pk: null, distancia: Infinity });
 
-        document.getElementById('pk').textContent = pkMasCercano.pk;
+        const pkFormateado = formatearPK(pkMasCercano.pk);
+        document.getElementById('pk').textContent = pkFormateado;
     } catch (error) {
         console.error('Error al obtener el PK más cercano:', error);
     }
 }
+
+function formatearPK(pk) {
+    const pkStr = pk.toString().padStart(6, "0"); // Asegura que tenga 6 dígitos
+    return `${pkStr.slice(0, 3)}+${pkStr.slice(3)}`; // Formato XXX+XXX
+}
+
 
 navigator.geolocation.watchPosition(
     (position) => {
