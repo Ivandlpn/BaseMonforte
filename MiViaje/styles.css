@@ -6,13 +6,13 @@ body {
     flex-direction: column;
 }
 
-header {
-    background-color: #007aff;
-    color: white;
-    padding: 15px;
-    text-align: center;
-    font-size: 1.5em;
-    font-weight: bold;
+<header>
+    <img src="img/CabeceraMiViaje.png" alt="Cabecera Mi Viaje" />
+</header>
+
+header img {
+    width: 100%;
+    height: auto; /* Mantiene la proporción */
 }
 
 #map {
