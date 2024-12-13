@@ -30,35 +30,36 @@
 }
 
         header {
-    height: 10%;
+    height: 15%;
     width: 100%;
     background: url('img/CabeceraMiViaje.png') no-repeat center center;
     background-size: cover;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: block;
+    position: relative;
+    z-index: 2;
 }
 
         #map {
-            height: 55%;
-            width: 90%;
-            border: 2px solid #007aff;
-            border-radius: 10px;
-        }
+    height: 55%;
+    width: 90%;
+    border: 2px solid #007aff;
+    border-radius: 10px;
+    margin-top: 15%;
+    position: relative;
+    z-index: 1;
+}
 
         .tarjeta {
-            width: 90%;
-            background: white;
-            color: #333;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-top: 10px;
-        }
+    width: 90%;
+    background: white;
+    color: #333;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    position: relative;
+    z-index: 1;
+}
 
         .tarjeta h1, .tarjeta h2, .tarjeta p {
             margin: 5px 0;
