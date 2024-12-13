@@ -48,16 +48,16 @@ header {
 
 .tarjeta h1 {
     margin: 5px 0; /* Márgenes más pequeños */
-    font-size: 1.5em; /* Reducir tamaño de fuente */
+    font-size: 1.8em; /* Reducir tamaño de fuente */
 }
 
 .tarjeta h2 {
     margin: 5px 0;
-    font-size: 1.2em; /* Reducir tamaño de fuente */
+    font-size: 1.5em; /* Reducir tamaño de fuente */
 }
 
 .tarjeta p {
     margin: 5px 0;
-    font-size: 1em;
+    font-size: 1.2em;
     opacity: 0.9; /* Más suavidad en el texto */
 }
