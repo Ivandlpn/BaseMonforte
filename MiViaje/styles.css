@@ -16,25 +16,24 @@ header {
 }
 
 #map {
-    height: calc(100vh - 150px); /* Ajusta el mapa para dejar espacio para la tarjeta */
+    height: 70%; /* Ocupa el 70% de la altura de la pantalla */
     width: 100%; /* Asegura que ocupe todo el ancho */
 }
 
 .tarjeta {
-    position: absolute; /* Asegura que esté siempre sobre el mapa */
-    bottom: 10px; /* Separa la tarjeta de la parte inferior */
-    left: 50%;
-    transform: translateX(-50%);
+    height: 30%; /* Ocupa el 30% restante de la pantalla */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background-color: rgba(0, 122, 255, 0.9);
     color: white;
-    border-radius: 20px;
-    padding: 20px 30px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 20px 20px 0 0; /* Bordes redondeados en la parte superior */
+    padding: 20px;
     font-family: Arial, sans-serif;
     text-align: center;
-    width: 90%; /* Ajusta mejor para pantallas móviles */
-    max-width: 400px;
-    z-index: 1000; /* Asegura que la tarjeta esté sobre el mapa */
+    width: 100%; /* Asegura que ocupe todo el ancho */
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
 }
 
 
