@@ -238,6 +238,27 @@ botonGuardar.style.cssText = estiloBoton;
 contenedorBotones.appendChild(botonGuardar);
                 
                 
+function mostrarMensaje(mensaje) {
+    const mensajeDiv = document.createElement("div");
+    mensajeDiv.textContent = mensaje;
+    mensajeDiv.style.position = "fixed";
+    mensajeDiv.style.bottom = "20px";
+    mensajeDiv.style.left = "50%";
+    mensajeDiv.style.transform = "translateX(-50%)";
+    mensajeDiv.style.backgroundColor = "#28a745"; // Verde de confirmación
+    mensajeDiv.style.color = "white";
+    mensajeDiv.style.padding = "10px 20px";
+    mensajeDiv.style.borderRadius = "5px";
+    mensajeDiv.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.1)";
+    mensajeDiv.style.zIndex = "1000";
+    mensajeDiv.style.fontSize = "1.2em";
+    document.body.appendChild(mensajeDiv);
+
+    setTimeout(() => {
+        mensajeDiv.remove();
+    }, 3000); // El mensaje desaparecerá después de 3 segundos
+}
+
 botonGuardar.addEventListener("click", () => {
     try {
         // Obtener el PK formateado
@@ -246,7 +267,7 @@ botonGuardar.addEventListener("click", () => {
         // Obtener la fecha actual
         const fechaActual = new Date();
         const dia = String(fechaActual.getDate()).padStart(2, "0");
-        const mes = String(fechaActual.getMonth() + 1).padStart(2, "0"); // Los meses comienzan en 0
+        const mes = String(fechaActual.getMonth() + 1).padStart(2, "0");
         const anio = fechaActual.getFullYear();
         const fechaFormateada = `${dia}-${mes}-${anio}`;
 
@@ -274,8 +295,8 @@ botonGuardar.addEventListener("click", () => {
             // Liberar el objeto URL
             URL.revokeObjectURL(url);
 
-            // Mensaje de confirmación
-            alert("✅ Imagen guardada correctamente.");
+            // Mostrar el mensaje de confirmación sin el nombre del sitio
+            mostrarMensaje("Foto guardada");
         }, "image/jpeg"); // Formato JPEG
     } catch (error) {
         console.error("Error al intentar guardar la imagen:", error);
