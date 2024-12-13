@@ -14,8 +14,8 @@ function inicializarMapa(lat, lon) {
 
 iconoTren = L.icon({
     iconUrl: 'img/MarcadorTren.png', // Ruta a la imagen local
-    iconSize: [40, 40],
-    iconAnchor: [20, 20]
+    iconSize: [80, 80],
+    iconAnchor: [40, 40]
 });
 
 
