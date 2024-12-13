@@ -1,144 +1,151 @@
-let mapa, marcadorTren, iconoTren;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Viaje en Cabina</title>
 
-// Inicializar el mapa
-function inicializarMapa(lat, lon) {
-    mapa = L.map('map', {
-        center: [lat, lon],
-        zoom: 16,
-        attributionControl: false // Desactiva el texto de atribución
-    });
-
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        maxZoom: 19
-    }).addTo(mapa);
-
-iconoTren = L.icon({
-    iconUrl: 'img/MarcadorTren.png', // Ruta a la imagen local
-    iconSize: [80, 80],
-    iconAnchor: [40, 40]
-});
-
-
-    marcadorTren = L.marker([lat, lon], { icon: iconoTren }).addTo(mapa);
-}
-
-// Actualizar la posición del tren en el mapa
-function actualizarPosicion(lat, lon) {
-    marcadorTren.setLatLng([lat, lon]);
-    mapa.setView([lat, lon], 16);
-}
-
-// Calcular velocidad en km/h
-let ultimaPosicion = null;
-let ultimaHora = null;
-
-function calcularVelocidad(lat, lon) {
-    const ahora = Date.now();
-
-    if (ultimaPosicion && ultimaHora) {
-        const distancia = calcularDistancia(
-            ultimaPosicion.lat,
-            ultimaPosicion.lon,
-            lat,
-            lon
-        );
-        const tiempo = (ahora - ultimaHora) / 1000; // Segundos
-        const velocidad = (distancia / tiempo) * 3.6; // m/s a km/h
-
-        document.getElementById('velocidad').textContent = `${velocidad.toFixed(0)} Km/h`; // Sin decimales
-
-    }
-
-    ultimaPosicion = { lat, lon };
-    ultimaHora = ahora;
-}
-
-// Calcular distancia entre dos coordenadas (Haversine)
-function calcularDistancia(lat1, lon1, lat2, lon2) {
-    const R = 6371000; // Radio de la Tierra en metros
-    const φ1 = lat1 * Math.PI / 180;
-    const φ2 = lat2 * Math.PI / 180;
-    const Δφ = (lat2 - lat1) * Math.PI / 180;
-    const Δλ = (lon2 - lon1) * Math.PI / 180;
-
-    const a = Math.sin(Δφ / 2) ** 2 +
-              Math.cos(φ1) * Math.cos(φ2) *
-              Math.sin(Δλ / 2) ** 2;
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-    return R * c;
-}
-
-// Obtener el PK más cercano
-async function obtenerPK(lat, lon) {
-    try {
-        const respuesta = await fetch('./PKCoordenas.json');
-        const data = await respuesta.json();
-
-        let pkMasCercano = data.reduce((masCercano, pk) => {
-            const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
-            return distancia < masCercano.distancia ? { pk: pk.PK, distancia } : masCercano;
-        }, { pk: null, distancia: Infinity });
-
-        const pkFormateado = formatearPK(pkMasCercano.pk);
-        document.getElementById('pk').textContent = pkFormateado;
-    } catch (error) {
-        console.error('Error al obtener el PK más cercano:', error);
-    }
-}
-
-function formatearPK(pk) {
-    const pkStr = pk.toString().padStart(6, "0"); // Asegura que tenga 6 dígitos
-    return `${pkStr.slice(0, 3)}+${pkStr.slice(3)}`; // Formato XXX+XXX
-}
-
-function determinarVia(lat) {
-    if (ultimaLatitud === null) {
-        ultimaLatitud = lat;  // Inicializa si es la primera vez
-        return "Desconocida"; // Sin dirección aún
-    }
-    const via = lat > ultimaLatitud ? "Vía 1" : "Vía 2";
-    ultimaLatitud = lat;  // Actualiza para la próxima comparación
-    return via;
-}
-
-function actualizarPK(pk, lat) {
-    const via = determinarVia(lat);
-    document.getElementById("pk").textContent = `${pk} (${via})`;
-}
-
-navigator.geolocation.watchPosition(
-    (position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-
-        if (!mapa) {
-            inicializarMapa(lat, lon);
+    <!-- Leaflet.js -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        actualizarPosicion(lat, lon);
-        calcularVelocidad(lat, lon);
-        obtenerPK(lat, lon);
-        obtenerLugar(lat, lon); // Actualiza el lugar dinámicamente
-    },
-    (error) => console.error('Error al obtener la ubicación:', error),
-    { enableHighAccuracy: true, maximumAge: 0 }
-);
+        body {
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            overflow: hidden;
+            background: #f4f4f4;
+        }
 
+        header {
+            height: 15%;
+            width: 100%;
+            background: url('img/CabeceraMiViaje.png') no-repeat center center;
+            background-size: cover;
+        }
 
-async function obtenerLugar(lat, lon) {
-    try {
-        const respuesta = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
-        const data = await respuesta.json();
+        #map {
+            height: 55%;
+            width: 100%;
+            border: 2px solid #007aff;
+        }
 
-        const municipio = data.address.city || data.address.town || data.address.village || "Desconocido";
-        const provincia = data.address.state || "Desconocido";
+        .tarjeta {
+            width: 90%;
+            background: white;
+            color: #333;
+            border-radius: 10px;
+            padding: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 5px;
+        }
 
-       document.getElementById('lugar').textContent = `${municipio}`;
+        .tarjeta h1 {
+            font-size: 1.6em;
+            color: #007aff;
+        }
 
-    } catch (error) {
-        console.error("Error al obtener el lugar:", error);
-        document.getElementById('lugar').textContent = "Lugar: Desconocido";
-    }
-}
+        .tarjeta h2 {
+            font-size: 1.2em;
+        }
 
+        .tarjeta p {
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        #error {
+            color: red;
+            font-size: 1em;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header></header>
+    <div id="map"></div>
+    <div class="tarjeta">
+        <h1 id="pk">475+156</h1>
+        <h2 id="velocidad">Velocidad: 0 Km/h</h2>
+        <p id="lugar">Buscando Ubicación...</p>
+    </div>
+    <p id="error"></p>
+
+    <script>
+        let mapa, marcador;
+        let ultimaLatitud = null;
+
+        function inicializarMapa(lat, lon) {
+            mapa = L.map('map').setView([lat, lon], 16);
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                maxZoom: 19
+            }).addTo(mapa);
+
+            const iconoTren = L.icon({
+                iconUrl: 'img/MarcadorTren.png',
+                iconSize: [80, 80],
+                iconAnchor: [40, 80]
+            });
+
+            marcador = L.marker([lat, lon], { icon: iconoTren }).addTo(mapa);
+        }
+
+        function determinarVia(lat) {
+            if (ultimaLatitud === null) {
+                ultimaLatitud = lat;
+                return "Desconocida";
+            }
+            const via = lat > ultimaLatitud ? "Vía 1" : "Vía 2";
+            ultimaLatitud = lat;
+            return via;
+        }
+
+        function actualizarPK(pk, lat) {
+            const via = determinarVia(lat);
+            document.getElementById("pk").textContent = `${pk} (${via})`;
+        }
+
+        navigator.geolocation.watchPosition(
+            (pos) => {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+
+                if (!mapa) inicializarMapa(lat, lon);
+                marcador.setLatLng([lat, lon]);
+                mapa.setView([lat, lon]);
+
+                actualizarPK("475+156", lat);
+                obtenerMunicipio(lat, lon);
+            },
+            (err) => manejarError("Error al obtener ubicación: " + err.message),
+            { enableHighAccuracy: true, maximumAge: 0 }
+        );
+
+        async function obtenerMunicipio(lat, lon) {
+            try {
+                const respuesta = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+                const data = await respuesta.json();
+                const municipio = data.address.city || data.address.town || data.address.village || "Desconocido";
+                document.getElementById("lugar").textContent = `Ubicación: ${municipio}`;
+            } catch (error) {
+                manejarError("Error al obtener el municipio.");
+            }
+        }
+
+        function manejarError(mensaje) {
+            document.getElementById("error").textContent = mensaje;
+        }
+    </script>
+</body>
+</html>
