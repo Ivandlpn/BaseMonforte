@@ -93,7 +93,13 @@ function formatearPK(pk) {
 }
 
 function determinarVia(lat) {
-    return lat > ultimaLatitud ? "Vía 1" : "Vía 2";
+    if (ultimaLatitud === null) {
+        ultimaLatitud = lat;  // Inicializa si es la primera vez
+        return "Desconocida"; // Sin dirección aún
+    }
+    const via = lat > ultimaLatitud ? "Vía 1" : "Vía 2";
+    ultimaLatitud = lat;  // Actualiza para la próxima comparación
+    return via;
 }
 
 function actualizarPK(pk, lat) {
