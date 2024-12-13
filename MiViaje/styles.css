@@ -1,59 +1,60 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    height: 100vh; /* La pantalla completa */
+    height: 100vh; /* 100% de la altura de la pantalla */
     display: flex;
-    flex-direction: column; /* Los elementos se apilan verticalmente */
+    flex-direction: column; /* Apila los elementos verticalmente */
+    overflow: hidden; /* Evita cualquier desplazamiento */
 }
 
 header {
-    height: 15%; /* La cabecera ocupa el 10% de la pantalla */
+    height: 10%; /* La cabecera ocupa el 10% de la pantalla */
     background-color: #007aff;
     color: white;
     text-align: center;
     font-size: 1.5em;
     font-weight: bold;
     display: flex;
-    align-items: center; /* Centrado vertical del texto */
-    justify-content: center; /* Centrado horizontal del texto */
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
+    box-sizing: border-box; /* Incluye padding en el cálculo del tamaño */
 }
 
 #map {
-    height: 65%; /* El mapa ocupa el 60% de la pantalla */
-    width: 100%; /* Asegura que el ancho sea completo */
+    height: 60%; /* El mapa ocupa el 60% de la pantalla */
+    width: 100%; /* Se asegura de usar todo el ancho */
+    box-sizing: border-box; /* Previene desbordamientos por bordes o padding */
 }
 
 .tarjeta {
-    height: 20%; /* La tarjeta ocupa el 30% de la pantalla */
+    height: 30%; /* La tarjeta ocupa el 30% de la pantalla */
     display: flex;
     flex-direction: column;
     justify-content: center; /* Centrado vertical del contenido */
     align-items: center; /* Centrado horizontal del contenido */
     background-color: rgba(0, 122, 255, 0.9);
     color: white;
-    border-radius: 15px; /* Bordes redondeados en la parte superior */
-    padding: 10px;
+    border-radius: 20px 20px 0 0; /* Bordes redondeados en la parte superior */
+    padding: 10px; /* Padding interno reducido */
     font-family: Arial, sans-serif;
     text-align: center;
-    width: 100%; /* Asegura que ocupe todo el ancho */
+    width: 100%; /* Asegura que use todo el ancho de la pantalla */
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box; /* Evita que el padding expanda el tamaño */
 }
 
-
 .tarjeta h1 {
-    margin: 5px 0;
-    font-size: 2em; /* Fuente grande para el PK */
-    font-weight: bold;
+    margin: 5px 0; /* Márgenes más pequeños */
+    font-size: 1.5em; /* Reducir tamaño de fuente */
 }
 
 .tarjeta h2 {
     margin: 5px 0;
-    font-size: 1.5em; /* Fuente mediana para la velocidad */
+    font-size: 1.2em; /* Reducir tamaño de fuente */
 }
 
 .tarjeta p {
     margin: 5px 0;
-    font-size: 1em; /* Fuente pequeña para el lugar */
-    opacity: 0.9; /* Un poco menos destacada */
+    font-size: 1em;
+    opacity: 0.9; /* Más suavidad en el texto */
 }
-
