@@ -58,11 +58,13 @@ header img {
   background-color: #007aff;
   color: white;
   border: none;
-  padding: 10px 15px;
+  padding: 10px 15px; /* Ajusta si quieres un tamaño más grande o pequeño */
   border-radius: 5px;
   cursor: pointer;
   font-size: 1.5em;
   text-align: center;
+  appearance: none; /* Desactiva estilos nativos del navegador */
+  -webkit-appearance: none; /* Compatibilidad con WebKit */
 }
 
 #actualizarUbicacion:hover {
@@ -71,9 +73,11 @@ header img {
 
 #actualizarUbicacion:active,
 #actualizarUbicacion:focus {
-  font-size: 1.5em; /* Asegura que no cambie al ser pulsado */
-  outline: none; /* Opcional: elimina el contorno de foco */
+  font-size: 1.5em; /* Asegura que no cambie el tamaño */
+  outline: none; /* Opcional: elimina el contorno */
+  transform: translateX(-50%); /* Mantén la misma posición */
 }
+
 
 /* Sección de la tarjeta con el icono */
 #calculoPK {
