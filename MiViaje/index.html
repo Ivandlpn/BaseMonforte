@@ -7,6 +7,7 @@
 
     <!-- Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         * {
@@ -16,139 +17,80 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            overflow: hidden;
-            background: #f4f4f4;
-        }
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
 
         header {
-            height: 15%;
-            width: 100%;
-            background: url('img/CabeceraMiViaje.png') no-repeat center center;
-            background-size: cover;
-        }
+    height: 15%;
+    width: 100%;
+    background: url('img/CabeceraMiViaje.png') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    z-index: 2;
+}
 
         #map {
-            height: 55%;
-            width: 100%;
-            border: 2px solid #007aff;
-        }
+    height: 55%;
+    width: 100%;
+    border: 2px solid #007aff;
+    border-radius: 0px;
+    position: relative;
+    z-index: 1;
+}
 
         .tarjeta {
-            width: 90%;
-            background: white;
-            color: #333;
-            border-radius: 10px;
-            padding: 8px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-top: 5px;
-        }
+    width: 90%;
+    background: white;
+    color: #333;
+    border-radius: 10px;
+    padding: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 5px;
+    position: relative;
+    z-index: 1;
+}
+
+        .tarjeta h1, .tarjeta h2, .tarjeta p {
+    font-size: 0.9em;
+    color: #555;
+}
 
         .tarjeta h1 {
-            font-size: 1.6em;
-            color: #007aff;
-        }
+    font-size: 1.8em;
+    color: #007aff;
+}
 
         .tarjeta h2 {
-            font-size: 1.2em;
-        }
+    font-size: 1.4em;
+}
 
         .tarjeta p {
-            font-size: 0.9em;
-            color: #555;
-        }
-
-        #error {
-            color: red;
-            font-size: 1em;
-            margin-top: 10px;
-            font-weight: bold;
-        }
+    font-size: 1em;
+    color: #555;
+}
     </style>
 </head>
 <body>
     <header></header>
+
     <div id="map"></div>
+
     <div class="tarjeta">
-        <h1 id="pk">475+156</h1>
-        <h2 id="velocidad">Velocidad: 0 Km/h</h2>
-        <p id="lugar">Buscando Ubicación...</p>
+        <h1 id="pk">354+978</h1>
+        <h2 id="velocidad">Velocidad: 289 Km/h</h2>
+        <p id="lugar">Lugar: Chinchilla (Albacete)</p>
     </div>
-    <p id="error"></p>
 
-    <script>
-        let mapa, marcador;
-
-function inicializarMapa(lat, lon) {
-    mapa = L.map('map').setView([lat, lon], 16);
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        maxZoom: 19
-    }).addTo(mapa);
-
-    const iconoTren = L.icon({
-        iconUrl: 'img/MarcadorTren.png',
-        iconSize: [80, 80],    // Tamaño del icono
-        iconAnchor: [40, 80],  // Punto de anclaje
-    });
-
-    marcador = L.marker([lat, lon], { icon: iconoTren }).addTo(mapa);
-}
-
-
-        async function obtenerMunicipio(lat, lon) {
-            try {
-                const respuesta = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
-                const data = await respuesta.json();
-                const municipio = data.address.city || data.address.town || data.address.village || "Desconocido";
-                document.getElementById("lugar").textContent = `Ubicación: ${municipio}`;
-            } catch (error) {
-                manejarError("Error al obtener el municipio.");
-            }
-        }
-
-        function calcularVelocidad(lat, lon) {
-            const ahora = Date.now();
-            if (ultimaLatitud && ultimaLongitud && ultimaHora) {
-                const distancia = Math.sqrt(
-                    Math.pow(lat - ultimaLatitud, 2) + Math.pow(lon - ultimaLongitud, 2)
-                ) * 111139;
-                const tiempo = (ahora - ultimaHora) / 1000;
-                const velocidad = (distancia / tiempo) * 3.6;
-                document.getElementById("velocidad").textContent = `Velocidad: ${velocidad.toFixed(0)} Km/h`;
-            }
-            ultimaLatitud = lat;
-            ultimaLongitud = lon;
-            ultimaHora = ahora;
-        }
-
-        function manejarError(mensaje) {
-            document.getElementById("error").textContent = mensaje;
-        }
-
-        let ultimaLatitud = null;
-        let ultimaLongitud = null;
-        let ultimaHora = null;
-
-        navigator.geolocation.watchPosition(
-            (pos) => {
-                const lat = pos.coords.latitude;
-                const lon = pos.coords.longitude;
-                if (!mapa) inicializarMapa(lat, lon);
-                marcador.setLatLng([lat, lon]);
-                mapa.setView([lat, lon]);
-                calcularVelocidad(lat, lon);
-                obtenerMunicipio(lat, lon);
-                manejarError(""); // Borrar errores
-            },
-            (err) => manejarError("Error al obtener ubicación: " + err.message),
-            { enableHighAccuracy: true, maximumAge: 0 }
-        );
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
