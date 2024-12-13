@@ -85,7 +85,6 @@ async function obtenerPK(lat, lon) {
     }
 }
 
-// Rastreo en tiempo real
 navigator.geolocation.watchPosition(
     (position) => {
         const lat = position.coords.latitude;
@@ -98,7 +97,25 @@ navigator.geolocation.watchPosition(
         actualizarPosicion(lat, lon);
         calcularVelocidad(lat, lon);
         obtenerPK(lat, lon);
+        obtenerLugar(lat, lon); // Actualiza el lugar dinámicamente
     },
     (error) => console.error('Error al obtener la ubicación:', error),
     { enableHighAccuracy: true, maximumAge: 0 }
 );
+
+
+async function obtenerLugar(lat, lon) {
+    try {
+        const respuesta = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+        const data = await respuesta.json();
+
+        const municipio = data.address.city || data.address.town || data.address.village || "Desconocido";
+        const provincia = data.address.state || "Desconocido";
+
+        document.getElementById('lugar').textContent = `Lugar: ${municipio} (${provincia})`;
+    } catch (error) {
+        console.error("Error al obtener el lugar:", error);
+        document.getElementById('lugar').textContent = "Lugar: Desconocido";
+    }
+}
+
