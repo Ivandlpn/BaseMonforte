@@ -92,6 +92,14 @@ function formatearPK(pk) {
     return `${pkStr.slice(0, 3)}+${pkStr.slice(3)}`; // Formato XXX+XXX
 }
 
+function determinarVia(lat) {
+    return lat > ultimaLatitud ? "Vía 1" : "Vía 2";
+}
+
+function actualizarPK(pk, lat) {
+    const via = determinarVia(lat);
+    document.getElementById("pk").textContent = `${pk} (${via})`;
+}
 
 navigator.geolocation.watchPosition(
     (position) => {
