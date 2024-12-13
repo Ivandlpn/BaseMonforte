@@ -85,13 +85,21 @@
     <script>
         let mapa, marcador;
 
-        function inicializarMapa(lat, lon) {
-            mapa = L.map('map').setView([lat, lon], 16);
-            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-                maxZoom: 19
-            }).addTo(mapa);
-            marcador = L.marker([lat, lon]).addTo(mapa);
-        }
+function inicializarMapa(lat, lon) {
+    mapa = L.map('map').setView([lat, lon], 16);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19
+    }).addTo(mapa);
+
+    const iconoTren = L.icon({
+        iconUrl: 'img/MarcadorTren.png',
+        iconSize: [80, 80],    // Tamaño del icono
+        iconAnchor: [40, 80],  // Punto de anclaje
+    });
+
+    marcador = L.marker([lat, lon], { icon: iconoTren }).addTo(mapa);
+}
+
 
         async function obtenerMunicipio(lat, lon) {
             try {
