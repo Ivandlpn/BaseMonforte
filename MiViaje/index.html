@@ -3,53 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viajes en Cabina</title>
+    <title>Mi Viaje en Cabina</title>
 
     <!-- Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <!-- Estilos personalizados -->
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        #map {
-            flex: 1;
-        }
-
-        .tarjeta {
-            position: fixed;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 122, 255, 0.9);
-            color: white;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            font-size: 1.2em;
-            z-index: 1000;
-            text-align: center;
-        }
-
-        .tarjeta h2 {
-            margin: 0;
-            font-size: 1.3em;
-        }
-
-        .tarjeta p {
-            margin: 5px 0 0;
-            font-size: 1.1em;
-        }
-    </style>
 </head>
 <body>
+    <header>Mi Viaje en Cabina</header>
+
     <div id="map"></div>
 
     <div class="tarjeta">
@@ -57,108 +20,6 @@
         <p>PK actual: <span id="pk">---</span></p>
     </div>
 
-    <script>
-        let mapa, marcadorTren, iconoTren;
-
-        // Inicializar el mapa
-        function inicializarMapa(lat, lon) {
-            mapa = L.map('map').setView([lat, lon], 16);
-
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors',
-                maxZoom: 19
-            }).addTo(mapa);
-
-            iconoTren = L.icon({
-                iconUrl: 'https://cdn-icons-png.flaticon.com/512/1985/1985172.png', // Cambia por un icono personalizado
-                iconSize: [40, 40],
-                iconAnchor: [20, 20]
-            });
-
-            marcadorTren = L.marker([lat, lon], { icon: iconoTren }).addTo(mapa);
-        }
-
-        // Actualizar la posición del tren en el mapa
-        function actualizarPosicion(lat, lon) {
-            marcadorTren.setLatLng([lat, lon]);
-            mapa.setView([lat, lon], 16);
-        }
-
-        // Calcular velocidad en km/h
-        let ultimaPosicion = null;
-        let ultimaHora = null;
-
-        function calcularVelocidad(lat, lon) {
-            const ahora = Date.now();
-
-            if (ultimaPosicion && ultimaHora) {
-                const distancia = calcularDistancia(
-                    ultimaPosicion.lat,
-                    ultimaPosicion.lon,
-                    lat,
-                    lon
-                );
-                const tiempo = (ahora - ultimaHora) / 1000; // Segundos
-                const velocidad = (distancia / tiempo) * 3.6; // m/s a km/h
-
-                document.getElementById('velocidad').textContent = velocidad.toFixed(1);
-            }
-
-            ultimaPosicion = { lat, lon };
-            ultimaHora = ahora;
-        }
-
-        // Calcular distancia entre dos coordenadas (Haversine)
-        function calcularDistancia(lat1, lon1, lat2, lon2) {
-            const R = 6371000; // Radio de la Tierra en metros
-            const φ1 = lat1 * Math.PI / 180;
-            const φ2 = lat2 * Math.PI / 180;
-            const Δφ = (lat2 - lat1) * Math.PI / 180;
-            const Δλ = (lon2 - lon1) * Math.PI / 180;
-
-            const a = Math.sin(Δφ / 2) ** 2 +
-                      Math.cos(φ1) * Math.cos(φ2) *
-                      Math.sin(Δλ / 2) ** 2;
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-            return R * c;
-        }
-
-        // Obtener el PK más cercano
-        async function obtenerPK(lat, lon) {
-            try {
-                const respuesta = await fetch('./PKCoordenas.json');
-                const data = await respuesta.json();
-
-                let pkMasCercano = data.reduce((masCercano, pk) => {
-                    const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
-                    return distancia < masCercano.distancia ? { pk: pk.PK, distancia } : masCercano;
-                }, { pk: null, distancia: Infinity });
-
-                document.getElementById('pk').textContent = pkMasCercano.pk;
-            } catch (error) {
-                console.error('Error al obtener el PK más cercano:', error);
-            }
-        }
-
-        // Rastreo en tiempo real
-        navigator.geolocation.watchPosition(
-            (position) => {
-                const lat = position.coords.latitude;
-                const lon = position.coords.longitude;
-
-                if (!mapa) {
-                    inicializarMapa(lat, lon);
-                }
-
-                actualizarPosicion(lat, lon);
-                calcularVelocidad(lat, lon);
-                obtenerPK(lat, lon);
-            },
-            (error) => console.error('Error al obtener la ubicación:', error),
-            { enableHighAccuracy: true, maximumAge: 0 }
-        );
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
-
