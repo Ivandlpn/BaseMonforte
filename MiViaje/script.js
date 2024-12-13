@@ -120,7 +120,7 @@ async function obtenerLugar(lat, lon) {
         const municipio = data.address.city || data.address.town || data.address.village || "Desconocido";
         const provincia = data.address.state || "Desconocido";
 
-       document.getElementById('lugar').textContent = `${municipio} (${provincia})`;
+       document.getElementById('lugar').textContent = `${municipio}`;
 
     } catch (error) {
         console.error("Error al obtener el lugar:", error);
