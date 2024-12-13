@@ -12,11 +12,12 @@ function inicializarMapa(lat, lon) {
         maxZoom: 19
     }).addTo(mapa);
 
-    iconoTren = L.icon({
-        iconUrl: 'https://cdn-icons-png.flaticon.com/512/1985/1985172.png',
-        iconSize: [40, 40],
-        iconAnchor: [20, 20]
-    });
+iconoTren = L.icon({
+    iconUrl: 'img/MarcadorTren.png', // Ruta a la imagen local
+    iconSize: [40, 40],
+    iconAnchor: [20, 20]
+});
+
 
     marcadorTren = L.marker([lat, lon], { icon: iconoTren }).addTo(mapa);
 }
