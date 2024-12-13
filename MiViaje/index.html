@@ -63,6 +63,13 @@
             font-size: 0.9em;
             color: #555;
         }
+
+        #error {
+            color: red;
+            font-size: 1em;
+            margin-top: 10px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -73,6 +80,7 @@
         <h2 id="velocidad">Velocidad: 0 Km/h</h2>
         <p id="lugar">Buscando Ubicación...</p>
     </div>
+    <p id="error"></p>
 
     <script>
         let mapa, marcador;
@@ -92,8 +100,7 @@
                 const municipio = data.address.city || data.address.town || data.address.village || "Desconocido";
                 document.getElementById("lugar").textContent = `Ubicación: ${municipio}`;
             } catch (error) {
-                console.error("Error al obtener el municipio:", error);
-                document.getElementById("lugar").textContent = "Ubicación: Desconocida";
+                manejarError("Error al obtener el municipio.");
             }
         }
 
@@ -112,6 +119,10 @@
             ultimaHora = ahora;
         }
 
+        function manejarError(mensaje) {
+            document.getElementById("error").textContent = mensaje;
+        }
+
         let ultimaLatitud = null;
         let ultimaLongitud = null;
         let ultimaHora = null;
@@ -125,8 +136,9 @@
                 mapa.setView([lat, lon]);
                 calcularVelocidad(lat, lon);
                 obtenerMunicipio(lat, lon);
+                manejarError(""); // Borrar errores
             },
-            (err) => console.error("Error al obtener ubicación:", err),
+            (err) => manejarError("Error al obtener ubicación: " + err.message),
             { enableHighAccuracy: true, maximumAge: 0 }
         );
     </script>
