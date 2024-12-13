@@ -1,58 +1,72 @@
+/* Ajustes generales */
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
+    padding: 0;
     font-family: Arial, sans-serif;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f4f4f4;
 }
 
-
+/* Cabecera */
 header {
-    width: 100%;            /* Ocupa todo el ancho de la pantalla */
-    height: 15vh;           /* Un cuarto de la pantalla en altura */
-    display: flex;          
-    justify-content: center;/* Centra la imagen horizontalmente */
-    align-items: center;    /* Centra la imagen verticalmente */
-    background-color: #007aff; /* Opcional: color de fondo si la imagen no cubre todo */
+    width: 100%;
+    height: 25vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #007aff;
 }
 
 header img {
-    max-height: 100%;       /* Ajusta la altura según el contenedor */
-    max-width: 90%;         /* Evita que la imagen se desborde horizontalmente */
-    height: auto;           /* Mantiene la proporción */
+    max-height: 100%;
+    max-width: 90%;
+    height: auto;
 }
 
-
-
+/* Mapa */
 #map {
-    flex: 1;
+    width: 90%;
+    height: 40vh;
+    border: 2px solid #007aff;
+    border-radius: 10px;
 }
 
+/* Tarjeta de información */
 .tarjeta {
-    position: fixed;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
+    width: 90%;
+    max-width: 400px;
     background-color: rgba(0, 122, 255, 0.9);
     color: white;
     border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    font-size: 1.5em;
-    z-index: 1000;
+    padding: 10px;
     text-align: center;
-    width: 80%; /* Ajusta el ancho al 80% del contenedor */
-    max-width: 500px; /* Asegura que no exceda un ancho máximo */
-    height: 80px; /* Disminuye la altura de la tarjeta */
-    line-height: 1.2; /* Ajusta el espacio entre las líneas de texto */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-size: 1em;
 }
 
-.tarjeta h2 {
-    margin: 0;
-    font-size: 1.5em;
+.tarjeta h2, .tarjeta p {
+    margin: 5px 0;
 }
 
-.tarjeta p {
-    margin: 10px 0 0;
-    font-size: 1.3em;
+/* Ajustes Responsivos */
+@media (max-height: 600px) {
+    header {
+        height: 20vh;
+    }
+
+    #map {
+        height: 35vh;
+    }
+
+    .tarjeta {
+        font-size: 0.9em;
+    }
 }
