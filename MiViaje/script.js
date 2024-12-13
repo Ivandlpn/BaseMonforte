@@ -2,24 +2,21 @@ let mapa, marcadorTren, iconoTren;
 
 // Cargar las coordenadas desde PKCoordenas.json
 async function dibujarVia() {
-    try {
-        const respuesta = await fetch('PKCoordenas.json');
-        const data = await respuesta.json();
+            try {
+                const respuesta = await fetch('PKCoordenas.json');
+                const data = await respuesta.json();
 
-        // Extraer coordenadas en formato [lat, lon]
-        const trazadoVia = data.map(pk => [pk.Latitud, pk.Longitud]);
+                const trazadoVia = data.map(pk => [pk.Latitud, pk.Longitud]);
 
-        // Dibujar la vía
-        L.polyline(trazadoVia, {
-            color: 'red',        // Color del trazado
-            weight: 5,           // Grosor
-            opacity: 0.7,        // Transparencia
-        }).addTo(mapa);
-
-    } catch (error) {
-        console.error("Error al cargar el trazado:", error);
-    }
-}
+                L.polyline(trazadoVia, {
+                    color: 'red',
+                    weight: 5,
+                    opacity: 0.7,
+                }).addTo(mapa);
+            } catch (error) {
+                console.error("Error al cargar el trazado:", error);
+            }
+        }
 
 // Llamar a la función después de inicializar el mapa
 function inicializarMapa(lat, lon) {
