@@ -31,8 +31,8 @@ header {
     align-items: center; /* Centrado horizontal del contenido */
     background-color: rgba(0, 122, 255, 0.9);
     color: white;
-    border-radius: 20px 20px 0 0; /* Bordes redondeados en la parte superior */
-    padding: 20px;
+    border-radius: 15px; /* Bordes redondeados en la parte superior */
+    padding: 10px;
     font-family: Arial, sans-serif;
     text-align: center;
     width: 100%; /* Asegura que ocupe todo el ancho */
@@ -41,18 +41,18 @@ header {
 
 
 .tarjeta h1 {
-    margin: 0;
+    margin: 5px 0;
     font-size: 2em; /* Fuente grande para el PK */
     font-weight: bold;
 }
 
 .tarjeta h2 {
-    margin: 10px 0 0;
+    margin: 5px 0;
     font-size: 1.5em; /* Fuente mediana para la velocidad */
 }
 
 .tarjeta p {
-    margin: 10px 0 0;
+    margin: 5px 0;
     font-size: 1em; /* Fuente pequeña para el lugar */
     opacity: 0.9; /* Un poco menos destacada */
 }
