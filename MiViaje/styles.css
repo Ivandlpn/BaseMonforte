@@ -27,17 +27,18 @@ header {
 }
 
 .tarjeta {
-    position: relative; /* Para mantenerla en su flujo natural */
-    display: inline-block; /* Se ajusta al ancho de su contenido */
-    background-color: rgba(0, 122, 255, 0.9);
-    color: white;
-    border-radius: 20px; /* Bordes redondeados uniformes */
-    padding: 10px 20px; /* Espaciado interno */
-    font-family: Arial, sans-serif;
+    position: relative; /* Mantiene la tarjeta en su flujo natural */
+    display: inline-block; /* Ajusta el ancho al contenido */
+    background: linear-gradient(135deg, #ffffff, #f0f0f0); /* Fondo degradado sutil */
+    color: #333; /* Texto en gris oscuro para mejor legibilidad */
+    border-radius: 15px; /* Bordes ligeramente redondeados */
+    padding: 15px 40px; /* Más espacio lateral */
+    font-family: 'Arial', sans-serif;
     text-align: center;
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box; /* Asegura que el padding no desborde */
-    margin: 10px auto; /* Centrado horizontal y separación */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera para profundidad */
+    box-sizing: border-box; /* Padding incluido en el tamaño total */
+    margin: 20px auto; /* Centrará la tarjeta horizontalmente con un margen superior */
+    border: 1px solid #ddd; /* Borde sutil */
 }
 
 
