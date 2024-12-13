@@ -32,6 +32,10 @@ header {
     font-size: 1.5em;
     z-index: 1000;
     text-align: center;
+    width: 80%; /* Ajusta el ancho al 80% del contenedor */
+    max-width: 500px; /* Asegura que no exceda un ancho máximo */
+    height: 80px; /* Disminuye la altura de la tarjeta */
+    line-height: 1.2; /* Ajusta el espacio entre las líneas de texto */
 }
 
 .tarjeta h2 {
