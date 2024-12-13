@@ -45,7 +45,8 @@ function calcularVelocidad(lat, lon) {
         const tiempo = (ahora - ultimaHora) / 1000; // Segundos
         const velocidad = (distancia / tiempo) * 3.6; // m/s a km/h
 
-        document.getElementById('velocidad').textContent = velocidad.toFixed(1);
+        document.getElementById('velocidad').textContent = `${velocidad.toFixed(0)} Km/h`; // Sin decimales
+
     }
 
     ultimaPosicion = { lat, lon };
@@ -112,7 +113,8 @@ async function obtenerLugar(lat, lon) {
         const municipio = data.address.city || data.address.town || data.address.village || "Desconocido";
         const provincia = data.address.state || "Desconocido";
 
-        document.getElementById('lugar').textContent = `Lugar: ${municipio} (${provincia})`;
+       document.getElementById('lugar').textContent = `${municipio} (${provincia})`;
+
     } catch (error) {
         console.error("Error al obtener el lugar:", error);
         document.getElementById('lugar').textContent = "Lugar: Desconocido";
