@@ -13,6 +13,7 @@ function inicializarMapa(lat, lon) {
     }).addTo(mapa);
 
 
+// Dibujar el trazado ferroviario desde PKCoordenas.json
 async function dibujarTrazado() {
     try {
         const respuesta = await fetch('./PKCoordenas.json');
@@ -32,6 +33,7 @@ async function dibujarTrazado() {
         console.error("Error al cargar el trazado:", error);
     }
 }
+
 
 
 
