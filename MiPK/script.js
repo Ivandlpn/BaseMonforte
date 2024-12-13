@@ -179,13 +179,13 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 const tarjetaWidth = ctx.measureText(textoPK).width + padding * 2 + margenExtra;
                 const tarjetaHeight = fontSize + padding * 2;
 
-               ctx.fillStyle = "rgba(0, 122, 255, 0.7)"; // Azul con 50% de transparencia
-                ctx.fillRect(
-                    (canvas.width - tarjetaWidth) / 2,
-                    canvas.height - tarjetaHeight - 20,
-                    tarjetaWidth,
-                    tarjetaHeight
-                );
+              ctx.fillStyle = "rgba(0, 122, 255, 0.5)"; // Fondo azul semitransparente
+                const x = (canvas.width - tarjetaWidth) / 2;
+                const y = canvas.height - tarjetaHeight - 20;
+                ctx.beginPath();
+                ctx.roundRect(x, y, tarjetaWidth, tarjetaHeight, 20); // 20 = radio de las esquinas
+                ctx.fill();
+
 
                 ctx.fillStyle = "white";
                 ctx.font = `${fontSize}px Arial`;
