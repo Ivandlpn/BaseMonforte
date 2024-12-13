@@ -16,36 +16,40 @@
             height: 100vh;
             background: linear-gradient(135deg, rgb(26, 68, 136), rgb(203, 24, 35));
             color: #fff;
-            overflow: hidden;
         }
 
         .container {
-            text-align: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
             background: rgba(255, 255, 255, 0.9);
-            padding: 1.5rem;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 400px;
         }
 
         h1 {
+            grid-column: 1 / -1;
             color: rgb(26, 68, 136);
+            text-align: center;
+            font-size: 1.8rem;
             margin-bottom: 1rem;
-            font-size: 1.5rem;
         }
 
         .button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             background: rgb(26, 68, 136);
             color: #fff;
             border: none;
-            padding: 0.5rem 1rem;
-            margin: 0.3rem 0;
-            border-radius: 5px;
+            padding: 1.5rem;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 0.9rem;
-            width: 100%;
-            max-width: 300px;
+            font-size: 1.2rem;
             transition: background-color 0.3s ease, transform 0.2s;
         }
 
@@ -58,23 +62,23 @@
             transform: scale(1);
         }
 
-        @media (max-height: 500px) {
-            .container {
-                padding: 1rem;
-            }
-            .button {
-                font-size: 0.8rem;
-                padding: 0.4rem 0.8rem;
-            }
+        .button-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
         }
 
         @media (max-width: 360px) {
             h1 {
-                font-size: 1.2rem;
+                font-size: 1.5rem;
             }
+
             .button {
-                font-size: 0.8rem;
-                padding: 0.4rem 0.8rem;
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .button-icon {
+                font-size: 1.5rem;
             }
         }
     </style>
@@ -82,12 +86,30 @@
 <body>
     <div class="container">
         <h1>MiBase</h1>
-        <button class="button" onclick="window.location.href='tel:913008066'">Llamar CPS Madrid</button>
-        <button class="button" onclick="window.location.href='tel:963131735'">Llamar CPS Valencia</button>
-        <button class="button" onclick="window.location.href='tel:967539504'">Llamar CSI</button>
-        <button class="button" onclick="window.location.href='tel:967539532'">Llamar CRC</button>
-        <button class="button" onclick="window.open('https://ivandlpn.github.io/BaseMonforte/PKC/', '_blank')">Abrir MiPK</button>
-        <button class="button" onclick="window.location.href='tel:967539503'">Llamar Telemando</button>
+        <button class="button" onclick="window.location.href='tel:913008066'">
+            <span class="button-icon">📞</span>
+            CPS Madrid
+        </button>
+        <button class="button" onclick="window.location.href='tel:963131735'">
+            <span class="button-icon">📞</span>
+            CPS Valencia
+        </button>
+        <button class="button" onclick="window.location.href='tel:967539504'">
+            <span class="button-icon">📞</span>
+            CSI
+        </button>
+        <button class="button" onclick="window.location.href='tel:967539532'">
+            <span class="button-icon">📞</span>
+            CRC
+        </button>
+        <button class="button" onclick="window.open('https://ivandlpn.github.io/BaseMonforte/PKC/', '_blank')">
+            <span class="button-icon">🔗</span>
+            MiPK
+        </button>
+        <button class="button" onclick="window.location.href='tel:967539503'">
+            <span class="button-icon">📞</span>
+            Telemando
+        </button>
     </div>
 </body>
 </html>
