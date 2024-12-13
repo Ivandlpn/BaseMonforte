@@ -179,7 +179,7 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 const tarjetaWidth = ctx.measureText(textoPK).width + padding * 2 + margenExtra;
                 const tarjetaHeight = fontSize + padding * 2;
 
-                ctx.fillStyle = "#007aff";
+               ctx.fillStyle = "rgba(0, 122, 255, 0.7)"; // Azul con 50% de transparencia
                 ctx.fillRect(
                     (canvas.width - tarjetaWidth) / 2,
                     canvas.height - tarjetaHeight - 20,
