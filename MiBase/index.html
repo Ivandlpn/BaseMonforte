@@ -16,30 +16,36 @@
             height: 100vh;
             background: linear-gradient(135deg, rgb(26, 68, 136), rgb(203, 24, 35));
             color: #fff;
+            overflow: hidden;
         }
 
         .container {
             text-align: center;
             background: rgba(255, 255, 255, 0.9);
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 400px;
         }
 
         h1 {
             color: rgb(26, 68, 136);
             margin-bottom: 1rem;
+            font-size: 1.5rem;
         }
 
         .button {
             background: rgb(26, 68, 136);
             color: #fff;
             border: none;
-            padding: 0.75rem 1.5rem;
-            margin: 0.5rem;
+            padding: 0.5rem 1rem;
+            margin: 0.3rem 0;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.9rem;
+            width: 100%;
+            max-width: 300px;
             transition: background-color 0.3s ease, transform 0.2s;
         }
 
@@ -50,6 +56,26 @@
 
         .button:active {
             transform: scale(1);
+        }
+
+        @media (max-height: 500px) {
+            .container {
+                padding: 1rem;
+            }
+            .button {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 1.2rem;
+            }
+            .button {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
         }
     </style>
 </head>
