@@ -27,7 +27,7 @@ header {
 }
 
 .tarjeta {
-    height: 30%; /* La tarjeta ocupa el 30% de la pantalla */
+    position: relative; /* Para mantenerla dentro del flujo del documento */
     display: flex;
     flex-direction: column;
     justify-content: center; /* Centrado vertical del contenido */
@@ -35,13 +35,16 @@ header {
     background-color: rgba(0, 122, 255, 0.9);
     color: white;
     border-radius: 20px 20px 0 0; /* Bordes redondeados en la parte superior */
-    padding: 10px; /* Padding interno reducido */
+    padding: 10px 20px; /* Ajusta el padding interno */
     font-family: Arial, sans-serif;
     text-align: center;
-    width: 100%; /* Asegura que use todo el ancho de la pantalla */
+    width: 90%; /* Limita el ancho para pantallas pequeñas */
+    max-width: 350px; /* Ancho máximo en pantallas grandes */
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box; /* Evita que el padding expanda el tamaño */
+    box-sizing: border-box; /* Evita desbordamientos */
+    margin: 10px auto; /* Centrará horizontalmente la tarjeta */
 }
+
 
 .tarjeta h1 {
     margin: 5px 0; /* Márgenes más pequeños */
