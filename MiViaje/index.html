@@ -85,7 +85,7 @@
     <div id="map"></div>
 
     <div class="tarjeta">
-        <h1 id="pk">123+456</h1>
+        <h1 id="pk">Buscando PK...</h1>
         <h2 id="velocidad">Velocidad: 0 Km/h</h2>
         <p id="lugar">Buscando Ubicación...</p>
     </div>
@@ -98,7 +98,9 @@
 
         function inicializarMapa(lat, lon) {
             mapa = L.map('map').setView([lat, lon], 16);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapa);
+            L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 19
+}).addTo(mapa);
             marcador = L.marker([lat, lon]).addTo(mapa);
         }
 
@@ -119,7 +121,7 @@
             if (ultimaLatitud !== null && ultimaLongitud !== null && ultimaHora !== null) {
                 const distancia = Math.sqrt(
                     Math.pow(lat - ultimaLatitud, 2) + Math.pow(lon - ultimaLongitud, 2)
-                ) * 111139; // Convertir grados a metros
+                ) * 111139; 
                 const tiempo = (ahora - ultimaHora) / 1000;
                 const velocidad = (distancia / tiempo) * 3.6;
                 document.getElementById("velocidad").textContent = `Velocidad: ${velocidad.toFixed(0)} Km/h`;
@@ -137,7 +139,8 @@
                 marcador.setLatLng([lat, lon]);
                 mapa.setView([lat, lon]);
                 calcularVelocidad(lat, lon);
-                actualizarPK("123+456", lat, lon);
+                actualizarPK("475+156", lat, lon);
+                document.getElementById("lugar").textContent = `Ubicación: (${lat.toFixed(5)}, ${lon.toFixed(5)})`;
             },
             (err) => console.error("Error al obtener ubicación:", err),
             { enableHighAccuracy: true, maximumAge: 0 }
