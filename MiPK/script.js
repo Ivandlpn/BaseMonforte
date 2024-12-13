@@ -273,21 +273,16 @@ botonGuardar.addEventListener("click", () => {
 
             // Liberar el objeto URL
             URL.revokeObjectURL(url);
+
+            // Mensaje de confirmación
+            alert("✅ Imagen guardada correctamente.");
         }, "image/jpeg"); // Formato JPEG
     } catch (error) {
         console.error("Error al intentar guardar la imagen:", error);
         alert("No se puede guardar la imagen en este dispositivo.");
     }
-
- // Mensaje de confirmación
-            alert("✅ Imagen guardada correctamente.");
-        }, "image/jpeg");
-    } catch (error) {
-        console.error("Error al intentar guardar la imagen:", error);
-        alert("No se puede guardar la imagen en este dispositivo.");
-    }
-    
 });
+
 
 
 
