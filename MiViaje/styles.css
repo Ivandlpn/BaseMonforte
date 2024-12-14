@@ -78,46 +78,27 @@ header {
     color: #555;
 }
 
-/* Estilo general de las tarjetas */
+/* Tarjeta contenedora */
 .tarjeta.acciones {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
+    flex-direction: column; /* Coloca los botones en una columna */
+    justify-content: space-evenly; /* Espacio uniforme entre botones */
+    align-items: center; /* Centra los botones horizontalmente */
+    padding: 10px; /* Espacio interno de la tarjeta */
+    height: 100%; /* Asegura que use todo el espacio disponible */
+    max-height: 150px; /* Limita la altura para evitar desbordamientos */
+    overflow: hidden; /* Oculta cualquier contenido que se salga */
 }
 
-/* Contenedor de los botones */
-.botones-contenedor {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 100%;
-    max-width: 320px; /* Asegura que no crezca demasiado */
-    gap: 10px; /* Espacio entre botones */
-    flex-wrap: wrap; /* Permite que los botones bajen si no hay espacio */
-}
-
-/* Ajuste de cada botón individual */
-.boton-wrapper {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 100px; /* Ancho máximo del botón */
-}
-
-/* Estilo del botón */
+/* Estilo de los botones */
 .boton {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Imagen arriba, texto abajo */
     justify-content: center;
     align-items: center;
-    width: 70px; /* Ajusta el tamaño del botón */
-    height: 90px; /* Espacio suficiente para la imagen y texto */
-    margin: 0 auto; /* Centrado automático */
+    width: 60px; /* Tamaño consistente del botón */
+    height: 80px;
+    margin: 5px 0; /* Espaciado entre botones */
     border: none;
     border-radius: 10px;
     background-color: #007aff;
@@ -125,23 +106,22 @@ header {
     text-align: center;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    gap: 5px; /* Espacio entre imagen y texto */
 }
 
 /* Imagen dentro del botón */
 .boton-icono {
-    width: 40px; /* Ajusta el tamaño de las imágenes */
-    height: 40px;
-    margin-bottom: 5px; /* Espacio debajo de la imagen */
+    width: 30px; /* Tamaño reducido */
+    height: 30px;
+    margin-bottom: 5px; /* Espacio entre imagen y texto */
 }
 
 /* Texto dentro del botón */
 .boton span {
-    font-size: 0.8em;
+    font-size: 0.7em; /* Ajuste del tamaño de texto */
     text-align: center;
 }
 
-/* Interacciones del botón */
+/* Interacción */
 .boton:hover {
     background-color: #005bb5;
 }
