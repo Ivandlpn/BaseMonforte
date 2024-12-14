@@ -189,7 +189,7 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
 
                 ctx.fillStyle = "white";
                 ctx.font = `${fontSize}px Arial`;
-                ctx.textAlign = "center";
+                ctx.textAlign = "left";
                 ctx.textBaseline = "middle";
                 ctx.fillText(
                     textoPK,
