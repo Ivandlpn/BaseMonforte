@@ -78,50 +78,40 @@ header {
     color: #555;
 }
 
-/* Tarjeta contenedora */
-.tarjeta.acciones {
-    display: flex;
-    flex-direction: column; /* Coloca los botones en una columna */
-    justify-content: space-evenly; /* Espacio uniforme entre botones */
-    align-items: center; /* Centra los botones horizontalmente */
-    padding: 10px; /* Espacio interno de la tarjeta */
-    height: 100%; /* Asegura que use todo el espacio disponible */
-    max-height: 150px; /* Limita la altura para evitar desbordamientos */
-    overflow: hidden; /* Oculta cualquier contenido que se salga */
-}
-
-/* Estilo de los botones */
 .boton {
     display: flex;
-    flex-direction: column; /* Imagen arriba, texto abajo */
     justify-content: center;
     align-items: center;
-    width: 60px; /* Tamaño consistente del botón */
-    height: 80px;
-    margin: 5px 0; /* Espaciado entre botones */
+    width: 50px;
+    height: 50px;
+    margin: 5px;
     border: none;
-    border-radius: 10px;
+    border-radius: 50%;
     background-color: #007aff;
     color: white;
-    text-align: center;
+    font-size: 1.2em;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Imagen dentro del botón */
-.boton-icono {
-    width: 30px; /* Tamaño reducido */
-    height: 30px;
-    margin-bottom: 5px; /* Espacio entre imagen y texto */
+.boton i {
+    font-size: 1.5em;
 }
 
-/* Texto dentro del botón */
-.boton span {
-    font-size: 0.7em; /* Ajuste del tamaño de texto */
-    text-align: center;
-}
-
-/* Interacción */
 .boton:hover {
     background-color: #005bb5;
 }
+
+.info-linea {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 5px 0;
+}
+
+.icono {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+

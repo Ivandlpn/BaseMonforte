@@ -5,13 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Viaje en Cabina</title>
 
-        <!-- Favicon -->
-    <link rel="icon" href="img/MarcadorTren.png?v=1" type="image/png">
-    <link rel="manifest" href="manifest.json">
-
-
-     <meta property="og:image" content="img/MarcadorTren.png" />
-
     <!-- Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="styles.css">
@@ -24,25 +17,12 @@
     <div id="map"></div>
 
     <div class="tarjetas">
-        
         <!-- Tarjeta para botones de acciones -->
-<div class="tarjeta acciones">
-    <button class="boton" id="registrarEvento" title="Añadir Evento">
-        <img src="img/evento.png" alt="Añadir Evento" class="boton-icono">
-        <span>Añadir Evento</span>
-    </button>
-    <button class="boton" id="finalizarDocumento" title="Iniciar Viaje">
-        <img src="img/viaje.png" alt="Iniciar Viaje" class="boton-icono">
-        <span>Iniciar Viaje</span>
-    </button>
-    <button class="boton" id="abrirPDF" title="Leer IT">
-        <img src="img/IT.png" alt="Leer IT" class="boton-icono">
-        <span>Leer IT</span>
-    </button>
-</div>
-
-
-
+        <div class="tarjeta acciones">
+            <button class="boton" id="registrarEvento" title="Registrar Evento"><i>+</i></button>
+            <button class="boton" id="finalizarDocumento" title="Finalizar Documento"><i>✓</i></button>
+            <button class="boton" id="abrirPDF" title="Abrir PDF"><i>📄</i></button>
+        </div>
 
 <div class="tarjeta informacion">
     <h1 id="pk">...+...</h1>
