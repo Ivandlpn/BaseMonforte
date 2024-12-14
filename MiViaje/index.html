@@ -9,102 +9,27 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-    font-family: Arial, sans-serif;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    overflow: hidden;
-    background: #f4f4f4;
-    margin: 0;
-    padding: 0;
-}
-
-        header {
-    height: 15%;
-    width: 100%;
-    background: url('img/CabeceraMiViaje.png') no-repeat center center;
-    background-size: cover;
-    position: relative;
-    z-index: 2;
-}
-
-        #map {
-    height: 55%;
-    width: 100%;
-    border: 2px solid #007aff;
-    border-radius: 0px;
-    position: relative;
-    z-index: 1;
-}
-
-        .tarjeta {
-    width: 90%;
-    background: white;
-    color: #333;
-    border-radius: 10px;
-    padding: 8px;
-    text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 5px;
-    position: relative;
-    z-index: 1;
-}
-
-        .tarjeta h1, .tarjeta h2, .tarjeta p {
-    font-size: 0.9em;
-    color: #555;
-}
-
-        .tarjeta h1 {
-    font-size: 1.8em;
-    color: #007aff;
-}
-
-        .tarjeta h2 {
-    font-size: 1.4em;
-}
-
-        .tarjeta p {
-    font-size: 1em;
-    color: #555;
-}
-    </style>
+    <script src="script.js" defer></script>
 </head>
 <body>
     <header></header>
 
     <div id="map"></div>
 
-<div class="tarjetas">
-    <!-- Tarjeta para botones de acciones (vacía ahora) -->
-    <div class="tarjeta acciones">
-        <!-- La tarjeta izquierda está vacía ahora, lista para contenido futuro -->
+    <div class="tarjetas">
+        <!-- Tarjeta para botones de acciones -->
+        <div class="tarjeta acciones">
+            <button class="boton" id="registrarEvento" title="Registrar Evento"><i>+</i></button>
+            <button class="boton" id="finalizarDocumento" title="Finalizar Documento"><i>✓</i></button>
+            <button class="boton" id="abrirPDF" title="Abrir PDF"><i>📄</i></button>
+        </div>
+
+        <!-- Tarjeta para información -->
+        <div class="tarjeta informacion">
+            <h1 id="pk">Buscando PK...</h1>
+            <h2 id="velocidad">___ km/h</h2>
+            <p id="lugar">Ubicación...</p>
+        </div>
     </div>
-
-    <!-- Tarjeta para información (sin cambios) -->
-    <div class="tarjeta informacion">
-        <h1 id="pk">Buscando PK...</h1>
-        <h2 id="velocidad">___ km/h</h2>
-        <p id="lugar">Ubicación...</p>
-    </div>
-</div>
-
-
-
-
-
-
-   <script src="script.js" defer></script>
-
 </body>
 </html>
