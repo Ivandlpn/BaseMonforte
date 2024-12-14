@@ -400,7 +400,7 @@ imagenEditar.addEventListener("click", () => {
     // Campo de texto para añadir información
     const inputTexto = document.createElement("input");
     inputTexto.type = "text";
-    inputTexto.placeholder = "Añade información...";
+    inputTexto.placeholder = "Añade información...(30 caracteres)";
     inputTexto.style.margin = "20px";
     inputTexto.style.padding = "10px";
     inputTexto.style.fontSize = "16px";
