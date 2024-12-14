@@ -32,7 +32,7 @@ header {
 .tarjetas {
     display: flex; /* Hace que las tarjetas se ubiquen en la misma línea horizontal */
     width: 100%; /* Ocupa todo el ancho de la pantalla */
-    height: 20vh; /* Ocupa el 20% de la altura de la pantalla */
+    height: 25vh; /* Ocupa el 25% de la altura de la pantalla, ajusta este valor según necesidad */
     box-sizing: border-box; /* Incluye padding y border en el tamaño */
 }
 
@@ -46,9 +46,10 @@ header {
     background: linear-gradient(135deg, #ffffff, #f0f0f0); /* Fondo degradado */
     border: 1px solid #ddd; /* Borde sutil */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-    border-radius: 5px; /* Bordes redondeados */
+    border-radius: 10px; /* Bordes más redondeados para darle un toque moderno */
     padding: 10px; /* Espaciado interno */
     box-sizing: border-box; /* Asegura que padding y border no desborden */
+    overflow: hidden; /* Para evitar que los botones se salgan de la tarjeta */
 }
 
 /* Tarjeta de botones de acciones */
@@ -66,30 +67,38 @@ header {
     flex-direction: column; /* Los botones están apilados verticalmente */
     align-items: center; /* Centrado horizontal de los botones */
     width: 100%; /* Asegura que ocupe el 100% del ancho de la tarjeta */
-    gap: 10px; /* Espacio entre los botones */
+    gap: 15px; /* Espacio entre los botones */
+    overflow-y: auto; /* Asegura que el contenido se pueda desplazar si hay muchos botones */
 }
 
 /* Estilo de los botones */
 .tarjeta.acciones button {
-    width: 80%; /* Los botones ocupan el 80% del ancho de la tarjeta */
+    width: 90%; /* Los botones ocupan el 90% del ancho de la tarjeta */
     background-color: #007aff;
     color: white;
     border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    font-size: 1em;
+    border-radius: 10px; /* Bordes redondeados para un aspecto elegante */
+    padding: 12px 15px; /* Botones con mayor espacio interno */
+    font-size: 1em; /* Tamaño de fuente adecuado */
     cursor: pointer;
-    text-align: left; /* Texto alineado a la izquierda */
+    text-align: center; /* Texto centrado */
+    box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
+    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+}
+
+.tarjeta.acciones button:hover {
+    background-color: #005bb5; /* Cambiar el color al pasar el mouse */
 }
 
 /* Tarjeta de información */
 .tarjeta.informacion {
     text-align: right; /* Texto alineado a la derecha */
     padding: 20px; /* Espaciado interno */
+    overflow-y: auto; /* Para que el contenido no se desborde */
 }
 
 .tarjeta.informacion h1 {
-    font-size: 2em;
+    font-size: 1.8em;
     color: #007aff;
     margin: 0;
 }
@@ -103,4 +112,24 @@ header {
     font-size: 1.2em;
     opacity: 0.9;
     margin: 0;
+}
+
+/* Estilos para móviles */
+@media (max-width: 600px) {
+    .tarjetas {
+        height: 30vh; /* Aumentar el tamaño para pantallas móviles si es necesario */
+    }
+
+    .tarjeta {
+        flex-direction: column; /* Apilar las tarjetas en móviles */
+        height: auto; /* Ajustar la altura automáticamente */
+    }
+
+    .tarjeta.acciones button {
+        width: 80%; /* Los botones ocupan un 80% del ancho en pantallas más pequeñas */
+    }
+
+    .tarjeta.informacion {
+        text-align: center; /* Centrar el texto de la tarjeta de información */
+    }
 }
