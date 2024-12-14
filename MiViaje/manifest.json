@@ -1,6 +1,6 @@
 {
-    "name": "MiViajeEnCabina",
-    "short_name": "MiViajeEnCabina",
+    "name": "Mi Viaje En Cabina",
+    "short_name": "Mi Viaje En Cabina",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#ffffff",
