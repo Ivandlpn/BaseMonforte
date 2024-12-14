@@ -41,8 +41,6 @@ header img {
   flex: 1 1 auto;
   min-height: 50%;
   position: relative;
-  transform-origin: center center;
-  transition: transform 0.5s ease;
 }
 
 #map {
