@@ -232,12 +232,13 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 `;
 
 // Botón "Guardar"
-const botonGuardar = document.createElement("button");
-botonGuardar.textContent = "💾 Guardar";
-botonGuardar.style.cssText = estiloBoton;
-contenedorBotones.appendChild(botonGuardar);
-                
-                
+const imagenGuardar = document.createElement("img"); // Cambiar de button a img
+imagenGuardar.src = "img/guardar.png"; // Reemplaza con el nombre y ruta de tu archivo de imagen
+imagenGuardar.alt = "Guardar";
+imagenGuardar.style.cssText = "cursor: pointer; width: 60px; height: 50px;"; // Ajusta el tamaño según necesites
+contenedorBotones.appendChild(imagenGuardar); // Añadir la imagen al contenedor
+
+// Mantener la función mostrarMensaje como está
 function mostrarMensaje(mensaje) {
     const mensajeDiv = document.createElement("div");
     mensajeDiv.textContent = mensaje;
@@ -259,7 +260,8 @@ function mostrarMensaje(mensaje) {
     }, 3000); // El mensaje desaparecerá después de 3 segundos
 }
 
-botonGuardar.addEventListener("click", () => {
+// Cambiar el evento click del botón por el evento click de la imagen
+imagenGuardar.addEventListener("click", () => { // Cambia botonGuardar por imagenGuardar
     try {
         // Obtener el PK formateado
         const pkFormateado = formatearPK(window.pkMasCercano.pk);
