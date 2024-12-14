@@ -32,33 +32,8 @@ header {
 .tarjetas {
     display: flex; /* Hace que las tarjetas se ubiquen en la misma línea horizontal */
     width: 100%; /* Ocupa todo el ancho de la pantalla */
-    height: 5vh; /* Reduce la altura del contenedor al 10% de la pantalla */
+    height: 0.4vh; /* Reduce la altura del contenedor al 10% de la pantalla */
     box-sizing: border-box; /* Incluye padding y border en el tamaño */
-}
-
-/* Estilo común para las tarjetas */
-.tarjeta {
-    flex: 1; /* Cada tarjeta ocupa el 50% del ancho */
-    display: flex; /* Organiza los elementos dentro de la tarjeta */
-    flex-direction: column; /* Elementos apilados verticalmente dentro de la tarjeta */
-    justify-content: center; /* Centrado vertical de los elementos */
-    align-items: center; /* Centrado horizontal */
-    background: linear-gradient(135deg, #ffffff, #f0f0f0); /* Fondo degradado */
-    border: 1px solid #ddd; /* Borde sutil */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-    border-radius: 10px; /* Bordes más redondeados para darle un toque moderno */
-    padding: 5px; /* Reduce el espaciado interno */
-    box-sizing: border-box; /* Asegura que padding y border no desborden */
-    overflow: hidden; /* Para evitar que los botones se salgan de la tarjeta */
-}
-
-/* Tarjeta de botones de acciones */
-.tarjeta.acciones {
-    justify-content: flex-start; /* Botones alineados al inicio vertical */
-    align-items: center; /* Centrado horizontal */
-    padding: 5px;
-    height: 100%; /* La tarjeta ocupa el 100% de la altura del contenedor */
-    overflow-y: auto; /* Permite que los botones se ajusten si hay mucho contenido */
 }
 
 /* Contenedor de los botones dentro de la tarjeta de acciones */
@@ -67,27 +42,33 @@ header {
     flex-direction: column; /* Los botones están apilados verticalmente */
     align-items: center; /* Centrado horizontal de los botones */
     width: 100%; /* Asegura que ocupe el 100% del ancho de la tarjeta */
-    gap: 8px; /* Espacio entre los botones */
-    overflow-y: auto; /* Asegura que el contenido se pueda desplazar si hay muchos botones */
+    gap: 15px; /* Espacio entre los botones */
 }
 
 /* Estilo de los botones */
 .tarjeta.acciones button {
     width: 80%; /* Los botones ocupan el 80% del ancho de la tarjeta */
-    background-color: #007aff;
-    color: white;
+    background-color: transparent; /* Fondo transparente para que solo se vea la imagen */
     border: none;
     border-radius: 10px; /* Bordes redondeados para un aspecto elegante */
-    padding: 6px 12px; /* Botones con menor altura para ajustarse al espacio */
-    font-size: 0.9em; /* Tamaño de fuente reducido para que los botones quepan bien */
+    padding: 10px; /* Espaciado interno */
     cursor: pointer;
-    text-align: center; /* Texto centrado */
-    box-sizing: border-box; /* Asegura que el padding no cause desbordamiento */
-    transition: background-color 0.3s ease; /* Transición suave para el cambio de color */
+    display: flex; /* Permite el ajuste de la imagen dentro del botón */
+    justify-content: center; /* Centra la imagen dentro del botón */
+    align-items: center; /* Centra la imagen dentro del botón */
 }
 
+/* Ajustar las imágenes dentro de los botones */
+.tarjeta.acciones button img {
+    max-width: 100%; /* Asegura que la imagen se ajuste al tamaño del botón */
+    max-height: 50px; /* Limita la altura de la imagen para que no se vea demasiado grande */
+    object-fit: contain; /* Mantiene la proporción de la imagen */
+}
+
+/* Efecto hover sobre los botones */
 .tarjeta.acciones button:hover {
-    background-color: #005bb5; /* Cambiar el color al pasar el mouse */
+    background-color: #e0e0e0; /* Cambiar el fondo cuando se pasa el mouse */
+    border-radius: 10px;
 }
 
 /* Tarjeta de información */
@@ -98,18 +79,18 @@ header {
 }
 
 .tarjeta.informacion h1 {
-    font-size: 2em;
+    font-size: 1.4em;
     color: #007aff;
     margin: 0;
 }
 
 .tarjeta.informacion h2 {
-    font-size: 1.5em;
+    font-size: 1.2em;
     margin: 0;
 }
 
 .tarjeta.informacion p {
-    font-size: 1.2em;
+    font-size: 1em;
     opacity: 0.9;
     margin: 0;
 }
@@ -117,7 +98,7 @@ header {
 /* Estilos para móviles */
 @media (max-width: 600px) {
     .tarjetas {
-        height: 20vh; /* Aumenta ligeramente el tamaño para pantallas móviles si es necesario */
+        height: 20vh; /* Aumentar el tamaño para pantallas móviles si es necesario */
     }
 
     .tarjeta {
