@@ -1,97 +1,103 @@
-body {
-    position: relative; /* Agregar esta línea */
+* {
     margin: 0;
-    font-family: Arial, sans-serif;
-    height: 100vh; /* 100% de la altura de la pantalla */
-    display: flex;
-    flex-direction: column; /* Apila los elementos verticalmente */
-    overflow: hidden; /* Evita cualquier desplazamiento */
+    padding: 0;
+    box-sizing: border-box;
 }
 
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
 
 header {
-    height: 10%; /* La cabecera ocupa el 10% de la pantalla */
-    background-color: #007aff;
-    color: white;
-    text-align: center;
-    font-size: 1.5em;
-    font-weight: bold;
-    display: flex;
-    align-items: center; /* Centrado vertical */
-    justify-content: center; /* Centrado horizontal */
-    box-sizing: border-box; /* Incluye padding en el cálculo del tamaño */
+    height: 15%;
+    width: 100%;
+    background: url('img/CabeceraMiViaje.png') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    z-index: 2;
 }
 
 #map {
-    height: 60%; /* El mapa ocupa el 60% de la pantalla */
-    width: 100%; /* Se asegura de usar todo el ancho */
-    box-sizing: border-box; /* Previene desbordamientos por bordes o padding */
+    height: 55%;
+    width: 100%;
+    border: 2px solid #007aff;
+    border-radius: 0px;
+    position: relative;
+    z-index: 1;
 }
 
-/* Contenedor principal para las dos tarjetas */
 .tarjetas {
-    display: flex; /* Hace que las tarjetas se ubiquen en la misma línea horizontal */
-    width: 100%; /* Ocupa todo el ancho de la pantalla */
-    height: 15vh; /* Ocupa el 15% de la altura de la pantalla */
-    box-sizing: border-box; /* Incluye padding y border en el tamaño */
+    display: flex;
+    width: 100%;
+    height: 15%;
+    box-sizing: border-box;
 }
 
-/* Estilo común para las tarjetas */
 .tarjeta {
-    flex: 1; /* Cada tarjeta ocupa el 50% del ancho */
-    display: flex; /* Organiza los elementos dentro de la tarjeta */
-    flex-direction: column; /* Elementos apilados verticalmente dentro de la tarjeta */
-    justify-content: center; /* Centrado vertical de los elementos */
-    align-items: center; /* Centrado horizontal */
-    background: linear-gradient(135deg, #ffffff, #f0f0f0); /* Fondo degradado */
-    border: 1px solid #ddd; /* Borde sutil */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-    border-radius: 10px; /* Bordes más redondeados para darle un toque moderno */
-    padding: 10px; /* Espaciado interno */
-    box-sizing: border-box; /* Asegura que padding y border no desborden */
-    overflow: hidden; /* Para evitar que los botones se salgan de la tarjeta */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: white;
+    color: #333;
+    border-radius: 10px;
+    padding: 8px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 5px;
+    position: relative;
+    z-index: 1;
 }
 
-/* Tarjeta de información */
-.tarjeta.informacion {
-    text-align: right; /* Texto alineado a la derecha */
-    padding: 10px; /* Espaciado interno */
-    overflow-y: auto; /* Para que el contenido no se desborde */
+.tarjeta h1, .tarjeta h2, .tarjeta p {
+    font-size: 0.9em;
+    color: #555;
 }
 
-.tarjeta.informacion h1 {
-    font-size: 1.4em;
+.tarjeta h1 {
+    font-size: 1.8em;
     color: #007aff;
-    margin: 0;
 }
 
-.tarjeta.informacion h2 {
-    font-size: 1.2em;
-    margin: 0;
+.tarjeta h2 {
+    font-size: 1.4em;
 }
 
-.tarjeta.informacion p {
+.tarjeta p {
     font-size: 1em;
-    opacity: 0.9;
-    margin: 0;
+    color: #555;
 }
 
-/* Estilos para móviles */
-@media (max-width: 600px) {
-    .tarjetas {
-        height: 20vh; /* Aumentar el tamaño para pantallas móviles si es necesario */
-    }
+.boton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    border: none;
+    border-radius: 50%;
+    background-color: #007aff;
+    color: white;
+    font-size: 1.2em;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
 
-    .tarjeta {
-        flex-direction: column; /* Apilar las tarjetas en móviles */
-        height: auto; /* Ajustar la altura automáticamente */
-    }
+.boton i {
+    font-size: 1.5em;
+}
 
-    .tarjeta.acciones button {
-        width: 80%; /* Los botones ocupan un 80% del ancho en pantallas más pequeñas */
-    }
-
-    .tarjeta.informacion {
-        text-align: center; /* Centrar el texto de la tarjeta de información */
-    }
+.boton:hover {
+    background-color: #005bb5;
 }
