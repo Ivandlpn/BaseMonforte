@@ -337,16 +337,20 @@ imagenCompartir.addEventListener("click", async () => {
 });
 
 
-            const botonVolver = document.createElement("button");
-                botonVolver.textContent = "↪️ Volver";
-                botonVolver.style.cssText = estiloBoton;
-                contenedorBotones.appendChild(botonVolver);
-                botonVolver.addEventListener("click", () => {
-                    imagenCapturada.remove();
-                    contenedorBotones.remove();
-                    video.style.display = "block";
-                });
-            });
+// Reemplazar el botón "Volver" por una imagen
+const imagenVolver = document.createElement("img"); // Cambiar de button a img
+imagenVolver.src = "img/volver.png"; // Reemplaza con el nombre y ruta de tu archivo de imagen
+imagenVolver.alt = "Volver";
+imagenVolver.style.cssText = "cursor: pointer; width: 60px; height: 50px;"; // Ajusta el tamaño según necesites
+contenedorBotones.appendChild(imagenVolver); // Añadir la imagen al contenedor
+
+// Agregar el evento click a la imagen
+imagenVolver.addEventListener("click", () => {
+    imagenCapturada.remove();
+    contenedorBotones.remove();
+    video.style.display = "block";
+});
+
 
             video.addEventListener("click", () => {
                 stream.getTracks().forEach(track => track.stop());
