@@ -29,35 +29,63 @@ header {
 }
 
 .tarjeta {
-    position: absolute;
-    bottom: 5%; /* Ajusta la tarjeta cerca de la parte inferior */
-    right: 5%; /* Alínea la tarjeta hacia la derecha */
-    display: inline-block; /* Ajusta el ancho al contenido */
+    height: 30%; /* Ocupa un 30% de la pantalla en altura */
+    width: 100%; /* Extiende al ancho completo del contenedor */
+    display: flex; /* Usa Flexbox para organizar los elementos */
+    flex-direction: row; /* Los elementos hijos estarán en línea horizontal */
+    justify-content: space-between; /* Espaciado entre los elementos principales */
+    align-items: center; /* Centrado vertical */
     background: linear-gradient(135deg, #ffffff, #f0f0f0); /* Fondo degradado */
-    color: #333;
-    border-radius: 15px;
-    padding: 15px 20px;
-    font-family: 'Arial', sans-serif;
-    text-align: right; /* Alinea el texto hacia la derecha */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ddd;
+    color: #333; /* Texto en gris oscuro */
+    border-top: 1px solid #ddd; /* Línea superior sutil */
+    padding: 10px; /* Espaciado interno */
+    box-sizing: border-box;
 }
 
-
-
-
-.tarjeta h1 {
-    margin: 5px 0; /* Márgenes más pequeños */
-    font-size: 2em; /* Reducir tamaño de fuente */
+/* Sección de botones y acciones (mitad izquierda) */
+.tarjeta .acciones {
+    width: 50%; /* Ocupa la mitad izquierda del ancho */
+    display: flex; /* Usa Flexbox para organizar los botones */
+    flex-direction: column; /* Apila los botones verticalmente */
+    align-items: flex-start; /* Alinea los botones a la izquierda */
+    gap: 10px; /* Espacio entre los botones */
 }
 
-.tarjeta h2 {
-    margin: 5px 0;
-    font-size: 1.5em; /* Reducir tamaño de fuente */
+.tarjeta .acciones button {
+    background-color: #007aff; /* Azul para destacar */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px; /* Botones más grandes */
+    font-size: 1em;
+    cursor: pointer;
+    width: 80%; /* Ajusta el tamaño del botón */
+    text-align: left; /* Texto alineado a la izquierda */
 }
 
-.tarjeta p {
-    margin: 5px 0;
-    font-size: 1.2em;
-    opacity: 0.9; /* Más suavidad en el texto */
+/* Sección de información (mitad derecha) */
+.tarjeta .informacion {
+    width: 50%; /* Ocupa la mitad derecha del ancho */
+    display: flex;
+    flex-direction: column; /* Organiza los elementos verticalmente */
+    justify-content: center; /* Centra verticalmente */
+    text-align: right; /* Alinea el texto a la derecha */
+    gap: 5px; /* Espacio entre los elementos */
+}
+
+.tarjeta .informacion h1 {
+    font-size: 1.8em; /* Tamaño destacado */
+    color: #007aff; /* Azul para PK */
+    margin: 0;
+}
+
+.tarjeta .informacion h2 {
+    font-size: 1.4em; /* Tamaño medio */
+    margin: 0;
+}
+
+.tarjeta .informacion p {
+    font-size: 1.2em; /* Tamaño del texto base */
+    opacity: 0.9; /* Suavidad en el texto */
+    margin: 0;
 }
