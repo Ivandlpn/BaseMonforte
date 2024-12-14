@@ -442,10 +442,7 @@ imagenEditar.addEventListener("click", () => {
     });
 });
 
-                
-
-
-
+               
 
             video.addEventListener("click", () => {
                 stream.getTracks().forEach(track => track.stop());
@@ -457,4 +454,4 @@ imagenEditar.addEventListener("click", () => {
         });
 });
 
-});
+
