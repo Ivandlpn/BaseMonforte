@@ -32,7 +32,7 @@ header {
 .tarjetas {
     display: flex; /* Hace que las tarjetas se ubiquen en la misma línea horizontal */
     width: 100%; /* Ocupa todo el ancho de la pantalla */
-    height: 15vh; /* Ocupa el 15% de la altura de la pantalla */
+    height: 8vh; /* Ocupa el 15% de la altura de la pantalla */
     box-sizing: border-box; /* Incluye padding y border en el tamaño */
 }
 
