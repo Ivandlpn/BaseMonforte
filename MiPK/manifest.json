@@ -7,12 +7,12 @@
     "theme_color": "#007aff",
     "icons": [
       {
-        "src": "img/MarcadorTren.png",
+        "src": "img/FaviconMiPK.png",
         "sizes": "192x192",
         "type": "image/png"
       },
       {
-        "src": "img/MarcadorTren.png",
+        "src": "img/FaviconMiPK.png",
         "sizes": "512x512",
         "type": "image/png"
       }
