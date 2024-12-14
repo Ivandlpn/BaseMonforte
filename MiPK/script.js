@@ -308,29 +308,32 @@ botonGuardar.addEventListener("click", () => {
 
 
 
-                const botonCompartir = document.createElement("button");
-                botonCompartir.textContent = "📨 Compartir";
-                botonCompartir.style.cssText = estiloBoton;
-                contenedorBotones.appendChild(botonCompartir);
-                botonCompartir.addEventListener("click", async () => {
-                    try {
-                        const dataUrl = canvas.toDataURL("image/png");
-                        const blob = await (await fetch(dataUrl)).blob();
-                        const file = new File([blob], "foto_con_pk.png", { type: "image/png" });
+const imagenCompartir = document.createElement("img");
+imagenCompartir.src = "img/compartir.png"; // Reemplaza con el nombre real de tu archivo de imagen
+imagenCompartir.alt = "Compartir";
+imagenCompartir.style.cssText = "cursor: pointer; width: 30px; height: 30px;"; // Ajusta el tamaño según necesites
+contenedorBotones.appendChild(imagenCompartir);
 
-                        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                            await navigator.share({
-                                files: [file],
-                                title: "Foto con PK",
-                                text: "Aquí está la foto con la información del PK."
-                            });
-                        } else {
-                            alert("No se puede compartir esta imagen desde tu dispositivo.");
-                        }
-                    } catch (error) {
-                        console.error("Error al compartir:", error);
-                    }
-                });
+imagenCompartir.addEventListener("click", async () => {
+    try {
+        const dataUrl = canvas.toDataURL("image/png");
+        const blob = await (await fetch(dataUrl)).blob();
+        const file = new File([blob], "foto_con_pk.png", { type: "image/png" });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({
+                files: [file],
+                title: "Foto con PK",
+                text: "Aquí está la foto con la información del PK."
+            });
+        } else {
+            alert("No se puede compartir esta imagen desde tu dispositivo.");
+        }
+    } catch (error) {
+        console.error("Error al compartir:", error);
+    }
+});
+
 
                 const botonVolver = document.createElement("button");
                 botonVolver.textContent = "↪️ Volver";
