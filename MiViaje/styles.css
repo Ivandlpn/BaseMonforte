@@ -28,64 +28,68 @@ header {
     box-sizing: border-box; /* Previene desbordamientos por bordes o padding */
 }
 
+/* Contenedor de las dos tarjetas */
+.tarjetas {
+    display: flex; /* Pone las tarjetas en línea horizontal */
+    width: 100%; /* Ocupa todo el ancho de la pantalla */
+    height: 30%; /* Ocupa el 30% de la pantalla en altura */
+    box-sizing: border-box; /* Asegura que padding y border estén dentro del tamaño */
+}
+
+/* Estilo general para todas las tarjetas */
 .tarjeta {
-    height: 30%; /* Ocupa un 30% de la pantalla en altura */
-    width: 100%; /* Extiende al ancho completo del contenedor */
-    display: flex; /* Usa Flexbox para organizar los elementos */
-    flex-direction: row; /* Los elementos hijos estarán en línea horizontal */
-    justify-content: space-between; /* Espaciado entre los elementos principales */
-    align-items: center; /* Centrado vertical */
+    flex: 1; /* Cada tarjeta ocupa el 50% del ancho del contenedor */
     background: linear-gradient(135deg, #ffffff, #f0f0f0); /* Fondo degradado */
-    color: #333; /* Texto en gris oscuro */
-    border-top: 1px solid #ddd; /* Línea superior sutil */
+    border: 1px solid #ddd; /* Borde sutil */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    border-radius: 5px; /* Bordes ligeramente redondeados */
     padding: 10px; /* Espaciado interno */
+    display: flex; /* Para organizar contenido dentro de cada tarjeta */
+    flex-direction: column; /* Elementos apilados verticalmente */
+    justify-content: center; /* Centrado vertical */
+    align-items: center; /* Centrado horizontal */
     box-sizing: border-box;
 }
 
-/* Sección de botones y acciones (mitad izquierda) */
-.tarjeta .acciones {
-    width: 50%; /* Ocupa la mitad izquierda del ancho */
-    display: flex; /* Usa Flexbox para organizar los botones */
-    flex-direction: column; /* Apila los botones verticalmente */
-    align-items: flex-start; /* Alinea los botones a la izquierda */
-    gap: 10px; /* Espacio entre los botones */
+/* Tarjeta de botones */
+.tarjeta.acciones {
+    justify-content: flex-start; /* Botones alineados al inicio vertical */
+    align-items: flex-start; /* Botones alineados a la izquierda */
+    padding: 20px; /* Más espacio interno */
 }
 
-.tarjeta .acciones button {
-    background-color: #007aff; /* Azul para destacar */
+.tarjeta.acciones button {
+    width: 80%; /* Botones ocupan la mayor parte del ancho */
+    background-color: #007aff; /* Azul destacable */
     color: white;
     border: none;
     border-radius: 5px;
-    padding: 10px 15px; /* Botones más grandes */
+    padding: 10px 15px;
+    margin-bottom: 10px; /* Espacio entre botones */
     font-size: 1em;
-    cursor: pointer;
-    width: 80%; /* Ajusta el tamaño del botón */
     text-align: left; /* Texto alineado a la izquierda */
+    cursor: pointer;
 }
 
-/* Sección de información (mitad derecha) */
-.tarjeta .informacion {
-    width: 50%; /* Ocupa la mitad derecha del ancho */
-    display: flex;
-    flex-direction: column; /* Organiza los elementos verticalmente */
-    justify-content: center; /* Centra verticalmente */
-    text-align: right; /* Alinea el texto a la derecha */
-    gap: 5px; /* Espacio entre los elementos */
+/* Tarjeta de información */
+.tarjeta.informacion {
+    text-align: right; /* Alinea el texto hacia la derecha */
+    padding: 20px; /* Espaciado interno */
 }
 
-.tarjeta .informacion h1 {
-    font-size: 1.8em; /* Tamaño destacado */
-    color: #007aff; /* Azul para PK */
+.tarjeta.informacion h1 {
+    font-size: 1.8em;
+    color: #007aff;
     margin: 0;
 }
 
-.tarjeta .informacion h2 {
-    font-size: 1.4em; /* Tamaño medio */
+.tarjeta.informacion h2 {
+    font-size: 1.4em;
     margin: 0;
 }
 
-.tarjeta .informacion p {
-    font-size: 1.2em; /* Tamaño del texto base */
-    opacity: 0.9; /* Suavidad en el texto */
+.tarjeta.informacion p {
+    font-size: 1.2em;
+    opacity: 0.9;
     margin: 0;
 }
