@@ -32,19 +32,27 @@ header {
 .tarjetas {
     display: flex; /* Hace que las tarjetas se ubiquen en la misma línea horizontal */
     width: 100%; /* Ocupa todo el ancho de la pantalla */
-    height: 8vh; /* Ocupa el 15% de la altura de la pantalla */
+    height: 15vh; /* Ocupa el 15% de la altura de la pantalla */
     box-sizing: border-box; /* Incluye padding y border en el tamaño */
 }
 
-/* Tarjeta izquierda vacía */
-.tarjeta.acciones {
-    flex: 1; /* La tarjeta ocupa el 50% del ancho */
-    background: transparent; /* Fondo transparente para que no sea visible */
-    border: 1px solid transparent; /* Borde transparente para evitar que sea visible */
-    padding: 0; /* Elimina el padding ya que no tiene contenido */
+/* Estilo común para las tarjetas */
+.tarjeta {
+    flex: 1; /* Cada tarjeta ocupa el 50% del ancho */
+    display: flex; /* Organiza los elementos dentro de la tarjeta */
+    flex-direction: column; /* Elementos apilados verticalmente dentro de la tarjeta */
+    justify-content: center; /* Centrado vertical de los elementos */
+    align-items: center; /* Centrado horizontal */
+    background: linear-gradient(135deg, #ffffff, #f0f0f0); /* Fondo degradado */
+    border: 1px solid #ddd; /* Borde sutil */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    border-radius: 10px; /* Bordes más redondeados para darle un toque moderno */
+    padding: 10px; /* Espaciado interno */
+    box-sizing: border-box; /* Asegura que padding y border no desborden */
+    overflow: hidden; /* Para evitar que los botones se salgan de la tarjeta */
 }
 
-/* Tarjeta de información (sin cambios) */
+/* Tarjeta de información */
 .tarjeta.informacion {
     text-align: right; /* Texto alineado a la derecha */
     padding: 10px; /* Espaciado interno */
