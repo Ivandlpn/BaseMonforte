@@ -3,40 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Viaje en Cabina</title>
+    <title>Mi PK 📍</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="img/FaviconMiPK.png?v=1" type="image/png">
+    <link rel="manifest" href="manifest.json">
+
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Mi PK 📍" />
+    <meta property="og:description" content="Consulta el PK más cercano" />
+    <meta property="og:image" content="img/FaviconMiPK.png" />
+    <meta property="og:url" content="https://ivandlpn.github.io/BaseMonforte/PKC/" />
+    <meta property="og:type" content="website" />
 
     <!-- Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="script.js" defer></script>
+
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header></header>
+    <div class="contenedor">
+        <header>
+            <img src="img/CabeceraMiPK.png" alt="Cabecera Mi PK">
+        </header>
 
-    <div id="map"></div>
-
-    <div class="tarjetas">
-        <!-- Tarjeta para botones de acciones -->
-        <div class="tarjeta acciones">
-            <button class="boton" id="registrarEvento" title="Registrar Evento"><i>+</i></button>
-            <button class="boton" id="finalizarDocumento" title="Finalizar Documento"><i>✓</i></button>
-            <button class="boton" id="abrirPDF" title="Abrir PDF"><i>📄</i></button>
+        <div class="linea-gradiente"></div> <!-- Línea con gradiente -->
+        
+        <div id="map-container">
+            <div id="map">
+                <button id="actualizarUbicacion">🔵 Centrar</button>
+            </div>
         </div>
-
-<div class="tarjeta informacion">
-    <h1 id="pk">...+...</h1>
-    <div class="info-linea">
-        <img src="img/velocimetro.png" alt="Velocímetro" class="icono">
-        <h2 id="velocidad">___ km/h</h2>
+        <div id="calculoPK">
+            <div id="iconoCamara"></div>
+            <div class="tarjeta">
+                <h2>PK más cercano: <span id="pkCercano">471+500</span></h2>
+                <p>Distancia: <span id="distancia">1289.73 metros</span></p>
+            </div>
+        </div>
+        <footer>
+            <img src="img/Logo-Ineco.png" alt="Logo Ineco">
+        </footer>
     </div>
-    <div class="info-linea">
-        <img src="img/localizacion.png" alt="Localización" class="icono">
-        <p id="lugar">Ubicación...</p>
-    </div>
-</div>
-
-   
-    </div>
+    <script src="script.js" defer></script>
 </body>
 </html>
