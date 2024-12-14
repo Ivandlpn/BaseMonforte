@@ -78,14 +78,29 @@ header {
     color: #555;
 }
 
+.tarjeta.acciones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.botones-contenedor {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    gap: 10px; /* Espacio entre botones */
+}
+
 .boton {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 80px;
-    height: 80px;
-    margin: 5px;
+    width: 70px; /* Ajusta el tamaño del botón */
+    height: 90px; /* Más espacio para el texto */
+    margin: 0;
     border: none;
     border-radius: 10px;
     background-color: #007aff;
@@ -94,33 +109,19 @@ header {
     text-align: center;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    gap: 5px;
+    gap: 5px; /* Espacio entre imagen y texto */
 }
 
 .boton-icono {
-    width: 30px;
-    height: 30px;
+    width: 40px; /* Ajusta el tamaño de las imágenes */
+    height: 40px;
 }
 
 .boton span {
-    font-size: 0.8em;
+    font-size: 0.75em; /* Ajusta el tamaño del texto */
+    text-align: center;
 }
 
 .boton:hover {
     background-color: #005bb5;
 }
-
-
-.info-linea {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 5px 0;
-}
-
-.icono {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-}
-
