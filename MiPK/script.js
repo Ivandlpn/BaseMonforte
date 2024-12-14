@@ -353,13 +353,3 @@ botonGuardar.addEventListener("click", () => {
         });
 });
 
-// Detectar la orientación del dispositivo
-window.addEventListener("deviceorientation", (event) => {
-    const { alpha } = event; // Ángulo en grados
-    if (alpha !== null) {
-        // Rotar el contenedor del mapa
-        const mapContainer = document.getElementById("map-container");
-        mapContainer.style.transform = `rotate(${-alpha}deg)`;
-    }
-});
-
