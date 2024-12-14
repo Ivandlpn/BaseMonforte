@@ -337,7 +337,7 @@ imagenCompartir.addEventListener("click", async () => {
 });
 
 
-                const botonVolver = document.createElement("button");
+            const botonVolver = document.createElement("button");
                 botonVolver.textContent = "↪️ Volver";
                 botonVolver.style.cssText = estiloBoton;
                 contenedorBotones.appendChild(botonVolver);
