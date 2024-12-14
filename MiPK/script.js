@@ -165,43 +165,37 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
             botonFoto.style.zIndex = "1001";
             contenedor.appendChild(botonFoto);
 
-         botonFoto.addEventListener("click", () => {
-    const canvas = document.createElement("canvas");
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            botonFoto.addEventListener("click", () => {
+                const canvas = document.createElement("canvas");
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    const textoPK = `PK ${formatearPK(window.pkMasCercano.pk)}`;
-    const padding = 20;
-    const fontSize = 24;
-    const margenExtra = 100; // Ajusta este valor según sea necesario
-    const tarjetaWidth = ctx.measureText(textoPK).width + padding * 2 + margenExtra;
-    const tarjetaHeight = fontSize + padding * 2;
+                const textoPK = `PK ${formatearPK(window.pkMasCercano.pk)}`;
+                const padding = 20;
+                const fontSize = 24;
+                const margenExtra = 60; // Ajusta este valor según sea necesario
+                const tarjetaWidth = ctx.measureText(textoPK).width + padding * 2 + margenExtra;
+                const tarjetaHeight = fontSize + padding * 2;
 
-    ctx.fillStyle = "rgba(0, 122, 255, 0.5)"; // Fondo azul semitransparente
+              ctx.fillStyle = "rgba(0, 122, 255, 0.5)"; // Fondo azul semitransparente
+                const x = (canvas.width - tarjetaWidth) / 2;
+                const y = canvas.height - tarjetaHeight - 20;
+                ctx.beginPath();
+                ctx.roundRect(x, y, tarjetaWidth, tarjetaHeight, 20); // 20 = radio de las esquinas
+                ctx.fill();
 
-    // Calcular x para alinear a la derecha
-    const x = canvas.width - tarjetaWidth - padding; // Ajustar para margen desde la derecha
-    const y = canvas.height - tarjetaHeight - 20;
 
-    ctx.beginPath();
-    ctx.roundRect(x, y, tarjetaWidth, tarjetaHeight, 20); // Dibuja el cuadro con esquinas redondeadas
-    ctx.fill();
-
-    ctx.fillStyle = "white";
-    ctx.font = `${fontSize}px Arial`;
-    ctx.textAlign = "right"; // Alineación a la derecha
-    ctx.textBaseline = "middle";
-
-    // Dibujo del texto alineado a la derecha
-    ctx.fillText(
-        textoPK,
-        x + tarjetaWidth - padding, // Ajustar posición x para alineación a la derecha
-        canvas.height - tarjetaHeight / 2 - 20 // Mantener la posición vertical
-    );
-});
-
+                ctx.fillStyle = "white";
+                ctx.font = `${fontSize}px Arial`;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(
+                    textoPK,
+                    canvas.width / 2,
+                    canvas.height - tarjetaHeight / 2 - 20
+                );
 
                 const imagenCapturada = document.createElement("img");
                 imagenCapturada.src = canvas.toDataURL("image/png");
@@ -400,7 +394,7 @@ imagenEditar.addEventListener("click", () => {
     // Campo de texto para añadir información
     const inputTexto = document.createElement("input");
     inputTexto.type = "text";
-    inputTexto.placeholder = "Añade información...(30 caracteres)";
+    inputTexto.placeholder = "Añade información...";
     inputTexto.style.margin = "20px";
     inputTexto.style.padding = "10px";
     inputTexto.style.fontSize = "16px";
@@ -463,4 +457,4 @@ imagenEditar.addEventListener("click", () => {
         });
 });
 
-
+});
