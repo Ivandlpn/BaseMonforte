@@ -180,7 +180,7 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 const tarjetaHeight = fontSize + padding * 2;
 
               ctx.fillStyle = "rgba(0, 122, 255, 0.5)"; // Fondo azul semitransparente
-                const x = (canvas.width - tarjetaWidth) / 2;
+                const x = padding;
                 const y = canvas.height - tarjetaHeight - 20;
                 ctx.beginPath();
                 ctx.roundRect(x, y, tarjetaWidth, tarjetaHeight, 20); // 20 = radio de las esquinas
