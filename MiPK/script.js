@@ -311,7 +311,7 @@ botonGuardar.addEventListener("click", () => {
 const imagenCompartir = document.createElement("img");
 imagenCompartir.src = "img/compartir.png"; // Reemplaza con el nombre real de tu archivo de imagen
 imagenCompartir.alt = "Compartir";
-imagenCompartir.style.cssText = "cursor: pointer; width: 30px; height: 30px;"; // Ajusta el tamaño según necesites
+imagenCompartir.style.cssText = "cursor: pointer; width: 50px; height: 50px;"; // Ajusta el tamaño según necesites
 contenedorBotones.appendChild(imagenCompartir);
 
 imagenCompartir.addEventListener("click", async () => {
