@@ -193,8 +193,8 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 ctx.textBaseline = "middle";
                 ctx.fillText(
                     textoPK,
-                    canvas.width / 2,
-                    canvas.height - tarjetaHeight / 2 - 20
+                      x + padding, // Usar padding para un margen adicional desde la izquierda
+    canvas.height - tarjetaHeight / 2 - 20 // Mantener la posición vertical
                 );
 
                 const imagenCapturada = document.createElement("img");
