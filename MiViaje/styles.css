@@ -80,27 +80,36 @@ header {
 
 .boton {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
     margin: 5px;
     border: none;
-    border-radius: 50%;
+    border-radius: 10px;
     background-color: #007aff;
     color: white;
-    font-size: 1.2em;
+    font-size: 0.9em;
+    text-align: center;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    gap: 5px;
 }
 
-.boton i {
-    font-size: 1.5em;
+.boton-icono {
+    width: 30px;
+    height: 30px;
+}
+
+.boton span {
+    font-size: 0.8em;
 }
 
 .boton:hover {
     background-color: #005bb5;
 }
+
 
 .info-linea {
     display: flex;
