@@ -51,16 +51,39 @@ header {
     box-sizing: border-box;
 }
 
-/* Tarjeta de botones */
+/* Contenedor principal para las dos tarjetas */
+.tarjetas {
+    display: flex; /* Hace que las tarjetas se ubiquen en la misma línea horizontal */
+    width: 100%; /* Ocupa todo el ancho de la pantalla */
+    height: 30%; /* Altura fija del contenedor */
+    box-sizing: border-box; /* Incluye padding y border en el tamaño */
+}
+
+/* Estilo común para las tarjetas */
+.tarjeta {
+    flex: 1; /* Cada tarjeta ocupa el 50% del ancho */
+    display: flex; /* Organiza los elementos dentro de la tarjeta */
+    flex-direction: column; /* Elementos apilados verticalmente dentro de la tarjeta */
+    justify-content: center; /* Centrado vertical de los elementos */
+    align-items: center; /* Centrado horizontal */
+    background: linear-gradient(135deg, #ffffff, #f0f0f0); /* Fondo degradado */
+    border: 1px solid #ddd; /* Borde sutil */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
+    box-sizing: border-box; /* Asegura que padding y border no desborden */
+}
+
+/* Tarjeta de botones de acciones */
 .tarjeta.acciones {
     justify-content: flex-start; /* Botones alineados al inicio vertical */
     align-items: flex-start; /* Botones alineados a la izquierda */
-    padding: 20px; /* Más espacio interno */
+    padding: 20px;
 }
 
 .tarjeta.acciones button {
-    width: 80%; /* Botones ocupan la mayor parte del ancho */
-    background-color: #007aff; /* Azul destacable */
+    width: 80%; /* Botones ocupan el 80% del ancho de la tarjeta */
+    background-color: #007aff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -73,7 +96,7 @@ header {
 
 /* Tarjeta de información */
 .tarjeta.informacion {
-    text-align: right; /* Alinea el texto hacia la derecha */
+    text-align: right; /* Texto alineado a la derecha */
     padding: 20px; /* Espaciado interno */
 }
 
@@ -93,3 +116,4 @@ header {
     opacity: 0.9;
     margin: 0;
 }
+
