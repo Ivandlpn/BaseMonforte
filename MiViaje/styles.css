@@ -78,19 +78,27 @@ header {
     color: #555;
 }
 
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+}
+
 .boton {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 50px;
     height: 50px;
-    margin: 5px;
     border: none;
     border-radius: 50%;
     background-color: #007aff;
     color: white;
     cursor: pointer;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    padding: 0; /* Eliminado el padding ya que usamos dimensiones fijas */
 }
 
 .boton i {
@@ -101,20 +109,8 @@ header {
     background-color: #005bb5;
 }
 
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Dos columnas */
-    grid-template-rows: repeat(2, 1fr); /* Dos filas */
-    gap: 10px; /* Espacio entre botones */
-}
 
-.boton {
-    padding: 5px 10px; /* Espaciado interno reducido */
-    font-size: 14px; /* Tamaño del texto */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+
 
 
 .info-linea {
