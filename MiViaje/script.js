@@ -194,3 +194,145 @@ document.getElementById('MiPK').addEventListener('click', () => {
     console.log('IT abierta');
 });
 
+
+
+marcadorTren.on('click', () => {
+    const pk = obtenerPKDelMarcador(marcadorTren); // Función para obtener el PK desde el marcador
+    mostrarFormulario(pk); // Mostrar el formulario cuando se hace clic en el marcador
+});
+
+const elementos = [
+    { nombre: 'Carril', defectos: ['Estado de carril', 'Cabeza de carril. Soldaduras'] },
+    { nombre: 'Traviesas Hormigón o Bibloque', defectos: ['Estado de la traviesa'] },
+    { nombre: 'Balasto', defectos: ['Contaminación de balasto', 'Insuficiencia de balasto'] },
+    { nombre: 'Geometría de vía', defectos: ['Defecto alineación planta (garrotes, ripados)'] }
+    // Añadir más elementos y defectos según la tabla original
+];
+
+const nivelesDefecto = ['IAL', 'IL'];  // Niveles de defectos
+const estados = ['Incorrecto', 'Correcto']; // Estados posibles
+const actuaciones = ['Inspección a pie', 'Prospección', 'Otros']; // Actuaciones recomendadas
+
+function mostrarFormulario(pk) {
+    // Crear el formulario
+    const form = document.createElement('form');
+    form.id = 'formularioDefecto';
+
+    // Elemento
+    const elementoSelect = document.createElement('select');
+    elementoSelect.id = 'elemento';
+    elementoSelect.addEventListener('change', actualizarDefectos);
+    elementos.forEach(elemento => {
+        const option = document.createElement('option');
+        option.value = elemento.nombre;
+        option.textContent = elemento.nombre;
+        elementoSelect.appendChild(option);
+    });
+
+    form.appendChild(elementoSelect);
+
+    // Defectos (dependerá del Elemento seleccionado)
+    const defectoSelect = document.createElement('select');
+    defectoSelect.id = 'defecto';
+    form.appendChild(defectoSelect);
+
+    // Nivel de defectos
+    const nivelSelect = document.createElement('select');
+    nivelSelect.id = 'nivel';
+    nivelesDefecto.forEach(nivel => {
+        const option = document.createElement('option');
+        option.value = nivel;
+        option.textContent = nivel;
+        nivelSelect.appendChild(option);
+    });
+
+    form.appendChild(nivelSelect);
+
+    // Estado
+    const estadoSelect = document.createElement('select');
+    estadoSelect.id = 'estado';
+    estados.forEach(estado => {
+        const option = document.createElement('option');
+        option.value = estado;
+        option.textContent = estado;
+        estadoSelect.appendChild(option);
+    });
+
+    form.appendChild(estadoSelect);
+
+    // Observaciones
+    const observacionesInput = document.createElement('input');
+    observacionesInput.id = 'observaciones';
+    observacionesInput.placeholder = 'Observaciones';
+    form.appendChild(observacionesInput);
+
+    // Actuación recomendada
+    const actuacionSelect = document.createElement('select');
+    actuacionSelect.id = 'actuacion';
+    actuaciones.forEach(actuacion => {
+        const option = document.createElement('option');
+        option.value = actuacion;
+        option.textContent = actuacion;
+        actuacionSelect.appendChild(option);
+    });
+
+    form.appendChild(actuacionSelect);
+
+    // Botón para guardar
+    const saveButton = document.createElement('button');
+    saveButton.textContent = 'Guardar Defecto';
+    saveButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        guardarDefecto(pk);
+    });
+
+    form.appendChild(saveButton);
+
+    // Añadir el formulario al DOM
+    document.body.appendChild(form);
+}
+
+function actualizarDefectos(event) {
+    // Actualiza el listado de defectos según el elemento seleccionado
+    const selectedElemento = event.target.value;
+    const defectoSelect = document.getElementById('defecto');
+    
+    // Limpiar el actual listado
+    defectoSelect.innerHTML = '';
+
+    const elemento = elementos.find(e => e.nombre === selectedElemento);
+    if (elemento) {
+        elemento.defectos.forEach(defecto => {
+            const option = document.createElement('option');
+            option.value = defecto;
+            option.textContent = defecto;
+            defectoSelect.appendChild(option);
+        });
+    }
+}
+
+function guardarDefecto(pk) {
+    const elemento = document.getElementById('elemento').value;
+    const defecto = document.getElementById('defecto').value;
+    const nivel = document.getElementById('nivel').value;
+    const estado = document.getElementById('estado').value;
+    const observaciones = document.getElementById('observaciones').value;
+    const actuacion = document.getElementById('actuacion').value;
+
+    // Crear el contenido del archivo
+    const contenido = `Defecto PK: ${pk}\n\nElemento: ${elemento}\nDefecto: ${defecto}\nNivel: ${nivel}\nEstado: ${estado}\nObservaciones: ${observaciones}\nActuación recomendada: ${actuacion}`;
+
+    // Crear el archivo de texto
+    const blob = new Blob([contenido], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `Defecto_${pk}.txt`;
+
+    // Iniciar la descarga
+    link.click();
+
+    // Mostrar mensaje de éxito
+    alert('Defecto registrado');
+}
+
+
