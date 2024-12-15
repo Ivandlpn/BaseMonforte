@@ -235,14 +235,20 @@ const actuaciones = ['Inspección a pie', 'Prospección', 'Otros']; // Actuacion
 
 // Mostrar el formulario en un modal cuando se hace clic en el marcador
 function mostrarFormulario(pk) {
-    // Crear el formulario
+    // Primero, eliminar cualquier formulario previo si existe
+    const formularioExistente = document.getElementById('formularioDefecto');
+    if (formularioExistente) {
+        formularioExistente.remove();
+    }
+
+    // Crear un nuevo formulario
     const form = document.createElement('form');
     form.id = 'formularioDefecto';
 
     // Elemento
     const elementoSelect = document.createElement('select');
     elementoSelect.id = 'elemento';
-    elementoSelect.addEventListener('change', actualizarDefectos);
+    elementoSelect.addEventListener('change', actualizarDefectos); // Asociar la función de actualización
     elementos.forEach(elemento => {
         const option = document.createElement('option');
         option.value = elemento.nombre;
@@ -330,6 +336,8 @@ function mostrarFormulario(pk) {
         }
     };
 }
+
+
 
 // Función para guardar el defecto
 function guardarDefecto(pk) {
