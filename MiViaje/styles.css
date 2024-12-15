@@ -146,6 +146,7 @@ span {
 }
 
 /* Estilo para el modal */
+/* Modal */
 .modal {
     display: none; /* Oculto por defecto */
     position: fixed; /* Fijo en la pantalla */
@@ -160,13 +161,20 @@ span {
 /* Contenido del modal */
 .modal-content {
     background-color: #fff;
-    margin: 15% auto;
+    margin: 0; /* Eliminar margen */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Ancho ajustable */
     max-width: 600px; /* Máximo tamaño */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+    /* CENTRADO VERTICAL Y HORIZONTAL */
+    position: absolute; /* Cambiar a posición absoluta */
+    top: 50%; /* 50% desde arriba */
+    left: 50%; /* 50% desde la izquierda */
+    transform: translate(-50%, -50%); /* Moverlo para centrarlo exacto */
 }
+
 
 /* El botón de cerrar */
 .close {
