@@ -137,51 +137,36 @@ async function obtenerLugar(lat, lon) {
 // NUEVO VIAJE
 
 document.getElementById('nuevoviaje').addEventListener('click', () => {
-    // Comprobamos si ya existe un viaje activo en localStorage
-    let viajeActivo = localStorage.getItem('viajeActivo');
+    // Obtener la fecha y hora actuales
+    const fecha = new Date();
+    const dia = fecha.getDate().toString().padStart(2, '0');
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    const anio = fecha.getFullYear();
+    const hora = fecha.getHours().toString().padStart(2, '0');
+    const minuto = fecha.getMinutes().toString().padStart(2, '0');
 
-    if (viajeActivo) {
-        // Si ya existe un viaje activo, mostramos un mensaje y no hacemos nada
-        alert('Ya hay un viaje activo en progreso.');
-        console.log('Viaje activo encontrado');
-    } else {
-        // Si no hay un viaje activo, creamos uno nuevo
-        console.log('Creando un nuevo documento de viaje...');
-        
-        // Datos iniciales del viaje (fecha, hora de inicio)
-        const fecha = new Date();
-        const dia = fecha.getDate().toString().padStart(2, '0'); // Aseguramos 2 dígitos
-        const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // Aseguramos 2 dígitos
-        const anio = fecha.getFullYear(); // Año (4 dígitos)
-        const hora = fecha.getHours().toString().padStart(2, '0'); // Hora con 2 dígitos
-        const minuto = fecha.getMinutes().toString().padStart(2, '0'); // Minuto con 2 dígitos
+    // Contenido inicial del documento (con datos básicos)
+    const contenidoInicial = `
+    Viaje en Cabina
+    Fecha: ${dia}/${mes}/${anio}
+    Hora de Inicio: ${hora}:${minuto}
+    PK de Inicio: Cargando...
+    Eventos:
+    `;
 
-        // Contenido inicial del documento (PK de inicio aún no disponible)
-        const contenidoInicial = `
-        Viaje en Cabina
-        Fecha: ${dia}/${mes}/${anio}
-        Hora de Inicio: ${hora}:${minuto}
-        PK de Inicio: Cargando...
-        Eventos:
-        `;
+    // Nombre del archivo con la fecha y hora
+    const nombreArchivo = `ViajeCabina ${dia}${mes}${anio} ${hora}:${minuto}.txt`;
 
-        // Mostrar el documento en el área de texto
-        const textoArea = document.getElementById('documentoTexto');
-        textoArea.value = contenidoInicial;
+    // Mostrar el contenido del archivo en el área de texto
+    const textoArea = document.getElementById('documentoTexto');
+    textoArea.value = contenidoInicial;
 
-        // Guardamos el estado del viaje en localStorage
-        localStorage.setItem('viajeActivo', true);
+    // Guardar el nombre del archivo y los datos en localStorage
+    localStorage.setItem('nombreArchivo', nombreArchivo);
+    localStorage.setItem('documentoViaje', contenidoInicial);
 
-        // Guardamos los datos iniciales del viaje en localStorage
-        const viajeDatos = {
-            fecha: `${dia}/${mes}/${anio}`,
-            hora: `${hora}:${minuto}`,
-            pkInicio: null, // Lo actualizaremos más tarde
-            eventos: []
-        };
-
-        localStorage.setItem('datosViaje', JSON.stringify(viajeDatos));
-    }
+    // (Opcional) Mostrar el nombre del archivo en la interfaz si lo deseas
+    console.log('Documento creado con nombre:', nombreArchivo);
 });
 
 // NUEVO EVENTO
