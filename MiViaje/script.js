@@ -13,11 +13,6 @@ function inicializarMapa(lat, lon) {
     }).addTo(mapa);
 
 
-
-
-
-
-
 iconoTren = L.icon({
     iconUrl: 'img/MarcadorTren.png', // Ruta a la imagen local
     iconSize: [50, 50],
