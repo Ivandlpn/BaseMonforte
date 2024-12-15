@@ -123,12 +123,13 @@ function dibujarTrazado(trazado) {
     }).addTo(mapa);
 
     // Ajustar el mapa para que muestre todo el trazado
-    mapa.fitBounds(lineaFerrocarril.getBounds());
+    // mapa.fitBounds(lineaFerrocarril.getBounds());
 }
 
 function centrarMapaEnTren() {
     if (marcadorTren) {
-        mapa.setView(marcadorTren.getLatLng(), 16); // Centra el mapa en el marcador y mantiene el zoom
+        mapa.setView(marcadorTren.getLatLng(), mapa.getZoom()); 
+        // Centra el mapa en el marcador y conserva el nivel de zoom actual
     }
 }
 
