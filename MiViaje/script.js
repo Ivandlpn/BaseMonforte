@@ -134,50 +134,6 @@ async function obtenerLugar(lat, lon) {
     }
 }
 
-// NUEVO VIAJE
-
-document.getElementById('nuevoviaje').addEventListener('click', () => {
-    // Obtener la fecha y hora actuales
-    const fecha = new Date();
-    const dia = fecha.getDate().toString().padStart(2, '0');
-    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
-    const anio = fecha.getFullYear();
-    const hora = fecha.getHours().toString().padStart(2, '0');
-    const minuto = fecha.getMinutes().toString().padStart(2, '0');
-
-    // Contenido inicial del documento (PK de inicio aún no disponible)
-    const contenidoInicial = `
-    Viaje en Cabina
-    Fecha: ${dia}/${mes}/${anio}
-    Hora de Inicio: ${hora}:${minuto}
-    PK de Inicio: Cargando...
-    Eventos:
-    `;
-
-    // Nombre del archivo con la fecha y hora
-    const nombreArchivo = `ViajeCabina ${dia}${mes}${anio} ${hora}:${minuto}.txt`;
-
-    // Crear el archivo de texto
-    const blob = new Blob([contenidoInicial], { type: 'text/plain' });
-    const enlace = document.createElement('a');
-    enlace.href = URL.createObjectURL(blob);
-    enlace.download = nombreArchivo; // Nombre del archivo con la fecha y hora
-
-    // Simulamos el clic para iniciar la descarga
-    enlace.click(); // Esto descarga el archivo en el dispositivo móvil
-
-    console.log('Documento creado y descargado con nombre:', nombreArchivo);
-});
-
-
-
-// NUEVO EVENTO
-
-document.getElementById('nuevoevento').addEventListener('click', () => {
-    console.log('Evento registrado');
-    alert('Evento registrado exitosamente.');
-});
-
 
 
 document.getElementById('abrirPDF').addEventListener('click', () => {
