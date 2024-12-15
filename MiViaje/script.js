@@ -20,8 +20,8 @@ function inicializarMapa(lat, lon) {
 
 iconoTren = L.icon({
     iconUrl: 'img/MarcadorTren.png', // Ruta a la imagen local
-    iconSize: [50, 50],
-    iconAnchor: [25, 25]
+    iconSize: [60, 60],
+    iconAnchor: [30, 30]
 });
 
 
@@ -133,6 +133,19 @@ async function obtenerLugar(lat, lon) {
         document.getElementById('lugar').textContent = "Lugar: Desconocido";
     }
 }
+
+
+
+document.getElementById('nuevoviaje').addEventListener('click', () => {
+    console.log('Documento finalizado');
+    alert('Documento creado');
+});
+
+
+document.getElementById('nuevoevento').addEventListener('click', () => {
+    console.log('Evento registrado');
+    alert('Evento registrado exitosamente.');
+});
 
 
 

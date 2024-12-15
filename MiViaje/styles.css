@@ -42,15 +42,8 @@ header {
     box-sizing: border-box;
 }
 
-.tarjeta:nth-child(1) {
-    flex: 1; /* Tarjeta 1 ocupa el 2/3 del espacio */
-}
-
-.tarjeta:nth-child(2) {
-    flex: 2; /* Tarjeta 2 ocupa el 1/3 del espacio */
-}
-
 .tarjeta {
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -87,20 +80,15 @@ header {
 
 .grid-container {
     display: grid;
-    grid-template-columns: 1fr; /* Una columna que ocupe toda la anchura */
-    grid-template-rows: repeat(2, auto); /* Dos filas, ajustándose al contenido */
-    gap: 3px; /* Espacio de 3 píxeles entre las filas */
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 3px;
 }
 
-
 .boton-container {
-    display: flex;
-    flex-direction: row;  /* Icono y texto en fila */
-    align-items: center;  /* Alinea el icono y texto verticalmente */
-    text-align: center;   /* Asegura que el texto esté centrado en su contenedor */
     background: none;
     border: none;
-    padding: 10px;
+    padding: 0;
     cursor: pointer;
     outline: none;
 }
@@ -126,8 +114,8 @@ header {
 }
 
 .boton-container span {
-    font-size: 12px; /* Tamaño del texto */
-    color: #555; /* Color del texto */
+    font-size: 12px;
+    text-align: center;
 }
 
 .info-linea {

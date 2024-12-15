@@ -2,35 +2,40 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Viaje en Cabina</title>
 
     <!-- Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="styles.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-   
+    <script src="script.js" defer></script>
 </head>
 <body>
     <header></header>
 
     <div id="map"></div>
 
-<div class="tarjetas">
-    <!-- Tarjeta para botones de acciones -->
+    <div class="tarjetas">
+        <!-- Tarjeta para botones de acciones -->
     <div class="tarjeta acciones grid-container">
+        <div class="boton-container" id="nuevoviaje">
+            <img src="img/nuevoviaje.png" alt="Viaje" class="icono">
+            <span>Viaje</span>
+        </div>
+        <div class="boton-container" id="nuevoevento">
+            <img src="img/nuevoevento.png" alt="Evento" class="icono">
+            <span>Evento</span>
+        </div>
         <div class="boton-container" id="abrirPDF">
-            <img src="img/leerit.png" alt="Leer IT" class="icono">
-            <span>Instrucción Técnica</span> <!-- Texto a la derecha del icono -->
+            <img src="img/leerit.png" alt="IT" class="icono">
+            <span>IT</span>
         </div>
         <div class="boton-container" id="MiPK">
             <img src="img/abrirmipk.png" alt="MiPK" class="icono">
-            <span>Mi PK</span> <!-- Texto a la derecha del icono -->
+            <span>MiPK</span>
         </div>
     </div>
-</div>
-
 
 
 <div class="tarjeta informacion">
@@ -47,6 +52,5 @@
 
    
     </div>
-     <script src="script.js" defer></script>
 </body>
 </html>
