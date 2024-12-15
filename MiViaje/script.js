@@ -136,18 +136,6 @@ async function obtenerLugar(lat, lon) {
 
 
 
-document.getElementById('nuevoviaje').addEventListener('click', () => {
-    console.log('Documento finalizado');
-    alert('Documento creado');
-});
-
-
-document.getElementById('nuevoevento').addEventListener('click', () => {
-    console.log('Evento registrado');
-    alert('Evento registrado exitosamente.');
-});
-
-
 
 document.getElementById('abrirPDF').addEventListener('click', () => {
     window.open('doc/IT_Inspecci%C3%B3n_Cabina.pdf', '_blank');
