@@ -214,6 +214,7 @@ const nivelesDefecto = ['IAL', 'IL'];  // Niveles de defectos
 const estados = ['Incorrecto', 'Correcto']; // Estados posibles
 const actuaciones = ['Inspección a pie', 'Prospección', 'Otros']; // Actuaciones recomendadas
 
+// Mostrar el formulario en un modal cuando se hace clic en el marcador
 function mostrarFormulario(pk) {
     // Crear el formulario
     const form = document.createElement('form');
@@ -289,29 +290,29 @@ function mostrarFormulario(pk) {
 
     form.appendChild(saveButton);
 
-    // Añadir el formulario al DOM
-    document.body.appendChild(form);
+    // Añadir el formulario al modal
+    const modalContent = document.querySelector('.modal-content');
+    modalContent.appendChild(form);
+
+    // Mostrar el modal
+    const modal = document.getElementById('modalFormulario');
+    modal.style.display = 'block';
+
+    // Cerrar el modal al hacer clic en la 'x'
+    const closeButton = document.querySelector('.close');
+    closeButton.addEventListener('click', () => {
+        modal.style.display = 'none'; // Cerrar el modal
+    });
+
+    // Cerrar el modal si el usuario hace clic fuera de él
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
 }
 
-function actualizarDefectos(event) {
-    // Actualiza el listado de defectos según el elemento seleccionado
-    const selectedElemento = event.target.value;
-    const defectoSelect = document.getElementById('defecto');
-    
-    // Limpiar el actual listado
-    defectoSelect.innerHTML = '';
-
-    const elemento = elementos.find(e => e.nombre === selectedElemento);
-    if (elemento) {
-        elemento.defectos.forEach(defecto => {
-            const option = document.createElement('option');
-            option.value = defecto;
-            option.textContent = defecto;
-            defectoSelect.appendChild(option);
-        });
-    }
-}
-
+// Función para guardar el defecto
 function guardarDefecto(pk) {
     const elemento = document.getElementById('elemento').value;
     const defecto = document.getElementById('defecto').value;
@@ -334,6 +335,8 @@ function guardarDefecto(pk) {
 
     // Mostrar mensaje de éxito
     alert('Defecto registrado');
+
+    // Cerrar el modal después de guardar
+    const modal = document.getElementById('modalFormulario');
+    modal.style.display = 'none';
 }
-
-
