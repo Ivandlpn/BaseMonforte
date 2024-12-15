@@ -43,11 +43,11 @@ header {
 }
 
 .tarjeta:nth-child(1) {
-    flex: 2; /* Tarjeta 1 ocupa el 2/3 del espacio */
+    flex: 1; /* Tarjeta 1 ocupa el 2/3 del espacio */
 }
 
 .tarjeta:nth-child(2) {
-    flex: 1; /* Tarjeta 2 ocupa el 1/3 del espacio */
+    flex: 2; /* Tarjeta 2 ocupa el 1/3 del espacio */
 }
 
 .tarjeta {
