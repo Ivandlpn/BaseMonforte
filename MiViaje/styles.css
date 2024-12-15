@@ -82,7 +82,7 @@ header {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: 5px;
+    gap: 3px;
 }
 
 .boton {
