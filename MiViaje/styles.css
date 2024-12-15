@@ -80,10 +80,11 @@ header {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 3px;
+    grid-template-columns: 1fr; /* Una columna que ocupe toda la anchura */
+    grid-template-rows: repeat(2, auto); /* Dos filas, ajustándose al contenido */
+    gap: 3px; /* Espacio de 3 píxeles entre las filas */
 }
+
 
 .boton-container {
     background: none;
