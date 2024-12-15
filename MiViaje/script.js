@@ -138,7 +138,7 @@ async function obtenerLugar(lat, lon) {
 
 document.getElementById('nuevoviaje').addEventListener('click', () => {
     console.log('Documento finalizado');
-    alert('Documento finalizado.');
+    alert('Documento creado');
 });
 
 
@@ -156,6 +156,6 @@ document.getElementById('abrirPDF').addEventListener('click', () => {
 
 document.getElementById('MiPK').addEventListener('click', () => {
     window.open('https://ivandlpn.github.io/BaseMonforte/PKC/', '_blank');
-    console.log('PDF abierto');
+    console.log('IT abierta');
 });
 
