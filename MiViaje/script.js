@@ -157,14 +157,20 @@ document.getElementById('nuevoviaje').addEventListener('click', () => {
     // Nombre del archivo con la fecha y hora
     const nombreArchivo = `ViajeCabina ${dia}${mes}${anio} ${hora}:${minuto}.txt`;
 
-    // Crear el archivo de texto y ofrecer la descarga
+    // Crear el archivo de texto
     const blob = new Blob([contenidoInicial], { type: 'text/plain' });
     const enlace = document.createElement('a');
     enlace.href = URL.createObjectURL(blob);
     enlace.download = nombreArchivo; // Nombre del archivo con la fecha y hora
-    enlace.click(); // Simula el clic para iniciar la descarga
 
-    // Log para ver el nombre del archivo
+    // Crear una nueva ventana para abrir el archivo en el editor de texto
+    enlace.click(); // Iniciar la descarga
+
+    // Intentar abrir el archivo automáticamente en el editor de texto predeterminado
+    // El archivo se descarga en la carpeta de descargas, y luego el sistema operativo abrirá el archivo
+    const url = URL.createObjectURL(blob);
+    window.open(url);  // Abrir el archivo en una nueva ventana (esto depende del navegador y sistema operativo)
+    
     console.log('Documento creado y descargado con nombre:', nombreArchivo);
 });
 
