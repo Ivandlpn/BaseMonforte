@@ -20,6 +20,7 @@ navigator.geolocation.watchPosition((position) => {
             window.pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
             mostrarPKMasCercano(window.pkMasCercano);
             actualizarPosicionPK(window.pkMasCercano);
+            cargarTrazado();
         })
         .catch(error => console.error('Error al cargar los datos de PK:', error));
 }, 
@@ -118,6 +119,45 @@ function formatearPK(pk) {
         return pkStr;
     }
 }
+
+
+
+function dibujarTrazadoConEventos(data) {
+    const trazado = data.map((punto) => [punto.Latitud, punto.Longitud]);
+    const lineaFerrocarril = L.polyline(trazado, {
+        color: 'blue',
+        weight: 4,
+        opacity: 0.8
+    }).addTo(mapa);
+
+    // Añadir eventos para cada punto del trazado
+    data.forEach((punto) => {
+        const marcador = L.circleMarker([punto.Latitud, punto.Longitud], {
+            radius: 4,
+            color: 'red'
+        }).addTo(mapa);
+
+        marcador.bindPopup(`PK: ${punto.PK}`);
+    });
+
+    mapa.fitBounds(lineaFerrocarril.getBounds());
+}
+
+async function cargarTrazadoConEventos() {
+    try {
+        const respuesta = await fetch('./PKCoordenas.json');
+        const data = await respuesta.json();
+
+        dibujarTrazadoConEventos(data);
+    } catch (error) {
+        console.error('Error al cargar el trazado con eventos:', error);
+    }
+}
+
+
+
+
+
 
 document.getElementById("actualizarUbicacion").addEventListener("click", () => {
     if (marcadorActual) {
