@@ -47,7 +47,7 @@ header {
 }
 
 .tarjeta.informacion {
-    flex: 2; /* Ocupa 2/3 del ancho */
+    flex: 4; /* Ocupa 2/3 del ancho */
 }
 
 
