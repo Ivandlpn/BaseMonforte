@@ -134,13 +134,67 @@ async function obtenerLugar(lat, lon) {
     }
 }
 
-
+// NUEVO VIAJE
 
 document.getElementById('nuevoviaje').addEventListener('click', () => {
-    console.log('Documento finalizado');
-    alert('Documento creado');
+    // Comprobamos si ya existe un viaje activo en localStorage
+    let viajeActivo = localStorage.getItem('viajeActivo');
+
+    if (viajeActivo) {
+        // Si ya existe un viaje activo, mostramos un mensaje y no hacemos nada
+        alert('Ya hay un viaje activo en progreso.');
+        console.log('Viaje activo encontrado');
+    } else {
+        // Si no hay un viaje activo, creamos uno nuevo
+        console.log('Creando un nuevo documento de viaje...');
+        
+        // Datos iniciales del viaje (fecha, hora de inicio)
+        const fecha = new Date();
+        const dia = fecha.getDate().toString().padStart(2, '0'); // Aseguramos 2 dígitos
+        const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // Aseguramos 2 dígitos
+        const anio = fecha.getFullYear(); // Año (4 dígitos)
+        const hora = fecha.getHours().toString().padStart(2, '0'); // Hora con 2 dígitos
+        const minuto = fecha.getMinutes().toString().padStart(2, '0'); // Minuto con 2 dígitos
+
+        // Contenido inicial del documento (PK de inicio aún no disponible)
+        const contenidoInicial = `
+        Viaje en Cabina
+        Fecha: ${dia}/${mes}/${anio}
+        Hora de Inicio: ${hora}:${minuto}
+        PK de Inicio: Cargando...
+        Eventos:
+        `;
+
+        // Crear y descargar el archivo de texto
+        crearYDescargarArchivo(contenidoInicial, dia, mes, anio, hora, minuto);
+
+        // Guardamos en localStorage que el viaje está activo
+        localStorage.setItem('viajeActivo', true);
+
+        // Guardamos los datos iniciales del viaje (sin PK de inicio aún)
+        const viajeDatos = {
+            fecha: `${dia}/${mes}/${anio}`,
+            hora: `${hora}:${minuto}`,
+            pkInicio: null, // Lo actualizaremos más tarde
+            eventos: []
+        };
+
+        // Guardamos los datos del viaje en localStorage para uso posterior
+        localStorage.setItem('datosViaje', JSON.stringify(viajeDatos));
+    }
 });
 
+// Función para crear el archivo y descargarlo
+function crearYDescargarArchivo(contenido, dia, mes, anio, hora, minuto) {
+    const nombreArchivo = `ViajeCabina ${dia}${mes}${anio} ${hora}:${minuto}.txt`;
+    const blob = new Blob([contenido], { type: 'text/plain' });
+    const enlace = document.createElement('a');
+    enlace.href = URL.createObjectURL(blob);
+    enlace.download = nombreArchivo; // Usamos el nombre dinámico
+    enlace.click();
+}
+
+// NUEVO EVENTO
 
 document.getElementById('nuevoevento').addEventListener('click', () => {
     console.log('Evento registrado');
