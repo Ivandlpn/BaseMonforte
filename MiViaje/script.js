@@ -347,7 +347,9 @@ function guardarDefecto(pk) {
     const blob = new Blob([contenido], { type: 'text/plain' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `Defecto_${pk}.txt`;
+    const fecha = new Date().toISOString().split('T')[0]; // Obtener solo la fecha (YYYY-MM-DD)
+link.download = `Defecto_${pk}_${fecha}.txt`; // Ejemplo: Defecto_323+000_2024-12-15.txt
+
 
     // Iniciar la descarga
     link.click();
