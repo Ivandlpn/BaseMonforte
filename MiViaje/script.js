@@ -149,7 +149,7 @@ document.getElementById('abrirPDF').addEventListener('click', () => {
     console.log('PDF abierto');
 });
 
-document.getElementById('abrirMiPK').addEventListener('click', () => {
+document.getElementById('MiPK').addEventListener('click', () => {
     window.open('https://ivandlpn.github.io/BaseMonforte/PKC/', '_blank');
     console.log('PDF abierto');
 });
