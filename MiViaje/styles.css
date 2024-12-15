@@ -94,9 +94,14 @@ header {
 
 
 .boton-container {
+    display: flex;
+    flex-direction: row;  /* Icono y texto en fila */
+    justify-content: center;
+    align-items: center;  /* Alinea el icono y texto verticalmente */
+    text-align: center;   /* Asegura que el texto esté centrado en su contenedor */
     background: none;
     border: none;
-    padding: 0;
+    padding: 10px;
     cursor: pointer;
     outline: none;
 }
@@ -122,8 +127,8 @@ header {
 }
 
 .boton-container span {
-    font-size: 12px;
-    text-align: center;
+    font-size: 12px; /* Tamaño del texto */
+    color: #555; /* Color del texto */
 }
 
 .info-linea {
