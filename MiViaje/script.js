@@ -165,13 +165,14 @@ document.getElementById('nuevoviaje').addEventListener('click', () => {
         Eventos:
         `;
 
-        // Crear y descargar el archivo de texto
-        crearYDescargarArchivo(contenidoInicial, dia, mes, anio, hora, minuto);
+        // Mostrar el documento en el área de texto
+        const textoArea = document.getElementById('documentoTexto');
+        textoArea.value = contenidoInicial;
 
-        // Guardamos en localStorage que el viaje está activo
+        // Guardamos el estado del viaje en localStorage
         localStorage.setItem('viajeActivo', true);
 
-        // Guardamos los datos iniciales del viaje (sin PK de inicio aún)
+        // Guardamos los datos iniciales del viaje en localStorage
         const viajeDatos = {
             fecha: `${dia}/${mes}/${anio}`,
             hora: `${hora}:${minuto}`,
@@ -179,20 +180,9 @@ document.getElementById('nuevoviaje').addEventListener('click', () => {
             eventos: []
         };
 
-        // Guardamos los datos del viaje en localStorage para uso posterior
         localStorage.setItem('datosViaje', JSON.stringify(viajeDatos));
     }
 });
-
-// Función para crear el archivo y descargarlo
-function crearYDescargarArchivo(contenido, dia, mes, anio, hora, minuto) {
-    const nombreArchivo = `ViajeCabina ${dia}${mes}${anio} ${hora}:${minuto}.txt`;
-    const blob = new Blob([contenido], { type: 'text/plain' });
-    const enlace = document.createElement('a');
-    enlace.href = URL.createObjectURL(blob);
-    enlace.download = nombreArchivo; // Usamos el nombre dinámico
-    enlace.click();
-}
 
 // NUEVO EVENTO
 
