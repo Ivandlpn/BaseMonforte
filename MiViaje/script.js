@@ -151,10 +151,14 @@ navigator.geolocation.watchPosition(
        // Carga y dibuja el trazado al inicializar el mapa
         cargarTrazado();
 
-              // Centrar el mapa en el marcador cada 10 segundos
-        setInterval(() => {
-            centrarMapaEnTren();
-        }, 10000);
+      let centrarIntervalo;
+
+// Configura el temporizador
+if (!centrarIntervalo) {
+    centrarIntervalo = setInterval(() => {
+        centrarMapaEnTren();
+    }, 10000);
+}
         
     },
     (error) => console.error('Error al obtener la ubicación:', error),
