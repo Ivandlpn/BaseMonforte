@@ -21,6 +21,14 @@ iconoTren = L.icon({
 
 
     marcadorTren = L.marker([lat, lon], { icon: iconoTren }).addTo(mapa);
+
+    // Asegurarse de que el marcador se ha creado antes de asociar el evento
+    if (marcadorTren) {
+        // Asociar el evento de clic al marcador
+        marcadorTren.on('click', () => {
+            const pk = formatearPK(lat, lon);  // Usar lat/lon para calcular el PK (si es necesario)
+            mostrarFormulario(pk);            // Mostrar el formulario para registrar el defecto
+        });
 }
 
 // Actualizar la posición del tren en el mapa
@@ -191,10 +199,7 @@ document.getElementById('MiPK').addEventListener('click', () => {
 
 
 
-marcadorTren.on('click', () => {
-    const pk = obtenerPKDelMarcador(marcadorTren); // Función para obtener el PK desde el marcador
-    mostrarFormulario(pk); // Mostrar el formulario cuando se hace clic en el marcador
-});
+
 
 const elementos = [
     { nombre: 'Carril', defectos: ['Estado de carril', 'Cabeza de carril. Soldaduras'] },
