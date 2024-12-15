@@ -98,6 +98,36 @@ function formatearPK(pk) {
     return `${pkStr.slice(0, 3)}+${pkStr.slice(3)}`; // Formato XXX+XXX
 }
 
+async function cargarTrazado() {
+    try {
+        // Carga el archivo JSON
+        const respuesta = await fetch('./PKCoordenas.json');
+        const data = await respuesta.json();
+
+        // Extrae las coordenadas del archivo
+        const trazado = data.map((punto) => [punto.Latitud, punto.Longitud]);
+
+        // Dibuja el trazado en el mapa
+        dibujarTrazado(trazado);
+    } catch (error) {
+        console.error('Error al cargar el archivo PKCoordenas.json:', error);
+    }
+}
+
+function dibujarTrazado(trazado) {
+    const lineaFerrocarril = L.polyline(trazado, {
+        color: 'blue',         // Color de la línea
+        weight: 4,             // Grosor de la línea
+        opacity: 0.8,          // Transparencia
+        smoothFactor: 1        // Suavizado de la línea
+    }).addTo(mapa);
+
+    // Ajustar el mapa para que muestre todo el trazado
+    mapa.fitBounds(lineaFerrocarril.getBounds());
+}
+
+
+
 
 navigator.geolocation.watchPosition(
     (position) => {
@@ -112,6 +142,10 @@ navigator.geolocation.watchPosition(
         calcularVelocidad(lat, lon);
         obtenerPK(lat, lon);
         obtenerLugar(lat, lon); // Actualiza el lugar dinámicamente
+
+       // Carga y dibuja el trazado al inicializar el mapa
+        cargarTrazado();
+        
     },
     (error) => console.error('Error al obtener la ubicación:', error),
     { enableHighAccuracy: true, maximumAge: 0 }
