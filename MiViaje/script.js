@@ -126,6 +126,11 @@ function dibujarTrazado(trazado) {
     mapa.fitBounds(lineaFerrocarril.getBounds());
 }
 
+function centrarMapaEnTren() {
+    if (marcadorTren) {
+        mapa.setView(marcadorTren.getLatLng(), 16); // Centra el mapa en el marcador y mantiene el zoom
+    }
+}
 
 
 
@@ -145,6 +150,11 @@ navigator.geolocation.watchPosition(
 
        // Carga y dibuja el trazado al inicializar el mapa
         cargarTrazado();
+
+              // Centrar el mapa en el marcador cada 10 segundos
+        setInterval(() => {
+            centrarMapaEnTren();
+        }, 10000);
         
     },
     (error) => console.error('Error al obtener la ubicación:', error),
@@ -167,8 +177,6 @@ async function obtenerLugar(lat, lon) {
         document.getElementById('lugar').textContent = "Lugar: Desconocido";
     }
 }
-
-
 
 
 document.getElementById('abrirPDF').addEventListener('click', () => {
