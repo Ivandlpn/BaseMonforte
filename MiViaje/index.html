@@ -47,7 +47,39 @@
 <div id="modalFormulario" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <!-- El formulario irá aquí -->
+        <form id="formularioDefecto">
+            <h3>Registrar Defecto en el Tren</h3>
+            
+            <label for="elemento">Elemento:</label>
+            <select id="elemento">
+                <!-- Opciones de elementos aquí -->
+            </select>
+            
+            <label for="defecto">Defecto:</label>
+            <select id="defecto">
+                <!-- Opciones de defectos aquí -->
+            </select>
+            
+            <label for="nivel">Nivel de Defecto:</label>
+            <select id="nivel">
+                <!-- Opciones de niveles aquí -->
+            </select>
+            
+            <label for="estado">Estado:</label>
+            <select id="estado">
+                <!-- Opciones de estado aquí -->
+            </select>
+            
+            <label for="observaciones">Observaciones:</label>
+            <input id="observaciones" type="text" placeholder="Observaciones">
+
+            <label for="actuacion">Actuación recomendada:</label>
+            <select id="actuacion">
+                <!-- Opciones de actuación recomendada aquí -->
+            </select>
+
+            <button type="submit">Guardar Defecto</button>
+        </form>
     </div>
 </div>
 
