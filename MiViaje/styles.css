@@ -118,6 +118,10 @@ header {
     align-items: center;
 }
 
+.boton {
+    width: 100px;
+    height: 50px;
+}
 
 .info-linea {
     display: flex;
