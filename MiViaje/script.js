@@ -139,13 +139,13 @@ async function obtenerLugar(lat, lon) {
 document.getElementById('nuevoviaje').addEventListener('click', () => {
     // Obtener la fecha y hora actuales
     const fecha = new Date();
-    const dia = fecha.getDate().toString().padStart(2, '0');
-    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
-    const anio = fecha.getFullYear();
-    const hora = fecha.getHours().toString().padStart(2, '0');
-    const minuto = fecha.getMinutes().toString().padStart(2, '0');
+    const dia = fecha.getDate().toString().padStart(2, '0'); // Aseguramos 2 dígitos
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // Aseguramos 2 dígitos
+    const anio = fecha.getFullYear(); // Año (4 dígitos)
+    const hora = fecha.getHours().toString().padStart(2, '0'); // Hora con 2 dígitos
+    const minuto = fecha.getMinutes().toString().padStart(2, '0'); // Minuto con 2 dígitos
 
-    // Contenido inicial del documento (con datos básicos)
+    // Contenido inicial del documento (PK de inicio aún no disponible)
     const contenidoInicial = `
     Viaje en Cabina
     Fecha: ${dia}/${mes}/${anio}
@@ -157,17 +157,18 @@ document.getElementById('nuevoviaje').addEventListener('click', () => {
     // Nombre del archivo con la fecha y hora
     const nombreArchivo = `ViajeCabina ${dia}${mes}${anio} ${hora}:${minuto}.txt`;
 
-    // Mostrar el contenido del archivo en el área de texto
-    const textoArea = document.getElementById('documentoTexto');
-    textoArea.value = contenidoInicial;
+    // Crear el archivo de texto y ofrecer la descarga
+    const blob = new Blob([contenidoInicial], { type: 'text/plain' });
+    const enlace = document.createElement('a');
+    enlace.href = URL.createObjectURL(blob);
+    enlace.download = nombreArchivo; // Nombre del archivo con la fecha y hora
+    enlace.click(); // Simula el clic para iniciar la descarga
 
-    // Guardar el nombre del archivo y los datos en localStorage
-    localStorage.setItem('nombreArchivo', nombreArchivo);
-    localStorage.setItem('documentoViaje', contenidoInicial);
-
-    // (Opcional) Mostrar el nombre del archivo en la interfaz si lo deseas
-    console.log('Documento creado con nombre:', nombreArchivo);
+    // Log para ver el nombre del archivo
+    console.log('Documento creado y descargado con nombre:', nombreArchivo);
 });
+
+
 
 // NUEVO EVENTO
 
