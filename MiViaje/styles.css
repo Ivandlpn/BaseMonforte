@@ -86,21 +86,22 @@ header {
 }
 
 .boton-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 80px;
-    height: 80px;
+    background: none;
     border: none;
-    border-radius: 10px;
-    background-color: #007aff;
-    color: white;
+    padding: 0;
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    padding: 5px;
-    transition: background-color 0.3s;
+    outline: none;
 }
+
+.boton-container:focus {
+    outline: none;
+}
+
+.boton-container img {
+    width: 50px;  /* Ajusta según el tamaño deseado */
+    height: 50px; /* Ajusta según el tamaño deseado */
+}
+
 
 .boton-container:hover {
     background-color: #005bb5;
