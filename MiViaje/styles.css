@@ -80,8 +80,8 @@ header {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: 1fr; /* Una sola columna */
+    grid-template-rows: repeat(2, 1fr); /* Dos filas */
     gap: 3px;
 }
 
