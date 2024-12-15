@@ -96,7 +96,6 @@ header {
 .boton-container {
     display: flex;
     flex-direction: row;  /* Icono y texto en fila */
-    justify-content: center;
     align-items: center;  /* Alinea el icono y texto verticalmente */
     text-align: center;   /* Asegura que el texto esté centrado en su contenedor */
     background: none;
