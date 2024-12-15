@@ -98,8 +98,8 @@ header {
 }
 
 .boton-container img {
-    width: 50px;  /* Ajusta según el tamaño deseado */
-    height: 50px; /* Ajusta según el tamaño deseado */
+    width: 40px;  /* Ajusta según el tamaño deseado */
+    height: 40px; /* Ajusta según el tamaño deseado */
 }
 
 
@@ -126,8 +126,8 @@ header {
 }
 
 .icono {
-    width: 10px;
-    height: 10px;
+    width: 15px;
+    height: 15px;
     flex-shrink: 0;
 }
 
