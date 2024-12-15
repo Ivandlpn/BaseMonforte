@@ -198,7 +198,26 @@ document.getElementById('MiPK').addEventListener('click', () => {
     console.log('IT abierta');
 });
 
+// Esta es la función que actualizará el desplegable de defectos
+function actualizarDefectos(event) {
+    const selectedElemento = event.target.value;
+    const defectoSelect = document.getElementById('defecto');
+    
+    // Limpiar el listado actual de defectos
+    defectoSelect.innerHTML = '';
 
+    // Encontrar el elemento seleccionado
+    const elemento = elementos.find(e => e.nombre === selectedElemento);
+    if (elemento) {
+        // Añadir los defectos al select
+        elemento.defectos.forEach(defecto => {
+            const option = document.createElement('option');
+            option.value = defecto;
+            option.textContent = defecto;
+            defectoSelect.appendChild(option);
+        });
+    }
+}
 
 
 
