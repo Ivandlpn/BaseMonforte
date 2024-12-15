@@ -147,6 +147,7 @@ span {
 
 /* Estilo para el modal */
 /* Estilos generales del modal */
+/* Estilos generales del modal */
 .modal {
     display: none; /* Oculto por defecto */
     position: fixed; /* Fijo en la pantalla */
@@ -162,10 +163,12 @@ span {
 .modal-content {
     background-color: #ffffff;
     margin: 0;
-    padding: 30px;
+    padding: 20px;
     border-radius: 10px;
     width: 80%;
     max-width: 600px;
+    max-height: 90%; /* Altura máxima ajustada para que no se desborde de la pantalla */
+    overflow-y: auto; /* Si el contenido es más grande, tendrá barra de desplazamiento */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     
     /* Centrando el modal */
@@ -174,6 +177,9 @@ span {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+/* Resto de los estilos... */
+
 
 /* Botón de cerrar */
 .close {
