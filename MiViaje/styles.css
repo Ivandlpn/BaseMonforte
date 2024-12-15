@@ -129,3 +129,8 @@ header {
     height: 15px;
     flex-shrink: 0;
 }
+
+span {
+    font-size: 12px;
+    text-align: center;
+}
