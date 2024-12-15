@@ -139,11 +139,11 @@ async function obtenerLugar(lat, lon) {
 document.getElementById('nuevoviaje').addEventListener('click', () => {
     // Obtener la fecha y hora actuales
     const fecha = new Date();
-    const dia = fecha.getDate().toString().padStart(2, '0'); // Aseguramos 2 dígitos
-    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0'); // Aseguramos 2 dígitos
-    const anio = fecha.getFullYear(); // Año (4 dígitos)
-    const hora = fecha.getHours().toString().padStart(2, '0'); // Hora con 2 dígitos
-    const minuto = fecha.getMinutes().toString().padStart(2, '0'); // Minuto con 2 dígitos
+    const dia = fecha.getDate().toString().padStart(2, '0');
+    const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    const anio = fecha.getFullYear();
+    const hora = fecha.getHours().toString().padStart(2, '0');
+    const minuto = fecha.getMinutes().toString().padStart(2, '0');
 
     // Contenido inicial del documento (PK de inicio aún no disponible)
     const contenidoInicial = `
@@ -163,14 +163,9 @@ document.getElementById('nuevoviaje').addEventListener('click', () => {
     enlace.href = URL.createObjectURL(blob);
     enlace.download = nombreArchivo; // Nombre del archivo con la fecha y hora
 
-    // Crear una nueva ventana para abrir el archivo en el editor de texto
-    enlace.click(); // Iniciar la descarga
+    // Simulamos el clic para iniciar la descarga
+    enlace.click(); // Esto descarga el archivo en el dispositivo móvil
 
-    // Intentar abrir el archivo automáticamente en el editor de texto predeterminado
-    // El archivo se descarga en la carpeta de descargas, y luego el sistema operativo abrirá el archivo
-    const url = URL.createObjectURL(blob);
-    window.open(url);  // Abrir el archivo en una nueva ventana (esto depende del navegador y sistema operativo)
-    
     console.log('Documento creado y descargado con nombre:', nombreArchivo);
 });
 
