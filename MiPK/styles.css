@@ -105,8 +105,8 @@ header img {
 }
 
 #iconoCamara {
-  width: 150px; /* Cambia a un tamaño mayor */
-  height: 150px; /* Cambia a un tamaño mayor */
+  width: 120px; /* Cambia a un tamaño mayor */
+  height: 120px; /* Cambia a un tamaño mayor */
   background: url('img/camara.png') no-repeat center center;
   background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
   margin-left: 5px;
