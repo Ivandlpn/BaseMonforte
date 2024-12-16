@@ -257,13 +257,8 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 ctx.beginPath();
                 ctx.roundRect(x, y, tarjetaWidth, tarjetaHeight, 20); // 20 = radio de las esquinas
                 ctx.fill();
-
-
                 ctx.fillStyle = "white";
-                ctx.font = `${fontSize}px Arial`;
-
-
-                
+                ctx.font = `${fontSize}px Arial`;   
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
                 ctx.fillText(
