@@ -231,3 +231,56 @@ footer img {
   }
 }
 
+/* Estilo general de la pantalla de llamada */
+.pantalla-llamada {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    display: none; /* Oculto por defecto */
+}
+
+.contenedor-botones {
+    display: flex;
+    gap: 30px; /* Espacio entre los botones */
+    justify-content: center;
+}
+
+.boton-llamada {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boton-llamada img {
+    width: 150px; /* Tamaño del botón */
+    height: 150px;
+}
+
+.cerrar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1001; /* Para que quede por encima */
+}
+
+/* Efecto hover para los botones */
+.boton-llamada:hover img {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
