@@ -96,7 +96,7 @@ function mostrarPKMasCercano(pk) {
     const distanciaElement = document.getElementById("distancia");
     const pkFormateado = formatearPK(pk.pk);
     pkElement.textContent = pkFormateado;
-    distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`;
+     <!--  distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`; -->
 }
 
 function actualizarPosicionPK(pk) {
