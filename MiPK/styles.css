@@ -111,6 +111,15 @@ header img {
   left: 0;
 }
 
+#iconoMas {
+    width: 110px; /* Igual que la cámara */
+    height: 110px;
+    background: url('img/mas.png') no-repeat center center;
+    background-size: contain;
+    margin-left: 5px; /* Espaciado entre el botón de la cámara y el nuevo */
+    cursor: pointer;
+}
+
 
 #calculoPK .tarjeta {
   display: inline-block;
