@@ -165,9 +165,9 @@ document.getElementById("iconoMas").addEventListener("click", () => {
 
     // Opciones del menú
     const opciones = [
-        { texto: "Añadir nueva funcionalidad", accion: () => alert("Funcionalidad añadida") },
-        { texto: "Ver histórico de posiciones", accion: () => alert("Histórico de posiciones") },
-        { texto: "Configurar ajustes", accion: () => alert("Configuración abierta") }
+        { texto: "Ir a otro PK", accion: () => alert("En construcción...") },
+        { texto: "Buscar Puerta + cercana", accion: () => alert("En construcción...") },
+        { texto: "llamar a CPS", accion: () => alert("En construcción...") }
     ];
 
     // Crear los botones para las opciones
