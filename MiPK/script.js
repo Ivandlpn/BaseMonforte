@@ -167,7 +167,7 @@ document.getElementById("iconoMas").addEventListener("click", () => {
     const opciones = [
         { texto: "Ir a otro PK", accion: () => alert("En construcción...") },
         { texto: "Buscar Puerta + cercana", accion: () => alert("En construcción...") },
-        { texto: "llamar a CPS", accion: () => alert("En construcción...") }
+        { texto: "llamar a CPS", accion: () => {abrirPantallaLlamada();}  // Mostrar la pantalla de llamadas 
     ];
 
     // Crear los botones para las opciones
@@ -188,6 +188,43 @@ document.getElementById("iconoMas").addEventListener("click", () => {
     // Añadir el cuadro flotante al body
     document.body.appendChild(listadoOpciones);
 });
+
+
+// CPS
+// Función para abrir la pantalla de llamada
+function abrirPantallaLlamada() {
+    const pantalla = document.getElementById("pantallaLlamada");
+    pantalla.style.display = "flex"; // Mostrar la pantalla
+}
+
+// Función para cerrar la pantalla de llamada
+function cerrarPantallaLlamada() {
+    const pantalla = document.getElementById("pantallaLlamada");
+    pantalla.style.display = "none"; // Ocultar la pantalla
+}
+
+// Añadir los eventos de los botones de llamada
+document.getElementById("llamarCPS1").addEventListener("click", () => {
+    const numeroCPS1 = "+123456789"; // Sustituir con el primer número
+    window.location.href = `tel:${numeroCPS1}`;
+});
+
+document.getElementById("llamarCPS2").addEventListener("click", () => {
+    const numeroCPS2 = "+0987654321"; // Sustituir con el segundo número
+    window.location.href = `tel:${numeroCPS2}`;
+});
+
+// Evento para el botón de cerrar
+document.getElementById("cerrarPantalla").addEventListener("click", cerrarPantallaLlamada);
+
+
+
+
+
+
+
+
+
 
 
 
