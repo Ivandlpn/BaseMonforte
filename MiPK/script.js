@@ -120,6 +120,37 @@ function formatearPK(pk) {
     }
 }
 
+
+
+
+async function cargarTrazado() {
+    try {
+        // Carga el archivo JSON
+        const respuesta = await fetch('./PKCoordenas.json');
+        const data = await respuesta.json();
+
+        // Extrae las coordenadas del archivo
+        const trazado = data.map((punto) => [punto.Latitud, punto.Longitud]);
+
+        // Dibuja el trazado en el mapa
+        dibujarTrazado(trazado);
+    } catch (error) {
+        console.error('Error al cargar el archivo PKCoordenas.json:', error);
+    }
+}
+
+function dibujarTrazado(trazado) {
+    const lineaFerrocarril = L.polyline(trazado, {
+        color: 'blue',         // Color de la línea
+        weight: 4,             // Grosor de la línea
+        opacity: 0.8,          // Transparencia
+        smoothFactor: 1        // Suavizado de la línea
+    }).addTo(mapa);
+
+    // Ajustar el mapa para que muestre todo el trazado
+    mapa.fitBounds(lineaFerrocarril.getBounds());
+}
+
 document.getElementById("iconoMas").addEventListener("click", () => {
     // Comprobar si el listado ya existe
     let listadoOpciones = document.getElementById("listadoOpciones");
@@ -179,37 +210,6 @@ document.getElementById("iconoMas").addEventListener("click", () => {
     // Añadir el listado al body
     document.body.appendChild(listadoOpciones);
 });
-
-
-
-
-async function cargarTrazado() {
-    try {
-        // Carga el archivo JSON
-        const respuesta = await fetch('./PKCoordenas.json');
-        const data = await respuesta.json();
-
-        // Extrae las coordenadas del archivo
-        const trazado = data.map((punto) => [punto.Latitud, punto.Longitud]);
-
-        // Dibuja el trazado en el mapa
-        dibujarTrazado(trazado);
-    } catch (error) {
-        console.error('Error al cargar el archivo PKCoordenas.json:', error);
-    }
-}
-
-function dibujarTrazado(trazado) {
-    const lineaFerrocarril = L.polyline(trazado, {
-        color: 'blue',         // Color de la línea
-        weight: 4,             // Grosor de la línea
-        opacity: 0.8,          // Transparencia
-        smoothFactor: 1        // Suavizado de la línea
-    }).addTo(mapa);
-
-    // Ajustar el mapa para que muestre todo el trazado
-    mapa.fitBounds(lineaFerrocarril.getBounds());
-}
 
 
 
