@@ -352,7 +352,13 @@ function mostrarFormulario(pk) {
 
 
 // Función para guardar el defecto
-function guardarDefecto(pk) {
+function guardarDefecto() {
+    // Capturar información de la tarjeta de información
+    const pk = document.getElementById('pk').textContent; // PK actual mostrado en la tarjeta
+    const velocidad = document.getElementById('velocidad').textContent; // Velocidad actual
+    const lugar = document.getElementById('lugar').textContent; // Ubicación actual
+
+    // Capturar valores del formulario
     const elemento = document.getElementById('elemento').value;
     const defecto = document.getElementById('defecto').value;
     const nivel = document.getElementById('nivel').value;
@@ -360,18 +366,26 @@ function guardarDefecto(pk) {
     const observaciones = document.getElementById('observaciones').value;
     const actuacion = document.getElementById('actuacion').value;
 
-     const pkFormateado = formatearPK(pk);
-
     // Crear el contenido del archivo
-    const contenido = `Defecto PK: ${pk}\n\nElemento: ${elemento}\nDefecto: ${defecto}\nNivel: ${nivel}\nEstado: ${estado}\nObservaciones: ${observaciones}\nActuación recomendada: ${actuacion}`;
+    const contenido = `
+Defecto PK: ${pk}
+Velocidad: ${velocidad}
+Ubicación: ${lugar}
+
+Elemento: ${elemento}
+Defecto: ${defecto}
+Nivel: ${nivel}
+Estado: ${estado}
+Observaciones: ${observaciones}
+Actuación recomendada: ${actuacion}
+    `;
 
     // Crear el archivo de texto
     const blob = new Blob([contenido], { type: 'text/plain' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    const fecha = new Date().toISOString().split('T')[0]; // Obtener solo la fecha (YYYY-MM-DD)
-link.download = `Defecto_${pkFormateado}_${fecha}.txt`; // Ejemplo: Defecto_323+000_2024-12-15.txt
-
+    const fecha = new Date().toISOString().split('T')[0]; // Fecha en formato YYYY-MM-DD
+    link.download = `Defecto_${pk.replace('+', '_')}_${fecha}.txt`; // Reemplaza '+' por '_' en el nombre del archivo
 
     // Iniciar la descarga
     link.click();
@@ -383,3 +397,4 @@ link.download = `Defecto_${pkFormateado}_${fecha}.txt`; // Ejemplo: Defecto_323+
     const modal = document.getElementById('modalFormulario');
     modal.style.display = 'none';
 }
+
