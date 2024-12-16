@@ -360,6 +360,8 @@ function guardarDefecto(pk) {
     const observaciones = document.getElementById('observaciones').value;
     const actuacion = document.getElementById('actuacion').value;
 
+     const pkFormateado = formatearPK(pk);
+
     // Crear el contenido del archivo
     const contenido = `Defecto PK: ${pk}\n\nElemento: ${elemento}\nDefecto: ${defecto}\nNivel: ${nivel}\nEstado: ${estado}\nObservaciones: ${observaciones}\nActuación recomendada: ${actuacion}`;
 
@@ -368,7 +370,7 @@ function guardarDefecto(pk) {
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     const fecha = new Date().toISOString().split('T')[0]; // Obtener solo la fecha (YYYY-MM-DD)
-link.download = `Defecto_${pk}_${fecha}.txt`; // Ejemplo: Defecto_323+000_2024-12-15.txt
+link.download = `Defecto_${pkFormateado}_${fecha}.txt`; // Ejemplo: Defecto_323+000_2024-12-15.txt
 
 
     // Iniciar la descarga
