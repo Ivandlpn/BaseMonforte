@@ -167,7 +167,7 @@ document.getElementById("iconoMas").addEventListener("click", () => {
     const opciones = [
         { texto: "Ir a otro PK", accion: () => alert("En construcción...") },
         { texto: "Buscar Puerta + cercana", accion: () => alert("En construcción...") },
-        { texto: "Llamar a CPS", accion: () => {abrirPantallaLlamada();}  // Mostrar la pantalla de llamadas 
+        { texto: "Llamar a CPS", accion: () => {abrirPantallaLlamada();} } // Mostrar la pantalla de llamadas 
     ];
 
     // Crear los botones para las opciones
