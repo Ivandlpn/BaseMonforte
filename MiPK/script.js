@@ -204,12 +204,12 @@ function cerrarPantallaLlamada() {
 }
 
 // Añadir los eventos de los botones de llamada
-document.getElementById("llamarCPS1").addEventListener("click", () => {
+document.getElementById("CPS MADRID").addEventListener("click", () => {
     const numeroCPS1 = "+123456789"; // Sustituir con el primer número
     window.location.href = `tel:${numeroCPS1}`;
 });
 
-document.getElementById("llamarCPS2").addEventListener("click", () => {
+document.getElementById("CPS VALENCIA").addEventListener("click", () => {
     const numeroCPS2 = "+0987654321"; // Sustituir con el segundo número
     window.location.href = `tel:${numeroCPS2}`;
 });
