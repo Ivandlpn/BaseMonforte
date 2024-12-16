@@ -166,7 +166,7 @@ document.getElementById("iconoMas").addEventListener("click", () => {
     // Opciones del menú
     const opciones = [
         { texto: "📌Ir a otro PK", accion: () => alert("En construcción...") },
-        { texto: "🚪Buscar Puerta , accion: () => alert("En construcción...") },
+        { texto: "🚪Buscar Puerta" , accion: () => alert("En construcción...") },
         { texto: "📞 Llamar CPS", accion: () => alert("En construcción...") },
         { texto: "☀️ Previsión ", accion: () => alert("En construcción...") },
     ];
