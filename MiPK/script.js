@@ -165,9 +165,10 @@ document.getElementById("iconoMas").addEventListener("click", () => {
 
     // Opciones del menú
     const opciones = [
-        { texto: "Ir a otro PK", accion: () => alert("En construcción...") },
-        { texto: "Buscar Puerta + cercana", accion: () => alert("En construcción...") },
-        { texto: "Llamar a CPS", accion: () => alert("En construcción...") },
+        { texto: "📌Ir a otro PK", accion: () => alert("En construcción...") },
+        { texto: "🚪Buscar Puerta , accion: () => alert("En construcción...") },
+        { texto: "📞 Llamar CPS", accion: () => alert("En construcción...") },
+        { texto: "☀️ Previsión ", accion: () => alert("En construcción...") },
     ];
 
     // Crear los botones para las opciones
