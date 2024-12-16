@@ -56,7 +56,7 @@ header img {
   transform: translateX(-50%);
   z-index: 1000;
   cursor: pointer;
-  width: 90px; /* Ajusta según el tamaño deseado */
+  width: 85px; /* Ajusta según el tamaño deseado */
   height: 40px; /* Ajusta para mantener la proporción */
   background: url('img/centrar.png') no-repeat center center;
   background-size: contain;
