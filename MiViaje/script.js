@@ -385,7 +385,7 @@ Actuación recomendada: ${actuacion}
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     const fecha = new Date().toISOString().split('T')[0]; // Fecha en formato YYYY-MM-DD
-    link.download = `Defecto_${pk.replace('+', '_')}_${fecha}.txt`; // Reemplaza '+' por '_' en el nombre del archivo
+    link.download = `Defecto_${pk.replace('+', '+')}_${fecha}.txt`; // Reemplaza '+' por '_' en el nombre del archivo
 
     // Iniciar la descarga
     link.click();
