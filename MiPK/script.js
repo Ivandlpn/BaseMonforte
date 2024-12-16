@@ -120,6 +120,67 @@ function formatearPK(pk) {
     }
 }
 
+document.getElementById("iconoMas").addEventListener("click", () => {
+    // Comprobar si el listado ya existe
+    let listadoOpciones = document.getElementById("listadoOpciones");
+    if (listadoOpciones) {
+        listadoOpciones.remove(); // Eliminar si ya está abierto
+        return;
+    }
+
+    // Crear el contenedor del listado
+    listadoOpciones = document.createElement("div");
+    listadoOpciones.id = "listadoOpciones";
+    listadoOpciones.style.position = "absolute";
+    listadoOpciones.style.top = "150px"; // Justo debajo de los botones
+    listadoOpciones.style.left = "50%";
+    listadoOpciones.style.transform = "translateX(-50%)";
+    listadoOpciones.style.backgroundColor = "white";
+    listadoOpciones.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.1)";
+    listadoOpciones.style.borderRadius = "10px";
+    listadoOpciones.style.padding = "10px";
+    listadoOpciones.style.width = "90%";
+    listadoOpciones.style.maxWidth = "400px";
+    listadoOpciones.style.zIndex = "1000";
+
+    // Opciones del listado
+    const opciones = [
+        { texto: "Funcionalidad 1", accion: () => alert("Opción 1 seleccionada") },
+        { texto: "Funcionalidad 2", accion: () => alert("Opción 2 seleccionada") },
+        { texto: "Funcionalidad 3", accion: () => alert("Opción 3 seleccionada") }
+    ];
+
+    opciones.forEach(opcion => {
+        const boton = document.createElement("button");
+        boton.textContent = opcion.texto;
+        boton.style.display = "block";
+        boton.style.width = "100%";
+        boton.style.margin = "5px 0";
+        boton.style.padding = "10px";
+        boton.style.backgroundColor = "#479af5";
+        boton.style.color = "white";
+        boton.style.border = "none";
+        boton.style.borderRadius = "5px";
+        boton.style.cursor = "pointer";
+        boton.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.2)";
+        boton.addEventListener("click", opcion.accion);
+        listadoOpciones.appendChild(boton);
+    });
+
+    // Cerrar listado al hacer clic fuera
+    const cerrarListado = (event) => {
+        if (!listadoOpciones.contains(event.target)) {
+            listadoOpciones.remove();
+            document.removeEventListener("click", cerrarListado);
+        }
+    };
+    document.addEventListener("click", cerrarListado);
+
+    // Añadir el listado al body
+    document.body.appendChild(listadoOpciones);
+});
+
+
 
 
 async function cargarTrazado() {
