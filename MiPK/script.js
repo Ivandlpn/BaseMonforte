@@ -268,7 +268,7 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 ctx.textBaseline = "middle";
                 ctx.fillText(
                     textoPK,
-                       canvas.width - tarjetaWidth / 2 - 20,
+                       canvas.width - tarjetaWidth / 2 - 10,
                        canvas.height - tarjetaHeight / 2 - 20
                 );
 
