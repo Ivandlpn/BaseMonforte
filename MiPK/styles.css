@@ -105,13 +105,15 @@ header img {
 }
 
 #iconoCamara {
-  width: 120px;
-  height: 120px;
-background: url('img/camara.png') no-repeat center center;
-  margin-left: 5px; 
+  width: 150px; /* Cambia a un tamaño mayor */
+  height: 150px; /* Cambia a un tamaño mayor */
+  background: url('img/camara.png') no-repeat center center;
+  background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
+  margin-left: 5px;
   position: absolute;
   left: 0;
 }
+
 
 #calculoPK .tarjeta {
   display: inline-block;
