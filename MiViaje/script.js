@@ -224,9 +224,21 @@ function actualizarDefectos(event) {
 const elementos = [
     { nombre: 'Carril', defectos: ['Estado de carril', 'Cabeza de carril. Soldaduras'] },
     { nombre: 'Traviesas Hormigón o Bibloque', defectos: ['Estado de la traviesa'] },
-    { nombre: 'Balasto', defectos: ['Contaminación de balasto', 'Insuficiencia de balasto'] },
-    { nombre: 'Geometría de vía', defectos: ['Defecto alineación planta (garrotes, ripados)'] }
-    // Añadir más elementos y defectos según la tabla original
+    { nombre: 'Traviesas Madera', defectos: ['Estado de la traviesa'] },
+    { nombre: 'Balasto', defectos: ['Contaminación de balasto', 'Insuficiencia de balasto', 'Exceso de balasto sobre traviesas', 'Presencia de vegetación'] },
+    { nombre: 'Geometría de vía', defectos: ['Defecto alineación planta (garrotes, ripados)', 'Defecto nivelación alzado (Bache)'] },
+    { nombre: 'Cerramientos', defectos: ['Mal estado general', 'Mal estado puntual'] },
+    { nombre: 'Engrasador de carril', defectos: ['Mal estado general'] },
+    { nombre: 'Limpieza del entorno ferroviario', defectos: ['Obstáculos en la zona de peligro', 'Obstáculos en la zona de seguridad', 'Presencia de vegetación en márgenes invadiendo gálibo'] },
+    { nombre: 'Cartelones', defectos: ['Deficiente estado o visibilidad', 'Mala colocación', 'Falta de señales o fuera de servicio'] },
+    { nombre: 'Drenajes', defectos: ['Cunetas y/o bajantes aterradas en toda su sección', 'Cunetas y/o bajantes aterradas parcialmente'] },
+    { nombre: 'Desmontes', defectos: ['Deficiente estado apreciable'] },
+    { nombre: 'Terraplenes', defectos: ['Deficiente estado apreciable'] },
+    { nombre: 'Puentes', defectos: ['Deficiente estado apreciable'] },
+    { nombre: 'Muros', defectos: ['Deficiente estado apreciable'] },
+    { nombre: 'Túneles', defectos: ['Deficiente estado apreciable'] },
+    { nombre: 'Estaciones', defectos: ['Deficiente estado de bordes de andén', 'Vías de estacionamiento en estado deficiente'] },
+    { nombre: 'Otros', defectos: [] }
 ];
 
 const nivelesDefecto = ['IAL', 'IL'];  // Niveles de defectos
