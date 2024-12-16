@@ -113,8 +113,8 @@ header img {
 }
 
 #iconoMas {
-    width: 80px; /* Igual que la cámara */
-    height: 80px;
+    width: 75px; /* Igual que la cámara */
+    height: 75px;
     background: url('img/mas.png') no-repeat center center;
     background-size: contain;
     margin-left: 5px; /* Espaciado entre el botón de la cámara y el nuevo */
