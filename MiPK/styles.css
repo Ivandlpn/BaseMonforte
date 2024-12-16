@@ -120,6 +120,56 @@ header img {
     cursor: pointer;
 }
 
+/* Estilo para el cuadro flotante */
+#listadoOpciones {
+    position: absolute;
+    top: 180px; /* Ajusta según la posición deseada */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 15px;
+    width: 90%;
+    max-width: 400px;
+    z-index: 1000;
+    text-align: center;
+    animation: desplegar 0.3s ease-out; /* Animación de despliegue */
+}
+
+/* Animación del cuadro flotante */
+@keyframes desplegar {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+/* Botones dentro del cuadro flotante */
+#listadoOpciones button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #007aff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+#listadoOpciones button:hover {
+    background-color: #005bb5;
+}
+
+
 
 #calculoPK .tarjeta {
   display: inline-block;
