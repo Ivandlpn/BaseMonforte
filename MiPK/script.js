@@ -252,7 +252,7 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 const tarjetaHeight = fontSize + padding * 2;
 
               ctx.fillStyle = "rgba(0, 122, 255, 0.5)"; // Fondo azul semitransparente
-                const x = ((canvas.width - tarjetaWidth) / 2) - 10;
+                const x = ((canvas.width - tarjetaWidth) / 2) + 20;
                 const y = canvas.height - tarjetaHeight - 20;
                 ctx.beginPath();
                 ctx.roundRect(x, y, tarjetaWidth, tarjetaHeight, 20); // 20 = radio de las esquinas
@@ -263,7 +263,7 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 ctx.textBaseline = "middle";
                 ctx.fillText(
                     textoPK,
-                    (canvas.width / 2) - 10,
+                    (canvas.width / 2) + 20,
                     canvas.height - tarjetaHeight / 2 - 20
 
                 );
