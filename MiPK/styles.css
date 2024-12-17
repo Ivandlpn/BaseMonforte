@@ -35,19 +35,20 @@ header img {
     z-index: 1000;        /* Asegura que esté visible */
 }
 
-
-
 #map-container {
-  flex: 1 1 auto;
-  min-height: 50%;
-  position: relative;
+    position: absolute;    /* Para posicionamiento preciso */
+    top: calc(10vh + 4px); /* Justo debajo de la cabecera y la línea gradiente */
+    left: 0;
+    width: 100%;           /* Ancho completo */
+    height: calc(75vh - 4px); /* Para dejar espacio a otros elementos */
+    z-index: 500;         /* Debajo de la cabecera y la línea gradiente */
 }
 
 #map {
-  height: 100%;
-  width: 100%;
-  position: relative;
+    width: 100%;
+    height: 100%;
 }
+
 
 #actualizarUbicacion {
   position: absolute;
