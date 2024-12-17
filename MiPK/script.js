@@ -212,23 +212,24 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 const margenExtra = 60; // Ajusta este valor según sea necesario
                 const tarjetaWidth = ctx.measureText(textoPK).width + padding * 2 + margenExtra;
                 const tarjetaHeight = fontSize + padding * 2;
-
-              ctx.fillStyle = "rgba(0, 122, 255, 0.5)"; // Fondo azul semitransparente
-                const x = (canvas.width - tarjetaWidth) / 2;
+                
+                ctx.fillStyle = "rgba(0, 122, 255, 0.5)"; // Fondo azul semitransparente
+                const x = canvas.width - tarjetaWidth - 20; // Posiciona a 20 píxeles del borde derecho
                 const y = canvas.height - tarjetaHeight - 20;
                 ctx.beginPath();
                 ctx.roundRect(x, y, tarjetaWidth, tarjetaHeight, 20); // 20 = radio de las esquinas
                 ctx.fill();
-
-
+                
                 ctx.fillStyle = "white";
                 ctx.font = `${fontSize}px Arial`;
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
                 ctx.fillText(
                     textoPK,
-                    canvas.width / 2,
+                    x + tarjetaWidth / 2,
                     canvas.height - tarjetaHeight / 2 - 20
+                );
+               
                 );
 
                 const imagenCapturada = document.createElement("img");
