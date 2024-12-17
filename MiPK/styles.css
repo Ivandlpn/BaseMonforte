@@ -26,7 +26,7 @@ header img {
 
 
 .linea-gradiente {
-    position: relative;   /* Para alinearla debajo de la cabecera */
+    position: absolute;   /* Para alinearla debajo de la cabecera */
     top: 10vh;            /* Justo después de la cabecera */
     left: 0;
     width: 100%;
