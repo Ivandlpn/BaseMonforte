@@ -26,7 +26,7 @@ iconoTren = L.icon({
        if (marcadorTren) {
         // Asociar el evento de clic al marcador
         marcadorTren.on('click', () => {
-            const pk = formatearPK(lat, lon); 
+           // const pk = formatearPK(lat, lon); 
             const pkFormateado = formatearPK(pk);// Usar lat/lon para calcular el PK (si es necesario)
             mostrarFormulario(pkFormateado);            // Mostrar el formulario para registrar el defecto
         });
