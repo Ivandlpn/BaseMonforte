@@ -14,38 +14,37 @@ html, body {
 }
 
 header {
-  width: 100%;         /* Ocupa todo el ancho */
-  height: 10vh;        /* Ocupa el 10% de la altura total de la pantalla */
+  width: 100%;         
+  height: 100px;       /* Ajusta según tus necesidades */
 }
 
 header img {
-  width: 100%;         /* La imagen se ajusta al ancho completo */
-  height: 100%;        /* La imagen ocupa toda la altura asignada a la cabecera */
-  object-fit: cover;   /* Asegura que la imagen llene el espacio sin distorsión */
+  width: 100%;         
+  height: 100%;        
+  object-fit: cover;   
 }
 
-
 .linea-gradiente {
-    position: absolute;   /* Para alinearla debajo de la cabecera */
-    top: 10vh;            /* Justo después de la cabecera */
+    position: relative;   
+    top: 100px;           
     left: 0;
     width: 100%;
-    height: 4px;          /* Mantener la altura de 4px */
+    height: 4px;          
     background: linear-gradient(to right, blue, red); 
-    z-index: 1000;        /* Asegura que esté visible */
+    z-index: 1000;        
 }
 
 #map-container {
-    position: relative;      /* Para posicionarlo correctamente */
-    top: calc(10vh + 4px);   /* Justo debajo de la cabecera y la línea gradiente */
+    position: relative;      
+    top: 0;                  
     left: 0;
-    width: 100%;             /* Ocupa todo el ancho */
-    height: 40vh;            /* 60% de la pantalla en altura */
-    z-index: 500;            /* Debajo de la cabecera y línea gradiente */
+    width: 100%;             
+    height: calc(100vh - 100px - 4px); /* Resta altura de cabecera y línea gradiente */
+    z-index: 500;            
 }
 
 #map {
-    width: 100%;             /* Asegura que el mapa llene el contenedor */
+    width: 100%;             
     height: 100%;
 }
 
