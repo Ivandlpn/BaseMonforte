@@ -207,29 +207,54 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
                 const textoPK = `PK ${formatearPK(window.pkMasCercano.pk)}`;
-                const padding = 20;
-                const fontSize = 24;
-                const margenExtra = 60; // Ajusta este valor según sea necesario
-                const tarjetaWidth = ctx.measureText(textoPK).width + padding * 2 + margenExtra;
-                const tarjetaHeight = fontSize + padding * 2;
 
-              ctx.fillStyle = "rgba(0, 122, 255, 0.5)"; // Fondo azul semitransparente
-                const x = (canvas.width - tarjetaWidth) / 2;
-                const y = canvas.height - tarjetaHeight - 20;
-                ctx.beginPath();
-                ctx.roundRect(x, y, tarjetaWidth, tarjetaHeight, 20); // 20 = radio de las esquinas
-                ctx.fill();
+// Obtener la fecha actual en formato DD/MM/AAAA
+const fechaActual = new Date();
+const dia = String(fechaActual.getDate()).padStart(2, "0");
+const mes = String(fechaActual.getMonth() + 1).padStart(2, "0");
+const anio = fechaActual.getFullYear();
+const textoFecha = `${dia}/${mes}/${anio}`;
 
+// Configuración del recuadro y fuente
+const padding = 20;
+const fontSizePK = 24; // Tamaño de fuente para el PK
+const fontSizeFecha = 18; // Tamaño de fuente para la fecha
+const margenEntreLineas = 10; // Separación entre el texto del PK y la fecha
 
-                ctx.fillStyle = "white";
-                ctx.font = `${fontSize}px Arial`;
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                ctx.fillText(
-                    textoPK,
-                    canvas.width / 2,
-                    canvas.height - tarjetaHeight / 2 - 20
-                );
+// Calcular dimensiones del recuadro
+const textoMasAncho = Math.max(
+    ctx.measureText(textoPK).width,
+    ctx.measureText(textoFecha).width
+);
+const tarjetaWidth = textoMasAncho + padding * 2;
+const tarjetaHeight = fontSizePK + fontSizeFecha + padding * 2 + margenEntreLineas;
+
+// Dibujar el fondo del recuadro
+ctx.fillStyle = "rgba(0, 122, 255, 0.5)"; // Fondo azul semitransparente
+const x = (canvas.width - tarjetaWidth) / 2;
+const y = canvas.height - tarjetaHeight - 20;
+ctx.beginPath();
+ctx.roundRect(x, y, tarjetaWidth, tarjetaHeight, 20); // Esquinas redondeadas
+ctx.fill();
+
+// Dibujar el texto del PK
+ctx.fillStyle = "white";
+ctx.font = `${fontSizePK}px Arial`;
+ctx.textAlign = "center";
+ctx.textBaseline = "top";
+ctx.fillText(
+    textoPK,
+    canvas.width / 2,
+    y + padding
+);
+
+// Dibujar la fecha
+ctx.font = `${fontSizeFecha}px Arial`;
+ctx.fillText(
+    textoFecha,
+    canvas.width / 2,
+    y + padding + fontSizePK + margenEntreLineas
+);
 
                 const imagenCapturada = document.createElement("img");
                 imagenCapturada.src = canvas.toDataURL("image/png");
