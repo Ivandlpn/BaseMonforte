@@ -246,7 +246,7 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
 
                 //const aspectRatio = video.videoWidth / video.videoHeight;
                 //const width = 2000; // Ancho deseado
-                c//onst height = width / aspectRatio;
+                //const height = width / aspectRatio;
 
                 const width = 4000; // Ancho deseado
                 const height = 3000; // Alto deseado
