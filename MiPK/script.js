@@ -183,58 +183,23 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
             video.style.objectFit = "cover";
             contenedor.appendChild(video);
 
-const imagenBotonFoto = document.createElement("img");
-imagenBotonFoto.src = "img/botoncamara.png"; // Ruta de la imagen
-imagenBotonFoto.alt = "Botón Hacer Foto";
-imagenBotonFoto.style.position = "absolute";
-imagenBotonFoto.style.bottom = "10px"; // Misma posición que el botón original
-imagenBotonFoto.style.left = "50%";
-imagenBotonFoto.style.transform = "translateX(-50%)"; // Centrar horizontalmente
-imagenBotonFoto.style.width = "70px"; // Ajusta el tamaño de la imagen
-imagenBotonFoto.style.height = "70px"; // Ajusta el tamaño de la imagen
-imagenBotonFoto.style.cursor = "pointer"; // Mostrar cursor de mano al pasar por encima
-imagenBotonFoto.style.zIndex = "1001"; // Asegurar que esté por encima del video
-contenedor.appendChild(imagenBotonFoto);
+            const botonFoto = document.createElement("button");
+            botonFoto.textContent = "Hacer Foto";
+            botonFoto.style.position = "absolute";
+            botonFoto.style.bottom = "10px";
+            botonFoto.style.left = "50%";
+            botonFoto.style.transform = "translateX(-50%)";
+            botonFoto.style.padding = "10px 20px";
+            botonFoto.style.fontSize = "16px";
+            botonFoto.style.color = "white";
+            botonFoto.style.backgroundColor = "#007aff";
+            botonFoto.style.border = "none";
+            botonFoto.style.borderRadius = "5px";
+            botonFoto.style.cursor = "pointer";
+            botonFoto.style.zIndex = "1001";
+            contenedor.appendChild(botonFoto);
 
-// Agregar funcionalidad al hacer clic en la imagen
-imagenBotonFoto.addEventListener("click", () => {
-    const canvas = document.createElement("canvas");
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    const ctx = canvas.getContext("2d");
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    // Aquí se sobreimprime la información del PK
-    const textoPK = `PK ${formatearPK(window.pkMasCercano.pk)}`;
-    const padding = 20;
-    const fontSize = 24;
-    const tarjetaWidth = ctx.measureText(textoPK).width + padding * 2;
-    const tarjetaHeight = fontSize + padding * 2;
-
-    // Dibujar fondo y texto en la imagen
-    ctx.fillStyle = "rgba(0, 122, 255, 0.5)";
-    ctx.fillRect(
-        (canvas.width - tarjetaWidth) / 2,
-        canvas.height - tarjetaHeight - 20,
-        tarjetaWidth,
-        tarjetaHeight
-    );
-    ctx.fillStyle = "white";
-    ctx.font = `${fontSize}px Arial`;
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(
-        textoPK,
-        canvas.width / 2,
-        canvas.height - tarjetaHeight / 2 - 20
-    );
-
-    // Crear y mostrar la imagen capturada
-    const imagenCapturada = document.createElement("img");
-    imagenCapturada.src = canvas.toDataURL("image/png");
-    document.body.appendChild(imagenCapturada);
-});
-
+            botonFoto.addEventListener("click", () => {
                 const canvas = document.createElement("canvas");
                 canvas.width = video.videoWidth;
                 canvas.height = video.videoHeight;
@@ -559,5 +524,6 @@ imagenEditar.addEventListener("click", () => {
         .catch((error) => {
             console.error("Error al acceder a la cámara: ", error);
         });
+});
 
- });
+});
