@@ -44,7 +44,7 @@ header img {
 #main-content {
   display: grid; /* Usa grid para organizar el contenido */
   grid-template-rows: 6fr 4fr; /* Asigna 60% al mapa y 40% a los botones */
-  height: 80%; /* Ajusta la altura total al 80% del contenedor */
+  height: 60%; /* Ajusta la altura total al 80% del contenedor */
 }
 /* Contenedor del mapa interactivo */
 #map-container {
