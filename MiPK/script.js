@@ -265,6 +265,23 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
                 `;
 
+// Botón "volver"
+ // Reemplazar el botón "Volver" por una imagen
+const imagenVolver = document.createElement("img"); // Cambiar de button a img
+imagenVolver.src = "img/volver.png"; // Reemplaza con el nombre y ruta de tu archivo de imagen
+imagenVolver.alt = "Volver";
+imagenVolver.style.cssText = "cursor: pointer; width: 60px; height: 50px;"; // Ajusta el tamaño según necesites
+contenedorBotones.appendChild(imagenVolver); // Añadir la imagen al contenedor
+
+// Agregar el evento click a la imagen
+imagenVolver.addEventListener("click", () => {
+    imagenCapturada.remove();
+    contenedorBotones.remove();
+    video.style.display = "block";
+});               
+                
+                
+                
 // Botón "Guardar"
 const imagenGuardar = document.createElement("img"); // Cambiar de button a img
 imagenGuardar.src = "img/guardar.png"; // Reemplaza con el nombre y ruta de tu archivo de imagen
@@ -371,19 +388,7 @@ imagenCompartir.addEventListener("click", async () => {
 });
 
 
-// Reemplazar el botón "Volver" por una imagen
-const imagenVolver = document.createElement("img"); // Cambiar de button a img
-imagenVolver.src = "img/volver.png"; // Reemplaza con el nombre y ruta de tu archivo de imagen
-imagenVolver.alt = "Volver";
-imagenVolver.style.cssText = "cursor: pointer; width: 60px; height: 50px;"; // Ajusta el tamaño según necesites
-contenedorBotones.appendChild(imagenVolver); // Añadir la imagen al contenedor
 
-// Agregar el evento click a la imagen
-imagenVolver.addEventListener("click", () => {
-    imagenCapturada.remove();
-    contenedorBotones.remove();
-    video.style.display = "block";
-});
 
 
                 
