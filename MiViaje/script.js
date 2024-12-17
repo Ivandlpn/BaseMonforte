@@ -248,6 +248,10 @@ const actuaciones = ['Inspección a pie', 'Prospección', 'Otros']; // Actuacion
 
 function mostrarFormulario(pk) {
     // Primero, eliminar cualquier formulario previo si existe
+
+// Formatear el PK al formato XXX+XXX
+    const pkFormateado = formatearPK(pk);
+    
     const formularioExistente = document.getElementById('formularioDefecto');
     if (formularioExistente) {
         formularioExistente.remove();
@@ -261,7 +265,7 @@ function mostrarFormulario(pk) {
 
     // Crear un nuevo título con el texto "DEFECTO EN XXX+XXX"
     const tituloDefecto = document.createElement('h2');
-    tituloDefecto.textContent = `DEFECTO EN ${pk}`;
+    tituloDefecto.textContent = `DEFECTO EN ${pkFormateado}`;
     tituloDefecto.style.textAlign = 'center'; // Opcional: Para centrar el texto
     tituloDefecto.style.color = '#007BFF'; // Opcional: Para añadir estilo al título
 
