@@ -1,136 +1,173 @@
-/* Estilos globales para todo el documento */
+/* Estilos globales */
 html, body {
-  margin: 0; /* Elimina márgenes predeterminados */
-  padding: 0; /* Elimina rellenos predeterminados */
-  width: 100vw; /* Establece el ancho al 100% de la ventana */
-  height: 100vh; /* Establece el alto al 100% de la ventana */
-  font-family: Arial, sans-serif; /* Fuente predeterminada */
-  overflow: hidden; /* Evita scroll no deseado */
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
 }
 
-/* Contenedor principal que ocupa toda la pantalla */
 .contenedor {
-  display: flex; /* Utiliza flexbox para disposición de contenido */
-  flex-direction: column; /* Organiza los elementos verticalmente */
-  height: 100%; /* Ajusta la altura al 100% del contenedor */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-/* Cabecera con identidad visual */
 header {
-  text-align: center; /* Centra el contenido horizontalmente */
-  flex: 0 0 10%; /* Altura relativa al 10% de la pantalla */
+  text-align: center;
+  padding: 0;
+  flex: 0 0 auto;
+  height: 100px;
 }
 
 header img {
-  width: 100%; /* Ajusta la imagen al ancho total del contenedor */
-  height: 100%; /* Ajusta la imagen a la altura disponible */
-  object-fit: cover; /* Escala la imagen sin distorsión */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* Contenedor principal que agrupa el mapa y los botones */
-#main-content {
-  display: grid; /* Usa grid para organizar el contenido */
-  grid-template-rows: 6fr 4fr; /* Asigna 60% al mapa y 40% a los botones */
-  height: 80%; /* Ajusta la altura total al 80% del contenedor */
+.linea-gradiente {
+    position: fixed; /* Siempre visible en la ventana */
+    top: 100px; /* Ajusta según la altura de la cabecera */
+    left: 0;
+    width: 100%;
+    height: 4px; /* Altura de la línea */
+    background: linear-gradient(to right, blue, red); /* Gradiente */
+    z-index: 1000; /* Asegura que esté por encima del mapa */
 }
 
-/* Contenedor del mapa interactivo */
+
 #map-container {
-  position: relative; /* Posiciona los elementos dentro del contenedor */
+  flex: 1 1 auto;
+  min-height: 50%;
+  position: relative;
 }
 
 #map {
-  width: 100%; /* Ocupa todo el ancho del contenedor */
-  height: 100%; /* Ocupa todo el alto del contenedor */
+  height: 100%;
+  width: 100%;
+  position: relative;
 }
 
-#center-map {
-  position: absolute; /* Posiciona el botón sobre el mapa */
-  bottom: 5%; /* Separa el botón un 5% desde la parte inferior */
-  right: 5%; /* Separa el botón un 5% desde la parte derecha */
-  z-index: 1000; /* Asegura que el botón esté sobre el mapa */
-  padding: 1vh 2vw; /* Ajusta el tamaño del botón con unidades relativas */
-  background: #007aff; /* Color de fondo del botón */
-  color: #fff; /* Color del texto del botón */
-  border: none; /* Elimina bordes predeterminados */
-  border-radius: 0.5em; /* Bordes redondeados */
-  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+#actualizarUbicacion {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  cursor: pointer;
+  width: 85px; /* Ajusta según el tamaño deseado */
+  height: 40px; /* Ajusta para mantener la proporción */
+  background: url('img/centrar.png') no-repeat center center;
+  background-size: contain;
+  border: none;
+  padding: 0;
+  font-size: 0; /* Oculta cualquier texto */
 }
 
-/* Contenedor para los botones de acción y la tarjeta informativa */
-#action-buttons {
-  display: flex; /* Usa flexbox para organizar los elementos */
-  justify-content: space-between; /* Distribuye los elementos con espacio entre ellos */
-  align-items: center; /* Alinea los elementos verticalmente */
-  padding: 2%; /* Añade espacio interno relativo */
+#actualizarUbicacion:hover {
+  background-color: #005f99;
 }
 
-/* Botón para activar la cámara */
-#camera-button {
-  width: 10vw; /* Ajusta el ancho al 10% del ancho de la pantalla */
-  height: 10vw; /* Hace el botón cuadrado basado en el ancho */
-  background: url('img/camara.png') no-repeat center center; /* Imagen como fondo */
-  background-size: contain; /* Ajusta la imagen al tamaño del contenedor */
-  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+#actualizarUbicacion:active,
+#actualizarUbicacion:focus {
+  font-size: 1em; /* Asegura que no cambie el tamaño */
+  outline: none; /* Opcional: elimina el contorno */
+  transform: translateX(-50%); /* Mantén la misma posición */
+ 
 }
 
-/* Tarjeta que muestra información clave */
-.info-card {
-  display: flex; /* Usa flexbox para organizar el contenido interno */
-  flex-direction: column; /* Organiza el contenido verticalmente */
-  align-items: flex-start; /* Alinea el contenido al inicio horizontal */
-  padding: 2%; /* Espaciado interno relativo */
-  background-color: #ffffff; /* Fondo blanco para contraste */
-  border: 0.2vh solid #003f5c; /* Borde con grosor relativo */
-  border-radius: 1vh; /* Esquinas redondeadas */
-  box-shadow: 0 0.4vh 1vh rgba(0, 0, 0, 0.1); /* Sombra sutil */
-  width: 50%; /* Ocupa el 50% del ancho del contenedor */
+.linea-gradiente {
+    position: fixed; /* Siempre visible en la ventana */
+    top: 100px; /* Ajusta según la altura de la cabecera */
+    left: 0;
+    width: 100%;
+    height: 4px; /* Altura de la línea */
+    background: linear-gradient(to right, blue, red); /* Gradiente */
+    z-index: 1000; /* Asegura que esté por encima del mapa */
 }
 
-.info-card h2 {
-  margin: 0; /* Elimina márgenes superiores e inferiores */
-  font-size: 2.5vh; /* Tamaño de texto relativo al alto de la pantalla */
-  color: #011145; /* Color de texto oscuro para contraste */
+
+
+/* Sección de la tarjeta con el icono */
+#calculoPK {
+  display: flex;
+  align-items: center;
+  /* justify-content: center;*/
+  padding: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  justify-content: flex-end; /* Alinea el contenido a la derecha */
+  text-align: center;
 }
 
-.info-card p {
-  margin: 0.5vh 0 0; /* Añade espacio superior entre párrafos */
-  font-size: 2vh; /* Ajusta el tamaño de texto relativo */
-  color: #415596; /* Color secundario para los detalles */
+#iconoCamara {
+  width: 65px; /* Cambia a un tamaño mayor */
+  height: 65px; /* Cambia a un tamaño mayor */
+  background: url('img/camara.png') no-repeat center center;
+  background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
+  margin-left: 5px;
+  position: absolute;
+  left: 0;
 }
 
-/* Pie de página con logo */
+
+#calculoPK .tarjeta {
+  display: inline-block;
+  background-color: #ffffff;
+  border: 2px solid #003f5c;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 50%;
+  max-width: 400px;
+  margin-right: 5px;
+}
+
+#calculoPK .tarjeta h2 {
+  margin: 0;
+  font-size: 2.5em;
+  color: #011145;
+  text-align: center;
+}
+
+#calculoPK .tarjeta p {
+  margin: 5px 0 0;
+  font-size: 1.3em;
+  color: #415596;
+}
+
 footer {
-  background-color: #ffffff; /* Fondo blanco */
-  text-align: center; /* Centra el contenido horizontalmente */
-  flex: 0 0 10%; /* Altura relativa al 10% del contenedor principal */
-  padding: 1vh 0; /* Espaciado vertical relativo */
+  background-color: #ffffff;
+  padding: 10px 0;
+  text-align: center;
+  flex: 0 0 auto;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
 footer img {
-  max-width: 20vw; /* Ajusta el tamaño del logo al 20% del ancho de la pantalla */
-  height: auto; /* Mantén las proporciones originales */
+  max-width: 80px;
+  height: auto;
 }
 
-/* Ajustes específicos para pantallas pequeñas */
+/* Ajustes para pantallas pequeñas */
 @media screen and (max-width: 768px) {
-  #action-buttons {
-    flex-direction: column; /* Organiza los botones en columna */
-    align-items: center; /* Centra los elementos horizontalmente */
+  #map-container {
+    min-height: 60%;
   }
 
-  .info-card {
-    width: 80%; /* Ocupa el 80% del ancho del contenedor */
+  #actualizarUbicacion {
+    font-size: 0.9em;
+  }
+
+  header img {
+    height: auto;
   }
 }
 
 @media screen and (max-width: 480px) {
-  #camera-button {
-    width: 15vw; /* Incrementa el tamaño relativo del botón */
-    height: 15vw; /* Mantiene proporciones cuadradas */
-  }
-
-  .info-card {
-    padding: 3%; /* Incrementa el espacio interno */
+  #map-container {
+    min-height: 70%;
   }
 }
+
