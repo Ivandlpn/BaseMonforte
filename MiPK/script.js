@@ -94,7 +94,7 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
 function mostrarPKMasCercano(pk) {
     const pkElement = document.getElementById("pkCercano");
     const distanciaElement = document.getElementById("distancia");
-    const pkFormateado = formatearPK(pk.pk);
+    const pkFormateado = formatearPK(pk);
     pkElement.textContent = pkFormateado;
      <!--  distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`; -->
 }
