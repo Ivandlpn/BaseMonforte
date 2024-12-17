@@ -8,10 +8,12 @@ html, body {
 }
 
 .contenedor {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
+    height: 100vh;
 }
+
 
 header {
   text-align: center;
@@ -38,9 +40,8 @@ header img {
 
 
 #map-container {
-  flex: 1 1 auto;
-  min-height: 50%;
-  position: relative;
+    grid-row: 2;
+    grid-column: 1;
 }
 
 #map {
@@ -91,14 +92,11 @@ header img {
 
 /* Sección de la tarjeta con el icono */
 #calculoPK {
-  display: flex;
-  align-items: center;
-  /* justify-content: center;*/
-  padding: 10px;
-  background-color: #ffffff;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-  justify-content: flex-end; /* Alinea el contenido a la derecha */
-  text-align: center;
+    grid-row: 3;
+    grid-column: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #iconoCamara {
@@ -150,11 +148,7 @@ footer img {
   height: auto;
 }
 
-/* Ajustes para pantallas pequeñas */
-@media screen and (max-width: 768px) {
-  #map-container {
-    min-height: 60%;
-  }
+
 
   #actualizarUbicacion {
     font-size: 0.9em;
@@ -165,9 +159,25 @@ footer img {
   }
 }
 
+
+/* Ajustes para pantallas pequeñas */
+
+@media screen and (max-width: 768px) {
+    #iconoCamara {
+        width: 50px;
+        height: 50px;
+    }
+    #calculoPK .tarjeta {
+        width: 45%;
+    }
+}
+
 @media screen and (max-width: 480px) {
-  #map-container {
-    min-height: 70%;
-  }
+    #map-container {
+        min-height: 60%;
+    }
+    header img {
+        height: auto;
+    }
 }
 
