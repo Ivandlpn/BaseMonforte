@@ -40,7 +40,7 @@ header img {
     top: calc(10vh + 4px);   /* Justo debajo de la cabecera y la línea gradiente */
     left: 0;
     width: 100%;             /* Ocupa todo el ancho */
-    height: 60vh;            /* 60% de la pantalla en altura */
+    height: 40vh;            /* 60% de la pantalla en altura */
     z-index: 500;            /* Debajo de la cabecera y línea gradiente */
 }
 
