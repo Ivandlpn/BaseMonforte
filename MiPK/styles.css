@@ -1,30 +1,34 @@
 /* Estilos globales */
 html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
+  margin: 0; /* Elimina márgenes predeterminados */
+  padding: 0; /* Elimina rellenos predeterminados */
+  width: 100vw; /* Establece el ancho al 100% de la ventana */
+  height: 100vh; /* Establece el alto al 100% de la ventana */
+  font-family: Arial, sans-serif; /* Fuente predeterminada */
+  overflow: hidden; /* Evita scroll no deseado */
 }
 
+
+/* Contenedor principal que ocupa toda la pantalla */
 .contenedor {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  display: flex; /* Utiliza flexbox para disposición de contenido */
+  flex-direction: column; /* Organiza los elementos verticalmente */
+  height: 100%; /* Ajusta la altura al 100% del contenedor */
 }
 
+/* Cabecera con identidad visual */
 header {
-  text-align: center;
-  padding: 0;
-  flex: 0 0 auto;
-  height: 100px;
+  text-align: center; /* Centra el contenido horizontalmente */
+  flex: 0 0 10%; /* Altura relativa al 10% de la pantalla */
 }
 
 header img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100%; /* Ajusta la imagen al ancho total del contenedor */
+  height: 100%; /* Ajusta la imagen a la altura disponible */
+  object-fit: cover; /* Escala la imagen sin distorsión */
 }
+
+
 
 .linea-gradiente {
     position: fixed; /* Siempre visible en la ventana */
@@ -36,23 +40,27 @@ header img {
     z-index: 1000; /* Asegura que esté por encima del mapa */
 }
 
-
+/* Contenedor principal que agrupa el mapa y los botones */
+#main-content {
+  display: grid; /* Usa grid para organizar el contenido */
+  grid-template-rows: 6fr 4fr; /* Asigna 60% al mapa y 40% a los botones */
+  height: 80%; /* Ajusta la altura total al 80% del contenedor */
+}
+/* Contenedor del mapa interactivo */
 #map-container {
-  flex: 1 1 auto;
-  min-height: 50%;
-  position: relative;
+  position: relative; /* Posiciona los elementos dentro del contenedor */
 }
 
 #map {
-  height: 100%;
-  width: 100%;
-  position: relative;
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+  height: 100%; /* Ocupa todo el alto del contenedor */
 }
+
 
 #actualizarUbicacion {
   position: absolute;
-  bottom: 10px;
-  left: 50%;
+  bottom: 5px;
+  right: 5%; /* Separa el botón un 5% desde la parte derecha */
   transform: translateX(-50%);
   z-index: 1000;
   cursor: pointer;
