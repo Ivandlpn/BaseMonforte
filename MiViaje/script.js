@@ -245,13 +245,25 @@ const nivelesDefecto = ['IAL', 'IL'];  // Niveles de defectos
 const estados = ['Incorrecto', 'Correcto']; // Estados posibles
 const actuaciones = ['Inspección a pie', 'Prospección', 'Otros']; // Actuaciones recomendadas
 
-// Mostrar el formulario en un modal cuando se hace clic en el marcador
+
 function mostrarFormulario(pk) {
     // Primero, eliminar cualquier formulario previo si existe
     const formularioExistente = document.getElementById('formularioDefecto');
     if (formularioExistente) {
         formularioExistente.remove();
     }
+
+    // También eliminar cualquier título previo si existe
+    const tituloExistente = document.querySelector('.modal-content h2');
+    if (tituloExistente) {
+        tituloExistente.remove();
+    }
+
+    // Crear un nuevo título con el texto "DEFECTO EN XXX+XXX"
+    const tituloDefecto = document.createElement('h2');
+    tituloDefecto.textContent = `DEFECTO EN ${pk}`;
+    tituloDefecto.style.textAlign = 'center'; // Opcional: Para centrar el texto
+    tituloDefecto.style.color = '#007BFF'; // Opcional: Para añadir estilo al título
 
     // Crear un nuevo formulario
     const form = document.createElement('form');
@@ -327,9 +339,10 @@ function mostrarFormulario(pk) {
 
     form.appendChild(saveButton);
 
-    // Añadir el formulario al modal
+    // Añadir el título y el formulario al modal
     const modalContent = document.querySelector('.modal-content');
-    modalContent.appendChild(form);
+    modalContent.appendChild(tituloDefecto); // Añadir el título
+    modalContent.appendChild(form); // Añadir el formulario
 
     // Mostrar el modal
     const modal = document.getElementById('modalFormulario');
@@ -348,6 +361,7 @@ function mostrarFormulario(pk) {
         }
     };
 }
+
 
 
 
