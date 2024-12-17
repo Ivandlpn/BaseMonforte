@@ -230,7 +230,7 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                     canvas.height - tarjetaHeight / 2 - 20
                 );
                
-                );
+              
 
                 const imagenCapturada = document.createElement("img");
                 imagenCapturada.src = canvas.toDataURL("image/png");
