@@ -216,7 +216,8 @@ const anio = fechaActual.getFullYear();
 const textoFecha = `${dia}/${mes}/${anio}`;
 
 // Configuración del recuadro y fuente
-const padding = 20; // Espaciado igual para todos los lados
+const paddingHorizontal = 20; // Espaciado horizontal
+const paddingVertical = 10; // Espaciado vertical
 const fontSizePK = 24; // Tamaño de fuente para el PK
 const fontSizeFecha = 18; // Tamaño de fuente para la fecha
 const margenEntreLineas = 10; // Separación entre el texto del PK y la fecha
@@ -224,9 +225,9 @@ const margenEntreLineas = 10; // Separación entre el texto del PK y la fecha
 // Calcular dimensiones del recuadro
 const anchoPK = ctx.measureText(textoPK).width;
 const anchoFecha = ctx.measureText(textoFecha).width;
-const textoMasAncho = Math.max(anchoPK, anchoFecha);
-const tarjetaWidth = textoMasAncho + padding * 2; // Considerar el padding horizontal
-const tarjetaHeight = fontSizePK + fontSizeFecha + padding * 2 + margenEntreLineas; // Mantener la altura existente
+const textoMasAncho = Math.max(anchoPK, anchoFecha); // Ancho basado en el texto más largo
+const tarjetaWidth = textoMasAncho + paddingHorizontal * 2; // Ancho total con padding
+const tarjetaHeight = fontSizePK + fontSizeFecha + paddingVertical * 2 + margenEntreLineas; // Altura total
 
 // Dibujar el fondo del recuadro
 ctx.fillStyle = "rgba(0, 122, 255, 0.5)"; // Fondo azul semitransparente
@@ -244,7 +245,7 @@ ctx.textBaseline = "top";
 ctx.fillText(
     textoPK,
     canvas.width / 2,
-    y + padding // Comenzar desde el padding superior
+    y + paddingVertical // Comenzar desde el padding superior
 );
 
 // Dibujar la fecha
@@ -252,7 +253,7 @@ ctx.font = `${fontSizeFecha}px Arial`;
 ctx.fillText(
     textoFecha,
     canvas.width / 2,
-    y + padding + fontSizePK + margenEntreLineas // Alinear debajo del texto del PK
+    y + paddingVertical + fontSizePK + margenEntreLineas // Alinear debajo del texto del PK
 );
 
 
