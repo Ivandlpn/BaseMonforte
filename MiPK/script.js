@@ -561,4 +561,3 @@ imagenEditar.addEventListener("click", () => {
         });
 });
 
-});
