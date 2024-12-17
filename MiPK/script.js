@@ -239,10 +239,26 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
 
             botonFoto.addEventListener("click", () => {
                 const canvas = document.createElement("canvas");
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
+               // canvas.width = video.videoWidth;
+               // canvas.height = video.videoHeight;
+              //  const ctx = canvas.getContext("2d");
+               // ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                const aspectRatio = video.videoWidth / video.videoHeight;
+                const width = 2000; // Ancho deseado
+                const height = width / aspectRatio;
+
+                //const width = 1280; // Ancho deseado
+                //const height = 720; // Alto deseado
+                
+                canvas.width = width;
+                canvas.height = height;
+                
                 const ctx = canvas.getContext("2d");
-                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                // Redimensiona la imagen del video al canvas
+                ctx.drawImage(video, 0, 0, width, height);
+
+                
 
                 const textoPK = `PK ${formatearPK(window.pkMasCercano.pk)}`;
                 const padding = 20;
