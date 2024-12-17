@@ -264,7 +264,6 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                     border-radius: 5px;
                     cursor: pointer;
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-                `;
 
 // Botón "Guardar"
 const imagenGuardar = document.createElement("img"); // Cambiar de button a img
