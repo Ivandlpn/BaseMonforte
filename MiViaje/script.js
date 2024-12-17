@@ -354,24 +354,37 @@ function mostrarFormulario(pk) {
 // Función para guardar el defecto
 function guardarDefecto() {
     // Capturar información de la tarjeta de información
-    const pk = document.getElementById('pk').textContent; // PK actual mostrado en la tarjeta
-    const velocidad = document.getElementById('velocidad').textContent; // Velocidad actual
-    const lugar = document.getElementById('lugar').textContent; // Ubicación actual
+    const pk = document.getElementById('pk').textContent.trim();
+    const velocidad = document.getElementById('velocidad').textContent.trim();
+    const lugar = document.getElementById('lugar').textContent.trim();
+
+    // Obtener la hora actual en formato HH:MM
+    const horaActual = new Date().toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit',
+    });
+
+    // Validar el formato del PK
+    const pkRegex = /^\d{3}\+\d{3}$/;
+    const pkValido = pkRegex.test(pk) ? pk : "000+000"; // Valor por defecto si el PK no es válido
 
     // Capturar valores del formulario
-    const elemento = document.getElementById('elemento').value;
-    const defecto = document.getElementById('defecto').value;
-    const nivel = document.getElementById('nivel').value;
-    const estado = document.getElementById('estado').value;
-    const observaciones = document.getElementById('observaciones').value;
-    const actuacion = document.getElementById('actuacion').value;
+    const elemento = document.getElementById('elemento').value.trim();
+    const defecto = document.getElementById('defecto').value.trim();
+    const nivel = document.getElementById('nivel').value.trim();
+    const estado = document.getElementById('estado').value.trim();
+    const observaciones = document.getElementById('observaciones').value.trim() || 'Sin observaciones';
+    const actuacion = document.getElementById('actuacion').value.trim();
 
-    // Crear el contenido del archivo
+    // Crear el contenido del archivo con el formato solicitado
     const contenido = `
-Defecto PK: ${pk}
+=== DATOS DEL DEFECTO ===
+PK: ${pkValido}
 Velocidad: ${velocidad}
+Hora: ${horaActual}
 Ubicación: ${lugar}
 
+=== DESCRIPCIÓN ===
 Elemento: ${elemento}
 Defecto: ${defecto}
 Nivel: ${nivel}
@@ -385,16 +398,17 @@ Actuación recomendada: ${actuacion}
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     const fecha = new Date().toISOString().split('T')[0]; // Fecha en formato YYYY-MM-DD
-    link.download = `Defecto_${pk.replace('+', '+')}_${fecha}.txt`; // Reemplaza '+' por '_' en el nombre del archivo
+    link.download = `Defecto_${pkValido.replace('+', '_')}_${fecha}.txt`; // Reemplaza '+' por '_' en el nombre del archivo
 
     // Iniciar la descarga
     link.click();
 
     // Mostrar mensaje de éxito
-    alert('Defecto registrado');
+    alert('Defecto registrado con éxito');
 
     // Cerrar el modal después de guardar
     const modal = document.getElementById('modalFormulario');
     modal.style.display = 'none';
 }
+
 
