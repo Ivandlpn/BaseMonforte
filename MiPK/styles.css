@@ -36,18 +36,19 @@ header img {
 }
 
 #map-container {
-    position: absolute;    /* Para posicionamiento preciso */
-    top: calc(10vh + 4px); /* Justo debajo de la cabecera y la línea gradiente */
+    position: absolute;      /* Para posicionarlo correctamente */
+    top: calc(10vh + 4px);   /* Justo debajo de la cabecera y la línea gradiente */
     left: 0;
-    width: 100%;           /* Ancho completo */
-    height: calc(75vh - 4px); /* Para dejar espacio a otros elementos */
-    z-index: 500;         /* Debajo de la cabecera y la línea gradiente */
+    width: 100%;             /* Ocupa todo el ancho */
+    height: 60vh;            /* 60% de la pantalla en altura */
+    z-index: 500;            /* Debajo de la cabecera y línea gradiente */
 }
 
 #map {
-    width: 100%;
+    width: 100%;             /* Asegura que el mapa llene el contenedor */
     height: 100%;
 }
+
 
 
 #actualizarUbicacion {
