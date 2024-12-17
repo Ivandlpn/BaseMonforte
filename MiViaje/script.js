@@ -265,7 +265,7 @@ function mostrarFormulario(pk) {
 
     // Crear un nuevo título con el texto "DEFECTO EN XXX+XXX"
     const tituloDefecto = document.createElement('h2');
-    tituloDefecto.textContent = `DEFECTO EN ${pkFormateado}`;
+    tituloDefecto.textContent = `DEFECTO EN ${pk}`;
     tituloDefecto.style.textAlign = 'center'; // Opcional: Para centrar el texto
     tituloDefecto.style.color = '#007BFF'; // Opcional: Para añadir estilo al título
 
