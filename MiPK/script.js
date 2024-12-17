@@ -206,7 +206,7 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 const ctx = canvas.getContext("2d");
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-                const textoPK = `PK ${formatearPK(window.pkMasCercano.pk)}`;
+const textoPK = `PK ${formatearPK(window.pkMasCercano.pk)}`;
 
 // Obtener la fecha actual en formato DD/MM/AAAA
 const fechaActual = new Date();
@@ -216,23 +216,22 @@ const anio = fechaActual.getFullYear();
 const textoFecha = `${dia}/${mes}/${anio}`;
 
 // Configuración del recuadro y fuente
-const padding = 20;
+const padding = 20; // Espaciado igual para todos los lados
 const fontSizePK = 24; // Tamaño de fuente para el PK
 const fontSizeFecha = 18; // Tamaño de fuente para la fecha
 const margenEntreLineas = 10; // Separación entre el texto del PK y la fecha
 
 // Calcular dimensiones del recuadro
-const textoMasAncho = Math.max(
-    ctx.measureText(textoPK).width,
-    ctx.measureText(textoFecha).width
-);
-const tarjetaWidth = textoMasAncho + padding * 2;
-const tarjetaHeight = fontSizePK + fontSizeFecha + padding * 2 + margenEntreLineas;
+const anchoPK = ctx.measureText(textoPK).width;
+const anchoFecha = ctx.measureText(textoFecha).width;
+const textoMasAncho = Math.max(anchoPK, anchoFecha);
+const tarjetaWidth = textoMasAncho + padding * 2; // Considerar el padding horizontal
+const tarjetaHeight = fontSizePK + fontSizeFecha + padding * 2 + margenEntreLineas; // Mantener la altura existente
 
 // Dibujar el fondo del recuadro
 ctx.fillStyle = "rgba(0, 122, 255, 0.5)"; // Fondo azul semitransparente
-const x = (canvas.width - tarjetaWidth) / 2;
-const y = canvas.height - tarjetaHeight - 20;
+const x = (canvas.width - tarjetaWidth) / 2; // Centrar horizontalmente
+const y = canvas.height - tarjetaHeight - 20; // Margen inferior
 ctx.beginPath();
 ctx.roundRect(x, y, tarjetaWidth, tarjetaHeight, 20); // Esquinas redondeadas
 ctx.fill();
@@ -245,7 +244,7 @@ ctx.textBaseline = "top";
 ctx.fillText(
     textoPK,
     canvas.width / 2,
-    y + padding
+    y + padding // Comenzar desde el padding superior
 );
 
 // Dibujar la fecha
@@ -253,8 +252,9 @@ ctx.font = `${fontSizeFecha}px Arial`;
 ctx.fillText(
     textoFecha,
     canvas.width / 2,
-    y + padding + fontSizePK + margenEntreLineas
+    y + padding + fontSizePK + margenEntreLineas // Alinear debajo del texto del PK
 );
+
 
                 const imagenCapturada = document.createElement("img");
                 imagenCapturada.src = canvas.toDataURL("image/png");
