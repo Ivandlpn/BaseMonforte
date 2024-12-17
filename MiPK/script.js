@@ -559,5 +559,5 @@ imagenEditar.addEventListener("click", () => {
         .catch((error) => {
             console.error("Error al acceder a la cámara: ", error);
         });
-});
+
 
