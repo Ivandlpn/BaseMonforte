@@ -109,6 +109,10 @@ header img {
   left: 0;
 }
 
+#iconoCamara:hover {
+    background-color: rgba(0, 128, 255, 0.2);
+}
+
 
 #calculoPK .tarjeta {
   display: inline-block;
