@@ -244,12 +244,12 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
               //  const ctx = canvas.getContext("2d");
                // ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-                const aspectRatio = video.videoWidth / video.videoHeight;
-                const width = 2000; // Ancho deseado
-                const height = width / aspectRatio;
+                //const aspectRatio = video.videoWidth / video.videoHeight;
+                //const width = 2000; // Ancho deseado
+                c//onst height = width / aspectRatio;
 
-                //const width = 1280; // Ancho deseado
-                //const height = 720; // Alto deseado
+                const width = 4000; // Ancho deseado
+                const height = 3000; // Alto deseado
                 
                 canvas.width = width;
                 canvas.height = height;
