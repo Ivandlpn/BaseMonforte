@@ -393,8 +393,12 @@ Observaciones: ${observaciones}
 Actuación recomendada: ${actuacion}
     `;
 
+    // Utilizar TextEncoder para convertir a UTF-8
+    const encoder = new TextEncoder();
+    const contenidoUtf8 = encoder.encode(contenido);
+
     // Crear el archivo de texto con la codificación UTF-8
-    const blob = new Blob([contenido], { type: 'text/plain;charset=utf-8' });
+    const blob = new Blob([contenidoUtf8], { type: 'text/plain;charset=utf-8' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     const fecha = new Date().toISOString().split('T')[0]; // Fecha en formato YYYY-MM-DD
@@ -410,6 +414,7 @@ Actuación recomendada: ${actuacion}
     const modal = document.getElementById('modalFormulario');
     modal.style.display = 'none';
 }
+
 
 
 
