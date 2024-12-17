@@ -14,17 +14,16 @@ html, body {
 }
 
 header {
-  text-align: center;
-  padding: 0;
-  flex: 0 0 auto;
-  height: 100px;
+  width: 100%;         /* Ocupa todo el ancho */
+  height: 10vh;        /* Ocupa el 10% de la altura total de la pantalla */
 }
 
 header img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100%;         /* La imagen se ajusta al ancho completo */
+  height: 100%;        /* La imagen ocupa toda la altura asignada a la cabecera */
+  object-fit: cover;   /* Asegura que la imagen llene el espacio sin distorsión */
 }
+
 
 .linea-gradiente {
     position: fixed; /* Siempre visible en la ventana */
