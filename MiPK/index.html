@@ -1,64 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8"> <!-- Define la codificación de caracteres como UTF-8 para soporte multilingüe -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Asegura que el diseño sea responsive en dispositivos móviles -->
-    <title>Mi PK 📍</title> <!-- Título de la página que se muestra en el navegador -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi PK 📍</title>
 
-    <!-- Favicon para la pestaña del navegador -->
+    <!-- Favicon -->
     <link rel="icon" href="img/FaviconMiPK.png?v=1" type="image/png">
-
-    <!-- Enlace al archivo de manifiesto para PWA -->
     <link rel="manifest" href="manifest.json">
 
-    <!-- Metadatos Open Graph para compartir en redes sociales -->
+
+    <!-- Open Graph -->
     <meta property="og:title" content="Mi PK 📍" />
     <meta property="og:description" content="Consulta el PK más cercano" />
     <meta property="og:image" content="img/FaviconMiPK.png" />
     <meta property="og:url" content="https://ivandlpn.github.io/BaseMonforte/PKC/" />
     <meta property="og:type" content="website" />
 
-    <!-- Biblioteca Leaflet para mapas interactivos -->
+    <!-- Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <!-- Enlace al archivo de estilos personalizado -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Contenedor principal que agrupa todos los elementos para escalado dinámico -->
     <div class="contenedor">
-        <!-- Sección de cabecera para título e identidad visual -->
         <header>
-            <img src="img/CabeceraMiPK.png" alt="Cabecera Mi PK"> <!-- Imagen de cabecera -->
+            <img src="img/CabeceraMiPK.png" alt="Cabecera Mi PK">
         </header>
 
-        <!-- Contenedor para el contenido principal: mapa y botones de acción -->
-        <div id="main-content">
-            <!-- Contenedor del mapa interactivo -->
-            <div id="map-container">
-                <div id="map"></div> <!-- Elemento donde se renderiza el mapa -->
-                <button id="center-map">Centrar Ubicación</button> <!-- Botón para centrar el mapa en la ubicación actual -->
-            </div>
-
-            <!-- Sección para los botones de acción y la tarjeta informativa -->
-            <div id="action-buttons">
-                <div id="camera-button"></div> <!-- Botón para activar la cámara -->
-                <div class="info-card"> <!-- Tarjeta que muestra información clave del PK -->
-                    <h2><span id="pkCercano">471+500</span></h2> <!-- PK más cercano, actualizado dinámicamente -->
-                    <p>Línea: <span id="linea">Madrid-Sevilla</span></p> <!-- Línea correspondiente al PK -->
-                    <p>Vía: <span id="via">2</span></p> <!-- Vía correspondiente al PK -->
-                </div>
+        <div class="linea-gradiente"></div> <!-- Línea con gradiente -->
+        
+        <div id="map-container">
+            <div id="map">
+                <img id="actualizarUbicacion" src="img/centrar.png" alt="Centrar" style="cursor: pointer;">
             </div>
         </div>
-
-        <!-- Pie de página con el logo de la empresa -->
+        <div class="linea-gradiente"></div> <!-- Línea con gradiente -->
+        <div id="calculoPK">
+            <div id="iconoCamara"></div>
+            <div class="tarjeta">
+                <h2> <span id="pkCercano">471+500</span></h2>
+               <!-- <p>Vía: <span id="distancia">1289.73 metros</span></p> -->
+            </div>
+        </div>
         <footer>
-            <img src="img/Logo-Ineco.png" alt="Logo Ineco"> <!-- Logo de la empresa -->
+            <img src="img/Logo-Ineco.png" alt="Logo Ineco">
         </footer>
     </div>
-
-    <!-- Archivo de script externo para la funcionalidad -->
     <script src="script.js" defer></script>
 </body>
 </html>
