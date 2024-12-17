@@ -249,8 +249,6 @@ const actuaciones = ['Inspección a pie', 'Prospección', 'Otros']; // Actuacion
 function mostrarFormulario(pk) {
     // Primero, eliminar cualquier formulario previo si existe
 
-// Formatear el PK al formato XXX+XXX
-    const pkFormateado = formatearPK(pk);
     
     const formularioExistente = document.getElementById('formularioDefecto');
     if (formularioExistente) {
