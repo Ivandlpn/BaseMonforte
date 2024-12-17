@@ -26,8 +26,9 @@ iconoTren = L.icon({
        if (marcadorTren) {
         // Asociar el evento de clic al marcador
         marcadorTren.on('click', () => {
-            const pk = formatearPK(lat, lon);  // Usar lat/lon para calcular el PK (si es necesario)
-            mostrarFormulario(pk);            // Mostrar el formulario para registrar el defecto
+            const pk = formatearPK(lat, lon); 
+            const pkFormateado = formatearPK(pk);// Usar lat/lon para calcular el PK (si es necesario)
+            mostrarFormulario(pkFormateado);            // Mostrar el formulario para registrar el defecto
         });
     }
 }
@@ -248,6 +249,7 @@ const actuaciones = ['Inspección a pie', 'Prospección', 'Otros']; // Actuacion
 
 function mostrarFormulario(pk) {
     // Primero, eliminar cualquier formulario previo si existe
+
 
     
     const formularioExistente = document.getElementById('formularioDefecto');
