@@ -25,11 +25,15 @@ iconoTren = L.icon({
     // Asegurarse de que el marcador se ha creado antes de asociar el evento
        if (marcadorTren) {
         // Asociar el evento de clic al marcador
-        marcadorTren.on('click', () => {
-           // const pk = formatearPK(lat, lon); 
-            const pkFormateado = formatearPK(pk);// Usar lat/lon para calcular el PK (si es necesario)
-            mostrarFormulario(pkFormateado);            // Mostrar el formulario para registrar el defecto
-        });
+marcadorTren.on('click', async () => {
+    const pk = await obtenerPK(lat, lon); // Obtener el PK como número
+    if (pk !== null) {
+        const pkFormateado = formatearPK(pk); // Formatear el PK a XXX+XXX
+        mostrarFormulario(pkFormateado);     // Mostrar el formulario con el PK correcto
+    } else {
+        console.error('No se pudo calcular el PK');
+    }
+});
     }
 }
 
@@ -91,17 +95,24 @@ async function obtenerPK(lat, lon) {
             return distancia < masCercano.distancia ? { pk: pk.PK, distancia } : masCercano;
         }, { pk: null, distancia: Infinity });
 
-        const pkFormateado = formatearPK(pkMasCercano.pk);
-        document.getElementById('pk').textContent = pkFormateado;
+        return pkMasCercano.pk; // Devuelve el PK más cercano como número
     } catch (error) {
         console.error('Error al obtener el PK más cercano:', error);
+        return null; // Manejo de error: devolver null si falla
     }
 }
 
+
 function formatearPK(pk) {
+    if (!pk || isNaN(pk)) {
+        console.error("El PK no es válido:", pk);
+        return "000+000"; // Valor por defecto en caso de error
+    }
+
     const pkStr = pk.toString().padStart(6, "0"); // Asegura que tenga 6 dígitos
     return `${pkStr.slice(0, 3)}+${pkStr.slice(3)}`; // Formato XXX+XXX
 }
+
 
 async function cargarTrazado() {
     try {
@@ -264,10 +275,10 @@ function mostrarFormulario(pk) {
     }
 
     // Crear un nuevo título con el texto "DEFECTO EN XXX+XXX"
-    const tituloDefecto = document.createElement('h2');
+        const tituloDefecto = document.createElement('h2');
     tituloDefecto.textContent = `DEFECTO EN ${pk}`;
-    tituloDefecto.style.textAlign = 'center'; // Opcional: Para centrar el texto
-    tituloDefecto.style.color = '#007BFF'; // Opcional: Para añadir estilo al título
+    tituloDefecto.style.textAlign = 'center';
+    tituloDefecto.style.color = '#007BFF';
 
     // Crear un nuevo formulario
     const form = document.createElement('form');
