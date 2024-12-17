@@ -122,7 +122,6 @@ function formatearPK(pk) {
 
 
 
-
 async function cargarTrazado() {
     try {
         // Carga el archivo JSON
@@ -151,44 +150,7 @@ function dibujarTrazado(trazado) {
     mapa.fitBounds(lineaFerrocarril.getBounds());
 }
 
-document.getElementById("iconoMas").addEventListener("click", () => {
-    // Comprobar si el listado ya está desplegado
-    let listadoOpciones = document.getElementById("listadoOpciones");
-    if (listadoOpciones) {
-        listadoOpciones.remove(); // Si ya existe, lo eliminamos
-        return;
-    }
 
-    // Crear el contenedor del listado
-    listadoOpciones = document.createElement("div");
-    listadoOpciones.id = "listadoOpciones";
-
-    // Opciones del menú
-    const opciones = [
-        { texto: "📌Ir a otro PK", accion: () => alert("En construcción...") },
-        { texto: "🚪Buscar Puerta" , accion: () => alert("En construcción...") },
-        { texto: "📞 Llamar CPS", accion: () => alert("En construcción...") },
-        { texto: "☀️ Previsión ", accion: () => alert("En construcción...") },
-    ];
-
-    // Crear los botones para las opciones
-    opciones.forEach(opcion => {
-        const boton = document.createElement("button");
-        boton.textContent = opcion.texto;
-        boton.addEventListener("click", opcion.accion); // Asignar acción
-        listadoOpciones.appendChild(boton);
-    });
-
-    // Botón para cerrar el listado
-    const botonCerrar = document.createElement("button");
-    botonCerrar.textContent = "Cerrar";
-    botonCerrar.style.backgroundColor = "#ff3b30"; // Rojo para el botón de cerrar
-    botonCerrar.addEventListener("click", () => listadoOpciones.remove());
-    listadoOpciones.appendChild(botonCerrar);
-
-    // Añadir el cuadro flotante al body
-    document.body.appendChild(listadoOpciones);
-});
 
 
 document.getElementById("actualizarUbicacion").addEventListener("click", () => {
@@ -239,30 +201,10 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
 
             botonFoto.addEventListener("click", () => {
                 const canvas = document.createElement("canvas");
-               canvas.width = video.videoWidth;
-               canvas.height = video.videoHeight;
-              const ctx = canvas.getContext("2d");
-               //ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-                //const aspectRatio = video.videoWidth / video.videoHeight;
-                //const width = 2000; // Ancho deseado
-                //const height = width / aspectRatio;
-
-                //const width = 4000; // Ancho deseado
-               // const height = 3000; // Alto deseado
-                
-                //canvas.width = width;
-                //canvas.height = height;
-                
-               // const ctx = canvas.getContext("2d");
-                // Redimensiona la imagen del video al canvas
-
-
-
-                
-                ctx.drawImage(video, 0, 0, width, height);
-
-                
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
                 const textoPK = `PK ${formatearPK(window.pkMasCercano.pk)}`;
                 const padding = 20;
@@ -272,20 +214,21 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
                 const tarjetaHeight = fontSize + padding * 2;
 
               ctx.fillStyle = "rgba(0, 122, 255, 0.5)"; // Fondo azul semitransparente
-                const x = ((canvas.width - tarjetaWidth) / 2) + 50;
+                const x = (canvas.width - tarjetaWidth) / 2;
                 const y = canvas.height - tarjetaHeight - 20;
                 ctx.beginPath();
                 ctx.roundRect(x, y, tarjetaWidth, tarjetaHeight, 20); // 20 = radio de las esquinas
                 ctx.fill();
+
+
                 ctx.fillStyle = "white";
-                ctx.font = `${fontSize}px Arial`;   
+                ctx.font = `${fontSize}px Arial`;
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
                 ctx.fillText(
                     textoPK,
-                    (canvas.width / 2) + 50,
+                    canvas.width / 2,
                     canvas.height - tarjetaHeight / 2 - 20
-
                 );
 
                 const imagenCapturada = document.createElement("img");
@@ -466,7 +409,7 @@ imagenEditar.addEventListener("click", () => {
     contenedorEdicion.style.left = "0";
     contenedorEdicion.style.width = "100%";
     contenedorEdicion.style.height = "100%";
-    contenedorEdicion.style.backgroundColor = "rgba(255, 0, 0, 0.8)";
+    contenedorEdicion.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
     contenedorEdicion.style.zIndex = "1004";
     contenedorEdicion.style.display = "flex";
     contenedorEdicion.style.flexDirection = "column";
