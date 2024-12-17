@@ -25,15 +25,10 @@ iconoTren = L.icon({
     // Asegurarse de que el marcador se ha creado antes de asociar el evento
        if (marcadorTren) {
         // Asociar el evento de clic al marcador
-marcadorTren.on('click', async () => {
-    const pk = await obtenerPK(lat, lon); // Obtener el PK como número
-    if (pk !== null) {
-        const pkFormateado = formatearPK(pk); // Formatear el PK a XXX+XXX
-        mostrarFormulario(pkFormateado);     // Mostrar el formulario con el PK correcto
-    } else {
-        console.error('No se pudo calcular el PK');
-    }
-});
+        marcadorTren.on('click', () => {
+            const pk = formatearPK(lat, lon);  // Usar lat/lon para calcular el PK (si es necesario)
+            mostrarFormulario(pk);            // Mostrar el formulario para registrar el defecto
+        });
     }
 }
 
@@ -95,24 +90,17 @@ async function obtenerPK(lat, lon) {
             return distancia < masCercano.distancia ? { pk: pk.PK, distancia } : masCercano;
         }, { pk: null, distancia: Infinity });
 
-        return pkMasCercano.pk; // Devuelve el PK más cercano como número
+        const pkFormateado = formatearPK(pkMasCercano.pk);
+        document.getElementById('pk').textContent = pkFormateado;
     } catch (error) {
         console.error('Error al obtener el PK más cercano:', error);
-        return null; // Manejo de error: devolver null si falla
     }
 }
 
-
 function formatearPK(pk) {
-    if (!pk || isNaN(pk)) {
-        console.error("El PK no es válido:", pk);
-        return "000+000"; // Valor por defecto en caso de error
-    }
-
     const pkStr = pk.toString().padStart(6, "0"); // Asegura que tenga 6 dígitos
     return `${pkStr.slice(0, 3)}+${pkStr.slice(3)}`; // Formato XXX+XXX
 }
-
 
 async function cargarTrazado() {
     try {
@@ -257,28 +245,13 @@ const nivelesDefecto = ['IAL', 'IL'];  // Niveles de defectos
 const estados = ['Incorrecto', 'Correcto']; // Estados posibles
 const actuaciones = ['Inspección a pie', 'Prospección', 'Otros']; // Actuaciones recomendadas
 
-
+// Mostrar el formulario en un modal cuando se hace clic en el marcador
 function mostrarFormulario(pk) {
     // Primero, eliminar cualquier formulario previo si existe
-
-
-    
     const formularioExistente = document.getElementById('formularioDefecto');
     if (formularioExistente) {
         formularioExistente.remove();
     }
-
-    // También eliminar cualquier título previo si existe
-    const tituloExistente = document.querySelector('.modal-content h2');
-    if (tituloExistente) {
-        tituloExistente.remove();
-    }
-
-    // Crear un nuevo título con el texto "DEFECTO EN XXX+XXX"
-        const tituloDefecto = document.createElement('h2');
-    tituloDefecto.textContent = `DEFECTO EN ${pk}`;
-    tituloDefecto.style.textAlign = 'center';
-    tituloDefecto.style.color = '#007BFF';
 
     // Crear un nuevo formulario
     const form = document.createElement('form');
@@ -354,10 +327,9 @@ function mostrarFormulario(pk) {
 
     form.appendChild(saveButton);
 
-    // Añadir el título y el formulario al modal
+    // Añadir el formulario al modal
     const modalContent = document.querySelector('.modal-content');
-    modalContent.appendChild(tituloDefecto); // Añadir el título
-    modalContent.appendChild(form); // Añadir el formulario
+    modalContent.appendChild(form);
 
     // Mostrar el modal
     const modal = document.getElementById('modalFormulario');
@@ -376,7 +348,6 @@ function mostrarFormulario(pk) {
         }
     };
 }
-
 
 
 
