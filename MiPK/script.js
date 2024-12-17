@@ -38,10 +38,12 @@ function inicializarMapa(lat, lon) {
         attributionControl: false
     });
 
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '',
-        maxZoom: 19
-    }).addTo(mapa);
+   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    tileSize: 512,
+    zoomOffset: -1,
+}).addTo(mapa);
+
 
     iconoUsuario = L.icon({
         iconUrl: 'https://cdn-icons-png.flaticon.com/512/1783/1783356.png',
