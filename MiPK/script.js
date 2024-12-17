@@ -216,16 +216,20 @@ const anio = fechaActual.getFullYear();
 const textoFecha = `${dia}/${mes}/${anio}`;
 
 // Configuración del recuadro y fuente
-const paddingHorizontal = 20; // Espaciado horizontal
-const paddingVertical = 10; // Espaciado vertical
+const paddingHorizontal = 30; // Espaciado adicional horizontal
+const paddingVertical = 15; // Espaciado adicional vertical
 const fontSizePK = 24; // Tamaño de fuente para el PK
 const fontSizeFecha = 18; // Tamaño de fuente para la fecha
-const margenEntreLineas = 10; // Separación entre el texto del PK y la fecha
+const margenEntreLineas = 10; // Separación entre líneas de texto
 
-// Calcular dimensiones del recuadro
-const anchoPK = ctx.measureText(textoPK).width;
-const anchoFecha = ctx.measureText(textoFecha).width;
-const textoMasAncho = Math.max(anchoPK, anchoFecha); // Ancho basado en el texto más largo
+// Configurar la fuente antes de medir el texto
+ctx.font = `${fontSizePK}px Arial`;
+const anchoPK = ctx.measureText(textoPK).width; // Ancho del texto PK
+ctx.font = `${fontSizeFecha}px Arial`;
+const anchoFecha = ctx.measureText(textoFecha).width; // Ancho del texto Fecha
+
+// Calcular el ancho y alto del recuadro
+const textoMasAncho = Math.max(anchoPK, anchoFecha);
 const tarjetaWidth = textoMasAncho + paddingHorizontal * 2; // Ancho total con padding
 const tarjetaHeight = fontSizePK + fontSizeFecha + paddingVertical * 2 + margenEntreLineas; // Altura total
 
