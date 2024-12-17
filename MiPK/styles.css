@@ -26,7 +26,7 @@ header img {
 
 
 .linea-gradiente {
-    position: absolute;   /* Para alinearla debajo de la cabecera */
+    position: relative;   /* Para alinearla debajo de la cabecera */
     top: 10vh;            /* Justo después de la cabecera */
     left: 0;
     width: 100%;
@@ -36,7 +36,7 @@ header img {
 }
 
 #map-container {
-    position: absolute;      /* Para posicionarlo correctamente */
+    position: relative;      /* Para posicionarlo correctamente */
     top: calc(10vh + 4px);   /* Justo debajo de la cabecera y la línea gradiente */
     left: 0;
     width: 100%;             /* Ocupa todo el ancho */
