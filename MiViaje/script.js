@@ -414,7 +414,3 @@ Actuación recomendada: ${actuacion}
     const modal = document.getElementById('modalFormulario');
     modal.style.display = 'none';
 }
-
-
-
-
