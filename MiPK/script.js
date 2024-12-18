@@ -125,12 +125,12 @@ function mostrarPKMasCercano(pk) {
     const pkElement = document.getElementById("pkCercano");
     const pkFormateado = formatearPK(pk.pk);
 
-    // Separar el PK y el lado de la vía en dos spans
     pkElement.innerHTML = `
-        <span style="font-size: 1em;">${pkFormateado}</span>
-        <span style="font-size: 0.7em; color: #555;"> (${pk.ladoVia})</span>
+        <div style="font-size: 1em; margin-bottom: 5px;">${pkFormateado}</div>
+        <div style="font-size: 0.7em; color: #555;">(${pk.ladoVia})</div>
     `;
 }
+
 
 
 
