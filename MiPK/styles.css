@@ -39,7 +39,7 @@ header img {
 #map-container {
     flex: 1 1 auto; /* Mantén esto si deseas que se ajuste al espacio disponible */
     min-height: 30%; /* Reduce la altura mínima */
-    height: 400px; /* Establece una altura fija */
+    height: 200px; /* Establece una altura fija */
     width: 100%; /* Establece un ancho fijo o porcentual */
     position: relative;
     margin: 0 auto; /* Centra el contenedor */
