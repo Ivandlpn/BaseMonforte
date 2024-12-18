@@ -39,7 +39,7 @@ header img {
 
 #map-container {
   flex: 1 1 auto;
-  min-height: 50%;
+  min-height: 40%;
   position: relative;
 }
 
