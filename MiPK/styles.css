@@ -101,6 +101,8 @@ header img {
   text-align: center;
 }
 
+
+
 #iconoCamara {
   width: 65px; /* Cambia a un tamaño mayor */
   height: 65px; /* Cambia a un tamaño mayor */
@@ -135,6 +137,16 @@ header img {
   margin: 5px 0 0;
   font-size: 1.3em;
   color: #415596;
+}
+
+.pk-grande {
+    font-size: 1.5em; /* Tamaño más grande */
+    color: #011145;  /* Azul oscuro */
+}
+
+.via-pequena {
+    font-size: 0.8em; /* Tamaño más pequeño */
+    color: #555;      /* Color gris tenue */
 }
 
 footer {
