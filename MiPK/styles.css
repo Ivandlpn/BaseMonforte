@@ -40,7 +40,7 @@ header img {
     flex: 1 1 auto; /* Mantén esto si deseas que se ajuste al espacio disponible */
     min-height: 30%; /* Reduce la altura mínima */
     height: 400px; /* Establece una altura fija */
-    width: 80%; /* Establece un ancho fijo o porcentual */
+    width: 100%; /* Establece un ancho fijo o porcentual */
     position: relative;
     margin: 0 auto; /* Centra el contenedor */
 }
