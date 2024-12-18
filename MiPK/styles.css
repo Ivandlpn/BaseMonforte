@@ -36,12 +36,21 @@ header img {
     z-index: 1000; /* Asegura que esté por encima del mapa */
 }
 
-
 #map-container {
-  flex: 1 1 auto;
-  min-height: 40%;
-  position: relative;
+    flex: 1 1 auto; /* Mantén esto si deseas que se ajuste al espacio disponible */
+    min-height: 30%; /* Reduce la altura mínima */
+    height: 400px; /* Establece una altura fija */
+    width: 80%; /* Establece un ancho fijo o porcentual */
+    position: relative;
+    margin: 0 auto; /* Centra el contenedor */
 }
+
+
+//#map-container {
+  //flex: 1 1 auto;
+  //min-height: 40%;
+  //position: relative;
+//}
 
 #map {
   height: 100%;
