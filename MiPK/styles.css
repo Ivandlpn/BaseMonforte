@@ -173,15 +173,4 @@ footer img {
   }
 }
 
-/* Ajustes para pantallas pequeñas */
-@media screen and (max-width: 768px) {
-  #map-container {
-    min-height: 50%;
-  }
-
-@media screen and (max-width: 480px) {
-  #map-container {
-    min-height: 60%;
-  }
-}
 
