@@ -1,4 +1,4 @@
-/* Estilos globales */
+tive/* Estilos globales */
 html, body {
   margin: 0;
   padding: 0;
@@ -27,7 +27,7 @@ header img {
 }
 
 .linea-gradiente {
-    position: fixed; /* Siempre visible en la ventana */
+    position: relative; /* Siempre visible en la ventana */
    // top: 100px; /* Ajusta según la altura de la cabecera */
     left: 0;
     width: 100%;
