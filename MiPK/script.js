@@ -124,8 +124,14 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
 function mostrarPKMasCercano(pk) {
     const pkElement = document.getElementById("pkCercano");
     const pkFormateado = formatearPK(pk.pk);
-    pkElement.textContent = `${pkFormateado} (${pk.ladoVia})`;
+
+    // Separar el PK y el lado de la vía en dos spans
+    pkElement.innerHTML = `
+        <span style="font-size: 1.5em;">${pkFormateado}</span>
+        <span style="font-size: 0.8em; color: #555;"> (${pk.ladoVia})</span>
+    `;
 }
+
 
 
 function actualizarPosicionPK(pk) {
