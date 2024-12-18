@@ -41,6 +41,7 @@ header img {
     width: 100%; /* Establece un ancho fijo o porcentual */
     position: relative;
     margin: 0 auto; /* Centra el contenedor */
+  z-index: 500
 }
 
 #map {
