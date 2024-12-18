@@ -66,6 +66,28 @@ function actualizarPosicionUsuario(lat, lon) {
     }
 }
 
+function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente) {
+    // Coordenadas del PK actual y siguiente
+    const { latitud: latActual, longitud: lonActual } = pkActual;
+    const { latitud: latSiguiente, longitud: lonSiguiente } = pkSiguiente;
+
+    // Vector del eje central (de PK actual a siguiente)
+    const vectorEjeX = lonSiguiente - lonActual;
+    const vectorEjeY = latSiguiente - latActual;
+
+    // Vector del usuario al PK actual
+    const vectorUsuarioX = lonUsuario - lonActual;
+    const vectorUsuarioY = latUsuario - latActual;
+
+    // Producto cruzado para determinar el lado
+    const productoCruzado = vectorEjeX * vectorUsuarioY - vectorEjeY * vectorUsuarioX;
+
+    // Si el producto cruzado es positivo, está a la izquierda; si es negativo, a la derecha
+    return productoCruzado > 0 ? "Vía 1" : "Vía 2";
+}
+
+
+
 function calcularPKMasCercano(lat, lon, data) {
     let puntosCercanos = data.map(pk => {
         const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
