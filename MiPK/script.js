@@ -73,7 +73,15 @@ function calcularPKMasCercano(lat, lon, data) {
     });
 
     puntosCercanos.sort((a, b) => a.distancia - b.distancia);
-    return puntosCercanos.slice(0, 1);
+
+    const pkActual = puntosCercanos[0]; // PK más cercano
+    const pkSiguiente = puntosCercanos[1] || pkActual; // PK siguiente (o actual si es el último)
+
+    // Determinar lado de la vía
+    const ladoVia = determinarLadoVia(lat, lon, pkActual, pkSiguiente);
+    pkActual.ladoVia = ladoVia;
+
+    return [pkActual];
 }
 
 function calcularDistancia(lat1, lon1, lat2, lon2) {
@@ -93,11 +101,10 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
 
 function mostrarPKMasCercano(pk) {
     const pkElement = document.getElementById("pkCercano");
-    const distanciaElement = document.getElementById("distancia");
     const pkFormateado = formatearPK(pk.pk);
-    pkElement.textContent = pkFormateado;
-     <!--  distanciaElement.textContent = `${pk.distancia.toFixed(2)} metros`; -->
+    pkElement.textContent = `${pkFormateado} (${pk.ladoVia})`;
 }
+
 
 function actualizarPosicionPK(pk) {
     if (!marcadorPK) {
@@ -511,7 +518,26 @@ imagenEditar.addEventListener("click", () => {
     });
 });
 
-                
+             function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente) {
+    // Coordenadas del PK actual y siguiente
+    const { latitud: latActual, longitud: lonActual } = pkActual;
+    const { latitud: latSiguiente, longitud: lonSiguiente } = pkSiguiente;
+
+    // Vector del eje central (de PK actual a siguiente)
+    const vectorEjeX = lonSiguiente - lonActual;
+    const vectorEjeY = latSiguiente - latActual;
+
+    // Vector del usuario al PK actual
+    const vectorUsuarioX = lonUsuario - lonActual;
+    const vectorUsuarioY = latUsuario - latActual;
+
+    // Producto cruzado para determinar el lado
+    const productoCruzado = vectorEjeX * vectorUsuarioY - vectorEjeY * vectorUsuarioX;
+
+    // Si el producto cruzado es positivo, está a la izquierda; si es negativo, a la derecha
+    return productoCruzado > 0 ? "Vía 1" : "Vía 2";
+}
+   
 
 
 
