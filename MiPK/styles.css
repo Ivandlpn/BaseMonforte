@@ -162,11 +162,7 @@ footer img {
   height: auto;
 }
 
-/* Ajustes para pantallas pequeñas */
-@media screen and (max-width: 768px) {
-  #map-container {
-    min-height: 60%;
-  }
+
 
   #actualizarUbicacion {
     font-size: 0.9em;
@@ -177,9 +173,15 @@ footer img {
   }
 }
 
+/* Ajustes para pantallas pequeñas */
+@media screen and (max-width: 768px) {
+  #map-container {
+    min-height: 50%;
+  }
+
 @media screen and (max-width: 480px) {
   #map-container {
-    min-height: 70%;
+    min-height: 60%;
   }
 }
 
