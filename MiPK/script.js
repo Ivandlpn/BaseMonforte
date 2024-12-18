@@ -20,7 +20,7 @@ navigator.geolocation.watchPosition((position) => {
             window.pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
             mostrarPKMasCercano(window.pkMasCercano);
             actualizarPosicionPK(window.pkMasCercano);
-            //cargarTrazado();
+            cargarTrazado();
         })
         .catch(error => console.error('Error al cargar los datos de PK:', error));
 }, 
