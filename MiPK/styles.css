@@ -124,9 +124,8 @@ header img {
 }
 
 #calculoPK .tarjeta p {
-  margin: 5px 0 0;
-  font-size: 1.3em;
-  color: #415596;
+  font-size: 0.8em; /* Tamaño más pequeño */
+    color: #555;      /* Color gris tenue */
 }
 
 .pk-grande {
