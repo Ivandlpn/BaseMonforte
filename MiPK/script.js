@@ -14,7 +14,7 @@ navigator.geolocation.watchPosition((position) => {
         actualizarPosicionUsuario(lat, lon);
     }
 
-    fetch("./doc/PKCoordenas0.json")
+    fetch("./doc/PKCoordenas2.json")
         .then(response => response.json())
         .then(data => {
             window.pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
@@ -91,7 +91,13 @@ function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente) {
 function calcularPKMasCercano(lat, lon, data) {
     let puntosCercanos = data.map(pk => {
         const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
-        return { pk: pk.PK, latitud: pk.Latitud, longitud: pk.Longitud, distancia: distancia };
+        return { 
+            pk: pk.PK, 
+            latitud: pk.Latitud, 
+            longitud: pk.Longitud, 
+            distancia: distancia,
+            linea: pk.Linea // Agregar la información de la línea
+        };
     });
 
     puntosCercanos.sort((a, b) => a.distancia - b.distancia);
@@ -126,7 +132,7 @@ function mostrarPKMasCercano(pk) {
     const pkFormateado = formatearPK(pk.pk);
 
     pkElement.innerHTML = `
-        <div style="font-size: 1em; margin-bottom: 3px;">${pkFormateado}</div>
+        <div style="font-size: 1em; margin-bottom: 3px;">Línea: ${pk.linea} - ${pkFormateado}</div>
         <div style="font-size: 0.7em; color: #555;">(${pk.ladoVia})</div>
     `;
 }
@@ -160,7 +166,7 @@ function formatearPK(pk) {
 async function cargarTrazado() {
     try {
         // Carga el archivo JSON
-        const respuesta = await fetch('./doc/PKCoordenas0.json');
+        const respuesta = await fetch('./doc/PKCoordenas2.json');
         const data = await respuesta.json();
 
         // Extrae las coordenadas del archivo
@@ -169,7 +175,7 @@ async function cargarTrazado() {
         // Dibuja el trazado en el mapa
         dibujarTrazado(trazado);
     } catch (error) {
-        console.error('Error al cargar el archivo PKCoordenas.json:', error);
+        console.error('Error al cargar el archivo PKCoordenas2.json:', error);
     }
 }
 
