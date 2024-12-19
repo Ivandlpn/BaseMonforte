@@ -106,7 +106,7 @@ header img {
 
 #calculoPK .tarjeta {
   display: inline-block;
-  background-color: #3600FA; 
+  background-color: #3600FA; /* Azul cartelón */
   border: 2px solid #003f5c;
   border-radius: 10px;
   padding: 10px;
@@ -125,7 +125,7 @@ header img {
 
 #calculoPK .tarjeta p {
   font-size: 0.8em; /* Tamaño más pequeño */
-    color: #555;      /* Color gris tenue */
+    color: #ffffff;      /* Color gris tenue */
 }
 
 .pk-grande {
