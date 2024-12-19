@@ -132,11 +132,10 @@ function mostrarPKMasCercano(pk) {
     const pkFormateado = formatearPK(pk.pk); // Formatea el PK
 
     pkElement.innerHTML = `
-        <div style="font-size: 1em; margin-bottom: 3px;">${pkFormateado} (L${pk.linea})</div>
-        <div style="font-size: 0.7em; color: #555;">-Vía ${pk.ladoVia}-</div>
+        <div style="font-size: 1em; margin-bottom: 3px;">${pkFormateado}</div>
+        <div style="font-size: 0.7em; color: #555;">-Vía ${pk.ladoVia}- (L${pk.linea})</div>
     `;
 }
-
 
 
 
