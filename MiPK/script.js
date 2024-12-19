@@ -219,23 +219,22 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
             video.style.objectFit = "cover";
             contenedor.appendChild(video);
 
-            const botonFoto = document.createElement("button");
-            botonFoto.textContent = "Hacer Foto";
-            botonFoto.style.position = "absolute";
-            botonFoto.style.bottom = "10px";
-            botonFoto.style.left = "50%";
-            botonFoto.style.transform = "translateX(-50%)";
-            botonFoto.style.padding = "10px 20px";
-            botonFoto.style.fontSize = "16px";
-            botonFoto.style.color = "white";
-            botonFoto.style.backgroundColor = "#007aff";
-            botonFoto.style.border = "none";
-            botonFoto.style.borderRadius = "5px";
-            botonFoto.style.cursor = "pointer";
-            botonFoto.style.zIndex = "1001";
-            contenedor.appendChild(botonFoto);
+            // Crear una imagen en lugar de un botón
+const imagenCamara = document.createElement("img");
+imagenCamara.src = "img/botoncamara.png"; // Ruta de la imagen
+imagenCamara.alt = "Hacer Foto";
+imagenCamara.style.position = "absolute";
+imagenCamara.style.bottom = "10px";
+imagenCamara.style.left = "50%";
+imagenCamara.style.transform = "translateX(-50%)";
+imagenCamara.style.cursor = "pointer";
+imagenCamara.style.width = "60px"; // Ajusta el tamaño según necesites
+imagenCamara.style.height = "60px"; // Ajusta el tamaño según necesites
+imagenCamara.style.zIndex = "1001";
+contenedor.appendChild(imagenCamara);
 
-            botonFoto.addEventListener("click", () => {
+// Evento click para la imagen
+imagenCamara.addEventListener("click", () => {
                 const canvas = document.createElement("canvas");
                 canvas.width = video.videoWidth;
                 canvas.height = video.videoHeight;
