@@ -57,6 +57,10 @@ function inicializarMapa(lat, lon) {
     mapa.on('move', () => {
         centradoAutomaticamente = false;
     });
+
+    mapa.on('zoomstart', () => {
+        centradoAutomaticamente = false;
+    });
 }
 
 function actualizarPosicionUsuario(lat, lon) {
