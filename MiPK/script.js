@@ -202,7 +202,7 @@ function dibujarPuntos(puntos) {
     puntos.forEach(punto => {
         L.circleMarker(punto, {
             color: 'blue',
-            radius: 5,
+            radius: 2,
             weight: 1,
             opacity: 0.8,
             fillOpacity: 0.8
