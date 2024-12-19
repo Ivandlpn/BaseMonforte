@@ -71,19 +71,11 @@ function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente) {
     const { latitud: latActual, longitud: lonActual } = pkActual;
     const { latitud: latSiguiente, longitud: lonSiguiente } = pkSiguiente;
 
-    // Vector del eje central (de PK actual a siguiente)
-    const vectorEjeX = lonSiguiente - lonActual;
-    const vectorEjeY = latSiguiente - latActual;
+    // Calcular la latitud promedio de la vía entre el PK actual y el siguiente
+    const latPromedioVia = (latActual + latSiguiente) / 2;
 
-    // Vector del usuario al PK actual
-    const vectorUsuarioX = lonUsuario - lonActual;
-    const vectorUsuarioY = latUsuario - latActual;
-
-    // Producto cruzado para determinar el lado
-    const productoCruzado = vectorEjeX * vectorUsuarioY - vectorEjeY * vectorUsuarioX;
-
-    // Si el producto cruzado es positivo, está a la izquierda; si es negativo, a la derecha
-    return productoCruzado > 0 ? "Vía 1" : "Vía 2";
+    // Comparar la latitud del usuario con la latitud promedio de la vía
+    return latUsuario > latPromedioVia ? "Vía 1" : "Vía 2";
 }
 
 
