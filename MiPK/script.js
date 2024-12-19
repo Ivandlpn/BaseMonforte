@@ -133,7 +133,7 @@ function mostrarPKMasCercano(pk) {
 
     pkElement.innerHTML = `
         <div style="font-size: 1em; margin-bottom: 3px;">${pkFormateado}</div>
-        <div style="font-size: 0.7em;">-${pk.ladoVia}- (L${pk.linea})</div>
+        <div style="font-size: 0.6em;">-${pk.ladoVia}- (L${pk.linea})</div>
     `;
 }
 
