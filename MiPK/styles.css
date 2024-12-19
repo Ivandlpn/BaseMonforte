@@ -97,7 +97,7 @@ header img {
   height: 65px; /* Tamaño del icono */
   background: url('img/camara.png') no-repeat center center;
   background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
-  margin-left: 5px;
+  margin-left: 10px;
   position: absolute;
   left: 0;
 }
@@ -107,7 +107,7 @@ header img {
   height: 65px; /* Tamaño del icono */
   background: url('img/mas.png') no-repeat center center;
   background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
-  margin-left: 75px; /* Ajusta la posición a la derecha del icono de la cámara */
+  margin-left: 80px; /* Ajusta la posición a la derecha del icono de la cámara */
   position: absolute;
   left: 0;
 }
