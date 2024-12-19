@@ -183,7 +183,7 @@ function dibujarTrazado(trazado) {
     }).addTo(mapa);
 
     // Ajustar el mapa para que muestre todo el trazado
-    mapa.fitBounds(lineaFerrocarril.getBounds());
+    //mapa.fitBounds(lineaFerrocarril.getBounds());
 }
 
 
