@@ -81,44 +81,39 @@ header img {
 
 /* Sección de la tarjeta con el icono */
 #calculoPK {
-    display: flex;
-    justify-content: space-between; /* Espacio entre las tarjetas */
-    text-align: center;
-    gap: 10px; /* Espacio entre las tarjetas */
+  display: flex;
+  align-items: center;
+  /* justify-content: center;*/
+  padding: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  justify-content: flex-end; /* Alinea el contenido a la derecha */
+  text-align: center;
 }
 
-#tarjetaBotones {
-    display: flex;
-    flex-direction: column; /* Alinea los botones en columna */
-    justify-content: center;
-    align-items: center;
-    width: 65px; /* Ancho de la tarjeta para que encaje con los iconos */
-}
 
-#calculoPK .tarjeta,
-#tarjetaBotones {
-    background-color: #3600FA; /* Azul cartelón */
-    border: 2px solid #003f5c;
-    border-radius: 10px;
-    padding: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-}
-
-#iconoCamara,
-#iconoMas {
-    width: 65px; /* Tamaño del icono */
-    height: 65px; /* Tamaño del icono */
-    background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
-    margin: 5px;
-}
 
 #iconoCamara {
-    background: url('img/camara.png') no-repeat center center;
+  width: 65px; /* Cambia a un tamaño mayor */
+  height: 65px; /* Cambia a un tamaño mayor */
+  background: url('img/camara.png') no-repeat center center;
+  background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
+  margin-left: 5px;
+  position: absolute;
+  left: 0;
 }
 
-#iconoMas {
-    background: url('img/mas.png') no-repeat center center;
+
+#calculoPK .tarjeta {
+  display: inline-block;
+  background-color: #3600FA; /* Azul cartelón */
+  border: 2px solid #003f5c;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 50%;
+  max-width: 400px;
+  margin-right: 5px;
 }
 
 #calculoPK .tarjeta h2 {

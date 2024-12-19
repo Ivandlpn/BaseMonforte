@@ -167,61 +167,24 @@ async function cargarTrazado() {
         // Extrae las coordenadas del archivo
         const trazado = data.map((punto) => [punto.Latitud, punto.Longitud]);
 
-        // Filtra los puntos para dibujar cada 50 metros
-        const puntosFiltrados = filtrarPuntosCada50Metros(trazado);
-
-        // Dibuja los puntos en el mapa
-        dibujarPuntos(puntosFiltrados);
+        // Dibuja el trazado en el mapa
+        dibujarTrazado(trazado);
     } catch (error) {
         console.error('Error al cargar el archivo PKCoordenas2.json:', error);
     }
 }
 
-
-function filtrarPuntosCada50Metros(trazado) {
-    const puntosFiltrados = [];
-    let ultimaPosicion = trazado[0];
-    puntosFiltrados.push(ultimaPosicion);
-
-    for (let i = 1; i < trazado.length; i++) {
-        const distancia = calcularDistancia(
-            ultimaPosicion[0], ultimaPosicion[1],
-            trazado[i][0], trazado[i][1]
-        );
-        if (distancia >= 100) {
-            puntosFiltrados.push(trazado[i]);
-            ultimaPosicion = trazado[i];
-        }
-    }
-
-    return puntosFiltrados;
-}
-
-
-function dibujarPuntos(puntos) {
-    puntos.forEach(punto => {
-        L.circleMarker(punto, {
-            color: 'blue',
-            radius: 2,
-            weight: 1,
-            opacity: 0.8,
-            fillOpacity: 0.8
-        }).addTo(mapa);
-    });
-}
-
-
-//function dibujarTrazado(trazado) {
-  //  const lineaFerrocarril = L.polyline(trazado, {
-    //    color: 'blue',         // Color de la línea
-      //  weight: 4,             // Grosor de la línea
-        //opacity: 0.8,          // Transparencia
-        //smoothFactor: 1        // Suavizado de la línea
-    //}).addTo(mapa);
+function dibujarTrazado(trazado) {
+    const lineaFerrocarril = L.polyline(trazado, {
+        color: 'blue',         // Color de la línea
+        weight: 4,             // Grosor de la línea
+        opacity: 0.8,          // Transparencia
+        smoothFactor: 1        // Suavizado de la línea
+    }).addTo(mapa);
 
     // Ajustar el mapa para que muestre todo el trazado
     //mapa.fitBounds(lineaFerrocarril.getBounds());
-//}
+}
 
 
 
