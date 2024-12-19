@@ -188,7 +188,7 @@ function filtrarPuntosCada50Metros(trazado) {
             ultimaPosicion[0], ultimaPosicion[1],
             trazado[i][0], trazado[i][1]
         );
-        if (distancia >= 50) {
+        if (distancia >= 100) {
             puntosFiltrados.push(trazado[i]);
             ultimaPosicion = trazado[i];
         }
