@@ -14,7 +14,7 @@ navigator.geolocation.watchPosition((position) => {
         actualizarPosicionUsuario(lat, lon);
     }
 
-    fetch("./doc/PKCoordenas2.json")
+    fetch("./doc/L42.json")
         .then(response => response.json())
         .then(data => {
             window.pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
@@ -161,7 +161,7 @@ function formatearPK(pk) {
 async function cargarTrazado() {
     try {
         // Carga el archivo JSON
-        const respuesta = await fetch('./doc/PKCoordenas2.json');
+        const respuesta = await fetch('./doc/L42.json');
         const data = await respuesta.json();
 
         // Extrae las coordenadas del archivo
