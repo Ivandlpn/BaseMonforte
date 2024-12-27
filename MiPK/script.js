@@ -1,8 +1,6 @@
 let mapa, marcadorActual, marcadorPK, iconoUsuario;
 let centradoAutomaticamente = true;
 
-const archivosJSON = ['./doc/L48.json']; // Añade aquí todos los archivos JSON que necesites
-
 // Rastrear la posición continuamente
 navigator.geolocation.watchPosition((position) => {
     const lat = position.coords.latitude;
@@ -16,34 +14,21 @@ navigator.geolocation.watchPosition((position) => {
         actualizarPosicionUsuario(lat, lon);
     }
 
-    cargarDatosJSON(archivosJSON).then(data => {
-        window.pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
-        mostrarPKMasCercano(window.pkMasCercano);
-        actualizarPosicionPK(window.pkMasCercano);
-        cargarTrazado(data);
-    }).catch(error => console.error('Error al cargar los datos de PK:', error));
+    fetch("./doc/PKCoordenas2.json")
+        .then(response => response.json())
+        .then(data => {
+            window.pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
+            mostrarPKMasCercano(window.pkMasCercano);
+            actualizarPosicionPK(window.pkMasCercano);
+            cargarTrazado();
+        })
+        .catch(error => console.error('Error al cargar los datos de PK:', error));
 }, 
 (error) => console.error('Error al obtener ubicación:', error), {
     enableHighAccuracy: true,
     maximumAge: 0,
     timeout: 10000
 });
-
-async function cargarDatosJSON(archivos) {
-    const datosCombinados = [];
-
-    for (const archivo of archivos) {
-        try {
-            const respuesta = await fetch(archivo);
-            const data = await respuesta.json();
-            datosCombinados.push(...data);
-        } catch (error) {
-            console.error(`Error al cargar ${archivo}:`, error);
-        }
-    }
-
-    return datosCombinados;
-}
 
 function inicializarMapa(lat, lon) {
     mapa = L.map('map', {
@@ -176,7 +161,7 @@ function formatearPK(pk) {
 async function cargarTrazado() {
     try {
         // Carga el archivo JSON
-        const respuesta = await fetch('./doc/L46.json');
+        const respuesta = await fetch('./doc/PKCoordenas2.json');
         const data = await respuesta.json();
 
         // Extrae las coordenadas del archivo
