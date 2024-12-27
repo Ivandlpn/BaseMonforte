@@ -1,4 +1,5 @@
 const archivosJSON = [
+    './doc/L40A.json',
     './doc/L40B.json',
     './doc/L40C.json',
     './doc/L42.json'    
