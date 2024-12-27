@@ -1,0 +1,176 @@
+tive/* Estilos globales */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.contenedor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+header {
+  text-align: center;
+  padding: 0;
+  flex: 0 0 auto;
+  height: 100px;
+}
+
+header img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.linea-gradiente {
+    position: relative; /* Siempre visible en la ventana */
+   // top: 100px; /* Ajusta según la altura de la cabecera */
+    left: 0;
+    width: 100%;
+    height: 4px; /* Altura de la línea */
+    background: linear-gradient(to right, blue, red); /* Gradiente */
+    z-index: 1000; /* Asegura que esté por encima del mapa */
+}
+
+/* Estilos para el contenedor del mapa */
+#map-container {
+    width: 100%; /* Establece un ancho fijo o porcentual */
+    position: relative;
+    margin: 0 auto; /* Centra el contenedor */
+  z-index: 500
+}
+
+#map {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+#actualizarUbicacion {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  cursor: pointer;
+  width: 85px; /* Ajusta según el tamaño deseado */
+  height: 40px; /* Ajusta para mantener la proporción */
+  background: url('img/centrar.png') no-repeat center center;
+  background-size: contain;
+  border: none;
+  padding: 0;
+  font-size: 0; /* Oculta cualquier texto */
+}
+
+#actualizarUbicacion:hover {
+  background-color: #005f99;
+}
+
+#actualizarUbicacion:active,
+#actualizarUbicacion:focus {
+  font-size: 1em; /* Asegura que no cambie el tamaño */
+  outline: none; /* Opcional: elimina el contorno */
+  transform: translateX(-50%); /* Mantén la misma posición */
+ 
+}
+
+
+/* Sección de la tarjeta con el icono */
+#calculoPK {
+  display: flex;
+  align-items: center;
+  /* justify-content: center;*/
+  padding: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  justify-content: flex-end; /* Alinea el contenido a la derecha */
+  text-align: center;
+}
+
+
+#iconoCamara {
+  width: 65px; /* Tamaño del icono */
+  height: 65px; /* Tamaño del icono */
+  background: url('img/camara.png') no-repeat center center;
+  background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
+  margin-left: 10px;
+  position: absolute;
+  left: 0;
+}
+
+#iconoMas {
+  width: 65px; /* Tamaño del icono */
+  height: 65px; /* Tamaño del icono */
+  background: url('img/mas.png') no-repeat center center;
+  background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
+  margin-left: 80px; /* Ajusta la posición a la derecha del icono de la cámara */
+  position: absolute;
+  left: 0;
+}
+
+
+
+
+#calculoPK .tarjeta {
+  display: inline-block;
+  background-color: #3600FA; /* Azul cartelón */
+  border: 2px solid #003f5c;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 50%;
+  max-width: 400px;
+  margin-right: 5px;
+}
+
+#calculoPK .tarjeta h2 {
+  margin: 0;
+  font-size: 2.5em;
+  color: #ffffff;
+  text-align: center;
+}
+
+#calculoPK .tarjeta p {
+  font-size: 0.8em; /* Tamaño más pequeño */
+    color: #ffffff;      /* Color gris tenue */
+}
+
+.pk-grande {
+    font-size: 1em; /* Tamaño más grande */
+    color: #011145;  /* Azul oscuro */
+}
+
+.via-pequena {
+    font-size: 0.8em; /* Tamaño más pequeño */
+    color: #ffffff;      /* Color gris tenue */
+}
+
+footer {
+  background-color: #ffffff;
+  padding: 10px 0;
+  text-align: center;
+  flex: 0 0 auto;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+footer img {
+  max-width: 80px;
+  height: auto;
+}
+
+
+
+  #actualizarUbicacion {
+    font-size: 0.9em;
+  }
+
+  header img {
+    height: auto;
+  }
+}
+
+
