@@ -2,7 +2,7 @@ const archivosJSON = [
     './doc/L40A.json',
     './doc/L40B.json',
     './doc/L40C.json',
-    './doc/L42.json'    
+    './doc/L42.json',   
     './doc/L46.json',
     './doc/L48.json' // Agrega más rutas según sea necesario
 ];
