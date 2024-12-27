@@ -2,9 +2,9 @@ let mapa, marcadorActual, marcadorPK, iconoUsuario;
 let centradoAutomaticamente = true;
 
 const archivosJSON = [
-    './doc/PKCoordenas1.json',
-    './doc/PKCoordenas2.json',
-    './doc/PKCoordenas3.json' // Agrega más rutas según sea necesario
+    './doc/L42.json',
+    './doc/L46.json',
+    './doc/L48.json' // Agrega más rutas según sea necesario
 ];
 
 let datosCombinados = [];
