@@ -1,35 +1,37 @@
 let mapa, marcadorActual, marcadorPK, iconoUsuario;
 let centradoAutomaticamente = true;
 
+const archivosJSON = [
+    './doc/PKCoordenas1.json',
+    './doc/PKCoordenas2.json',
+    './doc/PKCoordenas3.json' // Agrega más rutas según sea necesario
+];
+
+let datosCombinados = [];
+
 // Rastrear la posición continuamente
-navigator.geolocation.watchPosition((position) => {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
+navigator.geolocation.watchPosition(
+    async (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
 
-    if (!mapa) {
-        inicializarMapa(lat, lon);
-    }
+        if (!mapa) {
+            inicializarMapa(lat, lon);
+        }
 
-    if (centradoAutomaticamente) {
-        actualizarPosicionUsuario(lat, lon);
-    }
+        if (centradoAutomaticamente) {
+            actualizarPosicionUsuario(lat, lon);
+        }
 
-    fetch("./doc/PKCoordenas2.json")
-        .then(response => response.json())
-        .then(data => {
-            window.pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
-            mostrarPKMasCercano(window.pkMasCercano);
-            actualizarPosicionPK(window.pkMasCercano);
-            cargarTrazado();
-        })
-        .catch(error => console.error('Error al cargar los datos de PK:', error));
-}, 
-(error) => console.error('Error al obtener ubicación:', error), {
-    enableHighAccuracy: true,
-    maximumAge: 0,
-    timeout: 10000
-});
+        try {
+            // Carga y combina datos de todos los archivos JSON
+            datosCombinados = await cargarDatosDeArchivos(archivosJSON);
 
+            // Calcular el PK más cercano
+            const pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
+            mostrarPKMasCercano(pkMasCercano);
+            actualizarPosicionPK(pkMasCercano);
+            
 function inicializarMapa(lat, lon) {
     mapa = L.map('map', {
         center: [lat, lon],
@@ -158,22 +160,19 @@ function formatearPK(pk) {
 
 
 
-async function cargarTrazado() {
+// Dibujar trazado con datos combinados
+function cargarTrazado(datos) {
     try {
-        // Carga el archivo JSON
-        const respuesta = await fetch('./doc/PKCoordenas2.json');
-        const data = await respuesta.json();
+        // Extraer las coordenadas de todos los PK
+        const trazado = datos.map((punto) => [punto.Latitud, punto.Longitud]);
 
-        // Extrae las coordenadas del archivo
-        const trazado = data.map((punto) => [punto.Latitud, punto.Longitud]);
-
-        // Filtra los puntos para dibujar cada 50 metros
+        // Filtrar los puntos para dibujar cada 50 metros
         const puntosFiltrados = filtrarPuntosCada50Metros(trazado);
 
-        // Dibuja los puntos en el mapa
+        // Dibujar los puntos en el mapa
         dibujarPuntos(puntosFiltrados);
     } catch (error) {
-        console.error('Error al cargar el archivo PKCoordenas2.json:', error);
+        console.error('Error al dibujar el trazado:', error);
     }
 }
 
