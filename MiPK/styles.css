@@ -92,16 +92,27 @@ header img {
 }
 
 
-
 #iconoCamara {
-  width: 65px; /* Cambia a un tamaño mayor */
-  height: 65px; /* Cambia a un tamaño mayor */
+  width: 65px; /* Tamaño del icono */
+  height: 65px; /* Tamaño del icono */
   background: url('img/camara.png') no-repeat center center;
   background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
-  margin-left: 5px;
+  margin-left: 10px;
   position: absolute;
   left: 0;
 }
+
+#iconoMas {
+  width: 65px; /* Tamaño del icono */
+  height: 65px; /* Tamaño del icono */
+  background: url('img/mas.png') no-repeat center center;
+  background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
+  margin-left: 80px; /* Ajusta la posición a la derecha del icono de la cámara */
+  position: absolute;
+  left: 0;
+}
+
+
 
 
 #calculoPK .tarjeta {
