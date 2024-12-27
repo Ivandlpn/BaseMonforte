@@ -1,7 +1,7 @@
 let mapa, marcadorActual, marcadorPK, iconoUsuario;
 let centradoAutomaticamente = true;
 
-const archivosJSON = ['./doc/L46.json', './doc/L48.json','./doc/L42.json']; // Añade aquí todos los archivos JSON que necesites
+const archivosJSON = ['./doc/L46.json', './doc/L48.json']; // Añade aquí todos los archivos JSON que necesites
 
 // Rastrear la posición continuamente
 navigator.geolocation.watchPosition((position) => {
