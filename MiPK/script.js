@@ -204,32 +204,43 @@ function formatearPK(pk) {
 
 async function cargarTrazado() {
     try {
-        // Carga el archivo JSON
-        const respuesta = await fetch('./doc/PKCoordenas2.json');
-        const data = await respuesta.json();
+        // Rutas de todos los archivos JSON
+        const rutasArchivos = [
+            "./doc/L40A.json",
+            "./doc/L40B.json",
+            "./doc/L40C.json",
+            "./doc/L42A.json",
+            "./doc/L42B.json",
+            "./doc/L46.json",
+            "./doc/L48.json" // Añade más rutas si es necesario
+        ];
 
+        // Cargar y combinar datos de todos los archivos
+        const datosCombinados = await cargarArchivosJSON(rutasArchivos);
+
+        // Extrae las coordenadas de todos los puntos
         const puntosFiltrados = [];
-let distanciaAcumulada = 0;
+        let distanciaAcumulada = 0;
 
-for (let i = 1; i < data.length; i++) {
-    const puntoPrevio = data[i - 1];
-    const puntoActual = data[i];
-    const distancia = calcularDistancia(
-        puntoPrevio.Latitud, puntoPrevio.Longitud,
-        puntoActual.Latitud, puntoActual.Longitud
-    );
+        for (let i = 1; i < datosCombinados.length; i++) {
+            const puntoPrevio = datosCombinados[i - 1];
+            const puntoActual = datosCombinados[i];
+            const distancia = calcularDistancia(
+                puntoPrevio.Latitud, puntoPrevio.Longitud,
+                puntoActual.Latitud, puntoActual.Longitud
+            );
 
-    distanciaAcumulada += distancia;
-    if (distanciaAcumulada >= 100) {
-        puntosFiltrados.push([puntoActual.Latitud, puntoActual.Longitud]);
-        distanciaAcumulada = 0;
-    }
-}
+            distanciaAcumulada += distancia;
+            if (distanciaAcumulada >= 100) {
+                puntosFiltrados.push([puntoActual.Latitud, puntoActual.Longitud]);
+                distanciaAcumulada = 0;
+            }
+        }
 
-dibujarPuntos(puntosFiltrados);
-
+        // Dibujar los puntos en el mapa
+        dibujarPuntos(puntosFiltrados);
     } catch (error) {
-        console.error('Error al cargar el archivo PKCoordenas2.json:', error);
+        console.error("Error al cargar el trazado desde múltiples archivos:", error);
     }
 }
 
