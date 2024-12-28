@@ -236,7 +236,7 @@ dibujarPuntos(puntosFiltrados);
 function dibujarPuntos(puntos) {
     puntos.forEach(([lat, lon]) => {
         L.circleMarker([lat, lon], {
-            radius: 5,          // Tamaño del punto
+            radius: 2,          // Tamaño del punto
             color: 'blue',      // Color del borde
             fillColor: 'blue',  // Color de relleno
             fillOpacity: 1      // Opacidad completa
