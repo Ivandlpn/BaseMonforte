@@ -164,27 +164,42 @@ async function cargarTrazado() {
         const respuesta = await fetch('./doc/PKCoordenas2.json');
         const data = await respuesta.json();
 
-        // Extrae las coordenadas del archivo
-        const trazado = data.map((punto) => [punto.Latitud, punto.Longitud]);
+        const puntosFiltrados = [];
+let distanciaAcumulada = 0;
 
-        // Dibuja el trazado en el mapa
-        dibujarTrazado(trazado);
+for (let i = 1; i < data.length; i++) {
+    const puntoPrevio = data[i - 1];
+    const puntoActual = data[i];
+    const distancia = calcularDistancia(
+        puntoPrevio.Latitud, puntoPrevio.Longitud,
+        puntoActual.Latitud, puntoActual.Longitud
+    );
+
+    distanciaAcumulada += distancia;
+    if (distanciaAcumulada >= 100) {
+        puntosFiltrados.push([puntoActual.Latitud, puntoActual.Longitud]);
+        distanciaAcumulada = 0;
+    }
+}
+
+dibujarPuntos(puntosFiltrados);
+
     } catch (error) {
         console.error('Error al cargar el archivo PKCoordenas2.json:', error);
     }
 }
 
-function dibujarTrazado(trazado) {
-    const lineaFerrocarril = L.polyline(trazado, {
-        color: 'blue',         // Color de la línea
-        weight: 4,             // Grosor de la línea
-        opacity: 0.8,          // Transparencia
-        smoothFactor: 1        // Suavizado de la línea
-    }).addTo(mapa);
-
-    // Ajustar el mapa para que muestre todo el trazado
-    //mapa.fitBounds(lineaFerrocarril.getBounds());
+function dibujarPuntos(puntos) {
+    puntos.forEach(([lat, lon]) => {
+        L.circleMarker([lat, lon], {
+            radius: 5,          // Tamaño del punto
+            color: 'blue',      // Color del borde
+            fillColor: 'blue',  // Color de relleno
+            fillOpacity: 1      // Opacidad completa
+        }).addTo(mapa);
+    });
 }
+
 
 
 
