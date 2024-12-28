@@ -46,27 +46,6 @@ cargarArchivosJSON(rutasArchivos)
         window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
         mostrarPKMasCercano(window.pkMasCercano);
         actualizarPosicionPK(window.pkMasCercano);
-
-        // Dibujar los puntos en el mapa
-        const puntosFiltrados = [];
-        let distanciaAcumulada = 0;
-
-        for (let i = 1; i < datosCombinados.length; i++) {
-            const puntoPrevio = datosCombinados[i - 1];
-            const puntoActual = datosCombinados[i];
-            const distancia = calcularDistancia(
-                puntoPrevio.Latitud, puntoPrevio.Longitud,
-                puntoActual.Latitud, puntoActual.Longitud
-            );
-
-            distanciaAcumulada += distancia;
-            if (distanciaAcumulada >= 100) {
-                puntosFiltrados.push([puntoActual.Latitud, puntoActual.Longitud]);
-                distanciaAcumulada = 0;
-            }
-        }
-
-     
     })
     .catch(error => console.error('Error al combinar datos de los archivos:', error));
 
