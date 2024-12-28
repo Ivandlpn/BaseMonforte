@@ -31,9 +31,10 @@ navigator.geolocation.watchPosition((position) => {
 
 
     const rutasArchivos = [
-    "./doc/PKCoordenas1.json",
-    "./doc/PKCoordenas2.json",
-    "./doc/PKCoordenas3.json" // Añade más rutas según sea necesario
+    "./doc/L42AB.json",
+        "./doc/L42B.json",
+        "./doc/L46.json",
+        "./doc/L48.json" // Añade más rutas según sea necesario
 ];
 
 cargarArchivosJSON(rutasArchivos)
