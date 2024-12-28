@@ -1,49 +1,34 @@
-const archivosJSON = [
-    './doc/L42.json',
-    './doc/L46.json',
-    './doc/L48.json' // Agrega más rutas según sea necesario
-];
-
 let mapa, marcadorActual, marcadorPK, iconoUsuario;
 let centradoAutomaticamente = true;
-let datosCombinados = [];
 
 // Rastrear la posición continuamente
-navigator.geolocation.watchPosition(
-    async (position) => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
+navigator.geolocation.watchPosition((position) => {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
 
-        if (!mapa) {
-            inicializarMapa(lat, lon);
-        }
-
-        if (centradoAutomaticamente) {
-            actualizarPosicionUsuario(lat, lon);
-        }
-
-        try {
-            // Carga y combina datos de todos los archivos JSON
-            datosCombinados = await cargarDatosDeArchivos(archivosJSON);
-
-            // Calcular el PK más cercano
-            const pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
-            mostrarPKMasCercano(pkMasCercano);
-            actualizarPosicionPK(pkMasCercano);
-
-            // Dibujar el trazado
-            cargarTrazado(datosCombinados);
-        } catch (error) {
-            console.error('Error al cargar los datos de PK:', error);
-        }
-    },
-    (error) => console.error('Error al obtener ubicación:', error),
-    {
-        enableHighAccuracy: true,
-        maximumAge: 0,
-        timeout: 10000,
+    if (!mapa) {
+        inicializarMapa(lat, lon);
     }
-);
+
+    if (centradoAutomaticamente) {
+        actualizarPosicionUsuario(lat, lon);
+    }
+
+    fetch("./doc/PKCoordenas2.json")
+        .then(response => response.json())
+        .then(data => {
+            window.pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
+            mostrarPKMasCercano(window.pkMasCercano);
+            actualizarPosicionPK(window.pkMasCercano);
+            cargarTrazado();
+        })
+        .catch(error => console.error('Error al cargar los datos de PK:', error));
+}, 
+(error) => console.error('Error al obtener ubicación:', error), {
+    enableHighAccuracy: true,
+    maximumAge: 0,
+    timeout: 10000
+});
 
 function inicializarMapa(lat, lon) {
     mapa = L.map('map', {
@@ -97,12 +82,7 @@ function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente) {
     return latUsuario > latPromedioVia ? "Vía 1" : "Vía 2";
 }
 
-// Función para cargar y combinar datos de múltiples archivos JSON
-async function cargarDatosDeArchivos(listaDeArchivos) {
-    const promesas = listaDeArchivos.map((archivo) => fetch(archivo).then((res) => res.json()));
-    const resultados = await Promise.all(promesas);
-    return resultados.flat(); // Combina los datos de todos los archivos en un solo array
-}
+
 
 function calcularPKMasCercano(lat, lon, data) {
     let puntosCercanos = data.map(pk => {
