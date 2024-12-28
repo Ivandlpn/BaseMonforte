@@ -14,15 +14,58 @@ navigator.geolocation.watchPosition((position) => {
         actualizarPosicionUsuario(lat, lon);
     }
 
-    fetch("./doc/PKCoordenas2.json")
-        .then(response => response.json())
-        .then(data => {
-            window.pkMasCercano = calcularPKMasCercano(lat, lon, data)[0];
-            mostrarPKMasCercano(window.pkMasCercano);
-            actualizarPosicionPK(window.pkMasCercano);
-            cargarTrazado();
-        })
-        .catch(error => console.error('Error al cargar los datos de PK:', error));
+    async function cargarArchivosJSON(rutas) {
+    const todasPromesas = rutas.map(ruta =>
+        fetch(ruta)
+            .then(response => response.json())
+            .catch(error => {
+                console.error(`Error al cargar ${ruta}:`, error);
+                return []; // Devuelve un array vacío si falla
+            })
+    );
+
+    const datosCargados = await Promise.all(todasPromesas);
+    // Combina todos los arrays de datos en uno solo
+    return datosCargados.flat();
+}
+
+
+    const rutasArchivos = [
+    "./doc/PKCoordenas1.json",
+    "./doc/PKCoordenas2.json",
+    "./doc/PKCoordenas3.json" // Añade más rutas según sea necesario
+];
+
+cargarArchivosJSON(rutasArchivos)
+    .then(datosCombinados => {
+        // Calcular el PK más cercano con todos los datos combinados
+        window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
+        mostrarPKMasCercano(window.pkMasCercano);
+        actualizarPosicionPK(window.pkMasCercano);
+
+        // Dibujar los puntos en el mapa
+        const puntosFiltrados = [];
+        let distanciaAcumulada = 0;
+
+        for (let i = 1; i < datosCombinados.length; i++) {
+            const puntoPrevio = datosCombinados[i - 1];
+            const puntoActual = datosCombinados[i];
+            const distancia = calcularDistancia(
+                puntoPrevio.Latitud, puntoPrevio.Longitud,
+                puntoActual.Latitud, puntoActual.Longitud
+            );
+
+            distanciaAcumulada += distancia;
+            if (distanciaAcumulada >= 100) {
+                puntosFiltrados.push([puntoActual.Latitud, puntoActual.Longitud]);
+                distanciaAcumulada = 0;
+            }
+        }
+
+        dibujarPuntos(puntosFiltrados);
+    })
+    .catch(error => console.error('Error al combinar datos de los archivos:', error));
+
 }, 
 (error) => console.error('Error al obtener ubicación:', error), {
     enableHighAccuracy: true,
