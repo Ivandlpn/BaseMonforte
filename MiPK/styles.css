@@ -111,9 +111,13 @@ header img {
   border-radius: 10px;
   padding: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 250px; /* Tamaño fijo */
+  height: 100px; /* Tamaño fijo */
   width: 50%;
   max-width: 400px;
   margin-right: 5px;
+  text-align: center; /* Centrar el contenido */
+  overflow: hidden; /* Manejar desbordamiento de contenido */
 }
 
 #calculoPK .tarjeta h2 {
