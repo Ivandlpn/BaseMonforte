@@ -108,7 +108,13 @@ function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente) {
     return latUsuario > latPromedioVia ? "Vía 1" : "Vía 2";
 }
 
-
+// Definir el nuevo icono para el PK más cercano
+const iconoPK = L.icon({
+    iconUrl: 'img/MiPKubi.png', // Ruta de la imagen del icono
+    iconSize: [40, 40], // Tamaño del icono (ajusta según sea necesario)
+    iconAnchor: [20, 40], // Punto del icono que apunta a la ubicación
+    popupAnchor: [0, -40] // Punto desde donde se abrirá el popup
+});
 
 function calcularPKMasCercano(lat, lon, data) {
     let puntosCercanos = data.map(pk => {
@@ -163,11 +169,12 @@ function mostrarPKMasCercano(pk) {
 
 function actualizarPosicionPK(pk) {
     if (!marcadorPK) {
-        marcadorPK = L.marker([pk.latitud, pk.longitud]).addTo(mapa)
+        marcadorPK = L.marker([pk.latitud, pk.longitud], { icon: iconoPK }).addTo(mapa)
             .bindPopup('PK cercano')
             .openPopup();
     } else {
         marcadorPK.setLatLng([pk.latitud, pk.longitud]);
+        marcadorPK.setIcon(iconoPK); // Asegura que el icono se actualice si ya existe el marcador
     }
 }
 
