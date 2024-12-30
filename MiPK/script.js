@@ -31,10 +31,10 @@ navigator.geolocation.watchPosition((position) => {
 
 
     const rutasArchivos = [
-            "./doc/L40A.json",
-            "./doc/L40B.json",
-            "./doc/L40C.json",
-            "./doc/L42A.json",
+            "./doc/L40Ar.json",
+            "./doc/L40Br.json",
+            "./doc/L40Cr.json",
+            "./doc/L42Ar.json",
             "./doc/L42B.json",
             "./doc/L46.json",
             "./doc/L48.json" // Añade más rutas según sea necesario
