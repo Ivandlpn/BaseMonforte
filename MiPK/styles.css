@@ -140,15 +140,15 @@ header img {
 
 footer {
   background-color: #ffffff;
-  padding: 10px 0;
+  padding: 0; /* Elimina el padding para que la imagen ocupe todo el espacio */
   text-align: center;
   flex: 0 0 auto;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
 footer img {
-  max-width: 80px;
-  height: auto;
+  width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
+  height: auto; /* Mantiene la proporción de la imagen */
 }
 
 
