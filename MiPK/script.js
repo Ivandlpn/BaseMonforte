@@ -111,7 +111,7 @@ function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente) {
 // Definir el nuevo icono para el PK más cercano
 const iconoPK = L.icon({
     iconUrl: 'img/MiPKubi.png', // Ruta de la imagen del icono
-    iconSize: [40, 40], // Tamaño del icono (ajusta según sea necesario)
+    iconSize: [40, 30], // Tamaño del icono (ajusta según sea necesario)
     iconAnchor: [20, 40], // Punto del icono que apunta a la ubicación
     popupAnchor: [0, -40] // Punto desde donde se abrirá el popup
 });
