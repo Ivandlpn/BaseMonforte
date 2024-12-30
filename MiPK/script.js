@@ -243,6 +243,7 @@ imagenCamara.addEventListener("click", () => {
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
 const textoPK = `PK ${formatearPK(window.pkMasCercano.pk)}`;
+const textoViaLinea = `${window.pkMasCercano.ladoVia} (L${window.pkMasCercano.linea})`;
 
 // Obtener la fecha actual en formato DD/MM/AAAA
 const fechaActual = new Date();
@@ -255,19 +256,22 @@ const textoFecha = `${dia}/${mes}/${anio}`;
 const paddingHorizontal = 30; // Espaciado adicional horizontal
 const paddingVertical = 15; // Espaciado adicional vertical
 const fontSizePK = 24; // Tamaño de fuente para el PK
-const fontSizeFecha = 18; // Tamaño de fuente para la fecha
-const margenEntreLineas = 10; // Separación entre líneas de texto
+const fontSizeViaLinea = 18; // Tamaño de fuente para la vía y línea
+const fontSizeFecha = 16; // Tamaño de fuente para la fecha
+const margenEntreLineas = 5; // Separación entre líneas de texto
 
 // Configurar la fuente antes de medir el texto
 ctx.font = `${fontSizePK}px Arial`;
 const anchoPK = ctx.measureText(textoPK).width; // Ancho del texto PK
+ctx.font = `${fontSizeViaLinea}px Arial`;
+const anchoViaLinea = ctx.measureText(textoViaLinea).width; // Ancho del texto Vía y Línea
 ctx.font = `${fontSizeFecha}px Arial`;
 const anchoFecha = ctx.measureText(textoFecha).width; // Ancho del texto Fecha
 
 // Calcular el ancho y alto del recuadro
-const textoMasAncho = Math.max(anchoPK, anchoFecha);
+const textoMasAncho = Math.max(anchoPK, anchoViaLinea, anchoFecha);
 const tarjetaWidth = textoMasAncho + paddingHorizontal * 2; // Ancho total con padding
-const tarjetaHeight = fontSizePK + fontSizeFecha + paddingVertical * 2 + margenEntreLineas; // Altura total
+const tarjetaHeight = fontSizePK + fontSizeViaLinea + fontSizeFecha + paddingVertical * 2 + margenEntreLineas * 2; // Altura total
 
 // Dibujar el fondo del recuadro
 ctx.fillStyle = "rgba(0, 122, 255, 0.5)"; // Fondo azul semitransparente
@@ -288,12 +292,20 @@ ctx.fillText(
     y + paddingVertical // Comenzar desde el padding superior
 );
 
+// Dibujar el texto de la Vía y Línea
+ctx.font = `${fontSizeViaLinea}px Arial`;
+ctx.fillText(
+    textoViaLinea,
+    canvas.width / 2,
+    y + paddingVertical + fontSizePK + margenEntreLineas // Alinear debajo del texto del PK
+);
+
 // Dibujar la fecha
 ctx.font = `${fontSizeFecha}px Arial`;
 ctx.fillText(
     textoFecha,
     canvas.width / 2,
-    y + paddingVertical + fontSizePK + margenEntreLineas // Alinear debajo del texto del PK
+    y + paddingVertical + fontSizePK + fontSizeViaLinea + margenEntreLineas * 2 // Alinear debajo del texto de la Vía y Línea
 );
 
 
