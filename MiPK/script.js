@@ -78,7 +78,7 @@ function inicializarMapa(lat, lon) {
 
     marcadorActual = L.marker([lat, lon], { icon: iconoUsuario }).addTo(mapa)
         .bindPopup('Mi Ubicación')
-        .openPopup();
+        //.openPopup();
 
     mapa.on('move', () => {
         centradoAutomaticamente = false;
