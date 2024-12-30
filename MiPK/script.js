@@ -170,8 +170,8 @@ function mostrarPKMasCercano(pk) {
 function actualizarPosicionPK(pk) {
     if (!marcadorPK) {
         marcadorPK = L.marker([pk.latitud, pk.longitud], { icon: iconoPK }).addTo(mapa)
-            .bindPopup('PK cercano')
-            .openPopup();
+            //.bindPopup('PK cercano')
+            //.openPopup();
     } else {
         marcadorPK.setLatLng([pk.latitud, pk.longitud]);
         marcadorPK.setIcon(iconoPK); // Asegura que el icono se actualice si ya existe el marcador
