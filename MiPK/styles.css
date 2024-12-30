@@ -151,6 +151,9 @@ footer img {
   height: auto; /* Mantiene la proporción de la imagen */
 }
 
+.boton-control {
+    margin: 0 10px; /* Ajusta el margen según sea necesario */
+}
 
 
   #actualizarUbicacion {
