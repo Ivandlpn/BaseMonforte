@@ -113,7 +113,7 @@ const iconoPK = L.icon({
     iconUrl: 'img/MiPKubi.png', // Ruta de la imagen del icono
     iconSize: [30, 40], // Tamaño del icono (ajusta según sea necesario)
     iconAnchor: [20, 40], // Punto del icono que apunta a la ubicación
-    popupAnchor: [0, -40] // Punto desde donde se abrirá el popup
+    //popupAnchor: [0, -40] // Punto desde donde se abrirá el popup
 });
 
 function calcularPKMasCercano(lat, lon, data) {
