@@ -348,6 +348,7 @@ ctx.fillText(
 const imagenVolver = document.createElement("img"); // Cambiar de button a img
 imagenVolver.src = "img/volver.png"; // Reemplaza con el nombre y ruta de tu archivo de imagen
 imagenVolver.alt = "Volver";
+imagenVolver.classList.add("boton-control"); // Añadir clase común
 imagenVolver.style.cssText = "cursor: pointer; width: 60px; height: 50px;"; // Ajusta el tamaño según necesites
 contenedorBotones.appendChild(imagenVolver); // Añadir la imagen al contenedor
 
@@ -364,6 +365,7 @@ imagenVolver.addEventListener("click", () => {
 const imagenGuardar = document.createElement("img"); // Cambiar de button a img
 imagenGuardar.src = "img/guardar.png"; // Reemplaza con el nombre y ruta de tu archivo de imagen
 imagenGuardar.alt = "Guardar";
+imagenGuardar.classList.add("boton-control"); // Añadir clase común
 imagenGuardar.style.cssText = "cursor: pointer; width: 60px; height: 50px;"; // Ajusta el tamaño según necesites
 contenedorBotones.appendChild(imagenGuardar); // Añadir la imagen al contenedor
 
@@ -442,6 +444,7 @@ imagenGuardar.addEventListener("click", () => { // Cambia botonGuardar por image
 const imagenCompartir = document.createElement("img");
 imagenCompartir.src = "img/compartir.png"; // Reemplaza con el nombre real de tu archivo de imagen
 imagenCompartir.alt = "Compartir";
+imagenCompartir.classList.add("boton-control"); // Añadir clase común
 imagenCompartir.style.cssText = "cursor: pointer; width: 60px; height: 50px;"; // Ajusta el tamaño según necesites
 contenedorBotones.appendChild(imagenCompartir);
 
@@ -474,6 +477,7 @@ imagenCompartir.addEventListener("click", async () => {
 const imagenEditar = document.createElement("img");
 imagenEditar.src = "img/editar.png"; // Ruta de tu imagen de editar
 imagenEditar.alt = "Editar";
+imagenEditar.classList.add("boton-control"); 
 imagenEditar.style.cssText = `
     cursor: pointer; 
     width: 60px; 
