@@ -184,8 +184,12 @@ function formatearPK(pk) {
         return pkStr.slice(0, 3) + '+' + pkStr.slice(3, 6);
     } else if (pkStr.length === 6) {
         return pkStr.slice(0, 3) + '+' + pkStr.slice(3);
+    } else if (pkStr.length === 5) {
+        return pkStr.slice(0, 2) + '+' + pkStr.slice(2);
+    } else if (pkStr.length === 4) {
+        return pkStr.slice(0, 1) + '+' + pkStr.slice(1);
     } else {
-        return pkStr;
+        return pkStr; // Si tiene menos de 4 cifras, no se formatea
     }
 }
 
