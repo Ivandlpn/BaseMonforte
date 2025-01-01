@@ -33,7 +33,7 @@ navigator.geolocation.watchPosition((position) => {
     const rutasArchivos = [
             "./doc/L40Ar.json",
             "./doc/L40Br.json",
-          //  "./doc/L40Cr.json",
+          "./doc/L40Cr.json",
             "./doc/L42Ar.json",
             "./doc/L42B.json",
             "./doc/L46.json",
