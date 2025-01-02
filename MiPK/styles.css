@@ -80,7 +80,7 @@ header img {
   position: absolute;
   bottom: 10px;
   right: 10px;
-  z-index: 1001; /* Asegura que esté por encima del mapa */
+  z-index: 2000; /* Asegúrate de que el z-index sea alto */
   text-align: right;
 }
 
@@ -95,8 +95,7 @@ header img {
   border-radius: 5px;
   padding: 10px;
   display: none;
-  z-index: 1002; /* Asegura que esté por encima del mapa */
-  position: absolute; /* Necesario para que z-index funcione correctamente */
+  z-index: 2001; /* Asegúrate de que el z-index sea alto */
 }
 
 #opcionesCapas label {
