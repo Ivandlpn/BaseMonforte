@@ -9,6 +9,7 @@
     <link rel="icon" href="img/FaviconMiPK.png?v=1" type="image/png">
     <link rel="manifest" href="manifest.json">
 
+
     <!-- Open Graph -->
     <meta property="og:title" content="Mi PK 📍" />
     <meta property="og:description" content="Consulta el PK más cercano" />
@@ -30,33 +31,23 @@
 
         <div class="linea-gradiente"></div> <!-- Línea con gradiente -->
         
-        <!-- Contenedor del mapa con id específico y estilo en línea para la altura -->
+                <!-- Contenedor del mapa con id específico y estilo en línea para la altura -->
         <div id="map-container" style="height: 400px;">
             <div id="map">
                 <img id="actualizarUbicacion" src="img/centrar.png" alt="Centrar" style="cursor: pointer;">
-                <!-- Botón de capas -->
-                <div id="capas-container">
-                    <img id="botonCapas" src="img/capa.png" alt="Capas" style="cursor: pointer;">
-                    <div id="opcionesCapas" class="oculto">
-                        <label><input type="checkbox" id="capaPuertas" /> Puertas</label><br>
-                        <label><input type="checkbox" id="capaTraza" /> Traza</label><br>
-                        <label><input type="checkbox" id="capaEdificios" /> Edificios</label>
-                    </div>
-                </div>
             </div>
         </div>
-
         <div class="linea-gradiente"></div> <!-- Línea con gradiente -->
         <div id="calculoPK">
             <div id="iconoCamara"></div>
             <div class="tarjeta">
-                <h2> <span id="pkCercano">___+___</span></h2>
+                <h2> <span id="pkCercano">       ___+___               </span></h2>
+               <!-- <p>Vía: <span id="distancia">1289.73 metros</span></p> -->
             </div>
         </div>
-
         <footer>
-            <img src="img/PieMiPK.png" alt="Pie de Página">
-        </footer>
+    <img src="img/PieMiPK.png" alt="Pie de Página">
+    </footer>
     </div>
     <script src="script.js" defer></script>
 </body>
