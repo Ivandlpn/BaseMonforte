@@ -204,7 +204,13 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
 
 // Modificación para abrir la cámara y añadir un botón
 document.getElementById("iconoCamara").addEventListener("click", () => {
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
+    navigator.mediaDevices.getUserMedia({
+    video: {
+        facingMode: "environment",
+        width: { ideal: 1920 }, // Ancho ideal en píxeles
+        height: { ideal: 1080 } // Alto ideal en píxeles
+    }
+})
         .then((stream) => {
             const contenedor = document.createElement("div");
             contenedor.style.position = "absolute";
@@ -241,8 +247,10 @@ contenedor.appendChild(imagenCamara);
 // Evento click para la imagen
 imagenCamara.addEventListener("click", () => {
                 const canvas = document.createElement("canvas");
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
+                // Establece una resolución más alta, por ejemplo, Full HD
+                canvas.width = 1920; // Ancho deseado
+                canvas.height = 1080; // Alto deseado
+
                 const ctx = canvas.getContext("2d");
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
