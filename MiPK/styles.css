@@ -1,4 +1,4 @@
-tive/* Estilos globales */
+/* Estilos globales */
 html, body {
   margin: 0;
   padding: 0;
@@ -27,21 +27,21 @@ header img {
 }
 
 .linea-gradiente {
-    position: relative; /* Siempre visible en la ventana */
-   // top: 100px; /* Ajusta según la altura de la cabecera */
-    left: 0;
-    width: 100%;
-    height: 4px; /* Altura de la línea */
-    background: linear-gradient(to right, blue, red); /* Gradiente */
-    z-index: 1000; /* Asegura que esté por encima del mapa */
+  position: relative; /* Siempre visible en la ventana */
+  // top: 100px; /* Ajusta según la altura de la cabecera */
+  left: 0;
+  width: 100%;
+  height: 4px; /* Altura de la línea */
+  background: linear-gradient(to right, blue, red); /* Gradiente */
+  z-index: 1000; /* Asegura que esté por encima del mapa */
 }
 
 /* Estilos para el contenedor del mapa */
 #map-container {
-    width: 100%; /* Establece un ancho fijo o porcentual */
-    position: relative;
-    margin: 0 auto; /* Centra el contenedor */
-  z-index: 500
+  width: 100%; /* Establece un ancho fijo o porcentual */
+  position: relative;
+  margin: 0 auto; /* Centra el contenedor */
+  z-index: 500;
 }
 
 #map {
@@ -75,61 +75,18 @@ header img {
   font-size: 1em; /* Asegura que no cambie el tamaño */
   outline: none; /* Opcional: elimina el contorno */
   transform: translateX(-50%); /* Mantén la misma posición */
- 
 }
-
-
-/* CAPAS */
-
-#capas-container {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    z-index: 1000;
-    text-align: right;
-}
-
-#botonCapas {
-    width: 40px; /* Ajusta el tamaño del botón según sea necesario */
-    height: 40px;
-}
-
-#opcionesCapas {
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    display: none; /* Oculto por defecto */
-}
-
-#opcionesCapas label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.oculto {
-    display: none;
-}
-
-.visible {
-    display: block;
-}
-
-
 
 /* Sección de la tarjeta con el icono */
 #calculoPK {
   display: flex;
   align-items: center;
-  /* justify-content: center;*/
   padding: 10px;
   background-color: #ffffff;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
   justify-content: flex-end; /* Alinea el contenido a la derecha */
   text-align: center;
 }
-
-
 
 #iconoCamara {
   width: 65px; /* Cambia a un tamaño mayor */
@@ -140,7 +97,6 @@ header img {
   position: absolute;
   left: 0;
 }
-
 
 #calculoPK .tarjeta {
   display: inline-block;
@@ -167,17 +123,17 @@ header img {
 
 #calculoPK .tarjeta p {
   font-size: 0.8em; /* Tamaño más pequeño */
-    color: #ffffff;      /* Color gris tenue */
+  color: #ffffff; /* Color gris tenue */
 }
 
 .pk-grande {
-    font-size: 1em; /* Tamaño más grande */
-    color: #011145;  /* Azul oscuro */
+  font-size: 1em; /* Tamaño más grande */
+  color: #011145; /* Azul oscuro */
 }
 
 .via-pequena {
-    font-size: 0.8em; /* Tamaño más pequeño */
-    color: #ffffff;      /* Color gris tenue */
+  font-size: 0.8em; /* Tamaño más pequeño */
+  color: #ffffff; /* Color gris tenue */
 }
 
 footer {
@@ -194,17 +150,39 @@ footer img {
 }
 
 .boton-control {
-    margin: 0 5px; /* Ajusta el margen según sea necesario */
+  margin: 0 5px; /* Ajusta el margen según sea necesario */
 }
 
-
-  #actualizarUbicacion {
-    font-size: 0.9em;
-  }
-
-  header img {
-    height: auto;
-  }
+#capas-container {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 1000;
+  text-align: right;
 }
 
+#botonCapas {
+  width: 40px; /* Ajusta el tamaño del botón según sea necesario */
+  height: 40px;
+}
 
+#opcionesCapas {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  display: none; /* Oculto por defecto */
+}
+
+#opcionesCapas label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.oculto {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
