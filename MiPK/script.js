@@ -207,8 +207,8 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
     navigator.mediaDevices.getUserMedia({
     video: {
         facingMode: "environment",
-        width: { ideal: 1920 }, // Ancho ideal en píxeles
-        height: { ideal: 1080 } // Alto ideal en píxeles
+        width: { ideal: 3840 }, // Resolución máxima para ancho
+        height: { ideal: 2160 }, // Resolución máxima para alto
     }
 })
         .then((stream) => {
@@ -248,11 +248,26 @@ contenedor.appendChild(imagenCamara);
 imagenCamara.addEventListener("click", () => {
                 const canvas = document.createElement("canvas");
                 // Establece una resolución más alta, por ejemplo, Full HD
-                canvas.width = 1920; // Ancho deseado
-                canvas.height = 1080; // Alto deseado
+               const esVertical = video.videoHeight > video.videoWidth; // Detecta si el móvil está en vertical
+                if (esVertical) {
+                    canvas.width = 2160; // Ancho para vertical
+                    canvas.height = 3840; // Alto para vertical
+                } else {
+                    canvas.width = 3840; // Ancho para horizontal
+                    canvas.height = 2160; // Alto para horizontal
+                }
 
                 const ctx = canvas.getContext("2d");
-                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                if (esVertical) {
+                    ctx.save(); // Guarda el estado actual del contexto
+                    ctx.translate(canvas.width / 2, canvas.height / 2); // Mueve al centro del lienzo
+                    ctx.rotate(Math.PI / 2); // Rota 90 grados
+                    ctx.drawImage(video, -video.videoHeight / 2, -video.videoWidth / 2, video.videoHeight, video.videoWidth);
+                    ctx.restore(); // Restaura el estado original
+                } else {
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+}
+
 
 const textoPK = `PK ${formatearPK(window.pkMasCercano.pk)}`;
 const textoViaLinea = `${window.pkMasCercano.ladoVia} (L${window.pkMasCercano.linea})`;
@@ -417,7 +432,8 @@ imagenGuardar.addEventListener("click", () => { // Cambia botonGuardar por image
         const fechaFormateada = `${dia}-${mes}-${anio}`;
 
         // Crear el nombre del archivo
-        const nombreArchivo = `${pkFormateado} ${fechaFormateada}.jpg`;
+        const orientacion = esVertical ? "Vertical" : "Horizontal";
+const nombreArchivo = `${pkFormateado} ${fechaFormateada} (${orientacion}).jpg`;
 
         // Crear un Blob a partir del canvas en formato JPG
         canvas.toBlob((blob) => {
