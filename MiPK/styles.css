@@ -79,6 +79,44 @@ header img {
 }
 
 
+/* CAPAS */
+
+#capas-container {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1000;
+    text-align: right;
+}
+
+#botonCapas {
+    width: 40px; /* Ajusta el tamaño del botón según sea necesario */
+    height: 40px;
+}
+
+#opcionesCapas {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    display: none; /* Oculto por defecto */
+}
+
+#opcionesCapas label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.oculto {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+
+
 /* Sección de la tarjeta con el icono */
 #calculoPK {
   display: flex;
