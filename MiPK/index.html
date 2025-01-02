@@ -33,18 +33,20 @@
         
                 <!-- Contenedor del mapa con id específico y estilo en línea para la altura -->
         <div id="map-container" style="height: 400px;">
-            <div id="map">
-                <img id="actualizarUbicacion" src="img/centrar.png" alt="Centrar" style="cursor: pointer;">
+    <div id="map">
+        <img id="actualizarUbicacion" src="img/centrar.png" alt="Centrar" style="cursor: pointer;">
+        <!-- Botón de capas -->
+        <div id="capas-container">
+            <img id="botonCapas" src="img/capa.png" alt="Capas" style="cursor: pointer;">
+            <div id="opcionesCapas" class="oculto">
+                <label><input type="checkbox" id="capaPuertas" /> Puertas</label><br>
+                <label><input type="checkbox" id="capaTraza" /> Traza</label><br>
+                <label><input type="checkbox" id="capaEdificios" /> Edificios</label>
             </div>
         </div>
-        <div class="linea-gradiente"></div> <!-- Línea con gradiente -->
-        <div id="calculoPK">
-            <div id="iconoCamara"></div>
-            <div class="tarjeta">
-                <h2> <span id="pkCercano">       ___+___               </span></h2>
-               <!-- <p>Vía: <span id="distancia">1289.73 metros</span></p> -->
-            </div>
-        </div>
+    </div>
+</div>
+        
         <footer>
     <img src="img/PieMiPK.png" alt="Pie de Página">
     </footer>
