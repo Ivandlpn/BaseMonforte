@@ -415,8 +415,8 @@ imagenGuardar.addEventListener("click", () => { // Cambia botonGuardar por image
         const fechaFormateada = `${dia}-${mes}-${anio}`;
 
         // Crear el nombre del archivo
-        const orientacion = esVertical ? "Vertical" : "Horizontal";
-const nombreArchivo = `${pkFormateado} ${fechaFormateada} (${orientacion}).jpg`;
+ const nombreArchivo = `${pkFormateado} ${fechaFormateada}.jpg`;
+
 
         // Crear un Blob a partir del canvas en formato JPG
         canvas.toBlob((blob) => {
