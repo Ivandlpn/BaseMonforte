@@ -202,6 +202,44 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
     }
 });
 
+// CAPAS
+document.addEventListener("DOMContentLoaded", function() {
+    const botonCapas = document.getElementById("botonCapas");
+    const opcionesCapas = document.getElementById("opcionesCapas");
+
+    botonCapas.addEventListener("click", () => {
+        opcionesCapas.classList.toggle("oculto");
+        opcionesCapas.classList.toggle("visible");
+    });
+
+    // Aquí puedes añadir la lógica para activar/desactivar capas
+    document.getElementById("capaPuertas").addEventListener("change", (event) => {
+        if (event.target.checked) {
+            // Lógica para mostrar la capa de Puertas
+        } else {
+            // Lógica para ocultar la capa de Puertas
+        }
+    });
+
+    document.getElementById("capaTraza").addEventListener("change", (event) => {
+        if (event.target.checked) {
+            // Lógica para mostrar la capa de Traza
+        } else {
+            // Lógica para ocultar la capa de Traza
+        }
+    });
+
+    document.getElementById("capaEdificios").addEventListener("change", (event) => {
+        if (event.target.checked) {
+            // Lógica para mostrar la capa de Edificios
+        } else {
+            // Lógica para ocultar la capa de Edificios
+        }
+    });
+});
+
+
+
 // Modificación para abrir la cámara y añadir un botón
 document.getElementById("iconoCamara").addEventListener("click", () => {
     navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
