@@ -543,24 +543,28 @@ imagenEditar.addEventListener("click", () => {
     const texto = inputTexto.value;
 
     // Limitar los caracteres del texto
-    const textoLimitado = texto.slice(0, 100); // Limitar a 100 caracteres (puedes ajustarlo)
+    const textoLimitado = texto.slice(0, 100); // Limitar a 100 caracteres (ajusta si es necesario)
 
     // Obtener las dimensiones de la tarjeta de información
     const tarjetaInformacion = document.querySelector("#calculoPK .tarjeta");
     const tarjetaRect = tarjetaInformacion.getBoundingClientRect();
+    const canvasRect = canvas.getBoundingClientRect();
+
+    // Calcular las dimensiones dinámicas
     const margenIzquierdo = 20; // Margen desde el borde izquierdo
-    const paddingHorizontal = 15; // Espaciado interno
-    const paddingVertical = 10; // Espaciado interno
-    const radioEsquinas = 10; // Redondeado
+    const paddingHorizontal = 15; // Espaciado interno horizontal
+    const paddingVertical = 10; // Espaciado interno vertical
+    const radioEsquinas = 10; // Bordes redondeados
+    const altoTarjeta = tarjetaRect.height + paddingVertical * 2; // Igual que la tarjeta de información
+    const anchoTarjeta = tarjetaRect.left - canvasRect.left - margenIzquierdo - paddingHorizontal * 2;
+
+    // Calcular posición
+    const x = margenIzquierdo;
+    const y = canvas.height - altoTarjeta - 20; // Margen inferior
 
     // Dibujar la tarjeta roja transparente
     const ctxEdicion = canvas.getContext("2d");
     ctxEdicion.fillStyle = "rgba(255, 0, 0, 0.5)"; // Rojo transparente
-    const anchoTarjeta = tarjetaRect.left - margenIzquierdo - paddingHorizontal * 2;
-    const altoTarjeta = tarjetaRect.height + paddingVertical * 2;
-    const x = margenIzquierdo;
-    const y = canvas.height - altoTarjeta - 20; // Margen inferior
-
     ctxEdicion.beginPath();
     ctxEdicion.roundRect(x, y, anchoTarjeta, altoTarjeta, radioEsquinas);
     ctxEdicion.fill();
@@ -571,7 +575,7 @@ imagenEditar.addEventListener("click", () => {
     ctxEdicion.textAlign = "left";
     ctxEdicion.textBaseline = "top";
     const lineHeight = 20; // Altura de línea
-    const maxLineas = Math.floor((altoTarjeta - paddingVertical * 2) / lineHeight); // Calcular líneas disponibles
+    const maxLineas = Math.floor((altoTarjeta - paddingVertical * 2) / lineHeight); // Líneas disponibles
     const lineasTexto = textoLimitado.split("\n").slice(0, maxLineas); // Dividir texto en líneas
 
     lineasTexto.forEach((linea, index) => {
@@ -582,8 +586,10 @@ imagenEditar.addEventListener("click", () => {
         );
     });
 
-    contenedorEdicion.remove(); // Cerrar la interfaz de edición
+    // Cerrar la interfaz de edición
+    contenedorEdicion.remove();
 });
+
 
 });
 
