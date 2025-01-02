@@ -493,79 +493,52 @@ imagenEditar.style.cssText = `
 contenedorBotones.appendChild(imagenEditar);
 
 // Función para abrir la interfaz de edición
-imagenEditar.addEventListener("click", () => {
-    const contenedorEdicion = document.createElement("div");
-    contenedorEdicion.style.position = "absolute";
-    contenedorEdicion.style.top = "0";
-    contenedorEdicion.style.left = "0";
-    contenedorEdicion.style.width = "100%";
-    contenedorEdicion.style.height = "100%";
-    contenedorEdicion.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-    contenedorEdicion.style.zIndex = "1004";
-    contenedorEdicion.style.display = "flex";
-    contenedorEdicion.style.flexDirection = "column";
-    contenedorEdicion.style.justifyContent = "center";
-    contenedorEdicion.style.alignItems = "center";
-    document.body.appendChild(contenedorEdicion);
+botonGuardarEdicion.addEventListener("click", () => {
+    const texto = inputTexto.value;
 
-    // Mostrar la imagen capturada en un canvas editable
-    const canvasEdicion = document.createElement("canvas");
-    canvasEdicion.width = canvas.width;
-    canvasEdicion.height = canvas.height;
-    const ctxEdicion = canvasEdicion.getContext("2d");
-    ctxEdicion.drawImage(canvas, 0, 0);
-    contenedorEdicion.appendChild(canvasEdicion);
+    // Limitar los caracteres del texto
+    const textoLimitado = texto.slice(0, 100); // Limitar a 100 caracteres (puedes ajustarlo)
 
-    // Campo de texto para añadir información
-    const inputTexto = document.createElement("input");
-    inputTexto.type = "text";
-    inputTexto.placeholder = "Añade información...";
-    inputTexto.style.margin = "20px";
-    inputTexto.style.padding = "10px";
-    inputTexto.style.fontSize = "16px";
-    contenedorEdicion.appendChild(inputTexto);
+    // Obtener las dimensiones de la tarjeta de información
+    const tarjetaInformacion = document.querySelector("#calculoPK .tarjeta");
+    const tarjetaRect = tarjetaInformacion.getBoundingClientRect();
+    const margenIzquierdo = 20; // Margen desde el borde izquierdo
+    const paddingHorizontal = 15; // Espaciado interno
+    const paddingVertical = 10; // Espaciado interno
+    const radioEsquinas = 10; // Redondeado
 
-    // Botón para guardar cambios
-    const botonGuardarEdicion = document.createElement("button");
-    botonGuardarEdicion.textContent = "Guardar Cambios";
-    botonGuardarEdicion.style.margin = "10px";
-    botonGuardarEdicion.style.padding = "10px 20px";
-    botonGuardarEdicion.style.fontSize = "16px";
-    botonGuardarEdicion.style.color = "white";
-    botonGuardarEdicion.style.backgroundColor = "#007aff";
-    botonGuardarEdicion.style.border = "none";
-    botonGuardarEdicion.style.borderRadius = "5px";
-    botonGuardarEdicion.style.cursor = "pointer";
-    contenedorEdicion.appendChild(botonGuardarEdicion);
+    // Dibujar la tarjeta roja transparente
+    const ctxEdicion = canvas.getContext("2d");
+    ctxEdicion.fillStyle = "rgba(255, 0, 0, 0.5)"; // Rojo transparente
+    const anchoTarjeta = tarjetaRect.left - margenIzquierdo - paddingHorizontal * 2;
+    const altoTarjeta = tarjetaRect.height + paddingVertical * 2;
+    const x = margenIzquierdo;
+    const y = canvas.height - altoTarjeta - 20; // Margen inferior
 
-    // Evento para guardar cambios
-    botonGuardarEdicion.addEventListener("click", () => {
-        const texto = inputTexto.value;
-        ctxEdicion.font = "20px Arial";
-        ctxEdicion.fillStyle = "white";
-        ctxEdicion.fillText(texto, 20, canvasEdicion.height - 50);
-        ctx.drawImage(canvasEdicion, 0, 0); // Actualizar la imagen original
-        contenedorEdicion.remove();
+    ctxEdicion.beginPath();
+    ctxEdicion.roundRect(x, y, anchoTarjeta, altoTarjeta, radioEsquinas);
+    ctxEdicion.fill();
+
+    // Dibujar el texto dentro de la tarjeta
+    ctxEdicion.fillStyle = "white";
+    ctxEdicion.font = "16px Arial";
+    ctxEdicion.textAlign = "left";
+    ctxEdicion.textBaseline = "top";
+    const lineHeight = 20; // Altura de línea
+    const maxLineas = Math.floor((altoTarjeta - paddingVertical * 2) / lineHeight); // Calcular líneas disponibles
+    const lineasTexto = textoLimitado.split("\n").slice(0, maxLineas); // Dividir texto en líneas
+
+    lineasTexto.forEach((linea, index) => {
+        ctxEdicion.fillText(
+            linea,
+            x + paddingHorizontal,
+            y + paddingVertical + index * lineHeight
+        );
     });
 
-    // Botón para cerrar la edición
-    const botonCerrarEdicion = document.createElement("button");
-    botonCerrarEdicion.textContent = "Cerrar";
-    botonCerrarEdicion.style.margin = "10px";
-    botonCerrarEdicion.style.padding = "10px 20px";
-    botonCerrarEdicion.style.fontSize = "16px";
-    botonCerrarEdicion.style.color = "white";
-    botonCerrarEdicion.style.backgroundColor = "#ff3b30";
-    botonCerrarEdicion.style.border = "none";
-    botonCerrarEdicion.style.borderRadius = "5px";
-    botonCerrarEdicion.style.cursor = "pointer";
-    contenedorEdicion.appendChild(botonCerrarEdicion);
-
-    // Evento para cerrar la edición
-    botonCerrarEdicion.addEventListener("click", () => {
-        contenedorEdicion.remove();
-    });
+    contenedorEdicion.remove(); // Cerrar la interfaz de edición
 });
+
 
 
             video.addEventListener("click", () => {
