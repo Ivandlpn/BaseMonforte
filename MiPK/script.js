@@ -25,7 +25,6 @@ navigator.geolocation.watchPosition((position) => {
         );
 
         const datosCargados = await Promise.all(todasPromesas);
-        // Combina todos los arrays de datos en uno solo
         return datosCargados.flat();
     }
 
@@ -41,7 +40,6 @@ navigator.geolocation.watchPosition((position) => {
 
     cargarArchivosJSON(rutasArchivos)
         .then(datosCombinados => {
-            // Calcular el PK más cercano con todos los datos combinados
             window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
             mostrarPKMasCercano(window.pkMasCercano);
             actualizarPosicionPK(window.pkMasCercano);
@@ -97,9 +95,7 @@ function actualizarPosicionUsuario(lat, lon) {
 function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente) {
     const { latitud: latActual, longitud: lonActual } = pkActual;
     const { latitud: latSiguiente, longitud: lonSiguiente } = pkSiguiente;
-
     const latPromedioVia = (latActual + latSiguiente) / 2;
-
     return latUsuario > latPromedioVia ? "Vía 1" : "Vía 2";
 }
 
@@ -126,7 +122,6 @@ function calcularPKMasCercano(lat, lon, data) {
 
     const pkActual = puntosCercanos[0];
     const pkSiguiente = puntosCercanos[1] || pkActual;
-
     const ladoVia = determinarLadoVia(lat, lon, pkActual, pkSiguiente);
     pkActual.ladoVia = ladoVia;
 
@@ -151,10 +146,9 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
 function mostrarPKMasCercano(pk) {
     const pkElement = document.getElementById("pkCercano");
     const pkFormateado = formatearPK(pk.pk);
-
     pkElement.innerHTML = `
         <div style="font-size: 1em; margin-bottom: 3px;">${pkFormateado}</div>
-        <div style="font-size: 0.6em;"> ${pk.ladoVia}  (L${pk.linea})</div>
+        <div style="font-size: 0.6em;"> ${pk.ladoVia} (L${pk.linea})</div>
     `;
 }
 
@@ -190,49 +184,37 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
     }
 });
 
-document.getElementById("iconoCamara").addEventListener("click", () => {
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-        .then((stream) => {
-            const contenedor = document.createElement("div");
-            contenedor.style.position = "absolute";
-            contenedor.style.top = "0";
-            contenedor.style.left = "0";
-            contenedor.style.width = "100%";
-            contenedor.style.height = "100%";
-            contenedor.style.zIndex = "1000";
-            contenedor.style.backgroundColor = "black";
-            document.body.appendChild(contenedor);
+document.addEventListener("DOMContentLoaded", function() {
+    const botonCapas = document.getElementById("botonCapas");
+    const opcionesCapas = document.getElementById("opcionesCapas");
 
-            const video = document.createElement("video");
-            video.srcObject = stream;
-            video.autoplay = true;
-            video.style.width = "100%";
-            video.style.height = "100%";
-            video.style.objectFit = "cover";
-            contenedor.appendChild(video);
+    botonCapas.addEventListener("click", () => {
+        opcionesCapas.classList.toggle("oculto");
+        opcionesCapas.classList.toggle("visible");
+    });
 
-            const imagenCamara = document.createElement("img");
-            imagenCamara.src = "img/botoncamara.png";
-            imagenCamara.alt = "Hacer Foto";
-            imagenCamara.style.position = "absolute";
-            imagenCamara.style.bottom = "10px";
-            imagenCamara.style.left = "50%";
-            imagenCamara.style.transform = "translateX(-50%)";
-            imagenCamara.style.cursor = "pointer";
-            imagenCamara.style.width = "60px";
-            imagenCamara.style.height = "60px";
-            imagenCamara.style.zIndex = "1001";
-            contenedor.appendChild(imagenCamara);
+    // Lógica para activar/desactivar capas
+    document.getElementById("capaPuertas").addEventListener("change", (event) => {
+        if (event.target.checked) {
+            // Lógica para mostrar la capa de Puertas
+        } else {
+            // Lógica para ocultar la capa de Puertas
+        }
+    });
 
-            imagenCamara.addEventListener("click", () => {
-                const canvas = document.createElement("canvas");
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                const ctx = canvas.getContext("2d");
-                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    document.getElementById("capaTraza").addEventListener("change", (event) => {
+        if (event.target.checked) {
+            // Lógica para mostrar la capa de Traza
+        } else {
+            // Lógica para ocultar la capa de Traza
+        }
+    });
 
-                const textoPK = `PK ${formatearPK(window.pkMasCercano.pk)}`;
-                const textoViaLinea = `${window.pkMasCercano.ladoVia} (L${window.pkMasCercano.linea})`;
-
-                const fechaActual = new Date();
-                const dia = String(fechaActual.getDate()).padStart(2, "0");
+    document.getElementById("capaEdificios").addEventListener("change", (event) => {
+        if (event.target.checked) {
+            // Lógica para mostrar la capa de Edificios
+        } else {
+            // Lógica para ocultar la capa de Edificios
+        }
+    });
+});
