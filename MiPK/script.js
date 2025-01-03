@@ -204,8 +204,7 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
 
 // Modificación para abrir la cámara y añadir un botón
 document.getElementById("iconoCamara").addEventListener("click", () => {
-   navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
         .then((stream) => {
             const contenedor = document.createElement("div");
             contenedor.style.position = "absolute";
@@ -242,15 +241,10 @@ contenedor.appendChild(imagenCamara);
 // Evento click para la imagen
 imagenCamara.addEventListener("click", () => {
                 const canvas = document.createElement("canvas");
-                // Establece una resolución más alta, por ejemplo, Full HD
-               canvas.width = 1920;
-                canvas.height = 1080;
-
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
                 const ctx = canvas.getContext("2d");
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-}
-
 
 const textoPK = `PK ${formatearPK(window.pkMasCercano.pk)}`;
 const textoViaLinea = `${window.pkMasCercano.ladoVia} (L${window.pkMasCercano.linea})`;
@@ -415,8 +409,7 @@ imagenGuardar.addEventListener("click", () => { // Cambia botonGuardar por image
         const fechaFormateada = `${dia}-${mes}-${anio}`;
 
         // Crear el nombre del archivo
- const nombreArchivo = `${pkFormateado} ${fechaFormateada}.jpg`;
-
+        const nombreArchivo = `${pkFormateado} ${fechaFormateada}.jpg`;
 
         // Crear un Blob a partir del canvas en formato JPG
         canvas.toBlob((blob) => {
@@ -481,6 +474,98 @@ imagenCompartir.addEventListener("click", async () => {
 
 
 
+
+
+                
+// Crear la imagen como botón de editar
+const imagenEditar = document.createElement("img");
+imagenEditar.src = "img/editar.png"; // Ruta de tu imagen de editar
+imagenEditar.alt = "Editar";
+imagenEditar.classList.add("boton-control"); 
+imagenEditar.style.cssText = `
+    cursor: pointer; 
+    width: 60px; 
+    height: 50px; 
+    margin: 0 5px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    border-radius: 5px;
+`;
+contenedorBotones.appendChild(imagenEditar);
+
+// Función para abrir la interfaz de edición
+imagenEditar.addEventListener("click", () => {
+    const contenedorEdicion = document.createElement("div");
+    contenedorEdicion.style.position = "absolute";
+    contenedorEdicion.style.top = "0";
+    contenedorEdicion.style.left = "0";
+    contenedorEdicion.style.width = "100%";
+    contenedorEdicion.style.height = "100%";
+    contenedorEdicion.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+    contenedorEdicion.style.zIndex = "1004";
+    contenedorEdicion.style.display = "flex";
+    contenedorEdicion.style.flexDirection = "column";
+    contenedorEdicion.style.justifyContent = "center";
+    contenedorEdicion.style.alignItems = "center";
+    document.body.appendChild(contenedorEdicion);
+
+    // Mostrar la imagen capturada en un canvas editable
+    const canvasEdicion = document.createElement("canvas");
+    canvasEdicion.width = canvas.width;
+    canvasEdicion.height = canvas.height;
+    const ctxEdicion = canvasEdicion.getContext("2d");
+    ctxEdicion.drawImage(canvas, 0, 0);
+    contenedorEdicion.appendChild(canvasEdicion);
+
+    // Campo de texto para añadir información
+    const inputTexto = document.createElement("input");
+    inputTexto.type = "text";
+    inputTexto.placeholder = "Añade información...";
+    inputTexto.style.margin = "20px";
+    inputTexto.style.padding = "10px";
+    inputTexto.style.fontSize = "16px";
+    contenedorEdicion.appendChild(inputTexto);
+
+    // Botón para guardar cambios
+    const botonGuardarEdicion = document.createElement("button");
+    botonGuardarEdicion.textContent = "Guardar Cambios";
+    botonGuardarEdicion.style.margin = "10px";
+    botonGuardarEdicion.style.padding = "10px 20px";
+    botonGuardarEdicion.style.fontSize = "16px";
+    botonGuardarEdicion.style.color = "white";
+    botonGuardarEdicion.style.backgroundColor = "#007aff";
+    botonGuardarEdicion.style.border = "none";
+    botonGuardarEdicion.style.borderRadius = "5px";
+    botonGuardarEdicion.style.cursor = "pointer";
+    contenedorEdicion.appendChild(botonGuardarEdicion);
+
+    // Evento para guardar cambios
+    botonGuardarEdicion.addEventListener("click", () => {
+        const texto = inputTexto.value;
+        ctxEdicion.font = "20px Arial";
+        ctxEdicion.fillStyle = "white";
+        ctxEdicion.fillText(texto, 20, canvasEdicion.height - 50);
+        ctx.drawImage(canvasEdicion, 0, 0); // Actualizar la imagen original
+        contenedorEdicion.remove();
+    });
+
+    // Botón para cerrar la edición
+    const botonCerrarEdicion = document.createElement("button");
+    botonCerrarEdicion.textContent = "Cerrar";
+    botonCerrarEdicion.style.margin = "10px";
+    botonCerrarEdicion.style.padding = "10px 20px";
+    botonCerrarEdicion.style.fontSize = "16px";
+    botonCerrarEdicion.style.color = "white";
+    botonCerrarEdicion.style.backgroundColor = "#ff3b30";
+    botonCerrarEdicion.style.border = "none";
+    botonCerrarEdicion.style.borderRadius = "5px";
+    botonCerrarEdicion.style.cursor = "pointer";
+    contenedorEdicion.appendChild(botonCerrarEdicion);
+
+    // Evento para cerrar la edición
+    botonCerrarEdicion.addEventListener("click", () => {
+        contenedorEdicion.remove();
+    });
+});
 
 
             video.addEventListener("click", () => {
