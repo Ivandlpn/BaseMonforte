@@ -383,6 +383,8 @@ function mostrarMensaje(mensaje) {
     mensajeDiv.style.transform = "translateX(-50%)";
     mensajeDiv.style.backgroundColor = "#28a745"; // Verde de confirmación
     mensajeDiv.style.color = "white";
+    mensajeDiv.style.border = "1px solid #ffffff"; // Borde blanco
+mensajeDiv.style.opacity = "0.9"; // Ligera opacidad
     mensajeDiv.style.padding = "10px 20px";
     mensajeDiv.style.borderRadius = "5px";
     mensajeDiv.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.1)";
