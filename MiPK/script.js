@@ -380,7 +380,9 @@ function mostrarMensaje(mensaje) {
     mensajeDiv.style.position = "fixed";
     mensajeDiv.style.bottom = "20px";
     mensajeDiv.style.left = "50%";
-    mensajeDiv.style.transform = "translateX(-50%)";
+    mensajeDiv.style.top = "50%"; // Centrado vertical
+    mensajeDiv.style.left = "50%"; // Centrado horizontal
+    mensajeDiv.style.transform = "translate(-50%, -50%)"; 
     mensajeDiv.style.backgroundColor = "#28a745"; // Verde de confirmación
     mensajeDiv.style.color = "white";
     mensajeDiv.style.border = "1px solid #ffffff"; // Borde blanco
