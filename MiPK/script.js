@@ -392,7 +392,7 @@ function mostrarMensaje(mensaje) {
 
     setTimeout(() => {
         mensajeDiv.remove();
-    }, 3000); // El mensaje desaparecerá después de 3 segundos
+    }, 10000); // El mensaje desaparecerá después de 3 segundos
 }
 
 // Cambiar el evento click del botón por el evento click de la imagen
