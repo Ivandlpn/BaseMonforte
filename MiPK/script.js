@@ -225,18 +225,18 @@ document.getElementById("iconoCamara").addEventListener("click", () => {
             contenedor.appendChild(video);
 
             // Crear una imagen en lugar de un botón
-const imagenCamara = document.createElement("img");
-imagenCamara.src = "img/botoncamara.png"; // Ruta de la imagen
-imagenCamara.alt = "Hacer Foto";
-imagenCamara.style.position = "absolute";
-imagenCamara.style.bottom = "10px";
-imagenCamara.style.left = "50%";
-imagenCamara.style.transform = "translateX(-50%)";
-imagenCamara.style.cursor = "pointer";
-imagenCamara.style.width = "60px"; // Ajusta el tamaño según necesites
-imagenCamara.style.height = "60px"; // Ajusta el tamaño según necesites
-imagenCamara.style.zIndex = "1001";
-contenedor.appendChild(imagenCamara);
+            const imagenCamara = document.createElement("img");
+            imagenCamara.src = "img/botoncamara.png"; // Ruta de la imagen
+            imagenCamara.alt = "Hacer Foto";
+            imagenCamara.style.position = "absolute";
+            imagenCamara.style.bottom = "10px";
+            imagenCamara.style.left = "50%";
+            imagenCamara.style.transform = "translateX(-50%)";
+            imagenCamara.style.cursor = "pointer";
+            imagenCamara.style.width = "60px"; // Ajusta el tamaño según necesites
+            imagenCamara.style.height = "60px"; // Ajusta el tamaño según necesites
+            imagenCamara.style.zIndex = "1001";
+            contenedor.appendChild(imagenCamara);
 
 // Evento click para la imagen
 imagenCamara.addEventListener("click", () => {
@@ -245,6 +245,10 @@ imagenCamara.addEventListener("click", () => {
                 canvas.height = video.videoHeight;
                 const ctx = canvas.getContext("2d");
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                  // Detener el stream y eliminar el video
+                stream.getTracks().forEach(track => track.stop()); // Cierra la cámara
+                contenedor.remove();
 
 const textoPK = `PK ${formatearPK(window.pkMasCercano.pk)}`;
 const textoViaLinea = `${window.pkMasCercano.ladoVia} (L${window.pkMasCercano.linea})`;
