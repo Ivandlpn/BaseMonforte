@@ -380,33 +380,27 @@ contenedorBotones.appendChild(imagenGuardar); // Añadir la imagen al contenedor
 // Mantener la función mostrarMensaje como está
 function mostrarMensaje(mensaje) {
     const mensajeDiv = document.createElement("div");
-  // Estilos básicos
+    mensajeDiv.textContent = mensaje;
     mensajeDiv.style.position = "fixed";
-    mensajeDiv.style.top = "50%"; // Centrado vertical
-    mensajeDiv.style.left = "50%"; // Centrado horizontal
-    mensajeDiv.style.transform = "translate(-50%, -50%)"; // Ajusta para centrarlo perfectamente
+    mensajeDiv.style.bottom = "50px";
+    mensajeDiv.style.left = "50%";
+    mensajeDiv.style.transform = "translateX(-50%)";
     mensajeDiv.style.backgroundColor = "#28a745"; // Verde de confirmación
     mensajeDiv.style.color = "white";
-    mensajeDiv.style.padding = "10px 20px"; // Padding suficiente para que sea elegante
-    mensajeDiv.style.borderRadius = "10px"; // Esquinas redondeadas
+    mensajeDiv.style.padding = "10px 20px";
+    mensajeDiv.style.borderRadius = "5px";
     mensajeDiv.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.1)";
-    mensajeDiv.style.zIndex = "9999"; // Asegura que esté encima de todo
-    mensajeDiv.style.fontSize = "1.2em"; // Tamaño de fuente
-    mensajeDiv.style.textAlign = "center"; // Centrar el texto
-    mensajeDiv.style.whiteSpace = "nowrap"; // Evita saltos de línea
-
-    // Sin ancho fijo para que se ajuste al texto
-    mensajeDiv.style.width = "auto";
-    mensajeDiv.style.minWidth = "50px"; // Un ancho mínimo para mensajes muy cortos
-    mensajeDiv.style.height = "auto";
-
-    
+    mensajeDiv.style.zIndex = "9999"; // Alto z-index
+    mensajeDiv.style.fontSize = "1.2em";
+    mensajeDiv.style.border = "1px solid #ffffff"; // Borde blanco para visibilidad
+    mensajeDiv.style.opacity = "0.9"; // Ligera opacidad
     document.body.appendChild(mensajeDiv);
 
     setTimeout(() => {
         mensajeDiv.remove();
-    }, 3000); // El mensaje desaparecerá después de 3 segundos
+    }, 3000); // El mensaje desaparecerá después de 10 segundos
 }
+
 
 // Cambiar el evento click del botón por el evento click de la imagen
 imagenGuardar.addEventListener("click", () => { // Cambia botonGuardar por imagenGuardar
