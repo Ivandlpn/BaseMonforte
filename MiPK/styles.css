@@ -103,6 +103,15 @@ header img {
   left: 0;
 }
 
+#iconoMas {
+    width: 65px;
+    height: 65px;
+    background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
+    margin-right: 5px; /* Margen derecho para separación */
+  background: url('img/mas.png') no-repeat center center;
+}
+
+
 
 #calculoPK .tarjeta {
   display: inline-block;
