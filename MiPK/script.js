@@ -437,7 +437,7 @@ imagenGuardar.addEventListener("click", () => { // Cambia botonGuardar por image
             URL.revokeObjectURL(url);
 
             // Mostrar el mensaje de confirmación sin el nombre del sitio
-            mostrarMensaje("Foto guardada");
+            mostrarMensaje("✅ Foto guardada");
         }, "image/jpeg"); // Formato JPEG
     } catch (error) {
         console.error("Error al intentar guardar la imagen:", error);
