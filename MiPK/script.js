@@ -386,7 +386,7 @@ function mostrarMensaje(mensaje) {
     mensajeDiv.style.padding = "10px 20px";
     mensajeDiv.style.borderRadius = "5px";
     mensajeDiv.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.1)";
-    mensajeDiv.style.zIndex = "1000";
+   mensajeDiv.style.zIndex = "9999"; // Asegura que esté por encima de todo
     mensajeDiv.style.fontSize = "1.2em";
     document.body.appendChild(mensajeDiv);
 
