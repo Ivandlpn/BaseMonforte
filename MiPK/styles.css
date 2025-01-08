@@ -98,7 +98,7 @@ header img {
   height: 65px; /* Cambia a un tamaño mayor */
   background: url('img/camara.png') no-repeat center center;
   background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
-  margin-left: 5px;
+  margin-left: 7px;
   position: absolute;
   left: 0;
 }
@@ -108,7 +108,7 @@ header img {
     height: 65px;
      background: url('img/mas.png') no-repeat center center;
     background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
-    margin-right: 5px; /* Margen derecho para separación */
+    margin-right: 7px; /* Margen derecho para separación */
  
 }
 
