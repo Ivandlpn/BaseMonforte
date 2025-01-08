@@ -382,7 +382,7 @@ function mostrarMensaje(mensaje) {
     const mensajeDiv = document.createElement("div");
     mensajeDiv.textContent = mensaje;
     mensajeDiv.style.position = "fixed";
-    mensajeDiv.style.bottom = "50px";
+    mensajeDiv.style.bottom = "300px";
     mensajeDiv.style.left = "50%";
     mensajeDiv.style.transform = "translateX(-50%)";
     mensajeDiv.style.backgroundColor = "#28a745"; // Verde de confirmación
@@ -394,6 +394,12 @@ function mostrarMensaje(mensaje) {
     mensajeDiv.style.fontSize = "1.2em";
     mensajeDiv.style.border = "1px solid #ffffff"; // Borde blanco para visibilidad
     mensajeDiv.style.opacity = "0.9"; // Ligera opacidad
+
+
+    // Ajuste del ancho
+    mensajeDiv.style.minWidth = "200px"; // Ancho mínimo
+    mensajeDiv.style.width = "auto"; // Permite que crezca si es necesario
+    
     document.body.appendChild(mensajeDiv);
 
     setTimeout(() => {
