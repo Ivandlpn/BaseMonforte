@@ -392,6 +392,13 @@ mensajeDiv.style.opacity = "0.9"; // Ligera opacidad
     mensajeDiv.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.1)";
    mensajeDiv.style.zIndex = "9999"; // Asegura que esté por encima de todo
     mensajeDiv.style.fontSize = "1.2em";
+
+  // Sin ancho fijo para que se ajuste al texto
+    mensajeDiv.style.width = "auto";
+    mensajeDiv.style.minWidth = "50px"; // Un ancho mínimo para mensajes muy cortos
+    mensajeDiv.style.height = "auto";
+
+    
     document.body.appendChild(mensajeDiv);
 
     setTimeout(() => {
