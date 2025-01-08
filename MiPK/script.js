@@ -380,27 +380,22 @@ contenedorBotones.appendChild(imagenGuardar); // Añadir la imagen al contenedor
 // Mantener la función mostrarMensaje como está
 function mostrarMensaje(mensaje) {
     const mensajeDiv = document.createElement("div");
-    mensajeDiv.textContent = mensaje;
-    mensajeDiv.style.position = "fixed";
-    mensajeDiv.style.bottom = "20px";
-    mensajeDiv.style.left = "50%";
+    mmensajeDiv.style.position = "fixed";
     mensajeDiv.style.top = "50%"; // Centrado vertical
     mensajeDiv.style.left = "50%"; // Centrado horizontal
-    mensajeDiv.style.transform = "translate(-50%, -50%)"; 
+    mensajeDiv.style.transform = "translate(-50%, -50%)"; // Ajusta para centrarlo perfectamente
     mensajeDiv.style.backgroundColor = "#28a745"; // Verde de confirmación
     mensajeDiv.style.color = "white";
-    mensajeDiv.style.border = "1px solid #ffffff"; // Borde blanco
-mensajeDiv.style.opacity = "0.9"; // Ligera opacidad
-    mensajeDiv.style.padding = "10px 20px";
-    mensajeDiv.style.borderRadius = "5px";
+    mensajeDiv.style.padding = "10px 15px"; // Espacio ajustado alrededor del texto
+    mensajeDiv.style.borderRadius = "8px"; // Esquinas redondeadas compactas
     mensajeDiv.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.1)";
-   mensajeDiv.style.zIndex = "9999"; // Asegura que esté por encima de todo
-    mensajeDiv.style.fontSize = "1.2em";
-
-  // Sin ancho fijo para que se ajuste al texto
-    mensajeDiv.style.width = "auto";
-    mensajeDiv.style.minWidth = "50px"; // Un ancho mínimo para mensajes muy cortos
-    mensajeDiv.style.height = "auto";
+    mensajeDiv.style.zIndex = "9999"; // Asegura que esté encima de todo
+    mensajeDiv.style.fontSize = "1em"; // Tamaño de fuente más moderado
+    mensajeDiv.style.textAlign = "center"; // Centrar el texto
+    mensajeDiv.style.whiteSpace = "nowrap"; // Evita saltos de línea
+    mensajeDiv.style.width = "auto"; // Ancho dinámico
+    mensajeDiv.style.height = "auto"; // Altura dinámica
+    mensajeDiv.style.minWidth = "50px"; // Evita que sea demasiado pequeña
 
     
     document.body.appendChild(mensajeDiv);
