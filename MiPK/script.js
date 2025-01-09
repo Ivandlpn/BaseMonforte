@@ -101,12 +101,14 @@ function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente) {
     const { latitud: latActual, longitud: lonActual } = pkActual;
     const { latitud: latSiguiente, longitud: lonSiguiente } = pkSiguiente;
 
-    // Calcular la latitud promedio de la vía entre el PK actual y el siguiente
-    const latPromedioVia = (latActual + latSiguiente) / 2;
+    // Producto vectorial para determinar el lado
+    const resultado = (lonSiguiente - lonActual) * (latUsuario - latActual) -
+                      (latSiguiente - latActual) * (lonUsuario - lonActual);
 
-    // Comparar la latitud del usuario con la latitud promedio de la vía
-    return latUsuario > latPromedioVia ? "Vía 1" : "Vía 2";
+    // Asignar lado según el signo del producto vectorial
+    return resultado > 0 ? "Vía 1" : "Vía 2";
 }
+
 
 // Definir el nuevo icono para el PK más cercano
 const iconoPK = L.icon({
