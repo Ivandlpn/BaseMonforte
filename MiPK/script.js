@@ -105,9 +105,10 @@ function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente) {
     const resultado = (lonSiguiente - lonActual) * (latUsuario - latActual) -
                       (latSiguiente - latActual) * (lonUsuario - lonActual);
 
-    // Asignar lado según el signo del producto vectorial
-    return resultado > 0 ? "Vía 1" : "Vía 2";
+    // Invertir lógica si está asignando los lados al revés
+    return resultado > 0 ? "Vía 2" : "Vía 1";
 }
+
 
 
 // Definir el nuevo icono para el PK más cercano
