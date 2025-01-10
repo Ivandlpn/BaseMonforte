@@ -214,6 +214,7 @@ function mostrarPKMasCercano(pk) {
 
 
 
+
 function actualizarPosicionPK(pk) {
     if (!marcadorPK) {
         marcadorPK = L.marker([pk.latitud, pk.longitud], { icon: iconoPK }).addTo(mapa)
@@ -248,6 +249,10 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
         centradoAutomaticamente = true;
     }
 });
+
+// Asegúrate de que tengan la clase de animación
+botonCamara.classList.add("boton-animado");
+botonMas.classList.add("boton-animado");
 
 document.getElementById("iconoMas").addEventListener("click", () => {
      calcularYActualizarPK(); // Llama a la función de cálculo del PK
