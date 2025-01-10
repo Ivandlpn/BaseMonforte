@@ -285,7 +285,7 @@ document.getElementById("iconoMas").addEventListener("click", () => {
             window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
             mostrarPKMasCercano(window.pkMasCercano);
             actualizarPosicionPK(window.pkMasCercano);
-            mostrarMensaje("✅ PK actualizado correctamente.");
+            mostrarMensaje("🔄 PK Actualizado");
         })
         .catch(error => console.error('Error al combinar datos de los archivos:', error));
 });
