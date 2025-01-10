@@ -1,60 +1,28 @@
 let mapa, marcadorActual, marcadorPK, iconoUsuario;
 let centradoAutomaticamente = true;
 
-// Rastrear la posición continuamente
+let lat, lon;
+
+// Rastrea la posición continuamente, pero no realiza acciones automáticamente
 navigator.geolocation.watchPosition((position) => {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
+    lat = position.coords.latitude;
+    lon = position.coords.longitude;
 
     if (!mapa) {
         inicializarMapa(lat, lon);
     }
 
+    // Solo actualiza la posición del marcador sin recalcular el PK
     if (centradoAutomaticamente) {
         actualizarPosicionUsuario(lat, lon);
     }
-
-    async function cargarArchivosJSON(rutas) {
-    const todasPromesas = rutas.map(ruta =>
-        fetch(ruta)
-            .then(response => response.json())
-            .catch(error => {
-                console.error(`Error al cargar ${ruta}:`, error);
-                return []; // Devuelve un array vacío si falla
-            })
-    );
-
-    const datosCargados = await Promise.all(todasPromesas);
-    // Combina todos los arrays de datos en uno solo
-    return datosCargados.flat();
-}
-
-
-    const rutasArchivos = [
-            "./doc/L40Ar.json",
-            "./doc/L40Br.json",
-          "./doc/L40Cr.json",
-           "./doc/L42Ar.json",
-            "./doc/L42B.json",
-            "./doc/L46.json",
-            "./doc/L48.json" // Añade más rutas según sea necesario
-];
-
-cargarArchivosJSON(rutasArchivos)
-    .then(datosCombinados => {
-        // Calcular el PK más cercano con todos los datos combinados
-        window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
-        mostrarPKMasCercano(window.pkMasCercano);
-        actualizarPosicionPK(window.pkMasCercano);
-    })
-    .catch(error => console.error('Error al combinar datos de los archivos:', error));
-
 }, 
 (error) => console.error('Error al obtener ubicación:', error), {
     enableHighAccuracy: true,
     maximumAge: 0,
     timeout: 10000
 });
+
 
 function inicializarMapa(lat, lon) {
     mapa = L.map('map', {
@@ -204,6 +172,47 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
         centradoAutomaticamente = true;
     }
 });
+
+document.getElementById("iconoMas").addEventListener("click", () => {
+    if (!lat || !lon) {
+        alert("No se ha obtenido la ubicación actual del usuario.");
+        return;
+    }
+
+    async function cargarArchivosJSON(rutas) {
+        const todasPromesas = rutas.map(ruta =>
+            fetch(ruta)
+                .then(response => response.json())
+                .catch(error => {
+                    console.error(`Error al cargar ${ruta}:`, error);
+                    return []; // Devuelve un array vacío si falla
+                })
+        );
+
+        const datosCargados = await Promise.all(todasPromesas);
+        return datosCargados.flat(); // Combina todos los datos en un solo array
+    }
+
+    const rutasArchivos = [
+        "./doc/L40Ar.json",
+        "./doc/L40Br.json",
+        "./doc/L40Cr.json",
+        "./doc/L42Ar.json",
+        "./doc/L42B.json",
+        "./doc/L46.json",
+        "./doc/L48.json"
+    ];
+
+    cargarArchivosJSON(rutasArchivos)
+        .then(datosCombinados => {
+            window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
+            mostrarPKMasCercano(window.pkMasCercano);
+            actualizarPosicionPK(window.pkMasCercano);
+            mostrarMensaje("✅ PK actualizado correctamente.");
+        })
+        .catch(error => console.error('Error al combinar datos de los archivos:', error));
+});
+
 
 // Modificación para abrir la cámara y añadir un botón
 document.getElementById("iconoCamara").addEventListener("click", () => {
