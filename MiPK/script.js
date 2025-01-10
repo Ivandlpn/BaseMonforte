@@ -34,7 +34,7 @@ function calcularYActualizarPK() {
     // Mostrar texto temporal "Buscando PK..."
     const pkElement = document.getElementById("pkCercano");
     pkElement.textContent = "Buscando PK...";
-    pkElement.style.fontSize = "20px";
+    //pkElement.style.fontSize = "20px";
 
     
     if (!lat || !lon) {
