@@ -106,7 +106,7 @@ header img {
 #iconoMas {
     width: 65px;
     height: 65px;
-     background: url('img/mas.png') no-repeat center center;
+     background: url('img/mas1.png') no-repeat center center;
     background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
     margin-right: 10px; /* Margen derecho para separación */
  
