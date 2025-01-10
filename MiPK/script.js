@@ -1,7 +1,9 @@
 let mapa, marcadorActual, marcadorPK, iconoUsuario;
 let centradoAutomaticamente = true;
 
-let lat, lon;
+let lat, lon; // Coordenadas del usuario
+let primeraEjecucion = true; // Bandera para controlar la primera actualización
+
 
 // Rastrea la posición continuamente, pero no realiza acciones automáticamente
 navigator.geolocation.watchPosition((position) => {
@@ -12,9 +14,14 @@ navigator.geolocation.watchPosition((position) => {
         inicializarMapa(lat, lon);
     }
 
-    // Solo actualiza la posición del marcador sin recalcular el PK
     if (centradoAutomaticamente) {
         actualizarPosicionUsuario(lat, lon);
+    }
+
+    // Cálculo inicial del PK más cercano (solo la primera vez)
+    if (primeraEjecucion) {
+        primeraEjecucion = false; // Cambia la bandera para evitar futuras ejecuciones automáticas
+        calcularYActualizarPK();
     }
 }, 
 (error) => console.error('Error al obtener ubicación:', error), {
@@ -22,6 +29,46 @@ navigator.geolocation.watchPosition((position) => {
     maximumAge: 0,
     timeout: 10000
 });
+
+function calcularYActualizarPK() {
+    if (!lat || !lon) {
+        console.error("No se ha obtenido la ubicación actual del usuario.");
+        return;
+    }
+
+    const rutasArchivos = [
+        "./doc/L40Ar.json",
+        "./doc/L40Br.json",
+        "./doc/L40Cr.json",
+        "./doc/L42Ar.json",
+        "./doc/L42B.json",
+        "./doc/L46.json",
+        "./doc/L48.json"
+    ];
+
+    async function cargarArchivosJSON(rutas) {
+        const todasPromesas = rutas.map(ruta =>
+            fetch(ruta)
+                .then(response => response.json())
+                .catch(error => {
+                    console.error(`Error al cargar ${ruta}:`, error);
+                    return [];
+                })
+        );
+        return (await Promise.all(todasPromesas)).flat();
+    }
+
+    cargarArchivosJSON(rutasArchivos)
+        .then(datosCombinados => {
+            window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
+            mostrarPKMasCercano(window.pkMasCercano);
+            actualizarPosicionPK(window.pkMasCercano);
+            mostrarMensaje("✅ PK inicial calculado correctamente.");
+        })
+        .catch(error => console.error('Error al combinar datos de los archivos:', error));
+}
+
+
 
 
 function inicializarMapa(lat, lon) {
@@ -174,6 +221,7 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
 });
 
 document.getElementById("iconoMas").addEventListener("click", () => {
+     calcularYActualizarPK(); // Llama a la función de cálculo del PK
     if (!lat || !lon) {
         alert("No se ha obtenido la ubicación actual del usuario.");
         return;
