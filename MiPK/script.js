@@ -69,6 +69,35 @@ function calcularYActualizarPK() {
 }
 
 
+// Mantener la función mostrarMensaje como está
+function mostrarMensaje(mensaje) {
+    const mensajeDiv = document.createElement("div");
+    mensajeDiv.textContent = mensaje;
+    mensajeDiv.style.position = "fixed";
+    mensajeDiv.style.bottom = "300px";
+    mensajeDiv.style.left = "50%";
+    mensajeDiv.style.transform = "translateX(-50%)";
+    mensajeDiv.style.backgroundColor = "#28a745"; // Verde de confirmación
+    mensajeDiv.style.color = "white";
+    mensajeDiv.style.padding = "10px 20px";
+    mensajeDiv.style.borderRadius = "5px";
+    mensajeDiv.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.1)";
+    mensajeDiv.style.zIndex = "9999"; // Alto z-index
+    mensajeDiv.style.fontSize = "1.2em";
+    mensajeDiv.style.border = "1px solid #ffffff"; // Borde blanco para visibilidad
+    mensajeDiv.style.opacity = "0.9"; // Ligera opacidad
+
+
+    // Ajuste del ancho
+    mensajeDiv.style.minWidth = "200px"; // Ancho mínimo
+    mensajeDiv.style.width = "auto"; // Permite que crezca si es necesario
+    
+    document.body.appendChild(mensajeDiv);
+
+    setTimeout(() => {
+        mensajeDiv.remove();
+    }, 3000); // El mensaje desaparecerá después de 10 segundos
+}
 
 
 function inicializarMapa(lat, lon) {
@@ -437,35 +466,6 @@ imagenGuardar.classList.add("boton-control"); // Añadir clase común
 imagenGuardar.style.cssText = "cursor: pointer; width: 60px; height: 50px;"; // Ajusta el tamaño según necesites
 contenedorBotones.appendChild(imagenGuardar); // Añadir la imagen al contenedor
 
-// Mantener la función mostrarMensaje como está
-function mostrarMensaje(mensaje) {
-    const mensajeDiv = document.createElement("div");
-    mensajeDiv.textContent = mensaje;
-    mensajeDiv.style.position = "fixed";
-    mensajeDiv.style.bottom = "300px";
-    mensajeDiv.style.left = "50%";
-    mensajeDiv.style.transform = "translateX(-50%)";
-    mensajeDiv.style.backgroundColor = "#28a745"; // Verde de confirmación
-    mensajeDiv.style.color = "white";
-    mensajeDiv.style.padding = "10px 20px";
-    mensajeDiv.style.borderRadius = "5px";
-    mensajeDiv.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.1)";
-    mensajeDiv.style.zIndex = "9999"; // Alto z-index
-    mensajeDiv.style.fontSize = "1.2em";
-    mensajeDiv.style.border = "1px solid #ffffff"; // Borde blanco para visibilidad
-    mensajeDiv.style.opacity = "0.9"; // Ligera opacidad
-
-
-    // Ajuste del ancho
-    mensajeDiv.style.minWidth = "200px"; // Ancho mínimo
-    mensajeDiv.style.width = "auto"; // Permite que crezca si es necesario
-    
-    document.body.appendChild(mensajeDiv);
-
-    setTimeout(() => {
-        mensajeDiv.remove();
-    }, 3000); // El mensaje desaparecerá después de 10 segundos
-}
 
 
 // Cambiar el evento click del botón por el evento click de la imagen
