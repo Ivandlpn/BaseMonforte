@@ -37,6 +37,40 @@ function inicializarMapa(lat, lon) {
     });
 }
 
+document.getElementById("actualizarUbicacion").addEventListener("click", () => {
+    centradoAutomaticamente = true;
+
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            if (!mapa) {
+                inicializarMapa(lat, lon);
+            }
+
+            actualizarPosicionUsuario(lat, lon);
+
+            // Cargar los datos y calcular el PK más cercano
+            cargarArchivosJSON(["./doc/L40Ar.json", "./doc/L40Br.json", "./doc/L40Cr.json", "./doc/L42Ar.json", "./doc/L42B.json", "./doc/L46.json", "./doc/L48.json"])
+                .then(datosCombinados => {
+                    const pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
+                    mostrarPKMasCercano(pkMasCercano);
+                })
+                .catch(error => console.error('Error al combinar datos de los archivos:', error));
+        },
+        (error) => {
+            console.error('Error al obtener ubicación:', error);
+        },
+        {
+            enableHighAccuracy: true,
+            maximumAge: 5000,
+            timeout: 10000
+        }
+    );
+});
+
+
 function actualizarPosicionUsuario(lat, lon) {
     marcadorActual.setLatLng([lat, lon]);
     if (centradoAutomaticamente) {
