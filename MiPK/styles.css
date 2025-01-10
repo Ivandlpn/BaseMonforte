@@ -1,182 +1,236 @@
-tive/* Estilos globales */
-html, body {
+/* Variables CSS para mejor mantenimiento */
+:root {
+  --primary-color: #3600FA;
+  --secondary-color: #003f5c;
+  --white: #ffffff;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.2);
+  --gradient-start: blue;
+  --gradient-end: red;
+  --header-height: 100px;
+  --footer-padding: 0;
+  --border-radius: 10px;
+  --transition-speed: 0.3s;
+}
+
+/* Reset y estilos base */
+*, *::before, *::after {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
   height: 100%;
   overflow: hidden;
   font-family: Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Layout principal */
 .contenedor {
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-height: 100vh;
 }
 
+/* Header optimizado */
 header {
-  text-align: center;
-  padding: 0;
-  flex: 0 0 auto;
-  height: 100px;
+  flex: 0 0 var(--header-height);
+  position: relative;
+  z-index: 2;
 }
 
 header img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
+/* Línea gradiente optimizada */
 .linea-gradiente {
-    position: relative; /* Siempre visible en la ventana */
-   // top: 100px; /* Ajusta según la altura de la cabecera */
-    left: 0;
-    width: 100%;
-    height: 4px; /* Altura de la línea */
-    background: linear-gradient(to right, blue, red); /* Gradiente */
-    z-index: 1000; /* Asegura que esté por encima del mapa */
+  height: 4px;
+  background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
+  position: relative;
+  z-index: 3;
 }
 
-/* Estilos para el contenedor del mapa */
+/* Contenedor del mapa optimizado */
 #map-container {
-    width: 100%; /* Establece un ancho fijo o porcentual */
-    position: relative;
-    margin: 0 auto; /* Centra el contenedor */
-  z-index: 500
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  width: 100%;
 }
 
 #map {
   height: 100%;
   width: 100%;
-  position: relative;
 }
 
+/* Botón de actualización optimizado */
 #actualizarUbicacion {
   position: absolute;
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000;
-  cursor: pointer;
-  width: 85px; /* Ajusta según el tamaño deseado */
-  height: 40px; /* Ajusta para mantener la proporción */
-  background: url('img/centrar.png') no-repeat center center;
-  background-size: contain;
+  z-index: 4;
+  width: 85px;
+  height: 40px;
+  background: url('img/centrar.png') no-repeat center/contain;
   border: none;
-  padding: 0;
-  font-size: 0; /* Oculta cualquier texto */
+  cursor: pointer;
+  transition: transform var(--transition-speed) ease;
 }
 
 #actualizarUbicacion:hover {
-  background-color: #005f99;
+  transform: translateX(-50%) scale(1.05);
 }
 
-#actualizarUbicacion:active,
-#actualizarUbicacion:focus {
-  font-size: 1em; /* Asegura que no cambie el tamaño */
-  outline: none; /* Opcional: elimina el contorno */
-  transform: translateX(-50%); /* Mantén la misma posición */
- 
+#actualizarUbicacion:active {
+  transform: translateX(-50%) scale(0.95);
 }
 
-
-/* Sección de la tarjeta con el icono */
+/* Sección de cálculo PK optimizada */
 #calculoPK {
   display: flex;
   align-items: center;
-  /* justify-content: center;*/
+  justify-content: flex-end;
   padding: 10px;
-  background-color: #ffffff;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-  justify-content: flex-end; /* Alinea el contenido a la derecha */
-  text-align: center;
+  background-color: var(--white);
+  box-shadow: 0 -2px 5px var(--shadow-light);
+  position: relative;
+  z-index: 2;
 }
 
-
+/* Iconos optimizados */
+#iconoCamara,
+#iconoMas {
+  width: 65px;
+  height: 65px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+}
 
 #iconoCamara {
-  width: 65px; /* Cambia a un tamaño mayor */
-  height: 65px; /* Cambia a un tamaño mayor */
-  background: url('img/camara.png') no-repeat center center;
-  background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
-  margin-left: 10px;
+  background-image: url('img/camara.png');
   position: absolute;
-  left: 0;
+  left: 10px;
 }
 
 #iconoMas {
-    width: 65px;
-    height: 65px;
-     background: url('img/mas1.png') no-repeat center center;
-    background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
-    margin-right: 10px; /* Margen derecho para separación */
- 
+  background-image: url('img/mas1.png');
+  margin-right: 10px;
 }
 
-
-
+/* Tarjeta PK optimizada */
 #calculoPK .tarjeta {
-  display: inline-block;
-  background-color: #3600FA; /* Azul cartelón */
-  border: 2px solid #003f5c;
-  border-radius: 10px;
+  background-color: var(--primary-color);
+  border: 2px solid var(--secondary-color);
+  border-radius: var(--border-radius);
   padding: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 250px; /* Tamaño fijo */
-  height: 85px; /* Tamaño fijo */
+  box-shadow: 0 4px 10px var(--shadow-light);
   width: 50%;
   max-width: 400px;
+  height: 85px;
   margin-right: 5px;
-  text-align: center; /* Centrar el contenido */
-  overflow: hidden; /* Manejar desbordamiento de contenido */
+  text-align: center;
+  overflow: hidden;
+  transition: transform var(--transition-speed) ease;
+}
+
+#calculoPK .tarjeta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px var(--shadow-medium);
 }
 
 #calculoPK .tarjeta h2 {
   margin: 0;
   font-size: 2.5em;
-  color: #ffffff;
-  text-align: center;
+  color: var(--white);
 }
 
 #calculoPK .tarjeta p {
-  font-size: 0.8em; /* Tamaño más pequeño */
-    color: #ffffff;      /* Color gris tenue */
+  font-size: 0.8em;
+  color: var(--white);
+  margin-top: 5px;
 }
 
+/* Clases de utilidad */
 .pk-grande {
-    font-size: 1em; /* Tamaño más grande */
-    color: #011145;  /* Azul oscuro */
+  font-size: 1em;
+  color: #011145;
 }
 
 .via-pequena {
-    font-size: 0.8em; /* Tamaño más pequeño */
-    color: #ffffff;      /* Color gris tenue */
+  font-size: 0.8em;
+  color: var(--white);
 }
 
+/* Footer optimizado */
 footer {
-  background-color: #ffffff;
-  padding: 0; /* Elimina el padding para que la imagen ocupe todo el espacio */
-  text-align: center;
-  flex: 0 0 auto;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  background-color: var(--white);
+  padding: var(--footer-padding);
+  box-shadow: 0 -2px 5px var(--shadow-light);
+  z-index: 2;
 }
 
 footer img {
-  width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
-  height: auto; /* Mantiene la proporción de la imagen */
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
+/* Controles de cámara optimizados */
 .boton-control {
-    margin: 0 5px; /* Ajusta el margen según sea necesario */
+  margin: 0 5px;
+  transition: transform var(--transition-speed) ease;
 }
 
+.boton-control:hover {
+  transform: scale(1.05);
+}
 
-  #actualizarUbicacion {
-    font-size: 0.9em;
+.boton-control:active {
+  transform: scale(0.95);
+}
+
+/* Media queries optimizadas */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 80px;
   }
 
-  header img {
-    height: auto;
+  #calculoPK .tarjeta {
+    width: 70%;
+  }
+  
+  #calculoPK .tarjeta h2 {
+    font-size: 2em;
   }
 }
 
+@media (max-width: 480px) {
+  #calculoPK .tarjeta {
+    width: 85%;
+  }
+  
+  #iconoCamara,
+  #iconoMas {
+    width: 55px;
+    height: 55px;
+  }
+}
 
+/* Mejoras de rendimiento */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
