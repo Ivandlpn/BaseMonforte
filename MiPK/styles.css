@@ -1,34 +1,38 @@
-/* Variables CSS para mejor mantenimiento */
+/* Variables CSS globales para mantener consistencia con la identidad corporativa
+   y facilitar cambios a nivel global */
 :root {
-  --primary-color: #3600FA;
-  --secondary-color: #003f5c;
+  --primary-color: #3600FA;    /* Azul corporativo principal */
+  --secondary-color: #003f5c;  /* Azul secundario para elementos de apoyo */
   --white: #ffffff;
   --shadow-light: rgba(0, 0, 0, 0.1);
   --shadow-medium: rgba(0, 0, 0, 0.2);
-  --gradient-start: blue;
-  --gradient-end: red;
+  --gradient-start: blue;      /* Inicio del gradiente corporativo */
+  --gradient-end: red;         /* Fin del gradiente corporativo */
   --header-height: 100px;
   --footer-padding: 0;
   --border-radius: 10px;
-  --transition-speed: 0.3s;
+  --transition-speed: 0.3s;    /* Velocidad estándar para animaciones */
 }
 
-/* Reset y estilos base */
+/* Reset básico para asegurar consistencia entre navegadores
+   Especialmente importante para aplicación de campo donde se pueden usar diferentes dispositivos */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Configuración base del documento 
+   overflow: hidden previene scroll accidental durante uso en campo */
 html, body {
   height: 100%;
   overflow: hidden;
   font-family: Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;  /* Mejora la legibilidad del texto en pantallas */
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Layout principal */
+/* Contenedor principal con diseño flexible para adaptarse a diferentes tamaños de pantalla */
 .contenedor {
   display: flex;
   flex-direction: column;
@@ -36,13 +40,14 @@ html, body {
   min-height: 100vh;
 }
 
-/* Header optimizado */
+/* Cabecera con altura fija para mantener consistencia en la interfaz */
 header {
   flex: 0 0 var(--header-height);
   position: relative;
-  z-index: 2;
+  z-index: 2;  /* Asegura que la cabecera esté por encima del mapa */
 }
 
+/* Imagen de cabecera adaptable */
 header img {
   width: 100%;
   height: 100%;
@@ -50,7 +55,8 @@ header img {
   display: block;
 }
 
-/* Línea gradiente optimizada */
+/* Línea decorativa con gradiente corporativo
+   Sirve como separador visual entre secciones */
 .linea-gradiente {
   height: 4px;
   background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
@@ -58,7 +64,8 @@ header img {
   z-index: 3;
 }
 
-/* Contenedor del mapa optimizado */
+/* Contenedor del mapa principal
+   flex: 1 permite que ocupe todo el espacio disponible */
 #map-container {
   flex: 1;
   position: relative;
@@ -66,12 +73,14 @@ header img {
   width: 100%;
 }
 
+/* Mapa base que ocupa todo el contenedor disponible */
 #map {
   height: 100%;
   width: 100%;
 }
 
-/* Botón de actualización optimizado */
+/* Botón de centrado en ubicación actual
+   Posicionado en la parte inferior del mapa para fácil acceso */
 #actualizarUbicacion {
   position: absolute;
   bottom: 10px;
@@ -86,6 +95,7 @@ header img {
   transition: transform var(--transition-speed) ease;
 }
 
+/* Efectos interactivos para el botón de centrado */
 #actualizarUbicacion:hover {
   transform: translateX(-50%) scale(1.05);
 }
@@ -94,7 +104,8 @@ header img {
   transform: translateX(-50%) scale(0.95);
 }
 
-/* Sección de cálculo PK optimizada */
+/* Sección de información del PK
+   Diseñada para mostrar claramente el punto kilométrico actual */
 #calculoPK {
   display: flex;
   align-items: center;
@@ -106,7 +117,8 @@ header img {
   z-index: 2;
 }
 
-/* Iconos optimizados */
+/* Iconos de acción: cámara y actualización
+   Tamaño estandarizado para consistencia visual */
 #iconoCamara,
 #iconoMas {
   width: 65px;
@@ -117,18 +129,21 @@ header img {
   flex-shrink: 0;
 }
 
+/* Icono de cámara para captura de imágenes en campo */
 #iconoCamara {
   background-image: url('img/camara.png');
   position: absolute;
   left: 10px;
 }
 
+/* Icono de actualización de PK */
 #iconoMas {
   background-image: url('img/mas1.png');
   margin-right: 10px;
 }
 
-/* Tarjeta PK optimizada */
+/* Tarjeta que muestra el PK actual
+   Diseñada para máxima legibilidad en condiciones de campo */
 #calculoPK .tarjeta {
   background-color: var(--primary-color);
   border: 2px solid var(--secondary-color);
@@ -144,11 +159,8 @@ header img {
   transition: transform var(--transition-speed) ease;
 }
 
-#calculoPK .tarjeta:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px var(--shadow-medium);
-}
-
+/* Estilos para el texto del PK
+   Tamaño grande para visibilidad en exteriores */
 #calculoPK .tarjeta h2 {
   margin: 0;
   font-size: 2.5em;
@@ -161,7 +173,7 @@ header img {
   margin-top: 5px;
 }
 
-/* Clases de utilidad */
+/* Clases de utilidad para diferentes tamaños de texto en PKs */
 .pk-grande {
   font-size: 1em;
   color: #011145;
@@ -172,7 +184,7 @@ header img {
   color: var(--white);
 }
 
-/* Footer optimizado */
+/* Pie de página con imagen corporativa */
 footer {
   background-color: var(--white);
   padding: var(--footer-padding);
@@ -186,7 +198,7 @@ footer img {
   display: block;
 }
 
-/* Controles de cámara optimizados */
+/* Controles de cámara con efectos de interacción */
 .boton-control {
   margin: 0 5px;
   transition: transform var(--transition-speed) ease;
@@ -200,34 +212,36 @@ footer img {
   transform: scale(0.95);
 }
 
-/* Media queries optimizadas */
+/* Ajustes responsive para diferentes tamaños de pantalla */
 @media (max-width: 768px) {
   :root {
-    --header-height: 80px;
+    --header-height: 80px;  /* Cabecera más compacta en móviles */
   }
 
   #calculoPK .tarjeta {
-    width: 70%;
+    width: 70%;  /* Tarjeta más ancha en pantallas pequeñas */
   }
   
   #calculoPK .tarjeta h2 {
-    font-size: 2em;
+    font-size: 2em;  /* Texto ligeramente más pequeño en móviles */
   }
 }
 
+/* Ajustes adicionales para pantallas muy pequeñas */
 @media (max-width: 480px) {
   #calculoPK .tarjeta {
-    width: 85%;
+    width: 85%;  /* Tarjeta aún más ancha en pantallas muy pequeñas */
   }
   
   #iconoCamara,
   #iconoMas {
     width: 55px;
-    height: 55px;
+    height: 55px;  /* Iconos más pequeños en móviles */
   }
 }
 
-/* Mejoras de rendimiento */
+/* Optimización para usuarios que prefieren menos movimiento
+   Importante para accesibilidad */
 @media (prefers-reduced-motion: reduce) {
   * {
     transition: none !important;
