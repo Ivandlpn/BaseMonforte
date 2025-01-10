@@ -1,250 +1,182 @@
-/* Variables CSS globales para mantener consistencia con la identidad corporativa
-   y facilitar cambios a nivel global */
-:root {
-  --primary-color: #3600FA;    /* Azul corporativo principal */
-  --secondary-color: #003f5c;  /* Azul secundario para elementos de apoyo */
-  --white: #ffffff;
-  --shadow-light: rgba(0, 0, 0, 0.1);
-  --shadow-medium: rgba(0, 0, 0, 0.2);
-  --gradient-start: blue;      /* Inicio del gradiente corporativo */
-  --gradient-end: red;         /* Fin del gradiente corporativo */
-  --header-height: 100px;
-  --footer-padding: 0;
-  --border-radius: 10px;
-  --transition-speed: 0.3s;    /* Velocidad estándar para animaciones */
-}
-
-/* Reset básico para asegurar consistencia entre navegadores
-   Especialmente importante para aplicación de campo donde se pueden usar diferentes dispositivos */
-*, *::before, *::after {
+tive/* Estilos globales */
+html, body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-/* Configuración base del documento 
-   overflow: hidden previene scroll accidental durante uso en campo */
-html, body {
   height: 100%;
   overflow: hidden;
   font-family: Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;  /* Mejora la legibilidad del texto en pantallas */
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Contenedor principal con diseño flexible para adaptarse a diferentes tamaños de pantalla */
 .contenedor {
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 100vh;
 }
 
-/* Cabecera con altura fija para mantener consistencia en la interfaz */
 header {
-  flex: 0 0 var(--header-height);
-  position: relative;
-  z-index: 2;  /* Asegura que la cabecera esté por encima del mapa */
+  text-align: center;
+  padding: 0;
+  flex: 0 0 auto;
+  height: 100px;
 }
 
-/* Imagen de cabecera adaptable */
 header img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
 }
 
-/* Línea decorativa con gradiente corporativo
-   Sirve como separador visual entre secciones */
 .linea-gradiente {
-  height: 4px;
-  background: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
-  position: relative;
-  z-index: 3;
+    position: relative; /* Siempre visible en la ventana */
+   // top: 100px; /* Ajusta según la altura de la cabecera */
+    left: 0;
+    width: 100%;
+    height: 4px; /* Altura de la línea */
+    background: linear-gradient(to right, blue, red); /* Gradiente */
+    z-index: 1000; /* Asegura que esté por encima del mapa */
 }
 
-/* Contenedor del mapa principal
-   flex: 1 permite que ocupe todo el espacio disponible */
+/* Estilos para el contenedor del mapa */
 #map-container {
-  flex: 1;
-  position: relative;
-  z-index: 1;
-  width: 100%;
+    width: 100%; /* Establece un ancho fijo o porcentual */
+    position: relative;
+    margin: 0 auto; /* Centra el contenedor */
+  z-index: 500
 }
 
-/* Mapa base que ocupa todo el contenedor disponible */
 #map {
   height: 100%;
   width: 100%;
+  position: relative;
 }
 
-/* Botón de centrado en ubicación actual
-   Posicionado en la parte inferior del mapa para fácil acceso */
 #actualizarUbicacion {
   position: absolute;
   bottom: 10px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 4;
-  width: 85px;
-  height: 40px;
-  background: url('img/centrar.png') no-repeat center/contain;
-  border: none;
+  z-index: 1000;
   cursor: pointer;
-  transition: transform var(--transition-speed) ease;
+  width: 85px; /* Ajusta según el tamaño deseado */
+  height: 40px; /* Ajusta para mantener la proporción */
+  background: url('img/centrar.png') no-repeat center center;
+  background-size: contain;
+  border: none;
+  padding: 0;
+  font-size: 0; /* Oculta cualquier texto */
 }
 
-/* Efectos interactivos para el botón de centrado */
 #actualizarUbicacion:hover {
-  transform: translateX(-50%) scale(1.05);
+  background-color: #005f99;
 }
 
-#actualizarUbicacion:active {
-  transform: translateX(-50%) scale(0.95);
+#actualizarUbicacion:active,
+#actualizarUbicacion:focus {
+  font-size: 1em; /* Asegura que no cambie el tamaño */
+  outline: none; /* Opcional: elimina el contorno */
+  transform: translateX(-50%); /* Mantén la misma posición */
+ 
 }
 
-/* Sección de información del PK
-   Diseñada para mostrar claramente el punto kilométrico actual */
+
+/* Sección de la tarjeta con el icono */
 #calculoPK {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  /* justify-content: center;*/
   padding: 10px;
-  background-color: var(--white);
-  box-shadow: 0 -2px 5px var(--shadow-light);
-  position: relative;
-  z-index: 2;
+  background-color: #ffffff;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  justify-content: flex-end; /* Alinea el contenido a la derecha */
+  text-align: center;
 }
 
-/* Iconos de acción: cámara y actualización
-   Tamaño estandarizado para consistencia visual */
-#iconoCamara,
-#iconoMas {
-  width: 65px;
-  height: 65px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  flex-shrink: 0;
-}
 
-/* Icono de cámara para captura de imágenes en campo */
+
 #iconoCamara {
-  background-image: url('img/camara.png');
+  width: 65px; /* Cambia a un tamaño mayor */
+  height: 65px; /* Cambia a un tamaño mayor */
+  background: url('img/camara.png') no-repeat center center;
+  background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
+  margin-left: 10px;
   position: absolute;
-  left: 10px;
+  left: 0;
 }
 
-/* Icono de actualización de PK */
 #iconoMas {
-  background-image: url('img/mas1.png');
-  margin-right: 10px;
+    width: 65px;
+    height: 65px;
+     background: url('img/mas1.png') no-repeat center center;
+    background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
+    margin-right: 10px; /* Margen derecho para separación */
+ 
 }
 
-/* Tarjeta que muestra el PK actual
-   Diseñada para máxima legibilidad en condiciones de campo */
+
+
 #calculoPK .tarjeta {
-  background-color: var(--primary-color);
-  border: 2px solid var(--secondary-color);
-  border-radius: var(--border-radius);
+  display: inline-block;
+  background-color: #3600FA; /* Azul cartelón */
+  border: 2px solid #003f5c;
+  border-radius: 10px;
   padding: 10px;
-  box-shadow: 0 4px 10px var(--shadow-light);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 250px; /* Tamaño fijo */
+  height: 85px; /* Tamaño fijo */
   width: 50%;
   max-width: 400px;
-  height: 85px;
   margin-right: 5px;
-  text-align: center;
-  overflow: hidden;
-  transition: transform var(--transition-speed) ease;
+  text-align: center; /* Centrar el contenido */
+  overflow: hidden; /* Manejar desbordamiento de contenido */
 }
 
-/* Estilos para el texto del PK
-   Tamaño grande para visibilidad en exteriores */
 #calculoPK .tarjeta h2 {
   margin: 0;
   font-size: 2.5em;
-  color: var(--white);
+  color: #ffffff;
+  text-align: center;
 }
 
 #calculoPK .tarjeta p {
-  font-size: 0.8em;
-  color: var(--white);
-  margin-top: 5px;
+  font-size: 0.8em; /* Tamaño más pequeño */
+    color: #ffffff;      /* Color gris tenue */
 }
 
-/* Clases de utilidad para diferentes tamaños de texto en PKs */
 .pk-grande {
-  font-size: 1em;
-  color: #011145;
+    font-size: 1em; /* Tamaño más grande */
+    color: #011145;  /* Azul oscuro */
 }
 
 .via-pequena {
-  font-size: 0.8em;
-  color: var(--white);
+    font-size: 0.8em; /* Tamaño más pequeño */
+    color: #ffffff;      /* Color gris tenue */
 }
 
-/* Pie de página con imagen corporativa */
 footer {
-  background-color: var(--white);
-  padding: var(--footer-padding);
-  box-shadow: 0 -2px 5px var(--shadow-light);
-  z-index: 2;
+  background-color: #ffffff;
+  padding: 0; /* Elimina el padding para que la imagen ocupe todo el espacio */
+  text-align: center;
+  flex: 0 0 auto;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
 footer img {
-  width: 100%;
-  height: auto;
-  display: block;
+  width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
+  height: auto; /* Mantiene la proporción de la imagen */
 }
 
-/* Controles de cámara con efectos de interacción */
 .boton-control {
-  margin: 0 5px;
-  transition: transform var(--transition-speed) ease;
+    margin: 0 5px; /* Ajusta el margen según sea necesario */
 }
 
-.boton-control:hover {
-  transform: scale(1.05);
-}
 
-.boton-control:active {
-  transform: scale(0.95);
-}
-
-/* Ajustes responsive para diferentes tamaños de pantalla */
-@media (max-width: 768px) {
-  :root {
-    --header-height: 80px;  /* Cabecera más compacta en móviles */
+  #actualizarUbicacion {
+    font-size: 0.9em;
   }
 
-  #calculoPK .tarjeta {
-    width: 70%;  /* Tarjeta más ancha en pantallas pequeñas */
-  }
-  
-  #calculoPK .tarjeta h2 {
-    font-size: 2em;  /* Texto ligeramente más pequeño en móviles */
+  header img {
+    height: auto;
   }
 }
 
-/* Ajustes adicionales para pantallas muy pequeñas */
-@media (max-width: 480px) {
-  #calculoPK .tarjeta {
-    width: 85%;  /* Tarjeta aún más ancha en pantallas muy pequeñas */
-  }
-  
-  #iconoCamara,
-  #iconoMas {
-    width: 55px;
-    height: 55px;  /* Iconos más pequeños en móviles */
-  }
-}
 
-/* Optimización para usuarios que prefieren menos movimiento
-   Importante para accesibilidad */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
