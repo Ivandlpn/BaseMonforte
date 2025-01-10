@@ -31,6 +31,11 @@ navigator.geolocation.watchPosition((position) => {
 });
 
 function calcularYActualizarPK() {
+    // Mostrar texto temporal "Buscando PK..."
+    const pkElement = document.getElementById("pkCercano");
+    pkElement.textContent = "Buscando PK...";
+
+    
     if (!lat || !lon) {
         console.error("No se ha obtenido la ubicación actual del usuario.");
         return;
