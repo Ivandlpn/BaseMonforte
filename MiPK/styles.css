@@ -112,6 +112,15 @@ header img {
  
 }
 
+.boton-animado {
+    transition: transform 0.2s ease-in-out; /* Animación suave */
+}
+
+.boton-animado:active {
+    transform: scale(0.9); /* Encoge ligeramente al hacer clic */
+}
+
+
 
 
 #calculoPK .tarjeta {
