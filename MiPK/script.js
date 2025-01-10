@@ -2,7 +2,59 @@ let mapa, marcadorActual, marcadorPK, iconoUsuario;
 let centradoAutomaticamente = true;
 
 // Rastrear la posición continuamente
+navigator.geolocation.watchPosition((position) => {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
 
+    if (!mapa) {
+        inicializarMapa(lat, lon);
+    }
+
+    if (centradoAutomaticamente) {
+        actualizarPosicionUsuario(lat, lon);
+    }
+
+    async function cargarArchivosJSON(rutas) {
+    const todasPromesas = rutas.map(ruta =>
+        fetch(ruta)
+            .then(response => response.json())
+            .catch(error => {
+                console.error(`Error al cargar ${ruta}:`, error);
+                return []; // Devuelve un array vacío si falla
+            })
+    );
+
+    const datosCargados = await Promise.all(todasPromesas);
+    // Combina todos los arrays de datos en uno solo
+    return datosCargados.flat();
+}
+
+
+    const rutasArchivos = [
+            "./doc/L40Ar.json",
+            "./doc/L40Br.json",
+          "./doc/L40Cr.json",
+           "./doc/L42Ar.json",
+            "./doc/L42B.json",
+            "./doc/L46.json",
+            "./doc/L48.json" // Añade más rutas según sea necesario
+];
+
+cargarArchivosJSON(rutasArchivos)
+    .then(datosCombinados => {
+        // Calcular el PK más cercano con todos los datos combinados
+        window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
+        mostrarPKMasCercano(window.pkMasCercano);
+        actualizarPosicionPK(window.pkMasCercano);
+    })
+    .catch(error => console.error('Error al combinar datos de los archivos:', error));
+
+}, 
+(error) => console.error('Error al obtener ubicación:', error), {
+    enableHighAccuracy: true,
+    maximumAge: 0,
+    timeout: 10000
+});
 
 function inicializarMapa(lat, lon) {
     mapa = L.map('map', {
@@ -36,40 +88,6 @@ function inicializarMapa(lat, lon) {
         centradoAutomaticamente = false;
     });
 }
-
-document.getElementById("actualizarUbicacion").addEventListener("click", () => {
-    centradoAutomaticamente = true;
-
-    navigator.geolocation.getCurrentPosition(
-        (position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-
-            if (!mapa) {
-                inicializarMapa(lat, lon);
-            }
-
-            actualizarPosicionUsuario(lat, lon);
-
-            // Cargar los datos y calcular el PK más cercano
-            cargarArchivosJSON(["./doc/L40Ar.json", "./doc/L40Br.json", "./doc/L40Cr.json", "./doc/L42Ar.json", "./doc/L42B.json", "./doc/L46.json", "./doc/L48.json"])
-                .then(datosCombinados => {
-                    const pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
-                    mostrarPKMasCercano(pkMasCercano);
-                })
-                .catch(error => console.error('Error al combinar datos de los archivos:', error));
-        },
-        (error) => {
-            console.error('Error al obtener ubicación:', error);
-        },
-        {
-            enableHighAccuracy: true,
-            maximumAge: 5000,
-            timeout: 10000
-        }
-    );
-});
-
 
 function actualizarPosicionUsuario(lat, lon) {
     marcadorActual.setLatLng([lat, lon]);
