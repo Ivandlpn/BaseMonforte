@@ -1,4 +1,4 @@
-tive/* Estilos globales */
+/* Estilos base para asegurar que la aplicación ocupe toda la pantalla */
 html, body {
   margin: 0;
   padding: 0;
@@ -7,12 +7,14 @@ html, body {
   font-family: Arial, sans-serif;
 }
 
+/* Contenedor principal con disposición vertical */
 .contenedor {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
+/* Configuración de la cabecera con altura fija */
 header {
   text-align: center;
   padding: 0;
@@ -20,36 +22,39 @@ header {
   height: 100px;
 }
 
+/* Ajuste de la imagen de cabecera para cubrir el espacio */
 header img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* Línea decorativa con gradiente corporativo */
 .linea-gradiente {
-    position: relative; /* Siempre visible en la ventana */
-   // top: 100px; /* Ajusta según la altura de la cabecera */
+    position: relative;
     left: 0;
     width: 100%;
-    height: 4px; /* Altura de la línea */
-    background: linear-gradient(to right, blue, red); /* Gradiente */
-    z-index: 1000; /* Asegura que esté por encima del mapa */
+    height: 4px;
+    background: linear-gradient(to right, blue, red);
+    z-index: 1000;
 }
 
-/* Estilos para el contenedor del mapa */
+/* Contenedor del mapa principal */
 #map-container {
-    width: 100%; /* Establece un ancho fijo o porcentual */
+    width: 100%;
     position: relative;
-    margin: 0 auto; /* Centra el contenedor */
-  z-index: 500
+    margin: 0 auto;
+    z-index: 500
 }
 
+/* Configuración del mapa para ocupar todo el espacio disponible */
 #map {
   height: 100%;
   width: 100%;
   position: relative;
 }
 
+/* Botón de centrar ubicación */
 #actualizarUbicacion {
   position: absolute;
   bottom: 10px;
@@ -57,79 +62,76 @@ header img {
   transform: translateX(-50%);
   z-index: 1000;
   cursor: pointer;
-  width: 85px; /* Ajusta según el tamaño deseado */
-  height: 40px; /* Ajusta para mantener la proporción */
+  width: 85px;
+  height: 40px;
   background: url('img/centrar.png') no-repeat center center;
   background-size: contain;
   border: none;
   padding: 0;
-  font-size: 0; /* Oculta cualquier texto */
+  font-size: 0;
 }
 
+/* Estados del botón de centrar */
 #actualizarUbicacion:hover {
   background-color: #005f99;
 }
 
 #actualizarUbicacion:active,
 #actualizarUbicacion:focus {
-  font-size: 1em; /* Asegura que no cambie el tamaño */
-  outline: none; /* Opcional: elimina el contorno */
-  transform: translateX(-50%); /* Mantén la misma posición */
- 
+  font-size: 1em;
+  outline: none;
+  transform: translateX(-50%);
 }
 
-
-/* Sección de la tarjeta con el icono */
+/* Sección que muestra el PK actual */
 #calculoPK {
   display: flex;
   align-items: center;
-  /* justify-content: center;*/
   padding: 10px;
   background-color: #ffffff;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-  justify-content: flex-end; /* Alinea el contenido a la derecha */
+  justify-content: flex-end;
   text-align: center;
 }
 
-
-
+/* Icono de la cámara para capturas */
 #iconoCamara {
-  width: 65px; /* Cambia a un tamaño mayor */
-  height: 65px; /* Cambia a un tamaño mayor */
+  width: 65px;
+  height: 65px;
   background: url('img/camara.png') no-repeat center center;
-  background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
+  background-size: contain;
   margin-left: 10px;
   position: absolute;
   left: 0;
 }
 
+/* Icono de actualización de PK */
 #iconoMas {
     width: 65px;
     height: 65px;
-     background: url('img/mas1.png') no-repeat center center;
-    background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
-    margin-right: 10px; /* Margen derecho para separación */
- 
+    background: url('img/mas1.png') no-repeat center center;
+    background-size: contain;
+    margin-right: 10px;
 }
 
-
-
+/* Tarjeta que muestra la información del PK */
 #calculoPK .tarjeta {
   display: inline-block;
-  background-color: #3600FA; /* Azul cartelón */
+  background-color: #3600FA;
   border: 2px solid #003f5c;
   border-radius: 10px;
   padding: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 250px; /* Tamaño fijo */
-  height: 85px; /* Tamaño fijo */
+  width: 250px;
+  height: 85px;
   width: 50%;
   max-width: 400px;
   margin-right: 5px;
-  text-align: center; /* Centrar el contenido */
-  overflow: hidden; /* Manejar desbordamiento de contenido */
+  text-align: center;
+  overflow: hidden;
 }
 
+/* Estilos para el número de PK */
 #calculoPK .tarjeta h2 {
   margin: 0;
   font-size: 2.5em;
@@ -137,39 +139,45 @@ header img {
   text-align: center;
 }
 
+/* Información adicional del PK */
 #calculoPK .tarjeta p {
-  font-size: 0.8em; /* Tamaño más pequeño */
-    color: #ffffff;      /* Color gris tenue */
+  font-size: 0.8em;
+  color: #ffffff;
 }
 
+/* Clases para diferentes tamaños de texto en PKs */
 .pk-grande {
-    font-size: 1em; /* Tamaño más grande */
-    color: #011145;  /* Azul oscuro */
+    font-size: 1em;
+    color: #011145;
 }
 
 .via-pequena {
-    font-size: 0.8em; /* Tamaño más pequeño */
-    color: #ffffff;      /* Color gris tenue */
+    font-size: 0.8em;
+    color: #ffffff;
 }
 
+/* Pie de página */
 footer {
   background-color: #ffffff;
-  padding: 0; /* Elimina el padding para que la imagen ocupe todo el espacio */
+  padding: 0;
   text-align: center;
   flex: 0 0 auto;
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Imagen del pie de página */
 footer img {
-  width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
-  height: auto; /* Mantiene la proporción de la imagen */
+  width: 100%;
+  height: auto;
 }
 
+/* Estilos para los botones de control de la cámara */
 .boton-control {
-    margin: 0 5px; /* Ajusta el margen según sea necesario */
+    margin: 0 5px;
 }
 
-
+/* Ajustes responsive */
+@media (max-width: 768px) {
   #actualizarUbicacion {
     font-size: 0.9em;
   }
@@ -178,5 +186,3 @@ footer img {
     height: auto;
   }
 }
-
-
