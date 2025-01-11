@@ -4,13 +4,9 @@ let centradoAutomaticamente = true;
 let lat, lon; // Coordenadas del usuario
 let primeraEjecucion = true; // Bandera para controlar la primera actualización
 
-const actualizarPosicionConDebounce = _.debounce((lat, lon) => {
-    actualizarPosicionUsuario(lat, lon);
-}, 100); // espera 100 milisegundos antes de actualizar
 
 // Rastrea la posición continuamente, pero no realiza acciones automáticamente
 navigator.geolocation.watchPosition((position) => {
-
     lat = position.coords.latitude;
     lon = position.coords.longitude;
 
@@ -19,7 +15,7 @@ navigator.geolocation.watchPosition((position) => {
     }
 
     if (centradoAutomaticamente) {
-         actualizarPosicionConDebounce(position.coords.latitude, position.coords.longitude);
+        actualizarPosicionUsuario(lat, lon);
     }
 
     // Cálculo inicial del PK más cercano (solo la primera vez)
