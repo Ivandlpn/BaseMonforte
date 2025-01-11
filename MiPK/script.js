@@ -1,58 +1,8 @@
 let mapa, marcadorActual, marcadorPK, iconoUsuario;
 let centradoAutomaticamente = true;
-const pkCache = new PKCache();
 
 let lat, lon; // Coordenadas del usuario
 let primeraEjecucion = true; // Bandera para controlar la primera actualización
-
-// Añade esto al final del archivo
-document.addEventListener('DOMContentLoaded', () => {
-    // Precarga silenciosa de datos
-    pkCache.getPKData().catch(console.error);
-});
-
-class PKCache {
-    constructor() {
-        this.pkData = null;
-        this.lastUpdate = null;
-    }
-
-    async getPKData() {
-        // Si los datos existen y tienen menos de 1 hora
-        if (this.pkData && (Date.now() - this.lastUpdate) < 3600000) {
-            return this.pkData;
-        }
-
-        const rutasArchivos = [
-                 //  "./doc/L40Ar.json",
-      //  "./doc/L40Br.json",
-     //   "./doc/L40Cr.json",
-      //  "./doc/L42Ar.json",
-            "./doc/L42B.json",
-            "./doc/L46.json",
-            "./doc/L48.json"
-        ];
-
-        const data = await this.cargarArchivosJSON(rutasArchivos);
-        this.pkData = data;
-        this.lastUpdate = Date.now();
-        return this.pkData;
-    }
-
-    async cargarArchivosJSON(rutas) {
-        const todasPromesas = rutas.map(ruta =>
-            fetch(ruta)
-                .then(response => response.json())
-                .catch(error => {
-                    console.error(`Error al cargar ${ruta}:`, error);
-                    return [];
-                })
-        );
-
-        const datosCargados = await Promise.all(todasPromesas);
-        return datosCargados.flat();
-    }
-}
 
 
 // Rastrea la posición continuamente, pero no realiza acciones automáticamente
@@ -80,34 +30,48 @@ navigator.geolocation.watchPosition((position) => {
     timeout: 10000
 });
 
-async function calcularYActualizarPK() {
+function calcularYActualizarPK() {
+    // Mostrar texto temporal "Buscando PK ..."
     const pkElement = document.getElementById("pkCercano");
     pkElement.innerHTML = `<span class="texto-buscando-pk">Buscando PK...</span>`;
 
-    try {
-        // Obtener datos de PK cacheados
-        const datosCombinados = await pkCache.getPKData();
-        
-        if (!lat || !lon) {
-            throw new Error("No se ha obtenido la ubicación actual del usuario.");
-        }
 
-        window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
-        mostrarPKMasCercano(window.pkMasCercano);
-        actualizarPosicionPK(window.pkMasCercano);
-        
-        // Centrar el mapa en la ubicación actual
-        if (marcadorActual) {
-            const posicion = marcadorActual.getLatLng();
-            mapa.setView([posicion.lat, posicion.lng], 18);
-            centradoAutomaticamente = true;
-        }
-
-        mostrarMensaje(" 🔄 PK Actualizado");
-    } catch (error) {
-        console.error('Error:', error);
-        pkElement.innerHTML = `<span class="texto-error">Error al buscar PK</span>`;
+    
+    if (!lat || !lon) {
+        console.error("No se ha obtenido la ubicación actual del usuario.");
+        return;
     }
+
+    const rutasArchivos = [
+      //  "./doc/L40Ar.json",
+       // "./doc/L40Br.json",
+       // "./doc/L40Cr.json",
+       // "./doc/L42Ar.json",
+        "./doc/L42B.json",
+        "./doc/L46.json",
+        "./doc/L48.json"
+    ];
+
+    async function cargarArchivosJSON(rutas) {
+        const todasPromesas = rutas.map(ruta =>
+            fetch(ruta)
+                .then(response => response.json())
+                .catch(error => {
+                    console.error(`Error al cargar ${ruta}:`, error);
+                    return [];
+                })
+        );
+        return (await Promise.all(todasPromesas)).flat();
+    }
+
+    cargarArchivosJSON(rutasArchivos)
+        .then(datosCombinados => {
+            window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
+            mostrarPKMasCercano(window.pkMasCercano);
+            actualizarPosicionPK(window.pkMasCercano);
+            // mostrarMensaje("   🔄 PK Actualizado");
+        })
+        .catch(error => console.error('Error al combinar datos de los archivos:', error));
 }
 
 
