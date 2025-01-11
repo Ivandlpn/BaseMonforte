@@ -190,6 +190,21 @@ footer img {
     text-align: center; /* Asegura el centrado del texto */
 }
 
+#relleno-final {
+  position: relative;  /* Para que la imagen se posicione debajo del footer */
+  width: 100%;
+  overflow: hidden; /* Para evitar que la imagen se salga del contenedor */
+  /* Usamos top:0 para que la imagen se posicione debajo del footer */
+   display: block; /* Asegura que el contenedor ocupe el ancho completo */
+}
+
+#relleno-final img {
+  display: block;    /* Elimina el espacio extra alrededor de la imagen */
+  width: 100%;      /* La imagen ocupa todo el ancho del contenedor */
+  height: auto;      /* Mantiene la proporción original de la imagen */
+  object-fit: cover;
+}
+
 
   #actualizarUbicacion {
     font-size: 0.9em;
