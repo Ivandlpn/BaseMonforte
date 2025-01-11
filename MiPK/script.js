@@ -564,23 +564,7 @@ imagenCompartir.addEventListener("click", async () => {
 });
 
 
-// Evento para mostrar la ventana emergente al hacer clic en #iconoPlus
-document.getElementById("iconoPlus").addEventListener("click", () => {
-    const ventanaEmergente = document.getElementById("ventanaEmergente");
-    ventanaEmergente.classList.remove("ventana-emergente-oculta");
-     ventanaEmergente.classList.add("ventana-emergente");
 
-   // Manejador de clic fuera de la ventana
-        const cerrarVentana = (event) => {
-             if (event.target === ventanaEmergente) {
-            ventanaEmergente.classList.add("ventana-emergente-oculta");
-             ventanaEmergente.classList.remove("ventana-emergente");
-            document.removeEventListener("click", cerrarVentana); // Elimina el listener para evitar múltiples llamadas
-            }
-        };
-
-   document.addEventListener("click", cerrarVentana); // Agregar event listener
-});
 
 
                 

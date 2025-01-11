@@ -190,54 +190,6 @@ footer img {
     text-align: center; /* Asegura el centrado del texto */
 }
 
-/* Estilos para la ventana emergente */
-.ventana-emergente-oculta {
-    display: none; /* Ocultar por defecto */
-    position: fixed; /* Sobreponer a todo */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
-    z-index: 1001; /* Asegurar que esté por encima de otros elementos */
-    align-items: center; /* Centrar verticalmente */
-    justify-content: center; /* Centrar horizontalmente */
-}
-
-.ventana-emergente {
-    display: flex; /* Mostrar cuando se active */
-    position: fixed; /* Sobreponer a todo */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
-    z-index: 1001; /* Asegurar que esté por encima de otros elementos */
-    align-items: center; /* Centrar verticalmente */
-    justify-content: center; /* Centrar horizontalmente */
-}
-
-.contenido-ventana {
-    background-color: #e0f7fa; /* Fondo azulado claro */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    max-width: 300px; /* Ancho máximo */
-    margin: 0 10px; /* Ajuste para dispositivos pequeños */
-}
-
-.imagen-ventana {
-    max-width: 100%; /* Ajustar al ancho del contenedor */
-    height: auto;
-    margin-bottom: 10px;
-}
-
-.texto-ventana {
-    font-size: 1.2em;
-    color: #004d40; /* Color de texto azul oscuro */
-}
-
 
   #actualizarUbicacion {
     font-size: 0.9em;
