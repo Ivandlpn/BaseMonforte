@@ -33,8 +33,8 @@ navigator.geolocation.watchPosition((position) => {
 function calcularYActualizarPK() {
     // Mostrar texto temporal "Buscando PK..."
     const pkElement = document.getElementById("pkCercano");
-    pkElement.textContent = "Buscando PK...";
-    //pkElement.style.fontSize = "20px";
+    pkElement.innerHTML = `<span class="buscando-pk">Buscando PK...</span>`;
+
 
     
     if (!lat || !lon) {
