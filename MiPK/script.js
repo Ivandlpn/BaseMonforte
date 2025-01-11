@@ -4,6 +4,27 @@ let centradoAutomaticamente = true;
 let lat, lon; // Coordenadas del usuario
 let primeraEjecucion = true; // Bandera para controlar la primera actualización
 
+let datosPKsCache = []; // Aquí se almacenarán los datos cargados
+
+(async function precargarPKs() {
+    const rutasArchivos = [
+         //  "./doc/L40Ar.json",
+       // "./doc/L40Br.json",
+       // "./doc/L40Cr.json",
+       // "./doc/L42Ar.json",
+        "./doc/L42B.json",
+        "./doc/L46.json",
+        "./doc/L48.json"
+    ];
+
+    try {
+        datosPKsCache = await cargarArchivosJSON(rutasArchivos);
+        console.log("Datos de PKs precargados:", datosPKsCache);
+    } catch (error) {
+        console.error("Error al precargar los datos de PKs:", error);
+    }
+})();
+
 
 // Rastrea la posición continuamente, pero no realiza acciones automáticamente
 navigator.geolocation.watchPosition((position) => {
@@ -30,49 +51,28 @@ navigator.geolocation.watchPosition((position) => {
     timeout: 10000
 });
 
+
+
 function calcularYActualizarPK() {
-    // Mostrar texto temporal "Buscando PK..."
     const pkElement = document.getElementById("pkCercano");
-   pkElement.innerHTML = `<span class="buscando-pk">Buscando PK...</span>`;
+    pkElement.innerHTML = `<span class="buscando-pk">Buscando PK...</span>`;
 
-
-    
     if (!lat || !lon) {
         console.error("No se ha obtenido la ubicación actual del usuario.");
         return;
     }
 
-    const rutasArchivos = [
-      //  "./doc/L40Ar.json",
-       // "./doc/L40Br.json",
-       // "./doc/L40Cr.json",
-       // "./doc/L42Ar.json",
-        "./doc/L42B.json",
-        "./doc/L46.json",
-        "./doc/L48.json"
-    ];
-
-    async function cargarArchivosJSON(rutas) {
-        const todasPromesas = rutas.map(ruta =>
-            fetch(ruta)
-                .then(response => response.json())
-                .catch(error => {
-                    console.error(`Error al cargar ${ruta}:`, error);
-                    return [];
-                })
-        );
-        return (await Promise.all(todasPromesas)).flat();
+    try {
+        // Usar los datos ya precargados
+        window.pkMasCercano = calcularPKMasCercano(lat, lon, datosPKsCache)[0];
+        mostrarPKMasCercano(window.pkMasCercano);
+        actualizarPosicionPK(window.pkMasCercano);
+        mostrarMensaje("🔄 PK Actualizado");
+    } catch (error) {
+        console.error("Error al calcular el PK más cercano:", error);
     }
-
-    cargarArchivosJSON(rutasArchivos)
-        .then(datosCombinados => {
-            window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
-            mostrarPKMasCercano(window.pkMasCercano);
-            actualizarPosicionPK(window.pkMasCercano);
-            // mostrarMensaje("   🔄 PK Actualizado");
-        })
-        .catch(error => console.error('Error al combinar datos de los archivos:', error));
 }
+
 
 
 // Mantener la función mostrarMensaje como está
@@ -256,45 +256,16 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
 });
 
 document.getElementById("iconoMas").addEventListener("click", () => {
-     calcularYActualizarPK(); // Llama a la función de cálculo del PK
-    if (!lat || !lon) {
-        alert("No se ha obtenido la ubicación actual del usuario.");
+    if (datosPKsCache.length === 0) {
+        alert("Datos de PKs no disponibles aún. Por favor, espera...");
         return;
     }
 
-    async function cargarArchivosJSON(rutas) {
-        const todasPromesas = rutas.map(ruta =>
-            fetch(ruta)
-                .then(response => response.json())
-                .catch(error => {
-                    console.error(`Error al cargar ${ruta}:`, error);
-                    return []; // Devuelve un array vacío si falla
-                })
-        );
-
-        const datosCargados = await Promise.all(todasPromesas);
-        return datosCargados.flat(); // Combina todos los datos en un solo array
-    }
-
-    const rutasArchivos = [
-      //  "./doc/L40Ar.json",
-      //  "./doc/L40Br.json",
-     //   "./doc/L40Cr.json",
-      //  "./doc/L42Ar.json",
-        "./doc/L42B.json",
-       "./doc/L46.json",
-        "./doc/L48.json"
-    ];
-
-    cargarArchivosJSON(rutasArchivos)
-        .then(datosCombinados => {
-            window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
-            mostrarPKMasCercano(window.pkMasCercano);
-            actualizarPosicionPK(window.pkMasCercano);
-            mostrarMensaje(" 🔄 PK Actualizado");
-        })
-        .catch(error => console.error('Error al combinar datos de los archivos:', error));
+    calcularYActualizarPK();
 });
+
+
+
 
 
 // Modificación para abrir la cámara y añadir un botón
