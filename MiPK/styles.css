@@ -173,8 +173,8 @@ footer img {
     display: flex; /* Usar flexbox para centrar */
     justify-content: center; /* Centrar horizontalmente */
     align-items: center; /* Centrar verticalmente */
-    height: 100%; /* Ocupar toda la altura del contenedor */
-    font-size: 0.8em; /* Ajusta el tamaño del texto */
+    77height: 100%; /* Ocupar toda la altura del contenedor */
+    font-size: 0.5em; /* Ajusta el tamaño del texto */
     color: #ffffff; /* Opcional: Color del texto */
     //font-weight: bold; /* Opcional: Negrita para destacar */
     text-align: center; /* Asegura el centrado del texto */
