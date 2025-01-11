@@ -292,8 +292,20 @@ document.getElementById("iconoMas").addEventListener("click", () => {
             mostrarPKMasCercano(window.pkMasCercano);
             actualizarPosicionPK(window.pkMasCercano);
             mostrarMensaje(" 🔄 PK Actualizado");
+            
+            // Centrar el mapa en la posición actual
+            if (marcadorActual) {
+                const { lat, lng } = marcadorActual.getLatLng();
+                mapa.setView([lat, lng], 18);
+                centradoAutomaticamente = true;
+            }
+
+            
         })
         .catch(error => console.error('Error al combinar datos de los archivos:', error));
+
+
+    
 });
 
 
