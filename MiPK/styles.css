@@ -169,10 +169,15 @@ footer img {
     margin: 0 5px; /* Ajusta el margen según sea necesario */
 }
 
-.buscando-pk {
-    font-size: 0.8em; /* Ajusta el tamaño deseado */
-    color: #ff4500; /* Opcional: Cambia el color si quieres */
-    //font-weight: bold; /* Opcional: Aplica negrita */
+.texto-buscando-pk {
+    display: flex; /* Usar flexbox para centrar */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    height: 100%; /* Ocupar toda la altura del contenedor */
+    font-size: 0.8em; /* Ajusta el tamaño del texto */
+    color: #ffffff; /* Opcional: Color del texto */
+    //font-weight: bold; /* Opcional: Negrita para destacar */
+    text-align: center; /* Asegura el centrado del texto */
 }
 
 
