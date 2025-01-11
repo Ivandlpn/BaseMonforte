@@ -78,39 +78,50 @@ header img {
  
 }
 
-
-/* Sección de la tarjeta con el icono */
-#calculoPK {
-  display: flex;
-  align-items: center;
-  /* justify-content: center;*/
-  padding: 10px;
-  background-color: #ffffff;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-  justify-content: flex-end; /* Alinea el contenido a la derecha */
-  text-align: center;
+.iconos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-right: 20px;
 }
 
+.iconos-fila {
+    display: flex;
+    gap: 10px;
+}
 
+.icono {
+    width: 65px;
+    height: 65px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
 #iconoCamara {
-  width: 65px; /* Cambia a un tamaño mayor */
-  height: 65px; /* Cambia a un tamaño mayor */
-  background: url('img/camara.png') no-repeat center center;
-  background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
-  margin-left: 10px;
-  position: absolute;
-  left: 0;
+    background-image: url('img/camara.png');
 }
 
 #iconoMas {
-    width: 65px;
-    height: 65px;
-     background: url('img/mas1.png') no-repeat center center;
-    background-size: contain; /* Asegura que la imagen se ajuste al contenedor */
-    margin-right: 10px; /* Margen derecho para separación */
- 
+    background-image: url('img/mas1.png');
 }
+
+#iconoPuerta {
+    background-image: url('img/puerta.png');
+}
+
+#iconoPlus {
+    background-image: url('img/plus.png');
+}
+
+#calculoPK {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
 
 
 
