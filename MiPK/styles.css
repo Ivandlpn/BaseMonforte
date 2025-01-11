@@ -169,6 +169,12 @@ footer img {
     margin: 0 5px; /* Ajusta el margen según sea necesario */
 }
 
+.buscando-pk {
+    font-size: 0.8em; /* Ajusta el tamaño deseado */
+    color: #ff4500; /* Opcional: Cambia el color si quieres */
+    //font-weight: bold; /* Opcional: Aplica negrita */
+}
+
 
   #actualizarUbicacion {
     font-size: 0.9em;
