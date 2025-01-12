@@ -282,7 +282,7 @@ function ocultarPuertasCercanas() {
 
  
 
- function calcularPuertasCercanas(latUsuario, lonUsuario) {
+function calcularPuertasCercanas(latUsuario, lonUsuario) {
     const puertasPorVia = {}; // Agrupar puertas por vía
 
     // Agrupar puertas por vía
@@ -299,28 +299,28 @@ function ocultarPuertasCercanas() {
         // Calculamos la distancia a cada puerta de esta via
         const puertasConDistancia = puertasPorVia[via].map(puerta => ({
             ...puerta,
-            distancia: calcularDistancia(latUsuario, lonUsuario, parseFloat(puerta.Latitud), parseFloat(puerta.Longitud))
+           distanciaReal: calcularDistancia(latUsuario, lonUsuario, parseFloat(puerta.Latitud), parseFloat(puerta.Longitud))
         }));
 
         // Ordenamos por distancia para encontrar la más cercana
-        puertasConDistancia.sort((a, b) => a.distancia - b.distancia);
+        puertasConDistancia.sort((a, b) => a.distanciaReal - b.distanciaReal);
 
         const puertaMasCercana = puertasConDistancia[0];
 
         const pkMasCercano = parseFloat(puertaMasCercana.PK);
+
 
         // Ahora vamos a buscar los siguientes y anteriores
         const puertasOrdenadas = puertasPorVia[via].sort((a, b) => parseFloat(a.PK) - parseFloat(b.PK));
 
         const indexActual = puertasOrdenadas.findIndex(p => parseFloat(p.PK) === pkMasCercano);
 
-        // Las más cercanas en sentido creciente y decreciente (1 de cada lado).
-        let puertaCreciente = null;
+         let puertaCreciente = null;
         if (indexActual + 1 < puertasOrdenadas.length) {
           puertaCreciente = puertasOrdenadas[indexActual + 1]
             puertaCreciente = {
                 ...puertaCreciente,
-                distancia: calcularDistancia(latUsuario, lonUsuario, parseFloat(puertaCreciente.Latitud), parseFloat(puertaCreciente.Longitud))
+                distanciaPK :  parseFloat(puertaCreciente.PK) - parseFloat(window.pkMasCercano.pk),
             };
         }
         
@@ -330,18 +330,23 @@ function ocultarPuertasCercanas() {
             puertaDecreciente = puertasOrdenadas[indexActual - 1]
                puertaDecreciente = {
                     ...puertaDecreciente,
-                    distancia: calcularDistancia(latUsuario, lonUsuario, parseFloat(puertaDecreciente.Latitud), parseFloat(puertaDecreciente.Longitud))
+                    distanciaPK :   parseFloat(puertaDecreciente.PK) - parseFloat(window.pkMasCercano.pk),
                 };
             
         }
 
-        puertasCercanasPorVia[via] = {
+
+
+         puertasCercanasPorVia[via] = {
           creciente: puertaCreciente,
           decreciente: puertaDecreciente
       };
     }
+
     return puertasCercanasPorVia;
 }
+
+
 function generarHTMLPuertas(puertasCercanas) {
     let html = '';
     for (const via in puertasCercanas) {
@@ -350,7 +355,7 @@ function generarHTMLPuertas(puertasCercanas) {
         // Puerta en sentido creciente
         if(puertasCercanas[via].creciente){
             const puerta = puertasCercanas[via].creciente
-            const distanciaFormateada = puerta.distancia.toFixed(0);
+            const distanciaFormateada = puerta.distanciaPK.toFixed(0);
             const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
                         <span>A + ${distanciaFormateada} metros - PK ${pkFormateado}</span>
@@ -360,17 +365,15 @@ function generarHTMLPuertas(puertasCercanas) {
         // Puerta en sentido decreciente
         if(puertasCercanas[via].decreciente){
              const puerta = puertasCercanas[via].decreciente
-           const distanciaFormateada = puerta.distancia.toFixed(0);
+             const distanciaFormateada = puerta.distanciaPK.toFixed(0);
             const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
-                        <span>A - ${distanciaFormateada} metros - PK ${pkFormateado}</span>
+                        <span>A - ${Math.abs(distanciaFormateada)} metros - PK ${pkFormateado}</span>
                     </div>`;
         }
     }
     return html;
 }
-
-
 
 
 document.getElementById("actualizarUbicacion").addEventListener("click", () => {
