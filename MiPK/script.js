@@ -264,21 +264,26 @@ function formatearPK(pk) {
   }
 }
 
-function mostrarPuertasCercanas() {
-    if (!lat || !lon) {
-        alert("No se ha obtenido la ubicación actual del usuario.");
-        return;
-    }
+  function mostrarPuertasCercanas() {
+       if (!lat || !lon) {
+           alert("No se ha obtenido la ubicación actual del usuario.");
+           return;
+       }
 
-    const puertasCercanas = calcularPuertasCercanas(lat, lon);
-    const html = generarHTMLPuertas(puertasCercanas);
-    puertasInfoDiv.innerHTML = html;
-    puertasContainer.style.display = "flex"; // Mostrar la tarjeta
-}
+       const puertasCercanas = calcularPuertasCercanas(lat, lon);
+       const html = generarHTMLPuertas(puertasCercanas);
+       puertasInfoDiv.innerHTML = html;
+       puertasContainer.classList.add("show") // Mostrar la tarjeta
+        puertasContainer.style.display = "flex";
+   }
 
-function ocultarPuertasCercanas() {
-    puertasContainer.style.display = "none";
-}
+   function ocultarPuertasCercanas() {
+        puertasContainer.classList.remove("show")
+        setTimeout(() => {
+             puertasContainer.style.display = "none";
+       },300);
+      
+   }
 
  
 
