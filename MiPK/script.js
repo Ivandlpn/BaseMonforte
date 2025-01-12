@@ -4,6 +4,14 @@ let centradoAutomaticamente = true;
 let lat, lon; // Coordenadas del usuario
 let primeraEjecucion = true; // Bandera para controlar la primera actualización
 
+let puertasData = []; // Variable para guardar datos de las puertas
+const puertasContainer = document.getElementById("puertas-card-container");
+const puertasInfoDiv = document.getElementById("puertas-info");
+const cerrarPuertasCard = document.getElementById("cerrar-puertas-card");
+
+ // Cargar puertas al iniciar la app
+cargarPuertas();
+
 
 // Rastrea la posición continuamente, pero no realiza acciones automáticamente
 navigator.geolocation.watchPosition((position) => {
@@ -246,6 +254,128 @@ function formatearPK(pk) {
     }
 }
 
+ async function cargarPuertas() {
+  try {
+      const response = await fetch("./doc/puertas.json");
+      puertasData = await response.json();
+  } catch (error) {
+      console.error("Error al cargar los datos de puertas:", error);
+      alert("Error al cargar los datos de las puertas.");
+  }
+}
+
+function mostrarPuertasCercanas() {
+    if (!lat || !lon) {
+        alert("No se ha obtenido la ubicación actual del usuario.");
+        return;
+    }
+
+    const puertasCercanas = calcularPuertasCercanas(lat, lon);
+    const html = generarHTMLPuertas(puertasCercanas);
+    puertasInfoDiv.innerHTML = html;
+    puertasContainer.style.display = "flex"; // Mostrar la tarjeta
+}
+
+function ocultarPuertasCercanas() {
+    puertasContainer.style.display = "none";
+}
+
+ 
+
+ function calcularPuertasCercanas(latUsuario, lonUsuario) {
+        const puertasPorVia = {}; // Agrupar puertas por vía
+
+        // Agrupar puertas por vía
+        puertasData.forEach(puerta => {
+            if (!puertasPorVia[puerta.Via]) {
+                puertasPorVia[puerta.Via] = [];
+            }
+            puertasPorVia[puerta.Via].push(puerta);
+        });
+        const puertasCercanasPorVia = {};
+        for(const via in puertasPorVia){
+             // Calculamos la distancia a cada puerta de esta via
+             const puertasConDistancia = puertasPorVia[via].map(puerta => ({
+                ...puerta,
+                distancia: calcularDistancia(latUsuario, lonUsuario, parseFloat(puerta.Latitud), parseFloat(puerta.Longitud))
+            }));
+
+            // Ordenamos por distancia para encontrar la más cercana
+             puertasConDistancia.sort((a, b) => a.distancia - b.distancia);
+
+            
+            const puertaMasCercana = puertasConDistancia[0];
+            
+            const pkMasCercano = parseFloat(puertaMasCercana.PK)
+
+            // Ahora vamos a buscar los siguientes y anteriores
+            const puertasOrdenadas =  puertasPorVia[via].sort((a, b) => parseFloat(a.PK) - parseFloat(b.PK));
+
+
+           const indexActual = puertasOrdenadas.findIndex(p => parseFloat(p.PK) === pkMasCercano);
+            
+             // Las más cercanas en sentido creciente y decreciente (2 de cada lado).
+            const puertasCrecientes = puertasOrdenadas
+                .slice(indexActual + 1)
+                .slice(0, 2)
+                .map(puerta => {
+                        return {
+                        ...puerta,
+                       distancia: calcularDistancia(latUsuario, lonUsuario, parseFloat(puerta.Latitud), parseFloat(puerta.Longitud))
+                    };
+                });
+
+            const puertasDecrecientes = puertasOrdenadas
+                .slice(0, indexActual)
+               .reverse()
+               .slice(0,2)
+               .map(puerta => {
+                    return {
+                    ...puerta,
+                    distancia: calcularDistancia(latUsuario, lonUsuario, parseFloat(puerta.Latitud), parseFloat(puerta.Longitud))
+                };
+              });
+
+            puertasCercanasPorVia[via] = {
+                crecientes: puertasCrecientes,
+                decrecientes: puertasDecrecientes
+             }
+        }
+
+        return puertasCercanasPorVia;
+    }
+
+function generarHTMLPuertas(puertasCercanas) {
+    let html = '';
+    for (const via in puertasCercanas) {
+        html += `<h3>Vía ${via}</h3>`;
+
+        // Puertas en sentido creciente
+        puertasCercanas[via].crecientes.forEach(puerta => {
+            const distanciaFormateada = puerta.distancia.toFixed(0);
+            const pkFormateado = formatearPK(puerta.PK);
+            html += `<div class="puerta-fila">
+                        <span>A + ${distanciaFormateada} metros - PK ${pkFormateado}</span>
+                    </div>`;
+        });
+
+         // Puertas en sentido decreciente
+         puertasCercanas[via].decrecientes.forEach(puerta => {
+            const distanciaFormateada = puerta.distancia.toFixed(0);
+            const pkFormateado = formatearPK(puerta.PK);
+             html += `<div class="puerta-fila">
+                        <span>A - ${distanciaFormateada} metros - PK ${pkFormateado}</span>
+                    </div>`;
+        });
+    }
+    
+    return html;
+}
+
+
+
+
+
 
 document.getElementById("actualizarUbicacion").addEventListener("click", () => {
     if (marcadorActual) {
@@ -254,6 +384,15 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
         centradoAutomaticamente = true;
     }
 });
+
+
+
+// Event Listener para mostrar la tarjeta de puertas
+document.getElementById("iconoPuerta").addEventListener("click", mostrarPuertasCercanas);
+
+// Event Listener para cerrar la tarjeta de puertas
+cerrarPuertasCard.addEventListener("click", ocultarPuertasCercanas);
+
 
 document.getElementById("iconoMas").addEventListener("click", () => {
      calcularYActualizarPK(); // Llama a la función de cálculo del PK
