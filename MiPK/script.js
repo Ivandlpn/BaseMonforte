@@ -283,96 +283,92 @@ function ocultarPuertasCercanas() {
  
 
  function calcularPuertasCercanas(latUsuario, lonUsuario) {
-        const puertasPorVia = {}; // Agrupar puertas por vía
+    const puertasPorVia = {}; // Agrupar puertas por vía
 
-        // Agrupar puertas por vía
-        puertasData.forEach(puerta => {
-            if (!puertasPorVia[puerta.Via]) {
-                puertasPorVia[puerta.Via] = [];
-            }
-            puertasPorVia[puerta.Via].push(puerta);
-        });
-        const puertasCercanasPorVia = {};
-        for(const via in puertasPorVia){
-             // Calculamos la distancia a cada puerta de esta via
-             const puertasConDistancia = puertasPorVia[via].map(puerta => ({
-                ...puerta,
-                distancia: calcularDistancia(latUsuario, lonUsuario, parseFloat(puerta.Latitud), parseFloat(puerta.Longitud))
-            }));
+    // Agrupar puertas por vía
+    puertasData.forEach(puerta => {
+        if (!puertasPorVia[puerta.Via]) {
+            puertasPorVia[puerta.Via] = [];
+        }
+        puertasPorVia[puerta.Via].push(puerta);
+    });
 
-            // Ordenamos por distancia para encontrar la más cercana
-             puertasConDistancia.sort((a, b) => a.distancia - b.distancia);
+    const puertasCercanasPorVia = {};
 
-            
-            const puertaMasCercana = puertasConDistancia[0];
-            
-            const pkMasCercano = parseFloat(puertaMasCercana.PK)
+    for (const via in puertasPorVia) {
+        // Calculamos la distancia a cada puerta de esta via
+        const puertasConDistancia = puertasPorVia[via].map(puerta => ({
+            ...puerta,
+            distancia: calcularDistancia(latUsuario, lonUsuario, parseFloat(puerta.Latitud), parseFloat(puerta.Longitud))
+        }));
 
-            // Ahora vamos a buscar los siguientes y anteriores
-            const puertasOrdenadas =  puertasPorVia[via].sort((a, b) => parseFloat(a.PK) - parseFloat(b.PK));
+        // Ordenamos por distancia para encontrar la más cercana
+        puertasConDistancia.sort((a, b) => a.distancia - b.distancia);
 
+        const puertaMasCercana = puertasConDistancia[0];
 
-           const indexActual = puertasOrdenadas.findIndex(p => parseFloat(p.PK) === pkMasCercano);
-            
-             // Las más cercanas en sentido creciente y decreciente (2 de cada lado).
-            const puertasCrecientes = puertasOrdenadas
-                .slice(indexActual + 1)
-                .slice(0, 2)
-                .map(puerta => {
-                        return {
-                        ...puerta,
-                       distancia: calcularDistancia(latUsuario, lonUsuario, parseFloat(puerta.Latitud), parseFloat(puerta.Longitud))
-                    };
-                });
+        const pkMasCercano = parseFloat(puertaMasCercana.PK);
 
-            const puertasDecrecientes = puertasOrdenadas
-                .slice(0, indexActual)
-               .reverse()
-               .slice(0,2)
-               .map(puerta => {
-                    return {
-                    ...puerta,
-                    distancia: calcularDistancia(latUsuario, lonUsuario, parseFloat(puerta.Latitud), parseFloat(puerta.Longitud))
+        // Ahora vamos a buscar los siguientes y anteriores
+        const puertasOrdenadas = puertasPorVia[via].sort((a, b) => parseFloat(a.PK) - parseFloat(b.PK));
+
+        const indexActual = puertasOrdenadas.findIndex(p => parseFloat(p.PK) === pkMasCercano);
+
+        // Las más cercanas en sentido creciente y decreciente (1 de cada lado).
+        let puertaCreciente = null;
+        if (indexActual + 1 < puertasOrdenadas.length) {
+          puertaCreciente = puertasOrdenadas[indexActual + 1]
+            puertaCreciente = {
+                ...puertaCreciente,
+                distancia: calcularDistancia(latUsuario, lonUsuario, parseFloat(puertaCreciente.Latitud), parseFloat(puertaCreciente.Longitud))
+            };
+        }
+        
+
+        let puertaDecreciente = null;
+        if (indexActual > 0) {
+            puertaDecreciente = puertasOrdenadas[indexActual - 1]
+               puertaDecreciente = {
+                    ...puertaDecreciente,
+                    distancia: calcularDistancia(latUsuario, lonUsuario, parseFloat(puertaDecreciente.Latitud), parseFloat(puertaDecreciente.Longitud))
                 };
-              });
-
-            puertasCercanasPorVia[via] = {
-                crecientes: puertasCrecientes,
-                decrecientes: puertasDecrecientes
-             }
+            
         }
 
-        return puertasCercanasPorVia;
+        puertasCercanasPorVia[via] = {
+          creciente: puertaCreciente,
+          decreciente: puertaDecreciente
+      };
     }
-
+    return puertasCercanasPorVia;
+}
 function generarHTMLPuertas(puertasCercanas) {
     let html = '';
     for (const via in puertasCercanas) {
         html += `<h3>Vía ${via}</h3>`;
 
-        // Puertas en sentido creciente
-        puertasCercanas[via].crecientes.forEach(puerta => {
+        // Puerta en sentido creciente
+        if(puertasCercanas[via].creciente){
+            const puerta = puertasCercanas[via].creciente
             const distanciaFormateada = puerta.distancia.toFixed(0);
             const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
                         <span>A + ${distanciaFormateada} metros - PK ${pkFormateado}</span>
                     </div>`;
-        });
+        }
 
-         // Puertas en sentido decreciente
-         puertasCercanas[via].decrecientes.forEach(puerta => {
-            const distanciaFormateada = puerta.distancia.toFixed(0);
+        // Puerta en sentido decreciente
+        if(puertasCercanas[via].decreciente){
+             const puerta = puertasCercanas[via].decreciente
+           const distanciaFormateada = puerta.distancia.toFixed(0);
             const pkFormateado = formatearPK(puerta.PK);
-             html += `<div class="puerta-fila">
+            html += `<div class="puerta-fila">
                         <span>A - ${distanciaFormateada} metros - PK ${pkFormateado}</span>
                     </div>`;
-        });
+        }
     }
-    
     return html;
 }
-
-
 
 
 
