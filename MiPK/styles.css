@@ -194,57 +194,6 @@ footer img {
   height: auto; /* Mantiene la proporción de la imagen */
 }
 
-/* Tarjeta emergente */
-#tarjetaPuertas {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%; /* Ocupa el 90% del ancho en móviles */
-    max-width: 600px; /* Máximo tamaño en pantallas grandes */
-    height: 50%; /* Ocupa la mitad de la pantalla */
-    background-color: #0056b3; /* Azul oscuro */
-    color: white;
-    border-radius: 15px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 20px;
-    text-align: center;
-}
-
-/* Ocultar tarjeta inicialmente */
-.tarjeta-oculta {
-    display: none;
-}
-
-/* Botón de cierre */
-.boton-cerrar-tarjeta {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5em;
-    cursor: pointer;
-    z-index: 1100;
-}
-
-.boton-cerrar-tarjeta:hover {
-    color: #ffcccc; /* Cambia el color al pasar el ratón */
-}
-
-/* Contenido interno */
-#contenidoPuertas {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    overflow-y: auto; /* Scroll si el contenido es muy largo */
-    text-align: left;
-}
 
 
   #actualizarUbicacion {
