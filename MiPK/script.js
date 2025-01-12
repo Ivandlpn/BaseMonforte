@@ -4,6 +4,9 @@ let centradoAutomaticamente = true;
 let lat, lon; // Coordenadas del usuario
 let primeraEjecucion = true; // Bandera para controlar la primera actualización
 
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("tarjetaPuertas").classList.add("tarjeta-oculta");
+});
 
 // Rastrea la posición continuamente, pero no realiza acciones automáticamente
 navigator.geolocation.watchPosition((position) => {
