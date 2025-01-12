@@ -205,15 +205,9 @@ footer img {
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
     z-index: 1100; /* Asegura que esté por encima del mapa */
-  opacity: 0;
-    transform: translateY(20px); /* Desplazar hacia abajo inicialmente */
-    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.overlay-card-container.show {
-    opacity: 1;
-    transform: translateY(0); /* Mover a su posición final */
-}
+
 
 .overlay-card {
     background-color: #007bff; /* Azul */
@@ -246,9 +240,7 @@ footer img {
 }
 
 .close-button:hover {
-    opacity: 0.7; /* Reducir la opacidad al pasar el ratón */
-    transform: scale(1.1); /* Escalar un poco al pasar el ratón */
-    transition: transform 0.2s ease; /* Transición de la escala */
+    opacity: 0.8; /* Reducir la opacidad al pasar el ratón */
  }
 
 .close-button:focus {
