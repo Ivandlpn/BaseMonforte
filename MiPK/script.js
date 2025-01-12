@@ -246,6 +246,68 @@ function formatearPK(pk) {
     }
 }
 
+function calcularPuertasCercanas(pkUsuario, puertas) {
+    const resultado = { via1: { creciente: null, decreciente: null }, via2: { creciente: null, decreciente: null } };
+
+    puertas.forEach((puerta) => {
+        const distancia = Math.abs(puerta.PK - pkUsuario);
+
+        if (puerta.Via === "1") {
+            if (puerta.PK > pkUsuario && (!resultado.via1.creciente || distancia < Math.abs(resultado.via1.creciente.PK - pkUsuario))) {
+                resultado.via1.creciente = { ...puerta, distancia };
+            }
+            if (puerta.PK < pkUsuario && (!resultado.via1.decreciente || distancia < Math.abs(resultado.via1.decreciente.PK - pkUsuario))) {
+                resultado.via1.decreciente = { ...puerta, distancia };
+            }
+        } else if (puerta.Via === "2") {
+            if (puerta.PK > pkUsuario && (!resultado.via2.creciente || distancia < Math.abs(resultado.via2.creciente.PK - pkUsuario))) {
+                resultado.via2.creciente = { ...puerta, distancia };
+            }
+            if (puerta.PK < pkUsuario && (!resultado.via2.decreciente || distancia < Math.abs(resultado.via2.decreciente.PK - pkUsuario))) {
+                resultado.via2.decreciente = { ...puerta, distancia };
+            }
+        }
+    });
+
+    return resultado;
+}
+
+function mostrarTarjetaPuertas(puertasCercanas) {
+    const tarjeta = document.getElementById("tarjetaPuertas");
+    const contenido = document.getElementById("contenidoPuertas");
+
+    // Limpiar contenido anterior
+    contenido.innerHTML = "";
+
+    // Añadir información de cada vía
+    ["via1", "via2"].forEach((via) => {
+        if (puertasCercanas[via].creciente || puertasCercanas[via].decreciente) {
+            const tituloVia = document.createElement("h3");
+            tituloVia.textContent = `Vía ${via === "via1" ? "1" : "2"}`;
+            contenido.appendChild(tituloVia);
+
+            if (puertasCercanas[via].creciente) {
+                const creciente = document.createElement("p");
+                creciente.textContent = `A + ${puertasCercanas[via].creciente.distancia} metros - PK ${formatearPK(puertasCercanas[via].creciente.PK)}`;
+                contenido.appendChild(creciente);
+            }
+
+            if (puertasCercanas[via].decreciente) {
+                const decreciente = document.createElement("p");
+                decreciente.textContent = `A - ${puertasCercanas[via].decreciente.distancia} metros - PK ${formatearPK(puertasCercanas[via].decreciente.PK)}`;
+                contenido.appendChild(decreciente);
+            }
+        }
+    });
+
+    // Mostrar la tarjeta
+    tarjeta.classList.remove("tarjeta-oculta");
+}
+
+document.getElementById("cerrarTarjetaPuertas").addEventListener("click", () => {
+    document.getElementById("tarjetaPuertas").classList.add("tarjeta-oculta");
+});
+
 
 document.getElementById("actualizarUbicacion").addEventListener("click", () => {
     if (marcadorActual) {
@@ -304,12 +366,27 @@ document.getElementById("iconoMas").addEventListener("click", () => {
         })
         .catch(error => console.error('Error al combinar datos de los archivos:', error));
 
-
     
 });
 
+// PUERTA
+document.getElementById("iconoPuerta").addEventListener("click", async () => {
+    if (!window.pkMasCercano) {
+        alert("No se ha obtenido el PK actual del usuario.");
+        return;
+    }
 
-// Modificación para abrir la cámara y añadir un botón
+    const pkUsuario = parseInt(window.pkMasCercano.pk, 10);
+    const respuesta = await fetch("./doc/puertas.json");
+    const puertas = await respuesta.json();
+
+    const puertasCercanas = calcularPuertasCercanas(pkUsuario, puertas);
+    mostrarTarjetaPuertas(puertasCercanas);
+});
+
+
+
+// CÁMARA
 document.getElementById("iconoCamara").addEventListener("click", () => {
     navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
         .then((stream) => {
