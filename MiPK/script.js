@@ -318,6 +318,7 @@ function calcularPuertasCercanas(latUsuario, lonUsuario) {
     return puertasCercanasPorVia;
 }
 
+
 function generarHTMLPuertas(puertasCercanas) {
     let html = '';
     for (const via in puertasCercanas) {
@@ -329,7 +330,11 @@ function generarHTMLPuertas(puertasCercanas) {
             const distanciaFormateada = puerta.distanciaPK.toFixed(0);
             const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
-                        <span>A + ${distanciaFormateada} metros - PK ${pkFormateado}</span>
+                        <span>A + ${distanciaFormateada} metros - PK ${pkFormateado} 
+                        <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}">
+                            (Ver Mapa)
+                        </a>
+                        </span>
                     </div>`;
         }
 
@@ -339,7 +344,11 @@ function generarHTMLPuertas(puertasCercanas) {
             const distanciaFormateada = puerta.distanciaPK.toFixed(0);
             const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
-                        <span>A - ${Math.abs(distanciaFormateada)} metros - PK ${pkFormateado}</span>
+                        <span>A - ${Math.abs(distanciaFormateada)} metros - PK ${pkFormateado}
+                        <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}">
+                            (Ver Mapa)
+                        </a>
+                        </span>
                     </div>`;
         }
 
@@ -357,46 +366,43 @@ function generarHTMLPuertas(puertasCercanas) {
     return html;
 }
 
-function generarHTMLPuertas(puertasCercanas) {
-    let html = '';
-    for (const via in puertasCercanas) {
-        html += `<h3>Vía ${via}</h3>`;
+// Modifica la parte donde se muestra la tarjeta de puertas para agregar el event listener
+document.getElementById("iconoPuerta").addEventListener("click", () => {
+    mostrarPuertasCercanas();
 
-        // Puerta en sentido creciente
-        if (puertasCercanas[via].creciente) {
-            const puerta = puertasCercanas[via].creciente;
-            const distanciaFormateada = puerta.distanciaPK.toFixed(0);
-            const pkFormateado = formatearPK(puerta.PK);
-            html += `<div class="puerta-fila">
-                        <span>A + ${distanciaFormateada} metros - PK ${pkFormateado}</span>
-                    </div>`;
-        }
+    // Agregar event listener a los enlaces "Ver Mapa" después de generar el HTML
+    setTimeout(() => { // Asegurar que el contenido se ha renderizado
+        const enlacesVerMapa = document.querySelectorAll('.ver-en-mapa');
+        enlacesVerMapa.forEach(enlace => {
+            enlace.addEventListener('click', function(event) {
+                event.preventDefault(); // Evita que el enlace recargue la página
 
-        // Puerta en sentido decreciente
-        if (puertasCercanas[via].decreciente) {
-            const puerta = puertasCercanas[via].decreciente;
-            const distanciaFormateada = puerta.distanciaPK.toFixed(0);
-            const pkFormateado = formatearPK(puerta.PK);
-            html += `<div class="puerta-fila">
-                        <span>A - ${Math.abs(distanciaFormateada)} metros - PK ${pkFormateado}</span>
-                    </div>`;
-        }
+                // Cerrar la tarjeta de puertas
+                ocultarPuertasCercanas();
 
-        if (!puertasCercanas[via].creciente && !puertasCercanas[via].decreciente) {
-            html += `<div class="puerta-fila">
-                        <span>No se encontraron puertas cercanas en esta vía.</span>
-                    </div>`;
-        }
-    }
+                const latPuerta = parseFloat(this.dataset.lat);
+                const lonPuerta = parseFloat(this.dataset.lon);
 
-    if (html === '') {
-        html = '<p>No se encontraron puertas cercanas.</p>';
-    }
+                // Crear el marcador de la puerta
+                const iconoPuertaMapa = L.icon({
+                    iconUrl: 'img/puerta.png', // Asegúrate de que la ruta es correcta
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 30],
+                    popupAnchor: [0, -30]
+                });
+                const marcadorPuerta = L.marker([latPuerta, lonPuerta], { icon: iconoPuertaMapa })
+                    .addTo(mapa)
+                    .bindPopup('Ubicación de la Puerta'); // Opcional: popup al hacer clic
 
-    return html;
-}
-// Event Listener para mostrar la tarjeta de puertas
-document.getElementById("iconoPuerta").addEventListener("click", mostrarPuertasCercanas);
+                // Centrar el mapa para mostrar al usuario y la puerta
+                if (lat && lon) {
+                    const bounds = L.latLngBounds([lat, lon], [latPuerta, lonPuerta]);
+                    mapa.fitBounds(bounds);
+                }
+            });
+        });
+    }, 0);
+});
 
 // Event Listener para cerrar la tarjeta de puertas
 cerrarPuertasCard.addEventListener("click", ocultarPuertasCercanas);
