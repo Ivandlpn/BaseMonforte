@@ -245,10 +245,10 @@ footer img {
 }
 
  /* Estilos específicos para cada fila de información de puerta */
-.puerta-fila {
-    margin-bottom: 5px; /* Espacio entre filas */
-    padding: 5px;
-   
+.puerta-fila span {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 0.9em; /* Define el tamaño aquí */
 }
 
 .puerta-fila span {
