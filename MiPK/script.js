@@ -325,7 +325,7 @@ function generarHTMLPuertas(puertasCercanas) {
     // Verificar si tenemos el PK actual del usuario
     if (window.pkMasCercano) {
         const pkActualFormateado = formatearPK(window.pkMasCercano.pk);
-        html += `<p style="text-align: center; font-weight: bold; margin-bottom: 10px;">👤Estás en el PK: ${pkActualFormateado}</p>`;
+        html += `<p style="text-align: center; font-weight: bold; margin-bottom: 10px;">👤 Estás en el PK: ${pkActualFormateado}</p>`;
     } else {
         html += `<p style="text-align: center; font-style: italic; margin-bottom: 10px;">Calculando PK actual...</p>`;
     }
