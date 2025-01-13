@@ -375,7 +375,6 @@ function generarHTMLPuertas(puertasCercanas) {
     return html;
 }
 // Modifica la parte donde se muestra la tarjeta de puertas para agregar el event listener
-// Modifica la parte donde se muestra la tarjeta de puertas para agregar el event listener
 document.getElementById("iconoPuerta").addEventListener("click", () => {
     mostrarPuertasCercanas();
 
@@ -392,13 +391,6 @@ document.getElementById("iconoPuerta").addEventListener("click", () => {
                 const latPuerta = parseFloat(this.dataset.lat);
                 const lonPuerta = parseFloat(this.dataset.lon);
 
-                // **Buscar la información de la puerta correspondiente**
-                const pkPuerta = this.closest('.puerta-fila').querySelector('span').textContent.match(/PK ([\d+]+)/)[1];
-                const viaPuerta = this.closest('.puerta-fila').closest('h3').textContent.replace('Vía ', '');
-
-                // Crear el contenido del popup
-                const popupContent = `PK: ${pkPuerta}\nVía: ${viaPuerta}`;
-
                 // Crear el marcador de la puerta
                 const iconoPuertaMapa = L.icon({
                     iconUrl: 'img/iconopuerta.png', // Asegúrate de que la ruta es correcta
@@ -408,7 +400,7 @@ document.getElementById("iconoPuerta").addEventListener("click", () => {
                 });
                 const marcadorPuerta = L.marker([latPuerta, lonPuerta], { icon: iconoPuertaMapa })
                     .addTo(mapa)
-                    .bindPopup(popupContent); // Asignar el nuevo contenido del popup
+                     .bindPopup('Ubicación de la Puerta'); // Opcional: popup al hacer clic
 
                 // Centrar el mapa para mostrar al usuario y la puerta
                 if (lat && lon) {
