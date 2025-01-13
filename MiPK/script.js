@@ -321,6 +321,15 @@ function calcularPuertasCercanas(latUsuario, lonUsuario) {
 
 function generarHTMLPuertas(puertasCercanas) {
     let html = '';
+
+    // Verificar si tenemos el PK actual del usuario
+    if (window.pkMasCercano) {
+        const pkActualFormateado = formatearPK(window.pkMasCercano.pk);
+        html += `<p style="text-align: center; font-weight: bold; margin-bottom: 10px;">👤Estás en el PK: ${pkActualFormateado}</p>`;
+    } else {
+        html += `<p style="text-align: center; font-style: italic; margin-bottom: 10px;">Calculando PK actual...</p>`;
+    }
+
     for (const via in puertasCercanas) {
         html += `<h3>Vía ${via}</h3>`;
 
@@ -330,7 +339,7 @@ function generarHTMLPuertas(puertasCercanas) {
             const distanciaFormateada = puerta.distanciaPK.toFixed(0);
             const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
-                        <span>A + ${distanciaFormateada} metros - PK ${pkFormateado} 
+                        <span>A + ${distanciaFormateada} metros - PK ${pkFormateado}
                         <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}">
                             (Ver Mapa 📍)
                         </a>
@@ -365,7 +374,6 @@ function generarHTMLPuertas(puertasCercanas) {
 
     return html;
 }
-
 // Modifica la parte donde se muestra la tarjeta de puertas para agregar el event listener
 document.getElementById("iconoPuerta").addEventListener("click", () => {
     mostrarPuertasCercanas();
