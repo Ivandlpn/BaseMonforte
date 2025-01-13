@@ -281,70 +281,61 @@ function ocultarPuertasCercanas() {
 
  
 
-function calcularPuertasCercanas(latUsuario, lonUsuario) {
-    const puertasPorVia = {}; // Agrupar puertas por vía
-
-    // Agrupar puertas por vía
-    puertasData.forEach(puerta => {
-        if (!puertasPorVia[puerta.Via]) {
-            puertasPorVia[puerta.Via] = [];
-        }
-        puertasPorVia[puerta.Via].push(puerta);
-    });
-
-    const puertasCercanasPorVia = {};
-
-    for (const via in puertasPorVia) {
-        // Calculamos la distancia a cada puerta de esta via
-        const puertasConDistancia = puertasPorVia[via].map(puerta => ({
-            ...puerta,
-           distanciaReal: calcularDistancia(latUsuario, lonUsuario, parseFloat(puerta.Latitud), parseFloat(puerta.Longitud))
-        }));
-
-        // Ordenamos por distancia para encontrar la más cercana
-        puertasConDistancia.sort((a, b) => a.distanciaReal - b.distanciaReal);
-
-        const puertaMasCercana = puertasConDistancia[0];
-
-        const pkMasCercano = parseFloat(puertaMasCercana.PK);
-
-
-        // Ahora vamos a buscar los siguientes y anteriores
-        const puertasOrdenadas = puertasPorVia[via].sort((a, b) => parseFloat(a.PK) - parseFloat(b.PK));
-
-        const indexActual = puertasOrdenadas.findIndex(p => parseFloat(p.PK) === pkMasCercano);
-
-         let puertaCreciente = null;
-        if (indexActual + 1 < puertasOrdenadas.length) {
-          puertaCreciente = puertasOrdenadas[indexActual + 1]
-            puertaCreciente = {
-                ...puertaCreciente,
-                distanciaPK :  parseFloat(puertaCreciente.PK) - parseFloat(window.pkMasCercano.pk),
-            };
-        }
-        
-
-        let puertaDecreciente = null;
-        if (indexActual > 0) {
-            puertaDecreciente = puertasOrdenadas[indexActual - 1]
-               puertaDecreciente = {
-                    ...puertaDecreciente,
-                    distanciaPK :   parseFloat(puertaDecreciente.PK) - parseFloat(window.pkMasCercano.pk),
-                };
-            
-        }
-
-
-
-         puertasCercanasPorVia[via] = {
-          creciente: puertaCreciente,
-          decreciente: puertaDecreciente
-      };
+async function calcularPuertasCercanas(latUsuario, lonUsuario) {
+    if (!window.pkMasCercano) {
+        console.error("No se ha calculado el PK más cercano.");
+        return {};
     }
 
-    return puertasCercanasPorVia;
-}
+    const viaPKCercano = window.pkMasCercano.linea; // Obtener la vía del PK más cercano
+    const pkValorCercano = parseFloat(window.pkMasCercano.pk); // Obtener el valor del PK más cercano
 
+    // Filtrar puertas que pertenecen a la misma vía que el PK más cercano
+    const puertasMismaVia = puertasData.filter(puerta => puerta.Via === viaPKCercano);
+
+    // Ordenar las puertas de esta vía por su PK
+    puertasMismaVia.sort((a, b) => parseFloat(a.PK) - parseFloat(b.PK));
+
+    // Encontrar el índice del PK más cercano en la lista de puertas
+    let indexPKCercano = -1;
+    for (let i = 0; i < puertasMismaVia.length; i++) {
+        if (parseFloat(puertasMismaVia[i].PK) === pkValorCercano) {
+            indexPKCercano = i;
+            break;
+        }
+    }
+
+    const puertasCercanas = {};
+
+    if (indexPKCercano !== -1) {
+        const via = viaPKCercano; // La vía ya está determinada
+
+        let puertaCreciente = null;
+        if (indexPKCercano + 1 < puertasMismaVia.length) {
+            puertaCreciente = puertasMismaVia[indexPKCercano + 1];
+            puertaCreciente = {
+                ...puertaCreciente,
+                distanciaPK: parseFloat(puertaCreciente.PK) - pkValorCercano,
+            };
+        }
+
+        let puertaDecreciente = null;
+        if (indexPKCercano > 0) {
+            puertaDecreciente = puertasMismaVia[indexPKCercano - 1];
+            puertaDecreciente = {
+                ...puertaDecreciente,
+                distanciaPK: parseFloat(puertaDecreciente.PK) - pkValorCercano,
+            };
+        }
+
+        puertasCercanas[via] = {
+            creciente: puertaCreciente,
+            decreciente: puertaDecreciente,
+        };
+    }
+
+    return puertasCercanas;
+}
 
 function generarHTMLPuertas(puertasCercanas) {
     let html = '';
@@ -352,8 +343,8 @@ function generarHTMLPuertas(puertasCercanas) {
         html += `<h3>Vía ${via}</h3>`;
 
         // Puerta en sentido creciente
-        if(puertasCercanas[via].creciente){
-            const puerta = puertasCercanas[via].creciente
+        if (puertasCercanas[via].creciente) {
+            const puerta = puertasCercanas[via].creciente;
             const distanciaFormateada = puerta.distanciaPK.toFixed(0);
             const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
@@ -362,19 +353,28 @@ function generarHTMLPuertas(puertasCercanas) {
         }
 
         // Puerta en sentido decreciente
-        if(puertasCercanas[via].decreciente){
-             const puerta = puertasCercanas[via].decreciente
-             const distanciaFormateada = puerta.distanciaPK.toFixed(0);
+        if (puertasCercanas[via].decreciente) {
+            const puerta = puertasCercanas[via].decreciente;
+            const distanciaFormateada = puerta.distanciaPK.toFixed(0);
             const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
                         <span>A - ${Math.abs(distanciaFormateada)} metros - PK ${pkFormateado}</span>
                     </div>`;
         }
+
+        if (!puertasCercanas[via].creciente && !puertasCercanas[via].decreciente) {
+            html += `<div class="puerta-fila">
+                        <span>No se encontraron puertas cercanas en esta vía.</span>
+                    </div>`;
+        }
     }
+
+    if (html === '') {
+        html = '<p>No se encontraron puertas cercanas.</p>';
+    }
+
     return html;
 }
-
-
 // Event Listener para mostrar la tarjeta de puertas
 document.getElementById("iconoPuerta").addEventListener("click", mostrarPuertasCercanas);
 
