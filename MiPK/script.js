@@ -9,6 +9,15 @@ const puertasContainer = document.getElementById("puertas-card-container");
 const puertasInfoDiv = document.getElementById("puertas-info");
 const cerrarPuertasCard = document.getElementById("cerrar-puertas-card");
 
+    const rutasArchivos = [
+      //  "./doc/L40Ar.json",
+       // "./doc/L40Br.json",
+       // "./doc/L40Cr.json",
+       // "./doc/L42Ar.json",
+        "./doc/L42B.json",
+        "./doc/L46.json",
+        "./doc/L48.json"
+
  // Cargar puertas al iniciar la app
 cargarPuertas();
 
