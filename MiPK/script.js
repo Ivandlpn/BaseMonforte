@@ -269,61 +269,14 @@ function mostrarPuertasCercanas() {
         return;
     }
 
-     const puertasCercanas = calcularPuertasCercanas(lat, lon);
-     const pkFormateado = formatearPK(window.pkMasCercano.pk);
-    const html = `<h2>Estás en el PK ${pkFormateado}</h2>` + generarHTMLPuertas(puertasCercanas) + `<div style="text-align: center;margin-top:10px"> <a href="#" id="ver-todas-puertas">Ver todas 📍</a> </div> `;
+    const puertasCercanas = calcularPuertasCercanas(lat, lon);
+    const html = generarHTMLPuertas(puertasCercanas);
     puertasInfoDiv.innerHTML = html;
-     puertasContainer.style.display = "flex"; // Mostrar la tarjeta
+    puertasContainer.style.display = "flex"; // Mostrar la tarjeta
+}
 
-  // Añade el evento click a #ver-todas-puertas después de generar el HTML
-  document.getElementById("ver-todas-puertas").addEventListener('click', (event) => {
-      event.preventDefault();
-      ocultarPuertasCercanas();
-
-      const puertasPorVia = calcularPuertasCercanas(lat, lon)
-
-          for (const via in puertasPorVia) {
-              
-              if(puertasPorVia[via].creciente){
-                  const puerta = puertasPorVia[via].creciente;
-                const latPuerta = parseFloat(puerta.Latitud);
-                const lonPuerta = parseFloat(puerta.Longitud);
-                      const iconoPuertaMapa = L.icon({
-                          iconUrl: 'img/iconopuerta.png', // Asegúrate de que la ruta es correcta
-                          iconSize: [30, 30],
-                          iconAnchor: [15, 30],
-                          popupAnchor: [0, -30]
-                      });
-                    const marcadorPuerta = L.marker([latPuerta, lonPuerta], { icon: iconoPuertaMapa })
-                     .addTo(mapa)
-                       .bindPopup('Ubicación de la Puerta'); // Opcional: popup al hacer clic
-                    if (lat && lon) {
-                        const bounds = L.latLngBounds([lat, lon], [latPuerta, lonPuerta]);
-                        mapa.fitBounds(bounds);
-                     }
-              }
-
-              if(puertasPorVia[via].decreciente){
-                const puerta = puertasPorVia[via].decreciente;
-                const latPuerta = parseFloat(puerta.Latitud);
-                const lonPuerta = parseFloat(puerta.Longitud);
-                const iconoPuertaMapa = L.icon({
-                    iconUrl: 'img/iconopuerta.png', // Asegúrate de que la ruta es correcta
-                    iconSize: [30, 30],
-                    iconAnchor: [15, 30],
-                    popupAnchor: [0, -30]
-                });
-              const marcadorPuerta = L.marker([latPuerta, lonPuerta], { icon: iconoPuertaMapa })
-               .addTo(mapa)
-                 .bindPopup('Ubicación de la Puerta'); // Opcional: popup al hacer clic
-                if (lat && lon) {
-                    const bounds = L.latLngBounds([lat, lon], [latPuerta, lonPuerta]);
-                    mapa.fitBounds(bounds);
-                }
-              }
-
-          }
-  })
+function ocultarPuertasCercanas() {
+    puertasContainer.style.display = "none";
 }
 
  
