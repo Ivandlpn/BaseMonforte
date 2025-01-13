@@ -392,7 +392,7 @@ document.getElementById("iconoPuerta").addEventListener("click", () => {
                 });
                 const marcadorPuerta = L.marker([latPuerta, lonPuerta], { icon: iconoPuertaMapa })
                     .addTo(mapa)
-                    .bindPopup(`<b>PK:</b> ${pkPuerta}<br><b>Vía:</b> ${ladoViaPuerta}`);
+                    .bindPopup(`<b>Vía:</b> ${ladoViaPuerta}`);
 
                 // Centrar el mapa para mostrar al usuario y la puerta
                 if (lat && lon) {
