@@ -9,15 +9,6 @@ const puertasContainer = document.getElementById("puertas-card-container");
 const puertasInfoDiv = document.getElementById("puertas-info");
 const cerrarPuertasCard = document.getElementById("cerrar-puertas-card");
 
-    const rutasArchivos = [
-      //  "./doc/L40Ar.json",
-       // "./doc/L40Br.json",
-       // "./doc/L40Cr.json",
-       // "./doc/L42Ar.json",
-        "./doc/L42B.json",
-        "./doc/L46.json",
-        "./doc/L48.json"
-
  // Cargar puertas al iniciar la app
 cargarPuertas();
 
@@ -68,38 +59,27 @@ function calcularYActualizarPK() {
         "./doc/L48.json"
     ];
 
-async function cargarArchivosJSON(rutas) {
-           const todasPromesas = rutas.map(ruta =>
-               fetch(ruta)
-                   .then(response => response.json())
-                   .catch(error => {
-                        console.error(`Error al cargar ${ruta}:`, error);
-                        return [];
-                   })
-           );
+    async function cargarArchivosJSON(rutas) {
+        const todasPromesas = rutas.map(ruta =>
+            fetch(ruta)
+                .then(response => response.json())
+                .catch(error => {
+                    console.error(`Error al cargar ${ruta}:`, error);
+                    return [];
+                })
+        );
+        return (await Promise.all(todasPromesas)).flat();
+    }
 
-           const lineasInfoPromesa = fetch("./doc/lineasInfo.json")
-               .then(response => response.json())
-               .catch(error => {
-                   console.error('Error al cargar lineasInfo.json:', error);
-                   return {}; // Retornar un objeto vacío en caso de error
-               });
-
-
-           const datosCargados = await Promise.all([...todasPromesas, lineasInfoPromesa]);
-           return [datosCargados.slice(0,-1).flat(), datosCargados.slice(-1)[0]]
-         }
-
-   cargarArchivosJSON(rutasArchivos)
+    cargarArchivosJSON(rutasArchivos)
         .then(datosCombinados => {
-            const data = datosCombinados[0];
-            const lineasInfo = datosCombinados[1]
-            window.pkMasCercano = calcularPKMasCercano(lat, lon, data, lineasInfo)[0];
+            window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
             mostrarPKMasCercano(window.pkMasCercano);
             actualizarPosicionPK(window.pkMasCercano);
-           // mostrarMensaje("   🔄 PK Actualizado");
-       })
+            // mostrarMensaje("   🔄 PK Actualizado");
+        })
         .catch(error => console.error('Error al combinar datos de los archivos:', error));
+}
 
 
 // Mantener la función mostrarMensaje como está
@@ -173,26 +153,19 @@ function actualizarPosicionUsuario(lat, lon) {
     }
 }
 
-    function determinarLadoVia(latUsuario, lonUsuario, pkActual, lineasInfo) {
-            const numeroLinea = pkActual.linea; // Obtenemos la línea del PK
-            const infoLinea = lineasInfo[numeroLinea]; // Consulta en la tabla
-          
-         // Aquí deberíamos hacer el calculo dependiendo del lado en el que se encuentre el usuario, usando una aproximación muy similar a la del producto vectorial
+function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente) {
+    // Coordenadas del PK actual y siguiente
+    const { latitud: latActual, longitud: lonActual } = pkActual;
+    const { latitud: latSiguiente, longitud: lonSiguiente } = pkSiguiente;
 
-      const { latitud: latActual, longitud: lonActual } = pkActual;
-       // Asumiendo que todos los puntos de la via se dirigen aproximadamente hacia el mismo sentido
-      const resultado = infoLinea.via2 === "derecha"? (lonUsuario - lonActual) - (latUsuario - latActual) : (latUsuario - latActual) - (lonUsuario - lonActual);
-      return resultado > 0 ? "Vía 2" : "Vía 1";
-        }
-         const rutasArchivos = [
-      //  "./doc/L40Ar.json",
-      //  "./doc/L40Br.json",
-     //   "./doc/L40Cr.json",
-      //  "./doc/L42Ar.json",
-        "./doc/L42B.json",
-       "./doc/L46.json",
-        "./doc/L48.json"
-    ];
+    // Producto vectorial para determinar el lado
+    const resultado = (lonSiguiente - lonActual) * (latUsuario - latActual) -
+                      (latSiguiente - latActual) * (lonUsuario - lonActual);
+
+    // Invertir lógica si está asignando los lados al revés
+    return resultado > 0 ? "Vía 2" : "Vía 1";
+}
+
 
 
 // Definir el nuevo icono para el PK más cercano
@@ -203,30 +176,29 @@ const iconoPK = L.icon({
     popupAnchor: [0, -40] // Punto desde donde se abrirá el popup
 });
 
-    function calcularPKMasCercano(lat, lon, data, lineasInfo) {
+function calcularPKMasCercano(lat, lon, data) {
+    let puntosCercanos = data.map(pk => {
+        const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
+        return { 
+            pk: pk.PK, 
+            latitud: pk.Latitud, 
+            longitud: pk.Longitud, 
+            distancia: distancia,
+            linea: pk.Linea // Agregar la información de la línea
+        };
+    });
 
-        let puntosCercanos = data.map(pk => {
-            const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
-            return { 
-                pk: pk.PK, 
-                latitud: pk.Latitud, 
-                longitud: pk.Longitud, 
-                distancia: distancia,
-                linea: pk.Linea // Agregar la información de la línea
-                };
-        });
+    puntosCercanos.sort((a, b) => a.distancia - b.distancia);
 
-            puntosCercanos.sort((a, b) => a.distancia - b.distancia);
-    
-             const pkActual = puntosCercanos[0]; // PK más cercano
-             const pkSiguiente = puntosCercanos[1] || pkActual; // PK siguiente (o actual si es el último)
+    const pkActual = puntosCercanos[0]; // PK más cercano
+    const pkSiguiente = puntosCercanos[1] || pkActual; // PK siguiente (o actual si es el último)
 
-              // Determinar lado de la vía
-             const ladoVia = determinarLadoVia(lat, lon, pkActual, lineasInfo);
-              pkActual.ladoVia = ladoVia;
+    // Determinar lado de la vía
+    const ladoVia = determinarLadoVia(lat, lon, pkActual, pkSiguiente);
+    pkActual.ladoVia = ladoVia;
 
-            return [pkActual];
-        }
+    return [pkActual];
+}
 
 function calcularDistancia(lat1, lon1, lat2, lon2) {
     const R = 6371000;
