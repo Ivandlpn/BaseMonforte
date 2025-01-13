@@ -332,7 +332,7 @@ function generarHTMLPuertas(puertasCercanas) {
             html += `<div class="puerta-fila">
                         <span>A + ${distanciaFormateada} metros - PK ${pkFormateado} 
                         <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}">
-                            (Ver Mapa)
+                            (Ver Mapa 📍)
                         </a>
                         </span>
                     </div>`;
