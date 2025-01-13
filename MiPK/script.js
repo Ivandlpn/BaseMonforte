@@ -339,7 +339,7 @@ function generarHTMLPuertas(puertasCercanas) {
             const distanciaFormateada = puerta.distanciaPK.toFixed(0);
             const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
-                        <span>A + ${distanciaFormateada} metros - PK ${pkFormateado}
+                        <span>🚪 A + ${distanciaFormateada} metros - PK ${pkFormateado}
                         <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}">
                             (Ver Mapa 📍)
                         </a>
@@ -353,7 +353,7 @@ function generarHTMLPuertas(puertasCercanas) {
             const distanciaFormateada = puerta.distanciaPK.toFixed(0);
             const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
-                        <span>A - ${Math.abs(distanciaFormateada)} metros - PK ${pkFormateado}
+                        <span>🚪 A - ${Math.abs(distanciaFormateada)} metros - PK ${pkFormateado}
                         <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}">
                             (Ver Mapa 📍)
                         </a>
