@@ -257,6 +257,12 @@ footer img {
     font-size: 1.2em; /* Define el tamaño aquí */
 }
 
+#puertas-card h3 {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
     /* Estilos para cuando la tarjeta está en móvil */
 @media (max-width: 600px) {
    .overlay-card{
