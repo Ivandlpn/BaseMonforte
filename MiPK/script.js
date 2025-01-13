@@ -385,7 +385,7 @@ document.getElementById("iconoPuerta").addEventListener("click", () => {
 
                 // Crear el marcador de la puerta
                 const iconoPuertaMapa = L.icon({
-                    iconUrl: 'img/puerta.png', // Asegúrate de que la ruta es correcta
+                    iconUrl: 'img/iconopuerta.png', // Asegúrate de que la ruta es correcta
                     iconSize: [30, 30],
                     iconAnchor: [15, 30],
                     popupAnchor: [0, -30]
