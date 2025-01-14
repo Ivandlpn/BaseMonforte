@@ -153,17 +153,34 @@ function actualizarPosicionUsuario(lat, lon) {
     }
 }
 
-function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente) {
-    // Coordenadas del PK actual y siguiente
-    const { latitud: latActual, longitud: lonActual } = pkActual;
-    const { latitud: latSiguiente, longitud: lonSiguiente } = pkSiguiente;
+function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente, linea) {
+    // 1. Determinar el vector que representa la dirección de la vía
+    const vectorVia = {
+        x: pkSiguiente.longitud - pkActual.longitud,
+        y: pkSiguiente.latitud - pkActual.latitud
+    };
 
-    // Producto vectorial para determinar el lado
-    const resultado = (lonSiguiente - lonActual) * (latUsuario - latActual) -
-                      (latSiguiente - latActual) * (lonUsuario - lonActual);
+    // 2. Determinar el vector desde el PK actual hasta el usuario
+    const vectorUsuario = {
+        x: lonUsuario - pkActual.longitud,
+        y: latUsuario - pkActual.latitud
+    };
 
-    // Invertir lógica si está asignando los lados al revés
-    return resultado > 0 ? "Vía 2" : "Vía 1";
+    // 3. Calcular el producto cruz (2D)
+    const productoCruz = (vectorVia.x * vectorUsuario.y) - (vectorVia.y * vectorUsuario.x);
+
+    // 4. Determinar el lado de la vía basado en el producto cruz y la línea
+    if (linea === '40') {
+        return productoCruz > 0 ? "Vía 1" : "Vía 2";
+    } else if (linea === '42') {
+        return productoCruz > 0 ? "Vía 1" : "Vía 2";
+    } else if (linea === '46') {
+        return productoCruz > 0 ? "Vía 1" : "Vía 2";
+    } else if (linea === '48') {
+        return productoCruz > 0 ? "Vía 2" : "Vía 1";
+    } else {
+        return "Lado no definido";
+    }
 }
 
 
