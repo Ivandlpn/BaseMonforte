@@ -401,10 +401,12 @@ enlacesVerMapa.forEach(enlace => {
         const pk = pkMatch ? pkMatch[1] : "";
 
 
-        // Expresión regular para encontrar la vía en la cadena
+        // Obtener el elemento padre que contiene el h3 que a su vez contiene la vía
+        const viaElement = this.closest(".puerta-fila").previousElementSibling;
+        // Expresión regular para encontrar la vía en la cadena del h3
         const viaRegex = /Vía (\d+)/;
         // Buscar la vía usando la expresión regular
-        const viaMatch = puertaTexto.match(viaRegex);
+        const viaMatch = viaElement.textContent.match(viaRegex);
         // Si se encuentra una vía, se guarda en la variable. Si no, se deja vacía
          const via = viaMatch ? viaMatch[1] : "";
        
