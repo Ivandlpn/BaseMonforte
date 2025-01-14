@@ -322,7 +322,6 @@ function calcularPuertasCercanas(latUsuario, lonUsuario) {
 function generarHTMLPuertas(puertasCercanas) {
     let html = '';
 
-    // Verificar si tenemos el PK actual del usuario
     if (window.pkMasCercano) {
         const pkActualFormateado = formatearPK(window.pkMasCercano.pk);
         html += `<p style="text-align: center; font-weight: bold; margin-bottom: 10px;">👤 Estás en el PK: ${pkActualFormateado}</p>`;
@@ -340,7 +339,7 @@ function generarHTMLPuertas(puertasCercanas) {
             const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
                         <span>🚪 a + ${distanciaFormateada} metros - PK ${pkFormateado}
-                        <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}">
+                        <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
                             (📍)
                         </a>
                         </span>
@@ -354,7 +353,7 @@ function generarHTMLPuertas(puertasCercanas) {
             const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
                         <span>🚪 a - ${Math.abs(distanciaFormateada)} metros - PK ${pkFormateado}
-                        <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}">
+                        <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
                             (📍)
                         </a>
                         </span>
@@ -374,6 +373,7 @@ function generarHTMLPuertas(puertasCercanas) {
 
     return html;
 }
+
 // Modifica la parte donde se muestra la tarjeta de puertas para agregar el event listener
 document.getElementById("iconoPuerta").addEventListener("click", () => {
     mostrarPuertasCercanas();
@@ -381,6 +381,7 @@ document.getElementById("iconoPuerta").addEventListener("click", () => {
     // Agregar event listener a los enlaces "Ver Mapa" después de generar el HTML
     setTimeout(() => { // Asegurar que el contenido se ha renderizado
         const enlacesVerMapa = document.querySelectorAll('.ver-en-mapa');
+
 enlacesVerMapa.forEach(enlace => {
     enlace.addEventListener('click', function(event) {
         event.preventDefault();
@@ -389,6 +390,9 @@ enlacesVerMapa.forEach(enlace => {
 
         const latPuerta = parseFloat(this.dataset.lat);
         const lonPuerta = parseFloat(this.dataset.lon);
+          // Obtener la vía del atributo data-via del enlace
+         const via = this.dataset.via;
+
         // Obtener el elemento padre .puerta-fila
         const puertaFila = this.closest(".puerta-fila");
         // Extraer el texto del SPAN, en este caso toda la info de la puerta
@@ -400,16 +404,6 @@ enlacesVerMapa.forEach(enlace => {
         // Si se encuentra un PK, se guarda en la variable. Si no, se deja vacío.
         const pk = pkMatch ? pkMatch[1] : "";
 
-
-        // Obtener el elemento padre que contiene el h3 que a su vez contiene la vía
-        const viaElement = this.closest(".puerta-fila").previousElementSibling;
-        // Expresión regular para encontrar la vía en la cadena del h3
-        const viaRegex = /Vía (\d+)/;
-        // Buscar la vía usando la expresión regular
-        const viaMatch = viaElement.textContent.match(viaRegex);
-        // Si se encuentra una vía, se guarda en la variable. Si no, se deja vacía
-         const via = viaMatch ? viaMatch[1] : "";
-       
 
 
         const iconoPuertaMapa = L.icon({
