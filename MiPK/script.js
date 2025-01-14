@@ -211,7 +211,7 @@ function calcularPKMasCercano(lat, lon, data) {
     const pkSiguiente = puntosCercanos[1] || pkActual; // PK siguiente (o actual si es el último)
 
     // Determinar lado de la vía
-    const ladoVia = determinarLadoVia(lat, lon, pkActual, pkSiguiente);
+    const ladoVia = determinarLadoVia(lat, lon, pkActual, pkSiguiente, pkActual.linea);
     pkActual.ladoVia = ladoVia;
 
     return [pkActual];
