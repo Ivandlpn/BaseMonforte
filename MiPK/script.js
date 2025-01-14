@@ -381,34 +381,56 @@ document.getElementById("iconoPuerta").addEventListener("click", () => {
     // Agregar event listener a los enlaces "Ver Mapa" después de generar el HTML
     setTimeout(() => { // Asegurar que el contenido se ha renderizado
         const enlacesVerMapa = document.querySelectorAll('.ver-en-mapa');
-        enlacesVerMapa.forEach(enlace => {
-            enlace.addEventListener('click', function(event) {
-                event.preventDefault(); // Evita que el enlace recargue la página
+enlacesVerMapa.forEach(enlace => {
+    enlace.addEventListener('click', function(event) {
+        event.preventDefault();
 
-                // Cerrar la tarjeta de puertas
-                ocultarPuertasCercanas();
+        ocultarPuertasCercanas();
 
-                const latPuerta = parseFloat(this.dataset.lat);
-                const lonPuerta = parseFloat(this.dataset.lon);
+        const latPuerta = parseFloat(this.dataset.lat);
+        const lonPuerta = parseFloat(this.dataset.lon);
+        // Obtener el elemento padre .puerta-fila
+        const puertaFila = this.closest(".puerta-fila");
+        // Extraer el texto del SPAN, en este caso toda la info de la puerta
+        const puertaTexto = puertaFila.querySelector("span").textContent;
+        // Expresión regular para encontrar el PK en la cadena
+        const pkRegex = /PK (\d+[+]?\d+)/;
+        // Buscar el PK usando la expresión regular
+        const pkMatch = puertaTexto.match(pkRegex);
+        // Si se encuentra un PK, se guarda en la variable. Si no, se deja vacío.
+        const pk = pkMatch ? pkMatch[1] : "";
 
-                // Crear el marcador de la puerta
-                const iconoPuertaMapa = L.icon({
-                    iconUrl: 'img/iconopuerta.png', // Asegúrate de que la ruta es correcta
-                    iconSize: [30, 30],
-                    iconAnchor: [15, 30],
-                    popupAnchor: [0, -30]
-                });
-                const marcadorPuerta = L.marker([latPuerta, lonPuerta], { icon: iconoPuertaMapa })
-                    .addTo(mapa)
-                     .bindPopup('Ubicación de la Puerta'); // Opcional: popup al hacer clic
 
-                // Centrar el mapa para mostrar al usuario y la puerta
-                if (lat && lon) {
-                    const bounds = L.latLngBounds([lat, lon], [latPuerta, lonPuerta]);
-                    mapa.fitBounds(bounds);
-                }
-            });
+        // Expresión regular para encontrar la vía en la cadena
+        const viaRegex = /Vía (\d+)/;
+        // Buscar la vía usando la expresión regular
+        const viaMatch = puertaTexto.match(viaRegex);
+        // Si se encuentra una vía, se guarda en la variable. Si no, se deja vacía
+         const via = viaMatch ? viaMatch[1] : "";
+       
+
+
+        const iconoPuertaMapa = L.icon({
+            iconUrl: 'img/iconopuerta.png',
+            iconSize: [30, 30],
+            iconAnchor: [15, 30],
+            popupAnchor: [0, -30]
         });
+        const marcadorPuerta = L.marker([latPuerta, lonPuerta], { icon: iconoPuertaMapa })
+            .addTo(mapa)
+            .bindPopup(`
+                <div style="text-align: center;">
+                    <p style="margin: 0; font-size: 1.2em;">Vía ${via}</p>
+                    <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${pk}</p>
+                </div>
+            `); // Popup con información centrada
+
+        if (lat && lon) {
+            const bounds = L.latLngBounds([lat, lon], [latPuerta, lonPuerta]);
+            mapa.fitBounds(bounds);
+        }
+    });
+});
     }, 0);
 });
 
