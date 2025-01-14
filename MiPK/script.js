@@ -279,7 +279,37 @@ function ocultarPuertasCercanas() {
     puertasContainer.style.display = "none";
 }
 
- 
+ function mostrarTodasPuertas(puertas) {
+        if (!puertas || puertas.length === 0) {
+            return; // No hay puertas para mostrar
+        }
+
+        const bounds = [];
+        const iconoPuertaMapa = L.icon({
+                    iconUrl: 'img/iconopuerta.png', // Asegúrate de que la ruta es correcta
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 30],
+                    popupAnchor: [0, -30]
+        });
+
+        puertas.forEach(puerta => {
+            const marcadorPuerta = L.marker([puerta.Latitud, puerta.Longitud], { icon: iconoPuertaMapa })
+                .addTo(mapa)
+                  .bindPopup(`
+                <div style="text-align: center;">
+                    <p style="margin: 0; font-size: 1.2em;">Vía ${puerta.Via}</p>
+                    <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${formatearPK(puerta.PK)}</p>
+                </div>
+                `);
+              bounds.push([puerta.Latitud, puerta.Longitud]);
+
+        });
+        if (lat && lon)
+        {
+          bounds.push([lat,lon])
+        }
+    mapa.fitBounds(bounds); // Centrar el mapa en el contenido
+}
 
 function calcularPuertasCercanas(latUsuario, lonUsuario) {
     const puertasPorVia = {};
