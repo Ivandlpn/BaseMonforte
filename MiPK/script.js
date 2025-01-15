@@ -9,6 +9,8 @@ const puertasContainer = document.getElementById("puertas-card-container");
 const puertasInfoDiv = document.getElementById("puertas-info");
 const cerrarPuertasCard = document.getElementById("cerrar-puertas-card");
 
+const apiKeyOpenWeatherMap = "be7b3e9b73c19cd273aaeecad01eea04"; // Reemplaza con tu API Key
+
  // Cargar puertas al iniciar la app
 cargarPuertas();
 
@@ -376,6 +378,78 @@ checkTiempo.addEventListener('change', function() {
         desactivarCapaTiempo();
     }
 });
+
+async function obtenerDatosTiempo(ciudad, pais) {
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${apiKeyOpenWeatherMap}&units=metric&lang=es`;
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.cod === 200) {
+            return {
+                temperatura: data.main.temp,
+                descripcion: data.weather[0].description,
+                icono: data.weather[0].icon
+            };
+        } else {
+            console.error(`Error al obtener datos de ${ciudad}: ${data.message}`);
+            return null;
+        }
+    } catch (error) {
+        console.error(`Error al obtener datos de ${ciudad}:`, error);
+        return null;
+    }
+}
+
+function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
+    if (datosTiempo) {
+        const iconoUrl = `https://openweathermap.org/img/wn/${datosTiempo.icono}@2x.png`;
+
+        const popupContent = `
+            <div style="text-align: center;">
+                <h3 style="margin: 0;">${ciudad}</h3>
+                <img src="${iconoUrl}" alt="${datosTiempo.descripcion}">
+                <p style="margin: 5px 0;">${datosTiempo.temperatura} °C</p>
+                <p style="margin: 5px 0;">${datosTiempo.descripcion}</p>
+            </div>
+        `;
+
+        L.marker([lat, lon], {
+            icon: L.divIcon({
+                className: 'icono-tiempo',
+                html: `<img src="${iconoUrl}" alt="${datosTiempo.descripcion}">`,
+                iconSize: [50, 50]
+            })
+        })
+        .addTo(mapa)
+        .bindPopup(popupContent);
+    }
+}
+
+let marcadoresTiempo = []; // Array para almacenar los marcadores de tiempo
+
+async function activarCapaTiempo() {
+    const ciudades = [
+        { nombre: "Alicante", provincia: "Alicante", pais: "ES", lat: 38.3452, lon: -0.4815 },
+        { nombre: "Orihuela", provincia: "Alicante", pais: "ES", lat: 38.0840, lon: -0.9470 },
+        { nombre: "Villena", provincia: "Alicante", pais: "ES", lat: 38.6333, lon: -0.8667 },
+        { nombre: "Almansa", provincia: "Albacete", pais: "ES", lat: 38.8706, lon: -1.0976 },
+        { nombre: "Bonete", provincia: "Albacete", pais: "ES", lat: 38.9211, lon: -1.3480 }
+    ];
+
+    for (const ciudad of ciudades) {
+        const datosTiempo = await obtenerDatosTiempo(ciudad.nombre, ciudad.pais);
+        mostrarInfoTiempo(ciudad.nombre, ciudad.lat, ciudad.lon, datosTiempo);
+    }
+}
+
+function desactivarCapaTiempo() {
+    marcadoresTiempo.forEach(marcador => {
+        mapa.removeLayer(marcador);
+    });
+    marcadoresTiempo = [];
+}
 
 
  async function cargarPuertas() {
