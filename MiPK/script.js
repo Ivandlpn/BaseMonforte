@@ -405,32 +405,34 @@ async function obtenerDatosTiempo(ciudad, pais) {
 }
 
 function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
-    if (datosTiempo) {
-        const iconoUrl = `img/iconos-tiempo/${datosTiempo.icono}.png`; // Asumiendo que la carpeta se llama 'img/iconos-tiempo'`;
+  if (datosTiempo) {
+    const iconoUrl = `img/iconos-tiempo/${datosTiempo.icono}.png`;
 
-        const popupContent = `
-            <div style="text-align: center;">
-                <h3 style="margin: 0;">${ciudad}</h3>
-                <img src="${iconoUrl}" alt="${datosTiempo.descripcion}">
-                <p style="margin: 5px 0;">${datosTiempo.temperatura} °C</p>
-                <p style="margin: 5px 0;">${datosTiempo.descripcion}</p>
-            </div>
-        `;
+    // Crear el marcador y añadirlo al mapa
+    const marcador = L.marker([lat, lon], {
+      icon: L.divIcon({
+        className: "icono-tiempo",
+        html: `<img src="${iconoUrl}" alt="${datosTiempo.descripcion}">`,
+        iconSize: [50, 50], 
+      }),
+    }).addTo(mapa);
+    
+    // Usar una función anónima para generar el contenido del popup
+    marcador.bindPopup(function () {
+      const popupContent = `
+        <div style="text-align: center;">
+            <h3 style="margin: 0;">${ciudad}</h3>
+            <img src="${iconoUrl}" alt="${datosTiempo.descripcion}">
+            <p style="margin: 5px 0;">${datosTiempo.temperatura} °C</p>
+            <p style="margin: 5px 0;">${datosTiempo.descripcion}</p>
+        </div>
+    `;
+      return popupContent;
+    });
 
-        // Crear el marcador y añadirlo al mapa
-        const marcador = L.marker([lat, lon], {
-            icon: L.divIcon({
-                className: 'icono-tiempo',
-                html: `<img src="${iconoUrl}" alt="${datosTiempo.descripcion}">`,
-                iconSize: [50, 50]
-            })
-        })
-        .addTo(mapa)
-        .bindPopup(popupContent);
-
-        // Añadir el marcador al array marcadoresTiempo
-        marcadoresTiempo.push(marcador);
-    }
+    // Añadir el marcador al array marcadoresTiempo
+    marcadoresTiempo.push(marcador);
+  }
 }
 
 let marcadoresTiempo = []; // Array para almacenar los marcadores de tiempo
