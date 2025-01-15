@@ -44,9 +44,27 @@
         
                 <!-- Contenedor del mapa con id específico y estilo en línea para la altura -->
         <div id="map-container" style="height: 400px;">
-            <div id="map">
-                <img id="actualizarUbicacion" src="img/centrar.png" alt="Centrar" style="cursor: pointer;">
-            </div>
+          
+          div id="map">
+    <img id="actualizarUbicacion" src="img/centrar.png" alt="Centrar" style="cursor: pointer;">
+
+    <div id="control-capas">
+        <img src="img/capa.png" alt="Capas" id="boton-capas">
+        <div id="menu-capas" style="display: none;">
+            <label>
+                <input type="checkbox" id="check-trazado"> Trazado
+            </label>
+            <label>
+                <input type="checkbox" id="check-edificios"> Edificios
+            </label>
+            <label>
+                <input type="checkbox" id="check-tiempo"> Tiempo
+            </label>
+        </div>
+    </div>
+</div>
+        
+        
         </div>
         <div class="linea-gradiente"></div> <!-- Línea con gradiente -->
         <div id="calculoPK">
