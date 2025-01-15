@@ -344,17 +344,7 @@ function desactivarCapaEdificios() {
     console.log('Capa de edificios desactivada');
 }
 
-function activarCapaTiempo() {
-    // Aquí irá el código para activar la capa de tiempo
-    console.log('Capa de tiempo activada');
-}
 
-function desactivarCapaTiempo() {
-    marcadoresTiempo.forEach(marcador => {
-        mapa.removeLayer(marcador);
-    });
-    marcadoresTiempo = []; // Vaciar el array después de eliminar los marcadores
-}
 
 // Event listeners para los checkboxes
 checkTrazado.addEventListener('change', function() {
@@ -438,20 +428,21 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
 let marcadoresTiempo = []; // Array para almacenar los marcadores de tiempo
 
 async function activarCapaTiempo() {
-    const ciudades = [
- { nombre: "Alicante", provincia: "Alicante", pais: "ES", lat: 38.3452, lon: -0.4815 },
-        { nombre: "Villena", provincia: "Alicante", pais: "ES", lat: 38.6333, lon: -0.8667 },
-        { nombre: "Almansa", provincia: "Albacete", pais: "ES", lat: 38.8706, lon: -1.0976 },
-        { nombre: "Bonete", provincia: "Albacete", pais: "ES", lat: 38.9211, lon: -1.3480 },
-        { nombre: "BM Monforte", provincia: "Alicante", pais: "ES", lat: 38.4069, lon: -0.6949 } // Nuevo punto añadido
-    ];
+  const ciudades = [
+    { nombre: "Alicante", provincia: "Alicante", pais: "ES", lat: 38.3452, lon: -0.4815 },
+    { nombre: "Orihuela", provincia: "Alicante", pais: "ES", lat: 38.0840, lon: -0.9470 },
+    { nombre: "Villena", provincia: "Alicante", pais: "ES", lat: 38.6333, lon: -0.8667 },
+    { nombre: "Almansa", provincia: "Albacete", pais: "ES", lat: 38.8706, lon: -1.0976 },
+    { nombre: "Bonete", provincia: "Albacete", pais: "ES", lat: 38.9211, lon: -1.3480 },
+  ];
 
-    for (const ciudad of ciudades) {
-        const datosTiempo = await obtenerDatosTiempo(ciudad.nombre, ciudad.pais);
-        mostrarInfoTiempo(ciudad.nombre, ciudad.lat, ciudad.lon, datosTiempo);
+  for (const ciudad of ciudades) {
+    const datosTiempo = await obtenerDatosTiempo(ciudad.nombre, ciudad.pais);
+    if (datosTiempo) {
+      mostrarInfoTiempo(ciudad.nombre, ciudad.lat, ciudad.lon, datosTiempo);
     }
+  }
 }
-
 function desactivarCapaTiempo() {
     marcadoresTiempo.forEach(marcador => {
         mapa.removeLayer(marcador);
