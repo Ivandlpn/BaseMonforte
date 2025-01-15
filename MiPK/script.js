@@ -396,11 +396,12 @@ async function obtenerDatosTiempo(lat, lon) {
   }
 }
 
+
+
 function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
     if (datosTiempo) {
-        const iconoUrl = `img/iconos-tiempo/${datosTiempo.icono}.png`;
-         const iconSize = [10, 10]; // Ejemplo: 30x30 píxeles
-
+        // Construir la ruta a la imagen del icono personalizado
+        const iconoUrl = `img/iconos-tiempo/${datosTiempo.icono}.png`; // Asumiendo que la carpeta se llama 'img/iconos-tiempo'
 
         const popupContent = `
             <div style="text-align: center;">
@@ -411,17 +412,22 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
             </div>
         `;
 
-        L.marker([lat, lon], {
+        // Crear el marcador y añadirlo al mapa
+        const marcador = L.marker([lat, lon], {
             icon: L.divIcon({
                 className: 'icono-tiempo',
                 html: `<img src="${iconoUrl}" alt="${datosTiempo.descripcion}">`,
-                iconSize: [10, 10]
+                iconSize: [50, 50] // Ajusta el tamaño si es necesario
             })
         })
         .addTo(mapa)
         .bindPopup(popupContent);
+
+        // Añadir el marcador al array marcadoresTiempo
+        marcadoresTiempo.push(marcador);
     }
 }
+
 
 let marcadoresTiempo = []; // Array para almacenar los marcadores de tiempo
 
