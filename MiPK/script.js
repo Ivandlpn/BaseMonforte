@@ -363,7 +363,7 @@ checkEdificios.addEventListener('change', function() {
     }
 });
 
-///// CAPA TIEMPO /////
+/////  INICIO CAPA TIEMPO /////---------------------------------------------------------------------------------------
 
 checkTiempo.addEventListener('change', function() {
     if (this.checked) {
@@ -475,7 +475,9 @@ function desactivarCapaTiempo() {
     marcadoresTiempo = [];
 }
 
-///// PUERTAS /////
+/////  FIN CAPA TIEMPO /////---------------------------------------------------------------------------------------
+
+/////  INICIO PUERTAS /////---------------------------------------------------------------------------------------
 
  async function cargarPuertas() {
   try {
