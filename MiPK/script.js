@@ -9,7 +9,7 @@ const puertasContainer = document.getElementById("puertas-card-container");
 const puertasInfoDiv = document.getElementById("puertas-info");
 const cerrarPuertasCard = document.getElementById("cerrar-puertas-card");
 
-const apiKeyOpenWeatherMap = "be7b3e9b73c19cd273aaeecad01eea04"; // Reemplaza con tu API Key
+const apiKeyOpenWeatherMap = "14225e48c44f9d35291e12867b7f32cf"; // Reemplaza con tu API Key
 
  // Cargar puertas al iniciar la app
 cargarPuertas();
