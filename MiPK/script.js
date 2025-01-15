@@ -179,9 +179,7 @@ function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente, linea)
     return (productoCruz * direccionLineas[linea]) > 0 ? "Vía 1" : "Vía 2";
 }
 
-if (!pkActual || !pkSiguiente || !pkActual.longitud || !pkActual.latitud || !pkSiguiente.longitud || !pkSiguiente.latitud) {
-    return "Datos de PK inválidos";
-}
+
 
 
 
