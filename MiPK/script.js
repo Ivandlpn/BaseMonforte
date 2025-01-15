@@ -431,11 +431,22 @@ let marcadoresTiempo = []; // Array para almacenar los marcadores de tiempo
 
 async function activarCapaTiempo() {
     const ciudades = [
- { nombre: "Alicante", provincia: "Alicante", pais: "ES", lat: 38.3452, lon: -0.4815 },
-        { nombre: "Villena", provincia: "Alicante", pais: "ES", lat: 38.6333, lon: -0.8667 },
-        { nombre: "Almansa", provincia: "Albacete", pais: "ES", lat: 38.8706, lon: -1.0976 },
-        { nombre: "Bonete", provincia: "Albacete", pais: "ES", lat: 38.9211, lon: -1.3480 },
-        { nombre: "BM Monforte", provincia: "Alicante", pais: "ES", lat: 38.4069, lon: -0.6949 } // Nuevo punto añadido
+ { nombre: "Villena", provincia: "Alicante", pais: "ES", lat: 38.6333, lon: -0.8667 },
+{ nombre: "Almansa", provincia: "Albacete", pais: "ES", lat: 38.8706, lon: -1.0976 },
+{ nombre: "Bonete", provincia: "Albacete", pais: "ES", lat: 38.9211, lon: -1.3480 },
+
+{ nombre: "Estación Alicante", ciudad: "Alicante", pais: "ES", lat: 38.3447, lon: -0.4955 }, // Estación de AVE de Alicante 
+{ nombre: "Estación Villena", ciudad: "Villena", pais: "ES", lat: 38.5847, lon: -0.8723 }, // Estación de AVE de Villena 
+{ nombre: "Estación Albacete", ciudad: "Albacete", pais: "ES", lat: 38.9998, lon: -1.8483 }, // Estación de AVE de Albacete 
+{ nombre: "Estación Cuenca", ciudad: "Cuenca", pais: "ES", lat: 40.0357, lon: -2.1374 }, // Estación de AVE de Cuenca (Fernando Zóbel) 
+{ nombre: "Estación Requena", ciudad: "Requena", pais: "ES", lat: 39.4558, lon: -1.0995 }, // Estación de AVE de Requena-Utiel
+{ nombre: "Estación Valencia", ciudad: "Valencia", pais: "ES", lat: 39.4598, lon: -0.3832 }, // Estación de AVE de Valencia (Joaquín Sorolla)
+{ nombre: "Estación Madrid Chamartín", ciudad: "Madrid", pais: "ES", lat: 40.4722, lon: -3.6825 }, // Estación de Madrid Chamartín
+
+{ nombre: "BM Villarrubia", ciudad: "Villarrubia", pais: "ES", lat: 39.9577, lon: -3.3513 }, 
+{ nombre: "BM Requena", ciudad: "Requena", pais: "ES", lat: 39.5364, lon: -1.1565 },
+{ nombre: "BM Galbaldón", ciudad: "Gabaldón", pais: "ES", lat: 39.6362, lon: -1.9438 },
+{ nombre: "BM Monforte", provincia: "Alicante", pais: "ES", lat: 38.4069, lon: -0.6949 },
     ];
 
     for (const ciudad of ciudades) {
