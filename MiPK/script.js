@@ -44,8 +44,6 @@ function calcularYActualizarPK() {
     const pkElement = document.getElementById("pkCercano");
     pkElement.innerHTML = `<span class="texto-buscando-pk">Buscando PK...</span>`;
 
-
-    
     if (!lat || !lon) {
         console.error("No se ha obtenido la ubicación actual del usuario.");
         return;
@@ -180,8 +178,6 @@ function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente, linea)
 
     return (productoCruz * direccionLineas[linea]) > 0 ? "Vía 1" : "Vía 2";
 }
-
-
 
 
 
