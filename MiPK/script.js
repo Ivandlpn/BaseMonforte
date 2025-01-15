@@ -380,7 +380,7 @@ checkTiempo.addEventListener('change', function() {
 });
 
 async function obtenerDatosTiempo(ciudad, pais) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad},${pais}&appid=${apiKeyOpenWeatherMap}&units=metric&lang=es`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKeyOpenWeatherMap}&units=metric&lang=es`;
 
     try {
         const response = await fetch(url);
