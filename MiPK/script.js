@@ -401,7 +401,7 @@ async function obtenerDatosTiempo(lat, lon) {
 function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
     if (datosTiempo) {
         // Construir la ruta a la imagen del icono personalizado
-        const iconoUrl = `img/iconos-tiempo/${datosTiempo.icono}.png`; // Asumiendo que la carpeta se llama 'img/iconos-tiempo'
+       const iconoUrl = `https://openweathermap.org/img/wn/${datosTiempo.icono}@2x.png`; // Asumiendo que la carpeta se llama 'img/iconos-tiempo'
 
         const popupContent = `
             <div style="text-align: center;">
