@@ -464,6 +464,24 @@ function generarHTMLPuertas(puertasCercanas) {
 
     return html;
 }
+
+// Event listener para el botón "Buscar puerta por PK"
+document.addEventListener('click', function(event) {
+    if (event.target.closest('#buscar-puerta-por-pk')) {
+        const mensajeProximamente = document.getElementById('mensaje-proximamente');
+        if (mensajeProximamente) {
+            mensajeProximamente.style.display = 'block';
+            // Ocultar el mensaje después de 3 segundos
+            setTimeout(() => {
+                mensajeProximamente.style.display = 'none';
+            }, 3000);
+        }
+    }
+});
+
+
+
+
 // Modifica la parte donde se muestra la tarjeta de puertas para agregar el event listener
     // Modificar la parte donde se muestra la tarjeta de puertas para agregar el event listener
 document.getElementById("iconoPuerta").addEventListener("click", () => {
