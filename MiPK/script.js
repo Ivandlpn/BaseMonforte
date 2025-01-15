@@ -399,6 +399,8 @@ async function obtenerDatosTiempo(lat, lon) {
 function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
     if (datosTiempo) {
         const iconoUrl = `img/iconos-tiempo/${datosTiempo.icono}.png`;
+         const iconSize = [30, 30]; // Ejemplo: 30x30 píxeles
+
 
         const popupContent = `
             <div style="text-align: center;">
