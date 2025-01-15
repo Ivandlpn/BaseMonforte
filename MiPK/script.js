@@ -295,6 +295,89 @@ function formatearPK(pk) {
     }
 }
 
+// Obtener referencias a los elementos del DOM
+const botonCapas = document.getElementById('boton-capas');
+const menuCapas = document.getElementById('menu-capas');
+const checkTrazado = document.getElementById('check-trazado');
+const checkEdificios = document.getElementById('check-edificios');
+const checkTiempo = document.getElementById('check-tiempo');
+
+// Función para mostrar u ocultar el menú de capas
+function toggleMenuCapas() {
+    if (menuCapas.style.display === 'none') {
+        menuCapas.style.display = 'block';
+    } else {
+        menuCapas.style.display = 'none';
+    }
+}
+
+// Event listener para el botón de capas
+botonCapas.addEventListener('click', toggleMenuCapas);
+
+// Event listener para cerrar el menú al hacer clic fuera de él
+document.addEventListener('click', function(event) {
+    if (!botonCapas.contains(event.target) && !menuCapas.contains(event.target)) {
+        menuCapas.style.display = 'none';
+    }
+});
+
+// Funciones para activar/desactivar las capas (placeholders)
+function activarCapaTrazado() {
+    // Aquí irá el código para activar la capa de trazado
+    console.log('Capa de trazado activada');
+}
+
+function desactivarCapaTrazado() {
+    // Aquí irá el código para desactivar la capa de trazado
+    console.log('Capa de trazado desactivada');
+}
+
+function activarCapaEdificios() {
+    // Aquí irá el código para activar la capa de edificios
+    console.log('Capa de edificios activada');
+}
+
+function desactivarCapaEdificios() {
+    // Aquí irá el código para desactivar la capa de edificios
+    console.log('Capa de edificios desactivada');
+}
+
+function activarCapaTiempo() {
+    // Aquí irá el código para activar la capa de tiempo
+    console.log('Capa de tiempo activada');
+}
+
+function desactivarCapaTiempo() {
+    // Aquí irá el código para desactivar la capa de tiempo
+    console.log('Capa de tiempo desactivada');
+}
+
+// Event listeners para los checkboxes
+checkTrazado.addEventListener('change', function() {
+    if (this.checked) {
+        activarCapaTrazado();
+    } else {
+        desactivarCapaTrazado();
+    }
+});
+
+checkEdificios.addEventListener('change', function() {
+    if (this.checked) {
+        activarCapaEdificios();
+    } else {
+        desactivarCapaEdificios();
+    }
+});
+
+checkTiempo.addEventListener('change', function() {
+    if (this.checked) {
+        activarCapaTiempo();
+    } else {
+        desactivarCapaTiempo();
+    }
+});
+
+
  async function cargarPuertas() {
   try {
       const response = await fetch("./doc/puertas.json");
