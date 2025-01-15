@@ -276,11 +276,11 @@ footer img {
     bottom: 20px; /* Ajusta la distancia desde abajo */
     right: 10px; /* Ajusta la distancia desde la derecha */
     z-index: 1000; /* Asegura que esté encima del mapa */
+    /* Elimina el fondo, borde, padding y sombra */
     background-color: transparent;
-   // border: 2px solid #ccc;
-    border-radius: 5px;
-    padding: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    border: none;
+    padding: 0;
+    box-shadow: none;
 }
 
 /* Botón de capas */
@@ -288,6 +288,15 @@ footer img {
     width: 30px; /* Ajusta el tamaño del icono */
     height: 30px;
     cursor: pointer;
+    border: none; /* Elimina el borde */
+    padding: 0; /* Elimina el padding */
+    background-color: transparent; /* Fondo transparente */
+}
+
+/* Para hacer que la imagen ocupe todo el espacio del botón */
+#boton-capas img {
+    width: 100%;
+    height: 100%;
 }
 
 /* Menú de capas (oculto inicialmente) */
