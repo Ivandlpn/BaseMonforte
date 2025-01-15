@@ -396,7 +396,7 @@ async function obtenerDatosTiempo(ciudad, pais) {
 
 function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
     if (datosTiempo) {
-        const iconoUrl = `img/iconos-tiempo/${datosTiempo.icono}.png`;
+        const iconoUrl = `img/iconos-tiempo/${datosTiempo.icono}.png`; // Asumiendo que la carpeta se llama 'img/iconos-tiempo'
 
         const popupContent = `
             <div style="text-align: center;">
