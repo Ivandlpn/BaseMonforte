@@ -449,7 +449,7 @@ async function activarCapaTiempo() {
    
     { nombre: "BM Villarrubia", ciudad: "Villarrubia", pais: "ES", lat: 39.9577, lon: -3.3513 },
     { nombre: "BM Requena", ciudad: "Requena", pais: "ES", lat: 39.5364, lon: -1.1565 },
-    { nombre: "BM Gabaldón", ciudad: "Gabaldón", pais: "ES", lat: 39.6362, lon: -1.9438 }
+    { nombre: "BM Gabaldón", ciudad: "Gabaldón", pais: "ES", lat: 39.6362, lon: -1.9438 },
     { nombre: "BM Monforte", provincia: "Alicante", pais: "ES", lat: 38.4069, lon: -0.6949 },
   ];
 
