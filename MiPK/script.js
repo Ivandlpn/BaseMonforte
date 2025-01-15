@@ -431,11 +431,11 @@ let marcadoresTiempo = []; // Array para almacenar los marcadores de tiempo
 
 async function activarCapaTiempo() {
     const ciudades = [
-        { nombre: "Alicante", provincia: "Alicante", pais: "ES", lat: 38.3452, lon: -0.4815 },
-        { nombre: "BM Monforte", provincia: "Alicante", pais: "ES", lat: 38.4069, lon: -0.6949 },
+ { nombre: "Alicante", provincia: "Alicante", pais: "ES", lat: 38.3452, lon: -0.4815 },
         { nombre: "Villena", provincia: "Alicante", pais: "ES", lat: 38.6333, lon: -0.8667 },
         { nombre: "Almansa", provincia: "Albacete", pais: "ES", lat: 38.8706, lon: -1.0976 },
-        { nombre: "Bonete", provincia: "Albacete", pais: "ES", lat: 38.9211, lon: -1.3480 }
+        { nombre: "Bonete", provincia: "Albacete", pais: "ES", lat: 38.9211, lon: -1.3480 },
+        { nombre: "BM Monforte", provincia: "Alicante", pais: "ES", lat: 38.4069, lon: -0.6949 } // Nuevo punto añadido
     ];
 
     for (const ciudad of ciudades) {
