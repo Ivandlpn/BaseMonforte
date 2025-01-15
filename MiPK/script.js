@@ -153,35 +153,36 @@ function actualizarPosicionUsuario(lat, lon) {
     }
 }
 
+const direccionLineas = {
+    '40': 1,
+    '42': 1,
+    '46': 1,
+    '48': -1
+};
+
+
 function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente, linea) {
-    // 1. Determinar el vector que representa la dirección de la vía
+    if (!direccionLineas.hasOwnProperty(linea)) {
+        return "Línea no definida";
+    }
+
     const vectorVia = {
         x: pkSiguiente.longitud - pkActual.longitud,
         y: pkSiguiente.latitud - pkActual.latitud
     };
-
-    // 2. Determinar el vector desde el PK actual hasta el usuario
     const vectorUsuario = {
         x: lonUsuario - pkActual.longitud,
         y: latUsuario - pkActual.latitud
     };
-
-    // 3. Calcular el producto cruz (2D)
     const productoCruz = (vectorVia.x * vectorUsuario.y) - (vectorVia.y * vectorUsuario.x);
 
-    // 4. Determinar el lado de la vía basado en el producto cruz y la línea
-    if (linea === '40') {
-        return productoCruz > 0 ? "Vía 1" : "Vía 2";
-    } else if (linea === '42') {
-        return productoCruz > 0 ? "Vía 1" : "Vía 2";
-    } else if (linea === '46') {
-        return productoCruz > 0 ? "Vía 1" : "Vía 2";
-    } else if (linea === '48') {
-        return productoCruz > 0 ? "Vía 2" : "Vía 1";
-    } else {
-        return "Lado no definido";
-    }
+    return (productoCruz * direccionLineas[linea]) > 0 ? "Vía 1" : "Vía 2";
 }
+
+if (!pkActual || !pkSiguiente || !pkActual.longitud || !pkActual.latitud || !pkSiguiente.longitud || !pkSiguiente.latitud) {
+    return "Datos de PK inválidos";
+}
+
 
 
 
