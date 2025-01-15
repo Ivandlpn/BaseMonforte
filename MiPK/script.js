@@ -407,7 +407,8 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
             </div>
         `;
 
-        L.marker([lat, lon], {
+        // Crear el marcador y añadirlo al mapa
+        const marcador = L.marker([lat, lon], {
             icon: L.divIcon({
                 className: 'icono-tiempo',
                 html: `<img src="${iconoUrl}" alt="${datosTiempo.descripcion}">`,
@@ -416,6 +417,9 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
         })
         .addTo(mapa)
         .bindPopup(popupContent);
+
+        // Añadir el marcador al array marcadoresTiempo
+        marcadoresTiempo.push(marcador);
     }
 }
 
@@ -440,9 +444,8 @@ function desactivarCapaTiempo() {
     marcadoresTiempo.forEach(marcador => {
         mapa.removeLayer(marcador);
     });
-    marcadoresTiempo = [];
+    marcadoresTiempo = []; // Vaciar el array después de eliminar los marcadores
 }
-
 
  async function cargarPuertas() {
   try {
