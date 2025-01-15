@@ -414,7 +414,7 @@ function generarHTMLPuertas(puertasCercanas) {
             html += `<div class="puerta-fila">
                         <span>🚪 a + ${distanciaFormateada} metros - PK ${pkFormateado}
                         <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
-                            <img src="img/vermapa.png" alt="Ver en el mapa" style="width: 16px; height: 16px; vertical-align: middle;">
+                            <img src="img/vermapa.png" alt="Ver en el mapa" style="width: 20px; height: 20px; vertical-align: middle;">
                         </a>
                         </span>
                     </div>`;
@@ -429,7 +429,7 @@ function generarHTMLPuertas(puertasCercanas) {
             html += `<div class="puerta-fila">
                         <span>🚪 a - ${Math.abs(distanciaFormateada)} metros - PK ${pkFormateado}
                         <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
-                            <img src="img/vermapa.png" alt="Ver en el mapa" style="width: 16px; height: 16px; vertical-align: middle;">
+                            <img src="img/vermapa.png" alt="Ver en el mapa" style="width: 20px; height: 20px; vertical-align: middle;">
                         </a>
                         </span>
                     </div>`;
