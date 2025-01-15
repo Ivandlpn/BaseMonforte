@@ -276,7 +276,7 @@ footer img {
     bottom: 20px; /* Ajusta la distancia desde abajo */
     right: 10px; /* Ajusta la distancia desde la derecha */
     z-index: 1000; /* Asegura que esté encima del mapa */
-    background-color: white;
+    background-color: transparent;
     border: 2px solid #ccc;
     border-radius: 5px;
     padding: 5px;
