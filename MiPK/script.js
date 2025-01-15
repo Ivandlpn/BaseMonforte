@@ -344,15 +344,7 @@ function desactivarCapaEdificios() {
     console.log('Capa de edificios desactivada');
 }
 
-function activarCapaTiempo() {
-    // Aquí irá el código para activar la capa de tiempo
-    console.log('Capa de tiempo activada');
-}
 
-function desactivarCapaTiempo() {
-    // Aquí irá el código para desactivar la capa de tiempo
-    console.log('Capa de tiempo desactivada');
-}
 
 // Event listeners para los checkboxes
 checkTrazado.addEventListener('change', function() {
