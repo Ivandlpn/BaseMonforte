@@ -452,7 +452,7 @@ function generarHTMLPuertas(puertasCercanas) {
                 <img src="img/vertodasmapa.png" alt="Ver todas las puertas en el mapa" style="width: 120px; height: auto;">
             </a>
             <a href="#" id="buscar-puerta-por-pk">
-                <img src="img/buscapuerta.png" alt="Buscar puerta por PK" style="width: 50px; height: auto;">
+                <img src="img/buscapuerta.png" alt="Buscar puerta por PK" style="width: 120px; height: auto;">
             </a>
         </div>
         <div id="mensaje-proximamente" style="display: none; text-align: center; margin-top: 10px; background-color: #f8f9fa; border: 1px solid #ddd; padding: 15px; border-radius: 5px;">
