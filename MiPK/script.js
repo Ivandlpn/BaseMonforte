@@ -209,7 +209,7 @@ function calcularPKMasCercano(lat, lon, data) {
     const pkActual = puntosCercanos[0];
 
     // Definir el incremento de PK para el "siguiente" PK
-    const incrementoPK = 20;
+    const incrementoPK = 10;
 
     // Función para convertir el formato PK a un número para comparar
     function pkToNumber(pkString) {
