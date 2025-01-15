@@ -314,6 +314,11 @@ footer img {
     margin-right: 5px;
 }
 
+.icono-tiempo {
+    background-color: transparent;
+    border: none;
+}
+
   #actualizarUbicacion {
     font-size: 0.9em;
   }
