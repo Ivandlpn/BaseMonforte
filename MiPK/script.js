@@ -433,7 +433,7 @@ let marcadoresTiempo = []; // Array para almacenar los marcadores de tiempo
 
 async function activarCapaTiempo() {
   const ciudades = [
-    { nombre: "Alicante", provincia: "Alicante", pais: "ES", lat: 38.3452, lon: -0.4815 },
+  
     { nombre: "Villena", provincia: "Alicante", pais: "ES", lat: 38.6333, lon: -0.8667 },
     { nombre: "Almansa", provincia: "Albacete", pais: "ES", lat: 38.8706, lon: -1.0976 },
     { nombre: "Bonete", provincia: "Albacete", pais: "ES", lat: 38.9211, lon: -1.3480 },
@@ -667,7 +667,6 @@ document.addEventListener('click', function(event) {
 
 
 // Modifica la parte donde se muestra la tarjeta de puertas para agregar el event listener
-    // Modificar la parte donde se muestra la tarjeta de puertas para agregar el event listener
 document.getElementById("iconoPuerta").addEventListener("click", () => {
     mostrarPuertasCercanas();
 
@@ -744,6 +743,8 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
     }
 });
 
+/////  FIN PUERTAS /////---------------------------------------------------------------------------------------
+
 document.getElementById("iconoMas").addEventListener("click", () => {
      calcularYActualizarPK(); // Llama a la función de cálculo del PK
     if (!lat || !lon) {
@@ -751,8 +752,6 @@ document.getElementById("iconoMas").addEventListener("click", () => {
         return;
     }
 
-
- ///////////////////////////////////////////
 
     async function cargarArchivosJSON(rutas) {
         const todasPromesas = rutas.map(ruta =>
@@ -800,8 +799,8 @@ document.getElementById("iconoMas").addEventListener("click", () => {
     
 });
 
+/////  INICIO BOTÓN CAMARA /////---------------------------------------------------------------------------------------
 
-// Modificación para abrir la cámara y añadir un botón
 document.getElementById("iconoCamara").addEventListener("click", () => {
     navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
         .then((stream) => {
@@ -950,8 +949,7 @@ ctx.fillText(
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
                 `;
 
-// Botón "volver"
- // Reemplazar el botón "Volver" por una imagen
+// BOTÓN VOLVER
 const imagenVolver = document.createElement("img"); // Cambiar de button a img
 imagenVolver.src = "img/volver.png"; // Reemplaza con el nombre y ruta de tu archivo de imagen
 imagenVolver.alt = "Volver";
@@ -968,7 +966,7 @@ imagenVolver.addEventListener("click", () => {
                 
                 
                 
-// Botón "Guardar"
+// BOTÓN GUARRDAR
 const imagenGuardar = document.createElement("img"); // Cambiar de button a img
 imagenGuardar.src = "img/guardar.png"; // Reemplaza con el nombre y ruta de tu archivo de imagen
 imagenGuardar.alt = "Guardar";
@@ -977,8 +975,7 @@ imagenGuardar.style.cssText = "cursor: pointer; width: 60px; height: 50px;"; // 
 contenedorBotones.appendChild(imagenGuardar); // Añadir la imagen al contenedor
 
 
-
-// Cambiar el evento click del botón por el evento click de la imagen
+// Evento click GUARDAR
 imagenGuardar.addEventListener("click", () => { // Cambia botonGuardar por imagenGuardar
     try {
         // Obtener el PK formateado
@@ -1027,7 +1024,7 @@ imagenGuardar.addEventListener("click", () => { // Cambia botonGuardar por image
 
 
 
-
+// BOTÓN COMPARTIR
 const imagenCompartir = document.createElement("img");
 imagenCompartir.src = "img/compartir.png"; // Reemplaza con el nombre real de tu archivo de imagen
 imagenCompartir.alt = "Compartir";
@@ -1035,6 +1032,7 @@ imagenCompartir.classList.add("boton-control"); // Añadir clase común
 imagenCompartir.style.cssText = "cursor: pointer; width: 60px; height: 50px;"; // Ajusta el tamaño según necesites
 contenedorBotones.appendChild(imagenCompartir);
 
+ // Evento click COMPARTIR
 imagenCompartir.addEventListener("click", async () => {
     try {
         const dataUrl = canvas.toDataURL("image/png");
@@ -1054,15 +1052,7 @@ imagenCompartir.addEventListener("click", async () => {
         console.error("Error al compartir:", error);
     }
 });
-
-
-
-
-
-                
-
-
-
+   
             video.addEventListener("click", () => {
                 stream.getTracks().forEach(track => track.stop());
                 contenedor.remove();
