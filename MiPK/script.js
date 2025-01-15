@@ -449,7 +449,7 @@ function generarHTMLPuertas(puertasCercanas) {
         html += `
         <div style="text-align:left; margin-top: 10px; padding: 10px;">
             <a href="#" id="ver-todas-puertas" data-puertas='${JSON.stringify(puertasArray)}'>
-                <img src="img/vertodasmapa.png" alt="Ver todas las puertas en el mapa" style="width: 80px; height: auto; vertical-align: middle;">
+                <img src="img/vertodasmapa.png" alt="Ver todas las puertas en el mapa" style="width: 120px; height: auto; vertical-align: middle;">
             </a>
         </div>
     `;
