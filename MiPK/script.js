@@ -195,22 +195,48 @@ const iconoPK = L.icon({
 function calcularPKMasCercano(lat, lon, data) {
     let puntosCercanos = data.map(pk => {
         const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
-        return { 
-            pk: pk.PK, 
-            latitud: pk.Latitud, 
-            longitud: pk.Longitud, 
+        return {
+            pk: pk.PK,
+            latitud: pk.Latitud,
+            longitud: pk.Longitud,
             distancia: distancia,
-            linea: pk.Linea // Agregar la información de la línea
+            linea: pk.Linea
         };
     });
 
     puntosCercanos.sort((a, b) => a.distancia - b.distancia);
 
-    const pkActual = puntosCercanos[0]; // PK más cercano
-    const pkSiguiente = puntosCercanos[1] || pkActual; // PK siguiente (o actual si es el último)
+    const pkActual = puntosCercanos[0];
 
-    // Determinar lado de la vía
-    const ladoVia = determinarLadoVia(lat, lon, pkActual, pkSiguiente, pkActual.linea);
+    // Definir el incremento de PK para el "siguiente" PK
+    const incrementoPK = 20;
+
+    // Función para convertir el formato PK a un número para comparar
+    function pkToNumber(pkString) {
+        const parts = pkString.split('+');
+        return parseInt(parts[0]) * 1000 + parseInt(parts[1] || 0);
+    }
+
+    // Función para convertir un número de nuevo al formato PK
+    function numberToPk(pkNumber) {
+        const parteEntera = Math.floor(pkNumber / 1000);
+        const parteDecimal = pkNumber % 1000;
+        return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
+    }
+
+    const pkActualNumerico = pkToNumber(pkActual.pk);
+    const pkSiguienteObjetivoNumerico = pkActualNumerico + incrementoPK;
+    const pkSiguienteObjetivoFormateado = numberToPk(pkSiguienteObjetivoNumerico);
+
+    // Buscar el PK en los datos que coincida con el PK objetivo
+    const pkSiguiente = data.find(pk => pk.PK === pkSiguienteObjetivoFormateado && pk.Linea === pkActual.linea);
+
+    // Si no se encuentra el PK siguiente objetivo, usar el siguiente más cercano (o manejarlo de otra manera)
+    // Esto es importante para el final de la línea o tramos con espaciamiento irregular.
+    const pkSiguienteParaVector = pkSiguiente || puntosCercanos.find(p => p.linea === pkActual.linea && pkToNumber(p.pk) > pkActualNumerico) || pkActual;
+
+    // Determinar lado de la vía usando el PK siguiente objetivo (o el más cercano si no se encuentra el objetivo)
+    const ladoVia = determinarLadoVia(lat, lon, pkActual, pkSiguienteParaVector, pkActual.linea);
     pkActual.ladoVia = ladoVia;
 
     return [pkActual];
