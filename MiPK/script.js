@@ -401,7 +401,7 @@ function generarHTMLPuertas(puertasCercanas) {
         html += `<p style="text-align: center; font-style: italic; margin-bottom: 10px;">Calculando PK actual...</p>`;
     }
 
-    let puertasArray = []; // Array para almacenar todas las puertas
+    let puertasArray = [];
 
     for (const via in puertasCercanas) {
         html += `<h3>Vía ${via}</h3>`;
@@ -414,7 +414,7 @@ function generarHTMLPuertas(puertasCercanas) {
             html += `<div class="puerta-fila">
                         <span>🚪 a + ${distanciaFormateada} metros - PK ${pkFormateado}
                         <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
-                            (📍)
+                            <img src="img/vermapa.png" alt="Ver en el mapa" style="width: 16px; height: 16px; vertical-align: middle;">
                         </a>
                         </span>
                     </div>`;
@@ -429,7 +429,7 @@ function generarHTMLPuertas(puertasCercanas) {
             html += `<div class="puerta-fila">
                         <span>🚪 a - ${Math.abs(distanciaFormateada)} metros - PK ${pkFormateado}
                         <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
-                            (📍)
+                            <img src="img/vermapa.png" alt="Ver en el mapa" style="width: 16px; height: 16px; vertical-align: middle;">
                         </a>
                         </span>
                     </div>`;
@@ -446,18 +446,17 @@ function generarHTMLPuertas(puertasCercanas) {
     if (html === '') {
         html = '<p>No se encontraron puertas cercanas.</p>';
     } else{
-        // Añadir el enlace "Ver todas" al final de la tarjeta
         html += `
         <div style="text-align:left; margin-top: 10px; padding: 10px;">
-            <a href="#" id="ver-todas-puertas" data-puertas='${JSON.stringify(puertasArray)}'>Ver todas 📍</a>
+            <a href="#" id="ver-todas-puertas" data-puertas='${JSON.stringify(puertasArray)}'>Ver todas
+            <img src="img/vermapa.png" alt="Ver en el mapa" style="width: 16px; height: 16px; vertical-align: middle;">
+            </a>
         </div>
     `;
     }
-    
 
     return html;
 }
-
 // Modifica la parte donde se muestra la tarjeta de puertas para agregar el event listener
     // Modificar la parte donde se muestra la tarjeta de puertas para agregar el event listener
 document.getElementById("iconoPuerta").addEventListener("click", () => {
