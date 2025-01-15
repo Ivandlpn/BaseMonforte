@@ -414,7 +414,7 @@ function generarHTMLPuertas(puertasCercanas) {
             html += `<div class="puerta-fila">
                         <span>🚪 a + ${distanciaFormateada} metros - PK ${pkFormateado}
                         <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
-                            <img src="img/vermapa.png" alt="Ver en el mapa" style="width: 18px; height: 18px; vertical-align: middle;">
+                            <img src="img/vermapa.png" alt="Ver en el mapa" style="width: 16px; height: 16px; vertical-align: middle;">
                         </a>
                         </span>
                     </div>`;
@@ -429,7 +429,7 @@ function generarHTMLPuertas(puertasCercanas) {
             html += `<div class="puerta-fila">
                         <span>🚪 a - ${Math.abs(distanciaFormateada)} metros - PK ${pkFormateado}
                         <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
-                            <img src="img/vermapa.png" alt="Ver en el mapa" style="width: 18px; height: 18px; vertical-align: middle;">
+                            <img src="img/vermapa.png" alt="Ver en el mapa" style="width: 16px; height: 16px; vertical-align: middle;">
                         </a>
                         </span>
                     </div>`;
@@ -448,8 +448,8 @@ function generarHTMLPuertas(puertasCercanas) {
     } else{
         html += `
         <div style="text-align:left; margin-top: 10px; padding: 10px;">
-            <a href="#" id="ver-todas-puertas" data-puertas='${JSON.stringify(puertasArray)}'>Ver todas
-            <img src="img/vermapa.png" alt="Ver en el mapa" style="width: 16px; height: 16px; vertical-align: middle;">
+            <a href="#" id="ver-todas-puertas" data-puertas='${JSON.stringify(puertasArray)}'>
+                <img src="img/vertodasmapa.png" alt="Ver todas las puertas en el mapa" style="width: 80px; height: auto; vertical-align: middle;">
             </a>
         </div>
     `;
