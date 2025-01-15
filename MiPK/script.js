@@ -371,6 +371,8 @@ checkEdificios.addEventListener('change', function() {
     }
 });
 
+///// CAPA TIEMPO /////
+
 checkTiempo.addEventListener('change', function() {
     if (this.checked) {
         activarCapaTiempo();
@@ -435,8 +437,8 @@ async function activarCapaTiempo() {
     { nombre: "Villena", provincia: "Alicante", pais: "ES", lat: 38.6333, lon: -0.8667 },
     { nombre: "Almansa", provincia: "Albacete", pais: "ES", lat: 38.8706, lon: -1.0976 },
     { nombre: "Bonete", provincia: "Albacete", pais: "ES", lat: 38.9211, lon: -1.3480 },
-    { nombre: "BM Monforte", provincia: "Alicante", pais: "ES", lat: 38.4069, lon: -0.6949 },
-    { nombre: "Orihuela", provincia: "Alicante", pais: "ES", lat: 38.084, lon: -0.947 },
+
+
     { nombre: "Estación AVE Alicante", ciudad: "Alicante", pais: "ES", lat: 38.3394, lon: -0.5015 }, // Estación de AVE de Alicante
     { nombre: "Estación AVE Villena", ciudad: "Villena", pais: "ES", lat: 38.6536, lon: -0.8872 }, // Estación de AVE de Villena
     { nombre: "Estación AVE Albacete", ciudad: "Albacete", pais: "ES", lat: 39.0045, lon: -1.8531 }, // Estación de AVE de Albacete
@@ -444,9 +446,11 @@ async function activarCapaTiempo() {
     { nombre: "Estación AVE Requena", ciudad: "Requena", pais: "ES", lat: 39.4558, lon: -1.0995 }, // Estación de AVE de Requena-Utiel
     { nombre: "Estación AVE Valencia", ciudad: "Valencia", pais: "ES", lat: 39.4598, lon: -0.3832 }, // Estación de AVE de Valencia (Joaquín Sorolla)
     { nombre: "Estación Madrid Chamartín", ciudad: "Madrid", pais: "ES", lat: 40.4722, lon: -3.6825 }, // Estación de Madrid Chamartín
+   
     { nombre: "BM Villarrubia", ciudad: "Villarrubia", pais: "ES", lat: 39.9577, lon: -3.3513 },
     { nombre: "BM Requena", ciudad: "Requena", pais: "ES", lat: 39.5364, lon: -1.1565 },
     { nombre: "BM Gabaldón", ciudad: "Gabaldón", pais: "ES", lat: 39.6362, lon: -1.9438 }
+    { nombre: "BM Monforte", provincia: "Alicante", pais: "ES", lat: 38.4069, lon: -0.6949 },
   ];
 
   for (const ciudad of ciudades) {
@@ -471,6 +475,7 @@ function desactivarCapaTiempo() {
     marcadoresTiempo = [];
 }
 
+///// PUERTAS /////
 
  async function cargarPuertas() {
   try {
@@ -743,6 +748,9 @@ document.getElementById("iconoMas").addEventListener("click", () => {
         alert("No se ha obtenido la ubicación actual del usuario.");
         return;
     }
+
+
+ ///////////////////////////////////////////
 
     async function cargarArchivosJSON(rutas) {
         const todasPromesas = rutas.map(ruta =>
