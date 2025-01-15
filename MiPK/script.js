@@ -9,7 +9,7 @@ const puertasContainer = document.getElementById("puertas-card-container");
 const puertasInfoDiv = document.getElementById("puertas-info");
 const cerrarPuertasCard = document.getElementById("cerrar-puertas-card");
 
-const apiKeyOpenWeatherMap = "14225e48c44f9d35291e12867b7f32cf"; // Reemplaza con tu API Key
+const apiKeyOpenWeatherMap = "14225e48c44f9d35291e12867b7f32cf"; // API Meteo
 
  // Cargar puertas al iniciar la app
 cargarPuertas();
@@ -43,9 +43,7 @@ function calcularYActualizarPK() {
     // Mostrar texto temporal "Buscando PK ..."
     const pkElement = document.getElementById("pkCercano");
     pkElement.innerHTML = `<span class="texto-buscando-pk">Buscando PK...</span>`;
-
-
-    
+ 
     if (!lat || !lon) {
         console.error("No se ha obtenido la ubicación actual del usuario.");
         return;
@@ -84,7 +82,7 @@ function calcularYActualizarPK() {
 }
 
 
-// Mantener la función mostrarMensaje como está
+// Propiedades Mensaje: PK Actualizado
 function mostrarMensaje(mensaje) {
     const mensajeDiv = document.createElement("div");
     mensajeDiv.textContent = mensaje;
@@ -101,7 +99,6 @@ function mostrarMensaje(mensaje) {
     mensajeDiv.style.fontSize = "1.2em";
     mensajeDiv.style.border = "1px solid #ffffff"; // Borde blanco para visibilidad
     mensajeDiv.style.opacity = "0.9"; // Ligera opacidad
-
 
     // Ajuste del ancho
     mensajeDiv.style.minWidth = "200px"; // Ancho mínimo
@@ -155,6 +152,9 @@ function actualizarPosicionUsuario(lat, lon) {
     }
 }
 
+
+/////  INICIO CALCULO LADO VÍA /////---------------------------------------------------------------------------------------
+
 const direccionLineas = {
     '40': 1,
     '42': 1,
@@ -182,11 +182,11 @@ function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente, linea)
 }
 
 
+/////  FIN CALCULO LADO VÍA /////---------------------------------------------------------------------------------------
 
 
 
-
-// Definir el nuevo icono para el PK más cercano
+// icono para el PK más cercano
 const iconoPK = L.icon({
     iconUrl: 'img/MiPKubi.png', // Ruta de la imagen del icono
     iconSize: [30, 40], // Tamaño del icono (ajusta según sea necesario)
@@ -297,6 +297,7 @@ function formatearPK(pk) {
     }
 }
 
+/////  INICIO CAPAS/////---------------------------------------------------------------------------------------
 // Obtener referencias a los elementos del DOM
 const botonCapas = document.getElementById('boton-capas');
 const menuCapas = document.getElementById('menu-capas');
@@ -323,6 +324,8 @@ document.addEventListener('click', function(event) {
     }
 });
 
+/////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
+
 // Funciones para activar/desactivar las capas (placeholders)
 function activarCapaTrazado() {
     // Aquí irá el código para activar la capa de trazado
@@ -333,6 +336,20 @@ function desactivarCapaTrazado() {
     // Aquí irá el código para desactivar la capa de trazado
     console.log('Capa de trazado desactivada');
 }
+
+// Event listeners para los checkboxes
+checkTrazado.addEventListener('change', function() {
+    if (this.checked) {
+        activarCapaTrazado();
+    } else {
+        desactivarCapaTrazado();
+    }
+});
+
+/////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
+
+
+/////  INICIO CAPA EDIFICIOS /////---------------------------------------------------------------------------------------
 
 function activarCapaEdificios() {
     // Aquí irá el código para activar la capa de edificios
@@ -345,16 +362,6 @@ function desactivarCapaEdificios() {
 }
 
 
-
-// Event listeners para los checkboxes
-checkTrazado.addEventListener('change', function() {
-    if (this.checked) {
-        activarCapaTrazado();
-    } else {
-        desactivarCapaTrazado();
-    }
-});
-
 checkEdificios.addEventListener('change', function() {
     if (this.checked) {
         activarCapaEdificios();
@@ -362,6 +369,8 @@ checkEdificios.addEventListener('change', function() {
         desactivarCapaEdificios();
     }
 });
+
+/////  FIN CAPA EDIFICIOS /////---------------------------------------------------------------------------------------
 
 /////  INICIO CAPA TIEMPO /////---------------------------------------------------------------------------------------
 
