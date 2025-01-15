@@ -417,7 +417,7 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
             icon: L.divIcon({
                 className: 'icono-tiempo',
                 html: `<img src="${iconoUrl}" alt="${datosTiempo.descripcion}">`,
-               // iconSize: [10, 10] // Ajusta el tamaño si es necesario
+               // iconSize: [30, 30] // Ajusta el tamaño si es necesario
             })
         })
         .addTo(mapa)
