@@ -328,6 +328,11 @@ footer img {
     border: none;
 }
 
+.icono-tiempo img {
+    width: 30px; /* Ancho deseado */
+    height: 30px; /* Alto deseado */
+}
+
   #actualizarUbicacion {
     font-size: 0.9em;
   }
