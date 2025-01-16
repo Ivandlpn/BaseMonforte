@@ -579,7 +579,7 @@ function desactivarCapaTiempo() {
 
 
 const iconoEnergia = L.icon({
-    iconUrl: 'img/energia_icon.png',
+    iconUrl: 'img/edificios/energia_icon.png',
     iconSize: [25, 25],
     iconAnchor: [12, 35],
     popupAnchor: [0, -35]
