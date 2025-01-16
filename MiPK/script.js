@@ -346,7 +346,7 @@ async function activarCapaTrazado() {
         const puntosPorLinea = agruparPuntosPorLinea(datosTrazado);
         for (const linea in puntosPorLinea) {
             const puntosDeLaLinea = puntosPorLinea[linea];
-             dibujarPuntosCada20Metros(puntosDeLaLinea, linea);
+            dibujarPuntosCada20Metros(puntosDeLaLinea, linea);
         }
     } catch (error) {
         console.error("Error al cargar o procesar los datos de trazado:", error);
@@ -365,17 +365,18 @@ async function activarCapaTrazado() {
         return puntosPorLinea;
     }
 
-
     // Dibuja un punto azul en el mapa cada 20 metros de PK
     function dibujarPuntosCada20Metros(puntos, linea) {
-        const separacionPK = 20;
+        let siguientePK = ultimoPKGlobal === null ? null : ultimoPKGlobal;
+         const separacionPK = 20;
 
         for (const punto of puntos) {
             const pkActualNumerico = pkToNumber(punto.PK);
-            console.log(`Línea: ${linea}, PK Actual: ${punto.PK}, Numérico: ${pkActualNumerico}, UltimoPKGlobal: ${ultimoPKGlobal}`);
+            console.log(`Línea: ${linea}, PK Actual: ${punto.PK}, Numérico: ${pkActualNumerico}, SiguientePK: ${siguientePK}, UltimoPKGlobal: ${ultimoPKGlobal}`);
 
-            if (ultimoPKGlobal === null || (pkActualNumerico - ultimoPKGlobal) >= separacionPK) {
-                console.log(`   Dibujando punto en PK: ${punto.PK} (Línea: ${linea})`);
+
+            if (siguientePK === null || pkActualNumerico >= siguientePK ) {
+                 console.log(`   Dibujando punto en PK: ${punto.PK} (Línea: ${linea})`);
                 const puntoLat = parseFloat(punto.Latitud);
                 const puntoLng = parseFloat(punto.Longitud);
 
@@ -389,13 +390,17 @@ async function activarCapaTrazado() {
                         fillOpacity: 1
                     }).addTo(mapa);
                     marcadoresTrazado.push(marcador);
-                     ultimoPKGlobal = pkActualNumerico;
+                     siguientePK = pkActualNumerico + separacionPK;
+                    ultimoPKGlobal = siguientePK;
+
                 } else {
-                    console.error("Latitud o Longitud no válidas:", punto);
+                     console.error("Latitud o Longitud no válidas:", punto);
                 }
-             }else {
-                    console.log(`   No cumple la condición en PK: ${punto.PK} (Línea: ${linea})`);
-                }
+            }else {
+              console.log(`   No cumple la condición en PK: ${punto.PK} (Línea: ${linea})`);
+            }
+
+
         }
     }
 
@@ -433,9 +438,8 @@ function desactivarCapaTrazado() {
         mapa.removeLayer(marcador);
     });
     marcadoresTrazado = [];
-      ultimoPKGlobal = null;
+    ultimoPKGlobal = null;
 }
-
 
 checkTrazado.addEventListener('change', function () {
     if (this.checked) {
