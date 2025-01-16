@@ -365,18 +365,19 @@ async function activarCapaTrazado() {
         return puntosPorLinea;
     }
 
+
     // Dibuja un punto azul en el mapa cada 20 metros de PK
-    function dibujarPuntosCada20Metros(puntos, linea) {
-        let siguientePK = ultimoPKGlobal === null ? null : ultimoPKGlobal;
+  function dibujarPuntosCada20Metros(puntos, linea) {
+        let siguientePK = ultimoPKGlobal; // Inicializa siguientePK con el valor de ultimoPKGlobal
          const separacionPK = 20;
 
-        for (const punto of puntos) {
+         for (const punto of puntos) {
             const pkActualNumerico = pkToNumber(punto.PK);
             console.log(`Línea: ${linea}, PK Actual: ${punto.PK}, Numérico: ${pkActualNumerico}, SiguientePK: ${siguientePK}, UltimoPKGlobal: ${ultimoPKGlobal}`);
 
 
             if (siguientePK === null || pkActualNumerico >= siguientePK ) {
-                 console.log(`   Dibujando punto en PK: ${punto.PK} (Línea: ${linea})`);
+                console.log(`   Dibujando punto en PK: ${punto.PK} (Línea: ${linea})`);
                 const puntoLat = parseFloat(punto.Latitud);
                 const puntoLng = parseFloat(punto.Longitud);
 
@@ -390,14 +391,13 @@ async function activarCapaTrazado() {
                         fillOpacity: 1
                     }).addTo(mapa);
                     marcadoresTrazado.push(marcador);
-                     siguientePK = pkActualNumerico + separacionPK;
-                    ultimoPKGlobal = siguientePK;
-
+                     ultimoPKGlobal = pkActualNumerico; // Guarda el valor del PK actual
+                     siguientePK = pkActualNumerico + separacionPK; // Calcula el siguiente PK
                 } else {
                      console.error("Latitud o Longitud no válidas:", punto);
                 }
-            }else {
-              console.log(`   No cumple la condición en PK: ${punto.PK} (Línea: ${linea})`);
+           }else{
+                console.log(`   No cumple la condición en PK: ${punto.PK} (Línea: ${linea})`);
             }
 
 
@@ -405,14 +405,9 @@ async function activarCapaTrazado() {
     }
 
 
-
-
-    // Convierte PK de formato "XXX+YYY" a número
+    // Convierte PK a número (ahora mucho más simple)
     function pkToNumber(pkString) {
-        const parts = pkString.split('+');
-        const parteEntera = parseInt(parts[0], 10) * 1000;
-        const parteDecimal = parseInt(parts[1] || 0, 10);
-        return parteEntera + parteDecimal;
+        return parseInt(pkString, 10);
     }
 
 
