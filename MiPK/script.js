@@ -327,31 +327,32 @@ document.addEventListener('click', function(event) {
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 
-let marcadoresTrazado = []; // Para almacenar todos los marcadores de trazado
+let marcadoresTrazado = []; // Array para almacenar los marcadores de trazado
 
 async function activarCapaTrazado() {
     const rutasArchivos = [
-      //  "./doc/L40Ar.json",
-       // "./doc/L40Br.json",
-      //  "./doc/L40Cr.json",
-      //  "./doc/L42Ar.json",
+        // "./doc/L40Ar.json",
+        // "./doc/L40Br.json",
+        // "./doc/L40Cr.json",
+        // "./doc/L42Ar.json",
         "./doc/L42B.json",
         "./doc/L46.json",
         "./doc/L48.json"
     ];
 
     try {
-        const datosTrazado = await cargarArchivosJSON(rutasArchivos); // Cargar todos los archivos
+        const datosTrazado = await cargarArchivosJSON(rutasArchivos);
         const puntosPorLinea = agruparPuntosPorLinea(datosTrazado);
-
-         for (const linea in puntosPorLinea) {
-            const puntosLinea = puntosPorLinea[linea];
-             mostrarPuntosTrazado(puntosLinea, linea);
+        for (const linea in puntosPorLinea) {
+            const puntosDeLaLinea = puntosPorLinea[linea];
+            dibujarPuntosCada20Metros(puntosDeLaLinea);
         }
     } catch (error) {
         console.error("Error al cargar o procesar los datos de trazado:", error);
     }
 
+
+    // Agrupar los puntos por línea
     function agruparPuntosPorLinea(datos) {
         const puntosPorLinea = {};
         datos.forEach(punto => {
@@ -363,18 +364,22 @@ async function activarCapaTrazado() {
         return puntosPorLinea;
     }
 
-    function mostrarPuntosTrazado(puntos, linea) {
-        let ultimoPK = null;
-        const separacionPK = 20;
 
-          for (const punto of puntos) {
-              const pkActualNumerico = pkToNumber(punto.PK);
-                console.log("PK Actual Numerico:", pkActualNumerico, "Ultimo PK:", ultimoPK);
+    // Dibuja un punto azul en el mapa cada 20 metros de PK
+    function dibujarPuntosCada20Metros(puntos) {
+      let ultimoPK = null; // Inicializa ultimoPK en null
+      const separacionPK = 20;
+
+        for (const punto of puntos) {
+
+            const pkActualNumerico = pkToNumber(punto.PK);
+              // console.log("PK Actual Numerico:", pkActualNumerico, "Ultimo PK:", ultimoPK);
+
             if (ultimoPK === null || (pkActualNumerico - ultimoPK) >= separacionPK) {
 
-              console.log("Cumple la condición, creando marcador en PK:", punto.PK)
-                const puntoLat = parseFloat(punto.Latitud);
-                const puntoLng = parseFloat(punto.Longitud);
+               // console.log("Cumple la condición, creando marcador en PK:", punto.PK);
+               const puntoLat = parseFloat(punto.Latitud);
+               const puntoLng = parseFloat(punto.Longitud);
 
                   if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
                       const marcador = L.circleMarker([puntoLat, puntoLng], {
@@ -387,12 +392,45 @@ async function activarCapaTrazado() {
                       }).addTo(mapa);
                       marcadoresTrazado.push(marcador);
                   }
-
                 ultimoPK = pkActualNumerico;
-            }
+             }
 
-          }
+         }
         }
+
+
+
+     // Convierte PK de formato "XXX+YYY" a número
+        function pkToNumber(pkString) {
+            const parts = pkString.split('+');
+            const parteEntera = parseInt(parts[0], 10) * 1000;
+            const parteDecimal = parseInt(parts[1] || 0, 10);
+           return parteEntera + parteDecimal;
+        }
+
+    // Carga los archivos JSON
+    async function cargarArchivosJSON(rutas) {
+        const todasPromesas = rutas.map(ruta =>
+            fetch(ruta)
+                .then(response => response.json())
+                .catch(error => {
+                    console.error(`Error al cargar ${ruta}:`, error);
+                    return [];
+                })
+        );
+        const datosCargados = await Promise.all(todasPromesas);
+        return datosCargados.flat();
+    }
+
+}
+
+
+function desactivarCapaTrazado() {
+  marcadoresTrazado.forEach(marcador => {
+      mapa.removeLayer(marcador);
+  });
+  marcadoresTrazado = [];
+}
 
 
 
