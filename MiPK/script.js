@@ -650,35 +650,6 @@ checkTuneles.addEventListener('change', function () {
     this.checked ? activarCapaEdificios(tunelesLayer, ["TUNEL"], iconoTuneles) : desactivarCapaEdificios(tunelesLayer);
 });
 
-const checkEnergia = document.getElementById('check-energia');
-const energiaLayer = L.layerGroup();
-checkEnergia.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(energiaLayer, ["SE", "ATI", "ATF"], iconoEnergia) : desactivarCapaEdificios(energiaLayer);
-});
-
-const checkBts = document.getElementById('check-bts');
-const btsLayer = L.layerGroup();
-checkBts.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(btsLayer, ["BTS"], iconoBts) : desactivarCapaEdificios(btsLayer);
-});
-
-const checkIiss = document.getElementById('check-iiss');
-const iissLayer = L.layerGroup();
-checkIiss.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(iissLayer, ["CS", "ET"], iconoIiss) : desactivarCapaEdificios(iissLayer);
-});
-
-const checkEstaciones = document.getElementById('check-estaciones');
-const estacionesLayer = L.layerGroup();
-checkEstaciones.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(estacionesLayer, ["ESTACIÓN"], iconoEstaciones) : desactivarCapaEdificios(estacionesLayer);
-});
-
-const checkTuneles = document.getElementById('check-tuneles');
-const tunelesLayer = L.layerGroup();
-checkTuneles.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(tunelesLayer, ["TUNEL"], iconoTuneles) : desactivarCapaEdificios(tunelesLayer);
-});
 
 async function activarCapaEdificios(layerGroup, tipos, icono) {
     try {
