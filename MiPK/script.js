@@ -418,6 +418,8 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
       return texto.charAt(0).toUpperCase() + texto.slice(1);
     }
 
+    // Convertir la velocidad del viento de m/s a km/h
+    const vientoKmH = (datosTiempo.viento * 3.6).toFixed(1); // Redondear a un decimal
     const descripcionCapitalizada = capitalizarPrimeraLetra(datosTiempo.descripcion);
 
     const popupContent = `
