@@ -653,7 +653,7 @@ checkTuneles.addEventListener('change', function () {
 
 async function activarCapaEdificios(layerGroup, tipos, icono) {
     try {
-        const responseAlbali = await fetch("./doc/edificios/ALBALI.json");
+        const responseAlbali = await fetch("./doc/ALBALI.json");
         const dataAlbali = await responseAlbali.json();
 
         // Filtrar elementos por tipo
@@ -673,15 +673,23 @@ async function activarCapaEdificios(layerGroup, tipos, icono) {
 
         elementosFiltrados.forEach(elemento => {
             const pkElemento = elemento.PK;
-            // Buscar las coordenadas correspondientes al PK
-            const puntoCoordenadas = dataCoordenadas.find(punto => punto.PK === pkElemento);
+            const lineaElemento = elemento.LINEA;
+
+            // Buscar las coordenadas correspondientes al PK y la línea
+            const puntoCoordenadas = dataCoordenadas.find(punto => punto.PK === pkElemento && punto.Linea === lineaElemento);
 
             if (puntoCoordenadas) {
+                const pkFormateado = formatearPK(pkElemento); // Llamamos a la función para formatear el PK
                 const marker = L.marker([puntoCoordenadas.Latitud, puntoCoordenadas.Longitud], { icon: icono })
-                    .bindPopup(`${elemento.NOMBRE}`); // Puedes personalizar el popup
+                .bindPopup(`
+                    <div style="text-align: center;">
+                         <b style="font-size: 1.1em;">${elemento.NOMBRE}</b><br>
+                        ${pkFormateado} (L${lineaElemento})
+                    </div>
+                `);
                 layerGroup.addLayer(marker);
             } else {
-                console.warn(`No se encontraron coordenadas para el PK ${pkElemento} (Tipo: ${elemento.TIPO})`);
+                console.warn(`No se encontraron coordenadas para el PK ${pkElemento} en la línea ${lineaElemento} (Tipo: ${elemento.TIPO})`);
             }
         });
 
