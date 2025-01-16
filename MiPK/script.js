@@ -367,46 +367,44 @@ async function activarCapaTrazado() {
 
     // Dibuja un punto azul en el mapa cada 20 metros de PK
     function dibujarPuntosCada20Metros(puntos) {
-      let ultimoPK = null; // Inicializa ultimoPK en null
-      const separacionPK = 20;
+        let ultimoPK = null; // Inicializa ultimoPK en null
+        const separacionPK = 20;
+
 
         for (const punto of puntos) {
-
             const pkActualNumerico = pkToNumber(punto.PK);
-              // console.log("PK Actual Numerico:", pkActualNumerico, "Ultimo PK:", ultimoPK);
 
             if (ultimoPK === null || (pkActualNumerico - ultimoPK) >= separacionPK) {
+                const puntoLat = parseFloat(punto.Latitud);
+                const puntoLng = parseFloat(punto.Longitud);
 
-               // console.log("Cumple la condición, creando marcador en PK:", punto.PK);
-               const puntoLat = parseFloat(punto.Latitud);
-               const puntoLng = parseFloat(punto.Longitud);
+                if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
+                    const marcador = L.circleMarker([puntoLat, puntoLng], {
+                        radius: 2,
+                        fillColor: "blue",
+                        color: "blue",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 1
+                    }).addTo(mapa);
+                    marcadoresTrazado.push(marcador);
+                    ultimoPK = pkActualNumerico; // Actualiza ultimoPK solo si se creó el marcador
+                }
 
-                  if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
-                      const marcador = L.circleMarker([puntoLat, puntoLng], {
-                          radius: 2,
-                          fillColor: "blue",
-                          color: "blue",
-                          weight: 1,
-                          opacity: 1,
-                          fillOpacity: 1
-                      }).addTo(mapa);
-                      marcadoresTrazado.push(marcador);
-                  }
-                ultimoPK = pkActualNumerico;
-             }
 
-         }
+            }
         }
+    }
 
 
+    // Convierte PK de formato "XXX+YYY" a número
+    function pkToNumber(pkString) {
+        const parts = pkString.split('+');
+        const parteEntera = parseInt(parts[0], 10) * 1000;
+        const parteDecimal = parseInt(parts[1] || 0, 10);
+        return parteEntera + parteDecimal;
+    }
 
-     // Convierte PK de formato "XXX+YYY" a número
-        function pkToNumber(pkString) {
-            const parts = pkString.split('+');
-            const parteEntera = parseInt(parts[0], 10) * 1000;
-            const parteDecimal = parseInt(parts[1] || 0, 10);
-           return parteEntera + parteDecimal;
-        }
 
     // Carga los archivos JSON
     async function cargarArchivosJSON(rutas) {
@@ -426,51 +424,20 @@ async function activarCapaTrazado() {
 
 
 function desactivarCapaTrazado() {
-  marcadoresTrazado.forEach(marcador => {
-      mapa.removeLayer(marcador);
-  });
-  marcadoresTrazado = [];
-}
-
-
-
-    function pkToNumber(pkString) {
-    const parts = pkString.split('+');
-    const parteEntera = parseInt(parts[0], 10) * 1000; // Usar base 10
-    const parteDecimal = parseInt(parts[1] || 0, 10); // Usar base 10 y manejar el caso en que no haya decimales
-    return parteEntera + parteDecimal;
-}
-    async function cargarArchivosJSON(rutas) {
-        const todasPromesas = rutas.map(ruta =>
-            fetch(ruta)
-                .then(response => response.json())
-                .catch(error => {
-                    console.error(`Error al cargar ${ruta}:`, error);
-                    return []; // Devuelve un array vacío si falla
-                })
-        );
-        const datosCargados = await Promise.all(todasPromesas);
-        return datosCargados.flat();
-    }
-
-
-
-
-function desactivarCapaTrazado() {
-        marcadoresTrazado.forEach(marcador => {
+    marcadoresTrazado.forEach(marcador => {
         mapa.removeLayer(marcador);
     });
     marcadoresTrazado = [];
 }
 
-checkTrazado.addEventListener('change', function() {
-        if (this.checked) {
-            activarCapaTrazado();
-        } else {
-            desactivarCapaTrazado();
-        }
-    });
 
+checkTrazado.addEventListener('change', function () {
+    if (this.checked) {
+        activarCapaTrazado();
+    } else {
+        desactivarCapaTrazado();
+    }
+});
 /////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 
