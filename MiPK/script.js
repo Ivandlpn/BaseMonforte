@@ -326,9 +326,6 @@ document.addEventListener('click', function(event) {
 
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
-// Funciones para activar/desactivar las capas (placeholders)
-
-// ... (otras partes de tu código) ...
 
 let marcadoresTrazado = []; // Para almacenar todos los marcadores de trazado
 
@@ -369,15 +366,18 @@ async function activarCapaTrazado() {
     function mostrarPuntosTrazado(puntos, linea) {
         let ultimoPK = null;
         const separacionPK = 20;
-
+        console.log("SeparacionPK", separacionPK);
         for (const punto of puntos) {
            const pkActualNumerico = pkToNumber(punto.PK);
+            console.log("PK Actual Numerico:", pkActualNumerico, "Ultimo PK:", ultimoPK);
+
 
            if (ultimoPK === null || (pkActualNumerico - ultimoPK) >= separacionPK) {
-             const puntoLat = parseFloat(punto.Latitud);
-             const puntoLng = parseFloat(punto.Longitud);
-              if (!isNaN(puntoLat) && !isNaN(puntoLng)){
-                   const marcador = L.circleMarker([puntoLat, puntoLng], {
+              console.log("Cumple la condición, creando marcador en PK:", punto.PK)
+               const puntoLat = parseFloat(punto.Latitud);
+               const puntoLng = parseFloat(punto.Longitud);
+                if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
+                    const marcador = L.circleMarker([puntoLat, puntoLng], {
                     radius: 2,
                     fillColor: "blue",
                     color: "blue",
@@ -385,21 +385,20 @@ async function activarCapaTrazado() {
                     opacity: 1,
                     fillOpacity: 1
                 }).addTo(mapa);
-                  marcadoresTrazado.push(marcador);
-              }
-             ultimoPK = pkActualNumerico;
+                marcadoresTrazado.push(marcador);
+                }
+
+               ultimoPK = pkActualNumerico;
            }
         }
     }
-
-
 
     function pkToNumber(pkString) {
         const parts = pkString.split('+');
         return parseInt(parts[0]) * 1000 + parseInt(parts[1] || 0);
     }
 
-    async function cargarArchivosJSON(rutas) {
+     async function cargarArchivosJSON(rutas) {
     const todasPromesas = rutas.map(ruta =>
         fetch(ruta)
             .then(response => response.json())
@@ -410,9 +409,10 @@ async function activarCapaTrazado() {
     );
     const datosCargados = await Promise.all(todasPromesas);
     return datosCargados.flat();
-}
+    }
 
 }
+
 
 function desactivarCapaTrazado() {
         marcadoresTrazado.forEach(marcador => {
@@ -420,15 +420,6 @@ function desactivarCapaTrazado() {
     });
     marcadoresTrazado = [];
 }
-
-// ... (el resto de tu código) ...
- checkTrazado.addEventListener('change', function() {
-            if (this.checked) {
-                activarCapaTrazado();
-            } else {
-                desactivarCapaTrazado();
-            }
-        });
 
 /////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
