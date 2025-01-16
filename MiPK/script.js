@@ -344,7 +344,7 @@ async function activarCapaTrazado() {
         const datosTrazado = await cargarArchivosJSON(rutasArchivos); // Cargar todos los archivos
         const puntosPorLinea = agruparPuntosPorLinea(datosTrazado);
 
-        for (const linea in puntosPorLinea) {
+         for (const linea in puntosPorLinea) {
             const puntosLinea = puntosPorLinea[linea];
              mostrarPuntosTrazado(puntosLinea, linea);
         }
@@ -366,49 +366,53 @@ async function activarCapaTrazado() {
     function mostrarPuntosTrazado(puntos, linea) {
         let ultimoPK = null;
         const separacionPK = 20;
-        console.log("SeparacionPK", separacionPK);
-        for (const punto of puntos) {
-           const pkActualNumerico = pkToNumber(punto.PK);
-            console.log("PK Actual Numerico:", pkActualNumerico, "Ultimo PK:", ultimoPK);
 
+          for (const punto of puntos) {
+              const pkActualNumerico = pkToNumber(punto.PK);
+                console.log("PK Actual Numerico:", pkActualNumerico, "Ultimo PK:", ultimoPK);
+            if (ultimoPK === null || (pkActualNumerico - ultimoPK) >= separacionPK) {
 
-           if (ultimoPK === null || (pkActualNumerico - ultimoPK) >= separacionPK) {
               console.log("Cumple la condición, creando marcador en PK:", punto.PK)
-               const puntoLat = parseFloat(punto.Latitud);
-               const puntoLng = parseFloat(punto.Longitud);
-                if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
-                    const marcador = L.circleMarker([puntoLat, puntoLng], {
-                    radius: 2,
-                    fillColor: "blue",
-                    color: "blue",
-                    weight: 1,
-                    opacity: 1,
-                    fillOpacity: 1
-                }).addTo(mapa);
-                marcadoresTrazado.push(marcador);
-                }
+                const puntoLat = parseFloat(punto.Latitud);
+                const puntoLng = parseFloat(punto.Longitud);
 
-               ultimoPK = pkActualNumerico;
-           }
+                  if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
+                      const marcador = L.circleMarker([puntoLat, puntoLng], {
+                          radius: 2,
+                          fillColor: "blue",
+                          color: "blue",
+                          weight: 1,
+                          opacity: 1,
+                          fillOpacity: 1
+                      }).addTo(mapa);
+                      marcadoresTrazado.push(marcador);
+                  }
+
+                ultimoPK = pkActualNumerico;
+            }
+
+          }
         }
-    }
+
+
 
     function pkToNumber(pkString) {
-        const parts = pkString.split('+');
-        return parseInt(parts[0]) * 1000 + parseInt(parts[1] || 0);
-    }
-
-     async function cargarArchivosJSON(rutas) {
-    const todasPromesas = rutas.map(ruta =>
-        fetch(ruta)
-            .then(response => response.json())
-            .catch(error => {
-                console.error(`Error al cargar ${ruta}:`, error);
-                return []; // Devuelve un array vacío si falla
-            })
-    );
-    const datosCargados = await Promise.all(todasPromesas);
-    return datosCargados.flat();
+    const parts = pkString.split('+');
+    const parteEntera = parseInt(parts[0], 10) * 1000; // Usar base 10
+    const parteDecimal = parseInt(parts[1] || 0, 10); // Usar base 10 y manejar el caso en que no haya decimales
+    return parteEntera + parteDecimal;
+}
+    async function cargarArchivosJSON(rutas) {
+        const todasPromesas = rutas.map(ruta =>
+            fetch(ruta)
+                .then(response => response.json())
+                .catch(error => {
+                    console.error(`Error al cargar ${ruta}:`, error);
+                    return []; // Devuelve un array vacío si falla
+                })
+        );
+        const datosCargados = await Promise.all(todasPromesas);
+        return datosCargados.flat();
     }
 
 }
