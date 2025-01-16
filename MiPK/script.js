@@ -364,37 +364,35 @@ async function activarCapaTrazado() {
         return puntosPorLinea;
     }
 
-
     // Dibuja un punto azul en el mapa cada 20 metros de PK
     function dibujarPuntosCada20Metros(puntos) {
         let ultimoPK = null; // Inicializa ultimoPK en null
         const separacionPK = 20;
 
-
         for (const punto of puntos) {
-            const pkActualNumerico = pkToNumber(punto.PK);
-
-            if (ultimoPK === null || (pkActualNumerico - ultimoPK) >= separacionPK) {
+             const pkActualNumerico = pkToNumber(punto.PK);
+           console.log("PK Actual:", punto.PK, "Numerico:", pkActualNumerico, "UltimoPK:", ultimoPK);
+          if (ultimoPK === null || (pkActualNumerico - ultimoPK) >= separacionPK) {
+                console.log("Dibujando punto en:", punto.PK);
                 const puntoLat = parseFloat(punto.Latitud);
                 const puntoLng = parseFloat(punto.Longitud);
-
-                if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
-                    const marcador = L.circleMarker([puntoLat, puntoLng], {
+              if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
+                   const marcador = L.circleMarker([puntoLat, puntoLng], {
                         radius: 2,
                         fillColor: "blue",
                         color: "blue",
                         weight: 1,
                         opacity: 1,
                         fillOpacity: 1
-                    }).addTo(mapa);
-                    marcadoresTrazado.push(marcador);
-                    ultimoPK = pkActualNumerico; // Actualiza ultimoPK solo si se creó el marcador
-                }
-
-
-            }
-        }
+                   }).addTo(mapa);
+                  marcadoresTrazado.push(marcador);
+                  ultimoPK = pkActualNumerico;
+                } else {
+                  console.error("Latitud o Longitud no válidas:", punto);
+               }
+         }
     }
+}
 
 
     // Convierte PK de formato "XXX+YYY" a número
@@ -430,7 +428,6 @@ function desactivarCapaTrazado() {
     marcadoresTrazado = [];
 }
 
-
 checkTrazado.addEventListener('change', function () {
     if (this.checked) {
         activarCapaTrazado();
@@ -438,6 +435,7 @@ checkTrazado.addEventListener('change', function () {
         desactivarCapaTrazado();
     }
 });
+
 /////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 
