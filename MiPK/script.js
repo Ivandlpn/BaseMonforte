@@ -418,8 +418,7 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
       return texto.charAt(0).toUpperCase() + texto.slice(1);
     }
 
-   // Convertir la velocidad del viento de m/s a Km/h
-    const vientoKmH = (datosTiempo.viento * 3.6).toFixed(2); // Se usa .toFixed(2) para limitar a 2 decimales
+
     const descripcionCapitalizada = capitalizarPrimeraLetra(datosTiempo.descripcion);
 
     const popupContent = `
@@ -428,7 +427,6 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
         <img src="${iconoUrl}" alt="${datosTiempo.descripcion}">
         <p style="margin: 5px 0;">🌡 Temperatura: ${datosTiempo.temperatura} °C</p>
         <p style="margin: 5px 0;">🥵 Sensación: ${datosTiempo.sensacion} °C</p>
-        <p style="margin: 5px 0;">🚩 Viento: ${vientoKmH} km/h</p>
         <p style="margin: 5px 0;">ℹ ${descripcionCapitalizada}</p> 
       </div>
     `;
