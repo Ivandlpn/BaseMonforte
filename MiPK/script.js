@@ -613,12 +613,12 @@ const iconoTuneles = L.icon({
     popupAnchor: [0, -35]
 });
 
-let senalizacionLayer = L.layerGroup();
-let energiaLayer = L.layerGroup();
-let btsLayer = L.layerGroup();
-let iissLayer = L.layerGroup();
-let estacionesLayer = L.layerGroup();
-let tunelesLayer = L.layerGroup();
+//let senalizacionLayer = L.layerGroup();
+//let energiaLayer = L.layerGroup();
+//let btsLayer = L.layerGroup();
+//let iissLayer = L.layerGroup();
+//let estacionesLayer = L.layerGroup();
+//let tunelesLayer = L.layerGroup();
 
 const checkEnergia = document.getElementById('check-energia');
 const energiaLayer = L.layerGroup();
