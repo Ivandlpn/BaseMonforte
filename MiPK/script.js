@@ -463,6 +463,14 @@ function desactivarCapaTrazado() {
     marcadoresTrazado = [];
 }
 
+checkTrazado.addEventListener('change', function() {
+        if (this.checked) {
+            activarCapaTrazado();
+        } else {
+            desactivarCapaTrazado();
+        }
+    });
+
 /////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 
