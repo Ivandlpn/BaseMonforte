@@ -327,24 +327,109 @@ document.addEventListener('click', function(event) {
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 // Funciones para activar/desactivar las capas (placeholders)
-function activarCapaTrazado() {
-    // Aquí irá el código para activar la capa de trazado
-    console.log('Capa de trazado activada');
+
+// ... (otras partes de tu código) ...
+
+let marcadoresTrazado = []; // Para almacenar todos los marcadores de trazado
+
+async function activarCapaTrazado() {
+    const rutasArchivos = [
+      //  "./doc/L40Ar.json",
+       // "./doc/L40Br.json",
+      //  "./doc/L40Cr.json",
+      //  "./doc/L42Ar.json",
+        "./doc/L42B.json",
+        "./doc/L46.json",
+        "./doc/L48.json"
+    ];
+
+    try {
+        const datosTrazado = await cargarArchivosJSON(rutasArchivos); // Cargar todos los archivos
+        const puntosPorLinea = agruparPuntosPorLinea(datosTrazado);
+
+        for (const linea in puntosPorLinea) {
+            const puntosLinea = puntosPorLinea[linea];
+             mostrarPuntosTrazado(puntosLinea, linea);
+        }
+    } catch (error) {
+        console.error("Error al cargar o procesar los datos de trazado:", error);
+    }
+
+    function agruparPuntosPorLinea(datos) {
+        const puntosPorLinea = {};
+        datos.forEach(punto => {
+            if (!puntosPorLinea[punto.Linea]) {
+                puntosPorLinea[punto.Linea] = [];
+            }
+            puntosPorLinea[punto.Linea].push(punto);
+        });
+        return puntosPorLinea;
+    }
+
+   function mostrarPuntosTrazado(puntos, linea) {
+        let ultimoPK = null;
+        const separacionPK = 20;
+
+        for (const punto of puntos) {
+           const pkActualNumerico = pkToNumber(punto.PK);
+
+           if (ultimoPK === null || (pkActualNumerico - ultimoPK) >= separacionPK) {
+             const puntoLat = parseFloat(punto.Latitud);
+             const puntoLng = parseFloat(punto.Longitud);
+              if (!isNaN(puntoLat) && !isNaN(puntoLng)){
+                   const marcador = L.circleMarker([puntoLat, puntoLng], {
+                    radius: 2,
+                    fillColor: "blue",
+                    color: "blue",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 1
+                }).addTo(mapa);
+                  marcadoresTrazado.push(marcador);
+              }
+
+
+             ultimoPK = pkActualNumerico;
+           }
+        }
+    }
+
+
+    function pkToNumber(pkString) {
+        const parts = pkString.split('+');
+        return parseInt(parts[0]) * 1000 + parseInt(parts[1] || 0);
+    }
+
+    async function cargarArchivosJSON(rutas) {
+    const todasPromesas = rutas.map(ruta =>
+        fetch(ruta)
+            .then(response => response.json())
+            .catch(error => {
+                console.error(`Error al cargar ${ruta}:`, error);
+                return []; // Devuelve un array vacío si falla
+            })
+    );
+    const datosCargados = await Promise.all(todasPromesas);
+    return datosCargados.flat();
+}
+
 }
 
 function desactivarCapaTrazado() {
-    // Aquí irá el código para desactivar la capa de trazado
-    console.log('Capa de trazado desactivada');
+        marcadoresTrazado.forEach(marcador => {
+        mapa.removeLayer(marcador);
+    });
+    marcadoresTrazado = [];
 }
 
-// Event listeners para los checkboxes
-checkTrazado.addEventListener('change', function() {
-    if (this.checked) {
-        activarCapaTrazado();
-    } else {
-        desactivarCapaTrazado();
-    }
-});
+// ... (el resto de tu código) ...
+ checkTrazado.addEventListener('change', function() {
+            if (this.checked) {
+                activarCapaTrazado();
+            } else {
+                desactivarCapaTrazado();
+            }
+        });
 
 /////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
