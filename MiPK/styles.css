@@ -333,6 +333,23 @@ footer img {
     height: 80px; /* Alto deseado */
 }
 
+.leaflet-popup-content-wrapper {
+    background-color: #ddc9f5 !important;  /* Fondo #ddc9f5 */
+    color: black !important; /* Color del texto, puede que necesites cambiarlo para que haga contraste */
+    border-radius: 10px !important; /* Esquinas redondeadas */
+    border: none !important; /* Eliminar borde */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3) !important; /* Sombra */
+    padding: 10px !important;
+}
+
+.leaflet-popup-content {
+  margin: 0 !important;
+}
+
+.leaflet-popup-tip-container {
+    display: none !important; /* Ocultar la flecha del popup */
+}
+
   #actualizarUbicacion {
     font-size: 0.9em;
   }
