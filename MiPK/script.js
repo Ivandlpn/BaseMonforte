@@ -369,7 +369,7 @@ async function activarCapaTrazado() {
     // Dibuja un punto azul en el mapa cada 20 metros de PK
   function dibujarPuntosCada20Metros(puntos, linea) {
         let siguientePK = ultimoPKGlobal; // Inicializa siguientePK con el valor de ultimoPKGlobal
-         const separacionPK = 20;
+         const separacionPK = 100;
 
          for (const punto of puntos) {
             const pkActualNumerico = pkToNumber(punto.PK);
