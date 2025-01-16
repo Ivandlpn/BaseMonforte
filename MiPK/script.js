@@ -600,12 +600,10 @@ function desactivarCapaTiempo() {
 
 
 
-
-
 let energiaLayer = L.layerGroup(); // Añadimos la variable para la capa Energía
 
 const iconoEnergia = L.icon({
-    iconUrl: 'img/energia_icon.png', // Reemplaza con la ruta a tu icono
+    iconUrl: 'img/edificios/energia_icon.png', // Reemplaza con la ruta a tu icono
     iconSize: [25, 35],
     iconAnchor: [12, 35],
     popupAnchor: [0, -35]
