@@ -1,105 +1,137 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+    <!-- Etiqueta de Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y2NT7MQYVZ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-Y2NT7MQYVZ');
+    </script>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y2NT7MQYVZ"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-Y2NT7MQYVZ');
-</script>
-    
+    <!-- Metadatos -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título de la página -->
     <title>Mi PK 📍</title>
 
     <!-- Favicon -->
     <link rel="icon" href="img/FaviconMiPK.png?v=1" type="image/png">
     <link rel="manifest" href="manifest.json">
 
-
-    <!-- Open Graph -->
+    <!-- Metadatos Open Graph -->
     <meta property="og:title" content="Mi PK 📍" />
     <meta property="og:description" content="Consulta el PK más cercano" />
     <meta property="og:image" content="img/FaviconMiPK.png" />
     <meta property="og:url" content="https://ivandlpn.github.io/BaseMonforte/PKC/" />
     <meta property="og:type" content="website" />
 
-    <!-- Leaflet.js -->
+    <!-- Biblioteca Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+    <!-- Hoja de estilos personalizada -->
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="contenedor">
+
+        <!-- Sección de encabezado -->
         <header>
             <img src="img/CabeceraMiPK2.png" alt="Cabecera Mi PK">
         </header>
 
-        <div class="linea-gradiente"></div> <!-- Línea con gradiente -->
-        
-                <!-- Contenedor del mapa con id específico y estilo en línea para la altura -->
-        <div id="map-container" style="height: 400px;">
-          
-          <div id="map">
-    <img id="actualizarUbicacion" src="img/centrar.png" alt="Centrar" style="cursor: pointer;">
+        <!-- Separador en forma de línea con gradiente -->
+        <div class="linea-gradiente"></div>
 
-    <div id="control-capas">
-        <img src="img/capa.png" alt="Capas" id="boton-capas">
-        <div id="menu-capas" style="display: none;">
-            <label>
-                <input type="checkbox" id="check-trazado" disabled> 🛤️ Trazado
-            </label>
-            <label>
-                <input type="checkbox" id="check-edificios" disabled> 🏚️ Edificios
-            </label>
-            <label>
-                <input type="checkbox" id="check-tiempo"> 🌤️ Tiempo
-            </label>
-        </div>
-    </div>
-</div>
-        
-        
-        </div>
-        <div class="linea-gradiente"></div> <!-- Línea con gradiente -->
-        <div id="calculoPK">
-            
-           <div class="iconos-container">
-        <div class="iconos-fila">
-            <div id="iconoCamara" class="icono"></div>
-            <div id="iconoMas" class="icono"></div>
-        </div>
-        <div class="iconos-fila">
-            <div id="iconoPuerta" class="icono"></div>
-            <div id="iconoPlus" class="icono"></div>
-        </div>
-        </div>
-            <div class="tarjeta">
-                <h2> <span id="pkCercano">       ___+___               </span></h2>
-               <!-- <p>Vía: <span id="distancia">1289.73 metros</span></p> -->
+        <!-- Contenedor del mapa -->
+        <div id="map-container" style="height: 400px;">
+            <div id="map">
+
+                <!-- Botón para centrar el mapa -->
+                <img id="actualizarUbicacion" src="img/centrar.png" alt="Centrar" style="cursor: pointer;">
+
+                <!-- Menú de control de capas -->
+                <div id="control-capas">
+                    <img src="img/capa.png" alt="Capas" id="boton-capas">
+                    <div id="menu-capas" style="display: none;">
+                        <label>
+                            <input type="checkbox" id="check-trazado" disabled> 😤️ Trazado
+                        </label>
+                        <label>
+                            <input type="checkbox" id="check-edificios" disabled> 🚩 Edificios
+                        </label>
+                        <label>
+                            <input type="checkbox" id="check-tiempo"> 🌤️ Tiempo
+                        </label>
+                    </div>
+                </div>
+
             </div>
         </div>
+
+        <!-- Otro separador con línea de gradiente -->
+        <div class="linea-gradiente"></div>
+
+        <!-- Sección de cálculo de PK -->
+        <div id="calculoPK">
+
+            <!-- Contenedor de iconos -->
+            <div class="iconos-container">
+                <div class="iconos-fila">
+                    <div id="iconoCamara" class="icono"></div>
+                    <div id="iconoMas" class="icono"></div>
+                </div>
+                <div class="iconos-fila">
+                    <div id="iconoPuerta" class="icono"></div>
+                    <div id="iconoPlus" class="icono"></div>
+                </div>
+            </div>
+
+            <!-- Tarjeta con información del PK -->
+            <div class="tarjeta">
+                <h2><span id="pkCercano">___+___</span></h2>
+                <!-- <p>Vía: <span id="distancia">1289.73 metros</span></p> -->
+            </div>
+
+        </div>
+
+        <!-- Sección del pie de página -->
         <footer>
-    <img src="img/PieMiPK.png" alt="Pie de Página">
-    </footer>
+            <img src="img/PieMiPK.png" alt="Pie de Página">
+        </footer>
+
     </div>
 
-<div id="puertas-card-container" class="overlay-card-container" style="display: none;">
-    <div id="puertas-card" class="overlay-card">
-        <button id="cerrar-puertas-card" class="close-button" aria-label="Cerrar">
-        <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height:20px;"/></button>
-        <h2 style="text-align: center;margin-bottom: 15px;"><u>PUERTAS CERCANAS</u></h2>
-        <div id="puertas-info">
-            <!-- Aquí se insertará el contenido de las puertas (JS) -->
+    <!-- Tarjeta superpuesta para puertas cercanas -->
+    <div id="puertas-card-container" class="overlay-card-container" style="display: none;">
+        <div id="puertas-card" class="overlay-card">
+
+            <!-- Botón para cerrar la tarjeta -->
+            <button id="cerrar-puertas-card" class="close-button" aria-label="Cerrar">
+                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+            </button>
+
+            <!-- Título de la tarjeta -->
+            <h2 style="text-align: center; margin-bottom: 15px;"><u>PUERTAS CERCANAS</u></h2>
+
+            <!-- Área de contenido para información de puertas cercanas -->
+            <div id="puertas-info">
+                <!-- Insertado dinámicamente mediante JavaScript -->
+            </div>
+
         </div>
     </div>
-</div>
-    
+
+    <!-- Archivo JavaScript -->
     <script src="script.js" defer></script>
+
 </body>
+
 </html>
