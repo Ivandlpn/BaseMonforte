@@ -48,20 +48,22 @@ header img {
   width: 100%;
   position: relative;
 }
-#actualizarUbicacion {
-    position: absolute;
-    bottom: 5px; /* Reducimos la distancia respecto al borde inferior */
-    right: 10px;
-    z-index: 1000;
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    background: url('img/centrar.png') no-repeat center center;
-    background-size: contain;
-    border: none;
-    padding: 0;
-    font-size: 0;
-}
+
+ #actualizarUbicacion {
+     position: absolute;
+     bottom: 5px;
+     right: 10px;
+     z-index: 1000;
+     cursor: pointer;
+     width: 30px;
+     height: 30px;
+     background: url('img/centrar.png') no-repeat center center;
+     background-size: contain;
+     border: none; /* Ya está, pero nos aseguramos */
+     padding: 0;
+     font-size: 0;
+     background-color: transparent; /*Fondo transparente */
+ }
 
 #actualizarUbicacion:hover {
   background-color: #005f99;
@@ -271,13 +273,14 @@ footer img {
 /* Contenedor del control de capas */
 #control-capas {
     position: absolute;
-    bottom: 35px; /* Reducimos la distancia al inferior */
-    right: 10px;
+    bottom: 35px; /* Mantener la posición */
+    right: 10px;  /* Mantener la posición */
     z-index: 1000;
-    background-color: transparent;
-    border-radius: 5px;
-    padding: 0px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    background-color: transparent; /* Asegurarnos de que no haya fondo */
+    border-radius: 0px; /* Eliminar bordes redondeados */
+    padding: 0px;      /* Eliminar padding */
+    box-shadow: none;  /* Eliminar sombra */
+    border: none;     /* Eliminar borde */
 }
 
 /* Botón de capas */
@@ -285,8 +288,9 @@ footer img {
     width: 30px;
     height: 30px;
     cursor: pointer;
-    border: 2px solid #ccc; /* Añadimos un borde al botón */
-    border-radius: 5px; /* Redondeamos el borde */
+    border: none; /* Eliminar borde */
+    border-radius: 0px; /* Sin bordes redondeados */
+    background-color: transparent; /*Fondo transparente */
 }
 
 /* Para hacer que la imagen ocupe todo el espacio del botón */
@@ -299,7 +303,7 @@ footer img {
 #menu-capas {
     display: none;
     position: absolute;
-    bottom: 35px; /* Se ajusta a la nueva posición del botón de capas */
+    bottom: 30px; /* Se ajusta a la nueva altura del botón de capas */
     right: 0px;
     background-color: white;
     border: 2px solid #ccc;
