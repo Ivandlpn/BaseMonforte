@@ -365,41 +365,40 @@ async function activarCapaTrazado() {
     }
 
      // Dibuja un punto azul en el mapa cada 20 metros de PK
-    function dibujarPuntosCada20Metros(puntos) {
-         let ultimoPK = null; // Inicializa ultimoPK en null
-         const separacionPK = 20;
+   function dibujarPuntosCada20Metros(puntos) {
+    let ultimoPK = null; // Último PK registrado como numérico
+    const separacionPK = 20; // Distancia mínima en metros para dibujar
 
-        for (const punto of puntos) {
-            const pkActualNumerico = pkToNumber(punto.PK);
-           console.log("PK Actual:", punto.PK, "Numerico:", pkActualNumerico, "UltimoPK:", ultimoPK);
+    for (const punto of puntos) {
+        const pkActualNumerico = pkToNumber(punto.PK); // Convierte el PK actual a número
 
-            // Comprobamos que ultimoPK no sea null y si la diferencia es mayor a la separación
-            if (ultimoPK === null || (pkActualNumerico - ultimoPK) >= separacionPK) {
-                 console.log("Dibujando punto en:", punto.PK);
-               const puntoLat = parseFloat(punto.Latitud);
-                const puntoLng = parseFloat(punto.Longitud);
+        // Dibuja el punto si últimoPK es nulo (primer punto) o la distancia es suficiente
+        if (ultimoPK === null || (pkActualNumerico - ultimoPK) >= separacionPK) {
+            console.log("Dibujando punto en:", punto.PK); // Depuración
+            const puntoLat = parseFloat(punto.Latitud);
+            const puntoLng = parseFloat(punto.Longitud);
 
-                if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
-                    const marcador = L.circleMarker([puntoLat, puntoLng], {
-                        radius: 2,
-                        fillColor: "blue",
-                        color: "blue",
-                        weight: 1,
-                        opacity: 1,
-                        fillOpacity: 1
-                     }).addTo(mapa);
-                    marcadoresTrazado.push(marcador);
-                     ultimoPK = pkActualNumerico; // Actualizamos ultimoPK solo si se dibuja el punto
-                } else {
-                   console.error("Latitud o Longitud no válidas:", punto);
-                }
+            if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
+                const marcador = L.circleMarker([puntoLat, puntoLng], {
+                    radius: 3,
+                    fillColor: "blue",
+                    color: "blue",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                }).addTo(mapa);
 
+                marcadoresTrazado.push(marcador); // Agrega el marcador al array
+                ultimoPK = pkActualNumerico; // Actualiza último PK dibujado
             } else {
-                console.log("No cumple la condición:", punto.PK);
+                console.error("Latitud o Longitud no válidas:", punto); // Manejo de errores
             }
-
+        } else {
+            console.log("No cumple la condición para dibujar:", punto.PK); // Depuración
         }
     }
+}
+
 
 
 
