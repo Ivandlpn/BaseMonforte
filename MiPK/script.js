@@ -366,7 +366,7 @@ async function activarCapaTrazado() {
         return puntosPorLinea;
     }
 
-   function mostrarPuntosTrazado(puntos, linea) {
+    function mostrarPuntosTrazado(puntos, linea) {
         let ultimoPK = null;
         const separacionPK = 20;
 
@@ -387,12 +387,11 @@ async function activarCapaTrazado() {
                 }).addTo(mapa);
                   marcadoresTrazado.push(marcador);
               }
-
-
              ultimoPK = pkActualNumerico;
            }
         }
     }
+
 
 
     function pkToNumber(pkString) {
