@@ -418,8 +418,6 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
       return texto.charAt(0).toUpperCase() + texto.slice(1);
     }
 
-    // Convertir la velocidad del viento de m/s a km/h
-    const vientoKmH = (datosTiempo.viento * 3.6).toFixed(1); // Redondear a un decimal
     const descripcionCapitalizada = capitalizarPrimeraLetra(datosTiempo.descripcion);
 
     const popupContent = `
@@ -433,7 +431,7 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
       </div>
     `;
 
-    L.marker([lat, lon], {
+   const marcador = L.marker([lat, lon], {
       icon: L.divIcon({
         className: 'icono-tiempo',
         html: `<img src="${iconoUrl}" alt="${datosTiempo.descripcion}">`,
@@ -442,8 +440,12 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
     })
       .addTo(mapa)
       .bindPopup(popupContent);
+     return marcador;
+
   }
+  return null;
 }
+
 let marcadoresTiempo = []; // Array para almacenar los marcadores de tiempo
 
 async function activarCapaTiempo() {
@@ -469,18 +471,21 @@ async function activarCapaTiempo() {
   ];
 
   for (const ciudad of ciudades) {
-    try {
-      const datosTiempo = await obtenerDatosTiempo(ciudad.lat, ciudad.lon);
-      if (datosTiempo) {
-        mostrarInfoTiempo(ciudad.nombre, ciudad.lat, ciudad.lon, datosTiempo);
-      }
-    } catch (error) {
-      console.error(
-        `Error al obtener datos de tiempo para ${ciudad.nombre}:`,
-        error
-      );
+        try {
+            const datosTiempo = await obtenerDatosTiempo(ciudad.lat, ciudad.lon);
+            if (datosTiempo) {
+                const marcador = mostrarInfoTiempo(ciudad.nombre, ciudad.lat, ciudad.lon, datosTiempo);
+                if (marcador) {
+                marcadoresTiempo.push(marcador);
+               }
+            }
+        } catch (error) {
+             console.error(
+               `Error al obtener datos de tiempo para ${ciudad.nombre}:`,
+              error
+            );
+        }
     }
-  }
 }
 
 function desactivarCapaTiempo() {
