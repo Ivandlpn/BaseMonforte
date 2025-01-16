@@ -48,23 +48,19 @@ header img {
   width: 100%;
   position: relative;
 }
-
 #actualizarUbicacion {
     position: absolute;
-    /* bottom: 10px;  <- Eliminamos esto para posicionarlo con respecto a #control-capas */
-    /* left: 50%;    <- Eliminamos esto también */
-    /* transform: translateX(-50%); <- Y esto */
+    bottom: 5px; /* Reducimos la distancia respecto al borde inferior */
+    right: 10px;
     z-index: 1000;
     cursor: pointer;
-    width: 30px;  /* Ajustamos el ancho al del botón de capas */
-    height: 30px; /* Ajustamos el alto al del botón de capas */
+    width: 30px;
+    height: 30px;
     background: url('img/centrar.png') no-repeat center center;
     background-size: contain;
     border: none;
     padding: 0;
     font-size: 0;
-    bottom: 10px;   /* Lo posicionamos a 10px del borde inferior */
-    right: 10px;    /* Lo alineamos a la derecha con el botón de capas */
 }
 
 #actualizarUbicacion:hover {
@@ -275,23 +271,22 @@ footer img {
 /* Contenedor del control de capas */
 #control-capas {
     position: absolute;
-    bottom: 55px; /* Aumentamos el bottom para dejar espacio al botón de centrar */
+    bottom: 35px; /* Reducimos la distancia al inferior */
     right: 10px;
     z-index: 1000;
     background-color: transparent;
     border-radius: 5px;
-    padding: 5px;
+    padding: 0px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Botón de capas */
 #boton-capas {
-    width: 30px; /* Ajusta el tamaño del icono */
+    width: 30px;
     height: 30px;
     cursor: pointer;
-    border: none; /* Elimina el borde */
-    padding: 0; /* Elimina el padding */
-    background-color: transparent; /* Fondo transparente */
+    border: 2px solid #ccc; /* Añadimos un borde al botón */
+    border-radius: 5px; /* Redondeamos el borde */
 }
 
 /* Para hacer que la imagen ocupe todo el espacio del botón */
@@ -304,8 +299,8 @@ footer img {
 #menu-capas {
     display: none;
     position: absolute;
-    bottom: 40px; /* Reducimos el bottom para que se superponga correctamente */
-    right: 0px; /* Modificado para alinear con el borde derecho */
+    bottom: 35px; /* Se ajusta a la nueva posición del botón de capas */
+    right: 0px;
     background-color: white;
     border: 2px solid #ccc;
     border-radius: 5px;
