@@ -678,7 +678,7 @@ async function activarCapaEdificios(layerGroup, tipos, icono) {
 
             if (puntoCoordenadas) {
                 const marker = L.marker([puntoCoordenadas.Latitud, puntoCoordenadas.Longitud], { icon: icono })
-                    .bindPopup(`${elemento.TIPO}: ${elemento.NOMBRE}`); // Puedes personalizar el popup
+                    .bindPopup(`${elemento.NOMBRE}`); // Puedes personalizar el popup
                 layerGroup.addLayer(marker);
             } else {
                 console.warn(`No se encontraron coordenadas para el PK ${pkElemento} (Tipo: ${elemento.TIPO})`);
