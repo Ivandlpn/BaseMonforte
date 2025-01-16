@@ -447,28 +447,6 @@ checkTrazado.addEventListener('change', function () {
 /////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 
-/////  INICIO CAPA EDIFICIOS /////---------------------------------------------------------------------------------------
-
-function activarCapaEdificios() {
-    // Aquí irá el código para activar la capa de edificios
-    console.log('Capa de edificios activada');
-}
-
-function desactivarCapaEdificios() {
-    // Aquí irá el código para desactivar la capa de edificios
-    console.log('Capa de edificios desactivada');
-}
-
-
-checkEdificios.addEventListener('change', function() {
-    if (this.checked) {
-        activarCapaEdificios();
-    } else {
-        desactivarCapaEdificios();
-    }
-});
-
-/////  FIN CAPA EDIFICIOS /////---------------------------------------------------------------------------------------
 
 /////  INICIO CAPA TIEMPO /////---------------------------------------------------------------------------------------
 
