@@ -595,6 +595,79 @@ function desactivarCapaTiempo() {
 
 /////  FIN CAPA TIEMPO /////---------------------------------------------------------------------------------------
 
+
+/////  INICIO CAPA ENERGÍA /////---------------------------------------------------------------------------------------
+
+
+
+
+
+let energiaLayer = L.layerGroup(); // Añadimos la variable para la capa Energía
+
+const iconoEnergia = L.icon({
+    iconUrl: 'img/energia_icon.png', // Reemplaza con la ruta a tu icono
+    iconSize: [25, 35],
+    iconAnchor: [12, 35],
+    popupAnchor: [0, -35]
+});
+
+async function activarCapaEnergia() {
+    try {
+        const responseAlbali = await fetch("./doc/edificios/ALBALI.json");
+        const dataAlbali = await responseAlbali.json();
+
+        // Filtrar elementos por tipo
+        const elementosEnergia = dataAlbali.filter(item => ["SE", "ATI", "ATF"].includes(item.TIPO));
+
+        // Cargar los archivos JSON con las coordenadas (puedes optimizar esto si ya los tienes cargados)
+        const rutasCoordenadas = [
+            "./doc/L42B.json",
+            "./doc/L46.json",
+            "./doc/L48.json"
+            // ... añade aquí las rutas a todos tus archivos de coordenadas ...
+        ];
+        const dataCoordenadasArrays = await Promise.all(rutasCoordenadas.map(ruta =>
+            fetch(ruta).then(response => response.json())
+        ));
+        const dataCoordenadas = dataCoordenadasArrays.flat();
+
+        elementosEnergia.forEach(elemento => {
+            const pkElemento = elemento.PK;
+            // Buscar las coordenadas correspondientes al PK
+            const puntoCoordenadas = dataCoordenadas.find(punto => punto.PK === pkElemento);
+
+            if (puntoCoordenadas) {
+                const marker = L.marker([puntoCoordenadas.Latitud, puntoCoordenadas.Longitud], { icon: iconoEnergia })
+                    .bindPopup(`${elemento.TIPO}: ${elemento.NOMBRE}`); // Puedes personalizar el popup
+                energiaLayer.addLayer(marker);
+            } else {
+                console.warn(`No se encontraron coordenadas para el PK ${pkElemento} (Tipo: ${elemento.TIPO})`);
+            }
+        });
+
+        mapa.addLayer(energiaLayer);
+
+    } catch (error) {
+        console.error("Error al activar la capa Energía:", error);
+    }
+}
+
+function desactivarCapaEnergia() {
+    mapa.removeLayer(energiaLayer);
+}
+
+const checkEnergia = document.getElementById('check-energia');
+checkEnergia.addEventListener('change', function () {
+    if (this.checked) {
+        activarCapaEnergia();
+    } else {
+        desactivarCapaEnergia();
+    }
+});
+
+
+/////  FIN CAPA ENERGÍA /////---------------------------------------------------------------------------------------
+
 /////  INICIO PUERTAS /////---------------------------------------------------------------------------------------
 
  async function cargarPuertas() {
