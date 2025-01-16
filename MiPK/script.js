@@ -413,14 +413,21 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
   if (datosTiempo) {
     const iconoUrl = `https://openweathermap.org/img/wn/${datosTiempo.icono}@2x.png`;
 
+    // Función para capitalizar la primera letra
+    function capitalizarPrimeraLetra(texto) {
+      return texto.charAt(0).toUpperCase() + texto.slice(1);
+    }
+
+    const descripcionCapitalizada = capitalizarPrimeraLetra(datosTiempo.descripcion);
+
     const popupContent = `
       <div style="text-align: center;">
         <h3 style="margin: 0;">${ciudad}</h3>
         <img src="${iconoUrl}" alt="${datosTiempo.descripcion}">
-        <p style="margin: 5px 0;"> 🌡 Temperatura: ${datosTiempo.temperatura} °C</p>
-        <p style="margin: 5px 0;"> 🥵 Sensación: ${datosTiempo.sensacion} °C</p>
-        <p style="margin: 5px 0;"> 🚩 Viento: ${datosTiempo.viento} m/s</p>
-        <p style="margin: 5px 0;">${datosTiempo.descripcion}</p>
+        <p style="margin: 5px 0;">🌡 Temperatura: ${datosTiempo.temperatura} °C</p>
+        <p style="margin: 5px 0;">🥵 Sensación: ${datosTiempo.sensacion} °C</p>
+        <p style="margin: 5px 0;">🚩 Viento: ${datosTiempo.viento} m/s</p>
+        <p style="margin: 5px 0;">ℹ ${descripcionCapitalizada}</p> 
       </div>
     `;
 
@@ -435,7 +442,6 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
       .bindPopup(popupContent);
   }
 }
-
 let marcadoresTiempo = []; // Array para almacenar los marcadores de tiempo
 
 async function activarCapaTiempo() {
