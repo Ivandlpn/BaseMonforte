@@ -1,0 +1,462 @@
+[
+    {
+        "PK": "320841",
+        "TIPO": "CRC",
+        "NOMBRE": "CRC Albacete"
+    },
+    {
+        "PK": "320956",
+        "TIPO": "ET",
+        "NOMBRE": "ET Albacete"
+    },
+    {
+        "PK": "323340",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS01A"
+    },
+    {
+        "PK": "327918",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS01B"
+    },
+    {
+        "PK": "329138",
+        "TIPO": "CS",
+        "NOMBRE": "PICV 329"
+    },
+    {
+        "PK": "330036",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 311.5"
+    },
+    {
+        "PK": "332665",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS02A"
+    },
+    {
+        "PK": "336566",
+        "TIPO": "ET",
+        "NOMBRE": "ET PAET Chinchilla AV"
+    },
+    {
+        "PK": "337647",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS02B"
+    },
+    {
+        "PK": "342828",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS03A"
+    },
+    {
+        "PK": "342890",
+        "TIPO": "ATF",
+        "NOMBRE": "ATF 312.1"
+    },
+    {
+        "PK": "343856",
+        "TIPO": "CS",
+        "NOMBRE": "PICV 343"
+    },
+    {
+        "PK": "347556",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 03B"
+    },
+    {
+        "PK": "348862",
+        "TIPO": "CS",
+        "NOMBRE": "PCA Hoya Gonzalo"
+    },
+    {
+        "PK": "351720",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 04A"
+    },
+    {
+        "PK": "355160",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 04B"
+    },
+    {
+        "PK": "355696",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 312.2"
+    },
+    {
+        "PK": "358916",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 05A"
+    },
+    {
+        "PK": "361500",
+        "TIPO": "CS",
+        "NOMBRE": "PCA El Salobrejo"
+    },
+    {
+        "PK": "363923",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 05B"
+    },
+    {
+        "PK": "365625",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 312.3"
+    },
+    {
+        "PK": "367700",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 06A"
+    },
+    {
+        "PK": "371095",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 06B"
+    },
+    {
+        "PK": "373493",
+        "TIPO": "ET",
+        "NOMBRE": "ET PAET BONETE"
+    },
+    {
+        "PK": "374756",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 07A"
+    },
+    {
+        "PK": "376881",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 07B"
+    },
+    {
+        "PK": "378076",
+        "TIPO": "SE",
+        "NOMBRE": "SE 312 - SSEE CAMPANARIO"
+    },
+    {
+        "PK": "383493",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 08A"
+    },
+    {
+        "PK": "384772",
+        "TIPO": "CS",
+        "NOMBRE": "PCA El Mugrón"
+    },
+    {
+        "PK": "385743",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 08B"
+    },
+    {
+        "PK": "387772",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 312.4"
+    },
+    {
+        "PK": "388527",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 09A"
+    },
+    {
+        "PK": "392925",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 09B"
+    },
+    {
+        "PK": "395700",
+        "TIPO": "CS",
+        "NOMBRE": "PCA Atalaya"
+    },
+    {
+        "PK": "398047",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 10A"
+    },
+    {
+        "PK": "398537",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 312.5"
+    },
+    {
+        "PK": "401577",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 10B"
+    },
+    {
+        "PK": "405200",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 11A"
+    },
+    {
+        "PK": "405999",
+        "TIPO": "ATF",
+        "NOMBRE": "ATF 321.1"
+    },
+    {
+        "PK": "407496",
+        "TIPO": "CS",
+        "NOMBRE": "PB Las Chozas"
+    },
+    {
+        "PK": "410070",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 11B"
+    },
+    {
+        "PK": "410500",
+        "TIPO": "ET",
+        "NOMBRE": "ET Bifurcación La Oliva"
+    },
+    {
+        "PK": "413835",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 12A - SCVL-18A"
+    },
+    {
+        "PK": "417468",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 12B"
+    },
+    {
+        "PK": "418357",
+        "TIPO": "CS",
+        "NOMBRE": "Bifurcación Aguaverde"
+    },
+    {
+        "PK": "420421",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 321.2"
+    },
+    {
+        "PK": "421704",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 13A"
+    },
+    {
+        "PK": "425227",
+        "TIPO": "CS",
+        "NOMBRE": "PB Caudete AV"
+    },
+    {
+        "PK": "426207",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 13B"
+    },
+    {
+        "PK": "429607",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 321.3"
+    },
+    {
+        "PK": "429835",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 14A"
+    },
+    {
+        "PK": "433760",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 14B"
+    },
+    {
+        "PK": "435487",
+        "TIPO": "ET",
+        "NOMBRE": "Estación Villena"
+    },
+    {
+        "PK": "435487",
+        "TIPO": "ET",
+        "NOMBRE": "ET PAET Villena AV"
+    },
+    {
+        "PK": "437951",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 15A"
+    },
+    {
+        "PK": "438478",
+        "TIPO": "SE",
+        "NOMBRE": "SE 321 - SSEE SAX"
+    },
+    {
+        "PK": "440640",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 15B"
+    },
+    {
+        "PK": "442266",
+        "TIPO": "CS",
+        "NOMBRE": "PICV 442"
+    },
+    {
+        "PK": "444821",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 16A"
+    },
+    {
+        "PK": "444821",
+        "TIPO": "TUNEL",
+        "NOMBRE": "TUNEL BARRANCADAS"
+    },
+    {
+        "PK": "448927",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 16B"
+    },
+    {
+        "PK": "449554",
+        "TIPO": "CS",
+        "NOMBRE": "PCA Elda"
+    },
+    {
+        "PK": "450640",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 17A"
+    },
+    {
+        "PK": "450660",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 321.4"
+    },
+    {
+        "PK": "455432",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 17B"
+    },
+    {
+        "PK": "459390",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 18A - SCVL-23A"
+    },
+    {
+        "PK": "460006",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 321.5"
+    },
+    {
+        "PK": "461719",
+        "TIPO": "CS",
+        "NOMBRE": "Bifurcación Murcia"
+    },
+    {
+        "PK": "463781",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 18B"
+    },
+    {
+        "PK": "464480",
+        "TIPO": "CS",
+        "NOMBRE": "Bifurcación Vinalopo"
+    },
+    {
+        "PK": "464685",
+        "TIPO": "ET",
+        "NOMBRE": "ET PAET MONFORTE DEL CID"
+    },
+    {
+        "PK": "465134",
+        "TIPO": "BM",
+        "NOMBRE": "BM MONFORTE DEL CID"
+    },
+    {
+        "PK": "468144",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 19A - SCVL-24A"
+    },
+    {
+        "PK": "470416",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 19B"
+    },
+    {
+        "PK": "470928",
+        "TIPO": "TUNEL",
+        "NOMBRE": "TUNEL SIERRA DE LAS AGUILAS"
+    },
+    {
+        "PK": "472389",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 20A    (1 FOR)"
+    },
+    {
+        "PK": "474060",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 321.6"
+    },
+    {
+        "PK": "476032",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 20B"
+    },
+    {
+        "PK": "476931",
+        "TIPO": "CS",
+        "NOMBRE": "PCA Alcoraya"
+    },
+    {
+        "PK": "477939",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 21A"
+    },
+    {
+        "PK": "480320",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 21B"
+    },
+    {
+        "PK": "480323",
+        "TIPO": "TUNEL",
+        "NOMBRE": "TUNEL SERRETA"
+    },
+    {
+        "PK": "481640",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 321.7"
+    },
+    {
+        "PK": "481682",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 22A"
+    },
+    {
+        "PK": "482308",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 22B"
+    },
+    {
+        "PK": "483925",
+        "TIPO": "ET",
+        "NOMBRE": "ET Alacant-Terminal"
+    },
+    {
+        "PK": "483956",
+        "TIPO": "TUNEL",
+        "NOMBRE": "TUNEL ALICANTE LADO ALB"
+    },
+    {
+        "PK": "484520",
+        "TIPO": "SAL EM",
+        "NOMBRE": "SALIDA EMERGENCIA"
+    },
+    {
+        "PK": "484920",
+        "TIPO": "POZO",
+        "NOMBRE": "POZO DE BOMBEO"
+    },
+    {
+        "PK": "485023",
+        "TIPO": "TUNEL",
+        "NOMBRE": "TUNEL ALICANTE LADO ALI"
+    },
+    {
+        "PK": "486123",
+        "TIPO": "ET",
+        "NOMBRE": "Estación  Alicante"
+    },
+    {
+        "PK": "",
+        "TIPO": "",
+        "NOMBRE": ""
+    }
+]
