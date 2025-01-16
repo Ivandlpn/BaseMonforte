@@ -414,7 +414,7 @@
         "NOMBRE": "BTS 18B"
     },
     {
-        "LINEA": "46",
+        "LINEA": "42",
         "PK": "464480",
         "TIPO": "CS",
         "NOMBRE": "Bifurcación Vinalopo"
@@ -544,5 +544,11 @@
         "PK": "486123",
         "TIPO": "ESTACIÓN",
         "NOMBRE": "Estación  Alicante"
+    },
+    {
+        "LINEA": "",
+        "PK": "",
+        "TIPO": "",
+        "NOMBRE": ""
     }
 ]
