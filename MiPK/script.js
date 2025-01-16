@@ -328,6 +328,7 @@ document.addEventListener('click', function(event) {
 
 
 let marcadoresTrazado = []; // Array para almacenar los marcadores de trazado
+let ultimoPKGlobal = null;
 
 async function activarCapaTrazado() {
     const rutasArchivos = [
@@ -345,7 +346,7 @@ async function activarCapaTrazado() {
         const puntosPorLinea = agruparPuntosPorLinea(datosTrazado);
         for (const linea in puntosPorLinea) {
             const puntosDeLaLinea = puntosPorLinea[linea];
-            dibujarPuntosCada20Metros(puntosDeLaLinea);
+             dibujarPuntosCada20Metros(puntosDeLaLinea, linea);
         }
     } catch (error) {
         console.error("Error al cargar o procesar los datos de trazado:", error);
@@ -364,40 +365,39 @@ async function activarCapaTrazado() {
         return puntosPorLinea;
     }
 
-     // Dibuja un punto azul en el mapa cada 20 metros de PK
-   function dibujarPuntosCada20Metros(puntos) {
-    let ultimoPK = null; // Último PK registrado como numérico
-    const separacionPK = 20; // Distancia mínima en metros para dibujar
 
-    for (const punto of puntos) {
-        const pkActualNumerico = pkToNumber(punto.PK); // Convierte el PK actual a número
+    // Dibuja un punto azul en el mapa cada 20 metros de PK
+    function dibujarPuntosCada20Metros(puntos, linea) {
+        const separacionPK = 20;
 
-        // Dibuja el punto si últimoPK es nulo (primer punto) o la distancia es suficiente
-        if (ultimoPK === null || (pkActualNumerico - ultimoPK) >= separacionPK) {
-            console.log("Dibujando punto en:", punto.PK); // Depuración
-            const puntoLat = parseFloat(punto.Latitud);
-            const puntoLng = parseFloat(punto.Longitud);
+        for (const punto of puntos) {
+            const pkActualNumerico = pkToNumber(punto.PK);
+            console.log(`Línea: ${linea}, PK Actual: ${punto.PK}, Numérico: ${pkActualNumerico}, UltimoPKGlobal: ${ultimoPKGlobal}`);
 
-            if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
-                const marcador = L.circleMarker([puntoLat, puntoLng], {
-                    radius: 3,
-                    fillColor: "blue",
-                    color: "blue",
-                    weight: 1,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                }).addTo(mapa);
+            if (ultimoPKGlobal === null || (pkActualNumerico - ultimoPKGlobal) >= separacionPK) {
+                console.log(`   Dibujando punto en PK: ${punto.PK} (Línea: ${linea})`);
+                const puntoLat = parseFloat(punto.Latitud);
+                const puntoLng = parseFloat(punto.Longitud);
 
-                marcadoresTrazado.push(marcador); // Agrega el marcador al array
-                ultimoPK = pkActualNumerico; // Actualiza último PK dibujado
-            } else {
-                console.error("Latitud o Longitud no válidas:", punto); // Manejo de errores
-            }
-        } else {
-            console.log("No cumple la condición para dibujar:", punto.PK); // Depuración
+                if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
+                    const marcador = L.circleMarker([puntoLat, puntoLng], {
+                        radius: 2,
+                        fillColor: "blue",
+                        color: "blue",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 1
+                    }).addTo(mapa);
+                    marcadoresTrazado.push(marcador);
+                     ultimoPKGlobal = pkActualNumerico;
+                } else {
+                    console.error("Latitud o Longitud no válidas:", punto);
+                }
+             }else {
+                    console.log(`   No cumple la condición en PK: ${punto.PK} (Línea: ${linea})`);
+                }
         }
     }
-}
 
 
 
@@ -433,7 +433,9 @@ function desactivarCapaTrazado() {
         mapa.removeLayer(marcador);
     });
     marcadoresTrazado = [];
+      ultimoPKGlobal = null;
 }
+
 
 checkTrazado.addEventListener('change', function () {
     if (this.checked) {
@@ -442,6 +444,7 @@ checkTrazado.addEventListener('change', function () {
         desactivarCapaTrazado();
     }
 });
+
 /////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 
