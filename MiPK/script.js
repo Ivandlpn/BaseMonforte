@@ -653,7 +653,7 @@ checkTuneles.addEventListener('change', function () {
 
 async function activarCapaEdificios(layerGroup, tipos, icono) {
     try {
-        const responseAlbali = await fetch("./doc/ALBALI.json");
+        const responseAlbali = await fetch("./doc/edificios/ALBALI.json");
         const dataAlbali = await responseAlbali.json();
 
         // Filtrar elementos por tipo
