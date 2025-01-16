@@ -417,9 +417,9 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
       <div style="text-align: center;">
         <h3 style="margin: 0;">${ciudad}</h3>
         <img src="${iconoUrl}" alt="${datosTiempo.descripcion}">
-        <p style="margin: 5px 0;">Temperatura: ${datosTiempo.temperatura} °C</p>
-        <p style="margin: 5px 0;">Sensación: ${datosTiempo.sensacion} °C</p>
-        <p style="margin: 5px 0;">Viento: ${datosTiempo.viento} m/s</p>
+        <p style="margin: 5px 0;"> 🌡 Temperatura: ${datosTiempo.temperatura} °C</p>
+        <p style="margin: 5px 0;"> 🥵 Sensación: ${datosTiempo.sensacion} °C</p>
+        <p style="margin: 5px 0;"> 🚩 Viento: ${datosTiempo.viento} m/s</p>
         <p style="margin: 5px 0;">${datosTiempo.descripcion}</p>
       </div>
     `;
@@ -433,7 +433,6 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
     })
       .addTo(mapa)
       .bindPopup(popupContent);
-
   }
 }
 
