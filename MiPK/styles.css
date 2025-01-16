@@ -50,19 +50,21 @@ header img {
 }
 
 #actualizarUbicacion {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
-  cursor: pointer;
-  width: 85px; /* Ajusta según el tamaño deseado */
-  height: 40px; /* Ajusta para mantener la proporción */
-  background: url('img/centrar.png') no-repeat center center;
-  background-size: contain;
-  border: none;
-  padding: 0;
-  font-size: 0; /* Oculta cualquier texto */
+    position: absolute;
+    /* bottom: 10px;  <- Eliminamos esto para posicionarlo con respecto a #control-capas */
+    /* left: 50%;    <- Eliminamos esto también */
+    /* transform: translateX(-50%); <- Y esto */
+    z-index: 1000;
+    cursor: pointer;
+    width: 30px;  /* Ajustamos el ancho al del botón de capas */
+    height: 30px; /* Ajustamos el alto al del botón de capas */
+    background: url('img/centrar.png') no-repeat center center;
+    background-size: contain;
+    border: none;
+    padding: 0;
+    font-size: 0;
+    bottom: 10px;   /* Lo posicionamos a 10px del borde inferior */
+    right: 10px;    /* Lo alineamos a la derecha con el botón de capas */
 }
 
 #actualizarUbicacion:hover {
@@ -273,14 +275,13 @@ footer img {
 /* Contenedor del control de capas */
 #control-capas {
     position: absolute;
-    bottom: 20px; /* Ajusta la distancia desde abajo */
-    right: 10px; /* Ajusta la distancia desde la derecha */
-    z-index: 1000; /* Asegura que esté encima del mapa */
-    /* Elimina el fondo, borde, padding y sombra */
+    bottom: 55px; /* Aumentamos el bottom para dejar espacio al botón de centrar */
+    right: 10px;
+    z-index: 1000;
     background-color: transparent;
-    border: none;
-    padding: 0;
-    box-shadow: none;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 /* Botón de capas */
@@ -303,13 +304,13 @@ footer img {
 #menu-capas {
     display: none;
     position: absolute;
-    bottom: 40px; /* Ajusta para que se muestre encima del botón */
-    right: 0;
+    bottom: 40px; /* Reducimos el bottom para que se superponga correctamente */
+    right: 0px; /* Modificado para alinear con el borde derecho */
     background-color: white;
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     border-radius: 5px;
     padding: 10px;
-    width: 120px; /* Ajusta el ancho del menú */
+    width: 120px;
 }
 
 /* Estilos para los checkboxes y labels */
