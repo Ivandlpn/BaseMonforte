@@ -364,35 +364,43 @@ async function activarCapaTrazado() {
         return puntosPorLinea;
     }
 
-    // Dibuja un punto azul en el mapa cada 20 metros de PK
+     // Dibuja un punto azul en el mapa cada 20 metros de PK
     function dibujarPuntosCada20Metros(puntos) {
-        let ultimoPK = null; // Inicializa ultimoPK en null
-        const separacionPK = 20;
+         let ultimoPK = null; // Inicializa ultimoPK en null
+         const separacionPK = 20;
 
         for (const punto of puntos) {
-             const pkActualNumerico = pkToNumber(punto.PK);
+            const pkActualNumerico = pkToNumber(punto.PK);
            console.log("PK Actual:", punto.PK, "Numerico:", pkActualNumerico, "UltimoPK:", ultimoPK);
-          if (ultimoPK === null || (pkActualNumerico - ultimoPK) >= separacionPK) {
-                console.log("Dibujando punto en:", punto.PK);
-                const puntoLat = parseFloat(punto.Latitud);
+
+            // Comprobamos que ultimoPK no sea null y si la diferencia es mayor a la separación
+            if (ultimoPK === null || (pkActualNumerico - ultimoPK) >= separacionPK) {
+                 console.log("Dibujando punto en:", punto.PK);
+               const puntoLat = parseFloat(punto.Latitud);
                 const puntoLng = parseFloat(punto.Longitud);
-              if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
-                   const marcador = L.circleMarker([puntoLat, puntoLng], {
+
+                if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
+                    const marcador = L.circleMarker([puntoLat, puntoLng], {
                         radius: 2,
                         fillColor: "blue",
                         color: "blue",
                         weight: 1,
                         opacity: 1,
                         fillOpacity: 1
-                   }).addTo(mapa);
-                  marcadoresTrazado.push(marcador);
-                  ultimoPK = pkActualNumerico;
+                     }).addTo(mapa);
+                    marcadoresTrazado.push(marcador);
+                     ultimoPK = pkActualNumerico; // Actualizamos ultimoPK solo si se dibuja el punto
                 } else {
-                  console.error("Latitud o Longitud no válidas:", punto);
-               }
-         }
+                   console.error("Latitud o Longitud no válidas:", punto);
+                }
+
+            } else {
+                console.log("No cumple la condición:", punto.PK);
+            }
+
+        }
     }
-}
+
 
 
     // Convierte PK de formato "XXX+YYY" a número
@@ -435,7 +443,6 @@ checkTrazado.addEventListener('change', function () {
         desactivarCapaTrazado();
     }
 });
-
 /////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 
