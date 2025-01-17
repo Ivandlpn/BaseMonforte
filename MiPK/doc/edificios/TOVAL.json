@@ -1,2965 +1,2965 @@
 [
     {
         "LINEA": "40",
-        "PK": "1,00",
+        "PK": "001000",
         "TIPO": "CPS",
         "NOMBRE": "CPS MADRID ATOCHA/CHAMARTIN"
     },
     {
         "LINEA": "40",
-        "PK": "35,85",
+        "PK": "035850",
         "TIPO": "ET",
-        "NOMBRE": "Bifurcación Torrejón"
+        "NOMBRE": "Bifurcación Torrejón (tipo 1)"
     },
     {
         "LINEA": "40",
-        "PK": "36,86",
+        "PK": "036860",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto V. sobre Arroyo del Guatén y M–404"
     },
     {
         "LINEA": "40",
-        "PK": "37,19",
+        "PK": "037190",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. sobre Arroyo del Guatén y M–404"
     },
     {
         "LINEA": "40",
-        "PK": "37,807",
+        "PK": "037807",
         "TIPO": "SE",
         "NOMBRE": "Subestación SE 301"
     },
     {
         "LINEA": "40",
-        "PK": "40,3",
+        "PK": "040300",
         "TIPO": "PS",
         "NOMBRE": "P.S. 40,3"
     },
     {
         "LINEA": "40",
-        "PK": "40,24",
+        "PK": "040240",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0010A Estación Base Móviles"
     },
     {
         "LINEA": "40",
-        "PK": "40,35",
+        "PK": "040350",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel Naves Altas"
     },
     {
         "LINEA": "40",
-        "PK": "41,08",
+        "PK": "041080",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel Naves Altas"
     },
     {
         "LINEA": "40",
-        "PK": "41,099",
+        "PK": "041099",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "41,91",
+        "PK": "041910",
         "TIPO": "PS",
         "NOMBRE": "P.S. 41,9"
     },
     {
         "LINEA": "40",
-        "PK": "42,47",
+        "PK": "042470",
         "TIPO": "ET",
         "NOMBRE": "PAET de Valdemoro (tipo 5)"
     },
     {
         "LINEA": "40",
-        "PK": "42,8",
+        "PK": "042800",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0010B"
     },
     {
         "LINEA": "40",
-        "PK": "43,1",
+        "PK": "043100",
         "TIPO": "PS",
         "NOMBRE": "P.S. 43,1"
     },
     {
         "LINEA": "40",
-        "PK": "44,294",
+        "PK": "044294",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "44,31",
+        "PK": "044310",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel Cabeza de gato"
     },
     {
         "LINEA": "40",
-        "PK": "44,5",
+        "PK": "044500",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel Cabeza de gato"
     },
     {
         "LINEA": "40",
-        "PK": "44,71",
+        "PK": "044710",
         "TIPO": "PS",
         "NOMBRE": "P.S. 44,7"
     },
     {
         "LINEA": "40",
-        "PK": "45,552",
+        "PK": "045552",
         "TIPO": "PS",
         "NOMBRE": "P.S. 45,5"
     },
     {
         "LINEA": "40",
-        "PK": "45,76",
+        "PK": "045760",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0020A"
     },
     {
         "LINEA": "40",
-        "PK": "46,5",
+        "PK": "046500",
         "TIPO": "DCC",
         "NOMBRE": "Detector de Cajas Calientes DCC"
     },
     {
         "LINEA": "40",
-        "PK": "46,534",
+        "PK": "046534",
         "TIPO": "PS",
         "NOMBRE": "P.S. 46,5"
     },
     {
         "LINEA": "40",
-        "PK": "47,14",
+        "PK": "047140",
         "TIPO": "PS",
         "NOMBRE": "P.S. 47,1"
     },
     {
         "LINEA": "40",
-        "PK": "47,579",
+        "PK": "047579",
         "TIPO": "PS",
         "NOMBRE": "P.S. 47,5"
     },
     {
         "LINEA": "40",
-        "PK": "48,053",
+        "PK": "048053",
         "TIPO": "PS",
         "NOMBRE": "P.S. 48"
     },
     {
         "LINEA": "40",
-        "PK": "48,82",
+        "PK": "048820",
         "TIPO": "PS",
         "NOMBRE": "P.S. 48,8"
     },
     {
         "LINEA": "40",
-        "PK": "49,36",
+        "PK": "049360",
         "TIPO": "ATI",
         "NOMBRE": "ATI 301.2"
     },
     {
         "LINEA": "40",
-        "PK": "49,985",
+        "PK": "049985",
         "TIPO": "PS",
         "NOMBRE": "P.S. 49,9"
     },
     {
         "LINEA": "40",
-        "PK": "50,48",
+        "PK": "050480",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0020B"
     },
     {
         "LINEA": "40",
-        "PK": "50,53",
+        "PK": "050530",
         "TIPO": "PS",
         "NOMBRE": "P.S. 50,5"
     },
     {
         "LINEA": "40",
-        "PK": "51,253",
+        "PK": "051253",
         "TIPO": "PS",
         "NOMBRE": "P.S. 51,2"
     },
     {
         "LINEA": "40",
-        "PK": "52,07",
+        "PK": "052070",
         "TIPO": "PS",
         "NOMBRE": "P.S. 52"
     },
     {
         "LINEA": "40",
-        "PK": "52,25",
+        "PK": "052250",
         "TIPO": "ET",
         "NOMBRE": "PB Seseña (tipo 1)"
     },
     {
         "LINEA": "40",
-        "PK": "53,25",
+        "PK": "053250",
         "TIPO": "PS",
         "NOMBRE": "P.S. 53,2"
     },
     {
         "LINEA": "40",
-        "PK": "54,08",
+        "PK": "054080",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel de la Dehesa Nueva del Rey"
     },
     {
         "LINEA": "40",
-        "PK": "54,08",
+        "PK": "054080",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0030A"
     },
     {
         "LINEA": "40",
-        "PK": "55,07",
+        "PK": "055070",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel de la Dehesa Nueva del Rey"
     },
     {
         "LINEA": "40",
-        "PK": "55,085",
+        "PK": "055085",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "55,22",
+        "PK": "055220",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB003OP"
     },
     {
         "LINEA": "40",
-        "PK": "55,235",
+        "PK": "055235",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre río Tajo"
     },
     {
         "LINEA": "40",
-        "PK": "57,202",
+        "PK": "057202",
         "TIPO": "PS",
         "NOMBRE": "P.S. 57,2"
     },
     {
         "LINEA": "40",
-        "PK": "59,04",
+        "PK": "059040",
         "TIPO": "PS",
         "NOMBRE": "P.S. 59"
     },
     {
         "LINEA": "40",
-        "PK": "59,74",
+        "PK": "059740",
         "TIPO": "PS",
         "NOMBRE": "P.S. 59,7"
     },
     {
         "LINEA": "40",
-        "PK": "59,74",
+        "PK": "059740",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0030B"
     },
     {
         "LINEA": "40",
-        "PK": "60,776",
+        "PK": "060776",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel del Regajal"
     },
     {
         "LINEA": "40",
-        "PK": "63,213",
+        "PK": "063213",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel del Regajal"
     },
     {
         "LINEA": "40",
-        "PK": "63,21",
+        "PK": "063210",
         "TIPO": "CT",
         "NOMBRE": "Caseta grupo bombeo regajal"
     },
     {
         "LINEA": "40",
-        "PK": "63,223",
+        "PK": "063223",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "63,756",
+        "PK": "063756",
         "TIPO": "PICV",
         "NOMBRE": "PBL 637–640"
     },
     {
         "LINEA": "40",
-        "PK": "64,604",
+        "PK": "064604",
         "TIPO": "ATI",
         "NOMBRE": "Autotransformador ATI 301.3"
     },
     {
         "LINEA": "40",
-        "PK": "64,64",
+        "PK": "064640",
         "TIPO": "PS",
         "NOMBRE": "P.S. 64,6"
     },
     {
         "LINEA": "40",
-        "PK": "65,54",
+        "PK": "065540",
         "TIPO": "PS",
         "NOMBRE": "P.S. 65,5"
     },
     {
         "LINEA": "40",
-        "PK": "66,74",
+        "PK": "066740",
         "TIPO": "PS",
         "NOMBRE": "P.S. 66,7"
     },
     {
         "LINEA": "40",
-        "PK": "67,14",
+        "PK": "067140",
         "TIPO": "PS",
         "NOMBRE": "P.S. 67,1"
     },
     {
         "LINEA": "40",
-        "PK": "67,74",
+        "PK": "067740",
         "TIPO": "PS",
         "NOMBRE": "P.S. 67,7"
     },
     {
         "LINEA": "40",
-        "PK": "67,84",
+        "PK": "067840",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0040B"
     },
     {
         "LINEA": "40",
-        "PK": "68,49",
+        "PK": "068490",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0040A"
     },
     {
         "LINEA": "40",
-        "PK": "69,669",
+        "PK": "069669",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "69,679",
+        "PK": "069679",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel de los Rincones"
     },
     {
         "LINEA": "40",
-        "PK": "70,052",
+        "PK": "070052",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel de los Rincones"
     },
     {
         "LINEA": "40",
-        "PK": "71,609",
+        "PK": "071609",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "71,619",
+        "PK": "071619",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel bajo futura A–40"
     },
     {
         "LINEA": "40",
-        "PK": "72,419",
+        "PK": "072419",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel bajo futura A–40"
     },
     {
         "LINEA": "40",
-        "PK": "72,43",
+        "PK": "072430",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0050A"
     },
     {
         "LINEA": "40",
-        "PK": "72,469",
+        "PK": "072469",
         "TIPO": "PICV",
         "NOMBRE": "PCA 713–716"
     },
     {
         "LINEA": "40",
-        "PK": "72,869",
+        "PK": "072869",
         "TIPO": "PS",
         "NOMBRE": "P.S. 72,8"
     },
     {
         "LINEA": "40",
-        "PK": "72,874",
+        "PK": "072874",
         "TIPO": "ATF",
         "NOMBRE": "AutoTF 302.1"
     },
     {
         "LINEA": "40",
-        "PK": "73,669",
+        "PK": "073669",
         "TIPO": "PS",
         "NOMBRE": "P.S. 73,6"
     },
     {
         "LINEA": "40",
-        "PK": "76,89",
+        "PK": "076890",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0050B"
     },
     {
         "LINEA": "40",
-        "PK": "77,869",
+        "PK": "077869",
         "TIPO": "PS",
         "NOMBRE": "Punto Singular P.S. 77,8"
     },
     {
         "LINEA": "40",
-        "PK": "79,669",
+        "PK": "079669",
         "TIPO": "PS",
         "NOMBRE": "P.S. 79,6"
     },
     {
         "LINEA": "40",
-        "PK": "81,76",
+        "PK": "081760",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0060A"
     },
     {
         "LINEA": "40",
-        "PK": "82,269",
+        "PK": "082269",
         "TIPO": "PS",
         "NOMBRE": "P.S. 82,2"
     },
     {
         "LINEA": "40",
-        "PK": "83,169",
+        "PK": "083169",
         "TIPO": "PS",
         "NOMBRE": "P.S. 83,1"
     },
     {
         "LINEA": "40",
-        "PK": "83,969",
+        "PK": "083969",
         "TIPO": "PS",
         "NOMBRE": "P.S. 83,9"
     },
     {
         "LINEA": "40",
-        "PK": "84,585",
+        "PK": "084585",
         "TIPO": "ET",
         "NOMBRE": "PAET de Villarrubia (tipo 1)"
     },
     {
         "LINEA": "40",
-        "PK": "84,773",
+        "PK": "084773",
         "TIPO": "ATI",
         "NOMBRE": "ATI 302.2"
     },
     {
         "LINEA": "40",
-        "PK": "85,169",
+        "PK": "085169",
         "TIPO": "PS",
         "NOMBRE": "P.S. 85,1"
     },
     {
         "LINEA": "40",
-        "PK": "85,62",
+        "PK": "085620",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0060B"
     },
     {
         "LINEA": "40",
-        "PK": "86,169",
+        "PK": "086169",
         "TIPO": "PS",
         "NOMBRE": "P.S. 86,1"
     },
     {
         "LINEA": "40",
-        "PK": "85,3",
+        "PK": "085300",
         "TIPO": "BM",
         "NOMBRE": "Base Mantenimiento BM Villarrubia"
     },
     {
         "LINEA": "40",
-        "PK": "87,744",
+        "PK": "087744",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre FFCC Aranjuez–Cuenca, N–400 y A–40"
     },
     {
         "LINEA": "40",
-        "PK": "88,04",
+        "PK": "088040",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre FFCC Aranjuez–Cuenca, N–400 y A–40"
     },
     {
         "LINEA": "40",
-        "PK": "89,069",
+        "PK": "089069",
         "TIPO": "PS",
         "NOMBRE": "P.S. 89"
     },
     {
         "LINEA": "40",
-        "PK": "90,57",
+        "PK": "090570",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0070A"
     },
     {
         "LINEA": "40",
-        "PK": "91,946",
+        "PK": "091946",
         "TIPO": "DCC",
         "NOMBRE": "Detector de Cajas Calientes DCC"
     },
     {
         "LINEA": "40",
-        "PK": "93,489",
+        "PK": "093489",
         "TIPO": "PS",
         "NOMBRE": "P.S. 93,4"
     },
     {
         "LINEA": "40",
-        "PK": "95,2",
+        "PK": "095200",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0070B"
     },
     {
         "LINEA": "40",
-        "PK": "95,389",
+        "PK": "095389",
         "TIPO": "PS",
         "NOMBRE": "P.S. 95,3"
     },
     {
         "LINEA": "40",
-        "PK": "95,896",
+        "PK": "095896",
         "TIPO": "PICV",
         "NOMBRE": "PCA 959–962"
     },
     {
         "LINEA": "40",
-        "PK": "96,319",
+        "PK": "096319",
         "TIPO": "ATI",
         "NOMBRE": "ATI 302.3"
     },
     {
         "LINEA": "40",
-        "PK": "96,571",
+        "PK": "096571",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "96,581",
+        "PK": "096581",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel bajo futura A–40 y N–400"
     },
     {
         "LINEA": "40",
-        "PK": "96,871",
+        "PK": "096871",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel bajo futura A–40 y N–400"
     },
     {
         "LINEA": "40",
-        "PK": "98,34",
+        "PK": "098340",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0080A"
     },
     {
         "LINEA": "40",
-        "PK": "102,715",
+        "PK": "102715",
         "TIPO": "PS",
         "NOMBRE": "P.S. 102,7"
     },
     {
         "LINEA": "40",
-        "PK": "102,84",
+        "PK": "102840",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0080B"
     },
     {
         "LINEA": "40",
-        "PK": "103,839",
+        "PK": "103839",
         "TIPO": "ET",
         "NOMBRE": "PB de Sta. Cruz de la Zarza (tipo 1)"
     },
     {
         "LINEA": "40",
-        "PK": "103,898",
+        "PK": "103898",
         "TIPO": "PS",
         "NOMBRE": "P.S. 103,8"
     },
     {
         "LINEA": "40",
-        "PK": "105,854",
+        "PK": "105854",
         "TIPO": "PS",
         "NOMBRE": "P.S 105,8"
     },
     {
         "LINEA": "40",
-        "PK": "107,36",
+        "PK": "107360",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0090A"
     },
     {
         "LINEA": "40",
-        "PK": "107,789",
+        "PK": "107789",
         "TIPO": "PS",
         "NOMBRE": "P.S. 107,7"
     },
     {
         "LINEA": "40",
-        "PK": "108,049",
+        "PK": "108049",
         "TIPO": "SE",
         "NOMBRE": "Subestación SE 302"
     },
     {
         "LINEA": "40",
-        "PK": "108,315",
+        "PK": "108315",
         "TIPO": "PS",
         "NOMBRE": "P.S. 108,3"
     },
     {
         "LINEA": "40",
-        "PK": "109,73",
+        "PK": "109730",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0090B"
     },
     {
         "LINEA": "40",
-        "PK": "109,775",
+        "PK": "109775",
         "TIPO": "PS",
         "NOMBRE": "P.S. 109,7"
     },
     {
         "LINEA": "40",
-        "PK": "110,502",
+        "PK": "110502",
         "TIPO": "PS",
         "NOMBRE": "P.S. 110,5"
     },
     {
         "LINEA": "40",
-        "PK": "110,877",
+        "PK": "110877",
         "TIPO": "PICV",
         "NOMBRE": "PICV La Guindalera"
     },
     {
         "LINEA": "40",
-        "PK": "111,201",
+        "PK": "111201",
         "TIPO": "PS",
         "NOMBRE": "P.S. 111,2"
     },
     {
         "LINEA": "40",
-        "PK": "112,197",
+        "PK": "112197",
         "TIPO": "PS",
         "NOMBRE": "P.S. 112,1"
     },
     {
         "LINEA": "40",
-        "PK": "113,44",
+        "PK": "113440",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0090OP"
     },
     {
         "LINEA": "40",
-        "PK": "113,452",
+        "PK": "113452",
         "TIPO": "PS",
         "NOMBRE": "P.S. 113,4"
     },
     {
         "LINEA": "40",
-        "PK": "115,629",
+        "PK": "115629",
         "TIPO": "PS",
         "NOMBRE": "P.S. 115,6"
     },
     {
         "LINEA": "40",
-        "PK": "116,49",
+        "PK": "116490",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0100A"
     },
     {
         "LINEA": "40",
-        "PK": "116,514",
+        "PK": "116514",
         "TIPO": "PS",
         "NOMBRE": "P.S. 116,5"
     },
     {
         "LINEA": "40",
-        "PK": "117,236",
+        "PK": "117236",
         "TIPO": "PS",
         "NOMBRE": "P.S. 117,2"
     },
     {
         "LINEA": "40",
-        "PK": "117,959",
+        "PK": "117959",
         "TIPO": "PS",
         "NOMBRE": "P.S. 117,9"
     },
     {
         "LINEA": "40",
-        "PK": "118,449",
+        "PK": "118449",
         "TIPO": "ET",
         "NOMBRE": "PAET de Tarancón (tipo 5)"
     },
     {
         "LINEA": "40",
-        "PK": "119,629",
+        "PK": "119629",
         "TIPO": "ATI",
         "NOMBRE": "ATI 302.4"
     },
     {
         "LINEA": "40",
-        "PK": "120,85",
+        "PK": "120850",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0100B"
     },
     {
         "LINEA": "40",
-        "PK": "121,271",
+        "PK": "121271",
         "TIPO": "PS",
         "NOMBRE": "P.S. 121,2 (Tratamiento como Túnel)"
     },
     {
         "LINEA": "40",
-        "PK": "121,726",
+        "PK": "121726",
         "TIPO": "PS",
         "NOMBRE": "P.S. 121,7"
     },
     {
         "LINEA": "40",
-        "PK": "123,785",
+        "PK": "123785",
         "TIPO": "PS",
         "NOMBRE": "P.S. 123,7"
     },
     {
         "LINEA": "40",
-        "PK": "124,887",
+        "PK": "124887",
         "TIPO": "DCC",
         "NOMBRE": "Detector de Cajas Calientes DCC"
     },
     {
         "LINEA": "40",
-        "PK": "125,984",
+        "PK": "125984",
         "TIPO": "PS",
         "NOMBRE": "Punto Singular P.S. 125,9"
     },
     {
         "LINEA": "40",
-        "PK": "126,02",
+        "PK": "126020",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0110A"
     },
     {
         "LINEA": "40",
-        "PK": "129,396",
+        "PK": "129396",
         "TIPO": "PICV",
         "NOMBRE": "PCA 1297–1300"
     },
     {
         "LINEA": "40",
-        "PK": "129,45",
+        "PK": "129450",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0110B"
     },
     {
         "LINEA": "40",
-        "PK": "130,029",
+        "PK": "130029",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel Sierra de Altomira"
     },
     {
         "LINEA": "40",
-        "PK": "130,823",
+        "PK": "130823",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel Sierra de Altomira"
     },
     {
         "LINEA": "40",
-        "PK": "130,807",
+        "PK": "130807",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "131,048",
+        "PK": "131048",
         "TIPO": "ATI",
         "NOMBRE": "ATI 302.5"
     },
     {
         "LINEA": "40",
-        "PK": "132,05",
+        "PK": "132050",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0120A"
     },
     {
         "LINEA": "40",
-        "PK": "134,4",
+        "PK": "134400",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0120OP"
     },
     {
         "LINEA": "40",
-        "PK": "136,514",
+        "PK": "136514",
         "TIPO": "PICV",
         "NOMBRE": "PICV Alcazar del Rey"
     },
     {
         "LINEA": "40",
-        "PK": "136,53",
+        "PK": "136530",
         "TIPO": "PS",
         "NOMBRE": "P.S. 136,5"
     },
     {
         "LINEA": "40",
-        "PK": "137,218",
+        "PK": "137218",
         "TIPO": "PS",
         "NOMBRE": "P.S. 137,2"
     },
     {
         "LINEA": "40",
-        "PK": "137,23",
+        "PK": "137230",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0120B Estacion Base Móviles"
     },
     {
         "LINEA": "40",
-        "PK": "139,262",
+        "PK": "139262",
         "TIPO": "PS",
         "NOMBRE": "P.S. 139,2"
     },
     {
         "LINEA": "40",
-        "PK": "139,38",
+        "PK": "139380",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0130A"
     },
     {
         "LINEA": "40",
-        "PK": "142,052",
+        "PK": "142052",
         "TIPO": "PS",
         "NOMBRE": "P.S. 142"
     },
     {
         "LINEA": "40",
-        "PK": "142,921",
+        "PK": "142921",
         "TIPO": "ATF",
         "NOMBRE": "AutoTF 303.1"
     },
     {
         "LINEA": "40",
-        "PK": "143,972",
+        "PK": "143972",
         "TIPO": "ET",
         "NOMBRE": "PB de Campos del Paraíso (tipo 1)"
     },
     {
         "LINEA": "40",
-        "PK": "144,94",
+        "PK": "144940",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0130B"
     },
     {
         "LINEA": "40",
-        "PK": "144,932",
+        "PK": "144932",
         "TIPO": "PS",
         "NOMBRE": "P.S. 144,9"
     },
     {
         "LINEA": "40",
-        "PK": "146,002",
+        "PK": "146002",
         "TIPO": "PS",
         "NOMBRE": "P.S. 146"
     },
     {
         "LINEA": "40",
-        "PK": "147,962",
+        "PK": "147962",
         "TIPO": "PS",
         "NOMBRE": "P.S. 147,9"
     },
     {
         "LINEA": "40",
-        "PK": "148,916",
+        "PK": "148916",
         "TIPO": "PS",
         "NOMBRE": "P.S. 148,916"
     },
     {
         "LINEA": "40",
-        "PK": "148,833",
+        "PK": "148833",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0130OP"
     },
     {
         "LINEA": "40",
-        "PK": "151,782",
+        "PK": "151782",
         "TIPO": "PS",
         "NOMBRE": "P.S. 151,7"
     },
     {
         "LINEA": "40",
-        "PK": "152,2",
+        "PK": "152200",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0140A"
     },
     {
         "LINEA": "40",
-        "PK": "152,242",
+        "PK": "152242",
         "TIPO": "PS",
         "NOMBRE": "P.S. 152,2"
     },
     {
         "LINEA": "40",
-        "PK": "153,862",
+        "PK": "153862",
         "TIPO": "PICV",
         "NOMBRE": "PCA 1539–1542"
     },
     {
         "LINEA": "40",
-        "PK": "154,937",
+        "PK": "154937",
         "TIPO": "DCC",
         "NOMBRE": "Detector de Cajas Calientes DCC"
     },
     {
         "LINEA": "40",
-        "PK": "155,104",
+        "PK": "155104",
         "TIPO": "ATI",
         "NOMBRE": "ATI 303.2"
     },
     {
         "LINEA": "40",
-        "PK": "155,343",
+        "PK": "155343",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre N–400, Rio Cigüela y enlace Horcajada"
     },
     {
         "LINEA": "40",
-        "PK": "156,913",
+        "PK": "156913",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre N–400, Rio Cigüela y enlace Horcajada"
     },
     {
         "LINEA": "40",
-        "PK": "157,1",
+        "PK": "157100",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0140B"
     },
     {
         "LINEA": "40",
-        "PK": "157,656",
+        "PK": "157656",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "159,1",
+        "PK": "159100",
         "TIPO": "GALERÍA",
         "NOMBRE": "Galería Horcajada LM"
     },
     {
         "LINEA": "40",
-        "PK": "160,6",
+        "PK": "160600",
         "TIPO": "GALERÍA",
         "NOMBRE": "Galería Horcajada LV"
     },
     {
         "LINEA": "40",
-        "PK": "161,623",
+        "PK": "161623",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel de Horcajada"
     },
     {
         "LINEA": "40",
-        "PK": "161,76",
+        "PK": "161760",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0150A"
     },
     {
         "LINEA": "40",
-        "PK": "163,297",
+        "PK": "163297",
         "TIPO": "PS",
         "NOMBRE": "P.S. 163,2"
     },
     {
         "LINEA": "40",
-        "PK": "164,772",
+        "PK": "164772",
         "TIPO": "ET",
         "NOMBRE": "PAET de Torrejoncillo del Rey (tipo 1)"
     },
     {
         "LINEA": "40",
-        "PK": "165,982",
+        "PK": "165982",
         "TIPO": "PS",
         "NOMBRE": "P.S. 165,9"
     },
     {
         "LINEA": "40",
-        "PK": "166,12",
+        "PK": "166120",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0150B"
     },
     {
         "LINEA": "40",
-        "PK": "166,517",
+        "PK": "166517",
         "TIPO": "ATI",
         "NOMBRE": "Autotransformador ATI 303.3"
     },
     {
         "LINEA": "40",
-        "PK": "167,00",
+        "PK": "167000",
         "TIPO": "PS",
         "NOMBRE": "P.S. 166,7"
     },
     {
         "LINEA": "40",
-        "PK": "169,142",
+        "PK": "169142",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto \"\"Las Higueruelas\"\""
     },
     {
         "LINEA": "40",
-        "PK": "170,198",
+        "PK": "170198",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto \"\"Las Higueruelas\"\""
     },
     {
         "LINEA": "40",
-        "PK": "170,32",
+        "PK": "170320",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0160A"
     },
     {
         "LINEA": "40",
-        "PK": "170,845",
+        "PK": "170845",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "170,899",
+        "PK": "170899",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel \"\"Las Higueruelas\"\""
     },
     {
         "LINEA": "40",
-        "PK": "171,153",
+        "PK": "171153",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel \"\"Las Higueruelas\"\""
     },
     {
         "LINEA": "40",
-        "PK": "171,416",
+        "PK": "171416",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "171,426",
+        "PK": "171426",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel \"\"Alto Molino\"\""
     },
     {
         "LINEA": "40",
-        "PK": "171,706",
+        "PK": "171706",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel \"\"Alto Molino\"\""
     },
     {
         "LINEA": "40",
-        "PK": "171,76",
+        "PK": "171760",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0160B"
     },
     {
         "LINEA": "40",
-        "PK": "172,198",
+        "PK": "172198",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre rio Cigüela"
     },
     {
         "LINEA": "40",
-        "PK": "172,828",
+        "PK": "172828",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre rio Cigüela"
     },
     {
         "LINEA": "40",
-        "PK": "173,922",
+        "PK": "173922",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "173,94",
+        "PK": "173940",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0170A"
     },
     {
         "LINEA": "40",
-        "PK": "173,932",
+        "PK": "173932",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel del Hoyazo"
     },
     {
         "LINEA": "40",
-        "PK": "174,222",
+        "PK": "174222",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel del Hoyazo"
     },
     {
         "LINEA": "40",
-        "PK": "174,672",
+        "PK": "174672",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "174,682",
+        "PK": "174682",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel de Cabrejas"
     },
     {
         "LINEA": "40",
-        "PK": "176,702",
+        "PK": "176702",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel de Cabrejas"
     },
     {
         "LINEA": "40",
-        "PK": "176,752",
+        "PK": "176752",
         "TIPO": "PICV",
         "NOMBRE": "PCA 1767–1770"
     },
     {
         "LINEA": "40",
-        "PK": "176,86",
+        "PK": "176860",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0170B"
     },
     {
         "LINEA": "40",
-        "PK": "178,117",
+        "PK": "178117",
         "TIPO": "SE",
         "NOMBRE": "Subestación SE 303"
     },
     {
         "LINEA": "40",
-        "PK": "178,841",
+        "PK": "178841",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto Arroyo del Puente"
     },
     {
         "LINEA": "40",
-        "PK": "179,311",
+        "PK": "179311",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto Arroyo del Puente"
     },
     {
         "LINEA": "40",
-        "PK": "180,68",
+        "PK": "180680",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0180A"
     },
     {
         "LINEA": "40",
-        "PK": "180,619",
+        "PK": "180619",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "180,725",
+        "PK": "180725",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel Loma del Carrascal"
     },
     {
         "LINEA": "40",
-        "PK": "182,923",
+        "PK": "182923",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel Loma del Carrascal"
     },
     {
         "LINEA": "40",
-        "PK": "183,19",
+        "PK": "183190",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0180B"
     },
     {
         "LINEA": "40",
-        "PK": "183,232",
+        "PK": "183232",
         "TIPO": "PS",
         "NOMBRE": "P.S. 183,2"
     },
     {
         "LINEA": "40",
-        "PK": "183,9",
+        "PK": "183900",
         "TIPO": "PICV",
         "NOMBRE": "PCA 1845–1848"
     },
     {
         "LINEA": "40",
-        "PK": "184,369",
+        "PK": "184369",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto Arroyo de la Vega"
     },
     {
         "LINEA": "40",
-        "PK": "184,859",
+        "PK": "184859",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto Arroyo de la Vega"
     },
     {
         "LINEA": "40",
-        "PK": "185,932",
+        "PK": "185932",
         "TIPO": "PS",
         "NOMBRE": "P.S. 185,9"
     },
     {
         "LINEA": "40",
-        "PK": "186,11",
+        "PK": "186110",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0190A"
     },
     {
         "LINEA": "40",
-        "PK": "186,532",
+        "PK": "186532",
         "TIPO": "PS",
         "NOMBRE": "P.S. 186,5"
     },
     {
         "LINEA": "40",
-        "PK": "187,735",
+        "PK": "187735",
         "TIPO": "ATI",
         "NOMBRE": "ATI 303.4"
     },
     {
         "LINEA": "40",
-        "PK": "188,232",
+        "PK": "188232",
         "TIPO": "PS",
         "NOMBRE": "P.S. 188,2"
     },
     {
         "LINEA": "40",
-        "PK": "188,932",
+        "PK": "188932",
         "TIPO": "PS",
         "NOMBRE": "P.S. 188,9"
     },
     {
         "LINEA": "40",
-        "PK": "189,446",
+        "PK": "189446",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre rio Jucar"
     },
     {
         "LINEA": "40",
-        "PK": "190,008",
+        "PK": "190008",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre rio Jucar"
     },
     {
         "LINEA": "40",
-        "PK": "190,882",
+        "PK": "190882",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "190,892",
+        "PK": "190892",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel del Bosque"
     },
     {
         "LINEA": "40",
-        "PK": "190,91",
+        "PK": "190910",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0190B"
     },
     {
         "LINEA": "40",
-        "PK": "194,02",
+        "PK": "194020",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel del Bosque"
     },
     {
         "LINEA": "40",
-        "PK": "194,29",
+        "PK": "194290",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0200A"
     },
     {
         "LINEA": "40",
-        "PK": "194,316",
+        "PK": "194316",
         "TIPO": "PS",
         "NOMBRE": "P.S. 194,3"
     },
     {
         "LINEA": "40",
-        "PK": "195,262",
+        "PK": "195262",
         "TIPO": "ET",
         "NOMBRE": "Estacion Cuenca )tipo 5"
     },
     {
         "LINEA": "40",
-        "PK": "195,262",
+        "PK": "195262",
         "TIPO": "ET",
         "NOMBRE": "Cuenca (tipo 5)"
     },
     {
         "LINEA": "40",
-        "PK": "197,245",
+        "PK": "197245",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0200B"
     },
     {
         "LINEA": "40",
-        "PK": "197,389",
+        "PK": "197389",
         "TIPO": "ATI",
         "NOMBRE": "ATI 303.5"
     },
     {
         "LINEA": "40",
-        "PK": "200,272",
+        "PK": "200272",
         "TIPO": "PS",
         "NOMBRE": "P.S. 200,2"
     },
     {
         "LINEA": "40",
-        "PK": "201,03",
+        "PK": "201030",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0210A"
     },
     {
         "LINEA": "40",
-        "PK": "204,92",
+        "PK": "204920",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0210B"
     },
     {
         "LINEA": "40",
-        "PK": "205,01",
+        "PK": "205010",
         "TIPO": "PICV",
         "NOMBRE": "PICV Arcas del Villar"
     },
     {
         "LINEA": "40",
-        "PK": "205,391",
+        "PK": "205391",
         "TIPO": "PS",
         "NOMBRE": "P.S. 205,3"
     },
     {
         "LINEA": "40",
-        "PK": "205,563",
+        "PK": "205563",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "205,573",
+        "PK": "205573",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel de la Atalaya"
     },
     {
         "LINEA": "40",
-        "PK": "205,908",
+        "PK": "205908",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel de la Atalaya"
     },
     {
         "LINEA": "40",
-        "PK": "207,1",
+        "PK": "207100",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0220A"
     },
     {
         "LINEA": "40",
-        "PK": "207,161",
+        "PK": "207161",
         "TIPO": "ATF",
         "NOMBRE": "AutoTF 304.1"
     },
     {
         "LINEA": "40",
-        "PK": "207,331",
+        "PK": "207331",
         "TIPO": "DCC",
         "NOMBRE": "Detector de Cajas Calientes DCC"
     },
     {
         "LINEA": "40",
-        "PK": "209,421",
+        "PK": "209421",
         "TIPO": "PS",
         "NOMBRE": "P.S. 209,4"
     },
     {
         "LINEA": "40",
-        "PK": "210,225",
+        "PK": "210225",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre el Arroyo de la Motilla"
     },
     {
         "LINEA": "40",
-        "PK": "210,531",
+        "PK": "210531",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre el Arroyo de la Motilla"
     },
     {
         "LINEA": "40",
-        "PK": "210,58",
+        "PK": "210580",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0220B"
     },
     {
         "LINEA": "40",
-        "PK": "210,603",
+        "PK": "210603",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "210,613",
+        "PK": "210613",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel de El Cubillo"
     },
     {
         "LINEA": "40",
-        "PK": "211,978",
+        "PK": "211978",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel de El Cubillo"
     },
     {
         "LINEA": "40",
-        "PK": "211,988",
+        "PK": "211988",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "212,056",
+        "PK": "212056",
         "TIPO": "PS",
         "NOMBRE": "P.S. 212"
     },
     {
         "LINEA": "40",
-        "PK": "212,091",
+        "PK": "212091",
         "TIPO": "PICV",
         "NOMBRE": "PCA 2121–2124"
     },
     {
         "LINEA": "40",
-        "PK": "213,73",
+        "PK": "213730",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0230A"
     },
     {
         "LINEA": "40",
-        "PK": "213,74",
+        "PK": "213740",
         "TIPO": "PS",
         "NOMBRE": "P.S. 213,7"
     },
     {
         "LINEA": "40",
-        "PK": "214,681",
+        "PK": "214681",
         "TIPO": "PS",
         "NOMBRE": "P.S. 214,6"
     },
     {
         "LINEA": "40",
-        "PK": "214,73",
+        "PK": "214730",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0230B (SOLO GSM-R)"
     },
     {
         "LINEA": "40",
-        "PK": "215,451",
+        "PK": "215451",
         "TIPO": "ATI",
         "NOMBRE": "ATI 304,2"
     },
     {
         "LINEA": "40",
-        "PK": "215,575",
+        "PK": "215575",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre Arroyo de las Dehesillas"
     },
     {
         "LINEA": "40",
-        "PK": "216,187",
+        "PK": "216187",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre Arroyo de las Dehesillas"
     },
     {
         "LINEA": "40",
-        "PK": "216,421",
+        "PK": "216421",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "216,431",
+        "PK": "216431",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel de los Cubillos"
     },
     {
         "LINEA": "40",
-        "PK": "217,931",
+        "PK": "217931",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel de los Cubillos"
     },
     {
         "LINEA": "40",
-        "PK": "218,11",
+        "PK": "218110",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0240A"
     },
     {
         "LINEA": "40",
-        "PK": "220,632",
+        "PK": "220632",
         "TIPO": "PS",
         "NOMBRE": "Punto Singular P.S. 220,632"
     },
     {
         "LINEA": "40",
-        "PK": "218,268",
+        "PK": "218268",
         "TIPO": "PICV",
         "NOMBRE": "PICV Los Llecos"
     },
     {
         "LINEA": "40",
-        "PK": "222,446",
+        "PK": "222446",
         "TIPO": "PS",
         "NOMBRE": "P.S. 222,4"
     },
     {
         "LINEA": "40",
-        "PK": "222,5",
+        "PK": "222500",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0240B"
     },
     {
         "LINEA": "40",
-        "PK": "228,88",
+        "PK": "228880",
         "TIPO": "PS",
         "NOMBRE": "Punto Singular P.S. 228,8"
     },
     {
         "LINEA": "40",
-        "PK": "224,188",
+        "PK": "224188",
         "TIPO": "ATI",
         "NOMBRE": "ATI 304,3"
     },
     {
         "LINEA": "40",
-        "PK": "224,331",
+        "PK": "224331",
         "TIPO": "ET",
         "NOMBRE": "PAET de Monteagudo de las Salinas (tipo 1)"
     },
     {
         "LINEA": "40",
-        "PK": "224,967",
+        "PK": "224967",
         "TIPO": "PS",
         "NOMBRE": "P.S. 224,9"
     },
     {
         "LINEA": "40",
-        "PK": "227,942",
+        "PK": "227942",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "227,952",
+        "PK": "227952",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel de Tendero"
     },
     {
         "LINEA": "40",
-        "PK": "227,98",
+        "PK": "227980",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0250A"
     },
     {
         "LINEA": "40",
-        "PK": "229,031",
+        "PK": "229031",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel de Tendero"
     },
     {
         "LINEA": "40",
-        "PK": "229,27",
+        "PK": "229270",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0250B Estacion Base Móviles"
     },
     {
         "LINEA": "40",
-        "PK": "229,304",
+        "PK": "229304",
         "TIPO": "PS",
         "NOMBRE": "P.S. 229,3"
     },
     {
         "LINEA": "40",
-        "PK": "230,019",
+        "PK": "230019",
         "TIPO": "PS",
         "NOMBRE": "P.S. 230"
     },
     {
         "LINEA": "40",
-        "PK": "231,25",
+        "PK": "231250",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0260A"
     },
     {
         "LINEA": "40",
-        "PK": "231,935",
+        "PK": "231935",
         "TIPO": "PS",
         "NOMBRE": "P.S. 231,335"
     },
     {
         "LINEA": "40",
-        "PK": "232,605",
+        "PK": "232605",
         "TIPO": "PS",
         "NOMBRE": "P.S. 232,605"
     },
     {
         "LINEA": "40",
-        "PK": "233,15",
+        "PK": "233150",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0260OP"
     },
     {
         "LINEA": "40",
-        "PK": "234,219",
+        "PK": "234219",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre rio Valdemembra y Arroyo de los Angostos"
     },
     {
         "LINEA": "40",
-        "PK": "234,887",
+        "PK": "234887",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre rio Valdemembra y Arroyo de los Angostos"
     },
     {
         "LINEA": "40",
-        "PK": "235,26",
+        "PK": "235260",
         "TIPO": "PICV",
         "NOMBRE": "PCA 2345–2348"
     },
     {
         "LINEA": "40",
-        "PK": "236,121",
+        "PK": "236121",
         "TIPO": "SE",
         "NOMBRE": "Subestación SE 304"
     },
     {
         "LINEA": "40",
-        "PK": "237,24",
+        "PK": "237240",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0260B"
     },
     {
         "LINEA": "40",
-        "PK": "237,252",
+        "PK": "237252",
         "TIPO": "PS",
         "NOMBRE": "P.S. 237,2"
     },
     {
         "LINEA": "40",
-        "PK": "239,128",
+        "PK": "239128",
         "TIPO": "DCC",
         "NOMBRE": "Detector de Cajas Calientes DCC"
     },
     {
         "LINEA": "40",
-        "PK": "239,337",
+        "PK": "239337",
         "TIPO": "PS",
         "NOMBRE": "P.S. 239,3"
     },
     {
         "LINEA": "40",
-        "PK": "240,787",
+        "PK": "240787",
         "TIPO": "PS",
         "NOMBRE": "P.S.–211,436"
     },
     {
         "LINEA": "40",
-        "PK": "240,81",
+        "PK": "240810",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0270A"
     },
     {
         "LINEA": "40",
-        "PK": "242,971",
+        "PK": "242971",
         "TIPO": "ATI",
         "NOMBRE": "ATI 304.4"
     },
     {
         "LINEA": "40",
-        "PK": "243,634",
+        "PK": "243634",
         "TIPO": "PS",
         "NOMBRE": "P.S.–302,604"
     },
     {
         "LINEA": "40",
-        "PK": "245,17",
+        "PK": "245170",
         "TIPO": "BTS",
         "NOMBRE": "ATORMOTB0270B"
     },
     {
         "LINEA": "40",
-        "PK": "245,28",
+        "PK": "245280",
         "TIPO": "PS",
         "NOMBRE": "P.S. 245,2"
     },
     {
         "LINEA": "40",
-        "PK": "245,7",
+        "PK": "245700",
         "TIPO": "BM",
         "NOMBRE": "Base Mantenimiento BM GABALDON"
     },
     {
         "LINEA": "40",
-        "PK": "246,163",
+        "PK": "246163",
         "TIPO": "PS",
         "NOMBRE": "P.S. 246,1"
     },
     {
         "LINEA": "40",
-        "PK": "246,832",
+        "PK": "246832",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre arroyo de Doña Aleja"
     },
     {
         "LINEA": "40",
-        "PK": "247,153",
+        "PK": "247153",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre arroyo de Doña Aleja"
     },
     {
         "LINEA": "40",
-        "PK": "247,43",
+        "PK": "247430",
         "TIPO": "ET",
         "NOMBRE": "ET Bifurcación Albacete  (tipo 1)"
     },
     {
         "LINEA": "40",
-        "PK": "247,51",
+        "PK": "247510",
         "TIPO": "PS",
         "NOMBRE": "P.S. 247,5"
     },
     {
         "LINEA": "40",
-        "PK": "251,999",
+        "PK": "251999",
         "TIPO": "ATI",
         "NOMBRE": "Autotransformador ATI 304,5A"
     },
     {
         "LINEA": "40",
-        "PK": "253,13",
+        "PK": "253130",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB01AOP"
     },
     {
         "LINEA": "40",
-        "PK": "253,13",
+        "PK": "253130",
         "TIPO": "PS",
         "NOMBRE": "P.S. 253,1"
     },
     {
         "LINEA": "40",
-        "PK": "253,347",
+        "PK": "253347",
         "TIPO": "PS",
         "NOMBRE": "P.S. 253,3"
     },
     {
         "LINEA": "40",
-        "PK": "253,956",
+        "PK": "253956",
         "TIPO": "PS",
         "NOMBRE": "P.S. 253,9"
     },
     {
         "LINEA": "40",
-        "PK": "254,57",
+        "PK": "254570",
         "TIPO": "PS",
         "NOMBRE": "P.S. 254,5"
     },
     {
         "LINEA": "40",
-        "PK": "255,01",
+        "PK": "255010",
         "TIPO": "PS",
         "NOMBRE": "P.S. 255"
     },
     {
         "LINEA": "40",
-        "PK": "255,69",
+        "PK": "255690",
         "TIPO": "PS",
         "NOMBRE": "P.S. 255,6"
     },
     {
         "LINEA": "40",
-        "PK": "256,32",
+        "PK": "256320",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB01A"
     },
     {
         "LINEA": "40",
-        "PK": "256,35",
+        "PK": "256350",
         "TIPO": "PS",
         "NOMBRE": "P.S. 256,3"
     },
     {
         "LINEA": "40",
-        "PK": "256,35",
+        "PK": "256350",
         "TIPO": "PICV",
         "NOMBRE": "PCA 2563-2566"
     },
     {
         "LINEA": "40",
-        "PK": "256,93",
+        "PK": "256930",
         "TIPO": "PS",
         "NOMBRE": "P.S. 256,9"
     },
     {
         "LINEA": "40",
-        "PK": "259,77",
+        "PK": "259770",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB01B"
     },
     {
         "LINEA": "40",
-        "PK": "261,211",
+        "PK": "261211",
         "TIPO": "ATF",
         "NOMBRE": "AutoTF 305.1"
     },
     {
         "LINEA": "40",
-        "PK": "263,79",
+        "PK": "263790",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB02A"
     },
     {
         "LINEA": "40",
-        "PK": "264,21",
+        "PK": "264210",
         "TIPO": "PS",
         "NOMBRE": "P.S. 264,2"
     },
     {
         "LINEA": "40",
-        "PK": "266,21",
+        "PK": "266210",
         "TIPO": "PS",
         "NOMBRE": "P.S. 266,2"
     },
     {
         "LINEA": "40",
-        "PK": "267,09",
+        "PK": "267090",
         "TIPO": "ET",
         "NOMBRE": "ET PAET Iniesta  (tipo 5)"
     },
     {
         "LINEA": "40",
-        "PK": "267,31",
+        "PK": "267310",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB02B"
     },
     {
         "LINEA": "40",
-        "PK": "268,67",
+        "PK": "268670",
         "TIPO": "PS",
         "NOMBRE": "P.S. 268,6"
     },
     {
         "LINEA": "40",
-        "PK": "270,079",
+        "PK": "270079",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. Cañada de la Encina"
     },
     {
         "LINEA": "40",
-        "PK": "270,539",
+        "PK": "270539",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. Cañada de la Encina"
     },
     {
         "LINEA": "40",
-        "PK": "271,324",
+        "PK": "271324",
         "TIPO": "ATI",
         "NOMBRE": "ATI 305.2"
     },
     {
         "LINEA": "40",
-        "PK": "271,43",
+        "PK": "271430",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB03A"
     },
     {
         "LINEA": "40",
-        "PK": "272,09",
+        "PK": "272090",
         "TIPO": "PS",
         "NOMBRE": "P.S. 272"
     },
     {
         "LINEA": "40",
-        "PK": "275,79",
+        "PK": "275790",
         "TIPO": "PS",
         "NOMBRE": "P.S. 275,7"
     },
     {
         "LINEA": "40",
-        "PK": "275,81",
+        "PK": "275810",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB03B"
     },
     {
         "LINEA": "40",
-        "PK": "275,87",
+        "PK": "275870",
         "TIPO": "DCC",
         "NOMBRE": "Detector de Cajas Calientes DCC"
     },
     {
         "LINEA": "40",
-        "PK": "278,17",
+        "PK": "278170",
         "TIPO": "PICV",
         "NOMBRE": "PCA 2781-2784"
     },
     {
         "LINEA": "40",
-        "PK": "278,49",
+        "PK": "278490",
         "TIPO": "PS",
         "NOMBRE": "P.S. 278,4"
     },
     {
         "LINEA": "40",
-        "PK": "279,302",
+        "PK": "279302",
         "TIPO": "ATI",
         "NOMBRE": "ATI 305.3"
     },
     {
         "LINEA": "40",
-        "PK": "279,99",
+        "PK": "279990",
         "TIPO": "PS",
         "NOMBRE": "Punto Singular P.S. 279,9"
     },
     {
         "LINEA": "40",
-        "PK": "280,05",
+        "PK": "280050",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB04A"
     },
     {
         "LINEA": "40",
-        "PK": "282,49",
+        "PK": "282490",
         "TIPO": "PS",
         "NOMBRE": "P.S. 282,4"
     },
     {
         "LINEA": "40",
-        "PK": "282,53",
+        "PK": "282530",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB04B"
     },
     {
         "LINEA": "40",
-        "PK": "283,3",
+        "PK": "283300",
         "TIPO": "PS",
         "NOMBRE": "P.S. 283,3"
     },
     {
         "LINEA": "40",
-        "PK": "284,987",
+        "PK": "284987",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. Huerta Mateo (sin puerta)"
     },
     {
         "LINEA": "40",
-        "PK": "285,982",
+        "PK": "285982",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. Huerta Mateo (sin puerta)"
     },
     {
         "LINEA": "40",
-        "PK": "286,23",
+        "PK": "286230",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB05A"
     },
     {
         "LINEA": "40",
-        "PK": "286,293",
+        "PK": "286293",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Minglanilla"
     },
     {
         "LINEA": "40",
-        "PK": "286,812",
+        "PK": "286812",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Minglanilla"
     },
     {
         "LINEA": "40",
-        "PK": "286,868",
+        "PK": "286868",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "286,87",
+        "PK": "286870",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB05B"
     },
     {
         "LINEA": "40",
-        "PK": "287,253",
+        "PK": "287253",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. La Peinera"
     },
     {
         "LINEA": "40",
-        "PK": "287,64",
+        "PK": "287640",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto La Peinera"
     },
     {
         "LINEA": "40",
-        "PK": "288,19",
+        "PK": "288190",
         "TIPO": "PS",
         "NOMBRE": "P.S. 288,1"
     },
     {
         "LINEA": "40",
-        "PK": "288,591",
+        "PK": "288591",
         "TIPO": "SE",
         "NOMBRE": "Subestación SE 305"
     },
     {
         "LINEA": "40",
-        "PK": "288,79",
+        "PK": "288790",
         "TIPO": "PS",
         "NOMBRE": "P.S. 288,7"
     },
     {
         "LINEA": "40",
-        "PK": "289,138",
+        "PK": "289138",
         "TIPO": "ET",
         "NOMBRE": "ET PB Minglanilla  (tipo 1)"
     },
     {
         "LINEA": "40",
-        "PK": "289,73",
+        "PK": "289730",
         "TIPO": "PS",
         "NOMBRE": "P.S. 289,7"
     },
     {
         "LINEA": "40",
-        "PK": "289,791",
+        "PK": "289791",
         "TIPO": "TUNEL",
         "NOMBRE": "T. A-3"
     },
     {
         "LINEA": "40",
-        "PK": "289,81",
+        "PK": "289810",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB06A"
     },
     {
         "LINEA": "40",
-        "PK": "290,537",
+        "PK": "290537",
         "TIPO": "TUNEL",
         "NOMBRE": "T. A-3"
     },
     {
         "LINEA": "40",
-        "PK": "290,688",
+        "PK": "290688",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "290,872",
+        "PK": "290872",
         "TIPO": "TUNEL",
         "NOMBRE": "T. La Hoya de la Roda"
     },
     {
         "LINEA": "40",
-        "PK": "291,8",
+        "PK": "291800",
         "TIPO": "GALERÍA",
         "NOMBRE": "Galería Hoya de la Roda"
     },
     {
         "LINEA": "40",
-        "PK": "292,869",
+        "PK": "292869",
         "TIPO": "TUNEL",
         "NOMBRE": "T. La Hoya de la Roda"
     },
     {
         "LINEA": "40",
-        "PK": "292,87",
+        "PK": "292870",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "292,95",
+        "PK": "292950",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB06B"
     },
     {
         "LINEA": "40",
-        "PK": "293,319",
+        "PK": "293319",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. Contreras"
     },
     {
         "LINEA": "40",
-        "PK": "293,906",
+        "PK": "293906",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. Contreras"
     },
     {
         "LINEA": "40",
-        "PK": "293,962",
+        "PK": "293962",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Rabo de la Sarten"
     },
     {
         "LINEA": "40",
-        "PK": "294,338",
+        "PK": "294338",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Rabo de la Sarten"
     },
     {
         "LINEA": "40",
-        "PK": "294,368",
+        "PK": "294368",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "295,301",
+        "PK": "295301",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. Istmo"
     },
     {
         "LINEA": "40",
-        "PK": "295,373",
+        "PK": "295373",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Umbria de los Molinos"
     },
     {
         "LINEA": "40",
-        "PK": "296,875",
+        "PK": "296875",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Umbria de los Molinos"
     },
     {
         "LINEA": "40",
-        "PK": "296,977",
+        "PK": "296977",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "297,26",
+        "PK": "297260",
         "TIPO": "PS",
         "NOMBRE": "P.S. 297,2"
     },
     {
         "LINEA": "40",
-        "PK": "298,02",
+        "PK": "298020",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB07A"
     },
     {
         "LINEA": "40",
-        "PK": "298,036",
+        "PK": "298036",
         "TIPO": "PICV",
         "NOMBRE": "PCA 2987-2990"
     },
     {
         "LINEA": "40",
-        "PK": "298,957",
+        "PK": "298957",
         "TIPO": "ATI",
         "NOMBRE": "ATI 305.4"
     },
     {
         "LINEA": "40",
-        "PK": "298,984",
+        "PK": "298984",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "298,994",
+        "PK": "298994",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Villargordo del Cabriel"
     },
     {
         "LINEA": "40",
-        "PK": "302,334",
+        "PK": "302334",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Villargordo del Cabriel"
     },
     {
         "LINEA": "40",
-        "PK": "302,34",
+        "PK": "302340",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "303,77",
+        "PK": "303770",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB07B"
     },
     {
         "LINEA": "40",
-        "PK": "304,809",
+        "PK": "304809",
         "TIPO": "PS",
         "NOMBRE": "P.S. 304,8"
     },
     {
         "LINEA": "40",
-        "PK": "305,000",
+        "PK": "305000",
         "TIPO": "PS",
         "NOMBRE": "P.S. 305"
     },
     {
         "LINEA": "40",
-        "PK": "306,41",
+        "PK": "306410",
         "TIPO": "DCC",
         "NOMBRE": "Detector de Cajas Calientes DCC"
     },
     {
         "LINEA": "40",
-        "PK": "307,47",
+        "PK": "307470",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB08A"
     },
     {
         "LINEA": "40",
-        "PK": "307,536",
+        "PK": "307536",
         "TIPO": "PS",
         "NOMBRE": "P.S. 307,5"
     },
     {
         "LINEA": "40",
-        "PK": "307,976",
+        "PK": "307976",
         "TIPO": "PS",
         "NOMBRE": "P.S. 307,9"
     },
     {
         "LINEA": "40",
-        "PK": "309,866",
+        "PK": "309866",
         "TIPO": "PS",
         "NOMBRE": "P.S. 309,8"
     },
     {
         "LINEA": "40",
-        "PK": "310,481",
+        "PK": "310481",
         "TIPO": "ET",
         "NOMBRE": "ET PB Caudete de las Fuentes  (tipo 1)"
     },
     {
         "LINEA": "40",
-        "PK": "310,92",
+        "PK": "310920",
         "TIPO": "BTS",
         "NOMBRE": "MVOP-03"
     },
     {
         "LINEA": "40",
-        "PK": "311,934",
+        "PK": "311934",
         "TIPO": "ATI",
         "NOMBRE": "ATI 305.5"
     },
     {
         "LINEA": "40",
-        "PK": "313,946",
+        "PK": "313946",
         "TIPO": "PS",
         "NOMBRE": "P.S. 313,9"
     },
     {
         "LINEA": "40",
-        "PK": "313,98",
+        "PK": "313980",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB08B"
     },
     {
         "LINEA": "40",
-        "PK": "316,086",
+        "PK": "316086",
         "TIPO": "PS",
         "NOMBRE": "P.S. 316"
     },
     {
         "LINEA": "40",
-        "PK": "317,351",
+        "PK": "317351",
         "TIPO": "PS",
         "NOMBRE": "P.S. 317,3"
     },
     {
         "LINEA": "40",
-        "PK": "317,906",
+        "PK": "317906",
         "TIPO": "PS",
         "NOMBRE": "P.S. 317,9"
     },
     {
         "LINEA": "40",
-        "PK": "317,943",
+        "PK": "317943",
         "TIPO": "PICV",
         "NOMBRE": "PCA 3177-3180"
     },
     {
         "LINEA": "40",
-        "PK": "318,986",
+        "PK": "318986",
         "TIPO": "PS",
         "NOMBRE": "P.S. 318,9"
     },
     {
         "LINEA": "40",
-        "PK": "319,055",
+        "PK": "319055",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB09A"
     },
     {
         "LINEA": "40",
-        "PK": "319,176",
+        "PK": "319176",
         "TIPO": "PS",
         "NOMBRE": "P.S. 319,1"
     },
     {
         "LINEA": "40",
-        "PK": "320,616",
+        "PK": "320616",
         "TIPO": "PS",
         "NOMBRE": "P.S. 320,6"
     },
     {
         "LINEA": "40",
-        "PK": "321,351",
+        "PK": "321351",
         "TIPO": "PS",
         "NOMBRE": "P.S. 321,3"
     },
     {
         "LINEA": "40",
-        "PK": "322,012",
+        "PK": "322012",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. RÍo Magro y A-3"
     },
     {
         "LINEA": "40",
-        "PK": "323,17",
+        "PK": "323170",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. RÍo Magro y A-3"
     },
     {
         "LINEA": "40",
-        "PK": "323,95",
+        "PK": "323950",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB09B"
     },
     {
         "LINEA": "40",
-        "PK": "324,004",
+        "PK": "324004",
         "TIPO": "ATF",
         "NOMBRE": "AutoTF 306.1"
     },
     {
         "LINEA": "40",
-        "PK": "324,221",
+        "PK": "324221",
         "TIPO": "PS",
         "NOMBRE": "P.S. 324,2"
     },
     {
         "LINEA": "40",
-        "PK": "327,488",
+        "PK": "327488",
         "TIPO": "ET",
         "NOMBRE": "ET Estación Requena-Utiel  (tipo 1)"
     },
     {
         "LINEA": "40",
-        "PK": "327,96",
+        "PK": "327960",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB0100OP"
     },
     {
         "LINEA": "40",
-        "PK": "327,737",
+        "PK": "327737",
         "TIPO": "BM",
         "NOMBRE": "ESTACIÓN REQUENA"
     },
     {
         "LINEA": "40",
-        "PK": "327,737",
+        "PK": "327737",
         "TIPO": "BM",
         "NOMBRE": "Base Mantenimiento BM REQUENA"
     },
     {
         "LINEA": "40",
-        "PK": "328,806",
+        "PK": "328806",
         "TIPO": "PS",
         "NOMBRE": "P.S. 328,8"
     },
     {
         "LINEA": "40",
-        "PK": "329,506",
+        "PK": "329506",
         "TIPO": "PS",
         "NOMBRE": "P.S. 329,5"
     },
     {
         "LINEA": "40",
-        "PK": "329,584",
+        "PK": "329584",
         "TIPO": "ATI",
         "NOMBRE": "ATI 306.2"
     },
     {
         "LINEA": "40",
-        "PK": "330,706",
+        "PK": "330706",
         "TIPO": "PS",
         "NOMBRE": "P.S. 330,7"
     },
     {
         "LINEA": "40",
-        "PK": "331,306",
+        "PK": "331306",
         "TIPO": "PS",
         "NOMBRE": "P.S. 331,3"
     },
     {
         "LINEA": "40",
-        "PK": "331,606",
+        "PK": "331606",
         "TIPO": "PS",
         "NOMBRE": "P.S. 331,6"
     },
     {
         "LINEA": "40",
-        "PK": "331,69",
+        "PK": "331690",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB10A Estación Base Móviles"
     },
     {
         "LINEA": "40",
-        "PK": "333,506",
+        "PK": "333506",
         "TIPO": "PS",
         "NOMBRE": "P.S. 333,5"
     },
     {
         "LINEA": "40",
-        "PK": "333,62",
+        "PK": "333620",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB10B"
     },
     {
         "LINEA": "40",
-        "PK": "335,406",
+        "PK": "335406",
         "TIPO": "PS",
         "NOMBRE": "Punto Singular P.S. 335,4"
     },
     {
         "LINEA": "40",
-        "PK": "336,106",
+        "PK": "336106",
         "TIPO": "PS",
         "NOMBRE": "P.S. 336,1"
     },
     {
         "LINEA": "40",
-        "PK": "336,166",
+        "PK": "336166",
         "TIPO": "PICV",
         "NOMBRE": "PCA 3363-3366"
     },
     {
         "LINEA": "40",
-        "PK": "336,987",
+        "PK": "336987",
         "TIPO": "ATI",
         "NOMBRE": "ATI 306.3"
     },
     {
         "LINEA": "40",
-        "PK": "337,18",
+        "PK": "337180",
         "TIPO": "DCC",
         "NOMBRE": "Detector de Cajas Calientes DCC"
     },
     {
         "LINEA": "40",
-        "PK": "338,506",
+        "PK": "338506",
         "TIPO": "PS",
         "NOMBRE": "P.S. 338,5"
     },
     {
         "LINEA": "40",
-        "PK": "338,67",
+        "PK": "338670",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB11A"
     },
     {
         "LINEA": "40",
-        "PK": "340,306",
+        "PK": "340306",
         "TIPO": "PS",
         "NOMBRE": "P.S. 340,3"
     },
     {
         "LINEA": "40",
-        "PK": "341,106",
+        "PK": "341106",
         "TIPO": "PS",
         "NOMBRE": "P.S. 341,1"
     },
     {
         "LINEA": "40",
-        "PK": "342,75",
+        "PK": "342750",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB11B"
     },
     {
         "LINEA": "40",
-        "PK": "343,126",
+        "PK": "343126",
         "TIPO": "SE",
         "NOMBRE": "Subestación SE 306"
     },
     {
         "LINEA": "40",
-        "PK": "343,56",
+        "PK": "343560",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "343,618",
+        "PK": "343618",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel Artificial"
     },
     {
         "LINEA": "40",
-        "PK": "343,861",
+        "PK": "343861",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel Artificial"
     },
     {
         "LINEA": "40",
-        "PK": "345,149",
+        "PK": "345149",
         "TIPO": "ET",
         "NOMBRE": "ET PAET Siete Aguas  (tipo 1)"
     },
     {
         "LINEA": "40",
-        "PK": "345,34",
+        "PK": "345340",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB12A"
     },
     {
         "LINEA": "40",
-        "PK": "345,46",
+        "PK": "345460",
         "TIPO": "PS",
         "NOMBRE": "P.S. 345,4"
     },
     {
         "LINEA": "40",
-        "PK": "346,706",
+        "PK": "346706",
         "TIPO": "TUNEL",
         "NOMBRE": "T. La Rabosera"
     },
     {
         "LINEA": "40",
-        "PK": "348,099",
+        "PK": "348099",
         "TIPO": "TUNEL",
         "NOMBRE": "T. La Rabosera"
     },
     {
         "LINEA": "40",
-        "PK": "348,138",
+        "PK": "348138",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "348,78",
+        "PK": "348780",
         "TIPO": "PS",
         "NOMBRE": "P.S. 348,7"
     },
     {
         "LINEA": "40",
-        "PK": "349,1",
+        "PK": "349100",
         "TIPO": "PS",
         "NOMBRE": "P.S. 349,100"
     },
     {
         "LINEA": "40",
-        "PK": "349,525",
+        "PK": "349525",
         "TIPO": "PICV",
         "NOMBRE": "PICV Siete Aguas (nuevo)"
     },
     {
         "LINEA": "40",
-        "PK": "350,46",
+        "PK": "350460",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB12B"
     },
     {
         "LINEA": "40",
-        "PK": "350,445",
+        "PK": "350445",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "350,471",
+        "PK": "350471",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Siete Aguas"
     },
     {
         "LINEA": "40",
-        "PK": "350,897",
+        "PK": "350897",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Siete Aguas"
     },
     {
         "LINEA": "40",
-        "PK": "350,927",
+        "PK": "350927",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB13A"
     },
     {
         "LINEA": "40",
-        "PK": "351,248",
+        "PK": "351248",
         "TIPO": "ATI",
         "NOMBRE": "ATI 306.4"
     },
     {
         "LINEA": "40",
-        "PK": "351,235",
+        "PK": "351235",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "351,235",
+        "PK": "351235",
         "TIPO": "CT",
         "NOMBRE": "CT Bombeo y CT1"
     },
     {
         "LINEA": "40",
-        "PK": "351,235",
+        "PK": "351235",
         "TIPO": "CT",
         "NOMBRE": "Caseta Iberdrola"
     },
     {
         "LINEA": "40",
-        "PK": "351,274",
+        "PK": "351274",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Cabrera (bitubo)"
     },
     {
         "LINEA": "40",
-        "PK": "358,526",
+        "PK": "358526",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Cabrera (bitubo)"
     },
     {
         "LINEA": "40",
-        "PK": "358,534",
+        "PK": "358534",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "358,799",
+        "PK": "358799",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Buñol"
     },
     {
         "LINEA": "40",
-        "PK": "358,526",
+        "PK": "358526",
         "TIPO": "CT",
         "NOMBRE": "Caseta T5"
     },
     {
         "LINEA": "40",
-        "PK": "360,2",
+        "PK": "360200",
         "TIPO": "GALERÍA",
         "NOMBRE": "Galeria Tunel Buñol"
     },
     {
         "LINEA": "40",
-        "PK": "360,2",
+        "PK": "360200",
         "TIPO": "CT",
         "NOMBRE": "Caseta CT6"
     },
     {
         "LINEA": "40",
-        "PK": "360,2",
+        "PK": "360200",
         "TIPO": "CT",
         "NOMBRE": "Caseta Iberdrola 2"
     },
     {
         "LINEA": "40",
-        "PK": "360,656",
+        "PK": "360656",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Buñol"
     },
     {
         "LINEA": "40",
-        "PK": "360,714",
+        "PK": "360714",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "360,823",
+        "PK": "360823",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB13B"
     },
     {
         "LINEA": "40",
-        "PK": "360,844",
+        "PK": "360844",
         "TIPO": "PICV",
         "NOMBRE": "PCA 3601-3604"
     },
     {
         "LINEA": "40",
-        "PK": "363,000",
+        "PK": "363000",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. A-3"
     },
     {
         "LINEA": "40",
-        "PK": "363,933",
+        "PK": "363933",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. A-3"
     },
     {
         "LINEA": "40",
-        "PK": "364,23",
+        "PK": "364230",
         "TIPO": "ATI",
         "NOMBRE": "ATI 306.5"
     },
     {
         "LINEA": "40",
-        "PK": "365,285",
+        "PK": "365285",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Chiva"
     },
     {
         "LINEA": "40",
-        "PK": "365,944",
+        "PK": "365944",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Chiva"
     },
     {
         "LINEA": "40",
-        "PK": "365,97",
+        "PK": "365970",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB14A"
     },
     {
         "LINEA": "40",
-        "PK": "365,961",
+        "PK": "365961",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "368,092",
+        "PK": "368092",
         "TIPO": "PICV",
         "NOMBRE": "PICV Agua Perdida"
     },
     {
         "LINEA": "40",
-        "PK": "368,792",
+        "PK": "368792",
         "TIPO": "PS",
         "NOMBRE": "P.S. 368,7"
     },
     {
         "LINEA": "40",
-        "PK": "370,392",
+        "PK": "370392",
         "TIPO": "PS",
         "NOMBRE": "P.S. 370,3"
     },
     {
         "LINEA": "40",
-        "PK": "370,683",
+        "PK": "370683",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB14B"
     },
     {
         "LINEA": "40",
-        "PK": "371,815",
+        "PK": "371815",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. Bco. de Canaleja"
     },
     {
         "LINEA": "40",
-        "PK": "372,296",
+        "PK": "372296",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. Bco. de Canaleja"
     },
     {
         "LINEA": "40",
-        "PK": "373,474",
+        "PK": "373474",
         "TIPO": "ET",
         "NOMBRE": "ET Chiva  (tipo 1)"
     },
     {
         "LINEA": "40",
-        "PK": "374,445",
+        "PK": "374445",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB15A"
     },
     {
         "LINEA": "40",
-        "PK": "374,52",
+        "PK": "374520",
         "TIPO": "PS",
         "NOMBRE": "P.S. 374,5"
     },
     {
         "LINEA": "40",
-        "PK": "374,652",
+        "PK": "374652",
         "TIPO": "PS",
         "NOMBRE": "P.S. 374,6"
     },
     {
         "LINEA": "40",
-        "PK": "375,259",
+        "PK": "375259",
         "TIPO": "PS",
         "NOMBRE": "P.S. 375,2"
     },
     {
         "LINEA": "40",
-        "PK": "376,385",
+        "PK": "376385",
         "TIPO": "ATF",
         "NOMBRE": "AutoTF 314.1A"
     },
     {
         "LINEA": "40",
-        "PK": "379,14",
+        "PK": "379140",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB15B"
     },
     {
         "LINEA": "40",
-        "PK": "379,384",
+        "PK": "379384",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. Bco. del Gallego"
     },
     {
         "LINEA": "40",
-        "PK": "379,866",
+        "PK": "379866",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. Bco. del Gallego"
     },
     {
         "LINEA": "40",
-        "PK": "382,335",
+        "PK": "382335",
         "TIPO": "PS",
         "NOMBRE": "P.S. 382,3"
     },
     {
         "LINEA": "40",
-        "PK": "382,34",
+        "PK": "382340",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB16A (NUEVA)"
     },
     {
         "LINEA": "40",
-        "PK": "382,362",
+        "PK": "382362",
         "TIPO": "PICV",
         "NOMBRE": "PCA 3825-3828"
     },
     {
         "LINEA": "40",
-        "PK": "382,753",
+        "PK": "382753",
         "TIPO": "PS",
         "NOMBRE": "P.S. 382,7"
     },
     {
         "LINEA": "40",
-        "PK": "383,212",
+        "PK": "383212",
         "TIPO": "PS",
         "NOMBRE": "P.S. 383,2"
     },
     {
         "LINEA": "40",
-        "PK": "384,683",
+        "PK": "384683",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. A-7 y Canal Turia"
     },
     {
         "LINEA": "40",
-        "PK": "385,008",
+        "PK": "385008",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. A-7 y Canal Turia"
     },
     {
         "LINEA": "40",
-        "PK": "385,499",
+        "PK": "385499",
         "TIPO": "ATF",
         "NOMBRE": "AutoTI 314.2A"
     },
     {
         "LINEA": "40",
-        "PK": "385,721",
+        "PK": "385721",
         "TIPO": "PS",
         "NOMBRE": "P.S. 385,7"
     },
     {
         "LINEA": "40",
-        "PK": "386,1",
+        "PK": "386100",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB16B"
     },
     {
         "LINEA": "40",
-        "PK": "386,14",
+        "PK": "386140",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "386,181",
+        "PK": "386181",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Torrent"
     },
     {
         "LINEA": "40",
-        "PK": "389,171",
+        "PK": "389171",
         "TIPO": "TUNEL",
         "NOMBRE": "T. Torrent"
     },
     {
         "LINEA": "40",
-        "PK": "389,201",
+        "PK": "389201",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "40",
-        "PK": "389,29",
+        "PK": "389290",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB17A"
     },
     {
         "LINEA": "40",
-        "PK": "389,521",
+        "PK": "389521",
         "TIPO": "PS",
         "NOMBRE": "P.S. 106,1"
     },
     {
         "LINEA": "40",
-        "PK": "391,64",
+        "PK": "391640",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB17B"
     },
     {
         "LINEA": "40",
-        "PK": "393,018",
+        "PK": "393018",
         "TIPO": "ET",
         "NOMBRE": "ET Bifurcación Alicante-Albacete  (tipo 2)"
     },
     {
         "LINEA": "40",
-        "PK": "393,238",
+        "PK": "393238",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto Río Turia"
     },
     {
         "LINEA": "40",
-        "PK": "393,838",
+        "PK": "393838",
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto Río Turia"
     },
     {
         "LINEA": "40",
-        "PK": "394,28",
+        "PK": "394280",
         "TIPO": "PS",
         "NOMBRE": "PS 394,2"
     },
@@ -2977,613 +2977,613 @@
     },
     {
         "LINEA": "40",
-        "PK": "396,3",
+        "PK": "396300",
         "TIPO": "PS",
         "NOMBRE": "PS 396,300"
     },
     {
         "LINEA": "40",
-        "PK": "397,55",
+        "PK": "397550",
         "TIPO": "ET",
         "NOMBRE": "ESTACION VALENCIA"
     },
     {
         "LINEA": "40",
-        "PK": "397,55",
+        "PK": "397550",
         "TIPO": "CAMBIADOR",
         "NOMBRE": "CAMBIADOR  VALENCIA"
     },
     {
         "LINEA": "40",
-        "PK": "395,13",
+        "PK": "395130",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB18A"
     },
     {
         "LINEA": "40",
-        "PK": "396,63",
+        "PK": "396630",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB18B"
     },
     {
         "LINEA": "40",
-        "PK": "397,55",
+        "PK": "397550",
         "TIPO": "SE",
         "NOMBRE": "SUBESTAC ION 314 TORRENTE"
     },
     {
         "LINEA": "40",
-        "PK": "397,55",
+        "PK": "397550",
         "TIPO": "ET",
         "NOMBRE": "ET Estación Valencia Nord (**, tipo 5)"
     },
     {
         "LINEA": "42",
-        "PK": "248,35",
+        "PK": "248350",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB01A"
     },
     {
         "LINEA": "42",
-        "PK": "248,397",
+        "PK": "248397",
         "TIPO": "PS",
         "NOMBRE": "P.S. 248,3"
     },
     {
         "LINEA": "42",
-        "PK": "251,572",
+        "PK": "251572",
         "TIPO": "ATI",
         "NOMBRE": "ATI 304.5B"
     },
     {
         "LINEA": "42",
-        "PK": "253,215",
+        "PK": "253215",
         "TIPO": "PS",
         "NOMBRE": "P.S. N-III"
     },
     {
         "LINEA": "42",
-        "PK": "253,52",
+        "PK": "253520",
         "TIPO": "PS",
         "NOMBRE": "P.S. de Fauna"
     },
     {
         "LINEA": "42",
-        "PK": "253,53",
+        "PK": "253530",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB01B"
     },
     {
         "LINEA": "42",
-        "PK": "254,45",
+        "PK": "254450",
         "TIPO": "PS",
         "NOMBRE": "P.S. 254,450 a"
     },
     {
         "LINEA": "42",
-        "PK": "254,51",
+        "PK": "254510",
         "TIPO": "PICV",
         "NOMBRE": "PICV Alarcón"
     },
     {
         "LINEA": "42",
-        "PK": "257,18",
+        "PK": "257180",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB02A"
     },
     {
         "LINEA": "42",
-        "PK": "257,2",
+        "PK": "257200",
         "TIPO": "PS",
         "NOMBRE": "P.S. 257,2 a"
     },
     {
         "LINEA": "42",
-        "PK": "259,479",
+        "PK": "259479",
         "TIPO": "ATI",
         "NOMBRE": "ATI 304.6B"
     },
     {
         "LINEA": "42",
-        "PK": "261,96",
+        "PK": "261960",
         "TIPO": "PS",
         "NOMBRE": "P.S. 361,9 a"
     },
     {
         "LINEA": "42",
-        "PK": "262,38",
+        "PK": "262380",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB02B"
     },
     {
         "LINEA": "42",
-        "PK": "262,381",
+        "PK": "262381",
         "TIPO": "ET",
         "NOMBRE": "ET PAET Pozorrubielos  (tipo 1)"
     },
     {
         "LINEA": "42",
-        "PK": "263,986",
+        "PK": "263986",
         "TIPO": "PS",
         "NOMBRE": "P.S. 263,9 a"
     },
     {
         "LINEA": "42",
-        "PK": "265,336",
+        "PK": "265336",
         "TIPO": "PS",
         "NOMBRE": "P.S. 265,3 a"
     },
     {
         "LINEA": "42",
-        "PK": "266,785",
+        "PK": "266785",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB03A"
     },
     {
         "LINEA": "42",
-        "PK": "266,966",
+        "PK": "266966",
         "TIPO": "PS",
         "NOMBRE": "P.S. 266,9 a"
     },
     {
         "LINEA": "42",
-        "PK": "267,226",
+        "PK": "267226",
         "TIPO": "PS",
         "NOMBRE": "Punto Singular P.S. 267,2"
     },
     {
         "LINEA": "42",
-        "PK": "268,326",
+        "PK": "268326",
         "TIPO": "PS",
         "NOMBRE": "P.S. 268,3 a"
     },
     {
         "LINEA": "42",
-        "PK": "270,256",
+        "PK": "270256",
         "TIPO": "PICV",
         "NOMBRE": "PICV Rubielos (270-256)"
     },
     {
         "LINEA": "42",
-        "PK": "270,256",
+        "PK": "270256",
         "TIPO": "PS",
         "NOMBRE": "P.S. 270,2 a"
     },
     {
         "LINEA": "42",
-        "PK": "271,065",
+        "PK": "271065",
         "TIPO": "ATF",
         "NOMBRE": "AutoTF 311.1"
     },
     {
         "LINEA": "42",
-        "PK": "271,285",
+        "PK": "271285",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB03B"
     },
     {
         "LINEA": "42",
-        "PK": "271,396",
+        "PK": "271396",
         "TIPO": "PS",
         "NOMBRE": "P.S. 271,3 a"
     },
     {
         "LINEA": "42",
-        "PK": "272,466",
+        "PK": "272466",
         "TIPO": "PS",
         "NOMBRE": "P.S. 272,4 a"
     },
     {
         "LINEA": "42",
-        "PK": "273,286",
+        "PK": "273286",
         "TIPO": "PS",
         "NOMBRE": "P.S. 273,2 a"
     },
     {
         "LINEA": "42",
-        "PK": "274,056",
+        "PK": "274056",
         "TIPO": "PS",
         "NOMBRE": "P.S. 274,0 a"
     },
     {
         "LINEA": "42",
-        "PK": "274,635",
+        "PK": "274635",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB04A"
     },
     {
         "LINEA": "42",
-        "PK": "275,766",
+        "PK": "275766",
         "TIPO": "PICV",
         "NOMBRE": "PCA 2757-2760"
     },
     {
         "LINEA": "42",
-        "PK": "278,386",
+        "PK": "278386",
         "TIPO": "PS",
         "NOMBRE": "P.S. 278,3 a"
     },
     {
         "LINEA": "42",
-        "PK": "278,415",
+        "PK": "278415",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB04B"
     },
     {
         "LINEA": "42",
-        "PK": "281,136",
+        "PK": "281136",
         "TIPO": "PS",
         "NOMBRE": "P.S. 281,1 a"
     },
     {
         "LINEA": "42",
-        "PK": "282,121",
+        "PK": "282121",
         "TIPO": "PS",
         "NOMBRE": "P.S. 282,1 a"
     },
     {
         "LINEA": "42",
-        "PK": "282,596",
+        "PK": "282596",
         "TIPO": "ATI",
         "NOMBRE": "ATI 311.2"
     },
     {
         "LINEA": "42",
-        "PK": "283,1",
+        "PK": "283100",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB05A"
     },
     {
         "LINEA": "42",
-        "PK": "283,121",
+        "PK": "283121",
         "TIPO": "PS",
         "NOMBRE": "P.S. 283,1 a"
     },
     {
         "LINEA": "42",
-        "PK": "283,716",
+        "PK": "283716",
         "TIPO": "PS",
         "NOMBRE": "P.S. 283,7 a"
     },
     {
         "LINEA": "42",
-        "PK": "284,446",
+        "PK": "284446",
         "TIPO": "PS",
         "NOMBRE": "P.S. 284,4 a"
     },
     {
         "LINEA": "42",
-        "PK": "285,906",
+        "PK": "285906",
         "TIPO": "ET",
         "NOMBRE": "ET PB Tarazona  (tipo 1)"
     },
     {
         "LINEA": "42",
-        "PK": "287,066",
+        "PK": "287066",
         "TIPO": "PS",
         "NOMBRE": "P.S. 287,0 a"
     },
     {
         "LINEA": "42",
-        "PK": "287,12",
+        "PK": "287120",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB05B Estación Base Móviles"
     },
     {
         "LINEA": "42",
-        "PK": "288,456",
+        "PK": "288456",
         "TIPO": "PS",
         "NOMBRE": "P.S. 288,4 a"
     },
     {
         "LINEA": "42",
-        "PK": "289,136",
+        "PK": "289136",
         "TIPO": "PS",
         "NOMBRE": "P.S. 289,1 a"
     },
     {
         "LINEA": "42",
-        "PK": "290,136",
+        "PK": "290136",
         "TIPO": "PS",
         "NOMBRE": "P.S. 290,0 a"
     },
     {
         "LINEA": "42",
-        "PK": "290,686",
+        "PK": "290686",
         "TIPO": "PS",
         "NOMBRE": "P.S. 290,6 a"
     },
     {
         "LINEA": "42",
-        "PK": "291,22",
+        "PK": "291220",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB06A"
     },
     {
         "LINEA": "42",
-        "PK": "291,85",
+        "PK": "291850",
         "TIPO": "PS",
         "NOMBRE": "P.S. 291,8 a"
     },
     {
         "LINEA": "42",
-        "PK": "293,496",
+        "PK": "293496",
         "TIPO": "PS",
         "NOMBRE": "P.S. 293,4 a"
     },
     {
         "LINEA": "42",
-        "PK": "293,536",
+        "PK": "293536",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB06B"
     },
     {
         "LINEA": "42",
-        "PK": "294,034",
+        "PK": "294034",
         "TIPO": "ATI",
         "NOMBRE": "ATI 311.3"
     },
     {
         "LINEA": "42",
-        "PK": "294,148",
+        "PK": "294148",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel del Júcar"
     },
     {
         "LINEA": "42",
-        "PK": "294,788",
+        "PK": "294788",
         "TIPO": "TUNEL",
         "NOMBRE": "Túnel del Júcar"
     },
     {
         "LINEA": "42",
-        "PK": "294,919",
+        "PK": "294919",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "42",
-        "PK": "294,947",
+        "PK": "294947",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. Río Júcar"
     },
     {
         "LINEA": "42",
-        "PK": "295,422",
+        "PK": "295422",
         "TIPO": "VIADUCTO",
         "NOMBRE": "V. Río Júcar"
     },
     {
         "LINEA": "42",
-        "PK": "296,683",
+        "PK": "296683",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB07A"
     },
     {
         "LINEA": "42",
-        "PK": "296,735",
+        "PK": "296735",
         "TIPO": "PICV",
         "NOMBRE": "PCA 2967-2970"
     },
     {
         "LINEA": "42",
-        "PK": "296,943",
+        "PK": "296943",
         "TIPO": "TUNEL",
         "NOMBRE": "T. La Cañada"
     },
     {
         "LINEA": "42",
-        "PK": "297,128",
+        "PK": "297128",
         "TIPO": "TUNEL",
         "NOMBRE": "T. La Cañada"
     },
     {
         "LINEA": "42",
-        "PK": "297,15",
+        "PK": "297150",
         "TIPO": "CT",
         "NOMBRE": "Caseta de Túnel"
     },
     {
         "LINEA": "42",
-        "PK": "297,536",
+        "PK": "297536",
         "TIPO": "PS",
         "NOMBRE": "P.S. 297,5 a"
     },
     {
         "LINEA": "42",
-        "PK": "297,548",
+        "PK": "297548",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB07B"
     },
     {
         "LINEA": "42",
-        "PK": "298,891",
+        "PK": "298891",
         "TIPO": "PS",
         "NOMBRE": "P.S. 298,8 a"
     },
     {
         "LINEA": "42",
-        "PK": "300,029",
+        "PK": "300029",
         "TIPO": "PS",
         "NOMBRE": "P.S. 300,0 a"
     },
     {
         "LINEA": "42",
-        "PK": "300,064",
+        "PK": "300064",
         "TIPO": "DCC",
         "NOMBRE": "Detector de Cajas Calientes DCC"
     },
     {
         "LINEA": "42",
-        "PK": "300,808",
+        "PK": "300808",
         "TIPO": "PS",
         "NOMBRE": "P.S. 300,8 a"
     },
     {
         "LINEA": "42",
-        "PK": "301,6",
+        "PK": "301600",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB08A"
     },
     {
         "LINEA": "42",
-        "PK": "301,613",
+        "PK": "301613",
         "TIPO": "PS",
         "NOMBRE": "P.S. 301,6 a"
     },
     {
         "LINEA": "42",
-        "PK": "302,719",
+        "PK": "302719",
         "TIPO": "PS",
         "NOMBRE": "P.S. 302,7 a"
     },
     {
         "LINEA": "42",
-        "PK": "303,749",
+        "PK": "303749",
         "TIPO": "PS",
         "NOMBRE": "P.S. 303,7 a"
     },
     {
         "LINEA": "42",
-        "PK": "304,496",
+        "PK": "304496",
         "TIPO": "PS",
         "NOMBRE": "Punto Singular P.S. 304,4"
     },
     {
         "LINEA": "42",
-        "PK": "304,55",
+        "PK": "304550",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB08B"
     },
     {
         "LINEA": "42",
-        "PK": "305,816",
+        "PK": "305816",
         "TIPO": "SE",
         "NOMBRE": "Subestación SE 311"
     },
     {
         "LINEA": "42",
-        "PK": "305,919",
+        "PK": "305919",
         "TIPO": "PS",
         "NOMBRE": "P.S. 305,9 a"
     },
     {
         "LINEA": "42",
-        "PK": "307,628",
+        "PK": "307628",
         "TIPO": "ET",
         "NOMBRE": "ET PB La Gineta  (tipo 1)"
     },
     {
         "LINEA": "42",
-        "PK": "307,911",
+        "PK": "307911",
         "TIPO": "PS",
         "NOMBRE": "P.S. 307,9 a"
     },
     {
         "LINEA": "42",
-        "PK": "308,85",
+        "PK": "308850",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB09A"
     },
     {
         "LINEA": "42",
-        "PK": "310,914",
+        "PK": "310914",
         "TIPO": "PS",
         "NOMBRE": "P.S. 310,9 a"
     },
     {
         "LINEA": "42",
-        "PK": "312,45",
+        "PK": "312450",
         "TIPO": "BM",
         "NOMBRE": "BASE MANTENIEMIENTO LA GINETA"
     },
     {
         "LINEA": "42",
-        "PK": "313,000",
+        "PK": "313000",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB09B"
     },
     {
         "LINEA": "42",
-        "PK": "313,039",
+        "PK": "313039",
         "TIPO": "PS",
         "NOMBRE": "P.S. 313,0 a"
     },
     {
         "LINEA": "42",
-        "PK": "313,05",
+        "PK": "313050",
         "TIPO": "PICV",
         "NOMBRE": "PICV Villa Lozano"
     },
     {
         "LINEA": "42",
-        "PK": "315,528",
+        "PK": "315528",
         "TIPO": "PS",
         "NOMBRE": "P.S. 315,5 a"
     },
     {
         "LINEA": "42",
-        "PK": "316,128",
+        "PK": "316128",
         "TIPO": "PS",
         "NOMBRE": "P.S. 316,1 a"
     },
     {
         "LINEA": "42",
-        "PK": "317,77",
+        "PK": "317770",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB10A"
     },
     {
         "LINEA": "42",
-        "PK": "317,854",
+        "PK": "317854",
         "TIPO": "ATI",
         "NOMBRE": "Autotransformador ATI 311.4"
     },
     {
         "LINEA": "42",
-        "PK": "318,9",
+        "PK": "318900",
         "TIPO": "BTS",
         "NOMBRE": "AMPAB10B Estación Base Móviles"
     },
     {
         "LINEA": "42",
-        "PK": "319,198",
+        "PK": "319198",
         "TIPO": "PS",
         "NOMBRE": "P.S. 319,1 a"
     },
     {
         "LINEA": "42",
-        "PK": "319,228",
+        "PK": "319228",
         "TIPO": "PS",
         "NOMBRE": "P.S. 319,2 a"
     },
     {
         "LINEA": "42",
-        "PK": "319,298",
+        "PK": "319298",
         "TIPO": "PS",
         "NOMBRE": "P.S. 319,3 a"
     },
     {
         "LINEA": "42",
-        "PK": "321,000",
+        "PK": "321000",
         "TIPO": "ET",
         "NOMBRE": "ESTACION ALBACETE"
     },
     {
         "LINEA": "42",
-        "PK": "321,001",
+        "PK": "321001",
         "TIPO": "CRC",
         "NOMBRE": "CRC ALBACETE"
     },
     {
         "LINEA": "42",
-        "PK": "321,002",
+        "PK": "321002",
         "TIPO": "CAMBIADOR",
         "NOMBRE": "CAMBIADOR ALBACETE"
     },
     {
         "LINEA": "42",
-        "PK": "321,003",
+        "PK": "321003",
         "TIPO": "ET",
         "NOMBRE": "ET Albacete"
     }
