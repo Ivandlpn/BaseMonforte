@@ -1015,7 +1015,7 @@ document.getElementById("iconoMas").addEventListener("click", () => {
     }
 
     const rutasArchivos = [
-      //  "./doc/L40Ar.json",
+      "./doc/L40Ar.json",
       //  "./doc/L40Br.json",
      //   "./doc/L40Cr.json",
       //  "./doc/L42Ar.json",
