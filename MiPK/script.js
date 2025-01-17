@@ -622,7 +622,7 @@ async function activarCapaEdificios(layerGroup, tipos) {
             const icono = crearIconoEdificio(elemento.TIPO);
 
             if (puntoCoordenadas && icono) {
-                const pkFormateado = formatearPK(pkElemento); // Llamamos a la función para formatear el PK
+                const pkFormateado = formatearPK(pkElemento);
                 const marker = L.marker([puntoCoordenadas.Latitud, puntoCoordenadas.Longitud], { icon: icono })
                     .bindPopup(`
                         <div style="text-align: center;">
@@ -644,11 +644,11 @@ async function activarCapaEdificios(layerGroup, tipos) {
 }
 
 async function crearMapaCoordenadas() {
-    const rutasCoordenadas = [
-         "./doc/L40Ar.json",
-        // "./doc/L40Br.json",
-        // "./doc/L40Cr.json",
-        // "./doc/L42Ar.json",
+     const rutasCoordenadas = [
+        "./doc/L40Ar.json",
+        "./doc/L40Br.json",
+        "./doc/L40Cr.json",
+        "./doc/L42Ar.json",
         "./doc/L42B.json",
         "./doc/L46.json",
         "./doc/L48.json"
@@ -656,7 +656,15 @@ async function crearMapaCoordenadas() {
 
     try {
         const dataCoordenadasArrays = await Promise.all(rutasCoordenadas.map(ruta =>
-            fetch(ruta).then(response => response.json())
+            fetch(ruta).then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error al cargar ${ruta}: ${response.statusText}`);
+                }
+                return response.json();
+            }).catch(error => {
+                console.error(`Error al cargar ${ruta}:`, error);
+                return [];
+            })
         ));
 
         const dataCoordenadas = dataCoordenadasArrays.flat();
@@ -709,7 +717,6 @@ const tunelesLayer = L.layerGroup();
 checkTuneles.addEventListener('change', function () {
     this.checked ? activarCapaEdificios(tunelesLayer, ["TUNEL"]) : desactivarCapaEdificios(tunelesLayer);
 });
-
 
 /////  FIN CAPA EDIFICIOS /////---------------------------------------------------------------------------------------
 
