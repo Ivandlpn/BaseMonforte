@@ -333,9 +333,9 @@ let ultimoPKGlobal = null;
 async function activarCapaTrazado() {
     const rutasArchivos = [
         "./doc/L40Ar.json",
-        //"./doc/L40Br.json",
+        "./doc/L40Br.json",
          "./doc/L40Cr.json",
-        // "./doc/L42Ar.json",
+        "./doc/L42Ar.json",
         "./doc/L42B.json",
         "./doc/L46.json",
         "./doc/L48.json"
@@ -369,7 +369,7 @@ async function activarCapaTrazado() {
     // Dibuja un punto azul en el mapa cada 20 metros de PK
   function dibujarPuntosCada20Metros(puntos, linea) {
         let siguientePK = ultimoPKGlobal; // Inicializa siguientePK con el valor de ultimoPKGlobal
-         const separacionPK = 100;
+         const separacionPK = 500;
 
          for (const punto of puntos) {
             const pkActualNumerico = pkToNumber(punto.PK);
