@@ -327,12 +327,12 @@ document.addEventListener('click', function(event) {
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 
-let marcadoresTrazado = []; // Array para almacenar los marcadores de trazado
-let ultimoPKGlobal = null;
+let marcadoresTrazado = [];
+let ultimoPKPorLinea = {}; // Objeto para almacenar el último PK por línea
 
 async function activarCapaTrazado() {
     const rutasArchivos = [
-        "./doc/L40Ar.json",
+         "./doc/L40Ar.json",
         "./doc/L40Br.json",
          "./doc/L40Cr.json",
         "./doc/L42Ar.json",
@@ -352,8 +352,6 @@ async function activarCapaTrazado() {
         console.error("Error al cargar o procesar los datos de trazado:", error);
     }
 
-
-    // Agrupar los puntos por línea
     function agruparPuntosPorLinea(datos) {
         const puntosPorLinea = {};
         datos.forEach(punto => {
@@ -366,17 +364,15 @@ async function activarCapaTrazado() {
     }
 
 
-    // Dibuja un punto azul en el mapa cada 20 metros de PK
-  function dibujarPuntosCada20Metros(puntos, linea) {
-        let siguientePK = ultimoPKGlobal; // Inicializa siguientePK con el valor de ultimoPKGlobal
-         const separacionPK = 500;
+    function dibujarPuntosCada20Metros(puntos, linea) {
+        let siguientePK = ultimoPKPorLinea[linea] || null; // Inicializar con el último PK de la línea o null
+        const separacionPK = 500;
 
-         for (const punto of puntos) {
+        for (const punto of puntos) {
             const pkActualNumerico = pkToNumber(punto.PK);
-            console.log(`Línea: ${linea}, PK Actual: ${punto.PK}, Numérico: ${pkActualNumerico}, SiguientePK: ${siguientePK}, UltimoPKGlobal: ${ultimoPKGlobal}`);
+             console.log(`Línea: ${linea}, PK Actual: ${punto.PK}, Numérico: ${pkActualNumerico}, SiguientePK: ${siguientePK}, UltimoPKGlobal[linea]: ${ultimoPKPorLinea[linea]}`);
 
-
-            if (siguientePK === null || pkActualNumerico >= siguientePK ) {
+            if (siguientePK === null || pkActualNumerico >= siguientePK) {
                 console.log(`   Dibujando punto en PK: ${punto.PK} (Línea: ${linea})`);
                 const puntoLat = parseFloat(punto.Latitud);
                 const puntoLng = parseFloat(punto.Longitud);
@@ -391,27 +387,22 @@ async function activarCapaTrazado() {
                         fillOpacity: 1
                     }).addTo(mapa);
                     marcadoresTrazado.push(marcador);
-                     ultimoPKGlobal = pkActualNumerico; // Guarda el valor del PK actual
-                     siguientePK = pkActualNumerico + separacionPK; // Calcula el siguiente PK
+                    ultimoPKPorLinea[linea] = pkActualNumerico; // Guardar el último PK de la línea
+                     siguientePK = pkActualNumerico + separacionPK;
                 } else {
-                     console.error("Latitud o Longitud no válidas:", punto);
+                    console.error("Latitud o Longitud no válidas:", punto);
                 }
-           }else{
+            } else {
                 console.log(`   No cumple la condición en PK: ${punto.PK} (Línea: ${linea})`);
             }
-
-
         }
     }
 
 
-    // Convierte PK a número (ahora mucho más simple)
     function pkToNumber(pkString) {
         return parseInt(pkString, 10);
     }
 
-
-    // Carga los archivos JSON
     async function cargarArchivosJSON(rutas) {
         const todasPromesas = rutas.map(ruta =>
             fetch(ruta)
@@ -424,16 +415,14 @@ async function activarCapaTrazado() {
         const datosCargados = await Promise.all(todasPromesas);
         return datosCargados.flat();
     }
-
 }
-
 
 function desactivarCapaTrazado() {
     marcadoresTrazado.forEach(marcador => {
         mapa.removeLayer(marcador);
     });
     marcadoresTrazado = [];
-    ultimoPKGlobal = null;
+     ultimoPKPorLinea = {}; // Limpiar los últimos PKs por línea al desactivar
 }
 
 checkTrazado.addEventListener('change', function () {
