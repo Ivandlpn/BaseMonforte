@@ -9,7 +9,7 @@
         "LINEA": "40",
         "PK": "035850",
         "TIPO": "ET",
-        "NOMBRE": "Bifurcación Torrejón (tipo 1)"
+        "NOMBRE": "Bifurcación Torrejón"
     },
     {
         "LINEA": "40",
@@ -69,7 +69,7 @@
         "LINEA": "40",
         "PK": "042470",
         "TIPO": "ET",
-        "NOMBRE": "PAET de Valdemoro (tipo 5)"
+        "NOMBRE": "PAET de Valdemoro"
     },
     {
         "LINEA": "40",
@@ -195,7 +195,7 @@
         "LINEA": "40",
         "PK": "052250",
         "TIPO": "ET",
-        "NOMBRE": "PB Seseña (tipo 1)"
+        "NOMBRE": "PB Seseña"
     },
     {
         "LINEA": "40",
@@ -453,7 +453,7 @@
         "LINEA": "40",
         "PK": "084590",
         "TIPO": "ET",
-        "NOMBRE": "PAET de Villarrubia (tipo 1)"
+        "NOMBRE": "PAET de Villarrubia"
     },
     {
         "LINEA": "40",
@@ -585,7 +585,7 @@
         "LINEA": "40",
         "PK": "103840",
         "TIPO": "ET",
-        "NOMBRE": "PB de Sta. Cruz de la Zarza (tipo 1)"
+        "NOMBRE": "PB de Sta. Cruz de la Zarza"
     },
     {
         "LINEA": "40",
@@ -705,7 +705,7 @@
         "LINEA": "40",
         "PK": "118450",
         "TIPO": "ET",
-        "NOMBRE": "PAET de Tarancón (tipo 5)"
+        "NOMBRE": "PAET de Tarancón"
     },
     {
         "LINEA": "40",
@@ -855,7 +855,7 @@
         "LINEA": "40",
         "PK": "143970",
         "TIPO": "ET",
-        "NOMBRE": "PB de Campos del Paraíso (tipo 1)"
+        "NOMBRE": "PB de Campos del Paraíso"
     },
     {
         "LINEA": "40",
@@ -987,7 +987,7 @@
         "LINEA": "40",
         "PK": "164770",
         "TIPO": "ET",
-        "NOMBRE": "PAET de Torrejoncillo del Rey (tipo 1)"
+        "NOMBRE": "PAET de Torrejoncillo del Rey"
     },
     {
         "LINEA": "40",
@@ -1298,14 +1298,14 @@
     {
         "LINEA": "40",
         "PK": "195260",
-        "TIPO": "ET",
-        "NOMBRE": "Estacion Cuenca )tipo 5"
+        "TIPO": "ESTACIÓN",
+        "NOMBRE": "Estacion Cuenca"
     },
     {
         "LINEA": "40",
         "PK": "195260",
         "TIPO": "ET",
-        "NOMBRE": "Cuenca (tipo 5)"
+        "NOMBRE": "ET Cuenca"
     },
     {
         "LINEA": "40",
@@ -1551,7 +1551,7 @@
         "LINEA": "40",
         "PK": "224330",
         "TIPO": "ET",
-        "NOMBRE": "PAET de Monteagudo de las Salinas (tipo 1)"
+        "NOMBRE": "PAET de Monteagudo de las Salinas"
     },
     {
         "LINEA": "40",
@@ -1737,7 +1737,7 @@
         "LINEA": "40",
         "PK": "247430",
         "TIPO": "ET",
-        "NOMBRE": "ET Bifurcación Albacete  (tipo 1)"
+        "NOMBRE": "ET Bifurcación Albacete"
     },
     {
         "LINEA": "40",
@@ -1851,7 +1851,7 @@
         "LINEA": "40",
         "PK": "267090",
         "TIPO": "ET",
-        "NOMBRE": "ET PAET Iniesta  (tipo 5)"
+        "NOMBRE": "ET PAET Iniesta"
     },
     {
         "LINEA": "40",
@@ -2037,7 +2037,7 @@
         "LINEA": "40",
         "PK": "289140",
         "TIPO": "ET",
-        "NOMBRE": "ET PB Minglanilla  (tipo 1)"
+        "NOMBRE": "ET PB Minglanilla"
     },
     {
         "LINEA": "40",
@@ -2253,7 +2253,7 @@
         "LINEA": "40",
         "PK": "310480",
         "TIPO": "ET",
-        "NOMBRE": "ET PB Caudete de las Fuentes  (tipo 1)"
+        "NOMBRE": "ET PB Caudete de las Fuentes"
     },
     {
         "LINEA": "40",
@@ -2367,7 +2367,7 @@
         "LINEA": "40",
         "PK": "327490",
         "TIPO": "ET",
-        "NOMBRE": "ET Estación Requena-Utiel  (tipo 1)"
+        "NOMBRE": "ET Estación Requena-Utiel"
     },
     {
         "LINEA": "40",
@@ -2378,7 +2378,7 @@
     {
         "LINEA": "40",
         "PK": "327740",
-        "TIPO": "BM",
+        "TIPO": "ESTACIÓN",
         "NOMBRE": "ESTACIÓN REQUENA"
     },
     {
@@ -2529,7 +2529,7 @@
         "LINEA": "40",
         "PK": "345150",
         "TIPO": "ET",
-        "NOMBRE": "ET PAET Siete Aguas  (tipo 1)"
+        "NOMBRE": "ET PAET Siete Aguas"
     },
     {
         "LINEA": "40",
@@ -2787,7 +2787,7 @@
         "LINEA": "40",
         "PK": "373470",
         "TIPO": "ET",
-        "NOMBRE": "ET Chiva  (tipo 1)"
+        "NOMBRE": "ET Chiva"
     },
     {
         "LINEA": "40",
@@ -2943,7 +2943,7 @@
         "LINEA": "40",
         "PK": "393020",
         "TIPO": "ET",
-        "NOMBRE": "ET Bifurcación Alicante-Albacete  (tipo 2)"
+        "NOMBRE": "ET Bifurcación Alicante-Albacete"
     },
     {
         "LINEA": "40",
@@ -2984,8 +2984,8 @@
     {
         "LINEA": "40",
         "PK": "397550",
-        "TIPO": "ET",
-        "NOMBRE": "ESTACION VALENCIA"
+        "TIPO": "ESTACIÓN",
+        "NOMBRE": "Estación VALENCIA"
     },
     {
         "LINEA": "40",
@@ -3015,7 +3015,7 @@
         "LINEA": "40",
         "PK": "397550",
         "TIPO": "ET",
-        "NOMBRE": "ET Estación Valencia Nord (**, tipo 5)"
+        "NOMBRE": "ET Estación Valencia Nord"
     },
     {
         "LINEA": "42",
@@ -3099,7 +3099,7 @@
         "LINEA": "42",
         "PK": "262380",
         "TIPO": "ET",
-        "NOMBRE": "ET PAET Pozorrubielos  (tipo 1)"
+        "NOMBRE": "ET PAET Pozorrubielos"
     },
     {
         "LINEA": "42",
@@ -3255,7 +3255,7 @@
         "LINEA": "42",
         "PK": "285910",
         "TIPO": "ET",
-        "NOMBRE": "ET PB Tarazona  (tipo 1)"
+        "NOMBRE": "ET PB Tarazona"
     },
     {
         "LINEA": "42",
@@ -3471,7 +3471,7 @@
         "LINEA": "42",
         "PK": "307630",
         "TIPO": "ET",
-        "NOMBRE": "ET PB La Gineta  (tipo 1)"
+        "NOMBRE": "ET PB La Gineta"
     },
     {
         "LINEA": "42",
@@ -3566,8 +3566,8 @@
     {
         "LINEA": "42",
         "PK": "321000",
-        "TIPO": "ET",
-        "NOMBRE": "ESTACION ALBACETE"
+        "TIPO": "ESTACIÓN",
+        "NOMBRE": "Estación"
     },
     {
         "LINEA": "42",
