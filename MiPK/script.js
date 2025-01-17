@@ -578,121 +578,75 @@ function desactivarCapaTiempo() {
 /////  INICIO CAPA EDIFICIOS /////---------------------------------------------------------------------------------------
 
 
-const iconoEnergia = L.icon({
-    iconUrl: 'img/edificios/energia_icon.png',
-    iconSize: [25, 25],
-    iconAnchor: [12, 35],
-    popupAnchor: [0, -35]
-});
+const iconosEdificios = {
+    "SE": 'img/edificios/energia_icon.png',
+    "ATI": 'img/edificios/energia_icon.png',
+    "ATF": 'img/edificios/energia_icon.png',
+    "BTS": 'img/edificios/bts_icon.png',
+    "CS": 'img/edificios/iiss_icon.png',
+    "ET": 'img/edificios/iiss_icon.png',
+    "ESTACIÓN": 'img/edificios/estaciones_icon.png',
+    "TUNEL": 'img/edificios/tunel_icon.png'
+};
 
-const iconoBts = L.icon({
-    iconUrl: 'img/edificios/bts_icon.png',
-    iconSize: [25, 25],
-    iconAnchor: [12, 35],
-    popupAnchor: [0, -35]
-});
+function crearIconoEdificio(tipo) {
+    const iconUrl = iconosEdificios[tipo];
+    if (!iconUrl) return null;
+    return L.icon({
+        iconUrl: iconUrl,
+        iconSize: [25, 25],
+        iconAnchor: [12, 35],
+        popupAnchor: [0, -35]
+    });
+}
 
-const iconoIiss = L.icon({
-    iconUrl: 'img/edificios/iiss_icon.png',
-    iconSize: [25, 25],
-    iconAnchor: [12, 35],
-    popupAnchor: [0, -35]
-});
-
-const iconoEstaciones = L.icon({
-    iconUrl: 'img/edificios/estaciones_icon.png',
-    iconSize: [25, 25],
-    iconAnchor: [12, 35],
-    popupAnchor: [0, -35]
-});
-
-const iconoTuneles = L.icon({
-    iconUrl: 'img/edificios/tunel_icon.png',
-    iconSize: [25, 25],
-    iconAnchor: [12, 35],
-    popupAnchor: [0, -35]
-});
-
-//let senalizacionLayer = L.layerGroup();
-//let energiaLayer = L.layerGroup();
-//let btsLayer = L.layerGroup();
-//let iissLayer = L.layerGroup();
-//let estacionesLayer = L.layerGroup();
-//let tunelesLayer = L.layerGroup();
-
-const checkEnergia = document.getElementById('check-energia');
-const energiaLayer = L.layerGroup();
-checkEnergia.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(energiaLayer, ["SE", "ATI", "ATF"], iconoEnergia) : desactivarCapaEdificios(energiaLayer);
-});
-
-const checkBts = document.getElementById('check-bts');
-const btsLayer = L.layerGroup();
-checkBts.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(btsLayer, ["BTS"], iconoBts) : desactivarCapaEdificios(btsLayer);
-});
-
-const checkIiss = document.getElementById('check-iiss');
-const iissLayer = L.layerGroup();
-checkIiss.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(iissLayer, ["CS", "ET"], iconoIiss) : desactivarCapaEdificios(iissLayer);
-});
-
-const checkEstaciones = document.getElementById('check-estaciones');
-const estacionesLayer = L.layerGroup();
-checkEstaciones.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(estacionesLayer, ["ESTACIÓN"], iconoEstaciones) : desactivarCapaEdificios(estacionesLayer);
-});
-
-const checkTuneles = document.getElementById('check-tuneles');
-const tunelesLayer = L.layerGroup();
-checkTuneles.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(tunelesLayer, ["TUNEL"], iconoTuneles) : desactivarCapaEdificios(tunelesLayer);
-});
-
-
-async function activarCapaEdificios(layerGroup, tipos, icono) {
+async function activarCapaEdificios(layerGroup, tipos) {
     try {
-        const responseAlbali = await fetch("./doc/edificios/ALBALI.json");
-        const dataAlbali = await responseAlbali.json();
+        // Cargar y combinar datos de ambos archivos
+        const rutasEdificios = ["./doc/edificios/ALBALI.json", "./doc/edificios/TOVAL.json"];
+        const dataEdificiosArrays = await Promise.all(rutasEdificios.map(ruta =>
+            fetch(ruta).then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error al cargar ${ruta}: ${response.statusText}`);
+                }
+                return response.json();
+            }).catch(error => {
+                console.error(`Error al cargar ${ruta}:`, error);
+                return [];
+            })
+        ));
+        const dataEdificios = dataEdificiosArrays.flat();
+
+        // Mapear coordenadas a un objeto para mejor búsqueda
+        const coordenadasPorPKLinea = await crearMapaCoordenadas();
 
         // Filtrar elementos por tipo
-        const elementosFiltrados = dataAlbali.filter(item => tipos.includes(item.TIPO));
-
-        // Cargar los archivos JSON con las coordenadas
-        const rutasCoordenadas = [
-            "./doc/L42B.json",
-            "./doc/L46.json",
-            "./doc/L48.json"
-            // ... añade aquí las rutas a todos tus archivos de coordenadas ...
-        ];
-        const dataCoordenadasArrays = await Promise.all(rutasCoordenadas.map(ruta =>
-            fetch(ruta).then(response => response.json())
-        ));
-        const dataCoordenadas = dataCoordenadasArrays.flat();
+        const elementosFiltrados = dataEdificios.filter(item => tipos.includes(item.TIPO));
 
         elementosFiltrados.forEach(elemento => {
             const pkElemento = elemento.PK;
             const lineaElemento = elemento.LINEA;
+            const key = `${pkElemento}-${lineaElemento}`;
 
             // Buscar las coordenadas correspondientes al PK y la línea
-            const puntoCoordenadas = dataCoordenadas.find(punto => punto.PK === pkElemento && punto.Linea === lineaElemento);
+            const puntoCoordenadas = coordenadasPorPKLinea.get(key);
+            const icono = crearIconoEdificio(elemento.TIPO);
 
-            if (puntoCoordenadas) {
+            if (puntoCoordenadas && icono) {
                 const pkFormateado = formatearPK(pkElemento); // Llamamos a la función para formatear el PK
                 const marker = L.marker([puntoCoordenadas.Latitud, puntoCoordenadas.Longitud], { icon: icono })
-                .bindPopup(`
-                    <div style="text-align: center;">
-                         <b style="font-size: 1.1em;">${elemento.NOMBRE}</b><br>
-                        ${pkFormateado} (L${lineaElemento})
-                    </div>
-                `);
+                    .bindPopup(`
+                        <div style="text-align: center;">
+                            <b style="font-size: 1.1em;">${elemento.NOMBRE}</b><br>
+                            ${pkFormateado} (L${lineaElemento})
+                        </div>
+                    `);
                 layerGroup.addLayer(marker);
+
             } else {
                 console.warn(`No se encontraron coordenadas para el PK ${pkElemento} en la línea ${lineaElemento} (Tipo: ${elemento.TIPO})`);
             }
         });
-
         mapa.addLayer(layerGroup);
 
     } catch (error) {
@@ -700,12 +654,72 @@ async function activarCapaEdificios(layerGroup, tipos, icono) {
     }
 }
 
+async function crearMapaCoordenadas() {
+    const rutasCoordenadas = [
+         "./doc/L40Ar.json",
+        // "./doc/L40Br.json",
+        // "./doc/L40Cr.json",
+        // "./doc/L42Ar.json",
+        "./doc/L42B.json",
+        "./doc/L46.json",
+        "./doc/L48.json"
+    ];
+
+    try {
+        const dataCoordenadasArrays = await Promise.all(rutasCoordenadas.map(ruta =>
+            fetch(ruta).then(response => response.json())
+        ));
+
+        const dataCoordenadas = dataCoordenadasArrays.flat();
+        const mapaCoordenadas = new Map();
+
+        dataCoordenadas.forEach(punto => {
+            const key = `${punto.PK}-${punto.Linea}`;
+            mapaCoordenadas.set(key, punto);
+        });
+
+        return mapaCoordenadas;
+
+    } catch (error) {
+        console.error("Error al crear el mapa de coordenadas:", error);
+        return new Map();
+    }
+}
 
 function desactivarCapaEdificios(layerGroup) {
     mapa.removeLayer(layerGroup);
 }
 
+// Event listeners para las capas de edificios
+const checkEnergia = document.getElementById('check-energia');
+const energiaLayer = L.layerGroup();
+checkEnergia.addEventListener('change', function () {
+    this.checked ? activarCapaEdificios(energiaLayer, ["SE", "ATI", "ATF"]) : desactivarCapaEdificios(energiaLayer);
+});
 
+const checkBts = document.getElementById('check-bts');
+const btsLayer = L.layerGroup();
+checkBts.addEventListener('change', function () {
+    this.checked ? activarCapaEdificios(btsLayer, ["BTS"]) : desactivarCapaEdificios(btsLayer);
+});
+
+const checkIiss = document.getElementById('check-iiss');
+const iissLayer = L.layerGroup();
+checkIiss.addEventListener('change', function () {
+    this.checked ? activarCapaEdificios(iissLayer, ["CS", "ET"]) : desactivarCapaEdificios(iissLayer);
+});
+
+const checkEstaciones = document.getElementById('check-estaciones');
+const estacionesLayer = L.layerGroup();
+checkEstaciones.addEventListener('change', function () {
+    this.checked ? activarCapaEdificios(estacionesLayer, ["ESTACIÓN"]) : desactivarCapaEdificios(estacionesLayer);
+});
+
+const checkTuneles = document.getElementById('check-tuneles');
+const tunelesLayer = L.layerGroup();
+checkTuneles.addEventListener('change', function () {
+    this.checked ? activarCapaEdificios(tunelesLayer, ["TUNEL"]) : desactivarCapaEdificios(tunelesLayer);
+});
 
 
 /////  FIN CAPA EDIFICIOS /////---------------------------------------------------------------------------------------
