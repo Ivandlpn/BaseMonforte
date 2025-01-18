@@ -393,7 +393,7 @@ async function activarCapaTrazado() {
                     console.error("Latitud o Longitud no válidas:", punto);
                 }
             } else {
-                console.log(`   No cumple la condición en PK: ${punto.PK} (Línea: ${linea})`);
+              //  console.log(`   No cumple la condición en PK: ${punto.PK} (Línea: ${linea})`);
             }
         }
     }
