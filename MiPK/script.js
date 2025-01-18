@@ -50,13 +50,13 @@ function calcularYActualizarPK() {
     }
 
     const rutasArchivos = [
-      "./doc/L40Ar.json",
-       "./doc/L40Br.json",
-       "./doc/L40Cr.json",
-       "./doc/L42Ar.json",
-        "./doc/L42B.json",
-        "./doc/L46.json",
-        "./doc/L48.json"
+      "./doc/traza/L40Ar.json",
+       "./doc/traza/L40Br.json",
+       "./doc/traza/L40Cr.json",
+       "./doc/traza/L42Ar.json",
+        "./doc/traza/L42B.json",
+        "./doc/traza/L46.json",
+        "./doc/traza/L48.json"
     ];
 
     async function cargarArchivosJSON(rutas) {
@@ -332,13 +332,13 @@ let ultimoPKPorLinea = {}; // Objeto para almacenar el último PK por línea
 
 async function activarCapaTrazado() {
     const rutasArchivos = [
-         "./doc/L40Ar.json",
-        "./doc/L40Br.json",
-         "./doc/L40Cr.json",
-        "./doc/L42Ar.json",
-        "./doc/L42B.json",
-        "./doc/L46.json",
-        //"./doc/L48.json"
+      "./doc/traza/L40Ar.json",
+       "./doc/traza/L40Br.json",
+       "./doc/traza/L40Cr.json",
+       "./doc/traza/L42Ar.json",
+        "./doc/traza/L42B.json",
+        "./doc/traza/L46.json",
+        "./doc/traza/L48.json"
     ];
 
     try {
@@ -645,13 +645,13 @@ async function activarCapaEdificios(layerGroup, tipos) {
 
 async function crearMapaCoordenadas() {
      const rutasCoordenadas = [
-        "./doc/L40Ar.json",
-        "./doc/L40Br.json",
-        "./doc/L40Cr.json",
-        "./doc/L42Ar.json",
-        "./doc/L42B.json",
-        "./doc/L46.json",
-        "./doc/L48.json"
+      "./doc/traza/L40Ar.json",
+       "./doc/traza/L40Br.json",
+       "./doc/traza/L40Cr.json",
+       "./doc/traza/L42Ar.json",
+        "./doc/traza/L42B.json",
+        "./doc/traza/L46.json",
+        "./doc/traza/L48.json"
     ];
 
     try {
@@ -1011,13 +1011,13 @@ document.getElementById("iconoMas").addEventListener("click", () => {
     }
 
     const rutasArchivos = [
-      "./doc/L40Ar.json",
-      "./doc/L40Br.json",
-     "./doc/L40Cr.json",
-      "./doc/L42Ar.json",
-        "./doc/L42B.json",
-       "./doc/L46.json",
-        "./doc/L48.json"
+      "./doc/traza/L40Ar.json",
+       "./doc/traza/L40Br.json",
+       "./doc/traza/L40Cr.json",
+       "./doc/traza/L42Ar.json",
+        "./doc/traza/L42B.json",
+        "./doc/traza/L46.json",
+        "./doc/traza/L48.json"
     ];
 
     cargarArchivosJSON(rutasArchivos)
