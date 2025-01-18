@@ -724,7 +724,7 @@ checkTuneles.addEventListener('change', function () {
 
  async function cargarPuertas() {
   try {
-      const response = await fetch("./doc/puertas.json");
+      const response = await fetch("./doc/puertas/puertas.json");
       puertasData = await response.json();
   } catch (error) {
       console.error("Error al cargar los datos de puertas:", error);
