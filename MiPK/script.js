@@ -337,8 +337,8 @@ async function activarCapaTrazado() {
        "./doc/traza/L40Cr.json",
        "./doc/traza/L42Ar.json",
         "./doc/traza/L42B.json",
-        "./doc/traza/L46.json",
-        "./doc/traza/L48.json"
+         "./doc/traza/L48.json",
+        "./doc/traza/L46.json"
     ];
 
     try {
