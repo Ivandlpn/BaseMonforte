@@ -366,7 +366,7 @@ async function activarCapaTrazado() {
 
     function dibujarPuntosCada20Metros(puntos, linea) {
         let siguientePK = ultimoPKPorLinea[linea] || null; // Inicializar con el último PK de la línea o null
-        const separacionPK = 500;
+        const separacionPK = 50;
 
         for (const punto of puntos) {
             const pkActualNumerico = pkToNumber(punto.PK);
