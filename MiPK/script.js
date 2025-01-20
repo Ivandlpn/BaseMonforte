@@ -112,7 +112,6 @@ function mostrarMensaje(mensaje) {
 }
 
 
-let mapa; // Declara mapa fuera de la función
 
 function inicializarMapa(lat, lon) {
     mapa = L.map('map', { // Asigna el mapa a la variable global
