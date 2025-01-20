@@ -2983,13 +2983,13 @@
     },
     {
         "LINEA": "40",
-        "PK": "397550",
+        "PK": "397200",
         "TIPO": "ESTACIÓN",
-        "NOMBRE": "Estación VALENCIA"
+        "NOMBRE": "Estación VALENCIA - Joaquin Sorolla"
     },
     {
         "LINEA": "40",
-        "PK": "397550",
+        "PK": "396580",
         "TIPO": "CAMBIADOR",
         "NOMBRE": "CAMBIADOR  VALENCIA"
     },
@@ -3007,7 +3007,7 @@
     },
     {
         "LINEA": "40",
-        "PK": "397550",
+        "PK": "392700",
         "TIPO": "SE",
         "NOMBRE": "SUBESTAC ION 314 TORRENTE"
     },
@@ -3567,7 +3567,7 @@
         "LINEA": "42",
         "PK": "321000",
         "TIPO": "ESTACIÓN",
-        "NOMBRE": "Estación"
+        "NOMBRE": "Estación ALBACETE - Los Llanos"
     },
     {
         "LINEA": "42",
