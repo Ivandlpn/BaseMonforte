@@ -348,7 +348,8 @@ async function activarCapaMiTramo() {
 
     const pkActualNumerico = pkToNumberMiTramo(window.pkMasCercano.pk);
     const lineaActual = window.pkMasCercano.linea;
-    const rangoPK = 5000; // Define el rango del tramo en metros (ej: +/- 1000 metros)
+    const rangoPK = 1000; // Define el rango del tramo en metros (ej: +/- 1000 metros)
+    const intervaloDibujo = 20; // Intervalo de dibujo en metros
 
     const rutasArchivos = [
         "./doc/traza/L40Ar.json",
@@ -368,23 +369,30 @@ async function activarCapaMiTramo() {
                 return pkPuntoNumerico >= pkActualNumerico - rangoPK && pkPuntoNumerico <= pkActualNumerico + rangoPK;
             }
             return false;
-        });
+        }).sort((a, b) => pkToNumberMiTramo(a.PK) - pkToNumberMiTramo(b.PK)); // Ordenar por PK
 
-        // Dibujar los puntos del tramo
+        let ultimoPkDibujado = null;
+
+        // Dibujar los puntos del tramo con intervalo
         puntosMiTramo.forEach(punto => {
-            const puntoLat = parseFloat(punto.Latitud);
-            const puntoLng = parseFloat(punto.Longitud);
+            const pkPuntoNumerico = pkToNumberMiTramo(punto.PK);
 
-            if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
-                const marcador = L.circleMarker([puntoLat, puntoLng], {
-                    radius: 4,
-                    fillColor: "red",
-                    color: "red",
-                    weight: 1,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                }).addTo(mapa);
-                marcadoresMiTramo.push(marcador);
+            if (ultimoPkDibujado === null || pkPuntoNumerico - ultimoPkDibujado >= intervaloDibujo) {
+                const puntoLat = parseFloat(punto.Latitud);
+                const puntoLng = parseFloat(punto.Longitud);
+
+                if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
+                    const marcador = L.circleMarker([puntoLat, puntoLng], {
+                        radius: 4,
+                        fillColor: "red",
+                        color: "red",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    }).addTo(mapa);
+                    marcadoresMiTramo.push(marcador);
+                    ultimoPkDibujado = pkPuntoNumerico;
+                }
             }
         });
     } catch (error) {
