@@ -363,40 +363,52 @@ async function activarCapaMiTramo() {
 
     try {
         const datosTrazado = await cargarArchivosJSONMiTramo(rutasArchivos);
-        const puntosMiTramo = datosTrazado.filter(punto => {
-            if (punto.Linea === lineaActual) {
-                const pkPuntoNumerico = pkToNumberMiTramo(punto.PK);
-                return pkPuntoNumerico >= pkActualNumerico - rangoPK && pkPuntoNumerico <= pkActualNumerico + rangoPK;
+
+        // Función para encontrar las coordenadas de un PK específico
+        const encontrarCoordenadas = (pk, linea) => {
+            const pkNumerico = pkToNumberMiTramo(pk);
+            const puntoEncontrado = datosTrazado.find(punto =>
+                punto.Linea === linea && pkToNumberMiTramo(punto.PK) === pkNumerico
+            );
+            return puntoEncontrado ? { latitud: parseFloat(puntoEncontrado.Latitud), longitud: parseFloat(puntoEncontrado.Longitud) } : null;
+        };
+
+        // Dibujar puntos hacia adelante
+        for (let offset = 0; offset <= rangoPK; offset += intervaloDibujo) {
+            const pkTargetNumerico = pkActualNumerico + offset;
+            const pkTarget = numberToPkMiTramo(pkTargetNumerico);
+            const coordenadas = encontrarCoordenadas(pkTarget, lineaActual);
+            if (coordenadas) {
+                dibujarMarcadorMiTramo(coordenadas.latitud, coordenadas.longitud);
             }
-            return false;
-        }).sort((a, b) => pkToNumberMiTramo(a.PK) - pkToNumberMiTramo(b.PK)); // Ordenar por PK
+        }
 
-        let ultimoPkDibujado = null;
-
-        // Dibujar los puntos del tramo con intervalo
-        puntosMiTramo.forEach(punto => {
-            const pkPuntoNumerico = pkToNumberMiTramo(punto.PK);
-
-            if (ultimoPkDibujado === null || pkPuntoNumerico - ultimoPkDibujado >= intervaloDibujo) {
-                const puntoLat = parseFloat(punto.Latitud);
-                const puntoLng = parseFloat(punto.Longitud);
-
-                if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
-                    const marcador = L.circleMarker([puntoLat, puntoLng], {
-                        radius: 4,
-                        fillColor: "red",
-                        color: "red",
-                        weight: 1,
-                        opacity: 1,
-                        fillOpacity: 0.8
-                    }).addTo(mapa);
-                    marcadoresMiTramo.push(marcador);
-                    ultimoPkDibujado = pkPuntoNumerico;
-                }
+        // Dibujar puntos hacia atrás (empezar desde el intervalo para no duplicar el PK actual)
+        for (let offset = intervaloDibujo; offset <= rangoPK; offset += intervaloDibujo) {
+            const pkTargetNumerico = pkActualNumerico - offset;
+            const pkTarget = numberToPkMiTramo(pkTargetNumerico);
+            const coordenadas = encontrarCoordenadas(pkTarget, lineaActual);
+            if (coordenadas) {
+                dibujarMarcadorMiTramo(coordenadas.latitud, coordenadas.longitud);
             }
-        });
+        }
+
     } catch (error) {
         console.error("Error al cargar o procesar los datos para 'Mi Tramo':", error);
+    }
+}
+
+function dibujarMarcadorMiTramo(lat, lng) {
+    if (!isNaN(lat) && !isNaN(lng)) {
+        const marcador = L.circleMarker([lat, lng], {
+            radius: 4,
+            fillColor: "red",
+            color: "red",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        }).addTo(mapa);
+        marcadoresMiTramo.push(marcador);
     }
 }
 
@@ -423,6 +435,12 @@ async function cargarArchivosJSONMiTramo(rutas) {
 function pkToNumberMiTramo(pkString) {
     const parts = pkString.split('+');
     return parseInt(parts[0]) * 1000 + parseInt(parts[1] || 0);
+}
+
+function numberToPkMiTramo(pkNumber) {
+    const parteEntera = Math.floor(pkNumber / 1000);
+    const parteDecimal = pkNumber % 1000;
+    return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
 }
 
 /////  FIN CAPA MI TRAMO /////---------------------------------------------------------------------------------------
