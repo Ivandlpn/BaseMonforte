@@ -351,6 +351,8 @@ async function activarCapaMiTramo() {
     const rangoPK = 1000; // Define el rango del tramo en metros (ej: +/- 1000 metros)
     const intervaloDibujo = 20; // Intervalo de dibujo en metros
 
+    console.log(`Activando 'Mi Tramo'. PK Actual Numérico: ${pkActualNumerico}, Línea: ${lineaActual}`);
+
     const rutasArchivos = [
         "./doc/traza/L40Ar.json",
         "./doc/traza/L40Br.json",
@@ -363,6 +365,7 @@ async function activarCapaMiTramo() {
 
     try {
         const datosTrazado = await cargarArchivosJSONMiTramo(rutasArchivos);
+        console.log(`Datos de trazado cargados. Total de puntos: ${datosTrazado.length}`);
 
         // Función para encontrar las coordenadas de un PK específico
         const encontrarCoordenadas = (pk, linea) => {
@@ -370,23 +373,31 @@ async function activarCapaMiTramo() {
             const puntoEncontrado = datosTrazado.find(punto =>
                 punto.Linea === linea && pkToNumberMiTramo(punto.PK) === pkNumerico
             );
-            return puntoEncontrado ? { latitud: parseFloat(puntoEncontrado.Latitud), longitud: parseFloat(puntoEncontrado.Longitud) } : null;
+            if (puntoEncontrado) {
+                console.log(`  Encontradas coordenadas para PK: ${pk}, Línea: ${linea}`, puntoEncontrado);
+                return { latitud: parseFloat(puntoEncontrado.Latitud), longitud: parseFloat(puntoEncontrado.Longitud) };
+            } else {
+                console.log(`  No se encontraron coordenadas para PK: ${pk}, Línea: ${linea}`);
+                return null;
+            }
         };
 
-        // Dibujar puntos hacia adelante
+        console.log("Dibujando puntos hacia adelante:");
         for (let offset = 0; offset <= rangoPK; offset += intervaloDibujo) {
             const pkTargetNumerico = pkActualNumerico + offset;
             const pkTarget = numberToPkMiTramo(pkTargetNumerico);
+            console.log(`  Buscando PK hacia adelante: Numérico: ${pkTargetNumerico}, Formateado: ${pkTarget}`);
             const coordenadas = encontrarCoordenadas(pkTarget, lineaActual);
             if (coordenadas) {
                 dibujarMarcadorMiTramo(coordenadas.latitud, coordenadas.longitud);
             }
         }
 
-        // Dibujar puntos hacia atrás (empezar desde el intervalo para no duplicar el PK actual)
+        console.log("Dibujando puntos hacia atrás:");
         for (let offset = intervaloDibujo; offset <= rangoPK; offset += intervaloDibujo) {
             const pkTargetNumerico = pkActualNumerico - offset;
             const pkTarget = numberToPkMiTramo(pkTargetNumerico);
+            console.log(`  Buscando PK hacia atrás: Numérico: ${pkTargetNumerico}, Formateado: ${pkTarget}`);
             const coordenadas = encontrarCoordenadas(pkTarget, lineaActual);
             if (coordenadas) {
                 dibujarMarcadorMiTramo(coordenadas.latitud, coordenadas.longitud);
@@ -409,6 +420,9 @@ function dibujarMarcadorMiTramo(lat, lng) {
             fillOpacity: 0.8
         }).addTo(mapa);
         marcadoresMiTramo.push(marcador);
+        console.log(`  Marcador dibujado en Lat: ${lat}, Lng: ${lng}`);
+    } else {
+        console.warn(`  Intento de dibujar marcador con Lat/Lng no válidos: Lat: ${lat}, Lng: ${lng}`);
     }
 }
 
@@ -417,6 +431,7 @@ function desactivarCapaMiTramo() {
         mapa.removeLayer(marcador);
     });
     marcadoresMiTramo = [];
+    console.log("'Mi Tramo' desactivado y marcadores removidos.");
 }
 
 async function cargarArchivosJSONMiTramo(rutas) {
