@@ -328,6 +328,7 @@ document.addEventListener('click', function(event) {
 /////  INICIO CAPA MI TRAMO  /////---------------------------------------------------------------------------------------
 
 let marcadoresMiTramo = []; // Array para almacenar los marcadores de "Mi Tramo"
+let marcadorTiempoMiTramo = null; // Almacena el marcador de tiempo de "Mi Tramo"
 const checkMiTramo = document.getElementById('check-mitramo');
 
 checkMiTramo.addEventListener('change', function () {
@@ -346,93 +347,45 @@ async function activarCapaMiTramo() {
         return;
     }
 
-    const pkActualNumerico = pkToNumberMiTramo(window.pkMasCercano.pk);
-    const lineaActual = window.pkMasCercano.linea;
-    const rangoPK = 1000; // Define el rango del tramo en metros (ej: +/- 1000 metros)
-    const intervaloDibujo = 20; // Intervalo de dibujo en metros
+    const lat = parseFloat(window.pkMasCercano.latitud);
+    const lon = parseFloat(window.pkMasCercano.longitud);
 
-    console.log(`Activando 'Mi Tramo'. PK Actual Numérico: ${pkActualNumerico}, Línea: ${lineaActual}`);
+    console.log(`Activando 'Mi Tramo'. PK Actual: ${window.pkMasCercano.pk}, Lat: ${lat}, Lng: ${lon}`);
 
-    const rutasArchivos = [
-        "./doc/traza/L40Ar.json",
-        "./doc/traza/L40Br.json",
-        "./doc/traza/L40Cr.json",
-        "./doc/traza/L42Ar.json",
-        "./doc/traza/L42B.json",
-        "./doc/traza/L46.json",
-        "./doc/traza/L48.json"
-    ];
-
-    try {
-        const datosTrazado = await cargarArchivosJSONMiTramo(rutasArchivos);
-        console.log(`Datos de trazado cargados. Total de puntos: ${datosTrazado.length}`);
-
-        // Función para encontrar las coordenadas de un PK específico
-        const encontrarCoordenadas = (pk, linea) => {
-           const pkNumerico = pkToNumberMiTramo(pk);
-           const puntoEncontrado = datosTrazado.find(punto =>
-               punto.Linea === linea && pkToNumberMiTramo(punto.PK) === pkNumerico
-           );
-           if (puntoEncontrado) {
-               console.log(`  Encontradas coordenadas para PK: ${pk}, Línea: ${linea}`, puntoEncontrado);
-               return { latitud: parseFloat(puntoEncontrado.Latitud), longitud: parseFloat(puntoEncontrado.Longitud) };
-           } else {
-               console.log(`  No se encontraron coordenadas para PK: ${pk}, Línea: ${linea}`);
-                return null;
-           }
-        };
-
-        // Dibujar puntos hacia adelante
-       console.log("Dibujando puntos hacia adelante:");
-        for (let offset = 0; offset <= rangoPK; offset += intervaloDibujo) {
-            const pkTargetNumerico = pkActualNumerico + offset;
-            const pkTarget = numberToPkMiTramo(pkTargetNumerico, window.pkMasCercano.pk); // Pass original PK for formatting
-             console.log(`  Buscando PK hacia adelante: Numérico: ${pkTargetNumerico}, Formateado: ${pkTarget}`);
-            const coordenadas = encontrarCoordenadas(pkTarget, lineaActual);
-             if (coordenadas) {
-                dibujarMarcadorMiTramo(coordenadas.latitud, coordenadas.longitud);
-            }
-        }
-
-         // Dibujar puntos hacia atrás (empezar desde el intervalo para no duplicar el PK actual)
-         console.log("Dibujando puntos hacia atrás:");
-         for (let offset = intervaloDibujo; offset <= rangoPK; offset += intervaloDibujo) {
-            const pkTargetNumerico = pkActualNumerico - offset;
-            const pkTarget = numberToPkMiTramo(pkTargetNumerico, window.pkMasCercano.pk); // Pass original PK for formatting
-             console.log(`  Buscando PK hacia atrás: Numérico: ${pkTargetNumerico}, Formateado: ${pkTarget}`);
-             const coordenadas = encontrarCoordenadas(pkTarget, lineaActual);
-            if (coordenadas) {
-               dibujarMarcadorMiTramo(coordenadas.latitud, coordenadas.longitud);
-           }
-         }
-
-    } catch (error) {
-        console.error("Error al cargar o procesar los datos para 'Mi Tramo':", error);
-    }
+    mostrarTiempoEnPK(lat, lon);
 }
 
-function dibujarMarcadorMiTramo(lat, lng) {
-    if (!isNaN(lat) && !isNaN(lng)) {
-        const marcador = L.circleMarker([lat, lng], {
-            radius: 4,
-            fillColor: "red",
-            color: "red",
-            weight: 1,
-            opacity: 1,
-            fillOpacity: 0.8
-        }).addTo(mapa);
-        marcadoresMiTramo.push(marcador);
-        console.log(`  Marcador dibujado en Lat: ${lat}, Lng: ${lng}`);
-    } else {
-        console.warn(`  Intento de dibujar marcador con Lat/Lng no válidos: Lat: ${lat}, Lng: ${lng}`);
-    }
+
+async function mostrarTiempoEnPK(lat, lon) {
+   try {
+       const datosTiempo = await obtenerDatosTiempo(lat, lon);
+       if (datosTiempo) {
+           const ciudad = `PK ${formatearPK(window.pkMasCercano.pk)}`;
+            marcadorTiempoMiTramo = mostrarInfoTiempo(ciudad, lat, lon, datosTiempo);
+           if (marcadorTiempoMiTramo) {
+                marcadoresMiTramo.push(marcadorTiempoMiTramo); // Almacena el marcador del tiempo para poder eliminarlo luego
+          }
+       } else {
+         console.error("No se pudieron obtener los datos del tiempo para el PK.");
+         alert("No se pudieron obtener los datos del tiempo.");
+       }
+   } catch (error) {
+        console.error("Error al obtener los datos de tiempo:", error);
+        alert("Error al obtener los datos del tiempo.");
+   }
 }
+
 
 function desactivarCapaMiTramo() {
+     if (marcadorTiempoMiTramo) {
+        mapa.removeLayer(marcadorTiempoMiTramo); // Remueve el marcador de tiempo
+        marcadorTiempoMiTramo = null;
+     }
+
     marcadoresMiTramo.forEach(marcador => {
         mapa.removeLayer(marcador);
     });
-    marcadoresMiTramo = [];
+     marcadoresMiTramo = [];
     console.log("'Mi Tramo' desactivado y marcadores removidos.");
 }
 
@@ -454,17 +407,12 @@ function pkToNumberMiTramo(pkString) {
     return parseInt(parts[0]) * 1000 + parseInt(parts[1] || 0);
 }
 
-
-function numberToPkMiTramo(pkNumber, originalPK) {
-    const originalParts = originalPK.split('+');
-    const integerPartLength = originalParts[0].length;
-    const decimalPartLength = originalParts[1].length;
-
-
-    const parteEntera = Math.floor(pkNumber / Math.pow(10, decimalPartLength));
-    const parteDecimal = pkNumber % Math.pow(10, decimalPartLength);
-    return `${parteEntera.toString().padStart(integerPartLength, '0')}+${parteDecimal.toString().padStart(decimalPartLength, '0')}`;
+function numberToPkMiTramo(pkNumber) {
+    const parteEntera = Math.floor(pkNumber / 1000);
+    const parteDecimal = pkNumber % 1000;
+    return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
 }
+
 
 /////  FIN CAPA MI TRAMO /////---------------------------------------------------------------------------------------
 
