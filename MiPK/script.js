@@ -215,16 +215,16 @@ function calcularPKMasCercano(lat, lon, data) {
 
     // Función para convertir el formato PK a un número para comparar
     function pkToNumber(pkString) {
-        const parts = pkString.split('+');
-        return parseInt(parts[0]) * 1000 + parseInt(parts[1] || 0);
-    }
+    const parts = pkString.split('+');
+    return parseInt(parts[0]) * 1000 + parseInt(parts[1] || 0);
+}
 
     // Función para convertir un número de nuevo al formato PK
     function numberToPk(pkNumber) {
-        const parteEntera = Math.floor(pkNumber / 1000);
-        const parteDecimal = pkNumber % 1000;
-        return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
-    }
+    const parteEntera = Math.floor(pkNumber / 1000);
+    const parteDecimal = pkNumber % 1000;
+    return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
+}
 
     const pkActualNumerico = pkToNumber(pkActual.pk);
     const pkSiguienteObjetivoNumerico = pkActualNumerico + incrementoPK;
