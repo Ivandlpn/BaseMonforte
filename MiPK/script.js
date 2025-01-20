@@ -382,10 +382,11 @@ async function activarCapaMiTramo() {
             }
         };
 
+        // Dibujar puntos hacia adelante
         console.log("Dibujando puntos hacia adelante:");
         for (let offset = 0; offset <= rangoPK; offset += intervaloDibujo) {
             const pkTargetNumerico = pkActualNumerico + offset;
-            const pkTarget = numberToPkMiTramo(pkTargetNumerico);
+            const pkTarget = numberToPkMiTramo(pkTargetNumerico); // Convertir a PK String
             console.log(`  Buscando PK hacia adelante: Numérico: ${pkTargetNumerico}, Formateado: ${pkTarget}`);
             const coordenadas = encontrarCoordenadas(pkTarget, lineaActual);
             if (coordenadas) {
@@ -393,10 +394,11 @@ async function activarCapaMiTramo() {
             }
         }
 
+        // Dibujar puntos hacia atrás (empezar desde el intervalo para no duplicar el PK actual)
         console.log("Dibujando puntos hacia atrás:");
         for (let offset = intervaloDibujo; offset <= rangoPK; offset += intervaloDibujo) {
             const pkTargetNumerico = pkActualNumerico - offset;
-            const pkTarget = numberToPkMiTramo(pkTargetNumerico);
+            const pkTarget = numberToPkMiTramo(pkTargetNumerico); // Convertir a PK String
             console.log(`  Buscando PK hacia atrás: Numérico: ${pkTargetNumerico}, Formateado: ${pkTarget}`);
             const coordenadas = encontrarCoordenadas(pkTarget, lineaActual);
             if (coordenadas) {
@@ -455,8 +457,9 @@ function pkToNumberMiTramo(pkString) {
 function numberToPkMiTramo(pkNumber) {
     const parteEntera = Math.floor(pkNumber / 1000);
     const parteDecimal = pkNumber % 1000;
-    return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
+     return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
 }
+
 
 /////  FIN CAPA MI TRAMO /////---------------------------------------------------------------------------------------
 
