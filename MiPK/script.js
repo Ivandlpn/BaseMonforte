@@ -345,6 +345,17 @@ async function activarCapaMiTramo() {
         return;
     }
 
+ function pkToNumber(pkString) {
+    const parts = pkString.split('+');
+    return parseInt(parts[0]) * 1000 + parseInt(parts[1] || 0);
+}
+
+function numberToPk(pkNumber) {
+    const parteEntera = Math.floor(pkNumber / 1000);
+    const parteDecimal = pkNumber % 1000;
+    return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
+}
+
     const pkActualNumerico = pkToNumber(window.pkMasCercano.pk);
     const lineaUsuario = window.pkMasCercano.linea;
 
