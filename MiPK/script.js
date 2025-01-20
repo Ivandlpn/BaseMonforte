@@ -857,9 +857,10 @@ async function mostrarTodasPuertas(puertas) {
 
     // Crear un mapa de coordenadas por PK y Linea
      const coordenadasPorPKLinea = await crearMapaCoordenadas();
-        
+
     for (const puerta of puertas) {
-           const key = `${puerta.PK}-${puerta.Linea}`;
+          const pkFormateado = formatearPK(puerta.PK);
+           const key = `${pkFormateado}-${puerta.Linea}`;
             const puntoCoordenadas = coordenadasPorPKLinea.get(key);
 
           if(puntoCoordenadas){
@@ -868,12 +869,12 @@ async function mostrarTodasPuertas(puertas) {
                 .bindPopup(`
                     <div style="text-align: center;">
                         <p style="margin: 0; font-size: 1.2em;">Vía ${puerta.Via}</p>
-                        <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${formatearPK(puerta.PK)}</p>
+                        <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${pkFormateado}</p>
                     </div>
                 `);
             bounds.push([puntoCoordenadas.Latitud, puntoCoordenadas.Longitud]);
           } else {
-               console.warn(`No se encontraron coordenadas para el PK ${puerta.PK} en la línea ${puerta.Linea} (Puerta).`);
+               console.warn(`No se encontraron coordenadas para el PK ${pkFormateado} en la línea ${puerta.Linea} (Puerta).`);
           }
     }
 
@@ -891,15 +892,15 @@ function calcularPuertasCercanas(latUsuario, lonUsuario) {
         if (!puertasPorVia[puerta.Via]) {
             puertasPorVia[puerta.Via] = [];
         }
-       puerta.PK = pkToNumber(puerta.PK); // Convertir a número para la comparación
-       puertasPorVia[puerta.Via].push(puerta);
+      //  puerta.PK = pkToNumber(puerta.PK); // Convertir a número para la comparación
+        puertasPorVia[puerta.Via].push(puerta);
 
     });
 
     const puertasCercanasPorVia = {};
 
     for (const via in puertasPorVia) {
-       const puertasOrdenadas = puertasPorVia[via].sort((a, b) => a.PK - b.PK);
+       const puertasOrdenadas = puertasPorVia[via].sort((a, b) => pkToNumber(a.PK) - pkToNumber(b.PK));
 
         let crecienteMasCercana = null;
         let decrecienteMasCercana = null;
@@ -907,8 +908,7 @@ function calcularPuertasCercanas(latUsuario, lonUsuario) {
         let minDistanciaDecreciente = Infinity;
 
         for (const puerta of puertasOrdenadas) {
-            const distanciaPK = puerta.PK - pkToNumber(window.pkMasCercano.pk);
-
+            const distanciaPK = pkToNumber(puerta.PK) - pkToNumber(window.pkMasCercano.pk);
 
             if (distanciaPK > 0 && distanciaPK < minDistanciaCreciente) {
                 minDistanciaCreciente = distanciaPK;
@@ -918,21 +918,12 @@ function calcularPuertasCercanas(latUsuario, lonUsuario) {
                 decrecienteMasCercana = { ...puerta, distanciaPK };
             }
         }
-
-      if (crecienteMasCercana) {
-            crecienteMasCercana.PK = numberToPk(crecienteMasCercana.PK);
-        }
-        if(decrecienteMasCercana)
-        {
-            decrecienteMasCercana.PK = numberToPk(decrecienteMasCercana.PK);
-        }
-
         puertasCercanasPorVia[via] = { creciente: crecienteMasCercana, decreciente: decrecienteMasCercana };
-
     }
 
     return puertasCercanasPorVia;
 }
+
 
 function generarHTMLPuertas(puertasCercanas) {
     let html = '';
@@ -953,7 +944,7 @@ function generarHTMLPuertas(puertasCercanas) {
         if (puertasCercanas[via].creciente) {
             const puerta = puertasCercanas[via].creciente;
             const distanciaFormateada = puerta.distanciaPK.toFixed(0);
-             const pkFormateado = formatearPK(puerta.PK);
+            const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
                         <span>🚪 a + ${distanciaFormateada} metros - PK ${pkFormateado}
                         <a href="#" class="ver-en-mapa" data-pk="${puerta.PK}" data-linea="${puerta.Linea}" data-via="${via}">
@@ -964,10 +955,9 @@ function generarHTMLPuertas(puertasCercanas) {
              puertasArray.push(puerta);
         }
 
-
         // Puerta en sentido decreciente
         if (puertasCercanas[via].decreciente) {
-            const puerta = puertasCercanas[via].decreciente;
+           const puerta = puertasCercanas[via].decreciente;
             const distanciaFormateada = puerta.distanciaPK.toFixed(0);
             const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
@@ -980,13 +970,13 @@ function generarHTMLPuertas(puertasCercanas) {
              puertasArray.push(puerta);
         }
 
+
         if (!puertasCercanas[via].creciente && !puertasCercanas[via].decreciente) {
             html += `<div class="puerta-fila">
                         <span>No se encontraron puertas cercanas en esta vía.</span>
                     </div>`;
         }
     }
-
 
      if (html === '') {
         html = '<p>No se encontraron puertas cercanas.</p>';
@@ -1007,9 +997,9 @@ function generarHTMLPuertas(puertasCercanas) {
     `;
 }
 
+
     return html;
 }
-
 
 // Event listener para el botón "Buscar puerta por PK"
 document.addEventListener('click', function(event) {
@@ -1025,8 +1015,6 @@ document.addEventListener('click', function(event) {
     }
 });
 
-
-
 // Modifica la parte donde se muestra la tarjeta de puertas para agregar el event listener
 document.getElementById("iconoPuerta").addEventListener("click", () => {
     mostrarPuertasCercanas();
@@ -1035,36 +1023,37 @@ document.getElementById("iconoPuerta").addEventListener("click", () => {
     setTimeout(async () => {
         const enlacesVerMapa = document.querySelectorAll('.ver-en-mapa');
 
-        // Crear un mapa de coordenadas por PK y Linea
+       // Crear un mapa de coordenadas por PK y Linea
          const coordenadasPorPKLinea = await crearMapaCoordenadas();
-            
+
         enlacesVerMapa.forEach(enlace => {
-            enlace.addEventListener('click', function(event) {
+            enlace.addEventListener('click', async function(event) {
                 event.preventDefault();
 
                 ocultarPuertasCercanas();
 
-               const pkPuerta = this.dataset.pk;
+                const pkPuerta = this.dataset.pk;
                 const lineaPuerta = this.dataset.linea;
                 const via = this.dataset.via;
 
-                const key = `${pkPuerta}-${lineaPuerta}`;
+                const pkFormateado = formatearPK(pkPuerta);
 
+                const key = `${pkFormateado}-${lineaPuerta}`;
                 const puntoCoordenadas = coordenadasPorPKLinea.get(key);
                  if(puntoCoordenadas){
-                      const iconoPuertaMapa = L.icon({
+                    const iconoPuertaMapa = L.icon({
                         iconUrl: 'img/iconopuerta.png',
                         iconSize: [30, 30],
                         iconAnchor: [15, 30],
                         popupAnchor: [0, -30]
-                        });
+                    });
 
-                    const marcadorPuerta = L.marker([puntoCoordenadas.Latitud, puntoCoordenadas.Longitud], { icon: iconoPuertaMapa })
-                        .addTo(mapa)
+                     const marcadorPuerta = L.marker([puntoCoordenadas.Latitud, puntoCoordenadas.Longitud], { icon: iconoPuertaMapa })
+                         .addTo(mapa)
                         .bindPopup(`
                             <div style="text-align: center;">
                                 <p style="margin: 0; font-size: 1.2em;">Vía ${via}</p>
-                                <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${formatearPK(pkPuerta)}</p>
+                                <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${pkFormateado}</p>
                             </div>
                         `);
 
@@ -1073,23 +1062,20 @@ document.getElementById("iconoPuerta").addEventListener("click", () => {
                         mapa.fitBounds(bounds);
                     }
                   }else{
-                       console.warn(`No se encontraron coordenadas para el PK ${pkPuerta} en la línea ${lineaPuerta} (Click en mapa).`);
-                  }
+                     console.warn(`No se encontraron coordenadas para el PK ${pkFormateado} en la línea ${lineaPuerta} (Click en mapa).`);
+                 }
             });
         });
 
-
         const verTodasPuertas = document.getElementById('ver-todas-puertas');
-        if(verTodasPuertas){
+         if(verTodasPuertas){
             verTodasPuertas.addEventListener('click', function(event) {
-                event.preventDefault();
-                ocultarPuertasCercanas();
-                const puertas = JSON.parse(this.dataset.puertas);
-                mostrarTodasPuertas(puertas);
+                 event.preventDefault();
+                    ocultarPuertasCercanas();
+                    const puertas = JSON.parse(this.dataset.puertas);
+                    mostrarTodasPuertas(puertas);
             });
-        }
-
-
+         }
     }, 0);
 });
 
@@ -1115,6 +1101,7 @@ function numberToPk(pkNumber) {
     const parteDecimal = pkNumber % 1000;
     return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
 }
+
 
 
 /////  FIN PUERTAS /////---------------------------------------------------------------------------------------
