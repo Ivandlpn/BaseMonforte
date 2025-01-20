@@ -369,42 +369,42 @@ async function activarCapaMiTramo() {
 
         // Función para encontrar las coordenadas de un PK específico
         const encontrarCoordenadas = (pk, linea) => {
-            const pkNumerico = pkToNumberMiTramo(pk);
-            const puntoEncontrado = datosTrazado.find(punto =>
-                punto.Linea === linea && pkToNumberMiTramo(punto.PK) === pkNumerico
-            );
-            if (puntoEncontrado) {
-                console.log(`  Encontradas coordenadas para PK: ${pk}, Línea: ${linea}`, puntoEncontrado);
-                return { latitud: parseFloat(puntoEncontrado.Latitud), longitud: parseFloat(puntoEncontrado.Longitud) };
-            } else {
-                console.log(`  No se encontraron coordenadas para PK: ${pk}, Línea: ${linea}`);
+           const pkNumerico = pkToNumberMiTramo(pk);
+           const puntoEncontrado = datosTrazado.find(punto =>
+               punto.Linea === linea && pkToNumberMiTramo(punto.PK) === pkNumerico
+           );
+           if (puntoEncontrado) {
+               console.log(`  Encontradas coordenadas para PK: ${pk}, Línea: ${linea}`, puntoEncontrado);
+               return { latitud: parseFloat(puntoEncontrado.Latitud), longitud: parseFloat(puntoEncontrado.Longitud) };
+           } else {
+               console.log(`  No se encontraron coordenadas para PK: ${pk}, Línea: ${linea}`);
                 return null;
-            }
+           }
         };
 
         // Dibujar puntos hacia adelante
-        console.log("Dibujando puntos hacia adelante:");
+       console.log("Dibujando puntos hacia adelante:");
         for (let offset = 0; offset <= rangoPK; offset += intervaloDibujo) {
             const pkTargetNumerico = pkActualNumerico + offset;
-            const pkTarget = numberToPkMiTramo(pkTargetNumerico); // Convertir a PK String
-            console.log(`  Buscando PK hacia adelante: Numérico: ${pkTargetNumerico}, Formateado: ${pkTarget}`);
+            const pkTarget = numberToPkMiTramo(pkTargetNumerico, window.pkMasCercano.pk); // Pass original PK for formatting
+             console.log(`  Buscando PK hacia adelante: Numérico: ${pkTargetNumerico}, Formateado: ${pkTarget}`);
             const coordenadas = encontrarCoordenadas(pkTarget, lineaActual);
-            if (coordenadas) {
+             if (coordenadas) {
                 dibujarMarcadorMiTramo(coordenadas.latitud, coordenadas.longitud);
             }
         }
 
-        // Dibujar puntos hacia atrás (empezar desde el intervalo para no duplicar el PK actual)
-        console.log("Dibujando puntos hacia atrás:");
-        for (let offset = intervaloDibujo; offset <= rangoPK; offset += intervaloDibujo) {
+         // Dibujar puntos hacia atrás (empezar desde el intervalo para no duplicar el PK actual)
+         console.log("Dibujando puntos hacia atrás:");
+         for (let offset = intervaloDibujo; offset <= rangoPK; offset += intervaloDibujo) {
             const pkTargetNumerico = pkActualNumerico - offset;
-            const pkTarget = numberToPkMiTramo(pkTargetNumerico); // Convertir a PK String
-            console.log(`  Buscando PK hacia atrás: Numérico: ${pkTargetNumerico}, Formateado: ${pkTarget}`);
-            const coordenadas = encontrarCoordenadas(pkTarget, lineaActual);
+            const pkTarget = numberToPkMiTramo(pkTargetNumerico, window.pkMasCercano.pk); // Pass original PK for formatting
+             console.log(`  Buscando PK hacia atrás: Numérico: ${pkTargetNumerico}, Formateado: ${pkTarget}`);
+             const coordenadas = encontrarCoordenadas(pkTarget, lineaActual);
             if (coordenadas) {
-                dibujarMarcadorMiTramo(coordenadas.latitud, coordenadas.longitud);
-            }
-        }
+               dibujarMarcadorMiTramo(coordenadas.latitud, coordenadas.longitud);
+           }
+         }
 
     } catch (error) {
         console.error("Error al cargar o procesar los datos para 'Mi Tramo':", error);
@@ -454,12 +454,17 @@ function pkToNumberMiTramo(pkString) {
     return parseInt(parts[0]) * 1000 + parseInt(parts[1] || 0);
 }
 
-function numberToPkMiTramo(pkNumber) {
-    const parteEntera = Math.floor(pkNumber / 1000);
-    const parteDecimal = pkNumber % 1000;
-     return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
-}
 
+function numberToPkMiTramo(pkNumber, originalPK) {
+    const originalParts = originalPK.split('+');
+    const integerPartLength = originalParts[0].length;
+    const decimalPartLength = originalParts[1].length;
+
+
+    const parteEntera = Math.floor(pkNumber / Math.pow(10, decimalPartLength));
+    const parteDecimal = pkNumber % Math.pow(10, decimalPartLength);
+    return `${parteEntera.toString().padStart(integerPartLength, '0')}+${parteDecimal.toString().padStart(decimalPartLength, '0')}`;
+}
 
 /////  FIN CAPA MI TRAMO /////---------------------------------------------------------------------------------------
 
