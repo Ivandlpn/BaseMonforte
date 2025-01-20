@@ -859,8 +859,9 @@ async function mostrarTodasPuertas(puertas) {
      const coordenadasPorPKLinea = await crearMapaCoordenadas();
 
     for (const puerta of puertas) {
-          const pkFormateado = formatearPK(puerta.PK);
-           const key = `${pkFormateado}-${puerta.Linea}`;
+         const pkFormateado = formatearPK(puerta.PK);
+         const key = `${pkFormateado}-${puerta.Linea}`;
+
             const puntoCoordenadas = coordenadasPorPKLinea.get(key);
 
           if(puntoCoordenadas){
@@ -892,15 +893,14 @@ function calcularPuertasCercanas(latUsuario, lonUsuario) {
         if (!puertasPorVia[puerta.Via]) {
             puertasPorVia[puerta.Via] = [];
         }
-      //  puerta.PK = pkToNumber(puerta.PK); // Convertir a número para la comparación
+         puerta.PK = pkToNumber(puerta.PK);
         puertasPorVia[puerta.Via].push(puerta);
-
     });
 
     const puertasCercanasPorVia = {};
 
     for (const via in puertasPorVia) {
-       const puertasOrdenadas = puertasPorVia[via].sort((a, b) => pkToNumber(a.PK) - pkToNumber(b.PK));
+        const puertasOrdenadas = puertasPorVia[via].sort((a, b) => a.PK - b.PK);
 
         let crecienteMasCercana = null;
         let decrecienteMasCercana = null;
@@ -908,7 +908,7 @@ function calcularPuertasCercanas(latUsuario, lonUsuario) {
         let minDistanciaDecreciente = Infinity;
 
         for (const puerta of puertasOrdenadas) {
-            const distanciaPK = pkToNumber(puerta.PK) - pkToNumber(window.pkMasCercano.pk);
+             const distanciaPK = puerta.PK - pkToNumber(window.pkMasCercano.pk);
 
             if (distanciaPK > 0 && distanciaPK < minDistanciaCreciente) {
                 minDistanciaCreciente = distanciaPK;
@@ -918,12 +918,18 @@ function calcularPuertasCercanas(latUsuario, lonUsuario) {
                 decrecienteMasCercana = { ...puerta, distanciaPK };
             }
         }
+        if (crecienteMasCercana) {
+            crecienteMasCercana.PK = numberToPk(crecienteMasCercana.PK);
+        }
+        if(decrecienteMasCercana)
+        {
+            decrecienteMasCercana.PK = numberToPk(decrecienteMasCercana.PK);
+        }
         puertasCercanasPorVia[via] = { creciente: crecienteMasCercana, decreciente: decrecienteMasCercana };
     }
 
     return puertasCercanasPorVia;
 }
-
 
 function generarHTMLPuertas(puertasCercanas) {
     let html = '';
@@ -944,7 +950,7 @@ function generarHTMLPuertas(puertasCercanas) {
         if (puertasCercanas[via].creciente) {
             const puerta = puertasCercanas[via].creciente;
             const distanciaFormateada = puerta.distanciaPK.toFixed(0);
-            const pkFormateado = formatearPK(puerta.PK);
+             const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
                         <span>🚪 a + ${distanciaFormateada} metros - PK ${pkFormateado}
                         <a href="#" class="ver-en-mapa" data-pk="${puerta.PK}" data-linea="${puerta.Linea}" data-via="${via}">
@@ -952,12 +958,12 @@ function generarHTMLPuertas(puertasCercanas) {
                         </a>
                         </span>
                     </div>`;
-             puertasArray.push(puerta);
+           puertasArray.push(puerta);
         }
 
         // Puerta en sentido decreciente
         if (puertasCercanas[via].decreciente) {
-           const puerta = puertasCercanas[via].decreciente;
+             const puerta = puertasCercanas[via].decreciente;
             const distanciaFormateada = puerta.distanciaPK.toFixed(0);
             const pkFormateado = formatearPK(puerta.PK);
             html += `<div class="puerta-fila">
@@ -967,9 +973,8 @@ function generarHTMLPuertas(puertasCercanas) {
                         </a>
                         </span>
                     </div>`;
-             puertasArray.push(puerta);
+            puertasArray.push(puerta);
         }
-
 
         if (!puertasCercanas[via].creciente && !puertasCercanas[via].decreciente) {
             html += `<div class="puerta-fila">
@@ -996,11 +1001,8 @@ function generarHTMLPuertas(puertasCercanas) {
         </div>
     `;
 }
-
-
     return html;
 }
-
 // Event listener para el botón "Buscar puerta por PK"
 document.addEventListener('click', function(event) {
     if (event.target.closest('#buscar-puerta-por-pk')) {
@@ -1015,6 +1017,7 @@ document.addEventListener('click', function(event) {
     }
 });
 
+
 // Modifica la parte donde se muestra la tarjeta de puertas para agregar el event listener
 document.getElementById("iconoPuerta").addEventListener("click", () => {
     mostrarPuertasCercanas();
@@ -1022,24 +1025,23 @@ document.getElementById("iconoPuerta").addEventListener("click", () => {
     // Agregar event listener a los enlaces "Ver Mapa" después de generar el HTML
     setTimeout(async () => {
         const enlacesVerMapa = document.querySelectorAll('.ver-en-mapa');
-
-       // Crear un mapa de coordenadas por PK y Linea
-         const coordenadasPorPKLinea = await crearMapaCoordenadas();
-
+         // Crear un mapa de coordenadas por PK y Linea
+        const coordenadasPorPKLinea = await crearMapaCoordenadas();
         enlacesVerMapa.forEach(enlace => {
-            enlace.addEventListener('click', async function(event) {
+            enlace.addEventListener('click',async function(event) {
                 event.preventDefault();
 
                 ocultarPuertasCercanas();
 
-                const pkPuerta = this.dataset.pk;
+               const pkPuerta = this.dataset.pk;
                 const lineaPuerta = this.dataset.linea;
-                const via = this.dataset.via;
+                 const via = this.dataset.via;
 
-                const pkFormateado = formatearPK(pkPuerta);
+                 const pkFormateado = formatearPK(pkPuerta);
+                  const key = `${pkFormateado}-${lineaPuerta}`;
 
-                const key = `${pkFormateado}-${lineaPuerta}`;
-                const puntoCoordenadas = coordenadasPorPKLinea.get(key);
+
+                 const puntoCoordenadas = coordenadasPorPKLinea.get(key);
                  if(puntoCoordenadas){
                     const iconoPuertaMapa = L.icon({
                         iconUrl: 'img/iconopuerta.png',
@@ -1056,9 +1058,8 @@ document.getElementById("iconoPuerta").addEventListener("click", () => {
                                 <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${pkFormateado}</p>
                             </div>
                         `);
-
                     if (lat && lon) {
-                        const bounds = L.latLngBounds([lat, lon], [puntoCoordenadas.Latitud, puntoCoordenadas.Longitud]);
+                         const bounds = L.latLngBounds([lat, lon], [puntoCoordenadas.Latitud, puntoCoordenadas.Longitud]);
                         mapa.fitBounds(bounds);
                     }
                   }else{
@@ -1067,15 +1068,15 @@ document.getElementById("iconoPuerta").addEventListener("click", () => {
             });
         });
 
-        const verTodasPuertas = document.getElementById('ver-todas-puertas');
-         if(verTodasPuertas){
+         const verTodasPuertas = document.getElementById('ver-todas-puertas');
+        if(verTodasPuertas){
             verTodasPuertas.addEventListener('click', function(event) {
-                 event.preventDefault();
-                    ocultarPuertasCercanas();
-                    const puertas = JSON.parse(this.dataset.puertas);
-                    mostrarTodasPuertas(puertas);
+                event.preventDefault();
+                ocultarPuertasCercanas();
+                 const puertas = JSON.parse(this.dataset.puertas);
+                mostrarTodasPuertas(puertas);
             });
-         }
+        }
     }, 0);
 });
 
@@ -1090,6 +1091,46 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
     }
 });
 
+async function crearMapaCoordenadas() {
+    const rutasCoordenadas = [
+      "./doc/traza/L40Ar.json",
+       "./doc/traza/L40Br.json",
+       "./doc/traza/L40Cr.json",
+       "./doc/traza/L42Ar.json",
+        "./doc/traza/L42B.json",
+        "./doc/traza/L46.json",
+        "./doc/traza/L48.json"
+    ];
+
+    try {
+        const dataCoordenadasArrays = await Promise.all(rutasCoordenadas.map(ruta =>
+            fetch(ruta).then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error al cargar ${ruta}: ${response.statusText}`);
+                }
+                return response.json();
+            }).catch(error => {
+                console.error(`Error al cargar ${ruta}:`, error);
+                return [];
+            })
+        ));
+
+        const dataCoordenadas = dataCoordenadasArrays.flat();
+        const mapaCoordenadas = new Map();
+
+        dataCoordenadas.forEach(punto => {
+            const pkFormateado = formatearPK(punto.PK);
+            const key = `${pkFormateado}-${punto.Linea}`;
+            mapaCoordenadas.set(key, punto);
+        });
+
+        return mapaCoordenadas;
+
+    } catch (error) {
+        console.error("Error al crear el mapa de coordenadas:", error);
+        return new Map();
+    }
+}
 
 function pkToNumber(pkString) {
     const parts = pkString.split('+');
@@ -1101,7 +1142,6 @@ function numberToPk(pkNumber) {
     const parteDecimal = pkNumber % 1000;
     return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
 }
-
 
 
 /////  FIN PUERTAS /////---------------------------------------------------------------------------------------
