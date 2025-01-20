@@ -329,7 +329,16 @@ document.addEventListener('click', function(event) {
 
 let marcadoresMiTramo = []; // Array para almacenar los marcadores de "Mi Tramo"
 let marcadorTiempoMiTramo = null; // Almacena el marcador de tiempo de "Mi Tramo"
+let marcadoresEdificiosMiTramo = []; // Array para almacenar marcadores de edificios cercanos
 const checkMiTramo = document.getElementById('check-mitramo');
+
+// Almacenamos una referencia a los checkboxes de capas de edificios
+const checkEnergia = document.getElementById('check-energia');
+const checkBts = document.getElementById('check-bts');
+const checkIiss = document.getElementById('check-iiss');
+const checkEstaciones = document.getElementById('check-estaciones');
+const checkTuneles = document.getElementById('check-tuneles');
+
 
 checkMiTramo.addEventListener('change', function () {
     if (this.checked) {
@@ -352,9 +361,37 @@ async function activarCapaMiTramo() {
 
     console.log(`Activando 'Mi Tramo'. PK Actual: ${window.pkMasCercano.pk}, Lat: ${lat}, Lng: ${lon}`);
 
+    // Desactivar capas de edificios generales
+    desactivarCapasEdificiosGenerales();
+
     mostrarTiempoEnPK(lat, lon);
+    mostrarEmplazamientosCercanos(lat, lon);
 }
 
+function desactivarCapasEdificiosGenerales()
+{
+    // Desactivar capas de edificios generales si están activadas
+    if (checkEnergia.checked) {
+        checkEnergia.checked = false;
+        checkEnergia.dispatchEvent(new Event('change')); // Disparar el evento change
+    }
+    if (checkBts.checked) {
+        checkBts.checked = false;
+          checkBts.dispatchEvent(new Event('change')); // Disparar el evento change
+    }
+    if (checkIiss.checked) {
+        checkIiss.checked = false;
+        checkIiss.dispatchEvent(new Event('change')); // Disparar el evento change
+    }
+     if (checkEstaciones.checked) {
+        checkEstaciones.checked = false;
+         checkEstaciones.dispatchEvent(new Event('change')); // Disparar el evento change
+    }
+    if (checkTuneles.checked) {
+      checkTuneles.checked = false;
+        checkTuneles.dispatchEvent(new Event('change')); // Disparar el evento change
+    }
+}
 
 async function mostrarTiempoEnPK(lat, lon) {
    try {
@@ -363,7 +400,7 @@ async function mostrarTiempoEnPK(lat, lon) {
            const ciudad = `PK ${formatearPK(window.pkMasCercano.pk)}`;
             marcadorTiempoMiTramo = mostrarInfoTiempo(ciudad, lat, lon, datosTiempo);
            if (marcadorTiempoMiTramo) {
-                marcadoresMiTramo.push(marcadorTiempoMiTramo); // Almacena el marcador del tiempo para poder eliminarlo luego
+               marcadoresMiTramo.push(marcadorTiempoMiTramo);
           }
        } else {
          console.error("No se pudieron obtener los datos del tiempo para el PK.");
@@ -376,18 +413,107 @@ async function mostrarTiempoEnPK(lat, lon) {
 }
 
 
-function desactivarCapaMiTramo() {
+async function mostrarEmplazamientosCercanos(latUsuario, lonUsuario)
+{
+     const tipos = ["SE", "ATI", "ATF", "BTS", "CS", "ET", "ESTACIÓN", "TUNEL"];
+    try {
+        // Cargar y combinar datos de ambos archivos
+        const rutasEdificios = ["./doc/edificios/ALBALI.json", "./doc/edificios/TOVAL.json"];
+        const dataEdificiosArrays = await Promise.all(rutasEdificios.map(ruta =>
+            fetch(ruta).then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error al cargar ${ruta}: ${response.statusText}`);
+                }
+                return response.json();
+            }).catch(error => {
+                console.error(`Error al cargar ${ruta}:`, error);
+                return [];
+            })
+        ));
+         const dataEdificios = dataEdificiosArrays.flat();
+
+        // Mapear coordenadas a un objeto para mejor búsqueda
+          const coordenadasPorPKLinea = await crearMapaCoordenadas();
+
+
+        // Filtrar elementos por tipo
+        const elementosFiltrados = dataEdificios.filter(item => tipos.includes(item.TIPO));
+         elementosFiltrados.forEach(elemento => {
+            const pkElemento = elemento.PK;
+            const lineaElemento = elemento.LINEA;
+            const key = `${pkElemento}-${lineaElemento}`;
+             const puntoCoordenadas = coordenadasPorPKLinea.get(key);
+            const icono = crearIconoEdificio(elemento.TIPO);
+
+            if (puntoCoordenadas && icono) {
+                 const distancia = calcularDistancia(latUsuario, lonUsuario, puntoCoordenadas.Latitud, puntoCoordenadas.Longitud);
+
+                  if(distancia <= 5000) // Rango de 5 km
+                  {
+                    const pkFormateado = formatearPK(pkElemento);
+                    const marker = L.marker([puntoCoordenadas.Latitud, puntoCoordenadas.Longitud], { icon: icono })
+                    .bindPopup(`
+                    <div style="text-align: center;">
+                        <b style="font-size: 1.1em;">${elemento.NOMBRE}</b><br>
+                        ${pkFormateado} (L${lineaElemento})
+                    </div>
+                `);
+                   marcadoresEdificiosMiTramo.push(marker);
+                    marker.addTo(mapa);
+                }
+            } else {
+                 console.warn(`No se encontraron coordenadas para el PK ${pkElemento} en la línea ${lineaElemento} (Tipo: ${elemento.TIPO})`);
+            }
+        });
+
+    } catch (error) {
+         console.error("Error al activar la capa de edificios:", error);
+    }
+}
+
+ function desactivarCapaMiTramo() {
+
      if (marcadorTiempoMiTramo) {
-        mapa.removeLayer(marcadorTiempoMiTramo); // Remueve el marcador de tiempo
+        mapa.removeLayer(marcadorTiempoMiTramo);
         marcadorTiempoMiTramo = null;
      }
+
+    marcadoresEdificiosMiTramo.forEach(marcador => {
+         mapa.removeLayer(marcador);
+    });
+    marcadoresEdificiosMiTramo = [];
 
     marcadoresMiTramo.forEach(marcador => {
         mapa.removeLayer(marcador);
     });
      marcadoresMiTramo = [];
+
+      //Reactiva capas de edificios generales
+      reactivarCapasEdificiosGenerales();
     console.log("'Mi Tramo' desactivado y marcadores removidos.");
 }
+
+function reactivarCapasEdificiosGenerales()
+{
+    // Reactivar capas de edificios generales si estaban activadas
+        if (checkEnergia.checked) {
+             checkEnergia.dispatchEvent(new Event('change')); // Disparar el evento change
+        }
+    if (checkBts.checked) {
+         checkBts.dispatchEvent(new Event('change')); // Disparar el evento change
+    }
+    if (checkIiss.checked) {
+         checkIiss.dispatchEvent(new Event('change')); // Disparar el evento change
+    }
+     if (checkEstaciones.checked) {
+         checkEstaciones.dispatchEvent(new Event('change')); // Disparar el evento change
+    }
+     if (checkTuneles.checked) {
+          checkTuneles.dispatchEvent(new Event('change')); // Disparar el evento change
+    }
+}
+
+
 
 async function cargarArchivosJSONMiTramo(rutas) {
     const todasPromesas = rutas.map(ruta =>
@@ -413,6 +539,83 @@ function numberToPkMiTramo(pkNumber) {
     return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
 }
 
+async function crearMapaCoordenadas() {
+     const rutasCoordenadas = [
+      "./doc/traza/L40Ar.json",
+       "./doc/traza/L40Br.json",
+       "./doc/traza/L40Cr.json",
+       "./doc/traza/L42Ar.json",
+        "./doc/traza/L42B.json",
+        "./doc/traza/L46.json",
+        "./doc/traza/L48.json"
+    ];
+
+    try {
+        const dataCoordenadasArrays = await Promise.all(rutasCoordenadas.map(ruta =>
+            fetch(ruta).then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error al cargar ${ruta}: ${response.statusText}`);
+                }
+                return response.json();
+            }).catch(error => {
+                console.error(`Error al cargar ${ruta}:`, error);
+                return [];
+            })
+        ));
+
+        const dataCoordenadas = dataCoordenadasArrays.flat();
+        const mapaCoordenadas = new Map();
+
+        dataCoordenadas.forEach(punto => {
+            const key = `${punto.PK}-${punto.Linea}`;
+            mapaCoordenadas.set(key, punto);
+        });
+
+        return mapaCoordenadas;
+
+    } catch (error) {
+        console.error("Error al crear el mapa de coordenadas:", error);
+        return new Map();
+    }
+}
+
+function calcularDistancia(lat1, lon1, lat2, lon2) {
+    const R = 6371000;
+    const φ1 = lat1 * Math.PI / 180;
+    const φ2 = lat2 * Math.PI / 180;
+    const Δφ = (lat2 - lat1) * Math.PI / 180;
+    const Δλ = (lon2 - lon1) * Math.PI / 180;
+
+    const a = Math.sin(Δφ / 2) ** 2 +
+              Math.cos(φ1) * Math.cos(φ2) *
+              Math.sin(Δλ / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c;
+}
+
+
+function crearIconoEdificio(tipo) {
+    const iconosEdificios = {
+        "SE": 'img/edificios/energia_icon.png',
+        "ATI": 'img/edificios/energia_icon.png',
+        "ATF": 'img/edificios/energia_icon.png',
+        "BTS": 'img/edificios/bts_icon.png',
+        "CS": 'img/edificios/iiss_icon.png',
+        "ET": 'img/edificios/iiss_icon.png',
+        "ESTACIÓN": 'img/edificios/estaciones_icon.png',
+        "TUNEL": 'img/edificios/tunel_icon.png'
+    };
+
+    const iconUrl = iconosEdificios[tipo];
+    if (!iconUrl) return null;
+    return L.icon({
+        iconUrl: iconUrl,
+        iconSize: [25, 25],
+        iconAnchor: [12, 35],
+        popupAnchor: [0, -35]
+    });
+}
 
 /////  FIN CAPA MI TRAMO /////---------------------------------------------------------------------------------------
 
