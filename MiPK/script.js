@@ -570,9 +570,9 @@ async function activarCapaTrazado() {
     }
 
 
-    function pkToNumber(pkString) {
-        return parseInt(pkString, 10);
-    }
+   // function pkToNumber(pkString) {
+    //    return parseInt(pkString, 10);
+   // }
 
     async function cargarArchivosJSON(rutas) {
         const todasPromesas = rutas.map(ruta =>
