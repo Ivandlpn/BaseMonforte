@@ -299,6 +299,7 @@ function formatearPK(pk) {
 
 /////  INICIO CAPAS/////---------------------------------------------------------------------------------------
 // Obtener referencias a los elementos del DOM
+const checkMiTramo = document.getElementById('check-mitramo');
 const botonCapas = document.getElementById('boton-capas');
 const menuCapas = document.getElementById('menu-capas');
 const checkTrazado = document.getElementById('check-trazado');
@@ -324,6 +325,164 @@ document.addEventListener('click', function(event) {
     }
 });
 
+
+/////  INICIO CAPA MI TRAMO /////---------------------------------------------------------------------------------------
+
+
+checkMiTramo.addEventListener('change', function() {
+    if (this.checked) {
+        activarCapaMiTramo();
+    } else {
+        desactivarCapaMiTramo();
+    }
+});
+
+
+async function activarCapaMiTramo() {
+    if (!window.pkMasCercano) {
+        alert("Calculando PK actual. Inténtalo de nuevo en unos segundos.");
+        checkMiTramo.checked = false; // Desmarca el checkbox si no hay PK
+        return;
+    }
+
+    const pkActualNumerico = pkToNumber(window.pkMasCercano.pk);
+    const lineaUsuario = window.pkMasCercano.linea;
+
+    const pkInicioNumerico = pkActualNumerico - 5000; // 5km antes (5000 metros)
+    const pkFinNumerico = pkActualNumerico + 5000;   // 5km después (5000 metros)
+
+    const pkInicioFormateado = numberToPk(pkInicioNumerico);
+    const pkFinFormateado = numberToPk(pkFinNumerico);
+
+    // Activar las otras capas, pasando el rango de PK y la línea
+    activarCapaTrazado(pkInicioNumerico, pkFinNumerico, lineaUsuario);
+    activarCapaTiempoEnRango(pkInicioNumerico, pkFinNumerico);
+    activarCapaEdificiosEnRango(energiaLayer, ["SE", "ATI", "ATF"], pkInicioNumerico, pkFinNumerico, lineaUsuario);
+    activarCapaEdificiosEnRango(btsLayer, ["BTS"], pkInicioNumerico, pkFinNumerico, lineaUsuario);
+    activarCapaEdificiosEnRango(iissLayer, ["CS", "ET"], pkInicioNumerico, pkFinNumerico, lineaUsuario);
+    activarCapaEdificiosEnRango(estacionesLayer, ["ESTACIÓN"], pkInicioNumerico, pkFinNumerico, lineaUsuario);
+    activarCapaEdificiosEnRango(tunelesLayer, ["TUNEL"], pkInicioNumerico, pkFinNumerico, lineaUsuario);
+
+    // Ajustar el zoom del mapa para el tramo
+    ajustarZoomParaTramo(pkInicioNumerico, pkFinNumerico, lineaUsuario);
+}
+
+function desactivarCapaMiTramo() {
+    desactivarCapaTrazado();
+    desactivarCapaTiempo();
+    desactivarCapaEdificios(energiaLayer);
+    desactivarCapaEdificios(btsLayer);
+    desactivarCapaEdificios(iissLayer);
+    desactivarCapaEdificios(estacionesLayer);
+    desactivarCapaEdificios(tunelesLayer);
+    // Restablecer el zoom a la vista normal (opcional)
+    if (lat && lon) {
+        mapa.setView([lat, lon], 18);
+    }
+}
+
+async function activarCapaTiempoEnRango(pkInicio, pkFin) {
+    // Desactivar la capa de tiempo actual para evitar duplicados
+    desactivarCapaTiempo();
+
+    const ciudadesEnRango = [
+        // Adapta esta lógica para filtrar ciudades basándote en su proximidad al rango de PK
+        // Esto podría requerir obtener las coordenadas de los PKs límite y usar un cálculo de distancia.
+        // Por simplicidad, aquí se dejan las mismas ciudades. Una mejor implementación requeriría más lógica espacial.
+        { nombre: "Villena", provincia: "Alicante", pais: "ES", lat: 38.6333, lon: -0.8667 },
+        { nombre: "Almansa", provincia: "Albacete", pais: "ES", lat: 38.8706, lon: -1.0976 },
+        // ... (resto de tus ciudades)
+    ];
+
+    for (const ciudad of ciudadesEnRango) {
+        try {
+            const datosTiempo = await obtenerDatosTiempo(ciudad.lat, ciudad.lon);
+            if (datosTiempo) {
+                const marcador = mostrarInfoTiempo(ciudad.nombre, ciudad.lat, ciudad.lon, datosTiempo);
+                if (marcador) {
+                    marcadoresTiempo.push(marcador);
+                }
+            }
+        } catch (error) {
+            console.error(`Error al obtener datos de tiempo para ${ciudad.nombre}:`, error);
+        }
+    }
+}
+
+async function activarCapaEdificiosEnRango(layerGroup, tipos, pkInicio, pkFin, lineaFiltro) {
+    layerGroup.clearLayers(); // Limpiar la capa antes de añadir nuevos marcadores
+    try {
+        const rutasEdificios = ["./doc/edificios/ALBALI.json", "./doc/edificios/TOVAL.json"];
+        const dataEdificiosArrays = await Promise.all(rutasEdificios.map(ruta =>
+            fetch(ruta).then(response => response.json())
+        ));
+        const dataEdificios = dataEdificiosArrays.flat();
+
+        const coordenadasPorPKLinea = await crearMapaCoordenadas();
+
+        const elementosFiltrados = dataEdificios.filter(item =>
+            tipos.includes(item.TIPO) &&
+            pkToNumber(item.PK) >= pkInicio &&
+            pkToNumber(item.PK) <= pkFin &&
+            item.LINEA === lineaFiltro
+        );
+
+        elementosFiltrados.forEach(elemento => {
+            const pkElemento = elemento.PK;
+            const lineaElemento = elemento.LINEA;
+            const key = `${pkElemento}-${lineaElemento}`;
+            const puntoCoordenadas = coordenadasPorPKLinea.get(key);
+            const icono = crearIconoEdificio(elemento.TIPO);
+
+            if (puntoCoordenadas && icono) {
+                const pkFormateado = formatearPK(pkElemento);
+                const marker = L.marker([puntoCoordenadas.Latitud, puntoCoordenadas.Longitud], { icon: icono })
+                    .bindPopup(`<div style="text-align: center;"><b style="font-size: 1.1em;">${elemento.NOMBRE}</b><br>${pkFormateado} (L${lineaElemento})</div>`);
+                layerGroup.addLayer(marker);
+            }
+        });
+        mapa.addLayer(layerGroup);
+
+    } catch (error) {
+        console.error("Error al activar la capa de edificios:", error);
+    }
+}
+
+async function ajustarZoomParaTramo(pkInicio, pkFin, lineaFiltro) {
+    const rutasArchivos = [
+      "./doc/traza/L40Ar.json",
+       "./doc/traza/L40Br.json",
+       "./doc/traza/L40Cr.json",
+       "./doc/traza/L42Ar.json",
+        "./doc/traza/L42B.json",
+        "./doc/traza/L46.json",
+        "./doc/traza/L48.json"
+    ];
+    try {
+        const datosTrazado = await cargarArchivosJSON(rutasArchivos);
+        const puntosDelTramo = datosTrazado.filter(punto =>
+            pkToNumber(punto.PK) >= pkInicio &&
+            pkToNumber(punto.PK) <= pkFin &&
+            punto.Linea === lineaFiltro
+        );
+
+        if (puntosDelTramo.length > 0) {
+            let bounds = new L.LatLngBounds();
+            puntosDelTramo.forEach(punto => {
+                bounds.extend([punto.Latitud, punto.Longitud]);
+            });
+            mapa.fitBounds(bounds);
+        } else if (lat && lon) {
+            // Si no hay puntos en el tramo, centra en la ubicación del usuario
+            mapa.setView([lat, lon], 15); // Ajusta el nivel de zoom si es necesario
+        }
+    } catch (error) {
+        console.error("Error al ajustar el zoom del mapa:", error);
+    }
+}
+
+/////  FIN CAPA MI TRAMO /////---------------------------------------------------------------------------------------
+
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 
@@ -343,10 +502,22 @@ async function activarCapaTrazado() {
 
     try {
         const datosTrazado = await cargarArchivosJSON(rutasArchivos);
-        const puntosPorLinea = agruparPuntosPorLinea(datosTrazado);
-        for (const linea in puntosPorLinea) {
-            const puntosDeLaLinea = puntosPorLinea[linea];
-            dibujarPuntosCada20Metros(puntosDeLaLinea, linea);
+        const puntosFiltrados = datosTrazado.filter(punto =>
+            pkToNumber(punto.PK) >= pkInicio &&
+            pkToNumber(punto.PK) <= pkFin &&
+            punto.Linea === lineaFiltro
+        );
+
+        // Limpiar marcadores previos antes de dibujar
+        desactivarCapaTrazado();
+
+        // Dibujar puntos cada 20 metros dentro del rango
+        let ultimoPkDibujado = null;
+        for (const punto of puntosFiltrados) {
+            const pkActualNumerico = pkToNumber(punto.PK);
+            if (ultimoPkDibujado === null || pkActualNumerico >= ultimoPkDibujado + 20) {
+                // ... (código existente para dibujar el punto) ...
+            }
         }
     } catch (error) {
         console.error("Error al cargar o procesar los datos de trazado:", error);
