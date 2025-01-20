@@ -1,12 +1,6 @@
 [
     {
         "LINEA": "42",
-        "PK": "320841",
-        "TIPO": "CRC",
-        "NOMBRE": "CRC Albacete"
-    },
-    {
-        "LINEA": "42",
         "PK": "323340",
         "TIPO": "BTS",
         "NOMBRE": "BTS01A"
