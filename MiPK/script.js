@@ -112,8 +112,10 @@ function mostrarMensaje(mensaje) {
 }
 
 
+let mapa; // Declara mapa fuera de la función
+
 function inicializarMapa(lat, lon) {
-    mapa = L.map('map', {
+    mapa = L.map('map', { // Asigna el mapa a la variable global
         center: [lat, lon],
         zoom: 18,
         maxZoom: 19,
@@ -134,7 +136,6 @@ function inicializarMapa(lat, lon) {
 
     marcadorActual = L.marker([lat, lon], { icon: iconoUsuario }).addTo(mapa)
         .bindPopup('Mi Ubicación')
-        //.openPopup();
 
     mapa.on('move', () => {
         centradoAutomaticamente = false;
@@ -323,6 +324,407 @@ document.addEventListener('click', function(event) {
         menuCapas.style.display = 'none';
     }
 });
+
+/////  INICIO CAPA MI TRAMO /////---------------------------------------------------------------------------------------
+
+// Variables Globales para la capa "Mi tramo"
+let marcadoresTrazadoMiTramo = [];
+let marcadoresTiempoMiTramo = [];
+let marcadoresEdificiosMiTramo = [];
+
+
+async function activarCapaMiTramo() {
+  if (!window.pkMasCercano) {
+      console.error("No se ha calculado el PK actual. No se puede activar la capa 'Mi Tramo'.");
+      return;
+  }
+    
+  const { pk, linea, latitud, longitud } = window.pkMasCercano;
+  const pkNumerico = pkToNumber(pk);
+
+  // Calcular PKs de inicio y fin para el tramo de 10 km
+  const pkInicioNumerico = pkNumerico - 5000;
+  const pkFinNumerico = pkNumerico + 5000;
+
+  const pkInicioFormateado = numberToPk(pkInicioNumerico);
+  const pkFinFormateado = numberToPk(pkFinNumerico);
+
+  // Limpiar capas anteriores
+    desactivarCapaMiTramo();
+  
+  // Dibujar trazado
+    await dibujarTrazadoMiTramo(linea, pkInicioFormateado, pkFinFormateado);
+    
+  // Dibujar tiempo
+  await dibujarTiempoMiTramo(latitud, longitud, linea, pkInicioNumerico, pkFinNumerico);
+   
+  // Dibujar edificios
+  await dibujarEdificiosMiTramo(linea, pkInicioNumerico, pkFinNumerico);
+
+  // Ajustar el zoom del mapa
+  ajustarZoomAlTramo(latitud, longitud, pkInicioNumerico, pkFinNumerico);
+
+}
+
+// Función para buscar coordenadas por PK
+async function buscarCoordenadasPorPK(pkString, linea) {
+    const rutasArchivos = [
+       "./doc/traza/L40Ar.json",
+       "./doc/traza/L40Br.json",
+       "./doc/traza/L40Cr.json",
+       "./doc/traza/L42Ar.json",
+       "./doc/traza/L42B.json",
+       "./doc/traza/L46.json",
+       "./doc/traza/L48.json"
+    ];
+
+    try {
+        const datosTrazado = await cargarArchivosJSON(rutasArchivos);
+
+        const punto = datosTrazado.find(p => p.PK === pkString && p.Linea === linea);
+
+        if (punto) {
+            return {
+                Latitud: punto.Latitud,
+                Longitud: punto.Longitud
+            };
+        }
+         console.warn(`No se encontraron coordenadas para el PK ${pkString} y linea ${linea}`);
+        return null;
+    } catch (error) {
+        console.error("Error al cargar o procesar los datos de trazado:", error);
+        return null;
+    }
+
+    async function cargarArchivosJSON(rutas) {
+        const todasPromesas = rutas.map(ruta =>
+            fetch(ruta)
+                .then(response => response.json())
+                .catch(error => {
+                    console.error(`Error al cargar ${ruta}:`, error);
+                    return [];
+                })
+        );
+        const datosCargados = await Promise.all(todasPromesas);
+        return datosCargados.flat();
+    }
+}
+
+
+// Función para ajustar el zoom del mapa al tramo
+async function ajustarZoomAlTramo(latitud, longitud, pkInicioNumerico, pkFinNumerico) {
+   const incrementoPK = 20;
+
+  const coordenadasIniciales = await buscarCoordenadasPorPK(numberToPk(pkInicioNumerico), window.pkMasCercano.linea);
+  const coordenadasFinales = await buscarCoordenadasPorPK(numberToPk(pkFinNumerico), window.pkMasCercano.linea);
+
+   if(coordenadasIniciales && coordenadasFinales) {
+        const latLngInicial = L.latLng(coordenadasIniciales.Latitud, coordenadasIniciales.Longitud);
+        const latLngFinal = L.latLng(coordenadasFinales.Latitud, coordenadasFinales.Longitud);
+        const latLngUsuario = L.latLng(latitud, longitud);
+
+       const bounds = L.latLngBounds([latLngInicial, latLngFinal, latLngUsuario]);
+
+        mapa.fitBounds(bounds, { padding: [50, 50] }); // Ajustar padding para un mejor visualización
+    } else{
+         mapa.setView([latitud, longitud], 15); // En caso de error, establece un zoom por defecto
+    }
+}
+
+
+// Función para convertir el formato PK a un número para comparar
+function pkToNumber(pkString) {
+    const parts = pkString.split('+');
+    return parseInt(parts[0]) * 1000 + parseInt(parts[1] || 0);
+}
+
+// Función para convertir un número de nuevo al formato PK
+function numberToPk(pkNumber) {
+    const parteEntera = Math.floor(pkNumber / 1000);
+    const parteDecimal = pkNumber % 1000;
+    return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
+}
+
+async function dibujarTrazadoMiTramo(linea, pkInicioFormateado, pkFinFormateado) {
+    const rutasArchivos = [
+       "./doc/traza/L40Ar.json",
+       "./doc/traza/L40Br.json",
+       "./doc/traza/L40Cr.json",
+       "./doc/traza/L42Ar.json",
+       "./doc/traza/L42B.json",
+       "./doc/traza/L46.json",
+       "./doc/traza/L48.json"
+    ];
+
+    try {
+        const datosTrazado = await cargarArchivosJSON(rutasArchivos);
+
+        const puntosDeLaLinea = datosTrazado.filter(punto => punto.Linea === linea);
+        
+        const pkInicioNumerico = pkToNumber(pkInicioFormateado);
+        const pkFinNumerico = pkToNumber(pkFinFormateado);
+
+        for (const punto of puntosDeLaLinea) {
+            const pkActualNumerico = pkToNumber(punto.PK);
+
+            if (pkActualNumerico >= pkInicioNumerico && pkActualNumerico <= pkFinNumerico) {
+                const puntoLat = parseFloat(punto.Latitud);
+                const puntoLng = parseFloat(punto.Longitud);
+
+                if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
+                    const marcador = L.circleMarker([puntoLat, puntoLng], {
+                        radius: 2,
+                        fillColor: "blue",
+                        color: "blue",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 1
+                    }).addTo(mapa);
+                    marcadoresTrazadoMiTramo.push(marcador);
+                } else {
+                    console.error("Latitud o Longitud no válidas:", punto);
+                }
+            }
+        }
+    } catch (error) {
+        console.error("Error al cargar o procesar los datos de trazado para 'Mi Tramo':", error);
+    }
+
+    async function cargarArchivosJSON(rutas) {
+        const todasPromesas = rutas.map(ruta =>
+            fetch(ruta)
+                .then(response => response.json())
+                .catch(error => {
+                    console.error(`Error al cargar ${ruta}:`, error);
+                    return [];
+                })
+        );
+        const datosCargados = await Promise.all(todasPromesas);
+        return datosCargados.flat();
+    }
+}
+
+async function dibujarTiempoMiTramo(latitud, longitud, linea, pkInicioNumerico, pkFinNumerico) {
+
+    const ciudades = [
+        { nombre: "Villena", provincia: "Alicante", pais: "ES", lat: 38.6333, lon: -0.8667 },
+        { nombre: "Almansa", provincia: "Albacete", pais: "ES", lat: 38.8706, lon: -1.0976 },
+        { nombre: "Bonete", provincia: "Albacete", pais: "ES", lat: 38.9211, lon: -1.3480 },
+
+
+        { nombre: "Estación AVE Alicante", ciudad: "Alicante", pais: "ES", lat: 38.3394, lon: -0.5015 }, // Estación de AVE de Alicante
+        { nombre: "Estación AVE Villena", ciudad: "Villena", pais: "ES", lat: 38.6536, lon: -0.8872 }, // Estación de AVE de Villena
+        { nombre: "Estación AVE Albacete", ciudad: "Albacete", pais: "ES", lat: 39.0045, lon: -1.8531 }, // Estación de AVE de Albacete
+        { nombre: "Estación AVE Cuenca", ciudad: "Cuenca", pais: "ES", lat: 40.0269, lon: -2.0985 }, // Estación de AVE de Cuenca (Fernando Zóbel)
+        { nombre: "Estación AVE Requena", ciudad: "Requena", pais: "ES", lat: 39.4558, lon: -1.0995 }, // Estación de AVE de Requena-Utiel
+        { nombre: "Estación AVE Valencia", ciudad: "Valencia", pais: "ES", lat: 39.4598, lon: -0.3832 }, // Estación de AVE de Valencia (Joaquín Sorolla)
+        { nombre: "Estación Madrid Chamartín", ciudad: "Madrid", pais: "ES", lat: 40.4722, lon: -3.6825 }, // Estación de Madrid Chamartín
+        
+        { nombre: "BM Villarrubia", ciudad: "Villarrubia", pais: "ES", lat: 39.9577, lon: -3.3513 },
+        { nombre: "BM Requena", ciudad: "Requena", pais: "ES", lat: 39.5364, lon: -1.1565 },
+        { nombre: "BM Gabaldón", ciudad: "Gabaldón", pais: "ES", lat: 39.6362, lon: -1.9438 },
+        { nombre: "BM Monforte", provincia: "Alicante", pais: "ES", lat: 38.4069, lon: -0.6949 },
+    ];
+
+    const distanciaMaxima = 5000; // Distancia máxima para considerar una ciudad dentro del tramo
+
+    for (const ciudad of ciudades) {
+        const distancia = calcularDistancia(latitud, longitud, ciudad.lat, ciudad.lon);
+        const pkCiudadNumerico = await obtenerPKNumerico(ciudad.lat, ciudad.lon, linea);
+
+       if(pkCiudadNumerico) {
+            if (pkCiudadNumerico >= pkInicioNumerico && pkCiudadNumerico <= pkFinNumerico)
+            {
+                  try {
+                        const datosTiempo = await obtenerDatosTiempo(ciudad.lat, ciudad.lon);
+                        if (datosTiempo) {
+                             const marcador = mostrarInfoTiempo(ciudad.nombre, ciudad.lat, ciudad.lon, datosTiempo);
+                               if(marcador)
+                               {
+                                  marcadoresTiempoMiTramo.push(marcador);
+                               }
+                        }
+                   } catch (error) {
+                      console.error(`Error al obtener datos de tiempo para ${ciudad.nombre} en MiTramo:`, error);
+                   }
+
+            }
+         } else {
+           console.log(`No se encuentra PK para: ${ciudad.nombre}`)
+         }
+    }
+    
+   
+    async function obtenerPKNumerico(lat, lon, linea) {
+    const rutasArchivos = [
+       "./doc/traza/L40Ar.json",
+       "./doc/traza/L40Br.json",
+       "./doc/traza/L40Cr.json",
+       "./doc/traza/L42Ar.json",
+       "./doc/traza/L42B.json",
+       "./doc/traza/L46.json",
+       "./doc/traza/L48.json"
+    ];
+
+      try {
+        const datosTrazado = await cargarArchivosJSON(rutasArchivos);
+        const pkMasCercano = calcularPKMasCercano(lat, lon, datosTrazado)[0];
+
+          if(pkMasCercano.linea === linea)
+          {
+            return pkToNumber(pkMasCercano.pk)
+          }
+        return null;
+      }
+       catch (error) {
+        console.error("Error al obtener PK para los datos de tiempo:", error);
+        return null;
+      }
+
+         async function cargarArchivosJSON(rutas) {
+            const todasPromesas = rutas.map(ruta =>
+                fetch(ruta)
+                    .then(response => response.json())
+                    .catch(error => {
+                        console.error(`Error al cargar ${ruta}:`, error);
+                        return [];
+                    })
+            );
+             const datosCargados = await Promise.all(todasPromesas);
+            return datosCargados.flat();
+        }
+    }
+}
+
+
+async function dibujarEdificiosMiTramo(linea, pkInicioNumerico, pkFinNumerico) {
+
+     const tiposDeEdificios = ["SE", "ATI", "ATF", "BTS", "CS", "ET", "ESTACIÓN", "TUNEL"]
+
+    try {
+        // Cargar y combinar datos de ambos archivos
+          const rutasEdificios = ["./doc/edificios/ALBALI.json", "./doc/edificios/TOVAL.json"];
+          const dataEdificiosArrays = await Promise.all(rutasEdificios.map(ruta =>
+                fetch(ruta).then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Error al cargar ${ruta}: ${response.statusText}`);
+                    }
+                    return response.json();
+                }).catch(error => {
+                    console.error(`Error al cargar ${ruta}:`, error);
+                    return [];
+                })
+          ));
+          const dataEdificios = dataEdificiosArrays.flat();
+            // Mapear coordenadas a un objeto para mejor búsqueda
+            const coordenadasPorPKLinea = await crearMapaCoordenadas();
+
+           // Filtrar elementos por tipo
+          const elementosFiltrados = dataEdificios.filter(item => tiposDeEdificios.includes(item.TIPO));
+
+
+          elementosFiltrados.forEach(elemento => {
+            const pkElemento = elemento.PK;
+             const lineaElemento = elemento.LINEA;
+             const key = `${pkElemento}-${lineaElemento}`;
+              const pkElementoNumerico = pkToNumber(pkElemento);
+                
+                  if (pkElementoNumerico >= pkInicioNumerico && pkElementoNumerico <= pkFinNumerico && lineaElemento === linea)
+                 {
+                    // Buscar las coordenadas correspondientes al PK y la línea
+                    const puntoCoordenadas = coordenadasPorPKLinea.get(key);
+                    const icono = crearIconoEdificio(elemento.TIPO);
+
+                    if (puntoCoordenadas && icono) {
+                        const pkFormateado = formatearPK(pkElemento);
+                        const marker = L.marker([puntoCoordenadas.Latitud, puntoCoordenadas.Longitud], { icon: icono })
+                           .bindPopup(`
+                                <div style="text-align: center;">
+                                    <b style="font-size: 1.1em;">${elemento.NOMBRE}</b><br>
+                                    ${pkFormateado} (L${lineaElemento})
+                                </div>
+                            `);
+                        marcadoresEdificiosMiTramo.push(marker);
+                        marker.addTo(mapa);
+
+                    } else {
+                        console.warn(`No se encontraron coordenadas para el PK ${pkElemento} en la línea ${lineaElemento} (Tipo: ${elemento.TIPO}) en el MiTramo`);
+                    }
+               }
+        });
+
+    } catch (error) {
+        console.error("Error al activar la capa de edificios en 'Mi Tramo':", error);
+    }
+     async function crearMapaCoordenadas() {
+         const rutasCoordenadas = [
+           "./doc/traza/L40Ar.json",
+           "./doc/traza/L40Br.json",
+           "./doc/traza/L40Cr.json",
+           "./doc/traza/L42Ar.json",
+           "./doc/traza/L42B.json",
+           "./doc/traza/L46.json",
+           "./doc/traza/L48.json"
+        ];
+
+          try {
+             const dataCoordenadasArrays = await Promise.all(rutasCoordenadas.map(ruta =>
+                 fetch(ruta).then(response => {
+                     if (!response.ok) {
+                         throw new Error(`Error al cargar ${ruta}: ${response.statusText}`);
+                     }
+                     return response.json();
+                 }).catch(error => {
+                     console.error(`Error al cargar ${ruta}:`, error);
+                     return [];
+                 })
+             ));
+
+            const dataCoordenadas = dataCoordenadasArrays.flat();
+            const mapaCoordenadas = new Map();
+
+             dataCoordenadas.forEach(punto => {
+                 const key = `${punto.PK}-${punto.Linea}`;
+                 mapaCoordenadas.set(key, punto);
+             });
+
+              return mapaCoordenadas;
+
+           } catch (error) {
+             console.error("Error al crear el mapa de coordenadas en MiTramo:", error);
+            return new Map();
+          }
+        }
+
+    }
+
+function desactivarCapaMiTramo() {
+    marcadoresTrazadoMiTramo.forEach(marcador => {
+        mapa.removeLayer(marcador);
+    });
+    marcadoresTrazadoMiTramo = [];
+
+     marcadoresTiempoMiTramo.forEach(marcador => {
+       mapa.removeLayer(marcador);
+    });
+    marcadoresTiempoMiTramo = [];
+
+    marcadoresEdificiosMiTramo.forEach(marcador => {
+       mapa.removeLayer(marcador);
+    });
+    marcadoresEdificiosMiTramo = [];
+}
+
+const checkMitramo = document.getElementById('check-mitramo');
+checkMitramo.addEventListener('change', function() {
+    if (this.checked) {
+        activarCapaMiTramo();
+    } else {
+        desactivarCapaMiTramo();
+    }
+});
+
+/////  FIN CAPA MI TRAMO /////---------------------------------------------------------------------------------------
 
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
