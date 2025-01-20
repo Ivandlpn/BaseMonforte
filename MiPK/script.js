@@ -324,6 +324,103 @@ document.addEventListener('click', function(event) {
     }
 });
 
+
+/////  INICIO CAPA MI TRAMO  /////---------------------------------------------------------------------------------------
+
+let marcadoresMiTramo = []; // Array para almacenar los marcadores de "Mi Tramo"
+const checkMiTramo = document.getElementById('check-mitramo');
+
+checkMiTramo.addEventListener('change', function () {
+    if (this.checked) {
+        activarCapaMiTramo();
+    } else {
+        desactivarCapaMiTramo();
+    }
+});
+
+async function activarCapaMiTramo() {
+    if (!window.pkMasCercano) {
+        console.warn("No se ha calculado el PK cercano. No se puede activar 'Mi Tramo'.");
+        alert("Calculando su ubicación, espere un momento para activar 'Mi Tramo'.");
+        checkMiTramo.checked = false; // Desmarca el checkbox si no hay PK
+        return;
+    }
+
+    const pkActualNumerico = pkToNumberMiTramo(window.pkMasCercano.pk);
+    const lineaActual = window.pkMasCercano.linea;
+    const rangoPK = 5000; // Define el rango del tramo en metros (ej: +/- 1000 metros)
+
+    const rutasArchivos = [
+        "./doc/traza/L40Ar.json",
+        "./doc/traza/L40Br.json",
+        "./doc/traza/L40Cr.json",
+        "./doc/traza/L42Ar.json",
+        "./doc/traza/L42B.json",
+        "./doc/traza/L46.json",
+        "./doc/traza/L48.json"
+    ];
+
+    try {
+        const datosTrazado = await cargarArchivosJSONMiTramo(rutasArchivos);
+        const puntosMiTramo = datosTrazado.filter(punto => {
+            if (punto.Linea === lineaActual) {
+                const pkPuntoNumerico = pkToNumberMiTramo(punto.PK);
+                return pkPuntoNumerico >= pkActualNumerico - rangoPK && pkPuntoNumerico <= pkActualNumerico + rangoPK;
+            }
+            return false;
+        });
+
+        // Dibujar los puntos del tramo
+        puntosMiTramo.forEach(punto => {
+            const puntoLat = parseFloat(punto.Latitud);
+            const puntoLng = parseFloat(punto.Longitud);
+
+            if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
+                const marcador = L.circleMarker([puntoLat, puntoLng], {
+                    radius: 4,
+                    fillColor: "red",
+                    color: "red",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                }).addTo(mapa);
+                marcadoresMiTramo.push(marcador);
+            }
+        });
+    } catch (error) {
+        console.error("Error al cargar o procesar los datos para 'Mi Tramo':", error);
+    }
+}
+
+function desactivarCapaMiTramo() {
+    marcadoresMiTramo.forEach(marcador => {
+        mapa.removeLayer(marcador);
+    });
+    marcadoresMiTramo = [];
+}
+
+async function cargarArchivosJSONMiTramo(rutas) {
+    const todasPromesas = rutas.map(ruta =>
+        fetch(ruta)
+            .then(response => response.json())
+            .catch(error => {
+                console.error(`Error al cargar ${ruta}:`, error);
+                return [];
+            })
+    );
+    const datosCargados = await Promise.all(todasPromesas);
+    return datosCargados.flat();
+}
+
+function pkToNumberMiTramo(pkString) {
+    const parts = pkString.split('+');
+    return parseInt(parts[0]) * 1000 + parseInt(parts[1] || 0);
+}
+
+/////  FIN CAPA MI TRAMO /////---------------------------------------------------------------------------------------
+
+
+
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 
