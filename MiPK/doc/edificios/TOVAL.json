@@ -39,7 +39,7 @@
         "LINEA": "40",
         "PK": "040240",
         "TIPO": "BTS",
-        "NOMBRE": "ATORMOTB0010A Estación Base Móviles"
+        "NOMBRE": "ATORMOTB0010A"
     },
     {
         "LINEA": "40",
@@ -825,7 +825,7 @@
         "LINEA": "40",
         "PK": "137230",
         "TIPO": "BTS",
-        "NOMBRE": "ATORMOTB0120B Estacion Base Móviles"
+        "NOMBRE": "ATORMOTB0120B"
     },
     {
         "LINEA": "40",
@@ -1299,7 +1299,7 @@
         "LINEA": "40",
         "PK": "195260",
         "TIPO": "ESTACIÓN",
-        "NOMBRE": "Estacion Cuenca"
+        "NOMBRE": "Estación Cuenca - Fernando Zobel"
     },
     {
         "LINEA": "40",
@@ -1587,7 +1587,7 @@
         "LINEA": "40",
         "PK": "229270",
         "TIPO": "BTS",
-        "NOMBRE": "ATORMOTB0250B Estacion Base Móviles"
+        "NOMBRE": "ATORMOTB0250B"
     },
     {
         "LINEA": "40",
@@ -2367,7 +2367,7 @@
         "LINEA": "40",
         "PK": "327490",
         "TIPO": "ET",
-        "NOMBRE": "ET Estación Requena-Utiel"
+        "NOMBRE": "ET Requena"
     },
     {
         "LINEA": "40",
@@ -2379,13 +2379,13 @@
         "LINEA": "40",
         "PK": "327740",
         "TIPO": "ESTACIÓN",
-        "NOMBRE": "ESTACIÓN REQUENA"
+        "NOMBRE": "Estación Requena"
     },
     {
         "LINEA": "40",
         "PK": "327740",
         "TIPO": "BM",
-        "NOMBRE": "Base Mantenimiento BM REQUENA"
+        "NOMBRE": "BM REQUENA"
     },
     {
         "LINEA": "40",
@@ -2427,7 +2427,7 @@
         "LINEA": "40",
         "PK": "331690",
         "TIPO": "BTS",
-        "NOMBRE": "AMPVB10A Estación Base Móviles"
+        "NOMBRE": "AMPVB10A"
     },
     {
         "LINEA": "40",
@@ -2943,7 +2943,7 @@
         "LINEA": "40",
         "PK": "393020",
         "TIPO": "ET",
-        "NOMBRE": "ET Bifurcación Alicante-Albacete"
+        "NOMBRE": "ET Bifurcación Xátiva"
     },
     {
         "LINEA": "40",
@@ -2983,13 +2983,13 @@
     },
     {
         "LINEA": "40",
-        "PK": "397200",
+        "PK": "397550",
         "TIPO": "ESTACIÓN",
         "NOMBRE": "Estación VALENCIA - Joaquin Sorolla"
     },
     {
         "LINEA": "40",
-        "PK": "396580",
+        "PK": "397550",
         "TIPO": "CAMBIADOR",
         "NOMBRE": "CAMBIADOR  VALENCIA"
     },
@@ -3007,15 +3007,15 @@
     },
     {
         "LINEA": "40",
-        "PK": "392700",
+        "PK": "397550",
         "TIPO": "SE",
-        "NOMBRE": "SUBESTAC ION 314 TORRENTE"
+        "NOMBRE": "SUBESTACION 314 TORRENTE"
     },
     {
         "LINEA": "40",
-        "PK": "396700",
+        "PK": "397550",
         "TIPO": "ET",
-        "NOMBRE": "ET Valencia"
+        "NOMBRE": "ET Estación Valencia Nord"
     },
     {
         "LINEA": "42",
@@ -3267,7 +3267,7 @@
         "LINEA": "42",
         "PK": "287120",
         "TIPO": "BTS",
-        "NOMBRE": "AMPAB05B Estación Base Móviles"
+        "NOMBRE": "AMPAB05B"
     },
     {
         "LINEA": "42",
@@ -3567,7 +3567,7 @@
         "LINEA": "42",
         "PK": "321000",
         "TIPO": "ESTACIÓN",
-        "NOMBRE": "Estación ALBACETE - Los Llanos"
+        "NOMBRE": "Estación Albacete - Los Llanos"
     },
     {
         "LINEA": "42",
