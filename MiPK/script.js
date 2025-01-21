@@ -11,6 +11,16 @@ const cerrarPuertasCard = document.getElementById("cerrar-puertas-card");
 
 const apiKeyOpenWeatherMap = "14225e48c44f9d35291e12867b7f32cf"; // API Meteo
 
+    const rutasArchivos = [
+      "./doc/traza/L40Ar.json",
+       "./doc/traza/L40Br.json",
+       "./doc/traza/L40Cr.json",
+       "./doc/traza/L42Ar.json",
+        "./doc/traza/L42B.json",
+        "./doc/traza/L46.json",
+        "./doc/traza/L48.json"
+    ];
+
  // Cargar puertas al iniciar la app
 cargarPuertas();
 
@@ -64,16 +74,6 @@ function calcularYActualizarPK() {
         console.error("No se ha obtenido la ubicación actual del usuario.");
         return;
     }
-
-    const rutasArchivos = [
-      "./doc/traza/L40Ar.json",
-       "./doc/traza/L40Br.json",
-       "./doc/traza/L40Cr.json",
-       "./doc/traza/L42Ar.json",
-        "./doc/traza/L42B.json",
-        "./doc/traza/L46.json",
-        "./doc/traza/L48.json"
-    ];
 
     async function cargarArchivosJSON(rutas) {
         const todasPromesas = rutas.map(ruta =>
@@ -356,15 +356,6 @@ let marcadoresTrazado = [];
 let ultimoPKPorLinea = {}; // Objeto para almacenar el último PK por línea
 
 async function activarCapaTrazado() {
-    const rutasArchivos = [
-      "./doc/traza/L40Ar.json",
-       "./doc/traza/L40Br.json",
-       "./doc/traza/L40Cr.json",
-       "./doc/traza/L42Ar.json",
-        "./doc/traza/L42B.json",
-         "./doc/traza/L48.json",
-        "./doc/traza/L46.json"
-    ];
 
     try {
         const datosTrazado = await cargarArchivosJSON(rutasArchivos);
@@ -670,15 +661,6 @@ async function activarCapaEdificios(layerGroup, tipos) {
 }
 
 async function crearMapaCoordenadas() {
-     const rutasCoordenadas = [
-      "./doc/traza/L40Ar.json",
-       "./doc/traza/L40Br.json",
-       "./doc/traza/L40Cr.json",
-       "./doc/traza/L42Ar.json",
-        "./doc/traza/L42B.json",
-        "./doc/traza/L46.json",
-        "./doc/traza/L48.json"
-    ];
 
     try {
         const dataCoordenadasArrays = await Promise.all(rutasCoordenadas.map(ruta =>
@@ -950,15 +932,7 @@ async function calcularPuertasCercanas(latUsuario, lonUsuario) {
 
 async function obtenerCoordenadasPuertasCercanas(puertasCercanasPorVia) {
     console.log("Obteniendo coordenadas de puertas cercanas...");
-    const rutasArchivos = [
-        "./doc/traza/L40Ar.json",
-        "./doc/traza/L40Br.json",
-        "./doc/traza/L40Cr.json",
-        "./doc/traza/L42Ar.json",
-        "./doc/traza/L42B.json",
-        "./doc/traza/L46.json",
-        "./doc/traza/L48.json"
-    ];
+
     const datosTraza = await cargarArchivosJSON(rutasArchivos);
        console.log("Datos de traza cargados:", datosTraza);
 
@@ -1128,15 +1102,6 @@ document.getElementById("iconoMas").addEventListener("click", () => {
         return datosCargados.flat(); // Combina todos los datos en un solo array
     }
 
-    const rutasArchivos = [
-      "./doc/traza/L40Ar.json",
-       "./doc/traza/L40Br.json",
-       "./doc/traza/L40Cr.json",
-       "./doc/traza/L42Ar.json",
-        "./doc/traza/L42B.json",
-        "./doc/traza/L46.json",
-        "./doc/traza/L48.json"
-    ];
 
     cargarArchivosJSON(rutasArchivos)
         .then(datosCombinados => {
