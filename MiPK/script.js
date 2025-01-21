@@ -753,7 +753,7 @@ async function cargarPuertas() {
         const responses = await Promise.all([
             fetch("./doc/puertas/PL42.json"),
             fetch("./doc/puertas/PL46.json"),
-         fetch("./doc/puertas/PL40.json"),
+         fetch("./doc/puertas/PL40.json")
         ]);
         puertasData = (await Promise.all(responses.map(res => res.json()))).flat();
         console.log("Datos de puertas cargados:", puertasData);
