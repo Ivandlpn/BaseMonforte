@@ -18,6 +18,18 @@ function pkToNumber(pkString) { // <--- Definición en el ámbito global
     return parseInt(pkString, 10);
 }
 
+async function cargarArchivosJSON(rutas) { // <--- Definición en el ámbito global
+    const todasPromesas = rutas.map(ruta =>
+        fetch(ruta)
+            .then(response => response.json())
+            .catch(error => {
+                console.error(`Error al cargar ${ruta}:`, error);
+                return [];
+            })
+    );
+    return (await Promise.all(todasPromesas)).flat();
+}
+
 // Rastrea la posición continuamente, pero no realiza acciones automáticamente
 navigator.geolocation.watchPosition((position) => {
     lat = position.coords.latitude;
