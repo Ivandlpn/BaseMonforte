@@ -12,10 +12,10 @@ const cerrarPuertasCard = document.getElementById("cerrar-puertas-card");
 const apiKeyOpenWeatherMap = "14225e48c44f9d35291e12867b7f32cf"; // API Meteo
 
     const rutasArchivos = [
-      "./doc/traza/L40Ar.json",
-       "./doc/traza/L40Br.json",
-       "./doc/traza/L40Cr.json",
-       "./doc/traza/L42Ar.json",
+        "./doc/traza/L40Ar.json",
+        "./doc/traza/L40Br.json",
+        "./doc/traza/L40Cr.json",
+        "./doc/traza/L42Ar.json",
         "./doc/traza/L42B.json",
         "./doc/traza/L46.json",
         "./doc/traza/L48.json"
