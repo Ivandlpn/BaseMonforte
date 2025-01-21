@@ -734,7 +734,7 @@ checkIiss.addEventListener('change', function () {
 const checkEstaciones = document.getElementById('check-estaciones');
 const estacionesLayer = L.layerGroup();
 checkEstaciones.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(estacionesLayer, ["ESTACIÓN"]) : desactivarCapaEdificios(estacionesLayer);
+    this.checked ? activarCapaEdificios(estacionesLayer, ["ESTACIÓN", "BM"]) : desactivarCapaEdificios(estacionesLayer);
 });
 
 const checkTuneles = document.getElementById('check-tuneles');
