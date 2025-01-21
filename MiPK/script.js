@@ -14,6 +14,10 @@ const apiKeyOpenWeatherMap = "14225e48c44f9d35291e12867b7f32cf"; // API Meteo
  // Cargar puertas al iniciar la app
 cargarPuertas();
 
+function pkToNumber(pkString) { // <--- Definición en el ámbito global
+    return parseInt(pkString, 10);
+}
+
 // Rastrea la posición continuamente, pero no realiza acciones automáticamente
 navigator.geolocation.watchPosition((position) => {
     lat = position.coords.latitude;
