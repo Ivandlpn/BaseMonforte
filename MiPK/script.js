@@ -584,7 +584,7 @@ function desactivarCapaTiempo() {
 
 
 const iconosEdificios = {
-    "SE": 'img/edificios/energia_icon.png',
+    "SE": 'img/edificios/se_icon.png',
     "ATI": 'img/edificios/energia_icon.png',
     "ATF": 'img/edificios/energia_icon.png',
     "BTS": 'img/edificios/bts_icon.png',
