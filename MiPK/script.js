@@ -314,7 +314,7 @@ function formatearPK(pk) {
 }
 
 /////  INICIO CAPAS/////---------------------------------------------------------------------------------------
-// Obtener referencias a los elementos del DOM
+
 const botonCapas = document.getElementById('boton-capas');
 const menuCapas = document.getElementById('menu-capas');
 const checkTrazado = document.getElementById('check-trazado');
@@ -592,7 +592,7 @@ const iconosEdificios = {
     "ET": 'img/edificios/iiss_icon.png',
     "ESTACIÓN": 'img/edificios/estaciones_icon.png',
     "TUNEL": 'img/edificios/tunel_icon.png',
-  "BM": 'img/edificios/bm_icon.png'
+    "BM": 'img/edificios/bm_icon.png'
 };
 
 function crearIconoEdificio(tipo) {
@@ -1047,19 +1047,23 @@ function generarHTMLPuertas(puertasCercanas) {
     return html;
 }
 
-// Event listener para el botón "Buscar puerta por PK"
-document.addEventListener('click', function(event) {
-    if (event.target.closest('#buscar-puerta-por-pk')) {
-        const mensajeProximamente = document.getElementById('mensaje-proximamente');
-        if (mensajeProximamente) {
-            mensajeProximamente.style.display = 'block';
-            // Ocultar el mensaje después de 3 segundos
-            setTimeout(() => {
-                mensajeProximamente.style.display = 'none';
-            }, 3000);
-        }
-    }
-});
+            /////  INCIO BOTÓN BUSQUEDA PUERTAS POR PK /////---------------------------------------------------------------------------------------
+            
+            // Event listener para el botón "Buscar puerta por PK"
+            document.addEventListener('click', function(event) {
+                if (event.target.closest('#buscar-puerta-por-pk')) {
+                    const mensajeProximamente = document.getElementById('mensaje-proximamente');
+                    if (mensajeProximamente) {
+                        mensajeProximamente.style.display = 'block';
+                        // Ocultar el mensaje después de 3 segundos
+                        setTimeout(() => {
+                            mensajeProximamente.style.display = 'none';
+                        }, 3000);
+                    }
+                }
+            });
+            
+            /////  INCIO BOTÓN BUSQUEDA PUERTAS POR PK /////---------------------------------------------------------------------------------------
 
 
 // Modifica la parte donde se muestra la tarjeta de puertas para agregar el event listener
@@ -1121,9 +1125,7 @@ document.getElementById("iconoMas").addEventListener("click", () => {
         })
         .catch(error => console.error('Error al combinar datos de los archivos:', error));
 
-
-    
-});
+    });
 
 /////  INICIO BOTÓN CAMARA /////---------------------------------------------------------------------------------------
 
