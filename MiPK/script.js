@@ -1013,7 +1013,7 @@ document.getElementById("iconoPuerta").addEventListener("click", () => {
     mostrarPuertasCercanas();
 
     // Agregar event listener a los enlaces "Ver Mapa" después de generar el HTML
-    setTimeout(() => { // Asegurar que el contenido se ha renderizado
+setTimeout(() => { // Asegurar que el contenido se ha renderizado
         const enlacesVerMapa = document.querySelectorAll('.ver-en-mapa');
         enlacesVerMapa.forEach(enlace => {
             enlace.addEventListener('click', function(event) {
@@ -1025,7 +1025,6 @@ document.getElementById("iconoPuerta").addEventListener("click", () => {
                 const latPuerta = parseFloat(this.dataset.lat);
                 const lonPuerta = parseFloat(this.dataset.lon);
                 const via = this.dataset.via;
-
 
                 // Obtener el elemento padre .puerta-fila
                 const puertaFila = this.closest(".puerta-fila");
@@ -1047,12 +1046,12 @@ document.getElementById("iconoPuerta").addEventListener("click", () => {
                 });
                 const marcadorPuerta = L.marker([latPuerta, lonPuerta], { icon: iconoPuertaMapa })
                     .addTo(mapa)
-                    .bindPopup(`
+                      .bindPopup(`
                 <div style="text-align: center;">
                     <p style="margin: 0; font-size: 1.2em;">Vía ${via}</p>
                     <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${pk}</p>
                 </div>
-                `);
+            `);
 
                 // Centrar el mapa para mostrar al usuario y la puerta
                 if (lat && lon) {
