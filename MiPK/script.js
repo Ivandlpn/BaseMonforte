@@ -601,6 +601,7 @@ const iconosEdificios = {
     "ET": 'img/edificios/iiss_icon.png',
     "ESTACIÓN": 'img/edificios/estaciones_icon.png',
     "TUNEL": 'img/edificios/tunel_icon.png'
+  "BM": 'img/edificios/estaciones_icon.png',
 };
 
 function crearIconoEdificio(tipo) {
