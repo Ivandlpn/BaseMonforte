@@ -729,16 +729,17 @@ checkTuneles.addEventListener('change', function () {
 /////  FIN CAPA EDIFICIOS /////---------------------------------------------------------------------------------------
 
 /////  INICIO PUERTAS /////---------------------------------------------------------------------------------------
+
 let cachedPuertasCercanas = null;
 let lastUserLocation = null;
-
 
 async function cargarPuertas() {
     try {
         console.log("Cargando datos de puertas...");
         const responses = await Promise.all([
             fetch("./doc/puertas/PL42.json"),
-            fetch("./doc/puertas/PL46.json")
+            fetch("./doc/puertas/PL46.json"),
+            fetch("./doc/puertas/PL40.json")
         ]);
         puertasData = (await Promise.all(responses.map(res => res.json()))).flat();
         console.log("Datos de puertas cargados:", puertasData);
