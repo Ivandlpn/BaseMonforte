@@ -763,17 +763,23 @@ async function cargarPuertas() {
 }
 
 function mostrarPuertasCercanas() {
-    console.log("Mostrando puertas cercanas..."); // Log function call
+    console.log("Mostrando puertas cercanas...");
     if (!lat || !lon) {
         alert("No se ha obtenido la ubicación actual del usuario.");
         return;
     }
 
-    const puertasCercanas = calcularPuertasCercanas(lat, lon);
-    console.log("Puertas cercanas calculadas:", puertasCercanas); // Log results of calculation
-    const html = generarHTMLPuertas(puertasCercanas);
-    puertasInfoDiv.innerHTML = html;
-    puertasContainer.style.display = "flex";
+    calcularPuertasCercanas(lat, lon)
+        .then(puertasCercanas => {
+            console.log("Puertas cercanas calculadas:", puertasCercanas);
+            const html = generarHTMLPuertas(puertasCercanas);
+            puertasInfoDiv.innerHTML = html;
+            puertasContainer.style.display = "flex";
+        })
+        .catch(error => {
+            console.error("Error al calcular las puertas:", error);
+            alert("Error al calcular las puertas cercanas.");
+        });
 }
 
 function ocultarPuertasCercanas() {
@@ -814,15 +820,15 @@ function mostrarTodasPuertas(puertas) {
     mapa.fitBounds(bounds);
 }
 
-function calcularPuertasCercanas(latUsuario, lonUsuario) {
-    console.log("Calculando puertas cercanas...");  // Log function call
+async function calcularPuertasCercanas(latUsuario, lonUsuario) {
+    console.log("Calculando puertas cercanas...");
     const puertasPorVia = {};
     const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk);
-    console.log("PK del usuario (numérico):", pkUsuarioNumerico); // Log user PK
+    console.log("PK del usuario (numérico):", pkUsuarioNumerico);
 
     puertasData.forEach(puerta => {
         const pkPuertaNumerico = parseInt(puerta.PK, 10);
-         const diferenciaPK = pkPuertaNumerico - pkUsuarioNumerico;
+        const diferenciaPK = pkPuertaNumerico - pkUsuarioNumerico;
         console.log(`Puerta PK: ${puerta.PK}, numérico: ${pkPuertaNumerico}, diferencia: ${diferenciaPK}, vía: ${puerta.Via}`);
 
         if (!puertasPorVia[puerta.Via]) {
@@ -830,24 +836,24 @@ function calcularPuertasCercanas(latUsuario, lonUsuario) {
         }
         puertasPorVia[puerta.Via].push({ ...puerta, diferenciaPK });
     });
-    console.log("Puertas agrupadas por vía:", puertasPorVia); // Log grouped data
+    console.log("Puertas agrupadas por vía:", puertasPorVia);
 
     const puertasCercanasPorVia = {};
 
     for (const via in puertasPorVia) {
-         console.log(`Procesando vía: ${via}`);
+        console.log(`Procesando vía: ${via}`);
         const puertasOrdenadas = puertasPorVia[via].sort((a, b) => a.diferenciaPK - b.diferenciaPK);
         let crecienteMasCercana = null;
         let decrecienteMasCercana = null;
-         console.log(`Puertas ordenadas para vía ${via}:`, puertasOrdenadas);
+        console.log(`Puertas ordenadas para vía ${via}:`, puertasOrdenadas);
 
         for (const puerta of puertasOrdenadas) {
-              console.log(`  - Puerta PK: ${puerta.PK}, diferencia: ${puerta.diferenciaPK}`);
+            console.log(`  - Puerta PK: ${puerta.PK}, diferencia: ${puerta.diferenciaPK}`);
             if (puerta.diferenciaPK > 0 && !crecienteMasCercana) {
-                 console.log(`    - Encontrada puerta creciente más cercana: ${puerta.PK}`);
+                console.log(`    - Encontrada puerta creciente más cercana: ${puerta.PK}`);
                 crecienteMasCercana = puerta;
             } else if (puerta.diferenciaPK < 0) {
-                 console.log(`    - Encontrada puerta decreciente más cercana: ${puerta.PK}`);
+                console.log(`    - Encontrada puerta decreciente más cercana: ${puerta.PK}`);
                 decrecienteMasCercana = puerta;
             }
             if (crecienteMasCercana && decrecienteMasCercana) {
@@ -856,9 +862,9 @@ function calcularPuertasCercanas(latUsuario, lonUsuario) {
             }
         }
         puertasCercanasPorVia[via] = { creciente: crecienteMasCercana, decreciente: decrecienteMasCercana };
-           console.log(`Puertas cercanas para la vía ${via}:`, puertasCercanasPorVia[via]);
+        console.log(`Puertas cercanas para la vía ${via}:`, puertasCercanasPorVia[via]);
     }
-    console.log("Puertas cercanas calculadas (antes de coordenadas):", puertasCercanasPorVia);
+      console.log("Puertas cercanas calculadas (antes de coordenadas):", puertasCercanasPorVia);
     return obtenerCoordenadasPuertasCercanas(puertasCercanasPorVia);
 }
 
