@@ -747,14 +747,17 @@ checkTuneles.addEventListener('change', function () {
 
 /////  INICIO PUERTAS /////---------------------------------------------------------------------------------------
 
- async function cargarPuertas() {
-  try {
-      const response = await fetch("./doc/puertas/PL42.json");
-      puertasData = await response.json();
-  } catch (error) {
-      console.error("Error al cargar los datos de puertas:", error);
-      alert("Error al cargar los datos de las puertas.");
-  }
+async function cargarPuertas() {
+    try {
+        const responses = await Promise.all([
+            fetch("./doc/puertas/PL42.json"),
+            fetch("./doc/puertas/PL46.json") // Añadir la carga del nuevo archivo
+        ]);
+        puertasData = (await Promise.all(responses.map(res => res.json()))).flat();
+    } catch (error) {
+        console.error("Error al cargar los datos de puertas:", error);
+        alert("Error al cargar los datos de las puertas.");
+    }
 }
 
 function mostrarPuertasCercanas() {
