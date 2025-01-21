@@ -663,7 +663,7 @@ async function activarCapaEdificios(layerGroup, tipos) {
 async function crearMapaCoordenadas() {
 
     try {
-        const dataCoordenadasArrays = await Promise.all(rutasCoordenadas.map(ruta =>
+        const dataCoordenadasArrays = await Promise.all(rutasArchivos.map(ruta =>
             fetch(ruta).then(response => {
                 if (!response.ok) {
                     throw new Error(`Error al cargar ${ruta}: ${response.statusText}`);
