@@ -746,14 +746,16 @@ checkTuneles.addEventListener('change', function () {
 /////  FIN CAPA EDIFICIOS /////---------------------------------------------------------------------------------------
 
 /////  INICIO PUERTAS /////---------------------------------------------------------------------------------------
+let cachedPuertasCercanas = null;
+let lastUserLocation = null;
+
 
 async function cargarPuertas() {
     try {
         console.log("Cargando datos de puertas...");
         const responses = await Promise.all([
             fetch("./doc/puertas/PL42.json"),
-            fetch("./doc/puertas/PL46.json"),
-         fetch("./doc/puertas/PL40.json")
+            fetch("./doc/puertas/PL46.json")
         ]);
         puertasData = (await Promise.all(responses.map(res => res.json()))).flat();
         console.log("Datos de puertas cargados:", puertasData);
@@ -763,26 +765,37 @@ async function cargarPuertas() {
     }
 }
 
-function mostrarPuertasCercanas() {
-    console.log("Mostrando puertas cercanas...");
-    if (!lat || !lon) {
-        alert("No se ha obtenido la ubicación actual del usuario.");
-        return;
-    }
+ function mostrarPuertasCercanas() {
+        console.log("Mostrando puertas cercanas...");
+        if (!lat || !lon) {
+            alert("No se ha obtenido la ubicación actual del usuario.");
+            return;
+        }
 
-    calcularPuertasCercanas(lat, lon)
-        .then(puertasCercanas => {
-            console.log("Puertas cercanas calculadas:", puertasCercanas);
-            const html = generarHTMLPuertas(puertasCercanas);
+         const currentLocation = `${lat.toFixed(6)},${lon.toFixed(6)}`; // Use a string with fixed precision for comparison
+            if (cachedPuertasCercanas && lastUserLocation === currentLocation) {
+            console.log("Usando puertas cercanas cacheadas.");
+            const html = generarHTMLPuertas(cachedPuertasCercanas);
             puertasInfoDiv.innerHTML = html;
             puertasContainer.style.display = "flex";
-             agregarEventosVerMapa(puertasCercanas);
-        })
-        .catch(error => {
-            console.error("Error al calcular las puertas:", error);
-            alert("Error al calcular las puertas cercanas.");
-        });
-}
+             agregarEventosVerMapa(cachedPuertasCercanas);
+          }else{
+            calcularPuertasCercanas(lat, lon)
+                .then(puertasCercanas => {
+                     lastUserLocation = currentLocation;
+                    cachedPuertasCercanas = puertasCercanas;
+                    console.log("Puertas cercanas calculadas:", puertasCercanas);
+                    const html = generarHTMLPuertas(puertasCercanas);
+                    puertasInfoDiv.innerHTML = html;
+                    puertasContainer.style.display = "flex";
+                     agregarEventosVerMapa(puertasCercanas);
+                })
+                .catch(error => {
+                    console.error("Error al calcular las puertas:", error);
+                    alert("Error al calcular las puertas cercanas.");
+                });
+          }
+    }
 
 
 function agregarEventosVerMapa(puertasCercanas) {
@@ -844,6 +857,7 @@ function agregarEventosVerMapa(puertasCercanas) {
     }
     }, 0);
 }
+
 
 function ocultarPuertasCercanas() {
     console.log("Ocultando la tarjeta de puertas...");
