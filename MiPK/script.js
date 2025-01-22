@@ -795,8 +795,13 @@ function mostrarPuertasCercanasInterno() {
 
         calcularPuertasCercanas(lat, lon, puertasLineaUsuario)
             .then(puertasCercanas => {
+                console.log(">>>> Dentro del bloque .then() de calcularPuertasCercanas <<<<"); // *** NUEVO LOG
+                console.log("puertasCercanas:", puertasCercanas); // *** NUEVO LOG
+
                 // *** REEMPLAZAR el mensaje de carga con el HTML real de las puertas ***
                 const htmlPuertas = generarHTMLPuertas(puertasCercanas); // Volver a llamar a generarHTMLPuertas() (para generar HTML de puertas)
+                console.log("htmlPuertas generado:", htmlPuertas); // *** NUEVO LOG
+                console.log("puertasInfoDiv:", puertasInfoDiv); // *** NUEVO LOG
                 puertasInfoDiv.innerHTML = htmlPuertas; // Establecer el HTML de las puertas (REEMPLAZA el mensaje de carga)
 
                  lastUserLocation = currentLocation;
