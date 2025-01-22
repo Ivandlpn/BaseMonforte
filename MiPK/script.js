@@ -773,8 +773,8 @@ async function cargarPuertas() {
 
 function mostrarPuertasCercanasInterno() {
     const currentLocation = `${lat.toFixed(6)},${lon.toFixed(6)}`;
-    console.log("Ubicación actual:", currentLocation); // Añadido logging
-    console.log("Ubicación en caché:", lastUserLocation); // Añadido logging
+    console.log("Ubicación actual:", currentLocation);
+    console.log("Ubicación en caché:", lastUserLocation);
     if (cachedPuertasCercanas && lastUserLocation === currentLocation) {
         console.log("Usando puertas cercanas cacheadas.");
         const html = generarHTMLPuertas(cachedPuertasCercanas);
@@ -782,13 +782,20 @@ function mostrarPuertasCercanasInterno() {
         puertasContainer.style.display = "flex";
          agregarEventosVerMapa(cachedPuertasCercanas);
     } else {
-        console.log("No se usa la caché, recalculando puertas..."); // Añadido logging
+        console.log("No se usa la caché, recalculando puertas...");
+        // Mostrar mensaje "Buscando puertas..."
+        const mensajeBuscando = document.getElementById('puertas-buscando-mensaje');
+        mensajeBuscando.style.display = 'block'; // Mostrar el mensaje
+
         // Filtrar puertasData por la línea del usuario
         const lineaUsuario = window.pkMasCercano.linea;
         const puertasLineaUsuario = puertasData.filter(puerta => puerta.Linea === lineaUsuario);
 
-        calcularPuertasCercanas(lat, lon, puertasLineaUsuario) // Pass filtered data
+        calcularPuertasCercanas(lat, lon, puertasLineaUsuario)
             .then(puertasCercanas => {
+                // Ocultar mensaje "Buscando puertas..."
+                mensajeBuscando.style.display = 'none'; // Ocultar el mensaje
+
                  lastUserLocation = currentLocation;
                 cachedPuertasCercanas = puertasCercanas;
                 console.log("Puertas cercanas calculadas:", puertasCercanas);
@@ -798,6 +805,9 @@ function mostrarPuertasCercanasInterno() {
                  agregarEventosVerMapa(puertasCercanas);
             })
             .catch(error => {
+                // Ocultar mensaje "Buscando puertas..." también en caso de error
+                mensajeBuscando.style.display = 'none'; // Ocultar el mensaje
+
                 console.error("Error al calcular las puertas:", error);
                 alert("Error al calcular las puertas cercanas.");
             });
