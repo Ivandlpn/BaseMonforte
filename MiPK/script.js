@@ -1005,13 +1005,7 @@ async function obtenerCoordenadasPuertasCercanas(puertasCercanasPorVia) {
 function generarHTMLPuertas(puertasCercanas) {
     console.log("Generando HTML de puertas cercanas...", puertasCercanas);
 
-    // *** NUEVO:  Devolver directamente el mensaje de carga ***
-    return '<p style="text-align: center; font-style: italic; color: grey; margin-bottom: 10px;">Buscando puertas cercanas...</p>';
-
-    // *** El resto del código original de generarHTMLPuertas() (para generar la lista de puertas)
-    // *** lo comentamos o eliminamos temporalmente para esta prueba ***
-
-    /*
+    // *** RESTAURAMOS el código original para generar el HTML de las puertas ***
     let html = '';
 
     if (window.pkMasCercano) {
@@ -1087,7 +1081,6 @@ function generarHTMLPuertas(puertasCercanas) {
       console.log("HTML de puertas generado:", html);
 
     return html;
-    */
 }
 
             /////  INCIO BOTÓN BUSQUEDA PUERTAS POR PK /////---------------------------------------------------------------------------------------
