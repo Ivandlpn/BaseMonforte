@@ -777,62 +777,32 @@ function mostrarPuertasCercanasInterno() {
     console.log("Ubicación en caché:", lastUserLocation);
     if (cachedPuertasCercanas && lastUserLocation === currentLocation) {
         console.log("Usando puertas cercanas cacheadas.");
-        const html = generarHTMLPuertas(cachedPuertasCercanas); // Usar generarHTMLPuertas() normal (con caché)
+        const html = generarHTMLPuertas(cachedPuertasCercanas);
         puertasInfoDiv.innerHTML = html;
         puertasContainer.style.display = "flex";
          agregarEventosVerMapa(cachedPuertasCercanas);
     } else {
         console.log("No se usa la caché, recalculando puertas...");
-
-        // *** NUEVO: Mostrar mensaje "Buscando puertas..." INMEDIATAMENTE ***
-        const mensajeCargandoHTML = generarHTMLPuertas(); // Llamar a generarHTMLPuertas() (ahora devuelve mensaje de carga)
-        puertasInfoDiv.innerHTML = mensajeCargandoHTML; // Establecer el mensaje en el div
-        puertasContainer.style.display = "flex"; // Mostrar la tarjeta INMEDIATAMENTE
-
         // Filtrar puertasData por la línea del usuario
         const lineaUsuario = window.pkMasCercano.linea;
         const puertasLineaUsuario = puertasData.filter(puerta => puerta.Linea === lineaUsuario);
 
         calcularPuertasCercanas(lat, lon, puertasLineaUsuario)
             .then(puertasCercanas => {
-                console.log(">>>> Dentro del bloque .then() de calcularPuertasCercanas <<<<");
-                console.log("puertasCercanas:", puertasCercanas);
-
-                const htmlPuertas = generarHTMLPuertas(puertasCercanas);
-                console.log("htmlPuertas generado:", htmlPuertas);
-                console.log("puertasInfoDiv:", puertasInfoDiv);
-
-                console.log("***** Justo antes de innerHTML *****"); // *** NUEVO LOG
-                console.log("puertasInfoDiv antes de innerHTML:", puertasInfoDiv); // *** NUEVO LOG
-
-                puertasInfoDiv.innerHTML = htmlPuertas; // Establecer el HTML de las puertas (REEMPLAZA el mensaje de carga)
-
-                console.log("***** Justo DESPUÉS de innerHTML *****"); // *** NUEVO LOG
-                console.log("puertasInfoDiv después de innerHTML:", puertasInfoDiv); // *** NUEVO LOG
-                console.log('innerHTML actualizado'); // *** NUEVO LOG
-
-                // *** NUEVO: Forzar re-renderización con setTimeout ***
-                setTimeout(() => {
-                    console.log("***** Dentro del setTimeout (después de innerHTML) *****"); // *** NUEVO LOG
-                    puertasContainer.style.display = "flex"; // Mostrar la tarjeta (asegurarse de que esté visible)
-                    console.log("Tarjeta de puertas mostrada (después de setTimeout)"); // *** NUEVO LOG
-                    agregarEventosVerMapa(puertasCercanas);
-                }, 100); // Pausa de 100 milisegundos (puedes ajustar este valor)
-
                  lastUserLocation = currentLocation;
                 cachedPuertasCercanas = puertasCercanas;
                 console.log("Puertas cercanas calculadas:", puertasCercanas);
+                const html = generarHTMLPuertas(puertasCercanas);
+                puertasInfoDiv.innerHTML = html;
+                puertasContainer.style.display = "flex";
+                 agregarEventosVerMapa(puertasCercanas);
             })
             .catch(error => {
-                // En caso de error, podrías mostrar un mensaje de error en lugar del "Buscando puertas..." si quieres
-                puertasInfoDiv.innerHTML = '<p style="text-align: center; color: red;">Error al cargar puertas cercanas.</p>';
-
                 console.error("Error al calcular las puertas:", error);
                 alert("Error al calcular las puertas cercanas.");
             });
       }
 }
-
 function agregarEventosVerMapa(puertasCercanas) {
       setTimeout(() => { // Asegurar que el contenido se ha renderizado
         const enlacesVerMapa = document.querySelectorAll('.ver-en-mapa');
@@ -1023,7 +993,6 @@ async function obtenerCoordenadasPuertasCercanas(puertasCercanasPorVia) {
 function generarHTMLPuertas(puertasCercanas) {
     console.log("Generando HTML de puertas cercanas...", puertasCercanas);
 
-    // *** RESTAURAMOS el código original para generar el HTML de las puertas ***
     let html = '';
 
     if (window.pkMasCercano) {
