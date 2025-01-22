@@ -811,10 +811,17 @@ function mostrarPuertasCercanasInterno() {
                 console.log("puertasInfoDiv después de innerHTML:", puertasInfoDiv); // *** NUEVO LOG
                 console.log('innerHTML actualizado'); // *** NUEVO LOG
 
+                // *** NUEVO: Forzar re-renderización con setTimeout ***
+                setTimeout(() => {
+                    console.log("***** Dentro del setTimeout (después de innerHTML) *****"); // *** NUEVO LOG
+                    puertasContainer.style.display = "flex"; // Mostrar la tarjeta (asegurarse de que esté visible)
+                    console.log("Tarjeta de puertas mostrada (después de setTimeout)"); // *** NUEVO LOG
+                    agregarEventosVerMapa(puertasCercanas);
+                }, 100); // Pausa de 100 milisegundos (puedes ajustar este valor)
+
                  lastUserLocation = currentLocation;
                 cachedPuertasCercanas = puertasCercanas;
                 console.log("Puertas cercanas calculadas:", puertasCercanas);
-                agregarEventosVerMapa(puertasCercanas);
             })
             .catch(error => {
                 // En caso de error, podrías mostrar un mensaje de error en lugar del "Buscando puertas..." si quieres
