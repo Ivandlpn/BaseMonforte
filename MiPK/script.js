@@ -795,14 +795,21 @@ function mostrarPuertasCercanasInterno() {
 
         calcularPuertasCercanas(lat, lon, puertasLineaUsuario)
             .then(puertasCercanas => {
-                console.log(">>>> Dentro del bloque .then() de calcularPuertasCercanas <<<<"); // *** NUEVO LOG
-                console.log("puertasCercanas:", puertasCercanas); // *** NUEVO LOG
+                console.log(">>>> Dentro del bloque .then() de calcularPuertasCercanas <<<<");
+                console.log("puertasCercanas:", puertasCercanas);
 
-                // *** REEMPLAZAR el mensaje de carga con el HTML real de las puertas ***
-                const htmlPuertas = generarHTMLPuertas(puertasCercanas); // Volver a llamar a generarHTMLPuertas() (para generar HTML de puertas)
-                console.log("htmlPuertas generado:", htmlPuertas); // *** NUEVO LOG
-                console.log("puertasInfoDiv:", puertasInfoDiv); // *** NUEVO LOG
+                const htmlPuertas = generarHTMLPuertas(puertasCercanas);
+                console.log("htmlPuertas generado:", htmlPuertas);
+                console.log("puertasInfoDiv:", puertasInfoDiv);
+
+                console.log("***** Justo antes de innerHTML *****"); // *** NUEVO LOG
+                console.log("puertasInfoDiv antes de innerHTML:", puertasInfoDiv); // *** NUEVO LOG
+
                 puertasInfoDiv.innerHTML = htmlPuertas; // Establecer el HTML de las puertas (REEMPLAZA el mensaje de carga)
+
+                console.log("***** Justo DESPUÉS de innerHTML *****"); // *** NUEVO LOG
+                console.log("puertasInfoDiv después de innerHTML:", puertasInfoDiv); // *** NUEVO LOG
+                console.log('innerHTML actualizado'); // *** NUEVO LOG
 
                  lastUserLocation = currentLocation;
                 cachedPuertasCercanas = puertasCercanas;
@@ -818,7 +825,6 @@ function mostrarPuertasCercanasInterno() {
             });
       }
 }
-
 
 function agregarEventosVerMapa(puertasCercanas) {
       setTimeout(() => { // Asegurar que el contenido se ha renderizado
