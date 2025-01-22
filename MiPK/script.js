@@ -756,15 +756,35 @@ async function cargarPuertas() {
             return;
         }
 
-         const currentLocation = `${lat.toFixed(6)},${lon.toFixed(6)}`; // Use a string with fixed precision for comparison
-            if (cachedPuertasCercanas && lastUserLocation === currentLocation) {
+        if (!window.pkMasCercano || !window.pkMasCercano.linea) {
+            alert("No se puede determinar la línea del usuario. Calculando PK...");
+            calcularYActualizarPK().then(() => { // Recalcular PK and then show doors
+                if (window.pkMasCercano && window.pkMasCercano.linea) {
+                    mostrarPuertasCercanasInterno(); // Call the internal function after PK is updated
+                } else {
+                    alert("No se pudo determinar la línea del usuario.");
+                }
+            });
+            return; // Exit this function execution and wait for PK calculation
+        } else {
+            mostrarPuertasCercanasInterno(); // If line is available, directly show doors
+        }
+    }
+
+    function mostrarPuertasCercanasInterno() {
+        const currentLocation = `${lat.toFixed(6)},${lon.toFixed(6)}`;
+        if (cachedPuertasCercanas && lastUserLocation === currentLocation) {
             console.log("Usando puertas cercanas cacheadas.");
             const html = generarHTMLPuertas(cachedPuertasCercanas);
             puertasInfoDiv.innerHTML = html;
             puertasContainer.style.display = "flex";
              agregarEventosVerMapa(cachedPuertasCercanas);
-          }else{
-            calcularPuertasCercanas(lat, lon)
+        } else {
+            // Filtrar puertasData por la línea del usuario
+            const lineaUsuario = window.pkMasCercano.linea;
+            const puertasLineaUsuario = puertasData.filter(puerta => puerta.Linea === lineaUsuario);
+
+            calcularPuertasCercanas(lat, lon, puertasLineaUsuario) // Pass filtered data
                 .then(puertasCercanas => {
                      lastUserLocation = currentLocation;
                     cachedPuertasCercanas = puertasCercanas;
@@ -803,7 +823,7 @@ function agregarEventosVerMapa(puertasCercanas) {
                 // Expresión regular para encontrar el PK en la cadena
                  const pkRegex = /PK (\d+[+]?\d+)/;
                 // Buscar el PK usando la expresión regular
-                const pkMatch = puertaTexto.match(pkRegex);
+                const pkMatch = puertaTexto ? puertaTexto.match(pkRegex) : null; // Check if puertaTexto is not null
                 // Si se encuentra un PK, se guarda en la variable. Si no, se deja vacío.
                 const pk = pkMatch ? pkMatch[1] : "";
 
@@ -883,13 +903,13 @@ function ocultarPuertasCercanas() {
 }
 
 
-async function calcularPuertasCercanas(latUsuario, lonUsuario) {
+async function calcularPuertasCercanas(latUsuario, lonUsuario, puertasFiltradas) { // <-- Puertas filtradas como argumento
     console.log("Calculando puertas cercanas...");
     const puertasPorVia = {};
     const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk);
     console.log("PK del usuario (numérico):", pkUsuarioNumerico);
 
-    puertasData.forEach(puerta => {
+    puertasFiltradas.forEach(puerta => { // Usar puertasFiltradas en lugar de puertasData
         const pkPuertaNumerico = parseInt(puerta.PK, 10);
         const diferenciaPK = pkPuertaNumerico - pkUsuarioNumerico;
         console.log(`Puerta PK: ${puerta.PK}, numérico: ${pkPuertaNumerico}, diferencia: ${diferenciaPK}, vía: ${puerta.Via}`);
@@ -1049,7 +1069,7 @@ function generarHTMLPuertas(puertasCercanas) {
 }
 
             /////  INCIO BOTÓN BUSQUEDA PUERTAS POR PK /////---------------------------------------------------------------------------------------
-            
+
             // Event listener para el botón "Buscar puerta por PK"
             document.addEventListener('click', function(event) {
                 if (event.target.closest('#buscar-puerta-por-pk')) {
@@ -1063,7 +1083,7 @@ function generarHTMLPuertas(puertasCercanas) {
                     }
                 }
             });
-            
+
             /////  INCIO BOTÓN BUSQUEDA PUERTAS POR PK /////---------------------------------------------------------------------------------------
 
 
