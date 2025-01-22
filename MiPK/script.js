@@ -771,35 +771,38 @@ async function cargarPuertas() {
         }
     }
 
-    function mostrarPuertasCercanasInterno() {
-        const currentLocation = `${lat.toFixed(6)},${lon.toFixed(6)}`;
-        if (cachedPuertasCercanas && lastUserLocation === currentLocation) {
-            console.log("Usando puertas cercanas cacheadas.");
-            const html = generarHTMLPuertas(cachedPuertasCercanas);
-            puertasInfoDiv.innerHTML = html;
-            puertasContainer.style.display = "flex";
-             agregarEventosVerMapa(cachedPuertasCercanas);
-        } else {
-            // Filtrar puertasData por la línea del usuario
-            const lineaUsuario = window.pkMasCercano.linea;
-            const puertasLineaUsuario = puertasData.filter(puerta => puerta.Linea === lineaUsuario);
+function mostrarPuertasCercanasInterno() {
+    const currentLocation = `${lat.toFixed(6)},${lon.toFixed(6)}`;
+    console.log("Ubicación actual:", currentLocation); // Añadido logging
+    console.log("Ubicación en caché:", lastUserLocation); // Añadido logging
+    if (cachedPuertasCercanas && lastUserLocation === currentLocation) {
+        console.log("Usando puertas cercanas cacheadas.");
+        const html = generarHTMLPuertas(cachedPuertasCercanas);
+        puertasInfoDiv.innerHTML = html;
+        puertasContainer.style.display = "flex";
+         agregarEventosVerMapa(cachedPuertasCercanas);
+    } else {
+        console.log("No se usa la caché, recalculando puertas..."); // Añadido logging
+        // Filtrar puertasData por la línea del usuario
+        const lineaUsuario = window.pkMasCercano.linea;
+        const puertasLineaUsuario = puertasData.filter(puerta => puerta.Linea === lineaUsuario);
 
-            calcularPuertasCercanas(lat, lon, puertasLineaUsuario) // Pass filtered data
-                .then(puertasCercanas => {
-                     lastUserLocation = currentLocation;
-                    cachedPuertasCercanas = puertasCercanas;
-                    console.log("Puertas cercanas calculadas:", puertasCercanas);
-                    const html = generarHTMLPuertas(puertasCercanas);
-                    puertasInfoDiv.innerHTML = html;
-                    puertasContainer.style.display = "flex";
-                     agregarEventosVerMapa(puertasCercanas);
-                })
-                .catch(error => {
-                    console.error("Error al calcular las puertas:", error);
-                    alert("Error al calcular las puertas cercanas.");
-                });
-          }
-    }
+        calcularPuertasCercanas(lat, lon, puertasLineaUsuario) // Pass filtered data
+            .then(puertasCercanas => {
+                 lastUserLocation = currentLocation;
+                cachedPuertasCercanas = puertasCercanas;
+                console.log("Puertas cercanas calculadas:", puertasCercanas);
+                const html = generarHTMLPuertas(puertasCercanas);
+                puertasInfoDiv.innerHTML = html;
+                puertasContainer.style.display = "flex";
+                 agregarEventosVerMapa(puertasCercanas);
+            })
+            .catch(error => {
+                console.error("Error al calcular las puertas:", error);
+                alert("Error al calcular las puertas cercanas.");
+            });
+      }
+}
 
 
 function agregarEventosVerMapa(puertasCercanas) {
