@@ -777,15 +777,17 @@ function mostrarPuertasCercanasInterno() {
     console.log("Ubicación en caché:", lastUserLocation);
     if (cachedPuertasCercanas && lastUserLocation === currentLocation) {
         console.log("Usando puertas cercanas cacheadas.");
-        const html = generarHTMLPuertas(cachedPuertasCercanas);
+        const html = generarHTMLPuertas(cachedPuertasCercanas); // Usar generarHTMLPuertas() normal (con caché)
         puertasInfoDiv.innerHTML = html;
         puertasContainer.style.display = "flex";
          agregarEventosVerMapa(cachedPuertasCercanas);
     } else {
         console.log("No se usa la caché, recalculando puertas...");
-        // Mostrar mensaje "Buscando puertas..."
-        const mensajeBuscando = document.getElementById('puertas-buscando-mensaje');
-        mensajeBuscando.style.display = 'block'; // Mostrar el mensaje
+
+        // *** NUEVO: Mostrar mensaje "Buscando puertas..." INMEDIATAMENTE ***
+        const mensajeCargandoHTML = generarHTMLPuertas(); // Llamar a generarHTMLPuertas() (ahora devuelve mensaje de carga)
+        puertasInfoDiv.innerHTML = mensajeCargandoHTML; // Establecer el mensaje en el div
+        puertasContainer.style.display = "flex"; // Mostrar la tarjeta INMEDIATAMENTE
 
         // Filtrar puertasData por la línea del usuario
         const lineaUsuario = window.pkMasCercano.linea;
@@ -793,20 +795,18 @@ function mostrarPuertasCercanasInterno() {
 
         calcularPuertasCercanas(lat, lon, puertasLineaUsuario)
             .then(puertasCercanas => {
-                // Ocultar mensaje "Buscando puertas..."
-                mensajeBuscando.style.display = 'none'; // Ocultar el mensaje
+                // *** REEMPLAZAR el mensaje de carga con el HTML real de las puertas ***
+                const htmlPuertas = generarHTMLPuertas(puertasCercanas); // Volver a llamar a generarHTMLPuertas() (para generar HTML de puertas)
+                puertasInfoDiv.innerHTML = htmlPuertas; // Establecer el HTML de las puertas (REEMPLAZA el mensaje de carga)
 
                  lastUserLocation = currentLocation;
                 cachedPuertasCercanas = puertasCercanas;
                 console.log("Puertas cercanas calculadas:", puertasCercanas);
-                const html = generarHTMLPuertas(puertasCercanas);
-                puertasInfoDiv.innerHTML = html;
-                puertasContainer.style.display = "flex";
-                 agregarEventosVerMapa(puertasCercanas);
+                agregarEventosVerMapa(puertasCercanas);
             })
             .catch(error => {
-                // Ocultar mensaje "Buscando puertas..." también en caso de error
-                mensajeBuscando.style.display = 'none'; // Ocultar el mensaje
+                // En caso de error, podrías mostrar un mensaje de error en lugar del "Buscando puertas..." si quieres
+                puertasInfoDiv.innerHTML = '<p style="text-align: center; color: red;">Error al cargar puertas cercanas.</p>';
 
                 console.error("Error al calcular las puertas:", error);
                 alert("Error al calcular las puertas cercanas.");
@@ -1003,7 +1003,15 @@ async function obtenerCoordenadasPuertasCercanas(puertasCercanasPorVia) {
 }
 
 function generarHTMLPuertas(puertasCercanas) {
-      console.log("Generando HTML de puertas cercanas...", puertasCercanas);
+    console.log("Generando HTML de puertas cercanas...", puertasCercanas);
+
+    // *** NUEVO:  Devolver directamente el mensaje de carga ***
+    return '<p style="text-align: center; font-style: italic; color: grey; margin-bottom: 10px;">Buscando puertas cercanas...</p>';
+
+    // *** El resto del código original de generarHTMLPuertas() (para generar la lista de puertas)
+    // *** lo comentamos o eliminamos temporalmente para esta prueba ***
+
+    /*
     let html = '';
 
     if (window.pkMasCercano) {
@@ -1079,6 +1087,7 @@ function generarHTMLPuertas(puertasCercanas) {
       console.log("HTML de puertas generado:", html);
 
     return html;
+    */
 }
 
             /////  INCIO BOTÓN BUSQUEDA PUERTAS POR PK /////---------------------------------------------------------------------------------------
