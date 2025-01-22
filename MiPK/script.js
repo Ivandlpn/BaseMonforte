@@ -1008,7 +1008,7 @@ function generarHTMLPuertas(puertasCercanas) {
         const tienePuertas = puertasCercanas[via].creciente || puertasCercanas[via].decreciente;
         if (tienePuertas) {
             console.log(`Agregando título de vía: ${via}`);
-            html += `<h3 style="margin-bottom: 3px;">Vía ${via}</h3>`;
+           html += `<h3 style="margin-bottom: 5px; margin-top: 20px;">Vía ${via}</h3>`;
         }
 
 
