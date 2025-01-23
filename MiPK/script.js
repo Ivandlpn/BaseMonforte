@@ -1111,6 +1111,21 @@ document.getElementById("actualizarUbicacion").addEventListener("click", () => {
 
 /////  FIN PUERTAS /////---------------------------------------------------------------------------------------
 
+
+///// INICIO ICONO PLUS /////
+
+document.getElementById("iconoPlus").addEventListener("click", () => {
+    document.getElementById("plus-card-container").style.display = "flex";
+});
+
+document.getElementById("cerrar-plus-card").addEventListener("click", () => {
+    document.getElementById("plus-card-container").style.display = "none";
+});
+
+///// FIN ICONO PLUS /////
+
+
+
 document.getElementById("iconoMas").addEventListener("click", () => {
      calcularYActualizarPK(); // Llama a la función de cálculo del PK
     if (!lat || !lon) {
