@@ -389,8 +389,32 @@ footer img {
     background-color: #b3e0ff; /* Color al hacer clic */
 }
 
+/* Estilos para el título "Más Mi PK" en la tarjeta PLUS */
 #plus-card h2 {
     margin-bottom: 40px; /* Aumenta el margen inferior */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Cambia la fuente */
+    font-weight: 600; /* Hace la fuente un poco más gruesa */
+    font-size: 1.6em; /* Aumenta ligeramente el tamaño de la fuente */
+    color: #007bff; /* Cambia el color a un azul más vibrante */
+    /* background: linear-gradient(to right, #007bff, #00bfff); /* Degradado sutil */
+    /* -webkit-background-clip: text; */
+    /* -webkit-text-fill-color: transparent; */ /* Aplica el degradado al texto */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Añade una sombra de texto sutil */
+    position: relative; /* Para posicionar el icono */
+    padding-bottom: 5px; /* Espacio para el subrayado */
+}
+
+/* Subrayado personalizado */
+#plus-card h2::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%; /* Ancho del subrayado */
+    height: 3px; /* Grosor del subrayado */
+    background-color: #00aaff; /* Color del subrayado */
+    border-radius: 2px; /* Bordes redondeados del subrayado */
 }
 
   #actualizarUbicacion {
