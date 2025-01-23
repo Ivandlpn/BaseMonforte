@@ -179,6 +179,17 @@ header img {
     text-align: center; /* Asegura el centrado del texto */
 }
 
+.texto-buscando-mitramo {
+    display: flex; /* Usar flexbox para centrar */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    height: 100%; /* Ocupar toda la altura del contenedor */
+    font-size: 0.6em; /* Ajusta el tamaño del texto */
+    color: #ffffff; /* Opcional: Color del texto */
+    //font-weight: bold; /* Opcional: Negrita para destacar */
+    text-align: center; /* Asegura el centrado del texto */
+}
+
 footer {
     margin-top: auto;
     margin-bottom: 0; /* Elimina margen inferior del footer */
