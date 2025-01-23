@@ -361,7 +361,7 @@ async function activarCapaMiTramo() {
     // Mostrar mensaje "Cargando mi tramo..."
     const pkElement = document.getElementById("pkCercano");
     const textoOriginalPK = pkElement.innerHTML; // Guarda el texto original para restaurar
-    pkElement.innerHTML = `<span class="texto-buscando-mitramo">Cargando 📍Mi Tramo...</span>`;
+    pkElement.innerHTML = `<span class="texto-buscando-mitramo">Cargando<br>📍Mi Tramo...</span>`; // MODIFICADO PARA DOS LÍNEAS
 
     try {
         const datosTrazado = await cargarArchivosJSON(rutasArchivos);
