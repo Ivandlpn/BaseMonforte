@@ -395,6 +395,7 @@ async function activarCapaMiTramo() {
 
 
         for (let i = 0; i < puntosTramo.length; i += intervaloPuntos) {
+            console.log("Índice i dentro del bucle:", i); // *** AÑADIDO CONSOLE.LOG DENTRO DEL BUCLE ***
             puntosTramoReducido.push(puntosTramo[i]);
         }
         // --- FIN DE LA OPTIMIZACIÓN ---
