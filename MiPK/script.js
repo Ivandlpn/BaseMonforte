@@ -399,10 +399,28 @@ async function activarCapaMiTramo() {
 
         // Crear la polilínea para el tramo y añadirla al mapa
         miTramoLayer = L.polyline(latlngsTramo, {
-            color: 'blue',        // Color rojo para destacar el tramo
+            color: 'blue',        // Color azul para destacar el tramo
             weight: 5,         // Grosor de línea más notable
             opacity: 0.8       // Opacidad para que sea visible sobre el mapa base
         }).addTo(mapa);
+
+        // *** INICIO: AÑADIR EVENTO CLICK PARA MOSTRAR TIEMPO ***
+        miTramoLayer.on('click', async function(event) {
+            try {
+                const datosTiempoUsuario = await obtenerDatosTiempo(lat, lon); // Usar lat y lon globales
+                if (datosTiempoUsuario) {
+                    const popupContent = generarPopupTiempoMiTramo(datosTiempoUsuario);
+                    miTramoLayer.bindPopup(popupContent).openPopup(); // Asocia el popup a la polilínea y lo abre
+                } else {
+                    alert("No se pudieron obtener datos del tiempo para este tramo.");
+                }
+            } catch (error) {
+                console.error("Error al obtener datos del tiempo al hacer clic en 'Mi tramo':", error);
+                alert("Error al obtener datos del tiempo.");
+            }
+        });
+        // *** FIN: AÑADIR EVENTO CLICK PARA MOSTRAR TIEMPO ***
+
 
         // Ajustar el zoom del mapa para que el tramo completo sea visible
         const bounds = L.latLngBounds(latlngsTramo);
@@ -417,6 +435,28 @@ async function activarCapaMiTramo() {
         alert("Error al mostrar 'Mi tramo'.");
     }
 }
+
+// *** INICIO: FUNCIÓN PARA GENERAR EL POPUP DE TIEMPO EN MI TRAMO ***
+function generarPopupTiempoMiTramo(datosTiempo) {
+    const iconoUrl = `https://openweathermap.org/img/wn/${datosTiempo.icono}@2x.png`;
+
+    // Función para capitalizar la primera letra (reutilizamos la que ya tienes)
+    function capitalizarPrimeraLetra(texto) {
+        return texto.charAt(0).toUpperCase() + texto.slice(1);
+    }
+    const descripcionCapitalizada = capitalizarPrimeraLetra(datosTiempo.descripcion);
+
+    return `
+        <div style="text-align: center;">
+            <h3 style="margin: 0;">Tiempo en Mi Tramo</h3>
+            <img src="${iconoUrl}" alt="${datosTiempo.descripcion}">
+            <p style="margin: 5px 0;">🌡 Temperatura: ${datosTiempo.temperatura} °C</p>
+            <p style="margin: 5px 0;">🥵 Sensación: ${datosTiempo.sensacion} °C</p>
+            <p style="margin: 5px 0;">ℹ ${descripcionCapitalizada}</p>
+        </div>
+    `;
+}
+// *** FIN: FUNCIÓN PARA GENERAR EL POPUP DE TIEMPO EN MI TRAMO ***
 
 
 function desactivarCapaMiTramo() {
@@ -438,6 +478,8 @@ checkMitramo.addEventListener('change', function () {
 
 
 /////  FIN CAPA MI TRAMO /////---------------------------------------------------------------------------------------
+
+
 
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
