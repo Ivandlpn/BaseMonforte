@@ -343,8 +343,89 @@ document.addEventListener('click', function(event) {
 
 /////  INICIO CAPA MI TRAMO  /////---------------------------------------------------------------------------------------
 
+let miTramoLayer = null; // Variable para almacenar la capa del tramo actual
+
+async function activarCapaMiTramo() {
+    if (!window.pkMasCercano) {
+        alert("No se puede mostrar 'Mi tramo' sin conocer tu PK. Por favor, espera a que se calcule el PK.");
+        return;
+    }
+
+    const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk);
+    const lineaUsuario = window.pkMasCercano.linea;
+
+    // Calcular el rango de PKs (5km antes y 5km después)
+    const pkInicioTramo = pkUsuarioNumerico - 5000;
+    const pkFinTramo = pkUsuarioNumerico + 5000;
+
+    // Mostrar mensaje "Cargando mi tramo..."
+    const pkElement = document.getElementById("pkCercano");
+    const textoOriginalPK = pkElement.innerHTML; // Guarda el texto original para restaurar
+    pkElement.innerHTML = `<span class="texto-buscando-pk">Cargando mi tramo...</span>`;
+
+    try {
+        const datosTrazado = await cargarArchivosJSON(rutasArchivos);
+        if (!datosTrazado || datosTrazado.length === 0) {
+            console.error("No se pudieron cargar los datos de trazado para 'Mi tramo'.");
+            pkElement.innerHTML = textoOriginalPK; // Restaura el texto original en caso de error
+            alert("Error al cargar datos de trazado.");
+            return;
+        }
+
+        // Filtrar puntos dentro del rango de PKs y de la misma línea
+        const puntosTramo = datosTrazado.filter(punto => {
+            const pkPuntoNumerico = pkToNumber(punto.PK);
+            return pkPuntoNumerico >= pkInicioTramo && pkPuntoNumerico <= pkFinTramo && punto.Linea === lineaUsuario;
+        });
+
+        if (puntosTramo.length < 2) {
+            console.warn("No hay suficientes puntos de trazado en el rango para dibujar 'Mi tramo'.");
+            pkElement.innerHTML = textoOriginalPK; // Restaura el texto original en caso de error
+            alert("No hay suficiente información de trazado en este tramo.");
+            return; // No dibujar nada si no hay suficientes puntos
+        }
+
+        // Crear LatLngs para Leaflet a partir de los puntos filtrados
+        const latlngsTramo = puntosTramo.map(punto => [parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
+
+        // Crear la polilínea para el tramo y añadirla al mapa
+        miTramoLayer = L.polyline(latlngsTramo, {
+            color: 'red',        // Color rojo para destacar el tramo
+            weight: 5,         // Grosor de línea más notable
+            opacity: 0.8       // Opacidad para que sea visible sobre el mapa base
+        }).addTo(mapa);
+
+        // Ajustar el zoom del mapa para que el tramo completo sea visible
+        const bounds = L.latLngBounds(latlngsTramo);
+        mapa.fitBounds(bounds, { padding: [50, 50] }); // Añadir padding para que no quede pegado a los bordes
+
+        // Restaura el texto original del PK después de cargar el tramo
+        pkElement.innerHTML = textoOriginalPK;
+
+    } catch (error) {
+        console.error("Error al activar la capa 'Mi tramo':", error);
+        pkElement.innerHTML = textoOriginalPK; // Restaura el texto original en caso de error
+        alert("Error al mostrar 'Mi tramo'.");
+    }
+}
 
 
+function desactivarCapaMiTramo() {
+    if (miTramoLayer) {
+        mapa.removeLayer(miTramoLayer);
+        miTramoLayer = null;
+    }
+}
+
+
+const checkMitramo = document.getElementById('check-mitramo');
+checkMitramo.addEventListener('change', function () {
+    if (this.checked) {
+        activarCapaMiTramo();
+    } else {
+        desactivarCapaMiTramo();
+    }
+});
 
 
 /////  FIN CAPA MI TRAMO /////---------------------------------------------------------------------------------------
