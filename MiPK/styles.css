@@ -366,6 +366,29 @@ footer img {
     display: none !important; /* Ocultar la flecha del popup */
 }
 
+/* Estilos para los botones de la tarjeta PLUS */
+.plus-option-button {
+    background: linear-gradient(to bottom, #f0f8ff, #e6f7ff); /* Degradado azulado */
+    border: 1px solid #a6d4ff;
+    border-radius: 20px; /* Bordes redondeados */
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease; /* Transición suave */
+    width: 150px; /* Ancho fijo para los botones */
+    text-align: center; /* Centrar el texto */
+}
+
+.plus-option-button:hover {
+    background-color: #ccebff; /* Color al pasar el ratón */
+}
+
+.plus-option-button:active {
+    background-color: #b3e0ff; /* Color al hacer clic */
+}
+
 
   #actualizarUbicacion {
     font-size: 0.9em;
