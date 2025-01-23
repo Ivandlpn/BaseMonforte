@@ -148,9 +148,42 @@ function inicializarMapa(lat, lon) {
         popupAnchor: [0, -30]
     });
 
-    marcadorActual = L.marker([lat, lon], { icon: iconoUsuario }).addTo(mapa)
-        .bindPopup('Mi Ubicación')
+        marcadorActual = L.marker([lat, lon], { icon: iconoUsuario }).addTo(mapa)
+        .bindPopup(`
+            <div style="text-align: center;">
+                <b>Mi Ubicación</b><br><br>
+                <button id="compartirUbicacionBtn" style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer;">Compartir Ubicación</button>
+            </div>
+        `);
         //.openPopup();
+
+    // Event listener para el botón "Compartir Ubicación" dentro del popup
+    marcadorActual.on('popupopen', function() {
+        const compartirUbicacionBtn = document.getElementById('compartirUbicacionBtn');
+        compartirUbicacionBtn.addEventListener('click', function() {
+            // Obtener las coordenadas DEL MARCADOR directamente
+            const markerLatLng = marcadorActual.getLatLng();
+            const markerLat = markerLatLng.lat;
+            const markerLng = markerLatLng.lng;
+
+            const googleMapsUrl = `https://www.google.com/maps?q=${markerLat},${markerLng}`;
+
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Mi Ubicación',
+                    text: 'Aquí está mi ubicación actual:',
+                    url: googleMapsUrl
+                }).then(() => {
+                    console.log('Ubicación compartida exitosamente');
+                })
+                .catch((error) => console.error('Error al compartir', error));
+            } else {
+                // Si navigator.share no está soportado, muestra una alerta con el enlace
+                alert('Tu navegador no soporta la función de compartir. Aquí está el enlace a Google Maps:\n\n' + googleMapsUrl);
+            }
+        });
+    });
 
     mapa.on('move', () => {
         centradoAutomaticamente = false;
@@ -159,6 +192,7 @@ function inicializarMapa(lat, lon) {
     mapa.on('zoomstart', () => {
         centradoAutomaticamente = false;
     });
+}
 }
 
 function actualizarPosicionUsuario(lat, lon) {
