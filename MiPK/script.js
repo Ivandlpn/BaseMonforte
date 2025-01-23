@@ -193,7 +193,7 @@ function inicializarMapa(lat, lon) {
         centradoAutomaticamente = false;
     });
 }
-}
+
 
 function actualizarPosicionUsuario(lat, lon) {
     marcadorActual.setLatLng([lat, lon]);
