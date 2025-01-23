@@ -389,6 +389,9 @@ footer img {
     background-color: #b3e0ff; /* Color al hacer clic */
 }
 
+#plus-card h2 {
+    margin-bottom: 30px; /* Aumenta el margen inferior */
+}
 
   #actualizarUbicacion {
     font-size: 0.9em;
