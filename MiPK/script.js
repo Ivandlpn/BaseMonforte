@@ -387,7 +387,7 @@ async function activarCapaMiTramo() {
 
         // --- INICIO DE LA OPTIMIZACIÓN: SELECCIÓN DE PUNTOS CADA 50 METROS (APROX.) ---
         const puntosTramoReducido = [];
-        const intervaloPuntos = 50; // Intervalo: seleccionar 1 de cada 50 puntos (aprox. 50 metros)
+        const intervaloPuntos = 500; // Intervalo: seleccionar 1 de cada 50 puntos (aprox. 50 metros)
 
         console.log("Intervalo de puntos:", intervaloPuntos); // AÑADIDO CONSOLE.LOG
         console.log("Puntos originales en el tramo:", puntosTramo.length); // AÑADIDO CONSOLE.LOG
