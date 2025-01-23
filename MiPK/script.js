@@ -354,7 +354,7 @@ async function activarCapaMiTramo() {
     const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk);
     const lineaUsuario = window.pkMasCercano.linea;
 
-    // Calcular el rango de PKs (5km antes y 5km después)
+    // Calcular el rango de PKs (2km antes y 2km después)
     const pkInicioTramo = pkUsuarioNumerico - 2000;
     const pkFinTramo = pkUsuarioNumerico + 2000;
 
@@ -385,9 +385,14 @@ async function activarCapaMiTramo() {
             return; // No dibujar nada si no hay suficientes puntos
         }
 
-        // --- INICIO DE LA OPTIMIZACIÓN: SELECCIÓN DE PUNTOS CADA 5 METROS (APROX.) ---
+        // --- INICIO DE LA OPTIMIZACIÓN: SELECCIÓN DE PUNTOS CADA 50 METROS (APROX.) ---
         const puntosTramoReducido = [];
-        const intervaloPuntos = 50; // Intervalo: seleccionar 1 de cada 5 puntos (aprox. 5 metros)
+        const intervaloPuntos = 50; // Intervalo: seleccionar 1 de cada 50 puntos (aprox. 50 metros)
+
+        console.log("Intervalo de puntos:", intervaloPuntos); // AÑADIDO CONSOLE.LOG
+        console.log("Puntos originales en el tramo:", puntosTramo.length); // AÑADIDO CONSOLE.LOG
+        console.log("Puntos reducidos en el tramo:", puntosTramoReducido.length); // AÑADIDO CONSOLE.LOG
+
 
         for (let i = 0; i < puntosTramo.length; i += intervaloPuntos) {
             puntosTramoReducido.push(puntosTramo[i]);
