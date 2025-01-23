@@ -355,8 +355,8 @@ async function activarCapaMiTramo() {
     const lineaUsuario = window.pkMasCercano.linea;
 
     // Calcular el rango de PKs (5km antes y 5km después)
-    const pkInicioTramo = pkUsuarioNumerico - 5000;
-    const pkFinTramo = pkUsuarioNumerico + 5000;
+    const pkInicioTramo = pkUsuarioNumerico - 2000;
+    const pkFinTramo = pkUsuarioNumerico + 2000;
 
     // Mostrar mensaje "Cargando mi tramo..."
     const pkElement = document.getElementById("pkCercano");
@@ -385,12 +385,21 @@ async function activarCapaMiTramo() {
             return; // No dibujar nada si no hay suficientes puntos
         }
 
-        // Crear LatLngs para Leaflet a partir de los puntos filtrados
-        const latlngsTramo = puntosTramo.map(punto => [parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
+        // --- INICIO DE LA OPTIMIZACIÓN: SELECCIÓN DE PUNTOS CADA 5 METROS (APROX.) ---
+        const puntosTramoReducido = [];
+        const intervaloPuntos = 5; // Intervalo: seleccionar 1 de cada 5 puntos (aprox. 5 metros)
+
+        for (let i = 0; i < puntosTramo.length; i += intervaloPuntos) {
+            puntosTramoReducido.push(puntosTramo[i]);
+        }
+        // --- FIN DE LA OPTIMIZACIÓN ---
+
+        // Crear LatLngs para Leaflet a partir de los puntos REDUCIDOS
+        const latlngsTramo = puntosTramoReducido.map(punto => [parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
 
         // Crear la polilínea para el tramo y añadirla al mapa
         miTramoLayer = L.polyline(latlngsTramo, {
-            color: 'red',        // Color rojo para destacar el tramo
+            color: 'blue',        // Color rojo para destacar el tramo
             weight: 5,         // Grosor de línea más notable
             opacity: 0.8       // Opacidad para que sea visible sobre el mapa base
         }).addTo(mapa);
