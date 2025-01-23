@@ -391,7 +391,7 @@ footer img {
 
 /* Estilos para el título "Más Mi PK" en la tarjeta PLUS */
 #plus-card h2 {
-    margin-bottom: 40px; /* Aumenta el margen inferior */
+    margin-bottom: 60px; /* Aumenta el margen inferior */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Cambia la fuente */
     font-weight: 600; /* Hace la fuente un poco más gruesa */
     font-size: 1.6em; /* Aumenta ligeramente el tamaño de la fuente */
