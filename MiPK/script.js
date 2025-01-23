@@ -728,7 +728,7 @@ checkTuneles.addEventListener('change', function () {
 
 /////  FIN CAPA EDIFICIOS /////---------------------------------------------------------------------------------------
 
-/////  INICIO PUERTAS /////---------------------------------------------------------------------------------------
+    /////  INICIO PUERTAS /////---------------------------------------------------------------------------------------
 
 let cachedPuertasCercanas = null;
 let lastUserLocation = null;
@@ -755,6 +755,10 @@ async function cargarPuertas() {
             alert("No se ha obtenido la ubicación actual del usuario.");
             return;
         }
+
+        // Mostrar el mensaje de "Buscando puertas..." inmediatamente
+        puertasInfoDiv.innerHTML = '<p style="text-align: center;">Buscando puertas...</p>';
+        puertasContainer.style.display = "flex";
 
         if (!window.pkMasCercano || !window.pkMasCercano.linea) {
             alert("No se puede determinar la línea del usuario. Calculando PK...");
