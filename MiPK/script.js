@@ -152,7 +152,7 @@ function inicializarMapa(lat, lon) {
         .bindPopup(`
             <div style="text-align: center;">
                 <b>Mi Ubicación</b><br><br>
-                <button id="compartirUbicacionBtn" style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer;">Compartir Ubicación</button>
+                <button id="compartirUbicacionBtn" style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer;">Compartir 🌍</button>
             </div>
         `);
         //.openPopup();
