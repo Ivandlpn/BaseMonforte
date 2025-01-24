@@ -1356,7 +1356,7 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                         botonOperador.href = `tel:${operador.telefono}`; // Enlace tel: para iniciar llamada
                         botonOperador.className = 'operador-button'; // Clase CSS para estilos (a definir en CSS)
                         // *** MODIFICADO: Usar innerHTML para permitir etiquetas HTML (como <br>) ***
-                        botonOperador.innerHTML = `<b>${operador.nombre}</b><br><span class="operador-descripcion">${operador.descripcion}</span>`;
+                        botonOperador.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${operador.descripcion}</span>`;
                         // *** FIN MODIFICACIÓN ***
                         operadoresContainer.appendChild(botonOperador); // Añadir botón al contenedor
                     });
@@ -1421,7 +1421,7 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
         const botonCps = document.createElement('a'); // Usar <a> para enlaces tel: (igual que en Circulación)
         botonCps.href = `tel:${operador.telefono}`; // Enlace tel: para iniciar llamada
         botonCps.className = 'operador-button cps-option-button'; // Reutilizar clase operador-button y añadir cps-option-button
-        botonCps.innerHTML = `<b>${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`; // Formato similar a botones Circulación
+        botonCps.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`; // Formato similar a botones Circulación
         cpsContentContainer.appendChild(botonCps); // Añadir botón al contenedor
     });
 }
