@@ -664,14 +664,14 @@ async function obtenerDatosTiempo(lat, lon) {
 
 function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
   if (datosTiempo) {
-    const iconoUrl = `https://openweathermap.org/img/wn/${datosTiempo.icono}@2x.png`;
+    // *** MODIFICADO: Construir la ruta a tu icono personalizado ***
+    const iconoUrl = `img/iconos-tiempo/${datosTiempo.icono}.png`;
+    // *** FIN MODIFICACIÓN ***
 
-    // Función para capitalizar la primera letra
+    // Función para capitalizar la primera letra (sin cambios)
     function capitalizarPrimeraLetra(texto) {
       return texto.charAt(0).toUpperCase() + texto.slice(1);
     }
-
-
     const descripcionCapitalizada = capitalizarPrimeraLetra(datosTiempo.descripcion);
 
     const popupContent = `
@@ -680,15 +680,16 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
         <img src="${iconoUrl}" alt="${datosTiempo.descripcion}">
         <p style="margin: 5px 0;">🌡 Temperatura: ${datosTiempo.temperatura} °C</p>
         <p style="margin: 5px 0;">🥵 Sensación: ${datosTiempo.sensacion} °C</p>
-        <p style="margin: 5px 0;">ℹ ${descripcionCapitalizada}</p> 
+        <p style="margin: 5px 0;">ℹ ${descripcionCapitalizada}</p>
       </div>
     `;
 
    const marcador = L.marker([lat, lon], {
       icon: L.divIcon({
         className: 'icono-tiempo',
+        // *** MODIFICADO: Usar la ruta al icono personalizado en el HTML ***
         html: `<img src="${iconoUrl}" alt="${datosTiempo.descripcion}">`,
-        iconSize: [50, 50],
+        iconSize: [50, 50], // Puedes ajustar el tamaño si es necesario
       }),
     })
       .addTo(mapa)
