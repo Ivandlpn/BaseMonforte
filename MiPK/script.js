@@ -1520,99 +1520,95 @@ function generarContenidoCps() {
                 // ----- FIN FUNCIONALIDAD BOTÓN CSI -----
 
 
-                // ----- INICIO FUNCIONALIDAD BOTÓN TELEMANDO -----
-                
-                const operadoresTelemandoData = [ // Array con los datos de los operadores TELEMANDO
-                    {
-                        nombre: "Telemando Albacete",
-                        lineas: [
-                            "L40 - Desde Bif.Torrejón hasta Valencia Estación",
-                            "L42 - Desde Bif. Albacete hasta Alicante Estación",
-                            "L46 - Toda la línea"
-                        ],
-                        telefono: "967539503"
-                    },
-                    {
-                        nombre: "Telemando Villaverde",
-                        lineas: [
-                            "Respaldo de toda las líneas"
-                        ],
-                        telefonos: [ // Array de teléfonos para Villaverde
-                            "914688659",
-                            "914688669"
-                        ]
-                    },
-                    {
-                        nombre: "Telemando Atocha",
-                        lineas: [
-                            "L40 - Desde Madrid Chamartín hasta Bif.Torrejón"
-                        ],
-                        telefono: "914688255"
-                    },
-                ];
-                
-                
-                document.addEventListener('DOMContentLoaded', function() {
-                    const telemandoButton = document.querySelector('.plus-option-button[aria-label="TELEMANDO"]');
-                    const telemandoCardContainer = document.getElementById('telemando-card-container');
+                                // ----- INICIO FUNCIONALIDAD BOTÓN TELEMANDO -----
+                                
+                                const operadoresTelemandoData = [ // Array con los datos de los operadores TELEMANDO
+                                    {
+                                        nombre: "Telemando Albacete",
+                                        lineas: [
+                                            "L40 - Desde Bif.Torrejón hasta Valencia Estación",
+                                            "L42 - Desde Bif. Albacete hasta Alicante Estación",
+                                            "L46 - Toda la línea"
+                                        ],
+                                        telefono: "967539503"
+                                    },
+                                    {
+                                        nombre: "Telemando Villaverde",
+                                        lineas: [
+                                            "Respaldo de toda las líneas"
+                                        ],
+                                        telefonos: [ // Array de teléfonos para Villaverde
+                                            "914688659",
+                                            "914688669"
+                                        ]
+                                    },
+                                    {
+                                        nombre: "Telemando Atocha",
+                                        lineas: [
+                                            "L40 - Desde Madrid Chamartín hasta Bif.Torrejón"
+                                        ],
+                                        telefono: "914688255"
+                                    },
+                                ];
+                                
+                                
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const telemandoButton = document.querySelector('.plus-option-button[aria-label="TELEMANDO"]');
+                                    const telemandoCardContainer = document.getElementById('telemando-card-container');
+                                    const telemandoContentContainer = document.getElementById('telemando-content');
+                                    const cerrarTelemandoCardButton = document.getElementById('cerrar-telemando-card');
+                                
+                                    if (telemandoButton) {
+                                        telemandoButton.addEventListener('click', function() {
+                                            telemandoCardContainer.style.display = 'flex'; // Mostrar la tarjeta TELEMANDO
+                                            generarContenidoTelemando(); // Llama a la función para generar el contenido de TELEMANDO
+                                        });
+                                    } else {
+                                        console.error('No se encontró el botón TELEMANDO');
+                                    }
+                                
+                                    if (cerrarTelemandoCardButton) {
+                                        cerrarTelemandoCardButton.addEventListener('click', function() {
+                                            telemandoCardContainer.style.display = 'none'; // Ocultar la tarjeta TELEMANDO al hacer clic en "Cerrar"
+                                        });
+                                    } else {
+                                        console.error('No se encontró el botón de cerrar de la tarjeta TELEMANDO');
+                                    }
+                                
+                            function generarContenidoTelemando() {
                     const telemandoContentContainer = document.getElementById('telemando-content');
-                    const cerrarTelemandoCardButton = document.getElementById('cerrar-telemando-card');
+                    telemandoContentContainer.innerHTML = '';
                 
-                    if (telemandoButton) {
-                        telemandoButton.addEventListener('click', function() {
-                            telemandoCardContainer.style.display = 'flex'; // Mostrar la tarjeta TELEMANDO
-                            generarContenidoTelemando(); // Llama a la función para generar el contenido de TELEMANDO
+                    operadoresTelemandoData.forEach(operador => {
+                        const nombreH3 = document.createElement('h3'); // Título para el nombre del operador TELEMANDO
+                        nombreH3.textContent = operador.nombre;
+                        telemandoContentContainer.appendChild(nombreH3); // Añadir título
+                
+                        const lineasListUl = document.createElement('ul'); // Lista para las líneas TELEMANDO
+                        operador.lineas.forEach(linea => {
+                            const lineaLi = document.createElement('li');
+                            lineaLi.textContent = linea;
+                            lineasListUl.appendChild(lineaLi);
                         });
-                    } else {
-                        console.error('No se encontró el botón TELEMANDO');
-                    }
+                        telemandoContentContainer.appendChild(lineasListUl);
                 
-                    if (cerrarTelemandoCardButton) {
-                        cerrarTelemandoCardButton.addEventListener('click', function() {
-                            telemandoCardContainer.style.display = 'none'; // Ocultar la tarjeta TELEMANDO al hacer clic en "Cerrar"
-                        });
-                    } else {
-                        console.error('No se encontró el botón de cerrar de la tarjeta TELEMANDO');
-                    }
-                
-            function generarContenidoTelemando() {
-                const telemandoContentContainer = document.getElementById('telemando-content');
-                telemandoContentContainer.innerHTML = '';
-            
-                operadoresTelemandoData.forEach(operador => {
-                    const operadorDiv = document.createElement('div'); // Contenedor para cada operador TELEMANDO (para agrupar botones de Villaverde)
-            
-                    const nombreH3 = document.createElement('h3'); // Título para el nombre del operador TELEMANDO
-                    nombreH3.textContent = operador.nombre;
-                    telemandoContentContainer.appendChild(nombreH3); // Añadir título ANTES de los botones
-            
-                    const lineasListUl = document.createElement('ul'); // Lista para las líneas TELEMANDO
-                    operador.lineas.forEach(linea => {
-                        const lineaLi = document.createElement('li');
-                        lineaLi.textContent = linea;
-                        lineasListUl.appendChild(lineaLi);
-                    });
-                    telemandoContentContainer.appendChild(lineasListUl);
-            
-                    if (operador.telefonos) { // Si hay un array de teléfonos (para Villaverde)
-                        operador.telefonos.forEach((telefono, index) => { // Iterar sobre el array de teléfonos
+                        if (operador.telefonos) { // Si hay un array de teléfonos (para Villaverde)
+                            operador.telefonos.forEach((telefono, index) => { // Iterar sobre el array de teléfonos
+                                const llamarButton = document.createElement('a'); // Botón "Llamar" como enlace tel:
+                                llamarButton.href = `tel:${telefono}`;
+                                llamarButton.className = 'operador-button'; // Reutilizar clase operador-button (estilo consistente) - IMPORTANT!
+                                llamarButton.textContent = `Llamar (Tel ${index + 1})`; // Texto del botón with "Tel 1", "Tel 2", etc.
+                                telemandoContentContainer.appendChild(llamarButton); // Añadir botón al contenedor principal DIRECTAMENTE
+                            });
+                        } else if (operador.telefono) { // Si hay un solo teléfono (para Albacete y Atocha - SIN CAMBIOS)
                             const llamarButton = document.createElement('a'); // Botón "Llamar" como enlace tel:
-                            llamarButton.href = `tel:${telefono}`;
-                            llamarButton.className = 'operador-button telemando-llamar-button'; // Clase CSS para el botón "Llamar" TELEMANDO
-                            llamarButton.textContent = `Llamar (Tel ${index + 1})`; // Texto del botón con "Tel 1", "Tel 2", etc.
-                            operadorDiv.appendChild(llamarButton); // Añadir botón al contenedor operadorDiv
-                        });
-                         telemandoContentContainer.appendChild(operadorDiv); // Añadir el contenedor operadorDiv (que contiene los 2 botones) al contenedor principal
-                    } else if (operador.telefono) { // Si hay un solo teléfono (para Albacete y Atocha - SIN CAMBIOS)
-                        const llamarButton = document.createElement('a'); // Botón "Llamar" como enlace tel:
-                        llamarButton.href = `tel:${operador.telefono}`;
-                        llamarButton.className = 'operador-button telemando-llamar-button'; // Clase CSS para el botón "Llamar" TELEMANDO
-                        llamarButton.textContent = 'Llamar';
-                        operadorDiv.appendChild(llamarButton);
-                         telemandoContentContainer.appendChild(operadorDiv); // Añadir el contenedor operadorDiv (que contiene 1 botón) al contenedor principal
-                    }
-                });
-            }
+                            llamarButton.href = `tel:${operador.telefono}`;
+                            llamarButton.className = 'operador-button'; // Reutilizar clase operador-button (estilo consistente) - IMPORTANT!
+                            llamarButton.textContent = 'Llamar';
+                            telemandoContentContainer.appendChild(llamarButton); // Añadir botón al contenedor principal DIRECTAMENTE
+                        }
+                    });
+                }
                 });
                 
                 // ----- FIN FUNCIONALIDAD BOTÓN TELEMANDO -----
