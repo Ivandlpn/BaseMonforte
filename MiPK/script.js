@@ -1421,7 +1421,7 @@ function generarContenidoCps() {
         const botonCps = document.createElement('a');
         botonCps.href = `tel:${operador.telefono}`;
         botonCps.className = 'operador-button cps-option-button';
-        botonCps.innerHTML = `<b>${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`;
+        botonCps.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`;
         cpsContentContainer.appendChild(botonCps); // Añadir botón al contenedor (PRIMERO)
     });
 
