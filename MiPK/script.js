@@ -1440,7 +1440,7 @@ function generarContenidoCps() {
             cpsRecomendado = "CPS Valencia";
         }
 
-        const textoInformativo = `ℹ️ Estás en el PK ${formatearPK(window.pkMasCercano.pk)} de la línea ${lineaUsuario}.<br>Este punto pertenece al ámbito de <b>${cpsRecomendado}</b>.`;
+        const textoInformativo = `ℹ️ Estás en el PK ${formatearPK(window.pkMasCercano.pk)} de la línea ${lineaUsuario}.<br>Este punto pertenece al ámbito de <br><b>${cpsRecomendado}</b>.`;
 
         const infoParrafo = document.createElement('p');
         infoParrafo.className = 'cps-info-text';
