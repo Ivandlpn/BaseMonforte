@@ -1413,34 +1413,18 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                             console.error('No se encontró el botón de cerrar de la tarjeta CPS');
                         }
                     
-                        function generarContenidoCps() {
-                            cpsContentContainer.innerHTML = ''; // Limpiar el contenedor de contenido CPS
-                    
-                            operadoresCpsData.forEach(operador => {
-                                const operadorDiv = document.createElement('div'); // Contenedor para cada operador
-                                operadorDiv.className = 'cps-operador'; // Clase CSS para estilos de operador CPS
-                    
-                                const nombreH3 = document.createElement('h3'); // Título para el nombre del operador
-                                nombreH3.textContent = operador.nombre;
-                                operadorDiv.appendChild(nombreH3);
-                    
-                                const lineasListUl = document.createElement('ul'); // Lista para las líneas
-                                operador.lineas.forEach(linea => {
-                                    const lineaLi = document.createElement('li'); // Elemento de lista para cada línea
-                                    lineaLi.textContent = linea;
-                                    lineasListUl.appendChild(lineaLi);
-                                });
-                                operadorDiv.appendChild(lineasListUl);
-                    
-                                const llamarButton = document.createElement('a'); // Botón "Llamar" como enlace tel:
-                                llamarButton.href = `tel:${operador.telefono}`;
-                                llamarButton.className = 'cps-llamar-button'; // Clase CSS para el botón "Llamar"
-                                llamarButton.textContent = 'Llamar';
-                                operadorDiv.appendChild(llamarButton);
-                    
-                                cpsContentContainer.appendChild(operadorDiv); // Añadir el contenedor del operador al contenedor principal de CPS
-                            });
-                        }
+ function generarContenidoCps() {
+    const cpsContentContainer = document.getElementById('cps-content'); // Obtener el contenedor de contenido CPS
+    cpsContentContainer.innerHTML = ''; // Limpiar el contenedor de contenido CPS
+
+    operadoresCpsData.forEach(operador => {
+        const botonCps = document.createElement('a'); // Usar <a> para enlaces tel: (igual que en Circulación)
+        botonCps.href = `tel:${operador.telefono}`; // Enlace tel: para iniciar llamada
+        botonCps.className = 'operador-button cps-option-button'; // Reutilizar clase operador-button y añadir cps-option-button
+        botonCps.innerHTML = `<b>${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`; // Formato similar a botones Circulación
+        cpsContentContainer.appendChild(botonCps); // Añadir botón al contenedor
+    });
+}
                     });
                     
                     // ----- FIN FUNCIONALIDAD BOTÓN CPS -----
