@@ -1348,16 +1348,18 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                 
                 
                     function generarBotonesOperadores() {
-                        const operadoresContainer = document.getElementById('operadores-container'); // Obtener el contenedor AQUÍ
-                        operadoresContainer.innerHTML = ''; // Limpiar el contenedor antes de añadir botones nuevos
-                        operadoresCirculacionData.forEach(operador => {
-                            const botonOperador = document.createElement('a'); // Usar <a> para enlaces tel:
-                            botonOperador.href = `tel:${operador.telefono}`; // Enlace tel: para iniciar llamada
-                            botonOperador.className = 'operador-button'; // Clase CSS para estilos (a definir en CSS)
-                            botonOperador.textContent = `${operador.nombre} - ${operador.descripcion}`; // Texto del botón
-                            operadoresContainer.appendChild(botonOperador); // Añadir botón al contenedor
-                        });
-                    }
+                    const operadoresContainer = document.getElementById('operadores-container'); // Obtener el contenedor AQUÍ
+                    operadoresContainer.innerHTML = ''; // Limpiar el contenedor antes de añadir botones nuevos
+                    operadoresCirculacionData.forEach(operador => {
+                        const botonOperador = document.createElement('a'); // Usar <a> para enlaces tel:
+                        botonOperador.href = `tel:${operador.telefono}`; // Enlace tel: para iniciar llamada
+                        botonOperador.className = 'operador-button'; // Clase CSS para estilos (a definir en CSS)
+                        // *** MODIFICADO: Usar innerHTML para permitir etiquetas HTML (como <br>) ***
+                        botonOperador.innerHTML = `${operador.nombre}<br><span class="operador-descripcion">${operador.descripcion}</span>`;
+                        // *** FIN MODIFICACIÓN ***
+                        operadoresContainer.appendChild(botonOperador); // Añadir botón al contenedor
+                    });
+                }
                 });
                 
                 // ----- FIN FUNCIONALIDAD LISTADO OPERADORES CIRCULACIÓN ----
