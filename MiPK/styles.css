@@ -496,41 +496,7 @@ footer img {
     margin-bottom: 15px; /* Reduce un poco el margen inferior del título CPS */
 }
 
-.cps-operador {
-    margin-bottom: 20px; /* Espacio entre bloques de operador */
-    padding: 15px;
-    border: 1px solid #ddd; /* Borde sutil para cada bloque */
-    border-radius: 5px;
-    background-color: #ffffff; /* Fondo blanco para cada bloque */
-}
 
-.cps-operador h3 {
-    margin-top: 0; /* Eliminar margen superior del título del operador */
-    margin-bottom: 10px; /* Espacio inferior para el título */
-    font-size: 1.3em;
-    color: #333;
-}
-
-.cps-operador ul {
-    padding-left: 20px; /* Indentación para la lista de líneas */
-    margin-bottom: 15px; /* Espacio inferior para la lista */
-}
-
-.cps-operador li {
-    margin-bottom: 5px; /* Espacio entre elementos de la lista */
-    color: #555;
-}
-
-.cps-llamar-button {
-    display: inline-block;
-    padding: 8px 15px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none; /* Eliminar subrayado del enlace */
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
 
 .cps-llamar-button:hover {
     background-color: #0056b3;
