@@ -1575,46 +1575,28 @@ function generarContenidoCps() {
                         console.error('No se encontró el botón de cerrar de la tarjeta TELEMANDO');
                     }
                 
-                    function generarContenidoTelemando() {
-                        const telemandoContentContainer = document.getElementById('telemando-content'); // Obtener el contenedor de contenido TELEMANDO
-                        telemandoContentContainer.innerHTML = ''; // Limpiar el contenedor de contenido TELEMANDO
-                
-                        operadoresTelemandoData.forEach(operador => {
-                            const operadorDiv = document.createElement('div'); // Contenedor para cada operador TELEMANDO
-                            operadorDiv.className = 'telemando-operador'; // Clase CSS para estilos de operador TELEMANDO
-                
-                            const nombreH3 = document.createElement('h3'); // Título para el nombre del operador TELEMANDO
-                            nombreH3.textContent = operador.nombre;
-                            telemandoContentContainer.appendChild(nombreH3);
-                
-                            const lineasListUl = document.createElement('ul'); // Lista para las líneas TELEMANDO
-                            operador.lineas.forEach(linea => {
-                                const lineaLi = document.createElement('li'); // Elemento de lista para cada línea TELEMANDO
-                                lineaLi.textContent = linea;
-                                lineasListUl.appendChild(lineaLi);
-                            });
-                            telemandoContentContainer.appendChild(lineasListUl);
-                
-                            // Manejar uno o dos teléfonos (Villaverde tiene 2)
-                            if (operador.telefonos) { // Si hay un array de teléfonos (para Villaverde)
-                                operador.telefonos.forEach(telefono => {
-                                    const llamarButton = document.createElement('a'); // Botón "Llamar" como enlace tel:
-                                    llamarButton.href = `tel:${telefono}`;
-                                    llamarButton.className = 'operador-button telemando-llamar-button'; // Clase CSS para el botón "Llamar" TELEMANDO
-                                    llamarButton.textContent = 'Llamar';
-                                    operadorDiv.appendChild(llamarButton);
-                                });
-                            } else if (operador.telefono) { // Si hay un solo teléfono
-                                const llamarButton = document.createElement('a'); // Botón "Llamar" como enlace tel:
-                                llamarButton.href = `tel:${operador.telefono}`;
-                                llamarButton.className = 'operador-button telemando-llamar-button'; // Clase CSS para el botón "Llamar" TELEMANDO
-                                llamarButton.textContent = 'Llamar';
-                                operadorDiv.appendChild(llamarButton);
-                            }
-                
-                            telemandoContentContainer.appendChild(operadorDiv); // Añadir el contenedor del operador TELEMANDO al contenedor principal de TELEMANDO
-                        });
-                    }
+ function generarContenidoTelemando() {
+    const telemandoContentContainer = document.getElementById('telemando-content'); // Obtener el contenedor de contenido TELEMANDO
+    telemandoContentContainer.innerHTML = ''; // Limpiar el contenedor de contenido TELEMANDO
+
+    operadoresTelemandoData.forEach(operador => {
+        const botonTelemando = document.createElement('a'); // Usar <a> para enlaces tel: (igual que en Circulación, CPS, CSI)
+        botonTelemando.className = 'operador-button'; // Reutilizar clase operador-button (estilo consistente)
+
+        // Manejar uno o dos teléfonos (Villaverde tiene 2) - para el texto del botón
+        let telefonoTexto = '';
+        if (operador.telefonos) { // Si hay un array de teléfonos (para Villaverde)
+            telefonoTexto = operador.telefonos.join(' / '); // Unir teléfonos con " / " para mostrar en el botón (opcional)
+            botonTelemando.href = `tel:${operador.telefonos[0]}`; // Usar el primer teléfono para el enlace tel: (puedes elegir otro criterio si quieres)
+        } else if (operador.telefono) { // Si hay un solo teléfono
+            telefonoTexto = operador.telefono;
+            botonTelemando.href = `tel:${operador.telefono}`; // Enlace tel: para iniciar llamada
+        }
+
+        botonTelemando.innerHTML = `<b>${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`; // Formato nombre y descripción en líneas separadas (consistente)
+        telemandoContentContainer.appendChild(botonTelemando); // Añadir botón al contenedor
+    });
+}
                 });
                 
                 // ----- FIN FUNCIONALIDAD BOTÓN TELEMANDO -----
