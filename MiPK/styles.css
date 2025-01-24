@@ -482,6 +482,14 @@ footer img {
     gap: 5px; /* Espacio entre botones */
 }
 
+/* Estilos para la descripción del operador (segunda línea) */
+.operador-descripcion {
+    display: block; /* Para que ocupe una línea completa dentro del botón */
+    font-size: 0.9em; /* Tamaño de fuente más pequeño */
+    color: #777; /* Color gris más tenue */
+    margin-top: 3px; /* Pequeño espacio superior */
+}
+
 
 
   #actualizarUbicacion {
