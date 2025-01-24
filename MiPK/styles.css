@@ -505,14 +505,15 @@ footer img {
 
 /* Estilos para el texto informativo de CPS */
 .cps-info-text {
-    margin-bottom: 20px; /* Espacio debajo del texto informativo */
-    padding: 15px;
-    background-color: #fff3cd; /* Fondo amarillo pálido para destacar */
-    border: 1px solid #ffe082; /* Borde amarillo suave */
-    border-radius: 5px;
-    text-align: center;
-    font-style: italic; /* Texto en cursiva para diferenciarlo */
-    color: #555;
+    margin-bottom: 20px; /* Espacio debajo del texto informativo (sin cambios) */
+    padding: 15px; /* Sin cambios */
+    background-color: #fff3cd; /* Sin cambios */
+    border: 1px solid #ffe082; /* Sin cambios */
+    border-radius: 5px; /* Sin cambios */
+    text-align: center; /* Sin cambios */
+    font-style: italic; /* Sin cambios */
+    color: #555; /* Sin cambios */
+    margin-top: 20px; /* *** AÑADIDO: Espacio superior para separar del contenido anterior *** */
 }
 
   #actualizarUbicacion {
