@@ -1295,7 +1295,85 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
     document.getElementById("plus-card-container").style.display = "none";
 });
 
+
+                // ----- INICIO FUNCIONALIDAD BOTÓN CIRCULACIÓN -----
+                
+                document.addEventListener('DOMContentLoaded', function() {
+                    const circulacionButton = document.querySelector('.plus-option-button[aria-label="CIRCULACIÓN"]');
+                
+                    if (circulacionButton) {
+                        circulacionButton.addEventListener('click', function() {
+                            document.getElementById('circulacion-card-container').style.display = 'flex'; // Mostrar la tarjeta de operadores
+                            generarBotonesOperadores(); // Llama a la función para generar los botones
+                        });
+                    } else {
+                        console.error('No se encontró el botón CIRCULACIÓN'); // Mensaje de error si no se encuentra el botón
+                    }
+                });
+                
+                // ----- FIN FUNCIONALIDAD BOTÓN CIRCULACIÓN -----
+                
+                
+                // ----- INICIO FUNCIONALIDAD LISTADO OPERADORES CIRCULACIÓN -----
+                
+                const operadoresCirculacionData = [ // Array con los datos de los operadores
+                    { nombre: "Operador Banda 1", descripcion: "Bif. Torrejón - Bif. Albacete (excluida)", telefono: "967539500" },
+                    { nombre: "Operador Banda 2", descripcion: "Bif. Albacete - Valencia JS", telefono: "967539502" },
+                    { nombre: "Operador Banda 3", descripcion: "Bif. Albacete (excluida) - Alicante y Murcia", telefono: "967539532" },
+                    { nombre: "Operador Banda 4", descripcion: "Bif. Albacete (excluida) - Alicante y Murcia", telefono: "967539511" },
+                ];
+                
+                document.addEventListener('DOMContentLoaded', function() {
+                    const circulacionButton = document.querySelector('.plus-option-button[aria-label="CIRCULACIÓN"]');
+                    const circulacionCardContainer = document.getElementById('circulacion-card-container');
+                    const operadoresContainer = document.getElementById('operadores-container');
+                    const cerrarCirculacionCardButton = document.getElementById('cerrar-circulacion-card');
+                
+                    if (circulacionButton) {
+                        circulacionButton.addEventListener('click', function() {
+                            circulacionCardContainer.style.display = 'flex'; // Mostrar la tarjeta de operadores
+                            generarBotonesOperadores(); // Llama a la función para generar los botones
+                        });
+                    } else {
+                        console.error('No se encontró el botón CIRCULACIÓN');
+                    }
+                
+                    if (cerrarCirculacionCardButton) {
+                        cerrarCirculacionCardButton.addEventListener('click', function() {
+                            circulacionCardContainer.style.display = 'none'; // Ocultar la tarjeta de operadores al hacer clic en "Cerrar"
+                        });
+                    } else {
+                        console.error('No se encontró el botón de cerrar de la tarjeta de Circulación');
+                    }
+                
+                
+                    function generarBotonesOperadores() {
+                        const operadoresContainer = document.getElementById('operadores-container'); // Obtener el contenedor AQUÍ
+                        operadoresContainer.innerHTML = ''; // Limpiar el contenedor antes de añadir botones nuevos
+                        operadoresCirculacionData.forEach(operador => {
+                            const botonOperador = document.createElement('a'); // Usar <a> para enlaces tel:
+                            botonOperador.href = `tel:${operador.telefono}`; // Enlace tel: para iniciar llamada
+                            botonOperador.className = 'operador-button'; // Clase CSS para estilos (a definir en CSS)
+                            botonOperador.textContent = `${operador.nombre} - ${operador.descripcion}`; // Texto del botón
+                            operadoresContainer.appendChild(botonOperador); // Añadir botón al contenedor
+                        });
+                    }
+                });
+                
+                // ----- FIN FUNCIONALIDAD LISTADO OPERADORES CIRCULACIÓN ----
+
+
+
+
+
+
+
 ///// FIN ICONO PLUS /////
+
+
+
+
+
 
 
 
