@@ -1434,7 +1434,7 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                         }
                 
                         // Generar texto informativo dinámico
-                        const textoInformativo = `Estás en el PK ${formatearPK(window.pkMasCercano.pk)} de la línea ${lineaUsuario}.<br>Este punto pertenece al ámbito de <b>${cpsRecomendado}</b>.`;
+                        const textoInformativo = `ℹ️ Estás en el PK ${formatearPK(window.pkMasCercano.pk)} de la línea ${lineaUsuario}.<br>Este punto pertenece al ámbito de <b>${cpsRecomendado}</b>.`;
                 
                         // Crear elemento <p> para el texto informativo
                         const infoParrafo = document.createElement('p');
