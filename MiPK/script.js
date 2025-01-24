@@ -1375,8 +1375,8 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                         {
                             nombre: "CPS Valencia",
                             lineas: [
-                                "L40 desde el 293+907 hasta Valencia Joaquín Sorolla",
-                                "L42 desde el 412+783 hasta Alicante"
+                                "L40 desde 293+907 hasta Valencia Estación",
+                                "L42 desde 412+783 hasta Alicante Estación"
                             ],
                             telefono: "963131735" // No mostrar en la tarjeta inicialmente
                         },
@@ -1384,7 +1384,7 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                             nombre: "CPS Madrid",
                             lineas: [
                                 "L40 desde Madrid Chamartín hasta 293+907",
-                                "L42 desde Bif. Albacete hasta el 412+783"
+                                "L42 desde Bif. Albacete hasta 412+783"
                             ],
                             telefono: "913008066" // No mostrar en la tarjeta inicialmente
                         },
