@@ -1584,7 +1584,7 @@ function generarContenidoCps() {
                                 botonTelemando.className = 'operador-button'; // Use ONLY 'operador-button' class (consistent style)
                         
                                 // Construct button innerHTML for consistent formatting (Name on top, lines below)
-                                botonTelemando.innerHTML = `<b>${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`;
+                                botonTelemando.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`;
                         
                                 botonTelemando.href = operador.telefonos ? `tel:${operador.telefonos[0]}` : `tel:${operador.telefono}`; // Default to first phone for Villaverde
                         
