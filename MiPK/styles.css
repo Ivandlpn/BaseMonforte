@@ -516,6 +516,22 @@ footer img {
     margin-top: 30px; /* *** AÑADIDO: Espacio superior para separar del contenido anterior *** */
 }
 
+
+
+/* Estilos específicos para los botones "Llamar" de la tarjeta TELEMANDO (opcional) */
+.telemando-llamar-button {
+    background-color: #ffc107; /* Amarillo/ámbar para los botones "Llamar" de TELEMANDO */
+    color: #212529; /* Color de texto más oscuro para contrastar con el amarillo */
+}
+
+.telemando-llamar-button:hover {
+    background-color: #e0a800; /* Amarillo/ámbar más oscuro al pasar el ratón */
+}
+
+.telemando-llamar-button:active {
+    background-color: #c28e00; /* Amarillo/ámbar aún más oscuro al hacer clic */
+}
+
   #actualizarUbicacion {
     font-size: 0.9em;
   }
