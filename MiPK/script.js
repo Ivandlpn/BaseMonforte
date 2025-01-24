@@ -1511,7 +1511,7 @@ function generarContenidoCps() {
                             const botonCsi = document.createElement('a'); // Usar <a> para enlaces tel:
                             botonCsi.href = `tel:${operador.telefono}`; // Enlace tel: para iniciar llamada
                             botonCsi.className = 'operador-button csi-option-button'; // Reutilizar clase operador-button y añadir csi-option-button
-                            botonCsi.innerHTML = `<b>${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`; // Formato similar a botones Circulación y CPS
+                            botonCsi.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`; // Formato similar a botones Circulación y CPS
                             csiContentContainer.appendChild(botonCsi); // Añadir botón al contenedor
                         });
                     }
