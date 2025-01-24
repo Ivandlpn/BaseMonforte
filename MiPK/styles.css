@@ -448,6 +448,42 @@ footer img {
     opacity: 0.6; /* Ejemplo: reducir aún más la opacidad al hacer clic */
 }
 
+/* Estilos para los botones de operador en la tarjeta de Circulación */
+.operador-button {
+    display: block; /* Para que cada botón ocupe una línea completa */
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    background-color: #f0f8ff; /* Un color de fondo suave */
+    border: 1px solid #a6d4ff;
+    border-radius: 5px;
+    text-align: left; /* Texto alineado a la izquierda */
+    color: #333;
+    text-decoration: none; /* Quitar subrayado de enlaces */
+    cursor: pointer;
+    transition: background-color 0.2s ease; /* Transición suave para hover */
+}
+
+.operador-button:hover {
+    background-color: #ccebff; /* Color de fondo al pasar el ratón */
+}
+
+.operador-button:active {
+    background-color: #b3e0ff; /* Color de fondo al hacer clic */
+}
+
+/* Estilos adicionales para la tarjeta de operadores (opcional, puedes ajustar) */
+#circulacion-card h2 {
+    margin-bottom: 20px; /* Reduce el margen inferior del título de la tarjeta de Circulación */
+}
+
+#operadores-container {
+    display: flex;
+    flex-direction: column; /* Alinea los botones verticalmente */
+    gap: 5px; /* Espacio entre botones */
+}
+
+
+
   #actualizarUbicacion {
     font-size: 0.9em;
   }
