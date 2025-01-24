@@ -1458,7 +1458,66 @@ function generarContenidoCps() {
 
 
 
-
+                // ----- INICIO FUNCIONALIDAD BOTÓN CSI -----
+                
+                const operadoresCsiData = [ // Array con los datos de los operadores CSI
+                    {
+                        nombre: "CSI Albacete",
+                        lineas: [
+                            "L40 - Desde Bif.Torrejón hasta Valencia Estación",
+                            "L42 - Desde Bif. Albacete hasta Alicante Estación",
+                            "L46 - Toda la línea"
+                        ],
+                        telefono: "967539504" // No visible en la tarjeta
+                    },
+                    {
+                        nombre: "CSI Madrid",
+                        lineas: [
+                            "L40 - Desde Madrid Chamartín hasta Bif.Torrejón"
+                        ],
+                        telefono: "914688275" // No visible en la tarjeta
+                    },
+                ];
+                
+                
+                document.addEventListener('DOMContentLoaded', function() {
+                    const csiButton = document.querySelector('.plus-option-button[aria-label="CSI"]');
+                    const csiCardContainer = document.getElementById('csi-card-container');
+                    const csiContentContainer = document.getElementById('csi-content');
+                    const cerrarCsiCardButton = document.getElementById('cerrar-csi-card');
+                
+                    if (csiButton) {
+                        csiButton.addEventListener('click', function() {
+                            csiCardContainer.style.display = 'flex'; // Mostrar la tarjeta CSI
+                            generarContenidoCsi(); // Llama a la función para generar el contenido de CSI
+                        });
+                    } else {
+                        console.error('No se encontró el botón CSI');
+                    }
+                
+                    if (cerrarCsiCardButton) {
+                        cerrarCsiCardButton.addEventListener('click', function() {
+                            csiCardContainer.style.display = 'none'; // Ocultar la tarjeta CSI al hacer clic en "Cerrar"
+                        });
+                    } else {
+                        console.error('No se encontró el botón de cerrar de la tarjeta CSI');
+                    }
+                
+                    function generarContenidoCsi() {
+                        const csiContentContainer = document.getElementById('csi-content'); // Obtener el contenedor de contenido CSI
+                        csiContentContainer.innerHTML = ''; // Limpiar el contenedor de contenido CSI
+                
+                        operadoresCsiData.forEach(operador => {
+                            const botonCsi = document.createElement('a'); // Usar <a> para enlaces tel:
+                            botonCsi.href = `tel:${operador.telefono}`; // Enlace tel: para iniciar llamada
+                            botonCsi.className = 'operador-button csi-option-button'; // Reutilizar clase operador-button y añadir csi-option-button
+                            botonCsi.innerHTML = `<b>${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`; // Formato similar a botones Circulación y CPS
+                            csiContentContainer.appendChild(botonCsi); // Añadir botón al contenedor
+                        });
+                    }
+                });
+                
+                // ----- FIN FUNCIONALIDAD BOTÓN CSI -----
 
 
 
