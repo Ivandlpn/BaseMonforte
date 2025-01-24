@@ -1575,40 +1575,31 @@ function generarContenidoCps() {
                                         console.error('No se encontró el botón de cerrar de la tarjeta TELEMANDO');
                                     }
                                 
-                            function generarContenidoTelemando() {
-                    const telemandoContentContainer = document.getElementById('telemando-content');
-                    telemandoContentContainer.innerHTML = '';
-                
-                    operadoresTelemandoData.forEach(operador => {
-                        const nombreH3 = document.createElement('h3'); // Título para el nombre del operador TELEMANDO
-                        nombreH3.textContent = operador.nombre;
-                        telemandoContentContainer.appendChild(nombreH3); // Añadir título
-                
-                        const lineasListUl = document.createElement('ul'); // Lista para las líneas TELEMANDO
-                        operador.lineas.forEach(linea => {
-                            const lineaLi = document.createElement('li');
-                            lineaLi.textContent = linea;
-                            lineasListUl.appendChild(lineaLi);
-                        });
-                        telemandoContentContainer.appendChild(lineasListUl);
-                
-                        if (operador.telefonos) { // Si hay un array de teléfonos (para Villaverde)
-                            operador.telefonos.forEach((telefono, index) => { // Iterar sobre el array de teléfonos
-                                const llamarButton = document.createElement('a'); // Botón "Llamar" como enlace tel:
-                                llamarButton.href = `tel:${telefono}`;
-                                llamarButton.className = 'operador-button'; // Reutilizar clase operador-button (estilo consistente) - IMPORTANT!
-                                llamarButton.textContent = `Llamar (Tel ${index + 1})`; // Texto del botón with "Tel 1", "Tel 2", etc.
-                                telemandoContentContainer.appendChild(llamarButton); // Añadir botón al contenedor principal DIRECTAMENTE
+                        function generarContenidoTelemando() {
+                            const telemandoContentContainer = document.getElementById('telemando-content');
+                            telemandoContentContainer.innerHTML = '';
+                        
+                            operadoresTelemandoData.forEach(operador => {
+                                const botonTelemando = document.createElement('a'); // Create <a> for button (consistent)
+                                botonTelemando.className = 'operador-button'; // Use ONLY 'operador-button' class (consistent style)
+                        
+                                // Construct button innerHTML for consistent formatting (Name on top, lines below)
+                                botonTelemando.innerHTML = `<b>${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`;
+                        
+                                botonTelemando.href = operador.telefonos ? `tel:${operador.telefonos[0]}` : `tel:${operador.telefono}`; // Default to first phone for Villaverde
+                        
+                                telemandoContentContainer.appendChild(botonTelemando); // Append directly to container (consistent structure)
+                        
+                                if (operador.telefonos && operador.telefonos.length > 1) { // Handle second phone for Villaverde if it exists
+                                    const botonTelemando2 = document.createElement('a');
+                                    botonTelemando2.className = 'operador-button'; // Use ONLY 'operador-button' class (consistent style)
+                                    botonTelemando2.innerHTML = `<b>${operador.nombre} (Tel 2)</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`; // Indicate "(Tel 2)"
+                                    botonTelemando2.href = `tel:${operador.telefonos[1]}`; // Link to the second phone number
+                                    telemandoContentContainer.appendChild(botonTelemando2); // Append the second button as well
+                                }
                             });
-                        } else if (operador.telefono) { // Si hay un solo teléfono (para Albacete y Atocha - SIN CAMBIOS)
-                            const llamarButton = document.createElement('a'); // Botón "Llamar" como enlace tel:
-                            llamarButton.href = `tel:${operador.telefono}`;
-                            llamarButton.className = 'operador-button'; // Reutilizar clase operador-button (estilo consistente) - IMPORTANT!
-                            llamarButton.textContent = 'Llamar';
-                            telemandoContentContainer.appendChild(llamarButton); // Añadir botón al contenedor principal DIRECTAMENTE
                         }
-                    });
-                }
+                                    
                 });
                 
                 // ----- FIN FUNCIONALIDAD BOTÓN TELEMANDO -----
