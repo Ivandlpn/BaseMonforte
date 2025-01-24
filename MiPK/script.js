@@ -1369,6 +1369,86 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
 
 
 
+                    // ----- INICIO FUNCIONALIDAD BOTÓN CPS -----
+                    
+                    const operadoresCpsData = [ // Array con los datos de los operadores CPS
+                        {
+                            nombre: "CPS Valencia",
+                            lineas: [
+                                "L40 desde el 293+907 hasta Valencia Joaquín Sorolla",
+                                "L42 desde el 412+783 hasta Alicante"
+                            ],
+                            telefono: "963131735" // No mostrar en la tarjeta inicialmente
+                        },
+                        {
+                            nombre: "CPS Madrid",
+                            lineas: [
+                                "L40 desde Madrid Chamartín hasta 293+907",
+                                "L42 desde Bif. Albacete hasta el 412+783"
+                            ],
+                            telefono: "913008066" // No mostrar en la tarjeta inicialmente
+                        },
+                    ];
+                    
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const cpsButton = document.querySelector('.plus-option-button[aria-label="CPS"]');
+                        const cpsCardContainer = document.getElementById('cps-card-container');
+                        const cpsContentContainer = document.getElementById('cps-content'); // Contenedor para el contenido de CPS
+                        const cerrarCpsCardButton = document.getElementById('cerrar-cps-card');
+                    
+                        if (cpsButton) {
+                            cpsButton.addEventListener('click', function() {
+                                cpsCardContainer.style.display = 'flex'; // Mostrar la tarjeta CPS
+                                generarContenidoCps(); // Llama a la función para generar el contenido de CPS
+                            });
+                        } else {
+                            console.error('No se encontró el botón CPS');
+                        }
+                    
+                        if (cerrarCpsCardButton) {
+                            cerrarCpsCardButton.addEventListener('click', function() {
+                                cpsCardContainer.style.display = 'none'; // Ocultar la tarjeta CPS al hacer clic en "Cerrar"
+                            });
+                        } else {
+                            console.error('No se encontró el botón de cerrar de la tarjeta CPS');
+                        }
+                    
+                        function generarContenidoCps() {
+                            cpsContentContainer.innerHTML = ''; // Limpiar el contenedor de contenido CPS
+                    
+                            operadoresCpsData.forEach(operador => {
+                                const operadorDiv = document.createElement('div'); // Contenedor para cada operador
+                                operadorDiv.className = 'cps-operador'; // Clase CSS para estilos de operador CPS
+                    
+                                const nombreH3 = document.createElement('h3'); // Título para el nombre del operador
+                                nombreH3.textContent = operador.nombre;
+                                operadorDiv.appendChild(nombreH3);
+                    
+                                const lineasListUl = document.createElement('ul'); // Lista para las líneas
+                                operador.lineas.forEach(linea => {
+                                    const lineaLi = document.createElement('li'); // Elemento de lista para cada línea
+                                    lineaLi.textContent = linea;
+                                    lineasListUl.appendChild(lineaLi);
+                                });
+                                operadorDiv.appendChild(lineasListUl);
+                    
+                                const llamarButton = document.createElement('a'); // Botón "Llamar" como enlace tel:
+                                llamarButton.href = `tel:${operador.telefono}`;
+                                llamarButton.className = 'cps-llamar-button'; // Clase CSS para el botón "Llamar"
+                                llamarButton.textContent = 'Llamar';
+                                operadorDiv.appendChild(llamarButton);
+                    
+                                cpsContentContainer.appendChild(operadorDiv); // Añadir el contenedor del operador al contenedor principal de CPS
+                            });
+                        }
+                    });
+                    
+                    // ----- FIN FUNCIONALIDAD BOTÓN CPS -----
+
+
+
+
+
 
 
 ///// FIN ICONO PLUS /////
