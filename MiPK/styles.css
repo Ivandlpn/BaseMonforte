@@ -502,6 +502,19 @@ footer img {
     background-color: #0056b3;
 }
 
+
+/* Estilos para el texto informativo de CPS */
+.cps-info-text {
+    margin-bottom: 20px; /* Espacio debajo del texto informativo */
+    padding: 15px;
+    background-color: #fff3cd; /* Fondo amarillo pálido para destacar */
+    border: 1px solid #ffe082; /* Borde amarillo suave */
+    border-radius: 5px;
+    text-align: center;
+    font-style: italic; /* Texto en cursiva para diferenciarlo */
+    color: #555;
+}
+
   #actualizarUbicacion {
     font-size: 0.9em;
   }
