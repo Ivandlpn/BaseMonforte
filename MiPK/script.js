@@ -677,7 +677,7 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
     const popupContent = `
       <div style="text-align: center;">
         <h3 style="margin: 0;">${ciudad}</h3>
-        <img src="${iconoUrl}" alt="${datosTiempo.descripcion}">
+        <img src="${iconoUrl}" alt="${datosTiempo.descripcion}" style="width: 40px; height: 40px;">
         <p style="margin: 5px 0;">🌡 Temperatura: ${datosTiempo.temperatura} °C</p>
         <p style="margin: 5px 0;">🥵 Sensación: ${datosTiempo.sensacion} °C</p>
         <p style="margin: 5px 0;">ℹ ${descripcionCapitalizada}</p>
