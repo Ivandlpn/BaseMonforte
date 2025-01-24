@@ -1317,10 +1317,11 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                 // ----- INICIO FUNCIONALIDAD LISTADO OPERADORES CIRCULACIÓN -----
                 
                 const operadoresCirculacionData = [ // Array con los datos de los operadores
-                    { nombre: "Operador Banda 1", descripcion: "Bif. Torrejón - Bif. Albacete (excluida)", telefono: "967539500" },
-                    { nombre: "Operador Banda 2", descripcion: "Bif. Albacete - Valencia JS", telefono: "967539502" },
-                    { nombre: "Operador Banda 3", descripcion: "Bif. Albacete (excluida) - Alicante y Murcia", telefono: "967539532" },
-                    { nombre: "Operador Banda 4", descripcion: "Bif. Albacete (excluida) - Alicante y Murcia", telefono: "967539511" },
+                    { nombre: "Operador Banda Albacete 1", descripcion: "Bif. Torrejón - Bif. Albacete (excluida)", telefono: "967539500" },
+                    { nombre: "Operador Banda Albacete 2", descripcion: "Bif. Albacete - Valencia JS", telefono: "967539502" },
+                    { nombre: "Operador Banda Albacete 3", descripcion: "Bif. Albacete (excluida) - Alicante y Murcia", telefono: "967539532" },
+                    { nombre: "Operador Banda Albacete 4", descripcion: "Bif. Albacete (excluida) - Alicante y Murcia", telefono: "967539511" },
+                    { nombre: "Operador Banda Atocha", descripcion: "Bif. Torrejón de Velasco - Madrid Chamartín", telefono: "914688406" },
                 ];
                 
                 document.addEventListener('DOMContentLoaded', function() {
