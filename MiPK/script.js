@@ -1413,18 +1413,49 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                             console.error('No se encontró el botón de cerrar de la tarjeta CPS');
                         }
                     
- function generarContenidoCps() {
-    const cpsContentContainer = document.getElementById('cps-content'); // Obtener el contenedor de contenido CPS
-    cpsContentContainer.innerHTML = ''; // Limpiar el contenedor de contenido CPS
-
-    operadoresCpsData.forEach(operador => {
-        const botonCps = document.createElement('a'); // Usar <a> para enlaces tel: (igual que en Circulación)
-        botonCps.href = `tel:${operador.telefono}`; // Enlace tel: para iniciar llamada
-        botonCps.className = 'operador-button cps-option-button'; // Reutilizar clase operador-button y añadir cps-option-button
-        botonCps.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`; // Formato similar a botones Circulación
-        cpsContentContainer.appendChild(botonCps); // Añadir botón al contenedor
-    });
-}
+                 function generarContenidoCps() {
+                    const cpsContentContainer = document.getElementById('cps-content'); // Obtener el contenedor de contenido CPS
+                    cpsContentContainer.innerHTML = ''; // Limpiar el contenedor de contenido CPS
+                
+                    // *** INICIO: DETERMINAR CPS A LLAMAR SEGÚN UBICACIÓN DEL USUARIO ***
+                    let cpsRecomendado = "CPS Madrid"; // CPS por defecto (si no se cumplen las condiciones de Valencia)
+                
+                    if (window.pkMasCercano) { // Verificar si se ha calculado el PK del usuario
+                        const pkNumerico = pkToNumber(window.pkMasCercano.pk);
+                        const lineaUsuario = window.pkMasCercano.linea;
+                
+                        if (
+                            (lineaUsuario === '40' && pkNumerico > 293907) ||
+                            (lineaUsuario === '42' && pkNumerico > 412783) ||
+                            lineaUsuario === '46' ||
+                            lineaUsuario === '48'
+                        ) {
+                            cpsRecomendado = "CPS Valencia";
+                        }
+                
+                        // Generar texto informativo dinámico
+                        const textoInformativo = `Estás en el PK ${formatearPK(window.pkMasCercano.pk)} de la línea ${lineaUsuario}.<br>Este punto pertenece al ámbito de <b>${cpsRecomendado}</b>.`;
+                
+                        // Crear elemento <p> para el texto informativo
+                        const infoParrafo = document.createElement('p');
+                        infoParrafo.className = 'cps-info-text'; // Clase CSS para estilos (a definir en CSS)
+                        infoParrafo.innerHTML = textoInformativo; // Usar innerHTML para interpretar <br> y <b>
+                        cpsContentContainer.appendChild(infoParrafo); // Añadir párrafo al contenedor CPS
+                    } else {
+                        // Mensaje si no se puede determinar el PK del usuario (opcional, para manejo de errores)
+                        cpsContentContainer.innerHTML = '<p style="font-style: italic;">No se pudo determinar tu ubicación para recomendar CPS.</p>';
+                    }
+                    // *** FIN: DETERMINAR CPS A LLAMAR SEGÚN UBICACIÓN DEL USUARIO ***
+                
+                
+                    operadoresCpsData.forEach(operador => { // Generar botones de operador (sin cambios)
+                        const botonCps = document.createElement('a');
+                        botonCps.href = `tel:${operador.telefono}`;
+                        botonCps.className = 'operador-button cps-option-button';
+                        botonCps.innerHTML = `<b>${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`;
+                        cpsContentContainer.appendChild(botonCps);
+                    });
+                }
                     });
                     
                     // ----- FIN FUNCIONALIDAD BOTÓN CPS -----
