@@ -1356,7 +1356,7 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                         botonOperador.href = `tel:${operador.telefono}`; // Enlace tel: para iniciar llamada
                         botonOperador.className = 'operador-button'; // Clase CSS para estilos (a definir en CSS)
                         // *** MODIFICADO: Usar innerHTML para permitir etiquetas HTML (como <br>) ***
-                        botonOperador.innerHTML = `${operador.nombre}<br><span class="operador-descripcion">${operador.descripcion}</span>`;
+                        botonOperador.innerHTML = `<b>${operador.nombre}</b><br><span class="operador-descripcion">${operador.descripcion}</span>`;
                         // *** FIN MODIFICACIÓN ***
                         operadoresContainer.appendChild(botonOperador); // Añadir botón al contenedor
                     });
