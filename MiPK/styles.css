@@ -428,6 +428,26 @@ footer img {
     border-radius: 2px; /* Bordes redondeados del subrayado */
 }
 
+.plus-option-button {
+    background: none; /* Fondo transparente */
+    border: none;     /* Eliminar borde */
+    border-radius: 0; /* Eliminar bordes redondeados si los hubiera */
+    padding: 0;       /* Opcional: Eliminar padding para que la imagen ocupe todo el botón */
+    /* ... (mantén el resto de estilos que ya tengas para .plus-option-button, como cursor, box-shadow, etc.) ... */
+}
+
+.plus-option-button:hover {
+    /* ... (mantén o ajusta los estilos para :hover si quieres un efecto al pasar el ratón,
+           pero ten en cuenta que ahora el fondo del botón es transparente,
+           así que el efecto :hover tendrá que ser algo que afecte a la imagen o a otro aspecto) ... */
+    opacity: 0.8; /* Ejemplo: reducir la opacidad de la imagen al pasar el ratón */
+}
+
+.plus-option-button:active {
+    /* ... (mantén o ajusta los estilos para :active si quieres un efecto al hacer clic) ... */
+    opacity: 0.6; /* Ejemplo: reducir aún más la opacidad al hacer clic */
+}
+
   #actualizarUbicacion {
     font-size: 0.9em;
   }
