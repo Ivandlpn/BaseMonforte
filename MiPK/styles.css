@@ -401,42 +401,6 @@ footer img {
 }
 
 /* Estilos para el título "Más Mi PK" en la tarjeta PLUS */
-#plus-card h2 {
-    margin-bottom: 60px; /* Aumenta el margen inferior */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Cambia la fuente */
-    font-weight: 600; /* Hace la fuente un poco más gruesa */
-    font-size: 2em; /* Aumenta ligeramente el tamaño de la fuente */
-    color: #ffffff; /* Cambia el color a un azul más vibrante */
-    /* background: linear-gradient(to right, #007bff, #00bfff); /* Degradado sutil */
-    /* -webkit-background-clip: text; */
-    /* -webkit-text-fill-color: transparent; */ /* Aplica el degradado al texto */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Añade una sombra de texto sutil */
-    position: relative; /* Para posicionar el icono */
-    padding-bottom: 5px; /* Espacio para el subrayado */
-}
-
-/* Subrayado personalizado */
-#plus-card h2::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60%; /* Ancho del subrayado */
-    height: 3px; /* Grosor del subrayado */
-    background-color: #00aaff; /* Color del subrayado */
-    border-radius: 2px; /* Bordes redondeados del subrayado */
-}
-
-.plus-option-button {
-    background: none; /* Fondo transparente */
-    border: none;     /* Eliminar borde */
-    border-radius: 0; /* Eliminar bordes redondeados si los hubiera */
-    padding: 0;       /* Opcional: Eliminar padding para que la imagen ocupe todo el botón */
-    /* ... (mantén el resto de estilos que ya tengas para .plus-option-button, como cursor, box-shadow, etc.) ... */
-}
-
-
 /* Estilos para el contenedor principal de las dos columnas */
 #plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] {
     display: flex;
@@ -452,31 +416,39 @@ footer img {
     align-items: center;
 }
 
-
 /* Ajuste del ancho de la tarjeta overlay-card (opcional, según necesidad) */
 .overlay-card {
     /* Ajusta el valor según necesites */
-    width: 80%;
+    width: 90%;
     max-width: 700px; /* Ancho máximo */
+     overflow-x: auto; /* Asegura el scroll horizontal si es necesario */
+    box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
 }
 
 
-/* Opcional: Ajuste para dispositivos móviles */
+/* Ajuste para dispositivos móviles */
 @media (max-width: 600px) {
+  
      #plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] {
-        flex-direction: column; /* Una sola columna en pantallas pequeñas */
-         align-items: center; /*Centrar elementos en la columna*/
-    }
-     #plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] > div[style*="display: flex; flex-direction: column; gap: 10px; align-items: center;"] {
-        width: 100%; /* Ancho completo en pantallas pequeñas */
+          flex-direction: row; /* Mantiene las dos columnas */
+         align-items: flex-start;
+         overflow-x: auto;
+         width: auto; /* Elimina width */
+         box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
      }
-      .overlay-card {
-        width: 90%;
-        max-width: none; /* Elimina el ancho máximo en pantallas pequeñas */
-      }
+       #plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] > div[style*="display: flex; flex-direction: column; gap: 10px; align-items: center;"] {
+         flex: 1; /* Ajusta el tamaño de cada columna en movil */
+          width: auto; /* Elimina width */
+        }
+
+
+    .overlay-card {
+        width: 95%;
+       max-width: none; /* Elimina el ancho máximo en pantallas pequeñas */
+      overflow-x: auto; /* Asegura el scroll horizontal si es necesario */
+        box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
+    }
 }
-
-
 .plus-option-button:hover {
     /* ... (mantén o ajusta los estilos para :hover si quieres un efecto al pasar el ratón,
            pero ten en cuenta que ahora el fondo del botón es transparente,
@@ -488,7 +460,6 @@ footer img {
     /* ... (mantén o ajusta los estilos para :active si quieres un efecto al hacer clic) ... */
     opacity: 0.6; /* Ejemplo: reducir aún más la opacidad al hacer clic */
 }
-
 
 
 
