@@ -2,6 +2,9 @@
 <html lang="es">
 
 <head>
+    <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+    <!-- --- --- --- --- --- ---  ETIQUETA DE GOOGLE ANALYTICS  --- --- --- --- --- --- -->
+    <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
     <!-- Etiqueta de Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y2NT7MQYVZ"></script>
     <script>
@@ -13,6 +16,9 @@
         gtag('config', 'G-Y2NT7MQYVZ');
     </script>
 
+    <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+    <!-- --- --- --- --- --- ---  METADATOS  --- --- --- --- --- --- -->
+    <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
     <!-- Metadatos -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +30,9 @@
     <link rel="icon" href="img/FaviconMiPK.png?v=1" type="image/png">
     <link rel="manifest" href="manifest.json">
 
+    <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+    <!-- --- --- --- --- --- ---  METADATOS OPEN GRAPH  --- --- --- --- --- --- -->
+    <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
     <!-- Metadatos Open Graph -->
     <meta property="og:title" content="Mi PK 📍" />
     <meta property="og:description" content="Consulta el PK más cercano" />
@@ -31,10 +40,16 @@
     <meta property="og:url" content="https://ivandlpn.github.io/BaseMonforte/PKC/" />
     <meta property="og:type" content="website" />
 
+    <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+    <!-- --- --- --- --- --- ---  BIBLIOTECAS EXTERNAS  --- --- --- --- --- --- -->
+    <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
     <!-- Biblioteca Leaflet.js -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+    <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+    <!-- --- --- --- --- --- ---  HOJA DE ESTILOS PERSONALIZADA  --- --- --- --- --- --- -->
+    <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
     <!-- Hoja de estilos personalizada -->
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -42,15 +57,21 @@
 <body>
     <div class="contenedor">
 
-        <!-- Sección de encabezado -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- ---  SECCIÓN DE ENCABEZADO  --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
         <header>
             <img src="img/CabeceraMiPK2.png" alt="Cabecera Mi PK">
         </header>
 
-        <!-- Separador en forma de línea con gradiente -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- ---  SEPARADOR CON LÍNEA DE GRADIENTE  --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
         <div class="linea-gradiente"></div>
 
-        <!-- Contenedor del mapa -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- ---  CONTENEDOR DEL MAPA  --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
         <div id="map-container" style="height: 400px;">
             <div id="map">
 
@@ -63,7 +84,7 @@
                     <div id="menu-capas" style="display: none;">
                         <label>
                             <input type="checkbox" id="check-mitramo"> 📍 Mi tramo
-                        </label> 
+                        </label>
                         <!-- Línea azul -->
                         <hr class="linea-azul">
                         <!-- Texto "LAV ESTE" -->
@@ -95,10 +116,14 @@
             </div>
         </div>
 
-        <!-- Otro separador con línea de gradiente -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- ---  SEPARADOR CON LÍNEA DE GRADIENTE  --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
         <div class="linea-gradiente"></div>
 
-        <!-- Sección de cálculo de PK -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- ---  SECCIÓN DE CÁLCULO DE PK  --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
         <div id="calculoPK">
 
             <!-- Contenedor de iconos -->
@@ -116,160 +141,173 @@
             <!-- Tarjeta con información del PK -->
             <div class="tarjeta">
                 <h2><span id="pkCercano">___+___</span></h2>
-                <!-- <p>Vía: <span id="distancia">1289.73 metros</span></p> -->
             </div>
         </div>
-        
 
-    <!-- Tarjeta superpuesta para opciones PLUS -->
-    <div id="plus-card-container" class="overlay-card-container" style="display: none;">
-        <div id="plus-card" class="overlay-card">
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- ---  TARJETA SUPERPUESTA "MÁS MI PK" (PLUS CARD) --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- Tarjeta superpuesta para opciones PLUS -->
+        <div id="plus-card-container" class="overlay-card-container" style="display: none;">
+            <div id="plus-card" class="overlay-card">
 
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-plus-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
+                <!-- Botón para cerrar la tarjeta PLUS -->
+                <button id="cerrar-plus-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
 
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 20px;"><u>Mi PK MÁS</u></h2>
+                <!-- Título de la tarjeta PLUS -->
+                <h2 style="text-align: center; margin-bottom: 20px;"><u>Mi PK MÁS</u></h2>
 
-                        <!-- Contenedor de iconos de opciones PLUS -->
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                <button class="plus-option-button" aria-label="CIRCULACIÓN">
-                    <img src="img/plus/circulacion.png" alt="CIRCULACIÓN" style="width: 100%; height: auto;">
-                </button>
-                <button class="plus-option-button" aria-label="CPS">
-                    <img src="img/plus/cps.png" alt="CPS" style="width: 100%; height: auto;">
-                </button>
-                <button class="plus-option-button" aria-label="CSI">
-                    <img src="img/plus/csi.png" alt="CSI" style="width: 100%; height: auto;">
-                </button>
-                <button class="plus-option-button" aria-label="TELEMANDO">
-                    <img src="img/plus/telemando.png" alt="TELEMANDO" style="width: 100%; height: auto;">
-                </button>
-                <button class="plus-option-button" aria-label="ACTS">
-                    <img src="img/plus/acta.png" alt="Opción 5" style="width: 100%; height: auto;">
-                </button>
+                <!-- Contenedor de iconos de opciones PLUS -->
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                    <button class="plus-option-button" aria-label="CIRCULACIÓN">
+                        <img src="img/plus/circulacion.png" alt="CIRCULACIÓN" style="width: 100%; height: auto;">
+                    </button>
+                    <button class="plus-option-button" aria-label="CPS">
+                        <img src="img/plus/cps.png" alt="CPS" style="width: 100%; height: auto;">
+                    </button>
+                    <button class="plus-option-button" aria-label="CSI">
+                        <img src="img/plus/csi.png" alt="CSI" style="width: 100%; height: auto;">
+                    </button>
+                    <button class="plus-option-button" aria-label="TELEMANDO">
+                        <img src="img/plus/telemando.png" alt="TELEMANDO" style="width: 100%; height: auto;">
+                    </button>
+                    <button class="plus-option-button" aria-label="ACTS">
+                        <img src="img/plus/acta.png" alt="Opción 5" style="width: 100%; height: auto;">
+                    </button>
+                </div>
+
             </div>
-
         </div>
-    </div>
 
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- ---  TARJETA SUPERPUESTA "PUERTAS CERCANAS" --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- Tarjeta superpuesta para puertas cercanas -->
+        <div id="puertas-card-container" class="overlay-card-container" style="display: none;">
+            <div id="puertas-card" class="overlay-card">
 
-        <!-- Sección del pie de página -->
+                <!-- Botón para cerrar la tarjeta de puertas cercanas -->
+                <button id="cerrar-puertas-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta de puertas cercanas -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>PUERTAS CERCANAS</u></h2>
+
+                <!-- Área de contenido para información de puertas cercanas -->
+                <div id="puertas-info">
+                    <!-- Insertado dinámicamente mediante JavaScript -->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- ---  TARJETA SUPERPUESTA "OPERADORES CIRCULACIÓN" --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- Tarjeta superpuesta para Operadores Circulación -->
+        <div id="circulacion-card-container" class="overlay-card-container" style="display: none;">
+            <div id="circulacion-card" class="overlay-card">
+
+                <!-- Botón para cerrar la tarjeta de Operadores Circulación -->
+                <button id="cerrar-circulacion-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta de Operadores Circulación -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>OPERADORES CIRCULACIÓN</u></h2>
+
+                <!-- Contenedor para los botones de operadores de Circulación -->
+                <div id="operadores-container">
+                    <!-- Aquí se insertarán los botones dinámicamente con JavaScript -->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- ---  TARJETA SUPERPUESTA "OPERADORES CPS" --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- Tarjeta superpuesta para CPS -->
+        <div id="cps-card-container" class="overlay-card-container" style="display: none;">
+            <div id="cps-card" class="overlay-card">
+
+                <!-- Botón para cerrar la tarjeta CPS -->
+                <button id="cerrar-cps-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta CPS -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>OPERADORES CPS</u></h2>
+
+                <!-- Contenedor para el contenido de CPS -->
+                <div id="cps-content">
+                    <!-- Insertado dinámicamente mediante JavaScript -->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- ---  TARJETA SUPERPUESTA "OPERADORES CSI" --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- Tarjeta superpuesta para CSI -->
+        <div id="csi-card-container" class="overlay-card-container" style="display: none;">
+            <div id="csi-card" class="overlay-card">
+
+                <!-- Botón para cerrar la tarjeta CSI -->
+                <button id="cerrar-csi-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta CSI -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>OPERADORES CSI</u></h2>
+
+                <!-- Contenedor para el contenido de CSI -->
+                <div id="csi-content">
+                    <!-- Insertado dinámicamente mediante JavaScript -->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- ---  TARJETA SUPERPUESTA "OPERADORES TELEMANDO" --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- Tarjeta superpuesta para TELEMANDO -->
+        <div id="telemando-card-container" class="overlay-card-container" style="display: none;">
+            <div id="telemando-card" class="overlay-card">
+
+                <!-- Botón para cerrar la tarjeta TELEMANDO -->
+                <button id="cerrar-telemando-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta TELEMANDO -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>OPERADORES TELEMANDO</u></h2>
+
+                <!-- Contenedor para el contenido de TELEMANDO -->
+                <div id="telemando-content">
+                    <!-- Insertado dinámicamente mediante JavaScript -->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- ---  SECCIÓN DEL PIE DE PÁGINA  --- --- --- --- --- --- -->
+        <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
         <footer>
             <img src="img/PieMiPK.png" alt="Pie de Página">
         </footer>
 
     </div>
 
-    <!-- Tarjeta superpuesta para puertas cercanas -->
-    <div id="puertas-card-container" class="overlay-card-container" style="display: none;">
-        <div id="puertas-card" class="overlay-card">
-
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-puertas-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 25px;"><u>PUERTAS CERCANAS</u></h2>
-
-
-            <!-- Área de contenido para información de puertas cercanas -->
-            <div id="puertas-info">
-                <!-- Insertado dinámicamente mediante JavaScript -->
-            </div>
-
-        </div>
-    </div>
-
- <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA OPERADORES CIRCULACIÓN *** -->
-    <div id="circulacion-card-container" class="overlay-card-container" style="display: none;">
-        <div id="circulacion-card" class="overlay-card">
-
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-circulacion-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 25px;"><u>OPERADORES CIRCULACIÓN</u></h2>
-
-            <!-- Contenedor para los botones de operadores -->
-            <div id="operadores-container">
-                <!-- Aquí se insertarán los botones dinámicamente con JavaScript -->
-            </div>
-
-        </div>
-    </div>
-    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA OPERADORES CIRCULACIÓN *** -->
-
- <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA CPS *** -->
-    <div id="cps-card-container" class="overlay-card-container" style="display: none;">
-        <div id="cps-card" class="overlay-card">
-
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-cps-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 40px;"><u>OPERADORES CPS</u></h2>
-
-            <!-- Contenedor para el contenido de CPS -->
-            <div id="cps-content">
-                <p style="text-align: center; font-style: italic;">Funcionalidad CPS en desarrollo...</p>
-            </div>
-
-        </div>
-    </div>
-    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA CPS *** -->
-
-
-     <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA CSI *** -->
-    <div id="csi-card-container" class="overlay-card-container" style="display: none;">
-        <div id="csi-card" class="overlay-card">
-
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-csi-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 25px;"><u>OPERADORES CSI</u></h2>
-
-            <!-- Contenedor para el contenido de CSI -->
-            <div id="csi-content">
-                <!-- Aquí se insertará el contenido de CSI dinámicamente con JavaScript -->
-            </div>
-
-        </div>
-    </div>
-    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA CSI *** -->
-
-     <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA TELEMANDO *** -->
-    <div id="telemando-card-container" class="overlay-card-container" style="display: none;">
-        <div id="telemando-card" class="overlay-card">
-
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-telemando-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 25px;"><u>OPERADORES TELEMANDO</u></h2>
-
-            <!-- Contenedor para el contenido de TELEMANDO -->
-            <div id="telemando-content">
-                <!-- Aquí se insertará el contenido de TELEMANDO dinámicamente con JavaScript -->
-            </div>
-
-        </div>
-    </div>
-    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA TELEMANDO *** -->
-    
-
+    <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+    <!-- --- --- --- --- --- ---  ARCHIVO JAVASCRIPT  --- --- --- --- --- --- -->
+    <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
     <!-- Archivo JavaScript -->
     <script src="script.js" defer></script>
 
