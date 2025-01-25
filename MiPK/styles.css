@@ -1,4 +1,4 @@
-/* Estilos globales */
+tive/* Estilos globales */
 html, body {
   margin: 0;
   padding: 0;
@@ -12,10 +12,6 @@ html, body {
   flex-direction: column;
   height: 100%;
 }
-
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  ESTILOS DEL ENCABEZADO  --- --- --- --- --- --- */
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
 header {
   text-align: center;
@@ -39,10 +35,7 @@ header img {
     z-index: 1000; /* Asegura que esté por encima del mapa */
 }
 
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  ESTILOS DEL CONTENEDOR DEL MAPA  --- --- --- --- --- --- */
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-
+/* Estilos para el contenedor del mapa */
    #map-container {
     width: 100%; /* Establece un ancho fijo o porcentual */
     position: relative;
@@ -81,11 +74,8 @@ header img {
   font-size: 1em; /* Asegura que no cambie el tamaño */
   outline: none; /* Opcional: elimina el contorno */
   transform: translateX(-50%); /* Mantén la misma posición */
- }
-
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  ESTILOS DE LOS ICONOS PRINCIPALES  --- --- --- --- --- --- */
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+ 
+}
 
 .iconos-container {
     display: flex;
@@ -123,10 +113,6 @@ header img {
     background-image: url('img/plus.png');
 }
 
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  ESTILOS DE LA SECCIÓN DE CÁLCULO DE PK  --- --- --- --- --- --- */
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-
 #calculoPK {
     display: flex;
     align-items: center;
@@ -135,6 +121,9 @@ header img {
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
+
+
+
 #calculoPK .tarjeta {
   display: inline-block;
   background-color: #3600FA; /* Azul cartelón */
@@ -142,6 +131,8 @@ header img {
   border-radius: 10px;
   padding: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 250px; /* Tamaño fijo */
+  height: 85px; /* Tamaño fijo */
   width: 50%;
   max-width: 400px;
   margin-right: 5px;
@@ -171,6 +162,12 @@ header img {
     color: #ffffff;      /* Color gris tenue */
 }
 
+
+
+.boton-control {
+    margin: 0 5px; /* Ajusta el margen según sea necesario */
+}
+
 .texto-buscando-pk {
     display: flex; /* Usar flexbox para centrar */
     justify-content: center; /* Centrar horizontalmente */
@@ -178,6 +175,7 @@ header img {
     height: 100%; /* Ocupar toda la altura del contenedor */
     font-size: 0.8em; /* Ajusta el tamaño del texto */
     color: #ffffff; /* Opcional: Color del texto */
+    //font-weight: bold; /* Opcional: Negrita para destacar */
     text-align: center; /* Asegura el centrado del texto */
 }
 
@@ -188,12 +186,9 @@ header img {
     height: 100%; /* Ocupar toda la altura del contenedor */
     font-size: 0.7em; /* Ajusta el tamaño del texto */
     color: #ffffff; /* Opcional: Color del texto */
+    //font-weight: bold; /* Opcional: Negrita para destacar */
     text-align: center; /* Asegura el centrado del texto */
 }
-
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  ESTILOS DEL PIE DE PÁGINA  --- --- --- --- --- --- */
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
 footer {
     margin-top: auto;
@@ -209,10 +204,6 @@ footer img {
   width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
   height: auto; /* Mantiene la proporción de la imagen */
 }
-
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  ESTILOS DE LAS TARJETAS SUPERPUESTAS (OVERLAY CARDS) --- --- --- --- --- --- */
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
 .overlay-card-container {
     position: absolute;
@@ -264,19 +255,11 @@ footer img {
   outline: none; /* Eliminar el contorno al enfocar */
 }
 
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  ESTILOS ESPECÍFICOS DE LA TARJETA DE PUERTAS CERCANAS  --- --- --- --- --- --- */
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-
-#puertas-card h2 {
-    text-align: center;
-    margin-bottom: 25px;
-}
-
  /* Estilos específicos para cada fila de información de puerta */
 .puerta-fila {
     margin-bottom: 5px; /* Espacio entre filas */
     padding: 5px;
+   
 }
 
 .puerta-fila span {
@@ -291,28 +274,12 @@ footer img {
     margin-top: 10px;
 }
 
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  MEDIA QUERIES (ESTILOS PARA MÓVILES) --- --- --- --- --- --- */
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-
     /* Estilos para cuando la tarjeta está en móvil */
 @media (max-width: 600px) {
    .overlay-card{
        width: 90%; /* Ancho de la tarjeta en movil */
    }
-
-     #actualizarUbicacion {
-        font-size: 0.9em;
-      }
-
-      header img {
-        height: auto;
-      }
 }
-
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  ESTILOS DEL CONTROL DE CAPAS  --- --- --- --- --- --- */
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
 /* Contenedor del control de capas */
 #control-capas {
@@ -376,15 +343,12 @@ footer img {
 
 /* Texto "LAV ESTE" */
 .texto-laveste {
+    //text-align: center;
     font-size: 15px;
     font-weight: bold;
     margin: 10px 0;
     color: black;
 }
-
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  ESTILOS DE LOS ICONOS DE TIEMPO  --- --- --- --- --- --- */
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
 .icono-tiempo {
     background-color: transparent;
@@ -395,10 +359,6 @@ footer img {
     width: 80px; /* Ancho deseado */
     height: 80px; /* Alto deseado */
 }
-
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  ESTILOS DE LOS POPUPS DE LEAFLET  --- --- --- --- --- --- */
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
 .leaflet-popup-content-wrapper {
     background-color: #ddc9f5 !important;  /* Fondo #ddc9f5 */
@@ -417,126 +377,99 @@ footer img {
     display: none !important; /* Ocultar la flecha del popup */
 }
 
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  MODIFICACIONES PARA TARJETA "MÁS MI PK" (PLUS CARD) CON DOS COLUMNAS - REVISADO --- --- --- --- --- --- */
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-
-/* Modificación del contenedor de la tarjeta PLUS (.plus-card) - MÁS ESPECÍFICO */
-#plus-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    gap: 20px;
-    width: auto; /* Asegurar que la tarjeta se ajuste al contenido horizontalmente */
+/* Estilos para los botones de la tarjeta PLUS */
+.plus-option-button {
+    background: linear-gradient(to bottom, #f0f8ff, #e6f7ff); /* Degradado azulado */
+    border: 1px solid #a6d4ff;
+    border-radius: 20px; /* Bordes redondeados */
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #333;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease; /* Transición suave */
+    width: 150px; /* Ancho fijo para los botones */
+    text-align: center; /* Centrar el texto */
 }
 
-/* Estilos para el título "Más Mi PK" en la tarjeta PLUS - SIN CAMBIOS */
+.plus-option-button:hover {
+    background-color: #ccebff; /* Color al pasar el ratón */
+}
+
+.plus-option-button:active {
+    background-color: #b3e0ff; /* Color al hacer clic */
+}
+
+/* Estilos para el título "Más Mi PK" en la tarjeta PLUS */
 #plus-card h2 {
-    margin-bottom: 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: 600;
-    font-size: 1.6em;
-    color: #ffffff;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-    position: relative;
-    padding-bottom: 5px;
+    margin-bottom: 60px; /* Aumenta el margen inferior */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Cambia la fuente */
+    font-weight: 600; /* Hace la fuente un poco más gruesa */
+    font-size: 2em; /* Aumenta ligeramente el tamaño de la fuente */
+    color: #ffffff; /* Cambia el color a un azul más vibrante */
+    /* background: linear-gradient(to right, #007bff, #00bfff); /* Degradado sutil */
+    /* -webkit-background-clip: text; */
+    /* -webkit-text-fill-color: transparent; */ /* Aplica el degradado al texto */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Añade una sombra de texto sutil */
+    position: relative; /* Para posicionar el icono */
+    padding-bottom: 5px; /* Espacio para el subrayado */
 }
 
-/* Subrayado personalizado del título "Más Mi PK" - SIN CAMBIOS */
+/* Subrayado personalizado */
 #plus-card h2::after {
     content: "";
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 60%;
-    height: 3px;
-    background-color: #00aaff;
-    border-radius: 2px;
+    width: 60%; /* Ancho del subrayado */
+    height: 3px; /* Grosor del subrayado */
+    background-color: #00aaff; /* Color del subrayado */
+    border-radius: 2px; /* Bordes redondeados del subrayado */
 }
 
-/* Nuevo estilo para el CONTENEDOR DIRECTO de iconos de opciones PLUS (DOS COLUMNAS) - MÁS ESPECÍFICO Y SIN SELECTOR DE ATRIBUTOS */
-#plus-card > div { /* Selector DIRECTO al div contenedor de botones */
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 10px;
-    max-width: 320px; /* *** ANCHO MÁXIMO FIJO para el contenedor de botones (ajusta según sea necesario) *** */
-    margin: 0 auto; /* Centrar el contenedor de botones dentro de la tarjeta */
-}
-
-
-/* Modificación de los botones de opciones PLUS (.plus-option-button) para tamaño fijo - SIN CAMBIOS */
 .plus-option-button {
-    width: 140px;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: transparent;
-    border: none;
-    padding: 0;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    outline: none;
+    background: none; /* Fondo transparente */
+    border: none;     /* Eliminar borde */
+    border-radius: 0; /* Eliminar bordes redondeados si los hubiera */
+    padding: 0;       /* Opcional: Eliminar padding para que la imagen ocupe todo el botón */
+    /* ... (mantén el resto de estilos que ya tengas para .plus-option-button, como cursor, box-shadow, etc.) ... */
+}
+
+.plus-option-button:hover {
+    /* ... (mantén o ajusta los estilos para :hover si quieres un efecto al pasar el ratón,
+           pero ten en cuenta que ahora el fondo del botón es transparente,
+           así que el efecto :hover tendrá que ser algo que afecte a la imagen o a otro aspecto) ... */
+    opacity: 0.8; /* Ejemplo: reducir la opacidad de la imagen al pasar el ratón */
+}
+
+.plus-option-button:active {
+    /* ... (mantén o ajusta los estilos para :active si quieres un efecto al hacer clic) ... */
+    opacity: 0.6; /* Ejemplo: reducir aún más la opacidad al hacer clic */
+}
+
+/* Estilos para los botones de operador en la tarjeta de Circulación */
+.operador-button {
+    display: block; /* Para que cada botón ocupe una línea completa */
+    padding: 10px 15px;
+    margin-bottom: 5px;
+    background-color: #f0f8ff; /* Un color de fondo suave */
+    border: 1px solid #a6d4ff;
+    border-radius: 5px;
+    text-align: left; /* Texto alineado a la izquierda */
+    color: #333;
+    text-decoration: none; /* Quitar subrayado de enlaces */
     cursor: pointer;
-    overflow: hidden;
+    transition: background-color 0.2s ease; /* Transición suave para hover */
 }
 
-.plus-option-button img {
-    max-width: 80%;
-    max-height: 80%;
-    object-fit: contain;
+.operador-button:hover {
+    background-color: #ccebff; /* Color de fondo al pasar el ratón */
 }
 
-.plus-option-button:hover {
-    opacity: 0.8;
+.operador-button:active {
+    background-color: #b3e0ff; /* Color de fondo al hacer clic */
 }
-
-.plus-option-button:active {
-    opacity: 0.6;
-}
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  ESTILOS COMUNES DE LOS BOTONES DE OPERADOR (CIRCULACIÓN, CPS, CSI, TELEMANDO) --- --- --- --- --- --- */
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-
-.plus-option-button {
-    background: transparent; /* Fondo completamente transparente */
-    border: none;         /* Eliminar borde */
-    padding: 0;          /* Eliminar padding interno del botón */
-    border-radius: 0;    /* Asegurar que no haya bordes redondeados */
-    box-shadow: none;    /* Eliminar cualquier sombra */
-    outline: none;       /* Eliminar cualquier contorno al enfocar */
-    cursor: pointer;     /* Mantener el cursor de "mano" al pasar por encima */
-    /* transition: background-color 0.3s ease;  Eliminar o comentar la transición de background-color */
-    width: auto;        /* Ancho automático para ajustarse al ancho de la imagen */
-    height: auto;       /* Alto automático para ajustarse al alto de la imagen */
-    text-align: center; /* Centrar el texto (aunque ahora no hay texto, puede ser útil mantenerlo) */
-}
-
-.plus-option-button:hover {
-    opacity: 0.8; /* Mantener o ajustar el efecto de opacidad al pasar el ratón */
-}
-
-.plus-option-button:active {
-    opacity: 0.6; /* Mantener o ajustar el efecto de opacidad al hacer clic */
-}
-
-/* Estilos para la descripción del operador (segunda línea en botones de operador) */
-.operador-descripcion {
-    display: block; /* Para que ocupe una línea completa dentro del botón */
-    font-size: 0.9em; /* Tamaño de fuente más pequeño */
-    color: #777; /* Color gris más tenue */
-    margin-top: 3px; /* Pequeño espacio superior */
-}
-
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  ESTILOS ESPECÍFICOS DE LA TARJETA DE CIRCULACIÓN (EJEMPLO) --- --- --- --- --- --- */
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
 /* Estilos adicionales para la tarjeta de operadores (opcional, puedes ajustar) */
 #circulacion-card h2 {
@@ -549,13 +482,26 @@ footer img {
     gap: 5px; /* Espacio entre botones */
 }
 
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  ESTILOS ESPECÍFICOS DE LA TARJETA CPS (EJEMPLO) --- --- --- --- --- --- */
-/* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
+/* Estilos para la descripción del operador (segunda línea) */
+.operador-descripcion {
+    display: block; /* Para que ocupe una línea completa dentro del botón */
+    font-size: 0.9em; /* Tamaño de fuente más pequeño */
+    color: #777; /* Color gris más tenue */
+    margin-top: 3px; /* Pequeño espacio superior */
+}
+
+/* Estilos específicos para la tarjeta CPS */
 
 #cps-card h2 {
     margin-bottom: 15px; /* Reduce un poco el margen inferior del título CPS */
 }
+
+
+
+.cps-llamar-button:hover {
+    background-color: #0056b3;
+}
+
 
 /* Estilos para el texto informativo de CPS */
 .cps-info-text {
@@ -569,3 +515,30 @@ footer img {
     color: #555; /* Sin cambios */
     margin-top: 30px; /* *** AÑADIDO: Espacio superior para separar del contenido anterior *** */
 }
+
+
+
+/* Estilos específicos para los botones "Llamar" de la tarjeta TELEMANDO (opcional) */
+.telemando-llamar-button {
+    background-color: #ffc107; /* Amarillo/ámbar para los botones "Llamar" de TELEMANDO */
+    color: #212529; /* Color de texto más oscuro para contrastar con el amarillo */
+}
+
+.telemando-llamar-button:hover {
+    background-color: #e0a800; /* Amarillo/ámbar más oscuro al pasar el ratón */
+}
+
+.telemando-llamar-button:active {
+    background-color: #c28e00; /* Amarillo/ámbar aún más oscuro al hacer clic */
+}
+
+  #actualizarUbicacion {
+    font-size: 0.9em;
+  }
+
+  header img {
+    height: auto;
+  }
+}
+
+
