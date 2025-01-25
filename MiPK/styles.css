@@ -418,87 +418,88 @@ footer img {
 }
 
 /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
-/* --- --- --- --- --- ---  ESTILOS DE LOS BOTONES DE OPCIONES PLUS (TARJETA "MÁS MI PK") --- --- --- --- --- --- */
+/* --- --- --- --- --- ---  MODIFICACIONES PARA TARJETA "MÁS MI PK" (PLUS CARD) CON DOS COLUMNAS - REVISADO --- --- --- --- --- --- */
 /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
-/* Modificación del contenedor de la tarjeta PLUS (.plus-card) */
+/* Modificación del contenedor de la tarjeta PLUS (.plus-card) - MÁS ESPECÍFICO */
 #plus-card {
-    display: flex;              /* Usar Flexbox para la tarjeta PLUS */
-    flex-direction: column;     /* Contenido principal en columna */
-    align-items: center;        /* Centrar elementos horizontalmente dentro de la tarjeta */
-    padding: 20px;              /* Mantener padding */
-    gap: 20px;                 /* Espacio vertical entre título y contenedor de botones */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    gap: 20px;
+    width: auto; /* Asegurar que la tarjeta se ajuste al contenido horizontalmente */
 }
 
-/* Estilos para el título "Más Mi PK" en la tarjeta PLUS */
+/* Estilos para el título "Más Mi PK" en la tarjeta PLUS - SIN CAMBIOS */
 #plus-card h2 {
-    margin-bottom: 20px; /* Ajustado para menos margen inferior (antes 60px) */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Cambia la fuente */
-    font-weight: 600; /* Hace la fuente un poco más gruesa */
-    font-size: 1.6em; /* Ajusta el tamaño de la fuente (antes 2em) */
-    color: #ffffff; /* Cambia el color a un azul más vibrante */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Añade una sombra de texto sutil */
-    position: relative; /* Para posicionar el icono */
-    padding-bottom: 5px; /* Espacio para el subrayado */
+    margin-bottom: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 600;
+    font-size: 1.6em;
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    position: relative;
+    padding-bottom: 5px;
 }
 
-/* Subrayado personalizado del título "Más Mi PK" */
+/* Subrayado personalizado del título "Más Mi PK" - SIN CAMBIOS */
 #plus-card h2::after {
     content: "";
     position: absolute;
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 60%; /* Ancho del subrayado */
-    height: 3px; /* Grosor del subrayado */
-    background-color: #00aaff; /* Color del subrayado */
-    border-radius: 2px; /* Bordes redondeados del subrayado */
+    width: 60%;
+    height: 3px;
+    background-color: #00aaff;
+    border-radius: 2px;
 }
 
-/* Nuevo estilo para el contenedor de iconos de opciones PLUS (dos columnas) */
-#plus-card > div[style*="display: flex; flex-direction: column;"] { /* Selector específico para el contenedor de botones */
-    display: flex;              /* Convertir el contenedor de botones a Flexbox */
-    flex-direction: row;        /* Disponer los botones en fila (para luego envolverlos en columnas) */
-    flex-wrap: wrap;            /* Permitir que los botones se envuelvan a la siguiente fila si no caben */
-    justify-content: center;    /* Centrar horizontalmente los botones en cada fila */
-    align-items: flex-start;    /* Alinear los botones al inicio verticalmente */
-    gap: 10px;                 /* Espacio entre botones (horizontal y vertical) */
-    max-width: 100%;            /* Asegurar que no se desborde del ancho de la tarjeta */
+/* Nuevo estilo para el CONTENEDOR DIRECTO de iconos de opciones PLUS (DOS COLUMNAS) - MÁS ESPECÍFICO Y SIN SELECTOR DE ATRIBUTOS */
+#plus-card > div { /* Selector DIRECTO al div contenedor de botones */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 320px; /* *** ANCHO MÁXIMO FIJO para el contenedor de botones (ajusta según sea necesario) *** */
+    margin: 0 auto; /* Centrar el contenedor de botones dentro de la tarjeta */
 }
 
-/* Modificación de los botones de opciones PLUS (.plus-option-button) para tamaño fijo */
+
+/* Modificación de los botones de opciones PLUS (.plus-option-button) para tamaño fijo - SIN CAMBIOS */
 .plus-option-button {
-    width: 140px;             /* *** ANCHO FIJO para todos los botones (ajusta si es necesario) *** */
-    height: 100px;            /* *** ALTO FIJO para todos los botones (ajusta si es necesario) *** */
-    display: flex;             /* Convertir botones a Flexbox para centrar la imagen */
-    flex-direction: column;    /* Icono y texto en columna (aunque ahora solo tenemos iconos) */
-    justify-content: center;   /* Centrar verticalmente el contenido (imagen) */
-    align-items: center;       /* Centrar horizontalmente el contenido (imagen) */
-    background: transparent;   /* Fondo transparente (sin cambios) */
-    border: none;             /* Sin borde (sin cambios) */
-    padding: 0;              /* Sin padding (sin cambios) */
-    border-radius: 10px;      /* Bordes redondeados (puedes ajustar) */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra ligera (sin cambios) */
-    outline: none;            /* Sin contorno (sin cambios) */
-    cursor: pointer;         /* Cursor pointer (sin cambios) */
-    overflow: hidden;         /* Asegurar que la imagen no se desborde */
+    width: 140px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+    padding: 0;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    outline: none;
+    cursor: pointer;
+    overflow: hidden;
 }
 
 .plus-option-button img {
-    max-width: 80%;          /* Reducir el tamaño máximo de la imagen dentro del botón */
-    max-height: 80%;         /* Reducir el tamaño máximo de la imagen dentro del botón */
-    object-fit: contain;     /* Asegurar que la imagen se ajuste dentro sin deformarse */
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
 }
 
-
 .plus-option-button:hover {
-    opacity: 0.8;         /* Mantener efecto hover (sin cambios) */
+    opacity: 0.8;
 }
 
 .plus-option-button:active {
-    opacity: 0.6;         /* Mantener efecto active (sin cambios) */
+    opacity: 0.6;
 }
-
 /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 /* --- --- --- --- --- ---  ESTILOS COMUNES DE LOS BOTONES DE OPERADOR (CIRCULACIÓN, CPS, CSI, TELEMANDO) --- --- --- --- --- --- */
 /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
