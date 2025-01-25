@@ -123,37 +123,45 @@
 
     <!-- Tarjeta superpuesta para opciones PLUS -->
     <div id="plus-card-container" class="overlay-card-container" style="display: none;">
-        <div id="plus-card" class="overlay-card">
+    <div id="plus-card" class="overlay-card">
+        <!-- Botón para cerrar la tarjeta -->
+        <button id="cerrar-plus-card" class="close-button" aria-label="Cerrar">
+            <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+        </button>
 
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-plus-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
+        <!-- Título de la tarjeta -->
+        <h2 style="text-align: center; margin-bottom: 20px;"><u>Mi PK MÁS</u></h2>
 
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 20px;"><u>Mi PK MÁS</u></h2>
+        <!-- Contenedor principal para las dos columnas -->
+        <div style="display: flex; justify-content: center; gap: 10px;">
 
-                        <!-- Contenedor de iconos de opciones PLUS -->
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+            <!-- Columna 1 -->
+            <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
                 <button class="plus-option-button" aria-label="CIRCULACIÓN">
                     <img src="img/plus/circulacion.png" alt="CIRCULACIÓN" style="width: 100%; height: auto;">
                 </button>
                 <button class="plus-option-button" aria-label="CPS">
-                    <img src="img/plus/cps.png" alt="CPS" style="width: 100%; height: auto;">
+                   <img src="img/plus/cps.png" alt="CPS" style="width: 100%; height: auto;">
                 </button>
+                <!-- Añade más botones aquí para la columna 1 -->
+            </div>
+
+            <!-- Columna 2 -->
+            <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
                 <button class="plus-option-button" aria-label="CSI">
-                    <img src="img/plus/csi.png" alt="CSI" style="width: 100%; height: auto;">
+                     <img src="img/plus/csi.png" alt="CSI" style="width: 100%; height: auto;">
                 </button>
                 <button class="plus-option-button" aria-label="TELEMANDO">
                     <img src="img/plus/telemando.png" alt="TELEMANDO" style="width: 100%; height: auto;">
                 </button>
-                <button class="plus-option-button" aria-label="ACTS">
+                  <button class="plus-option-button" aria-label="ACTS">
                     <img src="img/plus/acta.png" alt="Opción 5" style="width: 100%; height: auto;">
                 </button>
+                <!-- Añade más botones aquí para la columna 2 -->
             </div>
-
         </div>
     </div>
+</div>
 
 
         <!-- Sección del pie de página -->
