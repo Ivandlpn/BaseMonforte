@@ -535,6 +535,16 @@ footer img {
     background-color: #c28e00; /* Amarillo/ámbar aún más oscuro al hacer clic */
 }
 
+
+/* Estilos para los botones de la tarjeta MALLAS */
+#mallas-container .operador-button {
+    padding: 15px 20px; /* Aumenta el padding para hacerlos más altos */
+    margin-bottom: 10px; /* Aumenta el margen inferior para separarlos */
+    font-size: 1.1em; /* Opcional: Aumentar el tamaño de la fuente si quieres */
+    display: block;
+    text-align: center;
+}
+
   #actualizarUbicacion {
     font-size: 0.9em;
   }
