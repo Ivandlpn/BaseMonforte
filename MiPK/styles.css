@@ -470,26 +470,26 @@ footer img {
 /* --- --- --- --- --- ---  ESTILOS COMUNES DE LOS BOTONES DE OPERADOR (CIRCULACIÓN, CPS, CSI, TELEMANDO) --- --- --- --- --- --- */
 /* --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- */
 
-.operador-button {
-    display: block; /* Para que cada botón ocupe una línea completa */
-    padding: 10px 15px;
-    margin-bottom: 5px;
-    background-color: #f0f8ff; /* Un color de fondo suave */
-    border: 1px solid #a6d4ff;
-    border-radius: 5px;
-    text-align: left; /* Texto alineado a la izquierda */
-    color: #333;
-    text-decoration: none; /* Quitar subrayado de enlaces */
-    cursor: pointer;
-    transition: background-color 0.2s ease; /* Transición suave para hover */
+.plus-option-button {
+    background: transparent; /* Fondo completamente transparente */
+    border: none;         /* Eliminar borde */
+    padding: 0;          /* Eliminar padding interno del botón */
+    border-radius: 0;    /* Asegurar que no haya bordes redondeados */
+    box-shadow: none;    /* Eliminar cualquier sombra */
+    outline: none;       /* Eliminar cualquier contorno al enfocar */
+    cursor: pointer;     /* Mantener el cursor de "mano" al pasar por encima */
+    /* transition: background-color 0.3s ease;  Eliminar o comentar la transición de background-color */
+    width: auto;        /* Ancho automático para ajustarse al ancho de la imagen */
+    height: auto;       /* Alto automático para ajustarse al alto de la imagen */
+    text-align: center; /* Centrar el texto (aunque ahora no hay texto, puede ser útil mantenerlo) */
 }
 
-.operador-button:hover {
-    background-color: #ccebff; /* Color de fondo al pasar el ratón */
+.plus-option-button:hover {
+    opacity: 0.8; /* Mantener o ajustar el efecto de opacidad al pasar el ratón */
 }
 
-.operador-button:active {
-    background-color: #b3e0ff; /* Color de fondo al hacer clic */
+.plus-option-button:active {
+    opacity: 0.6; /* Mantener o ajustar el efecto de opacidad al hacer clic */
 }
 
 /* Estilos para la descripción del operador (segunda línea en botones de operador) */
