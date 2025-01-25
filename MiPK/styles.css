@@ -378,34 +378,13 @@ footer img {
 }
 
 /* Estilos para los botones de la tarjeta PLUS */
-.plus-option-button {
-    background: linear-gradient(to bottom, #f0f8ff, #e6f7ff); /* Degradado azulado */
-    border: 1px solid #a6d4ff;
-    border-radius: 20px; /* Bordes redondeados */
-    padding: 10px 20px;
-    font-size: 1em;
-    color: #333;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease; /* Transición suave */
-    width: 150px; /* Ancho fijo para los botones */
-    text-align: center; /* Centrar el texto */
-}
-
-.plus-option-button:hover {
-    background-color: #ccebff; /* Color al pasar el ratón */
-}
-
-.plus-option-button:active {
-    background-color: #b3e0ff; /* Color al hacer clic */
-}
-
-/* Estilos para el título "Más Mi PK" en la tarjeta PLUS */
 /* Estilos para el contenedor principal de las dos columnas */
 #plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] {
     display: flex;
     justify-content: center;
     gap: 10px;
+        overflow-x: auto; /* Asegura el scroll horizontal si es necesario */
+     box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
 }
 
 /* Estilos para los contenedores de cada columna */
@@ -414,6 +393,7 @@ footer img {
     flex-direction: column;
     gap: 10px;
     align-items: center;
+      flex: 1; /* Ajusta el tamaño de cada columna en movil */
 }
 
 /* Ajuste del ancho de la tarjeta overlay-card (opcional, según necesidad) */
@@ -422,33 +402,31 @@ footer img {
     width: 90%;
     max-width: 700px; /* Ancho máximo */
      overflow-x: auto; /* Asegura el scroll horizontal si es necesario */
-    box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
+     box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
 }
-
 
 /* Ajuste para dispositivos móviles */
 @media (max-width: 600px) {
-  
-     #plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] {
-          flex-direction: row; /* Mantiene las dos columnas */
-         align-items: flex-start;
-         overflow-x: auto;
-         width: auto; /* Elimina width */
+    #plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] {
+        flex-direction: row;
+        align-items: flex-start;
+        overflow-x: auto;
          box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
-     }
-       #plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] > div[style*="display: flex; flex-direction: column; gap: 10px; align-items: center;"] {
-         flex: 1; /* Ajusta el tamaño de cada columna en movil */
-          width: auto; /* Elimina width */
-        }
-
+    }
+     #plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] > div[style*="display: flex; flex-direction: column; gap: 10px; align-items: center;"] {
+      
+       flex: 1;
+    }
 
     .overlay-card {
         width: 95%;
-       max-width: none; /* Elimina el ancho máximo en pantallas pequeñas */
+         max-width: none; /* Elimina el ancho máximo en pantallas pequeñas */
       overflow-x: auto; /* Asegura el scroll horizontal si es necesario */
-        box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
+         box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
     }
 }
+
+
 .plus-option-button:hover {
     /* ... (mantén o ajusta los estilos para :hover si quieres un efecto al pasar el ratón,
            pero ten en cuenta que ahora el fondo del botón es transparente,
