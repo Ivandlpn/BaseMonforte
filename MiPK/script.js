@@ -22,7 +22,11 @@ const apiKeyOpenWeatherMap = "14225e48c44f9d35291e12867b7f32cf"; // API Meteo
     ];
 
  // Cargar puertas al iniciar la app
-cargarPuertas();
+// Al final de cargarPuertas():
+cargarPuertas().then(puertas => {
+  indexarPuertas(puertas);
+  puertasData = puertas; // Mantener compatibilidad
+});
 
 function pkToNumber(pkString) { // <--- Definición en el ámbito global
     return parseInt(pkString, 10);
@@ -906,20 +910,49 @@ checkTuneles.addEventListener('change', function () {
 let cachedPuertasCercanas = null;
 let lastUserLocation = null;
 
+// Reemplazar la función existente con:
+let cachedPuertas = null;
+const puertasIndex = new Map();
+
 async function cargarPuertas() {
+  if (!cachedPuertas) {
     try {
-        console.log("Cargando datos de puertas...");
+      const cacheValido = localStorage.getItem('puertasCache') 
+        && (Date.now() - JSON.parse(localStorage.puertasCache).timestamp < 86400000); // 24h
+
+      if (cacheValido) {
+        cachedPuertas = JSON.parse(localStorage.puertasCache).data;
+      } else {
         const responses = await Promise.all([
-            fetch("./doc/puertas/PL42.json"),
-            fetch("./doc/puertas/PL46.json"),
-            fetch("./doc/puertas/PL40.json")
+          fetch("./doc/puertas/PL42.json"),
+          fetch("./doc/puertas/PL46.json"),
+          fetch("./doc/puertas/PL40.json")
         ]);
-        puertasData = (await Promise.all(responses.map(res => res.json()))).flat();
-        console.log("Datos de puertas cargados:", puertasData);
+        cachedPuertas = (await Promise.all(responses.map(res => res.json()))).flat();
+        localStorage.setItem('puertasCache', JSON.stringify({
+          data: cachedPuertas,
+          timestamp: Date.now()
+        }));
+      }
     } catch (error) {
-        console.error("Error al cargar los datos de puertas:", error);
-        alert("Error al cargar los datos de las puertas.");
+      console.error("Error al cargar puertas:", error);
+      cachedPuertas = [];
     }
+  }
+  return cachedPuertas;
+}
+
+function indexarPuertas(puertas) {
+  puertasIndex.clear();
+  puertas.forEach(puerta => {
+    const bloquePK = Math.floor(puerta.PK / 1000); // Agrupar por kilómetros
+    const key = `${puerta.Linea}-${bloquePK}`;
+    
+    if (!puertasIndex.has(key)) {
+      puertasIndex.set(key, []);
+    }
+    puertasIndex.get(key).push(puerta);
+  });
 }
 
  function mostrarPuertasCercanas() {
@@ -1081,53 +1114,40 @@ function ocultarPuertasCercanas() {
 }
 
 
-async function calcularPuertasCercanas(latUsuario, lonUsuario, puertasFiltradas) { // <-- Puertas filtradas como argumento
-    console.log("Calculando puertas cercanas...");
-    const puertasPorVia = {};
-    const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk);
-    console.log("PK del usuario (numérico):", pkUsuarioNumerico);
+function calcularPuertasCercanas(latUsuario, lonUsuario, lineaUsuario, pkUsuario) {
+  const rangoBusqueda = 2000; // ±2 km
+  const bloquesRelevantes = new Set();
 
-    puertasFiltradas.forEach(puerta => { // Usar puertasFiltradas en lugar de puertasData
-        const pkPuertaNumerico = parseInt(puerta.PK, 10);
-        const diferenciaPK = pkPuertaNumerico - pkUsuarioNumerico;
-        console.log(`Puerta PK: ${puerta.PK}, numérico: ${pkPuertaNumerico}, diferencia: ${diferenciaPK}, vía: ${puerta.Via}`);
+  // Calcular bloques circundantes
+  for (let pk = pkUsuario - rangoBusqueda; pk <= pkUsuario + rangoBusqueda; pk += 1000) {
+    bloquesRelevantes.add(Math.floor(pk / 1000));
+  }
 
-        if (!puertasPorVia[puerta.Via]) {
-            puertasPorVia[puerta.Via] = [];
-        }
-        puertasPorVia[puerta.Via].push({ ...puerta, diferenciaPK });
-    });
-    console.log("Puertas agrupadas por vía:", puertasPorVia);
+  // Obtener puertas candidatas
+  const puertasCandidatas = Array.from(bloquesRelevantes)
+    .map(bloque => puertasIndex.get(`${lineaUsuario}-${bloque}`) || [])
+    .flat();
 
-    const puertasCercanasPorVia = {};
-
-    for (const via in puertasPorVia) {
-        console.log(`Procesando vía: ${via}`);
-        const puertasOrdenadas = puertasPorVia[via].sort((a, b) => a.diferenciaPK - b.diferenciaPK);
-        let crecienteMasCercana = null;
-        let decrecienteMasCercana = null;
-        console.log(`Puertas ordenadas para vía ${via}:`, puertasOrdenadas);
-
-        for (const puerta of puertasOrdenadas) {
-            console.log(`  - Puerta PK: ${puerta.PK}, diferencia: ${puerta.diferenciaPK}`);
-            if (puerta.diferenciaPK > 0 && !crecienteMasCercana) {
-                console.log(`    - Encontrada puerta creciente más cercana: ${puerta.PK}`);
-                crecienteMasCercana = puerta;
-            } else if (puerta.diferenciaPK < 0) {
-                console.log(`    - Encontrada puerta decreciente más cercana: ${puerta.PK}`);
-                decrecienteMasCercana = puerta;
-            }
-            if (crecienteMasCercana && decrecienteMasCercana) {
-                console.log("    - Puertas crecientes y decrecientes encontradas. Saliendo del loop.");
-                break;
-            }
-        }
-        puertasCercanasPorVia[via] = { creciente: crecienteMasCercana, decreciente: decrecienteMasCercana };
-        console.log(`Puertas cercanas para la vía ${via}:`, puertasCercanasPorVia[via]);
-    }
-    console.log("Puertas cercanas calculadas (antes de coordenadas):", puertasCercanasPorVia);
-    return obtenerCoordenadasPuertasCercanas(puertasCercanasPorVia);
+  // Cálculo rápido de distancia aproximada
+  const factorLon = 111319 * Math.cos(latUsuario * Math.PI / 180);
+  
+  return puertasCandidatas
+    .map(puerta => {
+      const dLat = (puerta.Latitud - latUsuario) * 111319;
+      const dLon = (puerta.Longitud - lonUsuario) * factorLon;
+      return {
+        ...puerta,
+        distancia: dLat * dLat + dLon * dLon // Distancia cuadrada
+      };
+    })
+    .sort((a, b) => a.distancia - b.distancia)
+    .slice(0, 15); // Limitar resultados
 }
+
+// En mostrarPuertasCercanasInterno():
+const puertasLineaUsuario = puertasData.filter(puerta => puerta.Linea === lineaUsuario);
+// Reemplazar por:
+const puertasCercanas = calcularPuertasCercanas(lat, lon, lineaUsuario, pkUsuarioNumerico);
 
 async function obtenerCoordenadasPuertasCercanas(puertasCercanasPorVia) {
     console.log("Obteniendo coordenadas de puertas cercanas...");
