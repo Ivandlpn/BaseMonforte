@@ -1622,6 +1622,55 @@ document.addEventListener('DOMContentLoaded', function() {
         // ----- FIN FUNCIONALIDAD BOTÓN ACTAS -----
 
 
+    // ----- INICIO FUNCIONALIDAD BOTÓN MALLAS -----
+
+    const operadoresMallasData = [
+        { nombre: "Malla_Madrid-Valencia", vinculo: "https://adif365.sharepoint.com/:b:/r/sites/SubdirecciondeOperacionesAV/Documentos%20compartidos/0.%20Subdirecci%C3%B3n%20de%20Operaciones%20AV/GAIAV/Este/GMAVE/Z03%20DOC.%20ADMINISTRATIVA/6.%20TELECO-IISS/4.1.0810.1001%20CPP/12%20AUMENTO%20CIRCULACIONES/MALLAS/Malla_Madrid-Valencia.pdf?csf=1&web=1&e=eLGx7T" },
+        { nombre: "Malla_Bif_Albacete-Alicante", vinculo: "https://adif365.sharepoint.com/:b:/r/sites/SubdirecciondeOperacionesAV/Documentos%20compartidos/0.%20Subdirecci%C3%B3n%20de%20Operaciones%20AV/GAIAV/Este/GMAVE/Z03%20DOC.%20ADMINISTRATIVA/6.%20TELECO-IISS/4.1.0810.1001%20CPP/12%20AUMENTO%20CIRCULACIONES/MALLAS/Malla_Bif_Albacete-Alicante.pdf?csf=1&web=1&e=DdqAop" },
+       { nombre: "Malla_Alicante-Murcia", vinculo: "https://adif365.sharepoint.com/:b:/r/sites/SubdirecciondeOperacionesAV/Documentos%20compartidos/0.%20Subdirecci%C3%B3n%20de%20Operaciones%20AV/GAIAV/Este/GMAVE/Z03%20DOC.%20ADMINISTRATIVA/6.%20TELECO-IISS/4.1.0810.1001%20CPP/12%20AUMENTO%20CIRCULACIONES/MALLAS/Malla_Alicante-Murcia.pdf?csf=1&web=1&e=ZWAKDD" },
+    ];
+    
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const mallasButton = document.querySelector('.plus-option-button[aria-label="MALLAS"]');
+        const mallasCardContainer = document.getElementById('mallas-card-container');
+        const mallasContainer = document.getElementById('mallas-container');
+        const cerrarMallasCardButton = document.getElementById('cerrar-mallas-card');
+
+        if (mallasButton) {
+            mallasButton.addEventListener('click', function() {
+                mallasCardContainer.style.display = 'flex'; // Mostrar la tarjeta de operadores
+                 generarBotonesMallas();
+            });
+        } else {
+            console.error('No se encontró el botón MALLAS');
+        }
+
+          if (cerrarMallasCardButton) {
+            cerrarMallasCardButton.addEventListener('click', function() {
+               mallasCardContainer.style.display = 'none'; // Ocultar la tarjeta de operadores al hacer clic en "Cerrar"
+           });
+        } else {
+            console.error('No se encontró el botón de cerrar de la tarjeta de MALLAS');
+         }
+
+       function generarBotonesMallas() {
+         const mallasContainer = document.getElementById('mallas-container'); // Obtener el contenedor AQUÍ
+            mallasContainer.innerHTML = ''; // Limpiar el contenedor antes de añadir botones nuevos
+            operadoresMallasData.forEach(operador => {
+             const botonMalla = document.createElement('a'); // Usar <a> para enlaces tel:
+                botonMalla.href = operador.vinculo;
+                botonMalla.target = "_blank";
+                botonMalla.className = 'operador-button';
+                botonMalla.innerHTML = `<b>${operador.nombre}</b>`;
+              mallasContainer.appendChild(botonMalla); // Añadir botón al contenedor
+          });
+       }
+    });
+
+
+ // ----- FIN FUNCIONALIDAD BOTÓN MALLAS -----
+
 
 ///// FIN ICONO PLUS /////
 
