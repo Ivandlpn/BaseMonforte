@@ -426,6 +426,16 @@ footer img {
     }
 }
 
+.plus-option-button {
+    background: none; /* Fondo transparente */
+    border: none;     /* Eliminar borde */
+    border-radius: 0; /* Eliminar bordes redondeados si los hubiera */
+    padding: 0;       /* Opcional: Eliminar padding para que la imagen ocupe todo el botón */
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease; /* Transición suave */
+    /* ... (mantén el resto de estilos que ya tengas para .plus-option-button, como cursor, box-shadow, etc.) ... */
+}
 
 .plus-option-button:hover {
     /* ... (mantén o ajusta los estilos para :hover si quieres un efecto al pasar el ratón,
@@ -443,13 +453,6 @@ footer img {
 
 /* Estilos para los botones de operador en la tarjeta de Circulación */
 .operador-button {
-  background: none; /* Fondo transparente */
-    border: none;     /* Eliminar borde */
-    border-radius: 0; /* Eliminar bordes redondeados si los hubiera */
-    padding: 0;       /* Opcional: Eliminar padding para que la imagen ocupe todo el botón */
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: opacity 0.3s ease; /* Transición suave */
     display: block; /* Para que cada botón ocupe una línea completa */
     padding: 10px 15px;
     margin-bottom: 5px;
