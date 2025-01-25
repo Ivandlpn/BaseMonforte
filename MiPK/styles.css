@@ -436,6 +436,47 @@ footer img {
     /* ... (mantén el resto de estilos que ya tengas para .plus-option-button, como cursor, box-shadow, etc.) ... */
 }
 
+
+/* Estilos para el contenedor principal de las dos columnas */
+#plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Estilos para los contenedores de cada columna */
+#plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] > div[style*="display: flex; flex-direction: column; gap: 10px; align-items: center;"] {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+
+/* Ajuste del ancho de la tarjeta overlay-card (opcional, según necesidad) */
+.overlay-card {
+    /* Ajusta el valor según necesites */
+    width: 80%;
+    max-width: 700px; /* Ancho máximo */
+}
+
+
+/* Opcional: Ajuste para dispositivos móviles */
+@media (max-width: 600px) {
+     #plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] {
+        flex-direction: column; /* Una sola columna en pantallas pequeñas */
+         align-items: center; /*Centrar elementos en la columna*/
+    }
+     #plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] > div[style*="display: flex; flex-direction: column; gap: 10px; align-items: center;"] {
+        width: 100%; /* Ancho completo en pantallas pequeñas */
+     }
+      .overlay-card {
+        width: 90%;
+        max-width: none; /* Elimina el ancho máximo en pantallas pequeñas */
+      }
+}
+
+
 .plus-option-button:hover {
     /* ... (mantén o ajusta los estilos para :hover si quieres un efecto al pasar el ratón,
            pero ten en cuenta que ahora el fondo del botón es transparente,
@@ -447,6 +488,9 @@ footer img {
     /* ... (mantén o ajusta los estilos para :active si quieres un efecto al hacer clic) ... */
     opacity: 0.6; /* Ejemplo: reducir aún más la opacidad al hacer clic */
 }
+
+
+
 
 /* Estilos para los botones de operador en la tarjeta de Circulación */
 .operador-button {
