@@ -548,6 +548,7 @@ footer img {
 
 /* Estilos para los resultados del directorio */
 /* Estilos para el formulario del directorio */
+
 #directorio-formulario {
     display: flex;
     flex-direction: column;
@@ -580,6 +581,26 @@ footer img {
 #directorio-formulario #buscar-btn:hover {
     background-color: #0056b3; /* Fondo azul más oscuro al pasar el ratón */
 }
+
+#directorio-resultados {
+    margin-top: 10px; /* Espacio sobre la tabla */
+}
+
+.directorio-resultado {
+  margin-bottom: 15px; /* Espacio inferior para separar los resultados */
+    padding: 10px; /* Espacio alrededor de cada resultado */
+    border: 1px solid #eee; /* Borde gris tenue para separar visualmente */
+  background-color: #f9f9f9; /* Fondo gris muy claro para contraste */
+    border-radius: 5px;
+  text-align: left;
+}
+
+.directorio-resultado p {
+   margin: 2px 0;  /* Espacio arriba y abajo de cada parrafo*/
+     font-size: 0.9em;
+     line-height: 1.2; /* Interlineado */
+}
+
   #actualizarUbicacion {
     font-size: 0.9em;
   }
