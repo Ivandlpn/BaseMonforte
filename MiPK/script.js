@@ -1700,7 +1700,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     } else {
         console.error('No se encontró el botón DIRECTORIO');
-    })
+    }
 
     if (cerrarDirectorioCardButton) {
             cerrarDirectorioCardButton.addEventListener('click', function() {
@@ -1709,7 +1709,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             console.error('No se encontró el botón de cerrar de la tarjeta de DIRECTORIO');
          }
-}
+})
 
      function generarFormularioBusqueda() {
             const directorioContainer = document.getElementById('directorio-container'); // Obtener el contenedor AQUÍ
