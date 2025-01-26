@@ -1839,24 +1839,31 @@ function mostrarResultadosEnTabla(resultados) {
      resultados.forEach(item => {
         const resultadoDiv = document.createElement('div');
         resultadoDiv.classList.add('directorio-resultado'); // Añade una clase para estilos CSS
-            let logoElement;
+          let logoElement;
         // Añadir el logo según el dominio
         if (item.Correo && item.Correo.includes('@adif.es')) {
-          if (logoAdif)
-           {
+             if (logoAdif)
+          {
              logoElement = logoAdif.cloneNode();
-           logoElement.classList.add('logo-adif');
-           resultadoDiv.appendChild(logoElement);
+              logoElement.classList.add('logo-adif');
+           } else {
+               logoElement = document.createElement('span');
+             logoElement.textContent = '🟢';
+             logoElement.classList.add('logo-fallback')
            }
+           resultadoDiv.appendChild(logoElement);
         } else if (item.Correo && item.Correo.includes('@ineco.com')) {
-            if(logoIneco)
+           if(logoIneco)
            {
-             logoElement = logoIneco.cloneNode();
-           logoElement.classList.add('logo-ineco');
-            resultadoDiv.appendChild(logoElement);
-            } else {
-               console.error(`No se pudo obtener el logo de ineco para el usuario ${item.Nombre}`);
-            }
+               logoElement = logoIneco.cloneNode();
+              logoElement.classList.add('logo-ineco');
+          } else {
+             logoElement = document.createElement('span');
+             logoElement.textContent = '🔵';
+             logoElement.classList.add('logo-fallback')
+             console.error(`No se pudo obtener el logo de ineco para el usuario ${item.Nombre}`);
+           }
+           resultadoDiv.appendChild(logoElement);
         }
 
 
@@ -1870,7 +1877,7 @@ function mostrarResultadosEnTabla(resultados) {
 
 
         const ubicacionParrafo = document.createElement('p');
-         ubicacionParrafo.textContent = item.Ubicación || 'Ubicación no disponible';
+        ubicacionParrafo.textContent = item.Ubicación || 'Ubicación no disponible';
         resultadoDiv.appendChild(ubicacionParrafo);
 
        const telefonoParrafo = document.createElement('p');
@@ -1880,7 +1887,7 @@ function mostrarResultadosEnTabla(resultados) {
         
          const correoParrafo = document.createElement('p');
          const correo = item.Correo || 'Correo no disponible';
-         correoParrafo.innerHTML = `📧 <a href="mailto:${correo}">${correo}</a>`;
+        correoParrafo.innerHTML = `📧 <a href="mailto:${correo}">${correo}</a>`;
         resultadoDiv.appendChild(correoParrafo);
 
        directorioResultados.appendChild(resultadoDiv);
