@@ -1675,7 +1675,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
  // ----- INICIO FUNCIONALIDAD BOTÓN DIRECTORIO -----
 
-  const directorioData = []; // Array para guardar los datos del directorio
+ const directorioData = []; // Array para guardar los datos del directorio
    document.addEventListener('DOMContentLoaded', async function() {
       const directorioButton = document.querySelector('.plus-option-button[aria-label="DIRECTORIO"]');
       const directorioCardContainer = document.getElementById('directorio-card-container');
@@ -1692,9 +1692,16 @@ document.addEventListener('DOMContentLoaded', function() {
           directorioContainer.innerHTML = '<p>Error al cargar los datos del directorio.</p>';
           return; // Salir de la función si falla la carga
     }
+   
+     // Variables para almacenar las imagenes cargadas
+    let logoAdif = null;
+    let logoIneco = null;
 
     if (directorioButton) {
-        directorioButton.addEventListener('click', function() {
+        directorioButton.addEventListener('click', async function() {
+             // Carga previa de las imágenes
+            logoAdif = await cargarImagen('img/Logo-adif.png');
+             logoIneco = await cargarImagen('img/Logo-ineco.png');
             directorioCardContainer.style.display = 'flex';
             generarFormularioBusqueda(); // Llama a la función para generar el formulario
         });
@@ -1709,32 +1716,33 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             console.error('No se encontró el botón de cerrar de la tarjeta de DIRECTORIO');
          }
-})
+
+    async function cargarImagen(src) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.src = src;
+            img.onload = () => resolve(img); // Resuelve la promesa con la imagen cargada
+            img.onerror = () => {
+                console.error(`Error al cargar imagen: ${src}`);
+                resolve(null);  // Resuelve la promesa con null si hay un error
+            };
+        });
+    }
 
      function generarFormularioBusqueda() {
             const directorioContainer = document.getElementById('directorio-container'); // Obtener el contenedor AQUÍ
             directorioContainer.innerHTML = `
-                       <div id="directorio-formulario">
-        <div class="formulario-grupo">
-            <input type="text" id="nombre-input" placeholder="Nombre">
-        </div>
-         <div  class="formulario-grupo">
-            <select id="ubicacion-select">
-                <option value="">Todos</option>
-            </select>
-        </div>
-         <div  class="formulario-grupo">
-            <select id="puesto-select">
-                 <option value="">Todos</option>
-            </select>
-        </div>
-        <div class="formulario-grupo">
-             <input type="text" id="telefono-input" placeholder="Teléfono">
-         </div>
-          <div id="directorio-buscar-container">
-               <button id="buscar-btn">Buscar</button>
-          </div>
-     </div>
+            <div id="directorio-formulario">
+                <input type="text" id="nombre-input" placeholder="Nombre">
+                <select id="puesto-select">
+                     <option value="">Todos</option>
+                </select>
+                 <input type="text" id="telefono-input" placeholder="Teléfono">
+                <select id="ubicacion-select">
+                    <option value="">Todos</option>
+                </select>
+                <button id="buscar-btn">Buscar</button>
+            </div>
              <div id="directorio-resultados">
                 <!-- Aquí se insertará la tabla de resultados -->
             </div>
@@ -1746,7 +1754,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
           }
 
- function generarSelects()
+
+   function generarSelects()
     {
        const puestos = [...new Set(directorioData.map(item => item.Puesto))];
        const ubicaciones = [...new Set(directorioData.map(item => item.Ubicación))];
@@ -1756,51 +1765,46 @@ document.addEventListener('DOMContentLoaded', function() {
         ubicaciones.sort();
 
         const puestoSelect = document.getElementById("puesto-select");
-          // Añadir la opción "Puesto" por defecto
+        // Añadir la opción "Puesto" por defecto
          const optionPuestoLabel = document.createElement('option');
          optionPuestoLabel.value = "";
          optionPuestoLabel.text = "Puesto";
         optionPuestoLabel.disabled = true; // Deshabilitar la opción "Puesto"
         optionPuestoLabel.selected = true; // Seleccionar la opción "Puesto" por defecto
          puestoSelect.appendChild(optionPuestoLabel);
-         
+          //Añadir la opción "Todos"
+           const optionTodosPuesto = document.createElement('option');
+           optionTodosPuesto.value = "";
+             optionTodosPuesto.text = "Todos";
+           puestoSelect.appendChild(optionTodosPuesto);
         puestos.forEach(puesto => {
            const option = document.createElement('option');
            option.value = puesto;
            option.text = puesto;
           puestoSelect.appendChild(option);
          });
-          //Añadir la opción "Todos"
-           const optionTodosPuesto = document.createElement('option');
-           optionTodosPuesto.value = "";
-             optionTodosPuesto.text = "Todos";
-           puestoSelect.appendChild(optionTodosPuesto);
-      
-        
 
         const ubicacionSelect = document.getElementById("ubicacion-select");
-         // Añadir la opción "Ubicación" por defecto
+        // Añadir la opción "Ubicación" por defecto
         const optionUbicacionLabel = document.createElement('option');
         optionUbicacionLabel.value = "";
         optionUbicacionLabel.text = "Ubicación";
-        optionUbicacionLabel.disabled = true; // Deshabilitar la opción "Ubicación"
+       optionUbicacionLabel.disabled = true; // Deshabilitar la opción "Ubicación"
         optionUbicacionLabel.selected = true; // Seleccionar la opción "Ubicación" por defecto
         ubicacionSelect.appendChild(optionUbicacionLabel);
-          
+
+         //Añadir la opción "Todos"
+           const optionTodosUbicacion = document.createElement('option');
+           optionTodosUbicacion.value = "";
+           optionTodosUbicacion.text = "Todos";
+           ubicacionSelect.appendChild(optionTodosUbicacion);
           ubicaciones.forEach(ubicacion => {
              const option = document.createElement('option');
              option.value = ubicacion;
              option.text = ubicacion;
              ubicacionSelect.appendChild(option);
          });
-         
-        //Añadir la opción "Todos"
-           const optionTodosUbicacion = document.createElement('option');
-           optionTodosUbicacion.value = "";
-           optionTodosUbicacion.text = "Todos";
-           ubicacionSelect.appendChild(optionTodosUbicacion);
    }
-
 
   function filtrarYMostrarResultados() {
       const nombreInput = document.getElementById('nombre-input').value.toLowerCase();
@@ -1822,30 +1826,29 @@ document.addEventListener('DOMContentLoaded', function() {
             mostrarResultadosEnTabla(resultadosFiltrados);
     }
 
+
 function mostrarResultadosEnTabla(resultados) {
     const directorioResultados = document.getElementById('directorio-resultados');
     directorioResultados.innerHTML = ''; // Limpiar el contenedor
 
     if (resultados.length === 0) {
-        directorioResultados.innerHTML = '<p>No se encontraron resultados.</p>';
+      directorioResultados.innerHTML = '<p>No se encontraron resultados.</p>';
         return;
     }
-
-    resultados.forEach(item => {
+    
+     resultados.forEach(item => {
         const resultadoDiv = document.createElement('div');
-        resultadoDiv.classList.add('directorio-resultado');
-
+        resultadoDiv.classList.add('directorio-resultado'); // Añade una clase para estilos CSS
+            let logoElement;
         // Añadir el logo según el dominio
         if (item.Correo && item.Correo.includes('@adif.es')) {
-           const logoAdif = document.createElement('img');
-           logoAdif.src = 'img/Logo-adif.png';
-          logoAdif.classList.add('logo-adif');
-           resultadoDiv.appendChild(logoAdif);
+          logoElement = logoAdif.cloneNode();
+           logoElement.classList.add('logo-adif');
+           resultadoDiv.appendChild(logoElement);
         } else if (item.Correo && item.Correo.includes('@ineco.com')) {
-           const logoIneco = document.createElement('img');
-             logoIneco.src = 'img/Logo-ineco.png';
-           logoIneco.classList.add('logo-ineco');
-            resultadoDiv.appendChild(logoIneco);
+           logoElement = logoIneco.cloneNode();
+           logoElement.classList.add('logo-ineco');
+           resultadoDiv.appendChild(logoElement);
         }
 
         const nombreParrafo = document.createElement('p');
@@ -1856,6 +1859,7 @@ function mostrarResultadosEnTabla(resultados) {
         puestoParrafo.textContent = item.Puesto || 'Puesto no disponible';
         resultadoDiv.appendChild(puestoParrafo);
 
+
         const ubicacionParrafo = document.createElement('p');
         ubicacionParrafo.textContent = item.Ubicación || 'Ubicación no disponible';
         resultadoDiv.appendChild(ubicacionParrafo);
@@ -1864,15 +1868,17 @@ function mostrarResultadosEnTabla(resultados) {
         const telefono = item["Teléfono Exterior"] || 'No disponible';
         telefonoParrafo.innerHTML = `📞 <a href="tel:${telefono}">${telefono}</a>`
         resultadoDiv.appendChild(telefonoParrafo);
-
-        const correoParrafo = document.createElement('p');
-        const correo = item.Correo || 'Correo no disponible';
+        
+         const correoParrafo = document.createElement('p');
+         const correo = item.Correo || 'Correo no disponible';
          correoParrafo.innerHTML = `📧 <a href="mailto:${correo}">${correo}</a>`;
         resultadoDiv.appendChild(correoParrafo);
 
-        directorioResultados.appendChild(resultadoDiv);
+       directorioResultados.appendChild(resultadoDiv);
     });
-}
+ }
+
+});
 
  // ----- FIN FUNCIONALIDAD BOTÓN DIRECTORIO -----
 
