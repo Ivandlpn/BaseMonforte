@@ -2941,7 +2941,7 @@
     },
     {
         "LINEA": "40",
-        "PK": "393020",
+        "PK": "392720",
         "TIPO": "ET",
         "NOMBRE": "ET Bifurcación Xátiva"
     },
@@ -2989,13 +2989,13 @@
     },
     {
         "LINEA": "40",
-        "PK": "396630",
+        "PK": "395130",
         "TIPO": "CAMBIADOR",
         "NOMBRE": "CAMBIADOR  VALENCIA"
     },
     {
         "LINEA": "40",
-        "PK": "395130",
+        "PK": "395180",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB18A"
     },
