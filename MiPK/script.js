@@ -1736,28 +1736,31 @@ document.addEventListener('DOMContentLoaded', function() {
 
           }
 
-
-      function generarSelects()
+    function generarSelects()
     {
        const puestos = [...new Set(directorioData.map(item => item.Puesto))];
        const ubicaciones = [...new Set(directorioData.map(item => item.Ubicación))];
 
+        // Ordenar alfabéticamente los arrays
+        puestos.sort();
+        ubicaciones.sort();
+
         const puestoSelect = document.getElementById("puesto-select");
-         // Añadir la opción "Puesto" por defecto
+        // Añadir la opción "Puesto" por defecto
         const optionPuestoLabel = document.createElement('option');
-         optionPuestoLabel.value = "";
-         optionPuestoLabel.text = "Puesto";
+        optionPuestoLabel.value = "";
+        optionPuestoLabel.text = "Puesto";
         optionPuestoLabel.disabled = true; // Deshabilitar la opción "Puesto"
         optionPuestoLabel.selected = true; // Seleccionar la opción "Puesto" por defecto
          puestoSelect.appendChild(optionPuestoLabel);
 
-         //Añadir la opción "Todos"
+           //Añadir la opción "Todos"
          const optionTodosPuesto = document.createElement('option');
-           optionTodosPuesto.value = "";
-             optionTodosPuesto.text = "Todos";
-           puestoSelect.appendChild(optionTodosPuesto);
+         optionTodosPuesto.value = "";
+        optionTodosPuesto.text = "Todos";
+      puestoSelect.appendChild(optionTodosPuesto);
       
-        puestos.forEach(puesto => {
+      puestos.forEach(puesto => {
            const option = document.createElement('option');
            option.value = puesto;
            option.text = puesto;
@@ -1769,7 +1772,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const optionUbicacionLabel = document.createElement('option');
         optionUbicacionLabel.value = "";
         optionUbicacionLabel.text = "Ubicación";
-       optionUbicacionLabel.disabled = true; // Deshabilitar la opción "Ubicación"
+        optionUbicacionLabel.disabled = true; // Deshabilitar la opción "Ubicación"
         optionUbicacionLabel.selected = true; // Seleccionar la opción "Ubicación" por defecto
         ubicacionSelect.appendChild(optionUbicacionLabel);
         
@@ -1785,7 +1788,6 @@ document.addEventListener('DOMContentLoaded', function() {
              ubicacionSelect.appendChild(option);
          });
    }
-
   function filtrarYMostrarResultados() {
       const nombreInput = document.getElementById('nombre-input').value.toLowerCase();
       const puestoSelect = document.getElementById('puesto-select').value;
