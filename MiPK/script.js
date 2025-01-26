@@ -1625,9 +1625,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // ----- INICIO FUNCIONALIDAD BOTÓN MALLAS -----
 
     const operadoresMallasData = [
-        { nombre: "Malla Madrid-Valencia", vinculo: "https://adif365.sharepoint.com/:b:/r/sites/SubdirecciondeOperacionesAV/Documentos%20compartidos/0.%20Subdirecci%C3%B3n%20de%20Operaciones%20AV/GAIAV/Este/GMAVE/Z03%20DOC.%20ADMINISTRATIVA/6.%20TELECO-IISS/4.1.0810.1001%20CPP/12%20AUMENTO%20CIRCULACIONES/MALLAS/Malla_Madrid-Valencia.pdf?csf=1&web=1&e=eLGx7T" },
-        { nombre: "Malla Bif.Albacete-Alicante", vinculo: "https://adif365.sharepoint.com/:b:/r/sites/SubdirecciondeOperacionesAV/Documentos%20compartidos/0.%20Subdirecci%C3%B3n%20de%20Operaciones%20AV/GAIAV/Este/GMAVE/Z03%20DOC.%20ADMINISTRATIVA/6.%20TELECO-IISS/4.1.0810.1001%20CPP/12%20AUMENTO%20CIRCULACIONES/MALLAS/Malla_Bif_Albacete-Alicante.pdf?csf=1&web=1&e=DdqAop" },
-       { nombre: "Malla Alicante-Murcia", vinculo: "https://adif365.sharepoint.com/:b:/r/sites/SubdirecciondeOperacionesAV/Documentos%20compartidos/0.%20Subdirecci%C3%B3n%20de%20Operaciones%20AV/GAIAV/Este/GMAVE/Z03%20DOC.%20ADMINISTRATIVA/6.%20TELECO-IISS/4.1.0810.1001%20CPP/12%20AUMENTO%20CIRCULACIONES/MALLAS/Malla_Alicante-Murcia.pdf?csf=1&web=1&e=ZWAKDD" },
+        { nombre: "Malla Madrid-Valencia", vinculo: "https://inecospain.sharepoint.com/:b:/s/MONMUR/EcS4mBWyMU5HoVl336R4ILkBQwRDc45bU5LCXeK4owK7Vw?e=sixrSd" },
+        { nombre: "Malla Bif.Albacete-Alicante", vinculo: "https://inecospain.sharepoint.com/:b:/s/MONMUR/EabTrGPFMhBDsn8oK3tp_88BqDeLuukuJ8OSZ8fOdCtP7g?e=5FOYZz" },
+       { nombre: "Malla Alicante-Murcia", vinculo: "https://inecospain.sharepoint.com/:b:/s/MONMUR/EejdOyp0_dxIjKSSQ3aDQ68BIKlimADApEqpNSy8guVZaA?e=nNWUce" },
     ];
     
     
