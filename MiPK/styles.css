@@ -616,7 +616,7 @@ footer img {
    position: absolute;
    top: 5px; /* Ajusta la posición vertical */
    right: 5px; /* Ajusta la posición horizontal */
-   width: 25px; /* Ajusta el tamaño del logo */
+   width: 50px; /* Ajusta el tamaño del logo */
     height: 25px;
 }
 
