@@ -548,7 +548,6 @@ footer img {
 
 /* Estilos para los resultados del directorio */
 /* Estilos para el formulario del directorio */
-
 #directorio-formulario {
     display: flex;
     flex-direction: column;
@@ -560,9 +559,20 @@ footer img {
      
 }
 
+/* Estilos para aumentar el alto de los inputs y selects del directorio */
+#directorio-formulario input[type="text"],
+#directorio-formulario select {
+    padding: 10px; /* Aumenta el padding vertical para hacerlos más altos */
+    font-size: 1em;
+    border: 1px solid #ccc; /* Mantener o ajustar el borde */
+  border-radius: 5px;
+    margin-bottom: 5px;
+}
+
 /* Estilos para el botón de buscar del formulario del directorio*/
 #directorio-buscar-container {
-    margin-top: 20px; /* Espacio superior para separar el botón del formulario */
+    margin-top: 10px;
+   margin-bottom: 20px/* Espacio superior para separar el botón del formulario */
    display:flex;
    justify-content: center;
 }
