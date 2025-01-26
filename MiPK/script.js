@@ -1838,7 +1838,7 @@ function mostrarResultadosEnTabla(resultados) {
         resultadoDiv.appendChild(telefonoParrafo);
         
          const correoParrafo = document.createElement('p');
-         correoParrafo.textContent = item.Correo || 'Correo no disponible';
+         correoParrafo.innerHTML = `📧 ${item.Correo || 'Correo no disponible'}`; 
         resultadoDiv.appendChild(correoParrafo);
 
        directorioResultados.appendChild(resultadoDiv);
