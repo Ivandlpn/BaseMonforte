@@ -567,7 +567,22 @@ footer img {
      color: black; /*Añadido para que el texto sea negro*/
 }
 
+/* Estilos para el botón de buscar del formulario del directorio*/
+#directorio-formulario #buscar-btn {
+    margin-top: 20px; /* Espacio superior para separar el botón del formulario */
+    background-color: #007bff; /* Fondo azul */
+    color: white; /* Texto blanco */
+    border: none; /* Eliminar borde */
+    padding: 10px 20px; /* Padding para hacerlo mas grande */
+    border-radius: 5px; /* Borde redondeado */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
+/* Estilos para el botón de buscar al pasar el ratón */
+#directorio-formulario #buscar-btn:hover {
+    background-color: #0056b3; /* Fondo azul más oscuro al pasar el ratón */
+}
 
   #actualizarUbicacion {
     font-size: 0.9em;
