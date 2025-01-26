@@ -571,8 +571,8 @@ footer img {
 
 /* Estilos para el botón de buscar del formulario del directorio*/
 #directorio-buscar-container {
-    margin-top: 15px;
-   margin-bottom: 20px/* Espacio superior para separar el botón del formulario */
+    margin-top: 10px; /* Espacio superior para separar el botón del formulario */
+   margin-bottom: 20px
    display:flex;
    justify-content: center;
 }
@@ -594,7 +594,7 @@ footer img {
 
 /* Estilos para los resultados del directorio */
 #directorio-resultados {
-    margin-top: 10px; /* Espacio sobre la tabla */
+    margin-top: 15px; /* Espacio sobre la tabla */
 }
 
 .directorio-resultado {
