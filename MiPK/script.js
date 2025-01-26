@@ -1627,7 +1627,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const operadoresMallasData = [
         { nombre: "Malla Madrid-Valencia", vinculo: "https://inecospain.sharepoint.com/:b:/s/MONMUR/EcS4mBWyMU5HoVl336R4ILkBQwRDc45bU5LCXeK4owK7Vw?e=sixrSd" },
         { nombre: "Malla Bif.Albacete-Alicante", vinculo: "https://inecospain.sharepoint.com/:b:/s/MONMUR/EabTrGPFMhBDsn8oK3tp_88BqDeLuukuJ8OSZ8fOdCtP7g?e=5FOYZz" },
-       { nombre: "Malla Alicante-Murcia", vinculo: "https://inecospain.sharepoint.com/:b:/s/MONMUR/EejdOyp0_dxIjKSSQ3aDQ68BIKlimADApEqpNSy8guVZaA?e=nNWUce" },
+       { nombre: "Malla Alicante-Murcia", vinculo: "https://inecospain.sharepoint.com/:b:/s/MONMUR/EejdOyp0_dxIjKSSQ3aDQ68BIKlimADApEqpNSy8guVZaA?e=kQxzgQ" },
     ];
     
     
