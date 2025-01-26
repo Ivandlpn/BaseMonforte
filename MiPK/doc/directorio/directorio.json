@@ -2,7 +2,7 @@
  {
    "Ubicación": "Madrid",
    "Nombre": "Mario García Aguado",
-   "Puesto": "Jefe De Área De Mantenimiento A.V. Este",
+   "Puesto": "Jefe de Área",
    "Correo": "mgarciaaguado@adif.es",
    "Teléfonos Interior": "166548 - 967600",
    "Teléfono Exterior": 647923080,
@@ -38,7 +38,7 @@
  {
    "Ubicación": "Madrid",
    "Nombre": "Samuel García Chaparro",
-   "Puesto": "Cuadro Técnico Telecomunicaciones",
+   "Puesto": "C.T. Telecomunicaciones",
    "Correo": "sgarciac@adif.es",
    "Teléfonos Interior": "996722",
    "Teléfono Exterior": 647813678,
@@ -83,7 +83,7 @@
  {
    "Ubicación": "BM Villarrubia",
    "Nombre": "PTE NOMBRAMIENTO",
-   "Puesto": "Jefe De Base Villarrubia",
+   "Puesto": "Jefe de Base",
    "Correo": "",
    "Teléfonos Interior": "743000",
    "Teléfono Exterior": null,
@@ -174,7 +174,7 @@
    "Ubicación": "BM Villarrubia",
    "Nombre": "Álvaro Barahona Serrano",
    "Puesto": "Técnico De Infra y Vía",
-   "Correo": "alvaro.barahona.ineco.com",
+   "Correo": "alvaro.barahona@ineco.com",
    "Teléfonos Interior": "",
    "Teléfono Exterior": 647985585,
    "Dirección": "AUTOVÍA A40, SALIDA 196 CM-3001, KM.3 45360- VILLARRUBIA DE SANTIAGO (TOLEDO)"
@@ -182,7 +182,7 @@
  {
    "Ubicación": "BM Requena",
    "Nombre": "Jesús Valero Núñez",
-   "Puesto": "Jefe De Base Requena",
+   "Puesto": "Jefe de Base",
    "Correo": "jvaleronunez@adif.es",
    "Teléfonos Interior": "748203 - 950944 - 746013 Viernes Est.de Valencia",
    "Teléfono Exterior": 678281833,
@@ -299,7 +299,7 @@
  {
    "Ubicación": "BM Gabaldón",
    "Nombre": "Jesús Peña Cañada",
-   "Puesto": "Jefe De Base Gabaldón",
+   "Puesto": "Jefe de Base",
    "Correo": "jpenacanada@adif.es",
    "Teléfonos Interior": "748000- 969815",
    "Teléfono Exterior": 647981929,
@@ -488,7 +488,7 @@
  {
    "Ubicación": "BM Monforte",
    "Nombre": "Juan Pablo Rodriguez De La Fuente",
-   "Puesto": "Jefe De Base",
+   "Puesto": "Jefe de Base",
    "Correo": "jrodriguezdelafuente@adif.es",
    "Teléfonos Interior": "748300-979223",
    "Teléfono Exterior": 609120363,
