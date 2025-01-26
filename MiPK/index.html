@@ -305,20 +305,26 @@
     <!-- *** FIN: NUEVA TARJETA SUPERPUESTA MALLAS *** -->
 
 
-    <div id="directorio-formulario">
-        <input type="text" id="nombre-input" placeholder="Nombre">
-        <select id="puesto-select">
-             <option value="">Todos</option>
-        </select>
-         <input type="text" id="telefono-input" placeholder="Teléfono">
-        <select id="ubicacion-select">
-            <option value="">Todos</option>
-        </select>
-        <button id="buscar-btn">Buscar</button>
+         <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA DIRECTORIO *** -->
+    <div id="directorio-card-container" class="overlay-card-container" style="display: none;">
+        <div id="directorio-card" class="overlay-card">
+
+            <!-- Botón para cerrar la tarjeta -->
+            <button id="cerrar-directorio-card" class="close-button" aria-label="Cerrar">
+                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+            </button>
+
+            <!-- Título de la tarjeta -->
+            <h2 style="text-align: center; margin-bottom: 25px;"><u>DIRECTORIO</u></h2>
+
+            <!-- Contenedor para los enlaces del directorio -->
+            <div id="directorio-container">
+                <!-- Aquí se insertarán los enlaces dinámicamente con JavaScript -->
+            </div>
+
+        </div>
     </div>
-     <div id="directorio-resultados">
-        <!-- Aquí se insertará la tabla de resultados -->
-    </div>
+    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA DIRECTORIO *** -->
     
 
     <!-- Archivo JavaScript -->
