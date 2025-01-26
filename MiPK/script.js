@@ -1834,7 +1834,7 @@ function mostrarResultadosEnTabla(resultados) {
 
        const telefonoParrafo = document.createElement('p');
        const telefono = item["Teléfono Exterior"] || 'No disponible';
-       telefonoParrafo.textContent = `Teléfono: ${telefono}`;
+       telefonoParrafo.textContent = `📞 ${telefono}`;
         resultadoDiv.appendChild(telefonoParrafo);
         
          const correoParrafo = document.createElement('p');
