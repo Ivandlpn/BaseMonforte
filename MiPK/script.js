@@ -1737,21 +1737,48 @@ document.addEventListener('DOMContentLoaded', function() {
           }
 
 
-   function generarSelects()
+      function generarSelects()
     {
        const puestos = [...new Set(directorioData.map(item => item.Puesto))];
        const ubicaciones = [...new Set(directorioData.map(item => item.Ubicación))];
 
         const puestoSelect = document.getElementById("puesto-select");
-         puestos.forEach(puesto => {
-             const option = document.createElement('option');
-             option.value = puesto;
-             option.text = puesto;
-             puestoSelect.appendChild(option);
+         // Añadir la opción "Puesto" por defecto
+        const optionPuestoLabel = document.createElement('option');
+         optionPuestoLabel.value = "";
+         optionPuestoLabel.text = "Puesto";
+        optionPuestoLabel.disabled = true; // Deshabilitar la opción "Puesto"
+        optionPuestoLabel.selected = true; // Seleccionar la opción "Puesto" por defecto
+         puestoSelect.appendChild(optionPuestoLabel);
+
+         //Añadir la opción "Todos"
+         const optionTodosPuesto = document.createElement('option');
+           optionTodosPuesto.value = "";
+             optionTodosPuesto.text = "Todos";
+           puestoSelect.appendChild(optionTodosPuesto);
+      
+        puestos.forEach(puesto => {
+           const option = document.createElement('option');
+           option.value = puesto;
+           option.text = puesto;
+          puestoSelect.appendChild(option);
          });
 
         const ubicacionSelect = document.getElementById("ubicacion-select");
-         ubicaciones.forEach(ubicacion => {
+        // Añadir la opción "Ubicación" por defecto
+        const optionUbicacionLabel = document.createElement('option');
+        optionUbicacionLabel.value = "";
+        optionUbicacionLabel.text = "Ubicación";
+       optionUbicacionLabel.disabled = true; // Deshabilitar la opción "Ubicación"
+        optionUbicacionLabel.selected = true; // Seleccionar la opción "Ubicación" por defecto
+        ubicacionSelect.appendChild(optionUbicacionLabel);
+        
+         //Añadir la opción "Todos"
+           const optionTodosUbicacion = document.createElement('option');
+           optionTodosUbicacion.value = "";
+             optionTodosUbicacion.text = "Todos";
+           ubicacionSelect.appendChild(optionTodosUbicacion);
+          ubicaciones.forEach(ubicacion => {
              const option = document.createElement('option');
              option.value = ubicacion;
              option.text = ubicacion;
