@@ -1842,14 +1842,23 @@ function mostrarResultadosEnTabla(resultados) {
             let logoElement;
         // Añadir el logo según el dominio
         if (item.Correo && item.Correo.includes('@adif.es')) {
-          logoElement = logoAdif.cloneNode();
+          if (logoAdif)
+           {
+             logoElement = logoAdif.cloneNode();
            logoElement.classList.add('logo-adif');
            resultadoDiv.appendChild(logoElement);
+           }
         } else if (item.Correo && item.Correo.includes('@ineco.com')) {
-           logoElement = logoIneco.cloneNode();
+            if(logoIneco)
+           {
+             logoElement = logoIneco.cloneNode();
            logoElement.classList.add('logo-ineco');
-           resultadoDiv.appendChild(logoElement);
+            resultadoDiv.appendChild(logoElement);
+            } else {
+               console.error(`No se pudo obtener el logo de ineco para el usuario ${item.Nombre}`);
+            }
         }
+
 
         const nombreParrafo = document.createElement('p');
         nombreParrafo.innerHTML = `<b>👤 ${item.Nombre}</b>`;
@@ -1861,12 +1870,12 @@ function mostrarResultadosEnTabla(resultados) {
 
 
         const ubicacionParrafo = document.createElement('p');
-        ubicacionParrafo.textContent = item.Ubicación || 'Ubicación no disponible';
+         ubicacionParrafo.textContent = item.Ubicación || 'Ubicación no disponible';
         resultadoDiv.appendChild(ubicacionParrafo);
 
-        const telefonoParrafo = document.createElement('p');
-        const telefono = item["Teléfono Exterior"] || 'No disponible';
-        telefonoParrafo.innerHTML = `📞 <a href="tel:${telefono}">${telefono}</a>`
+       const telefonoParrafo = document.createElement('p');
+       const telefono = item["Teléfono Exterior"] || 'No disponible';
+       telefonoParrafo.innerHTML = `📞 <a href="tel:${telefono}">${telefono}</a>`
         resultadoDiv.appendChild(telefonoParrafo);
         
          const correoParrafo = document.createElement('p');
@@ -1877,7 +1886,6 @@ function mostrarResultadosEnTabla(resultados) {
        directorioResultados.appendChild(resultadoDiv);
     });
  }
-
 });
 
  // ----- FIN FUNCIONALIDAD BOTÓN DIRECTORIO -----
