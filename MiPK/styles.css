@@ -545,6 +545,29 @@ footer img {
     text-align: center;
 }
 
+
+/* Estilos para los resultados del directorio */
+#directorio-resultados {
+    margin-top: 10px; /* Espacio sobre la tabla */
+}
+
+.directorio-resultado {
+  margin-bottom: 15px; /* Espacio inferior para separar los resultados */
+    padding: 10px; /* Espacio alrededor de cada resultado */
+    border: 1px solid #eee; /* Borde gris tenue para separar visualmente */
+  background-color: #f9f9f9; /* Fondo gris muy claro para contraste */
+    border-radius: 5px;
+  text-align: left;
+}
+
+.directorio-resultado p {
+   margin: 2px 0;  /* Espacio arriba y abajo de cada parrafo*/
+     font-size: 0.9em;
+     line-height: 1.2; /* Interlineado */
+}
+
+
+
   #actualizarUbicacion {
     font-size: 0.9em;
   }
