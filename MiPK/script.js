@@ -1838,7 +1838,7 @@ function mostrarResultadosEnTabla(resultados) {
         // Añadir el logo según el dominio
         if (item.Correo && item.Correo.includes('@adif.es')) {
            const logoAdif = document.createElement('img');
-           logoAdif.src = 'img/logo-adif.png';
+           logoAdif.src = 'img/Logo-adif.png';
           logoAdif.classList.add('logo-adif');
            resultadoDiv.appendChild(logoAdif);
         } else if (item.Correo && item.Correo.includes('@ineco.com')) {
