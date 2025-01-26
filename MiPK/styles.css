@@ -547,31 +547,27 @@ footer img {
 
 
 /* Estilos para los resultados del directorio */
-#directorio-resultados {
-    margin-top: 10px; /* Espacio sobre la tabla */
+/* Estilos para el formulario del directorio */
+#directorio-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espacio entre campos */
 }
-
-.directorio-resultado {
-  margin-bottom: 15px; /* Espacio inferior para separar los resultados */
-    padding: 10px; /* Espacio alrededor de cada resultado */
-    border: 1px solid #eee; /* Borde gris tenue para separar visualmente */
-  background-color: #f9f9f9; /* Fondo gris muy claro para contraste */
-    border-radius: 5px;
-  text-align: left;
-}
-
-.directorio-resultado p {
-   margin: 2px 0;  /* Espacio arriba y abajo de cada parrafo*/
-     font-size: 0.9em;
-     line-height: 1.2; /* Interlineado */
-     color: black; /*Añadido para que el texto sea negro*/
+#directorio-formulario .formulario-grupo {
+      display: flex;
+      flex-direction: column;
+     
 }
 
 /* Estilos para el botón de buscar del formulario del directorio*/
+#directorio-buscar-container {
+    margin-top: 20px; /* Espacio superior para separar el botón del formulario */
+   display:flex;
+   justify-content: center;
+}
+
 #directorio-formulario #buscar-btn {
-    margin-top: 15px; /* Espacio superior para separar el botón del formulario */
-    margin-bottom: 20px;
-    background-color: #2887ed; /* Fondo azul */
+   background-color: #007bff; /* Fondo azul */
     color: white; /* Texto blanco */
     border: none; /* Eliminar borde */
     padding: 10px 20px; /* Padding para hacerlo mas grande */
@@ -584,7 +580,6 @@ footer img {
 #directorio-formulario #buscar-btn:hover {
     background-color: #0056b3; /* Fondo azul más oscuro al pasar el ratón */
 }
-
   #actualizarUbicacion {
     font-size: 0.9em;
   }
