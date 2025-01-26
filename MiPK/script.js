@@ -1831,12 +1831,19 @@ function mostrarResultadosEnTabla(resultados) {
         const ubicacionParrafo = document.createElement('p');
          ubicacionParrafo.textContent = item.Ubicación || 'Ubicación no disponible';
         resultadoDiv.appendChild(ubicacionParrafo);
+
+       const telefonoParrafo = document.createElement('p');
+       const telefono = item["Teléfono Exterior"] || 'No disponible';
+       telefonoParrafo.textContent = `Teléfono: ${telefono}`;
+        resultadoDiv.appendChild(telefonoParrafo);
         
+         const correoParrafo = document.createElement('p');
+         correoParrafo.textContent = item.Correo || 'Correo no disponible';
+        resultadoDiv.appendChild(correoParrafo);
 
        directorioResultados.appendChild(resultadoDiv);
     });
  }
-
 
  // ----- FIN FUNCIONALIDAD BOTÓN DIRECTORIO -----
 
