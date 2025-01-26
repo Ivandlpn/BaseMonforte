@@ -1672,6 +1672,167 @@ document.addEventListener('DOMContentLoaded', function() {
  // ----- FIN FUNCIONALIDAD BOTÓN MALLAS -----
 
 
+
+ // ----- INICIO FUNCIONALIDAD BOTÓN DIRECTORIO -----
+
+  const directorioData = []; // Array para guardar los datos del directorio
+   document.addEventListener('DOMContentLoaded', async function() {
+      const directorioButton = document.querySelector('.plus-option-button[aria-label="DIRECTORIO"]');
+      const directorioCardContainer = document.getElementById('directorio-card-container');
+      const directorioContainer = document.getElementById('directorio-container');
+     const cerrarDirectorioCardButton = document.getElementById('cerrar-directorio-card');
+     
+    // Cargar datos del directorio
+    try {
+        const response = await fetch("./doc/directorio/directorio.json");
+        const data = await response.json();
+         directorioData.push(...data);
+        } catch (error) {
+          console.error('Error al cargar el archivo directorio.json:', error);
+          directorioContainer.innerHTML = '<p>Error al cargar los datos del directorio.</p>';
+          return; // Salir de la función si falla la carga
+    }
+
+    if (directorioButton) {
+        directorioButton.addEventListener('click', function() {
+            directorioCardContainer.style.display = 'flex';
+            generarFormularioBusqueda(); // Llama a la función para generar el formulario
+        });
+    } else {
+        console.error('No se encontró el botón DIRECTORIO');
+    }
+
+    if (cerrarDirectorioCardButton) {
+            cerrarDirectorioCardButton.addEventListener('click', function() {
+               directorioCardContainer.style.display = 'none';
+           });
+        } else {
+            console.error('No se encontró el botón de cerrar de la tarjeta de DIRECTORIO');
+         }
+
+
+     function generarFormularioBusqueda() {
+            const directorioContainer = document.getElementById('directorio-container'); // Obtener el contenedor AQUÍ
+            directorioContainer.innerHTML = `
+            <div id="directorio-formulario">
+                <input type="text" id="nombre-input" placeholder="Nombre">
+                <select id="puesto-select">
+                     <option value="">Todos</option>
+                </select>
+                 <input type="text" id="telefono-input" placeholder="Teléfono">
+                <select id="ubicacion-select">
+                    <option value="">Todos</option>
+                </select>
+                <button id="buscar-btn">Buscar</button>
+            </div>
+             <div id="directorio-resultados">
+                <!-- Aquí se insertará la tabla de resultados -->
+            </div>
+             `; // Limpiar el contenedor y añadir el formulario
+             // Genera los select
+             generarSelects();
+              const buscarBtn = document.getElementById('buscar-btn');
+                  buscarBtn.addEventListener('click', filtrarYMostrarResultados);
+
+          }
+
+
+   function generarSelects()
+    {
+       const puestos = [...new Set(directorioData.map(item => item.Puesto))];
+       const ubicaciones = [...new Set(directorioData.map(item => item.Ubicación))];
+
+        const puestoSelect = document.getElementById("puesto-select");
+         puestos.forEach(puesto => {
+             const option = document.createElement('option');
+             option.value = puesto;
+             option.text = puesto;
+             puestoSelect.appendChild(option);
+         });
+
+        const ubicacionSelect = document.getElementById("ubicacion-select");
+         ubicaciones.forEach(ubicacion => {
+             const option = document.createElement('option');
+             option.value = ubicacion;
+             option.text = ubicacion;
+             ubicacionSelect.appendChild(option);
+         });
+   }
+
+  function filtrarYMostrarResultados() {
+      const nombreInput = document.getElementById('nombre-input').value.toLowerCase();
+      const puestoSelect = document.getElementById('puesto-select').value;
+      const telefonoInput = document.getElementById('telefono-input').value;
+      const ubicacionSelect = document.getElementById('ubicacion-select').value;
+
+
+      const resultadosFiltrados = directorioData.filter(item => {
+          const nombreCoincide = item.Nombre.toLowerCase().includes(nombreInput);
+           const puestoCoincide = puestoSelect === "" || item.Puesto === puestoSelect;
+         const telefonoCoincide = telefonoInput === "" || (item["Teléfonos Interior"] && item["Teléfonos Interior"].includes(telefonoInput)) || (item["Teléfono Exterior"] && item["Teléfono Exterior"].toString().includes(telefonoInput));
+          const ubicacionCoincide = ubicacionSelect === "" || item.Ubicación === ubicacionSelect;
+
+           return nombreCoincide && puestoCoincide && telefonoCoincide && ubicacionCoincide;
+
+      });
+        
+            mostrarResultadosEnTabla(resultadosFiltrados);
+    }
+
+function mostrarResultadosEnTabla(resultados) {
+        const directorioResultados = document.getElementById('directorio-resultados'); // Obtener el contenedor AQUÍ
+      directorioResultados.innerHTML = ''; // Limpiar el contenedor
+        
+      if (resultados.length === 0) {
+          directorioResultados.innerHTML = '<p>No se encontraron resultados.</p>';
+            return;
+        }
+
+            const tabla = document.createElement('table');
+            const thead = document.createElement('thead');
+            const tbody = document.createElement('tbody');
+            const headerRow = document.createElement('tr');
+
+            const headers = ["Nombre", "Puesto", "Correo", "Teléfonos Interior", "Teléfono Exterior","Ubicación", "Dirección"];
+            headers.forEach(headerText => {
+                const header = document.createElement('th');
+                header.textContent = headerText;
+                headerRow.appendChild(header);
+           });
+          thead.appendChild(headerRow);
+          tabla.appendChild(thead);
+
+         resultados.forEach(item => {
+            const row = document.createElement('tr');
+                const data = [
+                    item.Nombre,
+                    item.Puesto,
+                    item.Correo,
+                    item["Teléfonos Interior"] || 'No disponible',
+                   item["Teléfono Exterior"] || 'No disponible',
+                   item.Ubicación,
+                   item.Dirección || 'No disponible',
+               ];
+
+             data.forEach(cellData => {
+                 const cell = document.createElement('td');
+                cell.textContent = cellData;
+               row.appendChild(cell);
+             });
+                tbody.appendChild(row);
+         });
+         tabla.appendChild(tbody);
+        directorioResultados.appendChild(tabla);
+    }
+});
+
+
+ // ----- FIN FUNCIONALIDAD BOTÓN DIRECTORIO -----
+
+
+
+
+
 ///// FIN ICONO PLUS /////
 
 
