@@ -1820,7 +1820,7 @@ function mostrarResultadosEnTabla(resultados) {
         resultadoDiv.classList.add('directorio-resultado'); // Añade una clase para estilos CSS
 
         const nombreParrafo = document.createElement('p');
-        nombreParrafo.innerHTML = `<b>${item.Nombre}</b>`;
+        nombreParrafo.innerHTML = `<b>👤 ${item.Nombre}</b>`;
         resultadoDiv.appendChild(nombreParrafo);
 
         const puestoParrafo = document.createElement('p');
