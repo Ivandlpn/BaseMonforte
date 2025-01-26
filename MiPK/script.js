@@ -1827,13 +1827,26 @@ function mostrarResultadosEnTabla(resultados) {
     directorioResultados.innerHTML = ''; // Limpiar el contenedor
 
     if (resultados.length === 0) {
-      directorioResultados.innerHTML = '<p>No se encontraron resultados.</p>';
+        directorioResultados.innerHTML = '<p>No se encontraron resultados.</p>';
         return;
     }
-    
-     resultados.forEach(item => {
+
+    resultados.forEach(item => {
         const resultadoDiv = document.createElement('div');
-        resultadoDiv.classList.add('directorio-resultado'); // Añade una clase para estilos CSS
+        resultadoDiv.classList.add('directorio-resultado');
+
+        // Añadir el logo según el dominio
+        if (item.Correo && item.Correo.includes('@adif.es')) {
+           const logoAdif = document.createElement('img');
+           logoAdif.src = 'img/logo-adif.png';
+          logoAdif.classList.add('logo-adif');
+           resultadoDiv.appendChild(logoAdif);
+        } else if (item.Correo && item.Correo.includes('@ineco.com')) {
+           const logoIneco = document.createElement('img');
+             logoIneco.src = 'img/Logo-ineco.png';
+           logoIneco.classList.add('logo-ineco');
+            resultadoDiv.appendChild(logoIneco);
+        }
 
         const nombreParrafo = document.createElement('p');
         nombreParrafo.innerHTML = `<b>👤 ${item.Nombre}</b>`;
@@ -1843,24 +1856,23 @@ function mostrarResultadosEnTabla(resultados) {
         puestoParrafo.textContent = item.Puesto || 'Puesto no disponible';
         resultadoDiv.appendChild(puestoParrafo);
 
-
         const ubicacionParrafo = document.createElement('p');
-         ubicacionParrafo.textContent = item.Ubicación || 'Ubicación no disponible';
+        ubicacionParrafo.textContent = item.Ubicación || 'Ubicación no disponible';
         resultadoDiv.appendChild(ubicacionParrafo);
 
-      const telefonoParrafo = document.createElement('p');
+        const telefonoParrafo = document.createElement('p');
         const telefono = item["Teléfono Exterior"] || 'No disponible';
         telefonoParrafo.innerHTML = `📞 <a href="tel:${telefono}">${telefono}</a>`
         resultadoDiv.appendChild(telefonoParrafo);
 
         const correoParrafo = document.createElement('p');
         const correo = item.Correo || 'Correo no disponible';
-        correoParrafo.innerHTML = `📧 <a href="mailto:${correo}">${correo}</a>`;
+         correoParrafo.innerHTML = `📧 <a href="mailto:${correo}">${correo}</a>`;
         resultadoDiv.appendChild(correoParrafo);
 
-       directorioResultados.appendChild(resultadoDiv);
+        directorioResultados.appendChild(resultadoDiv);
     });
- }
+}
 
  // ----- FIN FUNCIONALIDAD BOTÓN DIRECTORIO -----
 
