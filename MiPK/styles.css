@@ -564,6 +564,7 @@ footer img {
    margin: 2px 0;  /* Espacio arriba y abajo de cada parrafo*/
      font-size: 0.9em;
      line-height: 1.2; /* Interlineado */
+     color: black; /*Añadido para que el texto sea negro*/
 }
 
 
