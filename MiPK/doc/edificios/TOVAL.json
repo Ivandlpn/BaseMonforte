@@ -2727,13 +2727,13 @@
         "LINEA": "40",
         "PK": "365290",
         "TIPO": "TUNEL",
-        "NOMBRE": "T. Chiva"
+        "NOMBRE": "T. Chiva - Lado Madrid"
     },
     {
         "LINEA": "40",
         "PK": "365940",
         "TIPO": "TUNEL",
-        "NOMBRE": "T. Chiva"
+        "NOMBRE": "T. Chiva - Lado Valencia"
     },
     {
         "LINEA": "40",
@@ -2847,7 +2847,7 @@
         "LINEA": "40",
         "PK": "382340",
         "TIPO": "BTS",
-        "NOMBRE": "AMPVB16A (NUEVA)"
+        "NOMBRE": "AMPVB16A"
     },
     {
         "LINEA": "40",
@@ -3001,7 +3001,7 @@
     },
     {
         "LINEA": "40",
-        "PK": "396730",
+        "PK": "396800",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB18B"
     },
