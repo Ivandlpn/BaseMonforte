@@ -1807,51 +1807,35 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 function mostrarResultadosEnTabla(resultados) {
-        const directorioResultados = document.getElementById('directorio-resultados'); // Obtener el contenedor AQUÍ
-      directorioResultados.innerHTML = ''; // Limpiar el contenedor
-        
-      if (resultados.length === 0) {
-          directorioResultados.innerHTML = '<p>No se encontraron resultados.</p>';
-            return;
-        }
+    const directorioResultados = document.getElementById('directorio-resultados');
+    directorioResultados.innerHTML = ''; // Limpiar el contenedor
 
-            const tabla = document.createElement('table');
-            const thead = document.createElement('thead');
-            const tbody = document.createElement('tbody');
-            const headerRow = document.createElement('tr');
-
-            const headers = ["Nombre", "Puesto", "Correo", "Teléfonos Interior", "Teléfono Exterior","Ubicación", "Dirección"];
-            headers.forEach(headerText => {
-                const header = document.createElement('th');
-                header.textContent = headerText;
-                headerRow.appendChild(header);
-           });
-          thead.appendChild(headerRow);
-          tabla.appendChild(thead);
-
-         resultados.forEach(item => {
-            const row = document.createElement('tr');
-                const data = [
-                    item.Nombre,
-                    item.Puesto,
-                    item.Correo,
-                    item["Teléfonos Interior"] || 'No disponible',
-                   item["Teléfono Exterior"] || 'No disponible',
-                   item.Ubicación,
-                   item.Dirección || 'No disponible',
-               ];
-
-             data.forEach(cellData => {
-                 const cell = document.createElement('td');
-                cell.textContent = cellData;
-               row.appendChild(cell);
-             });
-                tbody.appendChild(row);
-         });
-         tabla.appendChild(tbody);
-        directorioResultados.appendChild(tabla);
+    if (resultados.length === 0) {
+      directorioResultados.innerHTML = '<p>No se encontraron resultados.</p>';
+        return;
     }
-});
+    
+     resultados.forEach(item => {
+        const resultadoDiv = document.createElement('div');
+        resultadoDiv.classList.add('directorio-resultado'); // Añade una clase para estilos CSS
+
+        const nombreParrafo = document.createElement('p');
+        nombreParrafo.innerHTML = `<b>${item.Nombre}</b>`;
+        resultadoDiv.appendChild(nombreParrafo);
+
+        const puestoParrafo = document.createElement('p');
+        puestoParrafo.textContent = item.Puesto || 'Puesto no disponible';
+        resultadoDiv.appendChild(puestoParrafo);
+
+
+        const ubicacionParrafo = document.createElement('p');
+         ubicacionParrafo.textContent = item.Ubicación || 'Ubicación no disponible';
+        resultadoDiv.appendChild(ubicacionParrafo);
+        
+
+       directorioResultados.appendChild(resultadoDiv);
+    });
+ }
 
 
  // ----- FIN FUNCIONALIDAD BOTÓN DIRECTORIO -----
