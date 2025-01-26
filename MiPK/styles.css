@@ -604,13 +604,20 @@ footer img {
   background-color: #f9f9f9; /* Fondo gris muy claro para contraste */
     border-radius: 5px;
   text-align: left;
+    position: relative; /* Permitir posicionamiento absoluto de los logos */
 }
-
 .directorio-resultado p {
    margin: 2px 0;  /* Espacio arriba y abajo de cada parrafo*/
      font-size: 0.9em;
      line-height: 1.2; /* Interlineado */
      color: black; /*Añadido para que el texto sea negro*/
+}
+.logo-adif, .logo-ineco{
+   position: absolute;
+   top: 5px; /* Ajusta la posición vertical */
+   right: 5px; /* Ajusta la posición horizontal */
+   width: 25px; /* Ajusta el tamaño del logo */
+    height: 25px;
 }
 
   #actualizarUbicacion {
