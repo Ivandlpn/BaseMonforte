@@ -628,6 +628,13 @@ footer img {
     height: 20px;
 }
 
+.logo-fallback{
+     position: absolute;
+   top: 5px; /* Ajusta la posición vertical */
+   right: 5px; /* Ajusta la posición horizontal */
+   font-size: 1.3em; /* Ajusta el tamaño del texto */
+}
+
   #actualizarUbicacion {
     font-size: 0.9em;
   }
