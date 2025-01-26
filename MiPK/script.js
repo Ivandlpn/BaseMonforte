@@ -1612,7 +1612,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (actasButton) {
         actasButton.addEventListener('click', function() {
-             window.open('https://adif365.sharepoint.com/:f:/r/sites/SubdirecciondeOperacionesAV/Documentos%20compartidos/0.%20Subdirecci%C3%B3n%20de%20Operaciones%20AV/GAIAV/Este/GMAVE/Z03%20DOC.%20ADMINISTRATIVA/6.%20TELECO-IISS/4.1.0810.1001%20CPP/12%20AUMENTO%20CIRCULACIONES/MALLAS/Actas?csf=1&web=1&e=XdHHwX', '_blank'); // Abre la URL en una nueva pestaña
+             window.open('https://inecospain.sharepoint.com/:b:/s/MONMUR/ESJKZPzMthtFkoi0ZgjznjABzIc0enH8-NvcGeoqV2zkcg?e=N8XLLz', '_blank'); // Abre la URL en una nueva pestaña
         });
     } else {
         console.error('No se encontró el botón ACTAS');
