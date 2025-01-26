@@ -2983,13 +2983,13 @@
     },
     {
         "LINEA": "40",
-        "PK": "397550",
+        "PK": "397200",
         "TIPO": "ESTACIÓN",
         "NOMBRE": "Estación VALENCIA - Joaquin Sorolla"
     },
     {
         "LINEA": "40",
-        "PK": "397550",
+        "PK": "396630",
         "TIPO": "CAMBIADOR",
         "NOMBRE": "CAMBIADOR  VALENCIA"
     },
@@ -3001,7 +3001,7 @@
     },
     {
         "LINEA": "40",
-        "PK": "396830",
+        "PK": "396730",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB18B"
     },
@@ -3013,7 +3013,7 @@
     },
     {
         "LINEA": "40",
-        "PK": "396900",
+        "PK": "396850",
         "TIPO": "ET",
         "NOMBRE": "ET Estación Valencia Nord"
     },
