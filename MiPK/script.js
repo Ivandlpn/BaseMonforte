@@ -1832,13 +1832,14 @@ function mostrarResultadosEnTabla(resultados) {
          ubicacionParrafo.textContent = item.Ubicación || 'Ubicación no disponible';
         resultadoDiv.appendChild(ubicacionParrafo);
 
-       const telefonoParrafo = document.createElement('p');
-       const telefono = item["Teléfono Exterior"] || 'No disponible';
-       telefonoParrafo.textContent = `📞 ${telefono}`;
+      const telefonoParrafo = document.createElement('p');
+        const telefono = item["Teléfono Exterior"] || 'No disponible';
+        telefonoParrafo.innerHTML = `📞 <a href="tel:${telefono}">${telefono}</a>`
         resultadoDiv.appendChild(telefonoParrafo);
-        
-         const correoParrafo = document.createElement('p');
-         correoParrafo.innerHTML = `📧 ${item.Correo || 'Correo no disponible'}`; 
+
+        const correoParrafo = document.createElement('p');
+        const correo = item.Correo || 'Correo no disponible';
+        correoParrafo.innerHTML = `📧 <a href="mailto:${correo}">${correo}</a>`;
         resultadoDiv.appendChild(correoParrafo);
 
        directorioResultados.appendChild(resultadoDiv);
