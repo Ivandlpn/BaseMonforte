@@ -483,7 +483,7 @@
         "LINEA": "40",
         "PK": "085300",
         "TIPO": "BM",
-        "NOMBRE": "Base Mantenimiento BM Villarrubia"
+        "NOMBRE": "BM Villarrubia"
     },
     {
         "LINEA": "40",
@@ -1711,9 +1711,9 @@
     },
     {
         "LINEA": "40",
-        "PK": "245700",
-        "TIPO": "EST",
-        "NOMBRE": "Base Mantenimiento BM GABALDON"
+        "PK": "245420",
+        "TIPO": "BM",
+        "NOMBRE": "BM GABALDON"
     },
     {
         "LINEA": "40",
@@ -2385,7 +2385,7 @@
         "LINEA": "40",
         "PK": "327640",
         "TIPO": "BM",
-        "NOMBRE": "BM REQUENA"
+        "NOMBRE": "BM Requena"
     },
     {
         "LINEA": "40",
@@ -3001,7 +3001,7 @@
     },
     {
         "LINEA": "40",
-        "PK": "396630",
+        "PK": "396830",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB18B"
     },
@@ -3013,7 +3013,7 @@
     },
     {
         "LINEA": "40",
-        "PK": "397550",
+        "PK": "396900",
         "TIPO": "ET",
         "NOMBRE": "ET Estación Valencia Nord"
     },
@@ -3495,7 +3495,7 @@
         "LINEA": "42",
         "PK": "312450",
         "TIPO": "BM",
-        "NOMBRE": "BASE MANTENIEMIENTO LA GINETA"
+        "NOMBRE": "BM LA GINETA"
     },
     {
         "LINEA": "42",
@@ -3583,7 +3583,7 @@
     },
     {
         "LINEA": "42",
-        "PK": "321000",
+        "PK": "320080",
         "TIPO": "ET",
         "NOMBRE": "ET Albacete"
     }
