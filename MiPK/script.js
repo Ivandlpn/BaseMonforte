@@ -1753,13 +1753,7 @@ document.addEventListener('DOMContentLoaded', function() {
         optionPuestoLabel.disabled = true; // Deshabilitar la opción "Puesto"
         optionPuestoLabel.selected = true; // Seleccionar la opción "Puesto" por defecto
          puestoSelect.appendChild(optionPuestoLabel);
-
-         //Añadir la opción "Todos"
-           const optionTodosPuesto = document.createElement('option');
-           optionTodosPuesto.value = "";
-           optionTodosPuesto.text = "Todos";
-           puestoSelect.appendChild(optionTodosPuesto);
-      
+       
         puestos.forEach(puesto => {
            const option = document.createElement('option');
            option.value = puesto;
@@ -1767,16 +1761,23 @@ document.addEventListener('DOMContentLoaded', function() {
           puestoSelect.appendChild(option);
          });
 
+          //Añadir la opción "Todos"
+        const optionTodosPuesto = document.createElement('option');
+        optionTodosPuesto.value = "";
+        optionTodosPuesto.text = "Todos";
+      puestoSelect.appendChild(optionTodosPuesto);
+      
+
         const ubicacionSelect = document.getElementById("ubicacion-select");
         // Añadir la opción "Ubicación" por defecto
-         const optionUbicacionLabel = document.createElement('option');
+        const optionUbicacionLabel = document.createElement('option');
         optionUbicacionLabel.value = "";
         optionUbicacionLabel.text = "Ubicación";
-       optionUbicacionLabel.disabled = true; // Deshabilitar la opción "Ubicación"
+        optionUbicacionLabel.disabled = true; // Deshabilitar la opción "Ubicación"
         optionUbicacionLabel.selected = true; // Seleccionar la opción "Ubicación" por defecto
         ubicacionSelect.appendChild(optionUbicacionLabel);
-        
-         //Añadir la opción "Todos"
+
+        //Añadir la opción "Todos"
            const optionTodosUbicacion = document.createElement('option');
            optionTodosUbicacion.value = "";
            optionTodosUbicacion.text = "Todos";
