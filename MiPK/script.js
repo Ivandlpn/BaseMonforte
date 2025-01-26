@@ -1714,17 +1714,27 @@ document.addEventListener('DOMContentLoaded', function() {
      function generarFormularioBusqueda() {
             const directorioContainer = document.getElementById('directorio-container'); // Obtener el contenedor AQUÍ
             directorioContainer.innerHTML = `
-                    <div id="directorio-formulario">
+                       <div id="directorio-formulario">
+        <div class="formulario-grupo">
             <input type="text" id="nombre-input" placeholder="Nombre">
+        </div>
+         <div  class="formulario-grupo">
             <select id="ubicacion-select">
                 <option value="">Todos</option>
             </select>
-            <select id="puesto-select">
-                <option value="">Todos</option>
-            </select>
-            <input type="text" id="telefono-input" placeholder="Teléfono">
-            <button id="buscar-btn">Buscar</button>
         </div>
+         <div  class="formulario-grupo">
+            <select id="puesto-select">
+                 <option value="">Todos</option>
+            </select>
+        </div>
+        <div class="formulario-grupo">
+             <input type="text" id="telefono-input" placeholder="Teléfono">
+         </div>
+          <div id="directorio-buscar-container">
+               <button id="buscar-btn">Buscar</button>
+          </div>
+     </div>
              <div id="directorio-resultados">
                 <!-- Aquí se insertará la tabla de resultados -->
             </div>
