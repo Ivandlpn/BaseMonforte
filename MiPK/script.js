@@ -2160,4 +2160,3 @@ imagenCompartir.addEventListener("click", async () => {
         });
 });
 
-});
