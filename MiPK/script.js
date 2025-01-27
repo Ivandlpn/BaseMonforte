@@ -1818,26 +1818,25 @@ document.addEventListener('DOMContentLoaded', function() {
          });
    }
 
-  function filtrarYMostrarResultados() {
+ function filtrarYMostrarResultados() {
       const nombreInput = document.getElementById('nombre-input').value.toLowerCase();
       const puestoSelect = document.getElementById('puesto-select').value;
       const telefonoInput = document.getElementById('telefono-input').value;
       const ubicacionSelect = document.getElementById('ubicacion-select').value;
 
-
       const resultadosFiltrados = directorioData.filter(item => {
-          const nombreCoincide = item.Nombre.toLowerCase().includes(nombreInput);
-           const puestoCoincide = puestoSelect === "" || item.Puesto === puestoSelect;
-         const telefonoCoincide = telefonoInput === "" || (item["Teléfonos Interior"] && item["Teléfonos Interior"].includes(telefonoInput)) || (item["Teléfono Exterior"] && item["Teléfono Exterior"].toString().includes(telefonoInput));
+        const nombreNormalizado = normalizeText(item.Nombre).toLowerCase(); // Normalizar el nombre
+         const nombreCoincide = nombreNormalizado.includes(normalizeText(nombreInput));
+        const puestoCoincide = puestoSelect === "" || item.Puesto === puestoSelect;
+        const telefonoCoincide = telefonoInput === "" || (item["Teléfonos Interior"] && item["Teléfonos Interior"].includes(telefonoInput)) || (item["Teléfono Exterior"] && item["Teléfono Exterior"].toString().includes(telefonoInput));
           const ubicacionCoincide = ubicacionSelect === "" || item.Ubicación === ubicacionSelect;
 
-           return nombreCoincide && puestoCoincide && telefonoCoincide && ubicacionCoincide;
 
+           return nombreCoincide && puestoCoincide && telefonoCoincide && ubicacionCoincide;
       });
         
             mostrarResultadosEnTabla(resultadosFiltrados);
     }
-
 
 function mostrarResultadosEnTabla(resultados) {
     const directorioResultados = document.getElementById('directorio-resultados');
