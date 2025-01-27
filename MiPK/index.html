@@ -328,6 +328,39 @@
         </div>
     </div>
     <!-- *** FIN: NUEVA TARJETA SUPERPUESTA DIRECTORIO *** -->
+
+     <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA SIMULADOR *** -->
+    <div id="simulador-card-container" class="overlay-card-container" style="display: none;">
+        <div id="simulador-card" class="overlay-card">
+
+            <!-- Botón para cerrar la tarjeta -->
+            <button id="cerrar-simulador-card" class="close-button" aria-label="Cerrar">
+                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+            </button>
+
+            <!-- Título de la tarjeta -->
+            <h2 style="text-align: center; margin-bottom: 25px;"><u>Simular Ubicación</u></h2>
+
+            <!-- Contenedor para el contenido del simulador -->
+            <div id="simulador-content">
+                <!-- Contenido de la tarjeta (botones y formulario)-->
+                    <div id="simulador-opciones">
+                            <button id="simular-pk-btn" class="simulador-option-button">Simular PK</button>
+                          <button id="simular-mapa-btn" class="simulador-option-button" >Ubicar en Mapa (Próximamente)</button>
+                     </div>
+                    <div id="simulador-pk-form" style="display:none;">
+                        <select id="simulador-linea-select">
+                             <option value="">Línea</option>
+                        </select>
+                          <input type="text" id="simulador-pk-input" placeholder="PK">
+                          <button id="aplicar-simulacion-btn">Aplicar Simulación</button>
+                      </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA SIMULADOR *** -->
+
     
 
     <!-- Archivo JavaScript -->
