@@ -631,8 +631,8 @@ footer img {
    position: absolute;
    top: 5px; /* Ajusta la posición vertical */
    right: 5px; /* Ajusta la posición horizontal */
-   width: 52px; /* Ajusta el tamaño del logo */
-    height: 20px;
+   width: 54px; /* Ajusta el tamaño del logo */
+    height: 17px;
 }
 
 .logo-fallback{
