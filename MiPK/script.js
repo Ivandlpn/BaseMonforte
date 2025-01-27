@@ -2017,7 +2017,7 @@ function mostrarResultadosEnTabla(resultados) {
          pkElement.innerHTML = textoOriginalPK; // Restaura el texto original
     }
 }
-  });
+
 
  // ----- FIN FUNCIONALIDAD BOTÓN SUMULADOR -----
 
