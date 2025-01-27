@@ -1897,7 +1897,59 @@ function mostrarResultadosEnTabla(resultados) {
 
  // ----- FIN FUNCIONALIDAD BOTÓN DIRECTORIO -----
 
+     const simuladorButton = document.querySelector('.plus-option-button[aria-label="SIMULADOR"]');
+        const simuladorCardContainer = document.getElementById('simulador-card-container');
+         const cerrarSimuladorCardButton = document.getElementById('cerrar-simulador-card');
+          const simuladorOpciones = document.getElementById('simulador-opciones');
+        const simuladorPkForm = document.getElementById('simulador-pk-form');
 
+        if (simuladorButton) {
+            simuladorButton.addEventListener('click', function() {
+                 simuladorCardContainer.style.display = 'flex';
+            });
+        } else {
+            console.error('No se encontró el botón SIMULADOR');
+        }
+
+      if (cerrarSimuladorCardButton) {
+            cerrarSimuladorCardButton.addEventListener('click', function() {
+                simuladorCardContainer.style.display = 'none';
+                simuladorPkForm.style.display = 'none';
+            });
+        } else {
+            console.error('No se encontró el botón de cerrar de la tarjeta de SIMULADOR');
+        }
+          const simularPkBtn = document.getElementById('simular-pk-btn');
+           if (simularPkBtn) {
+               simularPkBtn.addEventListener('click', function(){
+                 simuladorOpciones.style.display = 'none';
+                 simuladorPkForm.style.display = 'flex';
+                generarSelectSimuladorLinea();
+            });
+        } else {
+             console.error('No se encontró el botón simular pk');
+         }
+
+      
+      function generarSelectSimuladorLinea(){
+
+         const lineas = [...new Set(directorioData.map(item => item.Linea))];
+         const simuladorLineaSelect = document.getElementById("simulador-linea-select");
+        // Añadir la opción "Ubicación" por defecto
+         const optionLineaLabel = document.createElement('option');
+         optionLineaLabel.value = "";
+         optionLineaLabel.text = "Línea";
+         optionLineaLabel.disabled = true; // Deshabilitar la opción "Línea"
+         optionLineaLabel.selected = true; // Seleccionar la opción "Línea" por defecto
+         simuladorLineaSelect.appendChild(optionLineaLabel);
+        
+        lineas.forEach(linea => {
+           const option = document.createElement('option');
+           option.value = linea;
+           option.text = linea;
+             simuladorLineaSelect.appendChild(option);
+            });
+    }
 
 
 
