@@ -2020,7 +2020,6 @@ function mostrarResultadosEnTabla(resultados) {
     }
 }
     
-  });
 
  // ----- FIN FUNCIONALIDAD BOTÓN SIMULADOR -----
 
