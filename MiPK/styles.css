@@ -600,6 +600,13 @@ footer img {
     background-color: #0056b3; /* Fondo azul más oscuro al pasar el ratón */
 }
 
+ /* Estilos para el separador horizontal del directorio */
+ #directorio-formulario #separador-resultados {
+     border: none;
+     border-top: 2px solid white;
+     margin: 10px 0 20px 0; /* Espacio arriba y abajo y sin margen horizontal */
+ }
+
 /* Estilos para los resultados del directorio */
 #directorio-resultados {
     margin-top: 20px; /* Espacio sobre la tabla */
