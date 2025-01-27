@@ -1899,11 +1899,6 @@ function mostrarResultadosEnTabla(resultados) {
 
  // ----- INICIO FUNCIONALIDAD BOTÓN SIMULADOR -----
 
- const directorioData = []; // Array para guardar los datos del directorio
-   document.addEventListener('DOMContentLoaded', async function() {
-   
-   //  ... (resto del código) ...
-
     const simuladorButton = document.querySelector('.plus-option-button[aria-label="SIMULADOR"]');
         const simuladorCardContainer = document.getElementById('simulador-card-container');
          const cerrarSimuladorCardButton = document.getElementById('cerrar-simulador-card');
