@@ -1973,7 +1973,7 @@ function mostrarResultadosEnTabla(resultados) {
             });
     }
 
-    async function simularPK(linea, pk) {
+   async function simularPK(linea, pk) {
     if (!linea || linea === "") {
           alert("Debes seleccionar una línea.");
           return;
@@ -1991,7 +1991,7 @@ function mostrarResultadosEnTabla(resultados) {
   
     try {
         const datosTrazado = await cargarArchivosJSON(rutasArchivos);
-         const puntoSimulado = datosTrazado.find(punto => punto.PK === pk && punto.Linea === linea);
+         const puntoSimulado = datosTrazado.find(punto => pkToNumber(punto.PK) === pkToNumber(pk) && punto.Linea === linea);
          if (puntoSimulado)
            {
                 latSimulada = parseFloat(puntoSimulado.Latitud);
@@ -2015,8 +2015,6 @@ function mostrarResultadosEnTabla(resultados) {
          pkElement.innerHTML = textoOriginalPK; // Restaura el texto original
     }
 }
-    
-
  // ----- FIN FUNCIONALIDAD BOTÓN SIMULADOR -----
 
 ///// FIN ICONO PLUS /////
