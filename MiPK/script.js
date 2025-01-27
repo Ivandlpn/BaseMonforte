@@ -1897,9 +1897,14 @@ function mostrarResultadosEnTabla(resultados) {
 
  // ----- FIN FUNCIONALIDAD BOTÓN DIRECTORIO -----
 
- // ----- INICIO FUNCIONALIDAD BOTÓN SUMULADOR -----
+ // ----- INICIO FUNCIONALIDAD BOTÓN SIMULADOR -----
 
-        const simuladorButton = document.querySelector('.plus-option-button[aria-label="SIMULADOR"]');
+ const directorioData = []; // Array para guardar los datos del directorio
+   document.addEventListener('DOMContentLoaded', async function() {
+   
+   //  ... (resto del código) ...
+
+    const simuladorButton = document.querySelector('.plus-option-button[aria-label="SIMULADOR"]');
         const simuladorCardContainer = document.getElementById('simulador-card-container');
          const cerrarSimuladorCardButton = document.getElementById('cerrar-simulador-card');
           const simuladorOpciones = document.getElementById('simulador-opciones');
@@ -1907,9 +1912,9 @@ function mostrarResultadosEnTabla(resultados) {
        let usarSimulacion = false;
     let latSimulada, lonSimulada;
 
-        if (simuladorButton) {
-            simuladorButton.addEventListener('click', async function() {
-                 // Carga previa de las imágenes
+    if (simuladorButton) {
+        simuladorButton.addEventListener('click', async function() {
+             // Carga previa de las imágenes
             logoAdif = await cargarImagen('img/Logo-adif.png');
              logoIneco = await cargarImagen('img/Logo-ineco.png');
             simuladorCardContainer.style.display = 'flex';
@@ -2003,8 +2008,10 @@ function mostrarResultadosEnTabla(resultados) {
                 usarSimulacion = true;
                  mapa.setView([latSimulada, lonSimulada], 18);
                   const pkSimulado = calcularPKMasCercano(latSimulada, lonSimulada, datosTrazado)[0]
-                  mostrarPKMasCercano(pkSimulado)
+                  mostrarPKMasCercano(pkSimulado);
                   actualizarPosicionPK(pkSimulado);
+                 
+               
                 mostrarMensaje("✅ Simulación Aplicada")
            }
          else {
@@ -2017,9 +2024,10 @@ function mostrarResultadosEnTabla(resultados) {
          pkElement.innerHTML = textoOriginalPK; // Restaura el texto original
     }
 }
+    
+  });
 
-
- // ----- FIN FUNCIONALIDAD BOTÓN SUMULADOR -----
+ // ----- FIN FUNCIONALIDAD BOTÓN SIMULADOR -----
 
 ///// FIN ICONO PLUS /////
 
