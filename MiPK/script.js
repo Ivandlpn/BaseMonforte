@@ -1899,7 +1899,7 @@ function mostrarResultadosEnTabla(resultados) {
 
  // ----- INICIO FUNCIONALIDAD BOTÓN SIMULADOR -----
 
-    const simuladorButton = document.querySelector('.plus-option-button[aria-label="SIMULADOR"]');
+        const simuladorButton = document.querySelector('.plus-option-button[aria-label="SIMULADOR"]');
         const simuladorCardContainer = document.getElementById('simulador-card-container');
          const cerrarSimuladorCardButton = document.getElementById('cerrar-simulador-card');
           const simuladorOpciones = document.getElementById('simulador-opciones');
@@ -1909,9 +1909,6 @@ function mostrarResultadosEnTabla(resultados) {
 
     if (simuladorButton) {
         simuladorButton.addEventListener('click', async function() {
-             // Carga previa de las imágenes
-            logoAdif = await cargarImagen('img/Logo-adif.png');
-             logoIneco = await cargarImagen('img/Logo-ineco.png');
             simuladorCardContainer.style.display = 'flex';
             });
         } else {
