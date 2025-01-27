@@ -66,17 +66,16 @@ navigator.geolocation.watchPosition((position) => {
 });
 
 function calcularYActualizarPK() {
-     // Mostrar texto temporal "Buscando PK ..."
+    // Mostrar texto temporal "Buscando PK ..."
     const pkElement = document.getElementById("pkCercano");
-    
-     if(pkElement){
+   if(pkElement){
       pkElement.innerHTML = `<span class="texto-buscando-pk">Buscando PK...</span>`;
-     }
+   }
     else {
-       console.error("No se ha encontrado el elemento con id pkCercano")
+      console.error("No se ha encontrado el elemento con id pkCercano")
       return;
     }
- 
+    
     if (!lat || !lon) {
         console.error("No se ha obtenido la ubicación actual del usuario.");
         return;
@@ -97,11 +96,10 @@ function calcularYActualizarPK() {
     cargarArchivosJSON(rutasArchivos)
         .then(datosCombinados => {
             window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
-             if(window.pkMasCercano){
-                mostrarPKMasCercano(window.pkMasCercano);
-                actualizarPosicionPK(window.pkMasCercano);
+            if(window.pkMasCercano && pkElement){ //Añadimos la comprobación de pkElement
+               mostrarPKMasCercano(window.pkMasCercano);
+               actualizarPosicionPK(window.pkMasCercano);
             }
-          
             // mostrarMensaje("   🔄 PK Actualizado");
         })
         .catch(error => console.error('Error al combinar datos de los archivos:', error));
