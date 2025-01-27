@@ -635,6 +635,54 @@ footer img {
    font-size: 1.3em; /* Ajusta el tamaño del texto */
 }
 
+////////////////// SIMULADOR *//////////////////
+
+.simulador-option-button {
+    display: block; /* Hacer que los botones ocupen todo el ancho */
+    margin-bottom: 10px; /* Separación entre botones */
+    padding: 10px 15px;
+    background-color: #f0f8ff; /* Un color de fondo suave */
+    border: 1px solid #a6d4ff;
+    border-radius: 5px;
+    text-align: center; /* Texto alineado al centro */
+    color: #333;
+    text-decoration: none; /* Quitar subrayado de enlaces */
+    cursor: pointer;
+    transition: background-color 0.2s ease; /* Transición suave para hover */
+}
+.simulador-option-button:hover {
+    background-color: #ccebff; /* Color de fondo al pasar el ratón */
+}
+.simulador-option-button:active {
+    background-color: #b3e0ff; /* Color de fondo al hacer clic */
+}
+  /* Estilos para el formulario de simular PK */
+    #simulador-pk-form input[type="text"], #simulador-pk-form select {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    }
+  #simulador-pk-form button {
+       margin-top: 10px;
+        background-color: #007bff;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+   #simulador-pk-form button:hover{
+       background-color: #0056b3;
+    }
+     #simulador-opciones{
+        display: flex;
+       flex-direction: column;
+    }
+
+
+
+
   #actualizarUbicacion {
     font-size: 0.9em;
   }
