@@ -24,6 +24,24 @@ const apiKeyOpenWeatherMap = "14225e48c44f9d35291e12867b7f32cf"; // API Meteo
  // Cargar puertas al iniciar la app
 //cargarPuertas();
 
+async function cargarPuertas() {
+    try {
+        console.log("Cargando datos de puertas...");
+        const responses = await Promise.all([
+            fetch("./doc/puertas/PL42.json"),
+            fetch("./doc/puertas/PL46.json"),
+            fetch("./doc/puertas/PL40.json")
+        ]);
+        puertasData = (await Promise.all(responses.map(res => res.json()))).flat();
+        console.log("Datos de puertas cargados:", puertasData);
+    } catch (error) {
+        console.error("Error al cargar los datos de puertas:", error);
+        alert("Error al cargar los datos de las puertas.");
+    }
+}
+
+
+
 function pkToNumber(pkString) { // <--- Definición en el ámbito global
     return parseInt(pkString, 10);
 }
@@ -918,21 +936,21 @@ checkTuneles.addEventListener('change', function () {
 let cachedPuertasCercanas = null;
 let lastUserLocation = null;
 
-async function cargarPuertas() {
-    try {
-        console.log("Cargando datos de puertas...");
-        const responses = await Promise.all([
-            fetch("./doc/puertas/PL42.json"),
-            fetch("./doc/puertas/PL46.json"),
-            fetch("./doc/puertas/PL40.json")
-        ]);
-        puertasData = (await Promise.all(responses.map(res => res.json()))).flat();
-        console.log("Datos de puertas cargados:", puertasData);
-    } catch (error) {
-        console.error("Error al cargar los datos de puertas:", error);
-        alert("Error al cargar los datos de las puertas.");
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
  function mostrarPuertasCercanas() {
         console.log("Mostrando puertas cercanas...");
