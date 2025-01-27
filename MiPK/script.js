@@ -1686,6 +1686,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
  // ----- INICIO FUNCIONALIDAD BOTÓN DIRECTORIO -----
+function normalizeText(text) {
+  if (!text) return "";
+  return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
 
  const directorioData = []; // Array para guardar los datos del directorio
    document.addEventListener('DOMContentLoaded', async function() {
