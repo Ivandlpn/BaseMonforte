@@ -1741,19 +1741,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-     function generarFormularioBusqueda() {
+      function generarFormularioBusqueda() {
             const directorioContainer = document.getElementById('directorio-container'); // Obtener el contenedor AQUÍ
             directorioContainer.innerHTML = `
             <div id="directorio-formulario">
                 <input type="text" id="nombre-input" placeholder="Nombre">
+                <select id="ubicacion-select">
+                     <option value="">Todos</option>
+                </select>
                 <select id="puesto-select">
                      <option value="">Todos</option>
                 </select>
                  <input type="text" id="telefono-input" placeholder="Teléfono">
-                <select id="ubicacion-select">
-                    <option value="">Todos</option>
-                </select>
-                <button id="buscar-btn">Buscar</button>
+                  <div id="directorio-buscar-container">
+                      <button id="buscar-btn">Buscar</button>
+                  </div>
+                  <hr id="separador-resultados">
             </div>
              <div id="directorio-resultados">
                 <!-- Aquí se insertará la tabla de resultados -->
@@ -1765,7 +1768,6 @@ document.addEventListener('DOMContentLoaded', function() {
                   buscarBtn.addEventListener('click', filtrarYMostrarResultados);
 
           }
-
 
    function generarSelects()
     {
