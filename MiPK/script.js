@@ -1897,15 +1897,22 @@ function mostrarResultadosEnTabla(resultados) {
 
  // ----- FIN FUNCIONALIDAD BOTÓN DIRECTORIO -----
 
-     const simuladorButton = document.querySelector('.plus-option-button[aria-label="SIMULADOR"]');
+ // ----- INICIO FUNCIONALIDAD BOTÓN SUMULADOR -----
+
+        const simuladorButton = document.querySelector('.plus-option-button[aria-label="SIMULADOR"]');
         const simuladorCardContainer = document.getElementById('simulador-card-container');
          const cerrarSimuladorCardButton = document.getElementById('cerrar-simulador-card');
           const simuladorOpciones = document.getElementById('simulador-opciones');
         const simuladorPkForm = document.getElementById('simulador-pk-form');
+       let usarSimulacion = false;
+    let latSimulada, lonSimulada;
 
         if (simuladorButton) {
-            simuladorButton.addEventListener('click', function() {
-                 simuladorCardContainer.style.display = 'flex';
+            simuladorButton.addEventListener('click', async function() {
+                 // Carga previa de las imágenes
+            logoAdif = await cargarImagen('img/Logo-adif.png');
+             logoIneco = await cargarImagen('img/Logo-ineco.png');
+            simuladorCardContainer.style.display = 'flex';
             });
         } else {
             console.error('No se encontró el botón SIMULADOR');
@@ -1914,7 +1921,14 @@ function mostrarResultadosEnTabla(resultados) {
       if (cerrarSimuladorCardButton) {
             cerrarSimuladorCardButton.addEventListener('click', function() {
                 simuladorCardContainer.style.display = 'none';
-                simuladorPkForm.style.display = 'none';
+                 simuladorPkForm.style.display = 'none';
+                  usarSimulacion = false; // Desactiva la simulación al cerrar la tarjeta
+                   calcularYActualizarPK();
+                     if (marcadorActual) {
+                         const { lat, lng } = marcadorActual.getLatLng();
+                        mapa.setView([lat, lng], 18);
+                         centradoAutomaticamente = true;
+                    }
             });
         } else {
             console.error('No se encontró el botón de cerrar de la tarjeta de SIMULADOR');
@@ -1929,6 +1943,18 @@ function mostrarResultadosEnTabla(resultados) {
         } else {
              console.error('No se encontró el botón simular pk');
          }
+
+          const aplicarSimulacionBtn = document.getElementById('aplicar-simulacion-btn');
+       if (aplicarSimulacionBtn) {
+            aplicarSimulacionBtn.addEventListener('click', async function() {
+                 const linea = document.getElementById('simulador-linea-select').value;
+                const pk = document.getElementById('simulador-pk-input').value;
+                 simularPK(linea, pk);
+           });
+        } else {
+            console.error('No se encontró el botón aplicar simulación');
+        }
+         
 
       
       function generarSelectSimuladorLinea(){
@@ -1951,7 +1977,49 @@ function mostrarResultadosEnTabla(resultados) {
             });
     }
 
+    async function simularPK(linea, pk) {
+    if (!linea || linea === "") {
+          alert("Debes seleccionar una línea.");
+          return;
+    }
+    if (!pk || isNaN(pkToNumber(pk))) {
+        alert("Debes introducir un PK válido.");
+        return;
+    }
 
+    // Mostrar mensaje "Buscando PK..."
+    const pkElement = document.getElementById("pkCercano");
+    const textoOriginalPK = pkElement.innerHTML; // Guarda el texto original para restaurar
+    pkElement.innerHTML = `<span class="texto-buscando-pk">Buscando PK simulado...</span>`;
+   
+  
+    try {
+        const datosTrazado = await cargarArchivosJSON(rutasArchivos);
+         const puntoSimulado = datosTrazado.find(punto => punto.PK === pk && punto.Linea === linea);
+         if (puntoSimulado)
+           {
+                latSimulada = parseFloat(puntoSimulado.Latitud);
+                lonSimulada = parseFloat(puntoSimulado.Longitud);
+                usarSimulacion = true;
+                 mapa.setView([latSimulada, lonSimulada], 18);
+                  const pkSimulado = calcularPKMasCercano(latSimulada, lonSimulada, datosTrazado)[0]
+                  mostrarPKMasCercano(pkSimulado)
+                  actualizarPosicionPK(pkSimulado);
+                mostrarMensaje("✅ Simulación Aplicada")
+           }
+         else {
+                alert("No se ha encontrado el PK o linea simulada.");
+           }
+                pkElement.innerHTML = textoOriginalPK; // Restaura el texto original
+    } catch (error) {
+        console.error("Error al simular PK:", error);
+         alert("Error al realizar la simulación del PK.");
+         pkElement.innerHTML = textoOriginalPK; // Restaura el texto original
+    }
+}
+  });
+
+ // ----- FIN FUNCIONALIDAD BOTÓN SUMULADOR -----
 
 ///// FIN ICONO PLUS /////
 
