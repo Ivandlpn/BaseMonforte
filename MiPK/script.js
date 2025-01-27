@@ -1953,10 +1953,9 @@ function mostrarResultadosEnTabla(resultados) {
         }
          
 
-      
-      function generarSelectSimuladorLinea(){
+          function generarSelectSimuladorLinea(){
 
-         const lineas = [...new Set(directorioData.map(item => item.Linea))];
+       const lineas = ["40", "42", "46", "48"]; // Array con las líneas permitidas
          const simuladorLineaSelect = document.getElementById("simulador-linea-select");
         // Añadir la opción "Ubicación" por defecto
          const optionLineaLabel = document.createElement('option');
