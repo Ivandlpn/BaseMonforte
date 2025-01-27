@@ -22,7 +22,7 @@ const apiKeyOpenWeatherMap = "14225e48c44f9d35291e12867b7f32cf"; // API Meteo
     ];
 
  // Cargar puertas al iniciar la app
-//cargarPuertas();
+cargarPuertas();
 
 async function cargarPuertas() {
     try {
