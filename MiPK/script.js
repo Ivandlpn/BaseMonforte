@@ -1360,17 +1360,22 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                     }
                 
                 
-                    function generarBotonesOperadores() {
+                       function generarBotonesOperadores() {
                     const operadoresContainer = document.getElementById('operadores-container'); // Obtener el contenedor AQUÍ
                     operadoresContainer.innerHTML = ''; // Limpiar el contenedor antes de añadir botones nuevos
-                    operadoresCirculacionData.forEach(operador => {
+                 operadoresContainer.innerHTML += `<h3 style="text-align: center; margin-top: 10px; margin-bottom: 10px;"><u>CRC ALBACETE</u></h3>`; // Añadir el título de CRC Albacete
+                    operadoresCirculacionData.forEach((operador, index) => {
                         const botonOperador = document.createElement('a'); // Usar <a> para enlaces tel:
                         botonOperador.href = `tel:${operador.telefono}`; // Enlace tel: para iniciar llamada
                         botonOperador.className = 'operador-button'; // Clase CSS para estilos (a definir en CSS)
                         // *** MODIFICADO: Usar innerHTML para permitir etiquetas HTML (como <br>) ***
                         botonOperador.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${operador.descripcion}</span>`;
                         // *** FIN MODIFICACIÓN ***
-                        operadoresContainer.appendChild(botonOperador); // Añadir botón al contenedor
+                        if (operador.nombre === "Operador Banda Atocha")
+                        {
+                              operadoresContainer.innerHTML += `<h3 style="text-align: center; margin-top: 20px; margin-bottom: 10px;"><u>CRC MADRID</u></h3>`;  //Añadir el título de CRC Madrid antes de la ultima tarjeta.
+                         }
+                         operadoresContainer.appendChild(botonOperador); // Añadir botón al contenedor
                     });
                 }
                 });
