@@ -1464,8 +1464,8 @@ function generarContenidoCps() {
                     {
                         nombre: "CSI Albacete",
                         lineas: [
-                            "L40 - Desde Bif.Torrejón hasta Valencia Estación",
-                            "L42 - Desde Bif. Albacete hasta Alicante Estación",
+                            "L40 - Desde Bif.Torrejón hasta Valencia EST",
+                            "L42 - Desde Bif.Albacete hasta Alicante EST",
                             "L46 - Toda la línea"
                         ],
                         telefono: "967539504" // No visible en la tarjeta
