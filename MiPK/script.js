@@ -1717,7 +1717,7 @@ function normalizeText(text) {
         directorioButton.addEventListener('click', async function() {
              // Carga previa de las imágenes
             logoAdif = await cargarImagen('img/Logo-adif.png');
-             logoIneco = await cargarImagen('img/Logo-ineco.png');
+             logoIneco = await cargarImagen('img/Logo-Ineco.png');
             directorioCardContainer.style.display = 'flex';
             generarFormularioBusqueda(); // Llama a la función para generar el formulario
         });
