@@ -2161,14 +2161,15 @@ async function predecirPasoTrenes() {
       const tiempoEstimado = calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades);
           if(tiempoEstimado)
           {
-            const tiempoPaso = new Date(tiempoEstimado);
-             if (tiempoPaso.getTime() > nowTime && tiempoPaso.getTime() < nowTime + 5 * 60 * 60 * 1000)
-               {
+            // const tiempoPaso = new Date(tiempoEstimado);
+             // if (tiempoPaso.getTime() > nowTime && tiempoPaso.getTime() < nowTime + 5 * 60 * 60 * 1000)
+               // {
                   predicciones.push({
                       tren: tren,
-                     tiempoEstimado: tiempoEstimado
+                     tiempoEstimado: tiempoEstimado.tiempoEstimado,
+                      horaExtremo: tiempoEstimado.horaExtremo
                      });
-                }
+                // }
 
           }
 
