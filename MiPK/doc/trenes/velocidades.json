@@ -1,0 +1,506 @@
+[
+    {
+        "Línea": "40",
+        "PK INI": "034400",
+        "PK FIN": "038200",
+        "Velocidad": "220"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "038200",
+        "PK FIN": "040300",
+        "Velocidad": "285"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "040300",
+        "PK FIN": "042500",
+        "Velocidad": "285"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "042500",
+        "PK FIN": "049200",
+        "Velocidad": "285"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "049200",
+        "PK FIN": "049600",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "049600",
+        "PK FIN": "051500",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "051500",
+        "PK FIN": "052200",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "052200",
+        "PK FIN": "056700",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "056700",
+        "PK FIN": "063100",
+        "Velocidad": "285"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "063100",
+        "PK FIN": "077400",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "077400",
+        "PK FIN": "079700",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "079700",
+        "PK FIN": "084600",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "084600",
+        "PK FIN": "103800",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "103800",
+        "PK FIN": "118600",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "118600",
+        "PK FIN": "143900",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "143900",
+        "PK FIN": "164800",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "164800",
+        "PK FIN": "174700",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "174700",
+        "PK FIN": "176800",
+        "Velocidad": "290"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "176800",
+        "PK FIN": "195100",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "195100",
+        "PK FIN": "224700",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "224700",
+        "PK FIN": "248100",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "248100",
+        "PK FIN": "267100",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "267100",
+        "PK FIN": "284100",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "284100",
+        "PK FIN": "289500",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "289500",
+        "PK FIN": "290100",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "290100",
+        "PK FIN": "293700",
+        "Velocidad": "270"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "293700",
+        "PK FIN": "295500",
+        "Velocidad": "245"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "295500",
+        "PK FIN": "296900",
+        "Velocidad": "290"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "296900",
+        "PK FIN": "298500",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "298500",
+        "PK FIN": "299200",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "299200",
+        "PK FIN": "302400",
+        "Velocidad": "290"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "302400",
+        "PK FIN": "303900",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "303900",
+        "PK FIN": "310500",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "310500",
+        "PK FIN": "327500",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "327500",
+        "PK FIN": "345100",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "345100",
+        "PK FIN": "373500",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "373500",
+        "PK FIN": "383700",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "383700",
+        "PK FIN": "390000",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "390000",
+        "PK FIN": "391300",
+        "Velocidad": "245"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "391300",
+        "PK FIN": "392100",
+        "Velocidad": "215"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "392100",
+        "PK FIN": "392700",
+        "Velocidad": "195"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "392700",
+        "PK FIN": "393700",
+        "Velocidad": "195"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "393700",
+        "PK FIN": "394400",
+        "Velocidad": "150"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "394400",
+        "PK FIN": "395100",
+        "Velocidad": "110"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "395100",
+        "PK FIN": "395200",
+        "Velocidad": "95"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "395200",
+        "PK FIN": "395300",
+        "Velocidad": "95"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "395300",
+        "PK FIN": "396700",
+        "Velocidad": "70"
+    },
+    {
+        "Línea": "40",
+        "PK INI": "396700",
+        "PK FIN": "397200",
+        "Velocidad": "30"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "248100",
+        "PK FIN": "249600",
+        "Velocidad": "200"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "249600",
+        "PK FIN": "262400",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "262400",
+        "PK FIN": "285900",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "285900",
+        "PK FIN": "307900",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "307900",
+        "PK FIN": "316600",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "316600",
+        "PK FIN": "320200",
+        "Velocidad": "245"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "320200",
+        "PK FIN": "321100",
+        "Velocidad": "200"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "321100",
+        "PK FIN": "323700",
+        "Velocidad": "190"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "323700",
+        "PK FIN": "329400",
+        "Velocidad": "190"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "329400",
+        "PK FIN": "337300",
+        "Velocidad": "240"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "337300",
+        "PK FIN": "363100",
+        "Velocidad": "240"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "363100",
+        "PK FIN": "364900",
+        "Velocidad": "270"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "364900",
+        "PK FIN": "373500",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "373500",
+        "PK FIN": "385800",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "385800",
+        "PK FIN": "386600",
+        "Velocidad": "255"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "386600",
+        "PK FIN": "387300",
+        "Velocidad": "260"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "387300",
+        "PK FIN": "389100",
+        "Velocidad": "265"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "389100",
+        "PK FIN": "398600",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "398600",
+        "PK FIN": "407600",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "407600",
+        "PK FIN": "410000",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "410000",
+        "PK FIN": "418600",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "418600",
+        "PK FIN": "425300",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "425300",
+        "PK FIN": "435500",
+        "Velocidad": "265"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "435500",
+        "PK FIN": "441000",
+        "Velocidad": "265"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "441000",
+        "PK FIN": "447400",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "447400",
+        "PK FIN": "449300",
+        "Velocidad": "250"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "449300",
+        "PK FIN": "461400",
+        "Velocidad": "300"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "461400",
+        "PK FIN": "461700",
+        "Velocidad": "290"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "461700",
+        "PK FIN": "463600",
+        "Velocidad": "275"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "463600",
+        "PK FIN": "464700",
+        "Velocidad": "290"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "464700",
+        "PK FIN": "468300",
+        "Velocidad": "290"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "468300",
+        "PK FIN": "473500",
+        "Velocidad": "270"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "473500",
+        "PK FIN": "480800",
+        "Velocidad": "200"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "480800",
+        "PK FIN": "483900",
+        "Velocidad": "140"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "483900",
+        "PK FIN": "485000",
+        "Velocidad": "120"
+    },
+    {
+        "Línea": "42",
+        "PK INI": "485000",
+        "PK FIN": "485900",
+        "Velocidad": "50"
+    }
+]
