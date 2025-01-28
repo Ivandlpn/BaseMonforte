@@ -2240,7 +2240,7 @@ function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
     return  horaEstimada.getTime();
 }
 
- function generarTablaTrenes(predicciones) {
+function generarTablaTrenes(predicciones) {
     let tablaHTML = `<table style="width: 100%; border-collapse: collapse; margin-top: 10px; text-align: center;">
                      <thead style="font-weight: bold;">
                         <tr style="border-bottom: 2px solid #ddd;">
@@ -2255,10 +2255,10 @@ function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
     const nowTime = new Date().getTime();
     for(const prediccion of predicciones)
     {
-          const horaPaso = new Date(prediccion.tiempoEstimado);
-          const horas = String(horaPaso.getHours()).padStart(2, '0');
+         const horaPaso = new Date(prediccion.tiempoEstimado);
+         const horas = String(horaPaso.getHours()).padStart(2, '0');
          const minutos = String(horaPaso.getMinutes()).padStart(2, '0');
-           const minutosRestantes = Math.round((prediccion.tiempoEstimado - nowTime)/ (60 * 1000))
+         const minutosRestantes = Math.round((prediccion.tiempoEstimado - nowTime)/ (60 * 1000))
           let origen = "";
          if (prediccion.tren.Línea === "42")
          {
@@ -2268,13 +2268,14 @@ function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
          {
             origen = "Valencia"
         }
-      const horaExtremo = prediccion.tren.Hora;
-      const horaExtremoDate = new Date();
-      const [horasExtremo, minutosExtremo] = horaExtremo.split(":");
-      horaExtremoDate.setHours(parseInt(horasExtremo,10));
-      horaExtremoDate.setMinutes(parseInt(minutosExtremo, 10));
-       const horasExtremoFormat = String(horaExtremoDate.getHours()).padStart(2,'0')
-        const minutosExtremoFormat = String(horaExtremoDate.getMinutes()).padStart(2, '0');
+        const horaExtremo = new Date(prediccion.tren.Hora);
+           const [horasExtremo, minutosExtremo] = prediccion.tren.Hora.split(":");
+           horaExtremo.setHours(parseInt(horasExtremo, 10));
+           horaExtremo.setMinutes(parseInt(minutosExtremo, 10));
+
+         const horasExtremoFormat = String(horaExtremo.getHours()).padStart(2,'0');
+         const minutosExtremoFormat = String(horaExtremo.getMinutes()).padStart(2, '0');
+
         tablaHTML +=`
             <tr style="border-bottom: 1px solid #eee;">
                  <td style="padding: 8px; border: 1px solid #ddd;">${horas}:${minutos}</td>
