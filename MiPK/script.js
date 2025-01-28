@@ -2206,10 +2206,12 @@ function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
     console.log("Tramo encontrado:", tramo)
 
     const distanciaTramo = Math.abs(pkUsuarioNumerico - pkTrenExtremo)
-   console.log("Distancia al extremo:", distanciaTramo, "metros");
+      console.log("Distancia al extremo:", distanciaTramo, "metros");
+    const distanciaTramoKm = distanciaTramo / 1000; // Convertimos metros a kilómetros
+   console.log("Distancia al extremo:", distanciaTramoKm, "Km");
 
-   const tiempoTramo = distanciaTramo / tramo.Velocidad;
-   console.log("Tiempo hasta el extremo:", tiempoTramo, "horas")
+    const tiempoTramo = distanciaTramoKm / tramo.Velocidad;
+      console.log("Tiempo hasta el extremo:", tiempoTramo, "horas");
 
 
     const horaLlegadaExtremo = new Date();
