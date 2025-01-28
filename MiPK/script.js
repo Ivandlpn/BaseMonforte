@@ -2061,7 +2061,7 @@ function mostrarResultadosEnTabla(resultados) {
 
 
 
- // ----- INICIO FUNCIONALIDAD TRENES -----
+// ----- INICIO FUNCIONALIDAD TRENES -----
 async function cargarDatosTrenes() {
     try {
         const [velocidadesResponse, trenesResponse] = await Promise.all([
@@ -2086,14 +2086,14 @@ async function cargarDatosTrenes() {
             "PK INI": parseInt(item["PK INI"], 10),
             "PK FIN": parseInt(item["PK FIN"],10)
          }));
-        console.log("Datos de velocidades cargados y convertidos:", velocidadesDataConvertida);
+        console.log("Datos de velocidades cargados:", velocidadesDataConvertida);
 
     
      const trenesDataConvertida = trenesData.map(item => ({
          ...item,
           PK: parseInt(item.PK, 10),
             }))
-        console.log("Datos de trenes cargados y convertidos:", trenesDataConvertida);
+        console.log("Datos de trenes cargados:", trenesDataConvertida);
 
         return {
             velocidades: velocidadesDataConvertida,
@@ -2105,6 +2105,8 @@ async function cargarDatosTrenes() {
         return null;
     }
 }
+
+
 async function predecirPasoTrenes() {
     const { velocidades, trenes } = await cargarDatosTrenes();
      if (!velocidades || !trenes) {
@@ -2124,8 +2126,9 @@ async function predecirPasoTrenes() {
 
     // Filtrar los trenes por la línea del usuario
      const trenesFiltrados = trenes.filter(tren => tren.Línea === lineaUsuario);
-     if (trenesFiltrados.length === 0) {
-        console.warn("No hay trenes en la línea:", lineaUsuario);
+       console.log("Trenes filtrados por línea:", trenesFiltrados);
+    if (trenesFiltrados.length === 0) {
+         console.warn("No hay trenes en la línea:", lineaUsuario);
           mostrarTarjetaTrenes("No hay trenes en esta línea");
       return;
     }
@@ -2141,8 +2144,9 @@ async function predecirPasoTrenes() {
                 return tren.Día === diaSemana
            }
         });
+      console.log("Trenes filtrados por día:", trenesFiltradosDia);
         if (trenesFiltradosDia.length === 0) {
-        console.warn("No hay trenes para el día de hoy:", diaSemana);
+          console.warn("No hay trenes para el día de hoy:", diaSemana);
          mostrarTarjetaTrenes("No hay trenes para el día de hoy");
         return;
        }
@@ -2154,18 +2158,19 @@ async function predecirPasoTrenes() {
       const tiempoEstimado = calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades);
           if(tiempoEstimado)
           {
-              const tiempoPaso = new Date(tiempoEstimado);
-               if (tiempoPaso.getTime() > nowTime && tiempoPaso.getTime() < nowTime + 5 * 60 * 60 * 1000)
-                    {
-                      predicciones.push({
-                            tren: tren,
-                          tiempoEstimado: tiempoEstimado
-                    });
-                   }
-            }
+            const tiempoPaso = new Date(tiempoEstimado);
+             if (tiempoPaso.getTime() > nowTime && tiempoPaso.getTime() < nowTime + 5 * 60 * 60 * 1000)
+               {
+                  predicciones.push({
+                      tren: tren,
+                     tiempoEstimado: tiempoEstimado
+                     });
+              }
+
+          }
 
      }
-
+    console.log("Predicciones calculadas:", predicciones);
     if(predicciones.length > 0)
       {
          // Ordenar las predicciones por tiempo estimado de paso
@@ -2178,7 +2183,9 @@ async function predecirPasoTrenes() {
         }
 
 }
+
  function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
+      console.log("Calculando tiempo para el tren:", tren, " PK Usuario:", pkUsuarioNumerico)
      const lineaTren = tren.Línea;
      const pkTrenExtremo = tren.PK;
       const viaTren = tren.Vía;
@@ -2192,7 +2199,7 @@ async function predecirPasoTrenes() {
     } else if (viaTren === "2") {
        tramosRecorridos = tramosLinea.filter(tramo => tramo["PK INI"] >= pkTrenExtremo  && tramo["PK FIN"] < pkUsuarioNumerico);
     }
-
+     console.log("Tramos recorridos por el tren:", tramosRecorridos);
     if (!tramosRecorridos || tramosRecorridos.length === 0 )
         {
           console.warn("No se encontraron tramos de la línea:", lineaTren," para el tren:", tren);
@@ -2312,9 +2319,7 @@ function mostrarTarjetaTrenes(contenido) {
                console.error('No se encontró el botón TRENES');
           }
      });
- // ----- FIN FUNCIONALIDAD TRENES -----
-
-
+// ----- FIN FUNCIONALIDAD TRENES -----
 
 
 
