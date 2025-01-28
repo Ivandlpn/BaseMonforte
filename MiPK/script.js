@@ -2154,7 +2154,7 @@ async function predecirPasoTrenes() {
         return;
        }
     const predicciones = [];
-     const nowTime = now.getTime();
+    const nowTime = new Date().getTime();
     // Calcular la hora de paso para cada tren
     for (const tren of trenesFiltradosDia)
       {
@@ -2162,23 +2162,23 @@ async function predecirPasoTrenes() {
           if(tiempoEstimado)
           {
             const tiempoPaso = new Date(tiempoEstimado);
-             // if (tiempoPaso.getTime() > nowTime && tiempoPaso.getTime() < nowTime + 5 * 60 * 60 * 1000)
-               // {
+             if (tiempoPaso.getTime() > nowTime && tiempoPaso.getTime() < nowTime + 5 * 60 * 60 * 1000)
+               {
                   predicciones.push({
                       tren: tren,
                      tiempoEstimado: tiempoEstimado
                      });
-              // }
+                }
 
           }
 
      }
-    console.log("Predicciones calculadas:", predicciones);
+      console.log("Predicciones calculadas:", predicciones);
     if(predicciones.length > 0)
       {
          // Ordenar las predicciones por tiempo estimado de paso
              predicciones.sort((a, b) => a.tiempoEstimado - b.tiempoEstimado);
-            mostrarTarjetaTrenes(generarTablaTrenes(predicciones));
+            mostrarTarjetaTrenes(generarTablaTrenes(predicciones, nowTime));
        }
      else {
         console.warn("No hay predicciones para el PK actual");
@@ -2240,7 +2240,7 @@ function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
     return  horaEstimada.getTime();
 }
 
-function generarTablaTrenes(predicciones) {
+function generarTablaTrenes(predicciones, nowTime) {
     let tablaHTML = `<table style="width: 100%; border-collapse: collapse; margin-top: 10px; text-align: center;">
                      <thead style="font-weight: bold;">
                         <tr style="border-bottom: 2px solid #ddd;">
@@ -2252,13 +2252,12 @@ function generarTablaTrenes(predicciones) {
                         </tr>
                    </thead>
                    <tbody>`;
-    const nowTime = new Date().getTime();
-    for(const prediccion of predicciones)
+        for(const prediccion of predicciones)
     {
-         const horaPaso = new Date(prediccion.tiempoEstimado);
-         const horas = String(horaPaso.getHours()).padStart(2, '0');
+          const horaPaso = new Date(prediccion.tiempoEstimado);
+          const horas = String(horaPaso.getHours()).padStart(2, '0');
          const minutos = String(horaPaso.getMinutes()).padStart(2, '0');
-         const minutosRestantes = Math.round((prediccion.tiempoEstimado - nowTime)/ (60 * 1000))
+           const minutosRestantes = Math.abs(Math.round((prediccion.tiempoEstimado - nowTime)/ (60 * 1000)))
           let origen = "";
          if (prediccion.tren.Línea === "42")
          {
@@ -2268,13 +2267,13 @@ function generarTablaTrenes(predicciones) {
          {
             origen = "Valencia"
         }
-        const horaExtremo = new Date(prediccion.tren.Hora);
-           const [horasExtremo, minutosExtremo] = prediccion.tren.Hora.split(":");
-           horaExtremo.setHours(parseInt(horasExtremo, 10));
-           horaExtremo.setMinutes(parseInt(minutosExtremo, 10));
+          const horaExtremoDate = new Date(prediccion.tiempoEstimado);
+            const [horasExtremo, minutosExtremo] = prediccion.tren.Hora.split(":");
+              horaExtremoDate.setHours(parseInt(horasExtremo, 10));
+              horaExtremoDate.setMinutes(parseInt(minutosExtremo, 10));
 
-         const horasExtremoFormat = String(horaExtremo.getHours()).padStart(2,'0');
-         const minutosExtremoFormat = String(horaExtremo.getMinutes()).padStart(2, '0');
+         const horasExtremoFormat = String(horaExtremoDate.getHours()).padStart(2,'0');
+         const minutosExtremoFormat = String(horaExtremoDate.getMinutes()).padStart(2, '0');
 
         tablaHTML +=`
             <tr style="border-bottom: 1px solid #eee;">
