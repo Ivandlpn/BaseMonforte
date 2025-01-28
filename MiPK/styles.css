@@ -699,27 +699,41 @@ footer img {
 
 #trenes-card table {
     width: 100%;
-    border-collapse: collapse; /* Unificar bordes */
+    border-collapse: collapse;
     margin-top: 10px;
     text-align: center;
-    background-color: white; /* Fondo blanco */
-    color: black; /* Texto negro */
+    background-color: white;
+    color: black;
+    table-layout: fixed; /* Añadido: para que las celdas respeten el ancho */
 }
 
 #trenes-card th, #trenes-card td {
     padding: 8px;
-    border: 1px solid #ddd; /* Borde para celdas */
+    border: 1px solid #ddd;
+    word-wrap: break-word; /* Añadido: para que el texto se divida en varias líneas si es necesario */
+    overflow: hidden; /* Ocultar cualquier desbordamiento */
+    white-space: nowrap; /* Evitar saltos de línea en textos cortos */
 }
 
 #trenes-card th {
-    background-color: #f2f2f2; /* Fondo gris para encabezado */
-    font-weight: bold; /* Negrita para encabezado */
+    background-color: #f2f2f2;
+    font-weight: bold;
 }
 
 /* Estilo para las filas alternas */
 /* #trenes-card tbody tr:nth-child(even) {
-    background-color: #f9f9f9;  Fondo gris claro para filas pares
+    background-color: #f9f9f9;
 } */
+
+
+@media (max-width: 600px) {
+    #trenes-card table {
+       font-size: 0.8em; /* Reducir tamaño de fuente */
+    }
+     #trenes-card th, #trenes-card td {
+          padding: 5px; /* Ajustar padding de celdas */
+       }
+    }
 
   #actualizarUbicacion {
     font-size: 0.9em;
