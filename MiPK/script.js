@@ -2065,7 +2065,7 @@ async function cargarDatosTrenes() {
     try {
         const [velocidadesResponse, trenesResponse] = await Promise.all([
             fetch("./doc/trenes/velocidades.json"),
-            fetch("./doc/trenes/trenes.json")
+            fetch("./doc/trenes/trenes2.json")
         ]);
 
         if (!velocidadesResponse.ok) {
@@ -2162,7 +2162,7 @@ async function predecirPasoTrenes() {
           if(tiempoEstimado)
           {
             const tiempoPaso = new Date(tiempoEstimado);
-             if (tiempoPaso.getTime() > nowTime && tiempoPaso.getTime() < nowTime + 5 * 60 * 60 * 1000)
+             if (tiempoPaso.getTime() > nowTime && tiempoPaso.getTime() < nowTime + 10 * 60 * 60 * 1000)
                {
                   predicciones.push({
                       tren: tren,
