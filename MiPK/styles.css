@@ -693,7 +693,29 @@ footer img {
     }
 
 
+/* Estilos para las tablas dentro de la tarjeta de trenes */
 
+#trenes-card table {
+    width: 100%;
+    border-collapse: collapse; /* Unificar bordes */
+    margin-top: 10px;
+    text-align: center;
+}
+
+#trenes-card th, #trenes-card td {
+    padding: 8px;
+    border: 1px solid #ddd; /* Borde para celdas */
+}
+
+#trenes-card th {
+    background-color: #f2f2f2; /* Fondo gris para encabezado */
+    font-weight: bold; /* Negrita para encabezado */
+}
+
+/* Estilo para las filas alternas */
+#trenes-card tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Fondo gris claro para filas pares */
+}
 
   #actualizarUbicacion {
     font-size: 0.9em;
