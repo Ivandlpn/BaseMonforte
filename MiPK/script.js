@@ -2137,13 +2137,16 @@ async function predecirPasoTrenes() {
    const diaSemana = ["D", "L", "M", "X", "J", "V", "S"][now.getDay()];
 
      const trenesFiltradosDia = trenesFiltrados.filter(tren => {
-            if(Array.isArray(tren.Día)){
-                   return tren.Día.includes(diaSemana)
-            }
-           else{
-                return tren.Día === diaSemana
-           }
-        });
+        if (Array.isArray(tren.Día)) {
+            return tren.Día.includes(diaSemana);
+        } else if (tren.Día === "L") {
+            // Si el día es "L", verifica que el día de la semana actual esté entre lunes y jueves
+            return diaSemana === "L" || diaSemana === "M" || diaSemana === "X" || diaSemana === "J";
+        } else {
+           return tren.Día === diaSemana;
+        }
+    });
+    
       console.log("Trenes filtrados por día:", trenesFiltradosDia);
         if (trenesFiltradosDia.length === 0) {
           console.warn("No hay trenes para el día de hoy:", diaSemana);
