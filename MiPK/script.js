@@ -2283,7 +2283,7 @@ function generarTablaTrenes(predicciones, nowTime) {
         }
 
           const horaExtremo = new Date(prediccion.horaExtremo);
-           const horasExtremo = String(horaExtremo.getHours()).padStart(2, '0');
+           const horasExtremo = String(horaExtremo.getHours()).padStart(2,'0');
            const minutosExtremo = String(horaExtremo.getMinutes()).padStart(2, '0');
 
         tablaHTML +=`
@@ -2299,6 +2299,7 @@ function generarTablaTrenes(predicciones, nowTime) {
        tablaHTML += `</tbody></table>`;
     return tablaHTML;
 }
+
 function mostrarTarjetaTrenes(contenido) {
     const trenesCardContainer = document.getElementById('trenes-card-container');
      const trenesContainer = document.getElementById('trenes-container');
