@@ -2194,62 +2194,63 @@ function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
     const pkTrenExtremo = tren.PK;
     const viaTren = tren.Vía;
     const horaTrenExtremo = tren.Hora;
-    
+
     console.log("Datos del tren:", { lineaTren, pkTrenExtremo, viaTren, horaTrenExtremo });
 
     const tramosLinea = velocidades.filter(tramo => tramo.Línea === lineaTren);
     let tiempoTotal = 0;
     let sentidoTramo = 1;
     let pkActual = pkTrenExtremo;
-    if (viaTren === "1") { // Sentido decreciente
+     if (viaTren === "1") { // Sentido decreciente
        sentidoTramo = -1;
-         while (pkActual > pkUsuarioNumerico) {
-           const tramo = tramosLinea.find(tramo => pkActual >= tramo["PK INI"] && pkActual <= tramo["PK FIN"]);
-              if (!tramo) {
+        while (pkActual > pkUsuarioNumerico) {
+             const tramo = tramosLinea.find(tramo => pkActual >= tramo["PK INI"] && pkActual <= tramo["PK FIN"]);
+             if (!tramo) {
                   console.warn("No se ha encontrado un tramo para el PK:", pkActual, "en la línea", lineaTren);
-                  return null;
-              }
-              const pkFinTramo = Math.max(pkUsuarioNumerico, tramo["PK INI"]);
-             const distanciaTramo = Math.abs(pkActual - pkFinTramo);
+                return null;
+            }
+           const pkFinTramo = Math.max(pkUsuarioNumerico, tramo["PK INI"]);
+           const distanciaTramo = Math.abs(pkActual - pkFinTramo);
             const distanciaTramoKm = distanciaTramo / 1000;
              const tiempoTramo = distanciaTramoKm / tramo.Velocidad;
               tiempoTotal += tiempoTramo;
-            pkActual =  pkFinTramo;
+             pkActual = pkFinTramo;
          }
-    } else if (viaTren === "2") { // Sentido creciente
-       sentidoTramo = 1;
-         while (pkActual < pkUsuarioNumerico) {
-            const tramo = tramosLinea.find(tramo => pkActual >= tramo["PK INI"] && pkActual <= tramo["PK FIN"]);
-              if (!tramo) {
-                 console.warn("No se ha encontrado un tramo para el PK:", pkActual, "en la línea", lineaTren);
-                 return null;
-              }
-           const pkFinTramo = Math.min(pkUsuarioNumerico, tramo["PK FIN"]);
-            const distanciaTramo = Math.abs(pkFinTramo - pkActual);
-            const distanciaTramoKm = distanciaTramo / 1000;
-           const tiempoTramo = distanciaTramoKm / tramo.Velocidad;
-            tiempoTotal += tiempoTramo;
-            pkActual = pkFinTramo;
-       }
     }
-     console.log("Tiempo total", tiempoTotal, "horas");
+      else if (viaTren === "2") { // Sentido creciente
+         sentidoTramo = 1;
+            while (pkActual < pkUsuarioNumerico) {
+                 const tramo = tramosLinea.find(tramo => pkActual >= tramo["PK INI"] && pkActual <= tramo["PK FIN"]);
+                if (!tramo) {
+                   console.warn("No se ha encontrado un tramo para el PK:", pkActual, "en la línea", lineaTren);
+                   return null;
+                }
+              const pkFinTramo = Math.min(pkUsuarioNumerico, tramo["PK FIN"]);
+              const distanciaTramo = Math.abs(pkFinTramo - pkActual );
+               const distanciaTramoKm = distanciaTramo / 1000;
+            const tiempoTramo = distanciaTramoKm / tramo.Velocidad;
+                tiempoTotal += tiempoTramo;
+             pkActual = pkFinTramo;
+         }
+     }
+      console.log("Tiempo total", tiempoTotal, "horas");
 
     const horaLlegadaExtremo = new Date();
-    const [horas, minutos] = horaTrenExtremo.split(":");
-    horaLlegadaExtremo.setHours(parseInt(horas, 10));
+     const [horas, minutos] = horaTrenExtremo.split(":");
+      horaLlegadaExtremo.setHours(parseInt(horas, 10));
     horaLlegadaExtremo.setMinutes(parseInt(minutos, 10));
 
-    console.log("horaLlegadaExtremo", horaLlegadaExtremo);
+      console.log("horaLlegadaExtremo", horaLlegadaExtremo);
 
-    let horaEstimada = new Date(horaLlegadaExtremo.getTime());
-      console.log("Hora Estimada Inicial", horaEstimada);
+     let horaEstimada = new Date(horaLlegadaExtremo.getTime());
+       console.log("Hora Estimada Inicial", horaEstimada);
 
-    const tiempoTotalMinutos = tiempoTotal * 60;
-     console.log("tiempoTotalMinutos", tiempoTotalMinutos);
+     const tiempoTotalMinutos = tiempoTotal * 60;
+       console.log("tiempoTotalMinutos", tiempoTotalMinutos);
+      horaLlegadaExtremo.setTime(horaLlegadaExtremo.getTime() + sentidoTramo * tiempoTotalMinutos * 60 * 1000);
+     console.log("Hora Estimada Final", horaEstimada);
 
-    horaEstimada.setTime(horaEstimada.getTime() + sentidoTramo * tiempoTotalMinutos * 60 * 1000);
-   console.log("Hora Estimada Final", horaEstimada);
-    return  horaEstimada.getTime();
+      return  horaLlegadaExtremo.getTime();
 }
 
 function generarTablaTrenes(predicciones, nowTime) {
@@ -2264,9 +2265,9 @@ function generarTablaTrenes(predicciones, nowTime) {
                         </tr>
                    </thead>
                    <tbody>`;
-        for(const prediccion of predicciones)
+    for(const prediccion of predicciones)
     {
-          const horaPaso = new Date(prediccion.tiempoEstimado);
+         const horaPaso = new Date(prediccion.tiempoEstimado);
           const horas = String(horaPaso.getHours()).padStart(2, '0');
          const minutos = String(horaPaso.getMinutes()).padStart(2, '0');
            const minutosRestantes = Math.abs(Math.round((prediccion.tiempoEstimado - nowTime)/ (60 * 1000)))
@@ -2279,13 +2280,6 @@ function generarTablaTrenes(predicciones, nowTime) {
          {
             origen = "Valencia"
         }
-          const horaExtremoDate = new Date(prediccion.tiempoEstimado);
-            const [horasExtremo, minutosExtremo] = prediccion.tren.Hora.split(":");
-              horaExtremoDate.setHours(parseInt(horasExtremo, 10));
-              horaExtremoDate.setMinutes(parseInt(minutosExtremo, 10));
-
-         const horasExtremoFormat = String(horaExtremoDate.getHours()).padStart(2,'0');
-         const minutosExtremoFormat = String(horaExtremoDate.getMinutes()).padStart(2, '0');
 
         tablaHTML +=`
             <tr style="border-bottom: 1px solid #eee;">
@@ -2293,13 +2287,12 @@ function generarTablaTrenes(predicciones, nowTime) {
                  <td style="padding: 8px; border: 1px solid #ddd;">${minutosRestantes}</td>
                 <td style="padding: 8px; border: 1px solid #ddd;">${prediccion.tren.Vía}</td>
                  <td style="padding: 8px; border: 1px solid #ddd;">${origen}</td>
-                   <td style="padding: 8px; border: 1px solid #ddd;">${horasExtremoFormat}:${minutosExtremoFormat}</td>
+                   <td style="padding: 8px; border: 1px solid #ddd;">${prediccion.tren.Hora}</td>
               </tr>
        `
     }
        tablaHTML += `</tbody></table>`;
     return tablaHTML;
-
 }
 
 function mostrarTarjetaTrenes(contenido) {
