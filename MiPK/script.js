@@ -2060,7 +2060,6 @@ function mostrarResultadosEnTabla(resultados) {
 
 
 
-
 // ----- INICIO FUNCIONALIDAD TRENES -----
 async function cargarDatosTrenes() {
     try {
@@ -2137,16 +2136,17 @@ async function predecirPasoTrenes() {
    const diaSemana = ["D", "L", "M", "X", "J", "V", "S"][now.getDay()];
 
      const trenesFiltradosDia = trenesFiltrados.filter(tren => {
-        if (Array.isArray(tren.Día)) {
-            return tren.Día.includes(diaSemana);
-        } else if (tren.Día === "L") {
-            // Si el día es "L", verifica que el día de la semana actual esté entre lunes y jueves
-            return diaSemana === "L" || diaSemana === "M" || diaSemana === "X" || diaSemana === "J";
-        } else {
-           return tren.Día === diaSemana;
-        }
-    });
-    
+            if(Array.isArray(tren.Día)){
+                   return tren.Día.includes(diaSemana)
+            }
+           else if (tren.Día === "L") {
+                // Si el día es "L", verifica que el día de la semana actual esté entre lunes y jueves
+                return diaSemana === "L" || diaSemana === "M" || diaSemana === "X" || diaSemana === "J";
+            }
+           else{
+                return tren.Día === diaSemana
+           }
+        });
       console.log("Trenes filtrados por día:", trenesFiltradosDia);
         if (trenesFiltradosDia.length === 0) {
           console.warn("No hay trenes para el día de hoy:", diaSemana);
@@ -2162,13 +2162,13 @@ async function predecirPasoTrenes() {
           if(tiempoEstimado)
           {
             const tiempoPaso = new Date(tiempoEstimado);
-             if (tiempoPaso.getTime() > nowTime && tiempoPaso.getTime() < nowTime + 5 * 60 * 60 * 1000)
-               {
+             // if (tiempoPaso.getTime() > nowTime && tiempoPaso.getTime() < nowTime + 5 * 60 * 60 * 1000)
+               // {
                   predicciones.push({
                       tren: tren,
                      tiempoEstimado: tiempoEstimado
                      });
-              }
+              // }
 
           }
 
@@ -2186,9 +2186,8 @@ async function predecirPasoTrenes() {
         }
 
 }
-
-  function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
-        console.log("Calculando tiempo para el tren:", tren, " PK Usuario:", pkUsuarioNumerico)
+ function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
+     console.log("Calculando tiempo para el tren:", tren, " PK Usuario:", pkUsuarioNumerico)
      const lineaTren = tren.Línea;
      const pkTrenExtremo = tren.PK;
       const viaTren = tren.Vía;
@@ -2196,14 +2195,14 @@ async function predecirPasoTrenes() {
     //Encontrar los tramos relevantes
      const tramosLinea = velocidades.filter(tramo => tramo.Línea === lineaTren)
      let tramosRecorridos = [];
-   if (viaTren === "1") {
+      if (viaTren === "1") {
          // Sentido decreciente: el tren va desde el PK del tren hasta el PK 0
-        tramosRecorridos = tramosLinea.filter(tramo => tramo["PK FIN"] <= pkTrenExtremo && tramo["PK INI"] > pkUsuarioNumerico);
+         tramosRecorridos = tramosLinea.filter(tramo => tramo["PK FIN"] <= pkTrenExtremo && tramo["PK INI"] > pkUsuarioNumerico);
     } else if (viaTren === "2") {
        //Sentido creciente: el tren va desde el PK 0 hasta el PK del tren
-         tramosRecorridos = tramosLinea.filter(tramo => tramo["PK INI"] >= pkUsuarioNumerico  && tramo["PK FIN"] < pkTrenExtremo);
+        tramosRecorridos = tramosLinea.filter(tramo => tramo["PK INI"] >= pkUsuarioNumerico  && tramo["PK FIN"] < pkTrenExtremo);
     }
-     console.log("Tramos recorridos por el tren:", tramosRecorridos);
+      console.log("Tramos recorridos por el tren:", tramosRecorridos);
     if (!tramosRecorridos || tramosRecorridos.length === 0 )
         {
           console.warn("No se encontraron tramos de la línea:", lineaTren," para el tren:", tren);
@@ -2275,14 +2274,20 @@ async function predecirPasoTrenes() {
          {
             origen = "Valencia"
         }
-        const horaExtremo = prediccion.tren.Hora;
+      const horaExtremo = prediccion.tren.Hora;
+      const horaExtremoDate = new Date();
+      const [horasExtremo, minutosExtremo] = horaExtremo.split(":");
+      horaExtremoDate.setHours(parseInt(horasExtremo,10));
+      horaExtremoDate.setMinutes(parseInt(minutosExtremo, 10));
+       const horasExtremoFormat = String(horaExtremoDate.getHours()).padStart(2,'0')
+        const minutosExtremoFormat = String(horaExtremoDate.getMinutes()).padStart(2, '0');
         tablaHTML +=`
             <tr style="border-bottom: 1px solid #eee;">
                  <td style="padding: 8px; border: 1px solid #ddd;">${horas}:${minutos}</td>
                  <td style="padding: 8px; border: 1px solid #ddd;">${minutosRestantes}</td>
                 <td style="padding: 8px; border: 1px solid #ddd;">${prediccion.tren.Vía}</td>
                  <td style="padding: 8px; border: 1px solid #ddd;">${origen}</td>
-                 <td style="padding: 8px; border: 1px solid #ddd;">${horaExtremo}</td>
+                   <td style="padding: 8px; border: 1px solid #ddd;">${horasExtremoFormat}:${minutosExtremoFormat}</td>
               </tr>
        `
     }
