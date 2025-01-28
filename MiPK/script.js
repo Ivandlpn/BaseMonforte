@@ -2188,7 +2188,7 @@ async function predecirPasoTrenes() {
 }
 
 function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
-   console.log("Calculando tiempo para el tren:", tren, " PK Usuario:", pkUsuarioNumerico);
+    console.log("Calculando tiempo para el tren:", tren, " PK Usuario:", pkUsuarioNumerico);
 
     const lineaTren = tren.Línea;
     const pkTrenExtremo = tren.PK;
@@ -2199,38 +2199,40 @@ function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
 
     const tramosLinea = velocidades.filter(tramo => tramo.Línea === lineaTren);
     let tiempoTotal = 0;
-     let tramosRecorridos = [];
     if (viaTren === "1") { // Sentido decreciente
         for (let i = pkTrenExtremo; i > pkUsuarioNumerico;) {
-           const tramo = tramosLinea.find(tramo => i >= tramo["PK INI"] && i <= tramo["PK FIN"]);
-              if(!tramo) {
-                console.warn("No se ha encontrado un tramo para el PK:",i, "en la línea", lineaTren);
-                   return null;
-                }
-            const pkFinTramo = Math.max(pkUsuarioNumerico, tramo["PK INI"]);
-             const distanciaTramo = Math.abs(i - pkFinTramo);
-               const distanciaTramoKm = distanciaTramo / 1000;
-            const tiempoTramo = distanciaTramoKm / tramo.Velocidad;
-             tiempoTotal += tiempoTramo;
-             i =  pkFinTramo;
-        }
-     } else if (viaTren === "2") { // Sentido creciente
-        for (let i = pkTrenExtremo; i < pkUsuarioNumerico;) {
             const tramo = tramosLinea.find(tramo => i >= tramo["PK INI"] && i <= tramo["PK FIN"]);
-              if(!tramo)
-                   {
-                    console.warn("No se ha encontrado un tramo para el PK:",i, "en la línea", lineaTren);
-                    return null;
-                  }
-             const pkFinTramo = Math.min(pkUsuarioNumerico, tramo["PK FIN"]);
-             const distanciaTramo = Math.abs(pkFinTramo - i );
-               const distanciaTramoKm = distanciaTramo / 1000;
-            const tiempoTramo = distanciaTramoKm / tramo.Velocidad;
-              tiempoTotal += tiempoTramo;
-               i = pkFinTramo;
-           }
+            if (!tramo) {
+                console.warn("No se ha encontrado un tramo para el PK:", i, "en la línea", lineaTren);
+                return null;
+            }
+           const pkFinTramo = Math.max(pkUsuarioNumerico, tramo["PK INI"]);
+           const distanciaTramo = Math.abs(i - pkFinTramo);
+           const distanciaTramoKm = distanciaTramo / 1000;
+           const tiempoTramo = distanciaTramoKm / tramo.Velocidad;
+           tiempoTotal += tiempoTramo;
+            i =  pkFinTramo;
         }
-        console.log("Tiempo total", tiempoTotal, "horas")
+    }
+    else if (viaTren === "2")
+    { // Sentido creciente
+         for (let i = pkTrenExtremo; i < pkUsuarioNumerico;)
+             {
+                const tramo = tramosLinea.find(tramo => i >= tramo["PK INI"] && i <= tramo["PK FIN"]);
+                   if(!tramo)
+                        {
+                           console.warn("No se ha encontrado un tramo para el PK:",i, "en la línea", lineaTren);
+                            return null;
+                         }
+                    const pkFinTramo = Math.min(pkUsuarioNumerico, tramo["PK FIN"]);
+                   const distanciaTramo = Math.abs(pkFinTramo - i);
+                  const distanciaTramoKm = distanciaTramo / 1000;
+                 const tiempoTramo = distanciaTramoKm / tramo.Velocidad;
+                 tiempoTotal += tiempoTramo;
+                i = pkFinTramo;
+            }
+     }
+    console.log("Tiempo total", tiempoTotal, "horas");
 
     const horaLlegadaExtremo = new Date();
     const [horas, minutos] = horaTrenExtremo.split(":");
@@ -2240,21 +2242,19 @@ function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
     console.log("horaLlegadaExtremo", horaLlegadaExtremo);
 
     let horaEstimada = new Date(horaLlegadaExtremo.getTime());
-     console.log("Hora Estimada Inicial", horaEstimada);
-
+    console.log("Hora Estimada Inicial", horaEstimada);
     const tiempoTotalMinutos = tiempoTotal * 60;
-     console.log("tiempoTotalMinutos", tiempoTotalMinutos);
-
+    console.log("tiempoTotalMinutos", tiempoTotalMinutos);
       let sentidoTramo = 1;
-    if (viaTren === "1") {
-        sentidoTramo = -1; //Valor -1 para la Vía 1 (decreciente)
+     if (viaTren === "1") {
+            sentidoTramo = -1; //Valor -1 para la Vía 1 (decreciente)
         }
-    else if (viaTren === "2"){
-        sentidoTramo = 1; //Valor 1 para la Vía 2 (creciente)
-    }
+     else if (viaTren === "2"){
+          sentidoTramo = 1; //Valor 1 para la Vía 2 (creciente)
+         }
     horaEstimada.setTime(horaEstimada.getTime() + sentidoTramo * tiempoTotalMinutos * 60 * 1000);
-   console.log("Hora Estimada Final", horaEstimada);
-    return  horaEstimada.getTime();
+      console.log("Hora Estimada Final", horaEstimada);
+    return horaEstimada.getTime();
 }
 
 function generarTablaTrenes(predicciones, nowTime) {
