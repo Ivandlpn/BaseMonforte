@@ -2214,12 +2214,13 @@ function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
             distanciaTramo = Math.abs(pkTrenExtremo - pkUsuarioNumerico)
               sentidoTramo = 1;  //Valor 1 para la Vía 2 (creciente)
         }
+     console.log("Sentido del tramo", sentidoTramo);
       console.log("Distancia al extremo:", distanciaTramo, "metros");
     const distanciaTramoKm = distanciaTramo / 1000; // Convertimos metros a kilómetros
       console.log("Distancia al extremo:", distanciaTramoKm, "Km");
 
     const tiempoTramo = distanciaTramoKm / tramo.Velocidad;
-    console.log("Tiempo hasta el extremo:", tiempoTramo, "horas");
+     console.log("Tiempo hasta el extremo:", tiempoTramo, "horas");
 
     const horaLlegadaExtremo = new Date();
     const [horas, minutos] = horaTrenExtremo.split(":");
@@ -2229,12 +2230,13 @@ function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
      console.log("horaLlegadaExtremo", horaLlegadaExtremo)
 
     let horaEstimada = new Date(horaLlegadaExtremo.getTime());
+      console.log("Hora Estimada Inicial", horaEstimada)
 
     const tiempoTotalMinutos = tiempoTramo * 60;
       console.log("tiempoTotalMinutos", tiempoTotalMinutos)
-
-    horaEstimada.setTime(horaEstimada.getTime() + sentidoTramo * tiempoTotalMinutos * 60 * 1000);
-    console.log("Hora Estimada", horaEstimada)
+       
+    horaEstimada.setTime(horaEstimada.getTime() - sentidoTramo * tiempoTotalMinutos * 60 * 1000);
+        console.log("Hora Estimada Final", horaEstimada)
     return  horaEstimada.getTime();
 }
 
