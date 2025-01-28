@@ -2187,8 +2187,8 @@ async function predecirPasoTrenes() {
 
 }
 
- function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
-      console.log("Calculando tiempo para el tren:", tren, " PK Usuario:", pkUsuarioNumerico)
+  function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
+        console.log("Calculando tiempo para el tren:", tren, " PK Usuario:", pkUsuarioNumerico)
      const lineaTren = tren.Línea;
      const pkTrenExtremo = tren.PK;
       const viaTren = tren.Vía;
@@ -2200,7 +2200,8 @@ async function predecirPasoTrenes() {
          // Sentido decreciente: el tren va desde el PK del tren hasta el PK 0
         tramosRecorridos = tramosLinea.filter(tramo => tramo["PK FIN"] <= pkTrenExtremo && tramo["PK INI"] > pkUsuarioNumerico);
     } else if (viaTren === "2") {
-       tramosRecorridos = tramosLinea.filter(tramo => tramo["PK INI"] >= pkTrenExtremo  && tramo["PK FIN"] < pkUsuarioNumerico);
+       //Sentido creciente: el tren va desde el PK 0 hasta el PK del tren
+         tramosRecorridos = tramosLinea.filter(tramo => tramo["PK INI"] >= pkUsuarioNumerico  && tramo["PK FIN"] < pkTrenExtremo);
     }
      console.log("Tramos recorridos por el tren:", tramosRecorridos);
     if (!tramosRecorridos || tramosRecorridos.length === 0 )
