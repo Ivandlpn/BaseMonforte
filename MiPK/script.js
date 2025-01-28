@@ -2057,6 +2057,12 @@ function mostrarResultadosEnTabla(resultados) {
 }
  // ----- FIN FUNCIONALIDAD BOTÓN SIMULADOR -----
 
+
+ // ----- INICIO FUNCIONALIDAD TRENES -----
+
+
+// ----- FIN FUNCIONALIDAD TRENES -----
+
 ///// FIN ICONO PLUS /////
 
 
