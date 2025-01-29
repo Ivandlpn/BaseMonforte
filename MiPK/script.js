@@ -2066,11 +2066,6 @@ function mostrarResultadosEnTabla(resultados) {
 let trenesData = []; // Variable global para almacenar los datos de trenes
 let velocidadesData = []; // Variable global para almacenar los datos de velocidades
 
-/**
- * Función asíncrona para cargar los datos de trenes y velocidades desde archivos JSON.
- * Carga 'velocidades.json' y 'trenes.json' usando Promise.all para carga paralela.
- * Parsea la velocidad a número entero y los PKs a enteros para facilitar cálculos.
- */
 async function cargarDatosTrenes() {
     try {
         const [velocidadesResponse, trenesResponse] = await Promise.all([
@@ -2111,30 +2106,23 @@ async function cargarDatosTrenes() {
     }
 }
 
-/**
- * Función asíncrona principal para predecir y mostrar los próximos trenes.
- * Obtiene datos de trenes y velocidades, filtra por ubicación del usuario,
- * calcula tiempos de paso estimados y muestra la tabla de trenes.
- */
+
 async function predecirPasoTrenes() {
     const datos = await cargarDatosTrenes();
     if (!datos) {
-        console.error("No se pudieron cargar los datos de trenes. No se puede predecir trenes.");
+        console.error("No se pudieron cargar los datos de trenes.");
         return;
     }
     const { velocidades, trenes } = datos;
 
-    if (!window.pkMasCercano) {
-        console.error("No se ha calculado el PK del usuario. No se pueden predecir trenes.");
-        alert("No se ha calculado el PK del usuario. No se pueden predecir trenes.");
-        return;
-    }
-    // Obtener datos del usuario
-    const pkUsuario = window.pkMasCercano.pk;
-    const lineaUsuario = window.pkMasCercano.linea;
+    // *** PK y Línea de usuario FIJOS para PRUEBA - ¡CAMBIAR ESTO DESPUÉS! ***
+    const pkUsuario = "465+000"; // PK de ejemplo FIJO
+    const lineaUsuario = "42";     // Línea de ejemplo FIJA
     const pkUsuarioNumerico = pkToNumber(pkUsuario);
+    // *** FIN PK y Línea de usuario FIJOS para PRUEBA ***
 
-    // Filtrar los trenes por la línea del usuario
+
+    // Filtrar los trenes por la línea del usuario (AHORA USANDO lineaUsuario FIJO)
     const trenesFiltrados = trenes.filter(tren => tren.Línea === lineaUsuario);
 
     if (trenesFiltrados.length === 0) {
@@ -2169,7 +2157,7 @@ async function predecirPasoTrenes() {
             if (tiempoPaso.getTime() > nowTime && tiempoPaso.getTime() < nowTime + 10 * 60 * 60 * 1000) {
                 predicciones.push({
                     tren: tren,
-                    tiempoEstimado: tiempoEstimado
+                    horaPasoEstimada: tiempoPaso.getTime() // Guardar timestamp para ordenamiento
                 });
             }
 
@@ -2178,7 +2166,7 @@ async function predecirPasoTrenes() {
     }
     if (predicciones.length > 0) {
         // Ordenar las predicciones por tiempo estimado de paso
-        predicciones.sort((a, b) => a.tiempoEstimado - b.tiempoEstimado);
+        predicciones.sort((a, b) => a.horaPasoEstimada - b.horaPasoEstimada);
         mostrarTarjetaTrenes(generarTablaTrenes(predicciones, nowTime));
     } else {
         mostrarTarjetaTrenes("No hay trenes en las próximas 5 horas");
@@ -2186,51 +2174,37 @@ async function predecirPasoTrenes() {
 
 }
 
-/**
- * Calcula el tiempo estimado de paso del tren por la ubicación del usuario.
- * @param {object} tren - Datos del tren.
- * @param {number} pkUsuarioNumerico - PK numérico del usuario.
- * @param {array} velocidades - Array de datos de velocidades por tramo.
- * @returns {number|null} - Timestamp de la hora estimada de paso o null si no se puede calcular.
- */
 function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
     const lineaTren = tren.Línea;
     const pkTrenExtremo = tren.PK;
     const viaTren = tren.Vía;
     const horaTrenExtremo = tren.Hora;
 
-    // Ordenar los tramos por PK de inicio para búsqueda eficiente
+    // Ordenar los tramos por PK
     const tramosLinea = velocidades.filter(tramo => tramo.Línea === lineaTren)
         .sort((a, b) => a["PK INI"] - b["PK INI"]);
 
     let tiempoTotal = 0;
     let pkInicio, pkFin;
 
-    if (viaTren === "1") { // Vía 1: Decreciente, tren sale del PK (PK archivo > PK usuario)
-        pkInicio = Math.min(pkUsuarioNumerico, pkTrenExtremo); // PK menor (usuario o tren)
-        pkFin = Math.max(pkUsuarioNumerico, pkTrenExtremo);   // PK mayor (usuario o tren)
-    } else if (viaTren === "2") { // Vía 2: Creciente, tren llega al PK (PK archivo < PK usuario)
-        pkInicio = Math.max(pkUsuarioNumerico, pkTrenExtremo); // PK mayor (usuario o tren)
-        pkFin = Math.min(pkUsuarioNumerico, pkTrenExtremo);   // PK menor (usuario o tren)
-    } else {
-        console.error("Vía de tren no válida:", viaTren);
-        return null;
+    if (viaTren === "1") {
+        pkInicio = Math.min(pkUsuarioNumerico, pkTrenExtremo);
+        pkFin = Math.max(pkUsuarioNumerico, pkTrenExtremo);
+    } else if (viaTren === "2") {
+        pkInicio = Math.max(pkUsuarioNumerico, pkTrenExtremo);
+        pkFin = Math.min(pkUsuarioNumerico, pkTrenExtremo);
     }
 
-
     for (let tramo of tramosLinea) {
-        // Verificar si el tramo está dentro del rango de PKs relevante
         if (tramo["PK FIN"] < pkInicio || tramo["PK INI"] > pkFin) continue;
 
-        // Calcular los PKs de inicio y fin del tramo INTERSECTADO con la ruta del tren
         let inicioTramo = Math.max(tramo["PK INI"], pkInicio);
         let finTramo = Math.min(tramo["PK FIN"], pkFin);
 
-        // Calcular distancia y tiempo para este tramo
         let distanciaTramo = Math.abs(finTramo - inicioTramo);
-        let tiempoTramo = (distanciaTramo / 1000) / tramo.Velocidad; // Tiempo en horas
+        let tiempoTramo = (distanciaTramo / 1000) / tramo.Velocidad;
 
-        tiempoTotal += tiempoTramo; // Acumular tiempo
+        tiempoTotal += tiempoTramo;
     }
 
     const horaLlegadaExtremo = new Date();
@@ -2239,37 +2213,31 @@ function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
     horaLlegadaExtremo.setMinutes(parseInt(minutos, 10));
 
     let horaEstimada = new Date(horaLlegadaExtremo.getTime());
-    const tiempoTotalMilisegundos = tiempoTotal * 60 * 60 * 1000; // Convertir horas a milisegundos
+    const tiempoTotalMilisegundos = tiempoTotal * 60 * 60 * 1000;
 
-    // Ajustar hora estimada según la vía (sentido del tren)
-    if (viaTren === "1") { // Vía 1: Sentido decreciente, sumar tiempo al horario de salida
-        horaEstimada.setTime(horaEstimada.getTime() - tiempoTotalMilisegundos); // Restar para vía 1 (decreciente)
-    } else if (viaTren === "2") { // Vía 2: Sentido creciente, restar tiempo al horario de llegada
-        horaEstimada.setTime(horaEstimada.getTime() + tiempoTotalMilisegundos); // Sumar para vía 2 (creciente)
+    if (viaTren === "1") {
+        horaEstimada.setTime(horaEstimada.getTime() - tiempoTotalMilisegundos);
+    } else if (viaTren === "2") {
+        horaEstimada.setTime(horaEstimada.getTime() + tiempoTotalMilisegundos);
     }
 
-    return horaEstimada.getTime(); // Devolver timestamp
+    return horaEstimada.getTime();
 }
 
 
-/**
- * Genera el HTML para la tabla de trenes próximos.
- * @param {array} predicciones - Array de objetos con predicciones de trenes.
- * @param {number} nowTime - Timestamp actual.
- * @returns {string} - HTML de la tabla.
- */
 function generarTablaTrenes(predicciones, nowTime) {
-    let tablaHTML = `<table style="width: 100%; border-collapse: collapse; margin-top: 10px; text-align: center;">
-                     <thead style="font-weight: bold;">
-                        <tr style="border-bottom: 2px solid #ddd;">
-                            <th style="padding: 8px; border: 1px solid #ddd;">Hora</th>
-                             <th style="padding: 8px; border: 1px solid #ddd;">Minutos</th>
-                            <th style="padding: 8px; border: 1px solid #ddd;">Vía</th>
-                             <th style="padding: 8px; border: 1px solid #ddd;">Ori/Des</th>
-                            <th style="padding: 8px; border: 1px solid #ddd;">Hora</th>
-                        </tr>
-                   </thead>
-                   <tbody>`;
+    let tablaHTML = `
+        <table style="width: 100%; border-collapse: collapse; margin-top: 10px; text-align: center;">
+            <thead style="font-weight: bold;">
+                <tr style="border-bottom: 2px solid #ddd;">
+                    <th style="padding: 8px; border: 1px solid #ddd;">Hora Paso (Estimada)</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Minutos Faltan</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Vía</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Origen/Destino (PK)</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Hora Programada</th>
+                </tr>
+            </thead>
+            <tbody>`;
     for (const prediccion of predicciones) {
         const horaPaso = new Date(prediccion.tiempoEstimado);
         const horas = String(horaPaso.getHours()).padStart(2, '0');
@@ -2286,28 +2254,23 @@ function generarTablaTrenes(predicciones, nowTime) {
         horaExtremoDate.setHours(parseInt(horasExtremo, 10));
         horaExtremoDate.setMinutes(parseInt(minutosExtremo, 10));
 
-        const horasExtremoFormat = String(horaExtremoDate.getHours()).padStart(2, '0');
+        const horaExtremoFormat = String(horaExtremoDate.getHours()).padStart(2, '0');
         const minutosExtremoFormat = String(horaExtremoDate.getMinutes()).padStart(2, '0');
 
         tablaHTML += `
             <tr style="border-bottom: 1px solid #eee;">
-                 <td style="padding: 8px; border: 1px solid #ddd;">${horas}:${minutos}</td>
-                 <td style="padding: 8px; border: 1px solid #ddd;">${minutosRestantes}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">${horas}:${minutos}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">${minutosRestantes}</td>
                 <td style="padding: 8px; border: 1px solid #ddd;">${prediccion.tren.Vía}</td>
-                 <td style="padding: 8px; border: 1px solid #ddd;">${origen}</td>
-                   <td style="padding: 8px; border: 1px solid #ddd;">${horasExtremoFormat}:${minutosExtremoFormat}</td>
-              </tr>
+                <td style="padding: 8px; border: 1px solid #ddd;">${formatearPK(prediccion.tren.PK)} <br>(${origen})</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">${horasExtremoFormat}:${minutosExtremoFormat}</td>
+            </tr>
        `;
     }
     tablaHTML += `</tbody></table>`;
     return tablaHTML;
-
 }
 
-/**
- * Muestra la tarjeta de trenes con el contenido proporcionado.
- * @param {string} contenido - HTML para mostrar en la tarjeta de trenes (tabla o mensaje).
- */
 function mostrarTarjetaTrenes(contenido) {
     const trenesCardContainer = document.getElementById('trenes-card-container');
     const trenesContainer = document.getElementById('trenes-container');
@@ -2315,22 +2278,21 @@ function mostrarTarjetaTrenes(contenido) {
 
     if (trenesContainer) {
         trenesContainer.innerHTML = contenido;
-        trenesCardContainer.style.display = 'flex'; // Mostrar la tarjeta de trenes
+        trenesCardContainer.style.display = 'flex';
     } else {
         console.error('No se encontró el contenedor de trenes');
     }
     if (cerrarTrenesCardButton) {
         cerrarTrenesCardButton.addEventListener('click', function () {
-            trenesCardContainer.style.display = 'none'; // Ocultar la tarjeta de trenes al hacer clic en "Cerrar"
+            trenesCardContainer.style.display = 'none';
         });
     } else {
         console.error('No se encontró el botón de cerrar de la tarjeta de trenes');
     }
-
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    // ... (resto del código de los botones plus - CPS, CSI, Telemando, etc. -  MANTENER ESTE CÓDIGO) ...
+    // ... (resto del código de los botones plus - CPS, CSI, Telemando, etc. - MANTENER ESTE CÓDIGO) ...
 
     const trenesButton = document.querySelector('.plus-option-button[aria-label="TRENES"]');
     if (trenesButton) {
@@ -2340,11 +2302,12 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         console.error('No se encontró el botón TRENES');
     }
-    cargarDatosTrenes();// Cargar datos al inicio, dentro de DOMContentLoaded
+
+    cargarDatosTrenes(); // Cargar datos al inicio, dentro de DOMContentLoaded
 
 });
-// ----- FIN FUNCIONALIDAD TRENES -----
 
+// ----- FIN FUNCIONALIDAD TRENES -----
 
 
 
