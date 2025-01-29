@@ -2199,53 +2199,48 @@ function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
     
     console.log("Datos del tren:", { lineaTren, pkTrenExtremo, viaTren, horaTrenExtremo });
 
-    // Ordenar los tramos por PK
-    const tramosLinea = velocidades.filter(tramo => tramo.Línea === lineaTren)
-                                   .sort((a, b) => a["PK INI"] - b["PK INI"]);
+    const tramo = velocidades.find(tramo => tramo.Línea === lineaTren && pkUsuarioNumerico >= tramo["PK INI"] &&  pkUsuarioNumerico <= tramo["PK FIN"]);
+     if(!tramo)
+       {
+         console.warn("No se ha encontrado un tramo para el PK:",pkUsuarioNumerico, "en la línea", lineaTren);
+         return null;
+       }
+    console.log("Tramo encontrado:", tramo)
+    let distanciaTramo = 0;
+    let sentidoTramo = 1; //Valor por defecto para vía 1
+     if (viaTren === "1") {
+      distanciaTramo = Math.abs(pkUsuarioNumerico - pkTrenExtremo)
+        sentidoTramo = -1; //Valor -1 para la Vía 1 (decreciente)
+         } else if (viaTren === "2")
+          {
+            distanciaTramo = Math.abs(pkTrenExtremo - pkUsuarioNumerico)
+              sentidoTramo = 1;  //Valor 1 para la Vía 2 (creciente)
+        }
+     console.log("Sentido del tramo", sentidoTramo);
+      console.log("Distancia al extremo:", distanciaTramo, "metros");
+    const distanciaTramoKm = distanciaTramo / 1000; // Convertimos metros a kilómetros
+      console.log("Distancia al extremo:", distanciaTramoKm, "Km");
 
-    let tiempoTotal = 0;
-    let pkInicio, pkFin;
-
-    if (viaTren === "1") {
-        pkInicio = Math.min(pkUsuarioNumerico, pkTrenExtremo);
-        pkFin = Math.max(pkUsuarioNumerico, pkTrenExtremo);
-    } else if (viaTren === "2") {
-        pkInicio = Math.max(pkUsuarioNumerico, pkTrenExtremo);
-        pkFin = Math.min(pkUsuarioNumerico, pkTrenExtremo);
-    }
-
-    for (let tramo of tramosLinea) {
-        if (tramo["PK FIN"] < pkInicio || tramo["PK INI"] > pkFin) continue;
-
-        let inicioTramo = Math.max(tramo["PK INI"], pkInicio);
-        let finTramo = Math.min(tramo["PK FIN"], pkFin);
-
-        let distanciaTramo = Math.abs(finTramo - inicioTramo);
-        let tiempoTramo = (distanciaTramo / 1000) / tramo.Velocidad;
-
-        tiempoTotal += tiempoTramo;
-    }
-
-    console.log("Tiempo total calculado:", tiempoTotal, "horas");
+    const tiempoTramo = distanciaTramoKm / tramo.Velocidad;
+     console.log("Tiempo hasta el extremo:", tiempoTramo, "horas");
 
     const horaLlegadaExtremo = new Date();
     const [horas, minutos] = horaTrenExtremo.split(":");
     horaLlegadaExtremo.setHours(parseInt(horas, 10));
     horaLlegadaExtremo.setMinutes(parseInt(minutos, 10));
+    
+     console.log("horaLlegadaExtremo", horaLlegadaExtremo)
 
     let horaEstimada = new Date(horaLlegadaExtremo.getTime());
-    const tiempoTotalMinutos = tiempoTotal * 60;
+      console.log("Hora Estimada Inicial", horaEstimada)
 
-    if (viaTren === "1") {
-        horaEstimada.setTime(horaEstimada.getTime() - tiempoTotalMinutos * 60 * 1000);
-    } else if (viaTren === "2") {
-        horaEstimada.setTime(horaEstimada.getTime() + tiempoTotalMinutos * 60 * 1000);
-    }
-
-    console.log("Hora Estimada Final", horaEstimada);
-    return horaEstimada.getTime();
+    const tiempoTotalMinutos = tiempoTramo * 60;
+      console.log("tiempoTotalMinutos", tiempoTotalMinutos)
+       
+    horaEstimada.setTime(horaEstimada.getTime() - sentidoTramo * tiempoTotalMinutos * 60 * 1000);
+        console.log("Hora Estimada Final", horaEstimada)
+    return  horaEstimada.getTime();
 }
-
 
 function generarTablaTrenes(predicciones, nowTime) {
     let tablaHTML = `<table style="width: 100%; border-collapse: collapse; margin-top: 10px; text-align: center;">
@@ -2330,6 +2325,7 @@ function mostrarTarjetaTrenes(contenido) {
           }
      });
 // ----- FIN FUNCIONALIDAD TRENES -----
+
 
 
 
