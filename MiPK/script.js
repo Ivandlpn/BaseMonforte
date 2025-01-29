@@ -2164,7 +2164,7 @@ async function predecirPasoTrenes() {
           if(tiempoEstimado)
           {
             const tiempoPaso = new Date(tiempoEstimado);
-             if (tiempoPaso.getTime() > nowTime && tiempoPaso.getTime() < nowTime + 10 * 60 * 60 * 1000)
+             if (tiempoPaso.getTime() > nowTime && tiempoPaso.getTime() < nowTime + 5 * 60 * 60 * 1000)
                {
                   predicciones.push({
                       tren: tren,
@@ -2246,10 +2246,10 @@ function generarTablaTrenes(predicciones, nowTime) {
     let tablaHTML = `<table style="width: 100%; border-collapse: collapse; margin-top: 10px; text-align: center;">
                      <thead style="font-weight: bold;">
                         <tr style="border-bottom: 2px solid #ddd;">
-                            <th style="padding: 8px; border: 1px solid #ddd;">Hora</th>
-                             <th style="padding: 8px; border: 1px solid #ddd;">Minutos</th>
+                            <th style="padding: 8px; border: 1px solid #ddd;">Hora Paso</th>
+                             <th style="padding: 8px; border: 1px solid #ddd;">Minutos Restantes</th>
                             <th style="padding: 8px; border: 1px solid #ddd;">Vía</th>
-                             <th style="padding: 8px; border: 1px solid #ddd;">Ori/Des</th>
+                             <th style="padding: 8px; border: 1px solid #ddd;">Origen/Destino</th>
                             <th style="padding: 8px; border: 1px solid #ddd;">Hora</th>
                         </tr>
                    </thead>
