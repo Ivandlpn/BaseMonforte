@@ -2112,7 +2112,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Cargar datos de trenes y velocidades al inicio
     cargarTrenes();
-    calcularYActualizarPK();
+
 });
 
 function mostrarProximosTrenes() {
