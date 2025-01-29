@@ -83,60 +83,8 @@ navigator.geolocation.watchPosition((position) => {
     timeout: 10000
 });
 
-function calcularPKMasCercano(lat, lon, data) {
-    let puntosCercanos = data.map(pk => {
-        const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
-        return {
-            pk: pk.PK,
-            latitud: pk.Latitud,
-            longitud: pk.Longitud,
-            distancia: distancia,
-            linea: pk.Linea
-        };
-    });
-
-    puntosCercanos.sort((a, b) => a.distancia - b.distancia);
-
-    const pkActual = puntosCercanos[0];
-
-    // Definir el incremento de PK para el "siguiente" PK
-    const incrementoPK = 10;
-
-    // Función para convertir el formato PK a un número para comparar
-    function pkToNumber(pkString) {
-        const parts = pkString.split('+');
-        return parseInt(parts[0]) * 1000 + parseInt(parts[1] || 0);
-    }
-
-    // Función para convertir un número de nuevo al formato PK
-    function numberToPk(pkNumber) {
-        const parteEntera = Math.floor(pkNumber / 1000);
-        const parteDecimal = pkNumber % 1000;
-        return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
-    }
-
-    const pkActualNumerico = pkToNumber(pkActual.pk);
-    const pkSiguienteObjetivoNumerico = pkActualNumerico + incrementoPK;
-    const pkSiguienteObjetivoFormateado = numberToPk(pkSiguienteObjetivoNumerico);
-
-    // Buscar el PK en los datos que coincida con el PK objetivo
-    const pkSiguiente = data.find(pk => pk.PK === pkSiguienteObjetivoFormateado && pk.Linea === pkActual.linea);
-
-    // Si no se encuentra el PK siguiente objetivo, usar el siguiente más cercano (o manejarlo de otra manera)
-    // Esto es importante para el final de la línea o tramos con espaciamiento irregular.
-    const pkSiguienteParaVector = pkSiguiente || puntosCercanos.find(p => p.linea === pkActual.linea && pkToNumber(p.pk) > pkActualNumerico) || pkActual;
-
-    // Determinar lado de la vía usando el PK siguiente objetivo (o el más cercano si no se encuentra el objetivo)
-    const ladoVia = determinarLadoVia(lat, lon, pkActual, pkSiguienteParaVector, pkActual.linea);
-    pkActual.ladoVia = ladoVia;
-
-    return [pkActual];
-}
-
-
 function calcularYActualizarPK() {
     // Mostrar texto temporal "Buscando PK ..."
-     console.log("Inicio de calcularYActualizarPK()"); // *** AÑADIDO - INICIO ***
     const pkElement = document.getElementById("pkCercano");
    if(pkElement){
       pkElement.innerHTML = `<span class="texto-buscando-pk">Buscando PK...</span>`;
@@ -322,6 +270,55 @@ const iconoPK = L.icon({
     popupAnchor: [0, -40] // Punto desde donde se abrirá el popup
 });
 
+function calcularPKMasCercano(lat, lon, data) {
+    let puntosCercanos = data.map(pk => {
+        const distancia = calcularDistancia(lat, lon, pk.Latitud, pk.Longitud);
+        return {
+            pk: pk.PK,
+            latitud: pk.Latitud,
+            longitud: pk.Longitud,
+            distancia: distancia,
+            linea: pk.Linea
+        };
+    });
+
+    puntosCercanos.sort((a, b) => a.distancia - b.distancia);
+
+    const pkActual = puntosCercanos[0];
+
+    // Definir el incremento de PK para el "siguiente" PK
+    const incrementoPK = 10;
+
+    // Función para convertir el formato PK a un número para comparar
+    function pkToNumber(pkString) {
+        const parts = pkString.split('+');
+        return parseInt(parts[0]) * 1000 + parseInt(parts[1] || 0);
+    }
+
+    // Función para convertir un número de nuevo al formato PK
+    function numberToPk(pkNumber) {
+        const parteEntera = Math.floor(pkNumber / 1000);
+        const parteDecimal = pkNumber % 1000;
+        return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
+    }
+
+    const pkActualNumerico = pkToNumber(pkActual.pk);
+    const pkSiguienteObjetivoNumerico = pkActualNumerico + incrementoPK;
+    const pkSiguienteObjetivoFormateado = numberToPk(pkSiguienteObjetivoNumerico);
+
+    // Buscar el PK en los datos que coincida con el PK objetivo
+    const pkSiguiente = data.find(pk => pk.PK === pkSiguienteObjetivoFormateado && pk.Linea === pkActual.linea);
+
+    // Si no se encuentra el PK siguiente objetivo, usar el siguiente más cercano (o manejarlo de otra manera)
+    // Esto es importante para el final de la línea o tramos con espaciamiento irregular.
+    const pkSiguienteParaVector = pkSiguiente || puntosCercanos.find(p => p.linea === pkActual.linea && pkToNumber(p.pk) > pkActualNumerico) || pkActual;
+
+    // Determinar lado de la vía usando el PK siguiente objetivo (o el más cercano si no se encuentra el objetivo)
+    const ladoVia = determinarLadoVia(lat, lon, pkActual, pkSiguienteParaVector, pkActual.linea);
+    pkActual.ladoVia = ladoVia;
+
+    return [pkActual];
+}
 
 function calcularDistancia(lat1, lon1, lat2, lon2) {
     const R = 6371000;
@@ -338,24 +335,8 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
     return R * c;
 }
 
-function formatearPK(pk) {
-    const pkStr = pk.toString();
-    if (pkStr.length > 6) {
-        return pkStr.slice(0, 3) + '+' + pkStr.slice(3, 6);
-    } else if (pkStr.length === 6) {
-        return pkStr.slice(0, 3) + '+' + pkStr.slice(3);
-    } else if (pkStr.length === 5) {
-        return pkStr.slice(0, 2) + '+' + pkStr.slice(2);
-    } else if (pkStr.length === 4) {
-        return pkStr.slice(0, 1) + '+' + pkStr.slice(1);
-    } else {
-        return pkStr; // Si tiene menos de 4 cifras, no se formatea
-    }
-}
-
 function mostrarPKMasCercano(pk) {
     const pkElement = document.getElementById("pkCercano");
-    console.log("Valor de pkElement dentro de mostrarPKMasCercano:", pkElement); // *** AÑADIDO ***
      if(pkElement)
      {
          const pkFormateado = formatearPK(pk.pk); // Formatea el PK
@@ -381,7 +362,20 @@ function actualizarPosicionPK(pk) {
     }
 }
 
-
+function formatearPK(pk) {
+    const pkStr = pk.toString();
+    if (pkStr.length > 6) {
+        return pkStr.slice(0, 3) + '+' + pkStr.slice(3, 6);
+    } else if (pkStr.length === 6) {
+        return pkStr.slice(0, 3) + '+' + pkStr.slice(3);
+    } else if (pkStr.length === 5) {
+        return pkStr.slice(0, 2) + '+' + pkStr.slice(2);
+    } else if (pkStr.length === 4) {
+        return pkStr.slice(0, 1) + '+' + pkStr.slice(1);
+    } else {
+        return pkStr; // Si tiene menos de 4 cifras, no se formatea
+    }
+}
 
 /////  INICIO CAPAS/////---------------------------------------------------------------------------------------
 
@@ -2065,7 +2059,10 @@ function mostrarResultadosEnTabla(resultados) {
 
 
 
+
 // ----- INICIO FUNCIONALIDAD TRENES -----
+
+
 
 
 
