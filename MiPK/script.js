@@ -2063,250 +2063,272 @@ function mostrarResultadosEnTabla(resultados) {
 
 
 // ----- INICIO FUNCIONALIDAD TRENES -----
-
-let trenesData = []; // Variable global para almacenar los datos de trenes
-let velocidadesData = []; // Variable global para almacenar los datos de velocidades
-
-async function cargarTrenes() {
+async function cargarDatosTrenes() {
     try {
-        const trenesResponse = await fetch('./doc/trenes/trenes.json');
-        if (!trenesResponse.ok) {
-            throw new Error(`HTTP error al cargar trenes.json! status: ${trenesResponse.status}`);
-        }
-        trenesData = await trenesResponse.json();
-        console.log('Datos de trenes cargados correctamente.');
+        const [velocidadesResponse, trenesResponse] = await Promise.all([
+            fetch("./doc/trenes/velocidades.json"),
+            fetch("./doc/trenes/trenes.json")
+        ]);
 
-        const velocidadesResponse = await fetch('./doc/trenes/velocidades.json');
         if (!velocidadesResponse.ok) {
-            throw new Error(`HTTP error al cargar velocidades.json! status: ${velocidadesResponse.status}`);
+            throw new Error(`Error al cargar velocidades.json: ${velocidadesResponse.statusText}`);
         }
-        velocidadesData = await velocidadesResponse.json();
-        console.log('Datos de velocidades cargados correctamente.');
+        if (!trenesResponse.ok) {
+            throw new Error(`Error al cargar trenes.json: ${trenesResponse.statusText}`);
+        }
 
+        const velocidadesData = await velocidadesResponse.json();
+        const trenesData = await trenesResponse.json();
+
+        // Convertir la velocidad de string a número
+       const velocidadesDataConvertida = velocidadesData.map(item => ({
+             ...item,
+            Velocidad: parseInt(item.Velocidad, 10),
+            "PK INI": parseInt(item["PK INI"], 10),
+            "PK FIN": parseInt(item["PK FIN"],10)
+         }));
+        console.log("Datos de velocidades cargados:", velocidadesDataConvertida);
+
+    
+     const trenesDataConvertida = trenesData.map(item => ({
+         ...item,
+          PK: parseInt(item.PK, 10),
+            }))
+        console.log("Datos de trenes cargados:", trenesDataConvertida);
+
+        return {
+            velocidades: velocidadesDataConvertida,
+             trenes: trenesDataConvertida
+        };
     } catch (error) {
-        console.error('Error al cargar datos:', error);
-        alert('Error al cargar datos de trenes o velocidades. Por favor, recargue la página.');
+        console.error("Error al cargar los datos de trenes:", error);
+        alert("Error al cargar los datos de trenes.");
+        return null;
     }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const trenesButton = document.querySelector('.plus-option-button[aria-label="TRENES"]');
-    const trenesCardContainer = document.getElementById('trenes-card-container');
-    const trenesContainer = document.getElementById('trenes-container');
-    const cerrarTrenesCardButton = document.getElementById('cerrar-trenes-card');
 
-    if (trenesButton) {
-        trenesButton.addEventListener('click', function() {
-            trenesCardContainer.style.display = 'flex';
-            mostrarProximosTrenes();
-        });
-    } else {
-        console.error('No se encontró el botón TRENES');
+async function predecirPasoTrenes() {
+    const { velocidades, trenes } = await cargarDatosTrenes();
+     if (!velocidades || !trenes) {
+        console.error("No se pudieron cargar los datos de trenes.");
+        return;
     }
-
-    if (cerrarTrenesCardButton) {
-        cerrarTrenesCardButton.addEventListener('click', function() {
-            trenesCardContainer.style.display = 'none';
-        });
-    } else {
-        console.error('No se encontró el botón de cerrar de la tarjeta de TRENES');
-    }
-
-    // Cargar datos de trenes y velocidades al inicio
-    cargarTrenes();
-    calcularYActualizarPK();
-});
-
-function mostrarProximosTrenes() {
-    const trenesContainer = document.getElementById('trenes-container');
-    trenesContainer.innerHTML = '<p style="text-align: center;">Cargando próximos trenes...</p>'; // Mensaje de carga inicial
-
     if (!window.pkMasCercano) {
-        trenesContainer.innerHTML = '<p style="text-align: center;">No se puede mostrar trenes sin conocer tu PK.  Espera a que se calcule el PK.</p>';
-        return;
-    }
-
+        console.error("No se ha calculado el PK del usuario. No se pueden predecir trenes.");
+         alert("No se ha calculado el PK del usuario. No se pueden predecir trenes.");
+         return;
+     }
+    // Obtener datos del usuario
     const pkUsuario = window.pkMasCercano.pk;
-    const lineaUsuario = window.pkMasCercano.linea;
-    const diaSemana = obtenerDiaSemana();
-    const horaActual = obtenerHoraActual();
-    const ahora = new Date(); // Para usar en cálculo de minutos faltantes
+     const lineaUsuario = window.pkMasCercano.linea;
+    const ladoViaUsuario = window.pkMasCercano.ladoVia;
+    const pkUsuarioNumerico = pkToNumber(pkUsuario);
 
-    const trenesFiltrados = trenesData.filter(tren => {
-        return tren.Línea === lineaUsuario &&
-               tren.PK === pkUsuario &&
-               tren.Día === diaSemana;
-    });
-
-    const trenesConInfoAdicional = [];
-    for (const tren of trenesFiltrados) {
-        const tiempoDeViajeMinutos = calcularTiempoDeViaje(pkUsuario, lineaUsuario, tren);
-        const horaPasoEstimada = calcularHoraDePaso(tren.Hora, tiempoDeViajeMinutos, tren.Vía);
-        if (horaPasoEstimada > horaActual) { // Solo mostrar trenes con hora de paso en el futuro
-            const minutosFaltantes = calcularMinutosFaltantes(horaPasoEstimada, ahora);
-            trenesConInfoAdicional.push({
-                ...tren,
-                horaPasoEstimada,
-                minutosFaltantes
-            });
-        }
+    // Filtrar los trenes por la línea del usuario
+     const trenesFiltrados = trenes.filter(tren => tren.Línea === lineaUsuario);
+       console.log("Trenes filtrados por línea:", trenesFiltrados);
+    if (trenesFiltrados.length === 0) {
+         console.warn("No hay trenes en la línea:", lineaUsuario);
+          mostrarTarjetaTrenes("No hay trenes en esta línea");
+      return;
     }
+     // Obtener el día actual para filtrar trenes
+    const now = new Date();
+   const diaSemana = ["D", "L", "M", "X", "J", "V", "S"][now.getDay()];
 
-    trenesConInfoAdicional.sort((a, b) => a.horaPasoEstimada.localeCompare(b.horaPasoEstimada)); // Ordenar por hora de paso estimada
-
-    generarTablaTrenes(trenesConInfoAdicional);
-}
-
-
-function generarTablaTrenes(trenes) {
-    const trenesContainer = document.getElementById('trenes-container');
-    trenesContainer.innerHTML = ''; // Limpiar el contenedor antes de generar la tabla
-
-    if (trenes.length === 0) {
-        trenesContainer.innerHTML = '<p style="text-align: center;">No se encontraron próximos trenes para tu ubicación actual.</p>';
-        return;
-    }
-
-    const tabla = document.createElement('table');
-    tabla.innerHTML = `
-        <thead>
-            <tr>
-                <th>Hora Paso (Estimada)</th>
-                <th>Minutos Faltan</th>
-                <th>Vía</th>
-                <th>Origen/Destino (PK)</th>
-                <th>Hora Programada</th>
-            </tr>
-        </thead>
-        <tbody>
-            ${trenes.map(tren => `
-                <tr>
-                    <td>${tren.horaPasoEstimada}</td>
-                    <td>${tren.minutosFaltantes}</td>
-                    <td>${tren.Vía}</td>
-                    <td>${formatearPK(tren.PK)}</td>
-                    <td>${tren.Hora}</td>
-                </tr>
-            `).join('')}
-        </tbody>
-    `;
-    trenesContainer.appendChild(tabla);
-}
-
-
-function calcularTiempoDeViaje(pkUsuarioStr, lineaUsuario, tren) {
-    let tiempoTotalMinutos = 0; // Inicializar como número decimal
-    const pkUsuario = pkToNumber(pkUsuarioStr);
-    const pkTren = pkToNumber(tren.PK);
-    const via = tren.Vía;
-    const linea = tren.Línea;
-
-    let pkInicioTramo, pkFinTramo, sentido;
-
-    if (via === '1') { // Vía 1: Sentido decreciente (tren sale del PK)
-        pkInicioTramo = pkTren; // PK de salida del tren (más alto)
-        pkFinTramo = pkUsuario;
-        sentido = -1; // Decreciente
-    } else { // Vía 2: Sentido creciente (tren llega al PK)
-        pkInicioTramo = pkUsuario;
-        pkFinTramo = pkTren; // PK de llegada del tren (más bajo)
-        sentido = 1; // Creciente
-    }
-
-    if (pkInicioTramo === pkFinTramo) return 0; // Mismo PK, tiempo de viaje 0
-
-    let pkActual = pkInicioTramo;
-
-    while (sentido === 1 ? pkActual < pkFinTramo : pkActual > pkFinTramo) {
-        let pkSiguienteTramo = sentido === 1 ? pkFinTramo : 0; // Inicializar con pkFinTramo o 0 para decreciente
-
-        let segmentoVelocidad = null;
-        for (const segmento of velocidadesData) { // Iterar con bucle for...of para salir del bucle interno si se encuentra segmento
-            const pkIniSegmento = pkToNumber(segmento["PK INI"]);
-            const pkFinSegmento = pkToNumber(segmento["PK FIN"]);
-            if (segmento.Línea === linea &&
-                pkActual >= pkIniSegmento && pkActual < pkFinSegmento &&
-                (sentido === 1 ? pkFinTramo >= pkIniSegmento : pkFinTramo <= pkFinSegmento)) { //Asegurar que pkFinTramo esté en el rango o más allá
-                segmentoVelocidad = segmento;
-                pkSiguienteTramo = pkFinSegmento; // Usar PK FIN del segmento como pkSiguienteTramo
-                break; // <--- ¡SALIR del bucle interno cuando se encuentra el segmento!
+     const trenesFiltradosDia = trenesFiltrados.filter(tren => {
+            if(Array.isArray(tren.Día)){
+                   return tren.Día.includes(diaSemana)
             }
+           else if (tren.Día === "L") {
+                // Si el día es "L", verifica que el día de la semana actual esté entre lunes y jueves
+                return diaSemana === "L" || diaSemana === "M" || diaSemana === "X" || diaSemana === "J";
+            }
+           else{
+                return tren.Día === diaSemana
+           }
+        });
+      console.log("Trenes filtrados por día:", trenesFiltradosDia);
+        if (trenesFiltradosDia.length === 0) {
+          console.warn("No hay trenes para el día de hoy:", diaSemana);
+         mostrarTarjetaTrenes("No hay trenes para el día de hoy");
+        return;
+       }
+    const predicciones = [];
+    const nowTime = new Date().getTime();
+    // Calcular la hora de paso para cada tren
+    for (const tren of trenesFiltradosDia)
+      {
+      const tiempoEstimado = calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades);
+          if(tiempoEstimado)
+          {
+            const tiempoPaso = new Date(tiempoEstimado);
+             if (tiempoPaso.getTime() > nowTime && tiempoPaso.getTime() < nowTime + 10 * 60 * 60 * 1000)
+               {
+                  predicciones.push({
+                      tren: tren,
+                     tiempoEstimado: tiempoEstimado
+                     });
+                }
+
+          }
+
+     }
+      console.log("Predicciones calculadas:", predicciones);
+    if(predicciones.length > 0)
+      {
+         // Ordenar las predicciones por tiempo estimado de paso
+             predicciones.sort((a, b) => a.tiempoEstimado - b.tiempoEstimado);
+            mostrarTarjetaTrenes(generarTablaTrenes(predicciones, nowTime));
+       }
+     else {
+        console.warn("No hay predicciones para el PK actual");
+        mostrarTarjetaTrenes("No hay trenes en las próximas 5 horas");
         }
 
+}
 
-        const pkLimiteTramo = segmentoVelocidad ? Math.min(pkSiguienteTramo, pkFinTramo) : pkFinTramo; //Limite del tramo actual
-        const distanciaKm = Math.abs(pkLimiteTramo - pkActual) / 1000; // Distancia en km
-        const velocidadKmH = segmentoVelocidad ? parseInt(segmentoVelocidad.Velocidad) : 100; // Velocidad en km/h (o 100 km/h por defecto si no hay segmento)
-        const tiempoMinutosTramo = (distanciaKm / velocidadKmH) * 60; // Tiempo en minutos (¡decimal!)
+function calcularTiempoEstimadoPaso(tren, pkUsuarioNumerico, velocidades) {
+    console.log("Calculando tiempo para el tren:", tren, " PK Usuario:", pkUsuarioNumerico);
 
-        tiempoTotalMinutos += tiempoMinutosTramo; // Acumular tiempo decimal
-        pkActual = pkLimiteTramo;
+    const lineaTren = tren.Línea;
+    const pkTrenExtremo = tren.PK;
+    const viaTren = tren.Vía;
+    const horaTrenExtremo = tren.Hora;
+    
+    console.log("Datos del tren:", { lineaTren, pkTrenExtremo, viaTren, horaTrenExtremo });
 
-         if (pkActual >= pkFinTramo && sentido === 1) break; // Detener si alcanzamos o superamos pkFinTramo (creciente)
-         if (pkActual <= pkFinTramo && sentido === -1 && pkFinTramo !== 0) break; // Detener si alcanzamos o superamos pkFinTramo (decreciente) y no es 0
+    // Ordenar los tramos por PK
+    const tramosLinea = velocidades.filter(tramo => tramo.Línea === lineaTren)
+                                   .sort((a, b) => a["PK INI"] - b["PK INI"]);
 
-         if (pkActual === pkSiguienteTramo && segmentoVelocidad) {
-             pkActual = pkSiguienteTramo; //Asegurar avance si estamos en el límite de un segmento
-         } else if (!segmentoVelocidad && sentido === -1 && pkFinTramo === 0 && pkActual === 0) {
-             break; //Evitar bucle infinito en sentido decreciente hacia PK 0 sin segmento
+    let tiempoTotal = 0;
+    let pkInicio, pkFin;
+
+    if (viaTren === "1") {
+        pkInicio = Math.min(pkUsuarioNumerico, pkTrenExtremo);
+        pkFin = Math.max(pkUsuarioNumerico, pkTrenExtremo);
+    } else if (viaTren === "2") {
+        pkInicio = Math.max(pkUsuarioNumerico, pkTrenExtremo);
+        pkFin = Math.min(pkUsuarioNumerico, pkTrenExtremo);
+    }
+
+    for (let tramo of tramosLinea) {
+        if (tramo["PK FIN"] < pkInicio || tramo["PK INI"] > pkFin) continue;
+
+        let inicioTramo = Math.max(tramo["PK INI"], pkInicio);
+        let finTramo = Math.min(tramo["PK FIN"], pkFin);
+
+        let distanciaTramo = Math.abs(finTramo - inicioTramo);
+        let tiempoTramo = (distanciaTramo / 1000) / tramo.Velocidad;
+
+        tiempoTotal += tiempoTramo;
+    }
+
+    console.log("Tiempo total calculado:", tiempoTotal, "horas");
+
+    const horaLlegadaExtremo = new Date();
+    const [horas, minutos] = horaTrenExtremo.split(":");
+    horaLlegadaExtremo.setHours(parseInt(horas, 10));
+    horaLlegadaExtremo.setMinutes(parseInt(minutos, 10));
+
+    let horaEstimada = new Date(horaLlegadaExtremo.getTime());
+    const tiempoTotalMinutos = tiempoTotal * 60;
+
+    if (viaTren === "1") {
+        horaEstimada.setTime(horaEstimada.getTime() - tiempoTotalMinutos * 60 * 1000);
+    } else if (viaTren === "2") {
+        horaEstimada.setTime(horaEstimada.getTime() + tiempoTotalMinutos * 60 * 1000);
+    }
+
+    console.log("Hora Estimada Final", horaEstimada);
+    return horaEstimada.getTime();
+}
+
+
+function generarTablaTrenes(predicciones, nowTime) {
+    let tablaHTML = `<table style="width: 100%; border-collapse: collapse; margin-top: 10px; text-align: center;">
+                     <thead style="font-weight: bold;">
+                        <tr style="border-bottom: 2px solid #ddd;">
+                            <th style="padding: 8px; border: 1px solid #ddd;">Hora</th>
+                             <th style="padding: 8px; border: 1px solid #ddd;">Minutos</th>
+                            <th style="padding: 8px; border: 1px solid #ddd;">Vía</th>
+                             <th style="padding: 8px; border: 1px solid #ddd;">Ori/Des</th>
+                            <th style="padding: 8px; border: 1px solid #ddd;">Hora</th>
+                        </tr>
+                   </thead>
+                   <tbody>`;
+        for(const prediccion of predicciones)
+    {
+          const horaPaso = new Date(prediccion.tiempoEstimado);
+          const horas = String(horaPaso.getHours()).padStart(2, '0');
+         const minutos = String(horaPaso.getMinutes()).padStart(2, '0');
+           const minutosRestantes = Math.abs(Math.round((prediccion.tiempoEstimado - nowTime)/ (60 * 1000)))
+          let origen = "";
+         if (prediccion.tren.Línea === "42")
+         {
+           origen = "Alicante"
          }
+       else if (prediccion.tren.Línea === "40")
+         {
+            origen = "Valencia"
+        }
+          const horaExtremoDate = new Date(prediccion.tiempoEstimado);
+            const [horasExtremo, minutosExtremo] = prediccion.tren.Hora.split(":");
+              horaExtremoDate.setHours(parseInt(horasExtremo, 10));
+              horaExtremoDate.setMinutes(parseInt(minutosExtremo, 10));
+
+         const horasExtremoFormat = String(horaExtremoDate.getHours()).padStart(2,'0');
+         const minutosExtremoFormat = String(horaExtremoDate.getMinutes()).padStart(2, '0');
+
+        tablaHTML +=`
+            <tr style="border-bottom: 1px solid #eee;">
+                 <td style="padding: 8px; border: 1px solid #ddd;">${horas}:${minutos}</td>
+                 <td style="padding: 8px; border: 1px solid #ddd;">${minutosRestantes}</td>
+                <td style="padding: 8px; border: 1px solid #ddd;">${prediccion.tren.Vía}</td>
+                 <td style="padding: 8px; border: 1px solid #ddd;">${origen}</td>
+                   <td style="padding: 8px; border: 1px solid #ddd;">${horasExtremoFormat}:${minutosExtremoFormat}</td>
+              </tr>
+       `
     }
+       tablaHTML += `</tbody></table>`;
+    return tablaHTML;
 
-    return Math.round(tiempoTotalMinutos); // Redondear a minutos enteros ¡SOLO AL FINAL!
 }
 
+function mostrarTarjetaTrenes(contenido) {
+    const trenesCardContainer = document.getElementById('trenes-card-container');
+     const trenesContainer = document.getElementById('trenes-container');
+     const cerrarTrenesCardButton = document.getElementById('cerrar-trenes-card');
 
-function calcularHoraDePaso(horaProgramada, tiempoViajeMinutos, via) {
-    let [horas, minutos] = horaProgramada.split(':').map(Number);
-    let fechaPaso = new Date();
-    fechaPaso.setHours(horas);
-    fechaPaso.setMinutes(minutos);
-    fechaPaso.setSeconds(0);
+     if (trenesContainer) {
+          trenesContainer.innerHTML = contenido;
+           trenesCardContainer.style.display = 'flex'; // Mostrar la tarjeta de trenes
+           } else{
+            console.error('No se encontró el contenedor de trenes');
+        }
+        if (cerrarTrenesCardButton) {
+            cerrarTrenesCardButton.addEventListener('click', function() {
+                trenesCardContainer.style.display = 'none'; // Ocultar la tarjeta de trenes al hacer clic en "Cerrar"
+            });
+        } else {
+            console.error('No se encontró el botón de cerrar de la tarjeta de trenes');
+        }
 
-    let tiempoMilisegundosViaje = tiempoViajeMinutos * 60 * 1000;
-
-    if (via === '1') { // Vía 1: Sumar tiempo de viaje (sale del PK)
-        fechaPaso = new Date(fechaPaso.getTime() + tiempoMilisegundosViaje);
-    } else { // Vía 2: Restar tiempo de viaje (llega al PK)
-        fechaPaso = new Date(fechaPaso.getTime() - tiempoMilisegundosViaje);
-    }
-
-    let horaPaso = String(fechaPaso.getHours()).padStart(2, '0');
-    let minutoPaso = String(fechaPaso.getMinutes()).padStart(2, '0');
-    return `${horaPaso}:${minutoPaso}`;
 }
+     document.addEventListener('DOMContentLoaded', function() {
+           // ... (resto del código de los botones plus)...
 
-
-function calcularMinutosFaltantes(horaPasoEstimadaStr, ahora) {
-    const [horaPaso, minutoPaso] = horaPasoEstimadaStr.split(':').map(Number);
-    const fechaPasoEstimada = new Date(ahora); // Clona la fecha actual para no modificarla
-    fechaPasoEstimada.setHours(horaPaso);
-    fechaPasoEstimada.setMinutes(minutoPaso);
-    fechaPasoEstimada.setSeconds(0);
-    fechaPasoEstimada.setMilliseconds(0);
-
-    const diferenciaMilisegundos = fechaPasoEstimada.getTime() - ahora.getTime();
-    const minutosFaltantes = Math.round(diferenciaMilisegundos / (1000 * 60)); // Convertir a minutos y redondear
-
-    return Math.max(0, minutosFaltantes); // No mostrar minutos negativos si el tren ya pasó
-}
-
-
-function obtenerDiaSemana() {
-    const diasSemana = ['D', 'L', 'L', 'L', 'L', 'V', 'S']; // D-Domingo, L-Laborable (Lunes-Jueves), V-Viernes, S-Sábado
-    const fecha = new Date();
-    const indiceDia = fecha.getDay(); // 0=Domingo, 1=Lunes, ..., 6=Sábado
-    return diasSemana[indiceDia];
-}
-
-function obtenerHoraActual() {
-    const ahora = new Date();
-    const horas = String(ahora.getHours()).padStart(2, '0');
-    const minutos = String(ahora.getMinutes()).padStart(2, '0');
-    return `${horas}:${minutos}`;
-}
-
-
+            const trenesButton = document.querySelector('.plus-option-button[aria-label="TRENES"]');
+            if (trenesButton) {
+                  trenesButton.addEventListener('click', function() {
+                       predecirPasoTrenes();
+               });
+           } else {
+               console.error('No se encontró el botón TRENES');
+          }
+     });
 // ----- FIN FUNCIONALIDAD TRENES -----
 
 
