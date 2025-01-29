@@ -74,7 +74,7 @@ navigator.geolocation.watchPosition((position) => {
     // Cálculo inicial del PK más cercano (solo la primera vez)
     if (primeraEjecucion) {
         primeraEjecucion = false; // Cambia la bandera para evitar futuras ejecuciones automáticas
-        calcularYActualizarPK();
+        //calcularYActualizarPK();
     }
 }, 
 (error) => console.error('Error al obtener ubicación:', error), {
@@ -2112,6 +2112,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Cargar datos de trenes y velocidades al inicio
     cargarTrenes();
+    calcularYActualizarPK();
 });
 
 function mostrarProximosTrenes() {
