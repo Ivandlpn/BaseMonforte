@@ -2104,16 +2104,19 @@ function mostrarResultadosEnTabla(resultados) {
         }
 
         async function predecirPasoTrenes() {
-            const { velocidades, trenes } = await cargarDatosTrenes();
-            if (!velocidades || !trenes) {
-                console.error("No se pudieron cargar los datos de trenes.");
-                return;
-            }
-            if (!window.pkMasCercano) {
-                console.error("No se ha calculado el PK del usuario. No se pueden predecir trenes.");
-                alert("No se ha calculado el PK del usuario. No se pueden predecir trenes.");
-                return;
-            }
+      console.log("predecirPasoTrenes: Inicio");
+      const { velocidades, trenes } = await cargarDatosTrenes();
+      console.log("predecirPasoTrenes: Datos cargados");
+      if (!velocidades || !trenes) {
+          console.error("No se pudieron cargar los datos de trenes.");
+          return;
+      }
+      console.log("predecirPasoTrenes: Datos OK");
+      if (!window.pkMasCercano) {
+          console.error("No se ha calculado el PK del usuario. No se pueden predecir trenes.");
+          alert("No se ha calculado el PK del usuario. No se pueden predecir trenes.");
+          return;
+      }
 
             // Obtener datos del usuario
             const pkUsuario = window.pkMasCercano.pk;
