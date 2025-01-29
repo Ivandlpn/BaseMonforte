@@ -337,7 +337,7 @@ function calcularDistancia(lat1, lon1, lat2, lon2) {
 
 function mostrarPKMasCercano(pk) {
     const pkElement = document.getElementById("pkCercano");
-     if(pkElement)
+     if(pkElement) // <-- Comprobación IMPORTANTE
      {
          const pkFormateado = formatearPK(pk.pk); // Formatea el PK
          pkElement.innerHTML = `
