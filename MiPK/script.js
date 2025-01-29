@@ -2060,7 +2060,7 @@ function mostrarResultadosEnTabla(resultados) {
 
 
 
-// ----- INICIO FUNCIONALIDAD BOTÓN TRENES -----
+// ----- INICIO FUNCIONALIDAD BOTÓN TRENES (CON HORA DE PASO ESTIMADA) -----
 
 document.addEventListener('DOMContentLoaded', function() {
     const trenesButton = document.querySelector('.plus-option-button[aria-label="TRENES"]');
@@ -2071,7 +2071,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (trenesButton) {
         trenesButton.addEventListener('click', function() {
             trenesCardContainer.style.display = 'flex';
-            cargarYMostrarTrenes(); // Llama a la función para cargar y mostrar los trenes
+            cargarYMostrarTrenesConEstimacion(); // Llama a la nueva función
         });
     } else {
         console.error('No se encontró el botón TRENES');
@@ -2085,15 +2085,16 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('No se encontró el botón de cerrar de la tarjeta de TRENES');
     }
 
-    async function cargarYMostrarTrenes() {
-        trenesContainer.innerHTML = '<p style="text-align: center;">Cargando horarios de trenes...</p>'; // Mensaje de carga inicial
+    async function cargarYMostrarTrenesConEstimacion() {
+        trenesContainer.innerHTML = '<p style="text-align: center;">Cargando horarios de trenes...</p>';
         try {
-            const trenesData = await cargarDatosTrenes(); // Cargar datos de trenes desde JSON
-            const trenesFiltrados = filtrarTrenesPorDia(trenesData); // Filtrar por día actual
-            mostrarTablaTrenes(trenesFiltrados); // Mostrar los trenes en una tabla
+            const trenesData = await cargarDatosTrenes();
+            const trenesFiltrados = filtrarTrenesPorDia(trenesData);
+            const trenesConEstimacion = calcularHoraPasoEstimada(trenesFiltrados); // Nueva función para estimar hora
+            mostrarTablaTrenesConEstimacion(trenesConEstimacion); // Nueva función para mostrar tabla
         } catch (error) {
             console.error('Error al cargar o mostrar los horarios de trenes:', error);
-            trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al cargar los horarios de trenes.</p>'; // Mensaje de error
+            trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al cargar los horarios de trenes.</p>';
         }
     }
 
@@ -2112,7 +2113,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (diasTren === 'L') { // Laborables (Lunes-Jueves)
                 return ['Lunes', 'Martes', 'Miércoles', 'Jueves'].includes(diaSemanaActual);
             } else {
-                return diasTren === diaSemanaActual.charAt(0).toUpperCase(); // V, S, D (Primera letra coincide)
+                return diasTren === diaSemanaActual.charAt(0).toUpperCase(); // V, S, D
             }
         });
     }
@@ -2120,11 +2121,90 @@ document.addEventListener('DOMContentLoaded', function() {
     function obtenerDiaSemanaActual() {
         const diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         const fecha = new Date();
-        const indiceDia = fecha.getDay(); // 0=Domingo, 1=Lunes, ..., 6=Sábado
+        const indiceDia = fecha.getDay();
         return diasSemana[indiceDia];
     }
 
-    function mostrarTablaTrenes(trenes) {
+    function calcularHoraPasoEstimada(trenes) {
+        if (!window.pkMasCercano || !window.pkMasCercano.pk || !window.pkMasCercano.linea) {
+            console.warn("No se puede calcular la hora de paso sin conocer el PK del usuario.");
+            return trenes; // Devuelve los trenes sin estimación si no hay PK del usuario
+        }
+
+        const userPKNumerico = pkToNumber(window.pkMasCercano.pk);
+        const userLinea = window.pkMasCercano.linea;
+        const velocidadConstanteKmPorMinuto = 200 / 60; // 200 km/h constante
+
+        return trenes.map(tren => {
+            if (tren.Línea !== userLinea) { // Solo calcular para trenes en la misma línea
+                return { ...tren, horaPasoEstimada: '---', minutosRestantes: '---' }; // Indica '---' si no es la misma línea
+            }
+
+            const trenPKNumerico = pkToNumber(tren.PK);
+            const distanciaKm = Math.abs(userPKNumerico - trenPKNumerico) / 1000;
+            const tiempoViajeMinutos = distanciaKm / velocidadConstanteKmPorMinuto;
+
+            let horaSalidaLlegadaMinutos = convertirHoraMinutos(tren.Hora);
+            let horaPasoEstimadaMinutos;
+
+            if (tren.Vía === '1') { // Vía 1: Decreciente, tren sale del PK en trenes.json
+                if (trenPKNumerico > userPKNumerico) { // Tren *hacia* el usuario
+                    horaPasoEstimadaMinutos = horaSalidaLlegadaMinutos - tiempoViajeMinutos;
+                } else {
+                    return { ...tren, horaPasoEstimada: '---', minutosRestantes: '---' }; // Tren ya pasó o va en dirección opuesta
+                }
+            } else if (tren.Vía === '2') { // Vía 2: Creciente, tren llega al PK en trenes.json
+                if (trenPKNumerico < userPKNumerico) { // Tren *hacia* el usuario
+                    horaPasoEstimadaMinutos = horaSalidaLlegadaMinutos + tiempoViajeMinutos;
+                } else {
+                    return { ...tren, horaPasoEstimada: '---', minutosRestantes: '---' }; // Tren ya pasó o va en dirección opuesta
+                }
+            } else {
+                return { ...tren, horaPasoEstimada: '---', minutosRestantes: '---' }; // Vía no válida
+            }
+
+            if (horaPasoEstimadaMinutos < 0) horaPasoEstimadaMinutos += (24 * 60); // Ajuste si la hora estimada es negativa (día anterior)
+            horaPasoEstimadaMinutos = horaPasoEstimadaMinutos % (24 * 60); // Ajuste para que no exceda un día
+
+            const horaPasoEstimadaFormateada = formatearHora(horaPasoEstimadaMinutos);
+            const minutosRestantes = calcularMinutosRestantes(horaPasoEstimadaMinutos);
+
+            return {
+                ...tren,
+                horaPasoEstimada: horaPasoEstimadaFormateada,
+                minutosRestantes: minutosRestantes
+            };
+        });
+    }
+
+    function convertirHoraMinutos(horaString) {
+        const [horas, minutos] = horaString.split(':').map(Number);
+        return horas * 60 + minutos;
+    }
+
+    function formatearHora(totalMinutos) {
+        const horas = Math.floor(totalMinutos / 60);
+        const minutos = Math.floor(totalMinutos % 60);
+        return `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}`;
+    }
+
+    function calcularMinutosRestantes(horaPasoEstimadaMinutos) {
+        const ahora = new Date();
+        const ahoraMinutos = ahora.getHours() * 60 + ahora.getMinutes();
+        let diferenciaMinutos = horaPasoEstimadaMinutos - ahoraMinutos;
+
+        if (diferenciaMinutos < -30) { // Considerar "Pasado" si faltan más de 30 minutos (ajusta este valor si es necesario)
+            return "Pasado";
+        } else if (diferenciaMinutos < 0) { // Si ya pasó pero hace poco, mostrar "En Breve"
+            return "En Breve";
+        }
+        else {
+          return Math.max(0, Math.floor(diferenciaMinutos)) + " min"; // Mínimo 0 minutos, para evitar negativos
+        }
+    }
+
+
+    function mostrarTablaTrenesConEstimacion(trenes) {
         if (trenes.length === 0) {
             trenesContainer.innerHTML = '<p style="text-align: center;">No hay horarios de trenes para hoy.</p>';
             return;
@@ -2135,33 +2215,55 @@ document.addEventListener('DOMContentLoaded', function() {
             <thead>
                 <tr>
                     <th>Línea</th>
-                    <th>Día</th>
                     <th>Vía</th>
                     <th>Tipo</th>
-                    <th>PK</th>
-                    <th>Hora</th>
+                    <th>Origen/Destino (PK)</th>
+                    <th>Hora (Salida/Llegada)</th>
+                    <th>Hora de Paso Estimada</th>
+                    <th>Minutos Restantes</th>
                 </tr>
             </thead>
             <tbody>
                 ${trenes.map(tren => `
                     <tr>
                         <td>${tren.Línea}</td>
-                        <td>${tren.Día}</td>
                         <td>${tren.Vía}</td>
                         <td>${tren.Tipo}</td>
-                        <td>${tren.PK}</td>
+                        <td>${formatearPK(tren.PK)}</td> <!-- Formatear PK -->
                         <td>${tren.Hora}</td>
+                        <td>${tren.horaPasoEstimada}</td>
+                        <td>${tren.minutosRestantes}</td>
                     </tr>
                 `).join('')}
             </tbody>
         `;
-        trenesContainer.innerHTML = ''; // Limpiar mensaje de carga
+        trenesContainer.innerHTML = '';
         trenesContainer.appendChild(tabla);
     }
+
+     function formatearPK(pk) { // Reutilizar la función formatearPK
+        const pkStr = pk.toString();
+        if (pkStr.length > 6) {
+            return pkStr.slice(0, 3) + '+' + pkStr.slice(3, 6);
+        } else if (pkStr.length === 6) {
+            return pkStr.slice(0, 3) + '+' + pkStr.slice(3);
+        } else if (pkStr.length === 5) {
+            return pkStr.slice(0, 2) + '+' + pkStr.slice(2);
+        } else if (pkStr.length === 4) {
+            return pkStr.slice(0, 1) + '+' + pkStr.slice(1);
+        } else {
+            return pkStr; // Si tiene menos de 4 cifras, no se formatea
+        }
+    }
+
+    function pkToNumber(pkString) { // Reutilizar la función pkToNumber
+        return parseInt(pkString, 10);
+    }
+
+
 });
 
-// ----- FIN FUNCIONALIDAD BOTÓN TRENES -----
-
+// ----- FIN FUNCIONALIDAD BOTÓN TRENES (CON HORA DE PASO ESTIMADA) -----
 
 
 
