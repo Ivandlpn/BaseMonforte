@@ -2060,7 +2060,7 @@ function mostrarResultadosEnTabla(resultados) {
 
 
 
-// ----- INICIO FUNCIONALIDAD BOTÓN TRENES (CON HORA DE PASO ESTIMADA) -----
+/// ----- INICIO FUNCIONALIDAD BOTÓN TRENES (CON HORA DE PASO ESTIMADA) -----
 
 document.addEventListener('DOMContentLoaded', function() {
     const trenesButton = document.querySelector('.plus-option-button[aria-label="TRENES"]');
@@ -2214,25 +2214,21 @@ document.addEventListener('DOMContentLoaded', function() {
         tabla.innerHTML = `
             <thead>
                 <tr>
-                    <th>Línea</th>
+                    <th>Hora Paso</th>
+                    <th>Minutos</th>
                     <th>Vía</th>
-                    <th>Tipo</th>
-                    <th>Origen/Destino (PK)</th>
-                    <th>Hora (Salida/Llegada)</th>
-                    <th>Hora de Paso Estimada</th>
-                    <th>Minutos Restantes</th>
+                    <th>O/D</th>
+                    <th>Hora Sal/Lle</th>
                 </tr>
             </thead>
             <tbody>
                 ${trenes.map(tren => `
                     <tr>
-                        <td>${tren.Línea}</td>
-                        <td>${tren.Vía}</td>
-                        <td>${tren.Tipo}</td>
-                        <td>${formatearPK(tren.PK)}</td> <!-- Formatear PK -->
-                        <td>${tren.Hora}</td>
                         <td>${tren.horaPasoEstimada}</td>
                         <td>${tren.minutosRestantes}</td>
+                        <td>${tren.Vía}</td>
+                        <td>${formatearPK(tren.PK)}</td>
+                        <td>${tren.Hora}</td>
                     </tr>
                 `).join('')}
             </tbody>
@@ -2264,7 +2260,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ----- FIN FUNCIONALIDAD BOTÓN TRENES (CON HORA DE PASO ESTIMADA) -----
-
 
 
 ///// FIN ICONO PLUS /////
