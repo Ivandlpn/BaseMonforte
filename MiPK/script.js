@@ -1048,6 +1048,7 @@ function agregarEventosVerMapa(puertasCercanas) {
                 <div style="text-align: center;">
                     <p style="margin: 0; font-size: 1.2em;">Vía ${via}</p>
                     <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${pk}</p>
+                    <button id="compartirUbicacionBtn" style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer;">Compartir 💬</button>
                 </div>
             `);
 
