@@ -1052,7 +1052,7 @@ function agregarEventosVerMapa(puertasCercanas) {
         <p style="margin: 0; font-size: 1.2em;">Vía ${via}</p>
         <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${pk}</p><br>
         <button id="compartirUbicacionBtn"
-                onclick="compartirUbicacionPuerta(${latPuerta}, ${lonPuerta})"  <!-- Añadido onclick -->
+                onclick="compartirUbicacionPuerta(${latPuerta}, ${lonPuerta})" 
                 style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer;">Compartir 💬</button>
     </div>
 `);
@@ -1132,7 +1132,7 @@ function ocultarPuertasCercanas() {
         <p style="margin: 0; font-size: 1.2em;">Vía ${puerta.Via}</p>
         <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${formatearPK(puerta.PK)}</p><br>
         <button id="compartirUbicacionBtn"
-                onclick="compartirUbicacionPuerta(${puerta.Latitud}, ${puerta.Longitud})"  <!-- Añadido onclick -->
+                onclick="compartirUbicacionPuerta(${puerta.Latitud}, ${puerta.Longitud})" 
                 style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer;">Compartir 💬</button>
     </div>
 `);
