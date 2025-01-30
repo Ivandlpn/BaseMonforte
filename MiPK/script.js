@@ -167,16 +167,40 @@ function inicializarMapa(lat, lon) {
         maxZoom: 19
     }).addTo(mapa);
 
-    // 🔄 Permitir rotación con dos dedos
-    L.DomEvent.on(mapa._container, 'touchstart', function (event) {
+
+
+    // 🚀 🔄 Habilitar rotación con dos dedos
+    let initialAngle = null;
+
+    mapa._container.addEventListener("touchstart", function (event) {
         if (event.touches.length === 2) {
-            mapa.touchRotate.enable();
+            // Calcula el ángulo inicial entre los dos dedos
+            initialAngle = getAngle(event.touches[0], event.touches[1]);
         }
     });
 
-    L.DomEvent.on(mapa._container, 'touchend', function () {
-        mapa.touchRotate.disable();
+    mapa._container.addEventListener("touchmove", function (event) {
+        if (event.touches.length === 2 && initialAngle !== null) {
+            // Calcula el nuevo ángulo
+            let newAngle = getAngle(event.touches[0], event.touches[1]);
+            let rotation = newAngle - initialAngle;
+            mapa._container.style.transform = `rotate(${rotation}deg)`;
+        }
     });
+
+    mapa._container.addEventListener("touchend", function (event) {
+        if (event.touches.length < 2) {
+            initialAngle = null; // Reinicia la rotación cuando se sueltan los dedos
+        }
+    });
+
+    // Función para calcular el ángulo entre dos puntos
+    function getAngle(touch1, touch2) {
+        let dx = touch2.clientX - touch1.clientX;
+        let dy = touch2.clientY - touch1.clientY;
+        return Math.atan2(dy, dx) * (180 / Math.PI);
+    }
+    
 
     iconoUsuario = L.icon({
         iconUrl: 'https://cdn-icons-png.flaticon.com/512/1783/1783356.png',
