@@ -1052,6 +1052,33 @@ function agregarEventosVerMapa(puertasCercanas) {
                 </div>
             `);
 
+                // *** INICIO: AÑADIR EVENT LISTENER PARA BOTÓN COMPARTIR EN POPUP DE PUERTA ***
+        marcadorPuerta.on('popupopen', function() {
+            const compartirUbicacionBtn = document.getElementById('compartirUbicacionBtn');
+            compartirUbicacionBtn.addEventListener('click', function() {
+                // Obtener las coordenadas DEL MARCADOR DE LA PUERTA directamente
+                const markerLatLng = marcadorPuerta.getLatLng();
+                const markerLat = markerLatLng.lat;
+                const markerLng = markerLatLng.lng;
+
+                const googleMapsUrl = `https://www.google.com/maps?q=${markerLat},${markerLng}`;
+
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Ubicación de Puerta',
+                        text: 'Aquí está la ubicación de la puerta en el mapa:',
+                        url: googleMapsUrl
+                    }).then(() => {
+                        console.log('Ubicación de puerta compartida exitosamente');
+                    })
+                    .catch((error) => console.error('Error al compartir ubicación de puerta', error));
+                } else {
+                    // Si navigator.share no está soportado, muestra una alerta con el enlace
+                    alert('Tu navegador no soporta la función de compartir. Aquí está el enlace a Google Maps:\n\n' + googleMapsUrl);
+                }
+            });
+        });
+
                 // Centrar el mapa para mostrar al usuario y la puerta
                 if (lat && lon) {
                     const bounds = L.latLngBounds([lat, lon], [latPuerta, lonPuerta]);
