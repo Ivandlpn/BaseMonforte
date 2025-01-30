@@ -1659,7 +1659,7 @@ function generarContenidoCsi() {
         csiContentContainer.innerHTML += '<p style="font-style: italic;">No se pudo determinar tu ubicación para recomendar CSI.</p>';
     }
 
-                });
+               
                 
                 // ----- FIN FUNCIONALIDAD BOTÓN CSI -----
 
