@@ -717,6 +717,18 @@ footer img {
     margin-top: 30px; /* *** AÑADIDO: Espacio superior para separar del contenido anterior *** */
 }
 
+.circulacion-info-text {
+   margin-bottom: 20px; /* Espacio debajo del texto informativo (sin cambios) */
+    padding: 15px; /* Sin cambios */
+    background-color: #fff3cd; /* Sin cambios */
+    border: 1px solid #ffe082; /* Sin cambios */
+    border-radius: 5px; /* Sin cambios */
+    text-align: center; /* Sin cambios */
+    font-style: italic; /* Sin cambios */
+    color: #555; /* Sin cambios */
+    margin-top: 30px; /* *** AÑADIDO: Espacio superior para separar del contenido anterior *** */
+}
+
   #actualizarUbicacion {
     font-size: 0.9em;
   }
