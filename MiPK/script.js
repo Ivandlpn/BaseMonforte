@@ -1419,9 +1419,7 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                 const operadoresCirculacionData = [ // Array con los datos de los operadores
                     { nombre: "Operador Banda Albacete 1", descripcion: "Pk 35+000 al Pk 240+574 (Bif. Torrejón a Monteagudo de las Salinas)", telefono: "967539500" },
                     { nombre: "Operador Banda Albacete 2", descripcion: "Pk 272+379 al Pk 397+214 (Minglanilla a Valencia J.S.)", telefono: "967539502" },
-                    { nombre: "Operador Banda Albacete 3", descripcion: "L040: Pk 240+574 al Pk 272+379 (Bif. Albacete a Iniesta).
-L042: Pk 248+102 al Pk 485+975 (Bif. Albacete a Alacant Terminal).
-L046: Pk 461+356 al Pk 467+551 (Bif. Murcia a Bif. Vinalopó).", telefono: "967539532" },
+                    { nombre: "Operador Banda Albacete 3", descripcion: "L040: Pk 240+574 al Pk 272+379 (Bif. Albacete a Iniesta) - L042: Pk 248+102 al Pk 485+975 (Bif. Albacete a Alacant Terminal) - L046: Pk 461+356 al Pk 467+551 (Bif. Murcia a Bif. Vinalopó)", telefono: "967539532" },
                     { nombre: "Operador Banda Albacete 4", descripcion: "L046: Pk 467+551 al Pk 529+281  (Elx Av a  Murcia del Carmen).", telefono: "967539511" },
                     { nombre: "Operador Banda Atocha", descripcion: "Bif. Torrejón de Velasco - Madrid Chamartín", telefono: "914688406" },
                 ];
