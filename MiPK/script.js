@@ -1555,50 +1555,83 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                             console.error('No se encontró el botón de cerrar de la tarjeta CPS');
                         }
                     
-function generarContenidoCps() {
-    const cpsContentContainer = document.getElementById('cps-content');
-    cpsContentContainer.innerHTML = '';
+function generarBotonesOperadores() {
+    const operadoresContainer = document.getElementById('operadores-container');
+    operadoresContainer.innerHTML = '';
+    operadoresContainer.innerHTML += `<h3 style="text-align: center; margin-top: 10px; margin-bottom: 10px;"><u>CRC ALBACETE</u></h3>`;
 
-    operadoresCpsData.forEach(operador => {
-        const botonCps = document.createElement('a');
-        botonCps.href = `tel:${operador.telefono}`;
-        botonCps.className = 'operador-button cps-option-button';
-        botonCps.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`;
-        cpsContentContainer.appendChild(botonCps);
+    let operadorRecomendado = null;
+    if (window.pkMasCercano) {
+        const pkNumerico = pkToNumber(window.pkMasCercano.pk);
+        const lineaUsuario = window.pkMasCercano.linea;
+        console.log("PK del usuario (numérico):", pkNumerico);
+        console.log("Linea del usuario:", lineaUsuario);
+
+        // Usar una función auxiliar para la lógica de coincidencia
+        const operadorMatch = (operador) => {
+            const nombre = operador.nombre;
+            if (nombre.includes("Banda Albacete 1") && lineaUsuario === '40' && pkNumerico > 35000 && pkNumerico < 240574)
+              return true
+            if (nombre.includes("Banda Albacete 2") && lineaUsuario === '40' && pkNumerico > 272379 && pkNumerico < 397214)
+                return true;
+
+            if (nombre.includes("Banda Albacete 3")) {
+               if (lineaUsuario === '40' && pkNumerico > 240574 && pkNumerico < 272379)
+                    return true;
+               if (lineaUsuario === '42' && pkNumerico > 248102 && pkNumerico < 485975)
+                    return true;
+                if (lineaUsuario === '46' && pkNumerico > 461356 && pkNumerico < 467551)
+                    return true;
+                }
+            if (nombre.includes("Banda Albacete 4") && lineaUsuario === '46' && pkNumerico > 467551 && pkNumerico < 529281)
+                 return true;
+
+            if (nombre.includes("Banda Atocha") && lineaUsuario === '40')
+                  return true;
+            return false;
+        };
+
+
+        operadorRecomendado = operadoresCirculacionData.find(operadorMatch);
+        console.log("Operador Recomendado:", operadorRecomendado);
+    }
+
+    operadoresCirculacionData.forEach((operador) => {
+        const botonOperador = document.createElement('a');
+        botonOperador.href = `tel:${operador.telefono}`;
+        botonOperador.className = 'operador-button';
+        botonOperador.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${operador.descripcion}</span>`;
+        if (operador.nombre === "Operador Banda Atocha") {
+            operadoresContainer.innerHTML += `<h3 style="text-align: center; margin-top: 20px; margin-bottom: 10px;"><u>CRC MADRID</u></h3>`;
+        }
+        if (operadorRecomendado && operador.nombre === operadorRecomendado.nombre) {
+            botonOperador.style.backgroundColor = '#ffeb3b'; // Color de fondo destacado
+            botonOperador.style.border = '4px solid #fbc02d'; // Borde destacado
+        }
+        operadoresContainer.appendChild(botonOperador);
     });
+
 
     if (window.pkMasCercano) {
         const pkNumerico = pkToNumber(window.pkMasCercano.pk);
         const lineaUsuario = window.pkMasCercano.linea;
-        let cpsRecomendado = "CPS Madrid";
-
-        if (
-            (lineaUsuario === '40' && pkNumerico > 293907) ||
-            (lineaUsuario === '42' && pkNumerico > 412783) ||
-            lineaUsuario === '46' ||
-            lineaUsuario === '48'
-        ) {
-            cpsRecomendado = "CPS Valencia";
-        }
-
-        const textoInformativo = `ℹ️ Estás en el PK ${formatearPK(window.pkMasCercano.pk)} de la línea ${lineaUsuario}.<br>Este punto pertenece al ámbito de <br><b>${cpsRecomendado}</b>.`;
-
+         let operadorRecomendadoTexto = "Ninguno";
+             if(operadorRecomendado)
+            {
+                operadorRecomendadoTexto = operadorRecomendado.nombre
+           }
+        const textoInformativo = `ℹ️ Estás en el PK ${formatearPK(window.pkMasCercano.pk)} de la línea ${lineaUsuario}.<br>Este punto pertenece al ámbito de <br><b>${operadorRecomendadoTexto}</b>.`;
         const infoParrafo = document.createElement('p');
-        infoParrafo.className = 'cps-info-text';
-        infoParrafo.innerHTML = textoInformativo;
-        cpsContentContainer.appendChild(infoParrafo);
-
-        // Destacar el botón del CPS recomendado
-        const botonesCps = cpsContentContainer.querySelectorAll('.cps-option-button');
-        botonesCps.forEach(boton => {
-            if (boton.innerHTML.includes(cpsRecomendado)) {
-                boton.style.backgroundColor = '#ffeb3b'; // Color de fondo destacado
-                boton.style.border = '4px solid #fbc02d'; // Borde destacado
-            }
-        });
-    } else {
-        cpsContentContainer.innerHTML += '<p style="font-style: italic;">No se pudo determinar tu ubicación para recomendar CPS.</p>';
+         infoParrafo.className = 'circulacion-info-text';
+           infoParrafo.innerHTML = textoInformativo;
+           operadoresContainer.appendChild(infoParrafo);
     }
+     else{
+        const infoParrafo = document.createElement('p');
+        infoParrafo.className = 'circulacion-info-text';
+        infoParrafo.innerHTML = '<p style="font-style: italic;">No se pudo determinar tu ubicación para recomendar operador de circulación.</p>';
+          operadoresContainer.appendChild(infoParrafo);
+     }
 }
                     });
                     
