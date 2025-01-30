@@ -1461,7 +1461,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const lineas = operador.descripcion.split(' - ');
                 lineas.forEach(linea =>
                     {
-                      descripcionHTML += `🔸${linea}<br>`
+                      descripcionHTML += `🔹${linea}<br>`
                    });
 
 
