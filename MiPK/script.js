@@ -1414,13 +1414,13 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                 // ----- FIN FUNCIONALIDAD BOTÓN CIRCULACIÓN -----
                 
                 
-               // ----- INICIO FUNCIONALIDAD LISTADO OPERADORES CIRCULACIÓN -----
+// ----- INICIO FUNCIONALIDAD LISTADO OPERADORES CIRCULACIÓN -----
 
 const operadoresCirculacionData = [
-    { nombre: "Operador Banda Albacete 1", descripcion: "🔸L040: Pk 35+000 al Pk 240+574 (Bif. Torrejón a Monteagudo de las Salinas)", telefono: "967539500" },
-    { nombre: "Operador Banda Albacete 2", descripcion: "🔸L040: Pk 272+379 al Pk 397+214 (Minglanilla a Valencia J.S.)", telefono: "967539502" },
-    { nombre: "Operador Banda Albacete 3", descripcion: "🔸L040: Pk 240+574 al Pk 272+379 (Bif. Albacete a Iniesta) 🔸 L042: Pk 248+102 al Pk 485+975 (Bif. Albacete a Alacant Terminal) 🔸 L046: Pk 461+356 al Pk 467+551 (Bif. Murcia a Bif. Vinalopó)", telefono: "967539532" },
-    { nombre: "Operador Banda Albacete 4", descripcion: "🔸L046: Pk 467+551 al Pk 529+281  (Elx Av a  Murcia del Carmen).", telefono: "967539511" },
+    { nombre: "Operador Banda Albacete 1", descripcion: "L040: Pk 35+000 al Pk 240+574 (Bif. Torrejón a Monteagudo de las Salinas)", telefono: "967539500" },
+    { nombre: "Operador Banda Albacete 2", descripcion: "L040: Pk 272+379 al Pk 397+214 (Minglanilla a Valencia J.S.)", telefono: "967539502" },
+    { nombre: "Operador Banda Albacete 3", descripcion: "L040: Pk 240+574 al Pk 272+379 (Bif. Albacete a Iniesta) - L042: Pk 248+102 al Pk 485+975 (Bif. Albacete a Alacant Terminal) - L046: Pk 461+356 al Pk 467+551 (Bif. Murcia a Bif. Vinalopó)", telefono: "967539532" },
+    { nombre: "Operador Banda Albacete 4", descripcion: "L046: Pk 467+551 al Pk 529+281 (Elx Av a Murcia del Carmen).", telefono: "967539511" },
     { nombre: "Operador Banda Atocha", descripcion: "Bif. Torrejón de Velasco - Madrid Chamartín", telefono: "914688406" },
 ];
 
@@ -1447,7 +1447,6 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('No se encontró el botón de cerrar de la tarjeta de Circulación');
     }
 
-
     function generarBotonesOperadores() {
         const operadoresContainer = document.getElementById('operadores-container');
         operadoresContainer.innerHTML = '';
@@ -1458,10 +1457,15 @@ document.addEventListener('DOMContentLoaded', function() {
             botonOperador.href = `tel:${operador.telefono}`;
             botonOperador.className = 'operador-button';
 
-            // Separar la descripción en líneas usando <br>
-             const descripcionConSaltos = operador.descripcion.replace(/\-/g, '<br>- ');
+             let descripcionHTML = "";
+                const lineas = operador.descripcion.split(' - ');
+                lineas.forEach(linea =>
+                    {
+                      descripcionHTML += `🔸${linea}<br>`
+                   });
 
-             botonOperador.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${descripcionConSaltos}</span>`;
+
+             botonOperador.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${descripcionHTML}</span>`;
 
             if (operador.nombre === "Operador Banda Atocha") {
                 operadoresContainer.innerHTML += `<h3 style="text-align: center; margin-top: 20px; margin-bottom: 10px;"><u>CRC MADRID</u></h3>`;
@@ -1471,7 +1475,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// ----- FIN FUNCIONALIDAD LISTADO OPERADORES CIRCULACIÓN ----
+// ----- FIN FUNCIONALIDAD LISTADO OPERADORES CIRCULACIÓN -----
 
 
 
