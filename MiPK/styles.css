@@ -735,6 +735,13 @@ footer img {
        }
     }
 
+#map {
+    touch-action: none; /* Evita que el navegador intercepte los gestos */
+    transform-origin: center;
+    transition: transform 0.1s linear; /* Suaviza el movimiento */
+}
+
+
   #actualizarUbicacion {
     font-size: 0.9em;
   }
