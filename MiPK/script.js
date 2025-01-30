@@ -167,6 +167,17 @@ function inicializarMapa(lat, lon) {
         maxZoom: 19
     }).addTo(mapa);
 
+    // 🔄 Permitir rotación con dos dedos
+    L.DomEvent.on(mapa._container, 'touchstart', function (event) {
+        if (event.touches.length === 2) {
+            mapa.touchRotate.enable();
+        }
+    });
+
+    L.DomEvent.on(mapa._container, 'touchend', function () {
+        mapa.touchRotate.disable();
+    });
+
     iconoUsuario = L.icon({
         iconUrl: 'https://cdn-icons-png.flaticon.com/512/1783/1783356.png',
         iconSize: [30, 30],
