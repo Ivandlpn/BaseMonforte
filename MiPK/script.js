@@ -1047,15 +1047,15 @@ function agregarEventosVerMapa(puertasCercanas) {
                 });
                 const marcadorPuerta = L.marker([latPuerta, lonPuerta], { icon: iconoPuertaMapa })
                     .addTo(mapa)
-                      .bindPopup(`
-                <div style="text-align: center;">
-                    <p style="margin: 0; font-size: 1.2em;">Vía ${via}</p>
-                    <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${pk}</p>
-                    <button id="compartirUbicacionBtn"
+                   .bindPopup(`
+    <div style="text-align: center;">
+        <p style="margin: 0; font-size: 1.2em;">Vía ${via}</p>
+        <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${pk}</p><br>
+        <button id="compartirUbicacionBtn"
                 onclick="compartirUbicacionPuerta(${latPuerta}, ${lonPuerta})"  <!-- Añadido onclick -->
                 style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer;">Compartir 💬</button>
-                </div>
-            `);
+    </div>
+`);
 
                 // *** INICIO: AÑADIR EVENT LISTENER PARA BOTÓN COMPARTIR EN POPUP DE PUERTA ***
         marcadorPuerta.on('popupopen', function() {
@@ -1128,14 +1128,14 @@ function ocultarPuertasCercanas() {
             const marcadorPuerta = L.marker([puerta.Latitud, puerta.Longitud], { icon: iconoPuertaMapa })
                 .addTo(mapa)
                   .bindPopup(`
-                <div style="text-align: center;">
-                    <p style="margin: 0; font-size: 1.2em;">Vía ${puerta.Via}</p>
-                    <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${formatearPK(puerta.PK)}</p>
-                      <button id="compartirUbicacionBtn"
+    <div style="text-align: center;">
+        <p style="margin: 0; font-size: 1.2em;">Vía ${puerta.Via}</p>
+        <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${formatearPK(puerta.PK)}</p><br>
+        <button id="compartirUbicacionBtn"
                 onclick="compartirUbicacionPuerta(${puerta.Latitud}, ${puerta.Longitud})"  <!-- Añadido onclick -->
                 style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer;">Compartir 💬</button>
-                </div>
-                `);
+    </div>
+`);
 
 
  // *** INICIO: AÑADIR EVENT LISTENER PARA BOTÓN COMPARTIR EN POPUP DE PUERTA (MOSTRAR TODAS) ***
