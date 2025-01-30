@@ -1567,36 +1567,36 @@ function generarBotonesOperadores() {
         console.log("PK del usuario (numérico):", pkNumerico);
         console.log("Linea del usuario:", lineaUsuario);
 
-        // Usar una función auxiliar para la lógica de coincidencia
-        const operadorMatch = (operador) => {
-            const nombre = operador.nombre;
-            if (nombre.includes("Banda Albacete 1") && lineaUsuario === '40' && pkNumerico > 35000 && pkNumerico < 240574)
-              return true
-            if (nombre.includes("Banda Albacete 2") && lineaUsuario === '40' && pkNumerico > 272379 && pkNumerico < 397214)
-                return true;
+         operadorRecomendado = operadoresCirculacionData.find(operador => {
 
-            if (nombre.includes("Banda Albacete 3")) {
-               if (lineaUsuario === '40' && pkNumerico > 240574 && pkNumerico < 272379)
+           if (operador.nombre.includes("Banda Albacete 1") && lineaUsuario === '40' && pkNumerico > 35000 && pkNumerico < 240574)
+           {
+              return true
+           }
+            if (operador.nombre.includes("Banda Albacete 2") && lineaUsuario === '40' && pkNumerico > 272379 && pkNumerico < 397214)
+             {
+                return true
+             }
+            if (operador.nombre.includes("Banda Albacete 3")) {
+              if (lineaUsuario === '40' && pkNumerico > 240574 && pkNumerico < 272379)
                     return true;
-               if (lineaUsuario === '42' && pkNumerico > 248102 && pkNumerico < 485975)
-                    return true;
-                if (lineaUsuario === '46' && pkNumerico > 461356 && pkNumerico < 467551)
-                    return true;
+                 if (lineaUsuario === '42' && pkNumerico > 248102 && pkNumerico < 485975)
+                   return true;
+                  if (lineaUsuario === '46' && pkNumerico > 461356 && pkNumerico < 467551)
+                  return true;
                 }
-            if (nombre.includes("Banda Albacete 4") && lineaUsuario === '46' && pkNumerico > 467551 && pkNumerico < 529281)
+            if (operador.nombre.includes("Banda Albacete 4") && lineaUsuario === '46' && pkNumerico > 467551 && pkNumerico < 529281)
+                return true
+               if (operador.nombre.includes("Banda Atocha") && lineaUsuario === '40')
                  return true;
 
-            if (nombre.includes("Banda Atocha") && lineaUsuario === '40')
-                  return true;
-            return false;
-        };
+              return false
+       });
+       console.log("Operador Recomendado:", operadorRecomendado);
 
-
-        operadorRecomendado = operadoresCirculacionData.find(operadorMatch);
-        console.log("Operador Recomendado:", operadorRecomendado);
     }
 
-    operadoresCirculacionData.forEach((operador) => {
+     operadoresCirculacionData.forEach((operador) => {
         const botonOperador = document.createElement('a');
         botonOperador.href = `tel:${operador.telefono}`;
         botonOperador.className = 'operador-button';
@@ -1605,25 +1605,26 @@ function generarBotonesOperadores() {
             operadoresContainer.innerHTML += `<h3 style="text-align: center; margin-top: 20px; margin-bottom: 10px;"><u>CRC MADRID</u></h3>`;
         }
         if (operadorRecomendado && operador.nombre === operadorRecomendado.nombre) {
-            botonOperador.style.backgroundColor = '#ffeb3b'; // Color de fondo destacado
-            botonOperador.style.border = '4px solid #fbc02d'; // Borde destacado
+            botonOperador.style.backgroundColor = '#ffeb3b';
+            botonOperador.style.border = '4px solid #fbc02d';
         }
         operadoresContainer.appendChild(botonOperador);
     });
 
 
-    if (window.pkMasCercano) {
-        const pkNumerico = pkToNumber(window.pkMasCercano.pk);
+
+     if (window.pkMasCercano) {
+         const pkNumerico = pkToNumber(window.pkMasCercano.pk);
         const lineaUsuario = window.pkMasCercano.linea;
-         let operadorRecomendadoTexto = "Ninguno";
+          let operadorRecomendadoTexto = "Ninguno";
              if(operadorRecomendado)
             {
                 operadorRecomendadoTexto = operadorRecomendado.nombre
            }
         const textoInformativo = `ℹ️ Estás en el PK ${formatearPK(window.pkMasCercano.pk)} de la línea ${lineaUsuario}.<br>Este punto pertenece al ámbito de <br><b>${operadorRecomendadoTexto}</b>.`;
         const infoParrafo = document.createElement('p');
-         infoParrafo.className = 'circulacion-info-text';
-           infoParrafo.innerHTML = textoInformativo;
+           infoParrafo.className = 'circulacion-info-text';
+             infoParrafo.innerHTML = textoInformativo;
            operadoresContainer.appendChild(infoParrafo);
     }
      else{
