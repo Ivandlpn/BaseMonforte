@@ -1631,7 +1631,7 @@ function generarContenidoCsi() {
         const lineaUsuario = window.pkMasCercano.linea;
         let csiRecomendado = "CSI Albacete";
 
-       if (lineaUsuario === "40" && pkNumerico < 293907 )
+       if (lineaUsuario === "40" && pkNumerico < 034410 )
        {
            csiRecomendado = "CSI Madrid"
         }
