@@ -1556,7 +1556,7 @@ function generarContenidoCps() {
         botonesCps.forEach(boton => {
             if (boton.innerHTML.includes(cpsRecomendado)) {
                 boton.style.backgroundColor = '#ffeb3b'; // Color de fondo destacado
-                boton.style.border = '2px solid #fbc02d'; // Borde destacado
+                boton.style.border = '4px solid #fbc02d'; // Borde destacado
             }
         });
     } else {
