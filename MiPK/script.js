@@ -1414,61 +1414,64 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                 // ----- FIN FUNCIONALIDAD BOTÓN CIRCULACIÓN -----
                 
                 
-                // ----- INICIO FUNCIONALIDAD LISTADO OPERADORES CIRCULACIÓN -----
-                
-                const operadoresCirculacionData = [ // Array con los datos de los operadores
-                    { nombre: "Operador Banda Albacete 1", descripcion: "Pk 35+000 al Pk 240+574 (Bif. Torrejón a Monteagudo de las Salinas)", telefono: "967539500" },
-                    { nombre: "Operador Banda Albacete 2", descripcion: "Pk 272+379 al Pk 397+214 (Minglanilla a Valencia J.S.)", telefono: "967539502" },
-                    { nombre: "Operador Banda Albacete 3", descripcion: "L040: Pk 240+574 al Pk 272+379 (Bif. Albacete a Iniesta) - L042: Pk 248+102 al Pk 485+975 (Bif. Albacete a Alacant Terminal) - L046: Pk 461+356 al Pk 467+551 (Bif. Murcia a Bif. Vinalopó)", telefono: "967539532" },
-                    { nombre: "Operador Banda Albacete 4", descripcion: "L046: Pk 467+551 al Pk 529+281  (Elx Av a  Murcia del Carmen).", telefono: "967539511" },
-                    { nombre: "Operador Banda Atocha", descripcion: "Bif. Torrejón de Velasco - Madrid Chamartín", telefono: "914688406" },
-                ];
-                
-                document.addEventListener('DOMContentLoaded', function() {
-                    const circulacionButton = document.querySelector('.plus-option-button[aria-label="CIRCULACIÓN"]');
-                    const circulacionCardContainer = document.getElementById('circulacion-card-container');
-                    const operadoresContainer = document.getElementById('operadores-container');
-                    const cerrarCirculacionCardButton = document.getElementById('cerrar-circulacion-card');
-                
-                    if (circulacionButton) {
-                        circulacionButton.addEventListener('click', function() {
-                            circulacionCardContainer.style.display = 'flex'; // Mostrar la tarjeta de operadores
-                            generarBotonesOperadores(); // Llama a la función para generar los botones
-                        });
-                    } else {
-                        console.error('No se encontró el botón CIRCULACIÓN');
-                    }
-                
-                    if (cerrarCirculacionCardButton) {
-                        cerrarCirculacionCardButton.addEventListener('click', function() {
-                            circulacionCardContainer.style.display = 'none'; // Ocultar la tarjeta de operadores al hacer clic en "Cerrar"
-                        });
-                    } else {
-                        console.error('No se encontró el botón de cerrar de la tarjeta de Circulación');
-                    }
-                
-                
-                       function generarBotonesOperadores() {
-                    const operadoresContainer = document.getElementById('operadores-container'); // Obtener el contenedor AQUÍ
-                    operadoresContainer.innerHTML = ''; // Limpiar el contenedor antes de añadir botones nuevos
-                 operadoresContainer.innerHTML += `<h3 style="text-align: center; margin-top: 10px; margin-bottom: 10px;"><u>CRC ALBACETE</u></h3>`; // Añadir el título de CRC Albacete
-                    operadoresCirculacionData.forEach((operador, index) => {
-                        const botonOperador = document.createElement('a'); // Usar <a> para enlaces tel:
-                        botonOperador.href = `tel:${operador.telefono}`; // Enlace tel: para iniciar llamada
-                        botonOperador.className = 'operador-button'; // Clase CSS para estilos (a definir en CSS)
-                        // *** MODIFICADO: Usar innerHTML para permitir etiquetas HTML (como <br>) ***
-                        botonOperador.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${operador.descripcion}</span>`;
-                        // *** FIN MODIFICACIÓN ***
-                        if (operador.nombre === "Operador Banda Atocha")
-                        {
-                              operadoresContainer.innerHTML += `<h3 style="text-align: center; margin-top: 20px; margin-bottom: 10px;"><u>CRC MADRID</u></h3>`;  //Añadir el título de CRC Madrid antes de la ultima tarjeta.
-                         }
-                         operadoresContainer.appendChild(botonOperador); // Añadir botón al contenedor
-                    });
-                }
-                });
-                
-                // ----- FIN FUNCIONALIDAD LISTADO OPERADORES CIRCULACIÓN ----
+               // ----- INICIO FUNCIONALIDAD LISTADO OPERADORES CIRCULACIÓN -----
+
+const operadoresCirculacionData = [
+    { nombre: "Operador Banda Albacete 1", descripcion: "Pk 35+000 al Pk 240+574 (Bif. Torrejón a Monteagudo de las Salinas)", telefono: "967539500" },
+    { nombre: "Operador Banda Albacete 2", descripcion: "Pk 272+379 al Pk 397+214 (Minglanilla a Valencia J.S.)", telefono: "967539502" },
+    { nombre: "Operador Banda Albacete 3", descripcion: "L040: Pk 240+574 al Pk 272+379 (Bif. Albacete a Iniesta) - L042: Pk 248+102 al Pk 485+975 (Bif. Albacete a Alacant Terminal) - L046: Pk 461+356 al Pk 467+551 (Bif. Murcia a Bif. Vinalopó)", telefono: "967539532" },
+    { nombre: "Operador Banda Albacete 4", descripcion: "L046: Pk 467+551 al Pk 529+281  (Elx Av a  Murcia del Carmen).", telefono: "967539511" },
+    { nombre: "Operador Banda Atocha", descripcion: "Bif. Torrejón de Velasco - Madrid Chamartín", telefono: "914688406" },
+];
+
+document.addEventListener('DOMContentLoaded', function() {
+    const circulacionButton = document.querySelector('.plus-option-button[aria-label="CIRCULACIÓN"]');
+    const circulacionCardContainer = document.getElementById('circulacion-card-container');
+    const operadoresContainer = document.getElementById('operadores-container');
+    const cerrarCirculacionCardButton = document.getElementById('cerrar-circulacion-card');
+
+    if (circulacionButton) {
+        circulacionButton.addEventListener('click', function() {
+            circulacionCardContainer.style.display = 'flex';
+            generarBotonesOperadores();
+        });
+    } else {
+        console.error('No se encontró el botón CIRCULACIÓN');
+    }
+
+    if (cerrarCirculacionCardButton) {
+        cerrarCirculacionCardButton.addEventListener('click', function() {
+            circulacionCardContainer.style.display = 'none';
+        });
+    } else {
+        console.error('No se encontró el botón de cerrar de la tarjeta de Circulación');
+    }
+
+
+    function generarBotonesOperadores() {
+        const operadoresContainer = document.getElementById('operadores-container');
+        operadoresContainer.innerHTML = '';
+        operadoresContainer.innerHTML += `<h3 style="text-align: center; margin-top: 10px; margin-bottom: 10px;"><u>CRC ALBACETE</u></h3>`;
+
+        operadoresCirculacionData.forEach((operador) => {
+            const botonOperador = document.createElement('a');
+            botonOperador.href = `tel:${operador.telefono}`;
+            botonOperador.className = 'operador-button';
+
+            // Separar la descripción en líneas usando <br>
+             const descripcionConSaltos = operador.descripcion.replace(/\-/g, '<br>- ');
+
+             botonOperador.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${descripcionConSaltos}</span>`;
+
+            if (operador.nombre === "Operador Banda Atocha") {
+                operadoresContainer.innerHTML += `<h3 style="text-align: center; margin-top: 20px; margin-bottom: 10px;"><u>CRC MADRID</u></h3>`;
+            }
+            operadoresContainer.appendChild(botonOperador);
+        });
+    }
+});
+
+// ----- FIN FUNCIONALIDAD LISTADO OPERADORES CIRCULACIÓN ----
 
 
 
