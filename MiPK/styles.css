@@ -693,37 +693,6 @@ footer img {
     }
 
 
-/* Estilos para las tablas dentro de la tarjeta de trenes */
-
-/* Estilos para las tablas dentro de la tarjeta de trenes */
-
-#trenes-card table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    text-align: center;
-    background-color: white;
-    color: black;
-    table-layout: fixed; /* Añadido: para que las celdas respeten el ancho */
-}
-
-#trenes-card th, #trenes-card td {
-    padding: 8px;
-    border: 1px solid #ddd;
-    word-wrap: break-word; /* Añadido: para que el texto se divida en varias líneas si es necesario */
-    overflow: hidden; /* Ocultar cualquier desbordamiento */
-    white-space: nowrap; /* Evitar saltos de línea en textos cortos */
-}
-
-#trenes-card th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-}
-
-/* Estilo para las filas alternas */
-/* #trenes-card tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-} */
 
 
 @media (max-width: 600px) {
@@ -735,12 +704,18 @@ footer img {
        }
     }
 
-#map {
-    touch-action: none; /* Evita que el navegador intercepte los gestos */
-    transform-origin: center;
-    transition: transform 0.1s linear; /* Suaviza el movimiento */
-}
 
+.csi-info-text {
+   margin-bottom: 20px; /* Espacio debajo del texto informativo (sin cambios) */
+    padding: 15px; /* Sin cambios */
+    background-color: #fff3cd; /* Sin cambios */
+    border: 1px solid #ffe082; /* Sin cambios */
+    border-radius: 5px; /* Sin cambios */
+    text-align: center; /* Sin cambios */
+    font-style: italic; /* Sin cambios */
+    color: #555; /* Sin cambios */
+    margin-top: 30px; /* *** AÑADIDO: Espacio superior para separar del contenido anterior *** */
+}
 
   #actualizarUbicacion {
     font-size: 0.9em;
