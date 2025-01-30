@@ -1614,7 +1614,7 @@ function generarContenidoCps() {
                         console.error('No se encontró el botón de cerrar de la tarjeta CSI');
                     }
                 
- function generarContenidoCsi() {
+function generarContenidoCsi() {
     const csiContentContainer = document.getElementById('csi-content'); // Obtener el contenedor de contenido CSI
     csiContentContainer.innerHTML = ''; // Limpiar el contenedor de contenido CSI
 
@@ -1633,7 +1633,7 @@ function generarContenidoCps() {
 
         if (
             (lineaUsuario === '40' && pkNumerico > 034410) ||
-            (lineaUsuario === '42' ||
+            lineaUsuario === '42' ||
             lineaUsuario === '46' ||
             lineaUsuario === '48'
         ) {
@@ -1658,7 +1658,7 @@ function generarContenidoCps() {
     } else {
         csiContentContainer.innerHTML += '<p style="font-style: italic;">No se pudo determinar tu ubicación para recomendar CSI.</p>';
     }
-}
+
                 });
                 
                 // ----- FIN FUNCIONALIDAD BOTÓN CSI -----
