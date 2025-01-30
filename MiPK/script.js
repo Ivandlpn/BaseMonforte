@@ -936,20 +936,23 @@ checkTuneles.addEventListener('change', function () {
 let cachedPuertasCercanas = null;
 let lastUserLocation = null;
 
+function compartirUbicacionPuerta(lat, lon) {
+    const googleMapsUrl = `https://www.google.com/maps?q=${lat},${lon}`;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    if (navigator.share) {
+        navigator.share({
+            title: 'Ubicación de Puerta',
+            text: 'Aquí está la ubicación de la puerta en el mapa:',
+            url: googleMapsUrl
+        }).then(() => {
+            console.log('Ubicación de puerta compartida exitosamente');
+        })
+        .catch((error) => console.error('Error al compartir ubicación de puerta', error));
+    } else {
+        // Si navigator.share no está soportado, muestra una alerta con el enlace
+        alert('Tu navegador no soporta la función de compartir. Aquí está el enlace a Google Maps:\n\n' + googleMapsUrl);
+    }
+}
 
 
  function mostrarPuertasCercanas() {
@@ -1048,7 +1051,9 @@ function agregarEventosVerMapa(puertasCercanas) {
                 <div style="text-align: center;">
                     <p style="margin: 0; font-size: 1.2em;">Vía ${via}</p>
                     <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${pk}</p>
-                    <button id="compartirUbicacionBtn" style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer;">Compartir 💬</button>
+                    <button id="compartirUbicacionBtn"
+                onclick="compartirUbicacionPuerta(${latPuerta}, ${lonPuerta})"  <!-- Añadido onclick -->
+                style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer;">Compartir 💬</button>
                 </div>
             `);
 
@@ -1126,9 +1131,12 @@ function ocultarPuertasCercanas() {
                 <div style="text-align: center;">
                     <p style="margin: 0; font-size: 1.2em;">Vía ${puerta.Via}</p>
                     <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${formatearPK(puerta.PK)}</p>
-                     <button id="compartirUbicacionBtn" style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer;">Compartir 💬</button>
+                      <button id="compartirUbicacionBtn"
+                onclick="compartirUbicacionPuerta(${puerta.Latitud}, ${puerta.Longitud})"  <!-- Añadido onclick -->
+                style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer;">Compartir 💬</button>
                 </div>
                 `);
+
 
  // *** INICIO: AÑADIR EVENT LISTENER PARA BOTÓN COMPARTIR EN POPUP DE PUERTA (MOSTRAR TODAS) ***
             marcadorPuerta.on('popupopen', function() {
@@ -1333,6 +1341,9 @@ function generarHTMLPuertas(puertasCercanas) {
 
     return html;
 }
+
+
+
 
             /////  INCIO BOTÓN BUSQUEDA PUERTAS POR PK /////---------------------------------------------------------------------------------------
 
