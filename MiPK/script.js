@@ -1098,8 +1098,10 @@ function ocultarPuertasCercanas() {
                 <div style="text-align: center;">
                     <p style="margin: 0; font-size: 1.2em;">Vía ${puerta.Via}</p>
                     <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${formatearPK(puerta.PK)}</p>
+                     <button id="compartirUbicacionBtn" style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer;">Compartir 💬</button>
                 </div>
                 `);
+            
               bounds.push([puerta.Latitud, puerta.Longitud]);
 
         });
