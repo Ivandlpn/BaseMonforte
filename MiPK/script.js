@@ -1569,7 +1569,7 @@ function generarContenidoCps() {
 
 
 
-                // ----- INICIO FUNCIONALIDAD BOTÓN CSI -----
+// ----- INICIO FUNCIONALIDAD BOTÓN CSI -----
                 
                 const operadoresCsiData = [ // Array con los datos de los operadores CSI
                     {
@@ -1614,52 +1614,19 @@ function generarContenidoCps() {
                         console.error('No se encontró el botón de cerrar de la tarjeta CSI');
                     }
                 
-function generarContenidoCsi() {
-    const csiContentContainer = document.getElementById('csi-content'); // Obtener el contenedor de contenido CSI
-    csiContentContainer.innerHTML = ''; // Limpiar el contenedor de contenido CSI
-
-    operadoresCsiData.forEach(operador => {
-        const botonCsi = document.createElement('a'); // Usar <a> para enlaces tel:
-        botonCsi.href = `tel:${operador.telefono}`; // Enlace tel: para iniciar llamada
-        botonCsi.className = 'operador-button csi-option-button'; // Reutilizar clase operador-button y añadir csi-option-button
-        botonCsi.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`; // Formato similar a botones Circulación
-        csiContentContainer.appendChild(botonCsi); // Añadir botón al contenedor
-    });
-
-    if (window.pkMasCercano) {
-        const pkNumerico = pkToNumber(window.pkMasCercano.pk);
-        const lineaUsuario = window.pkMasCercano.linea;
-        let csiRecomendado = "CSI Madrid";
-
-        if (
-            (lineaUsuario === '40' && pkNumerico > 034410) ||
-            lineaUsuario === '42' ||
-            lineaUsuario === '46' ||
-            lineaUsuario === '48'
-        ) {
-            csiRecomendado = "CSI Albacete";
-        }
-
-        const textoInformativo = `ℹ️ Estás en el PK ${formatearPK(window.pkMasCercano.pk)} de la línea ${lineaUsuario}.<br>Este punto pertenece al ámbito de <br><b>${csiRecomendado}</b>.`;
-
-        const infoParrafo = document.createElement('p');
-        infoParrafo.className = 'csi-info-text';
-        infoParrafo.innerHTML = textoInformativo;
-        csiContentContainer.appendChild(infoParrafo);
-
-        // Destacar el botón del CSI recomendado
-        const botonesCsi = csiContentContainer.querySelectorAll('.csi-option-button');
-        botonesCsi.forEach(boton => {
-            if (boton.innerHTML.includes(csiRecomendado)) {
-                boton.style.backgroundColor = '#ffeb3b'; // Color de fondo destacado
-                boton.style.border = '4px solid #fbc02d'; // Borde más grueso
-            }
-        });
-    } else {
-        csiContentContainer.innerHTML += '<p style="font-style: italic;">No se pudo determinar tu ubicación para recomendar CSI.</p>';
-    }
-
-               
+                    function generarContenidoCsi() {
+                        const csiContentContainer = document.getElementById('csi-content'); // Obtener el contenedor de contenido CSI
+                        csiContentContainer.innerHTML = ''; // Limpiar el contenedor de contenido CSI
+                
+                        operadoresCsiData.forEach(operador => {
+                            const botonCsi = document.createElement('a'); // Usar <a> para enlaces tel:
+                            botonCsi.href = `tel:${operador.telefono}`; // Enlace tel: para iniciar llamada
+                            botonCsi.className = 'operador-button csi-option-button'; // Reutilizar clase operador-button y añadir csi-option-button
+                            botonCsi.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`; // Formato similar a botones Circulación y CPS
+                            csiContentContainer.appendChild(botonCsi); // Añadir botón al contenedor
+                        });
+                    }
+                });
                 
                 // ----- FIN FUNCIONALIDAD BOTÓN CSI -----
 
