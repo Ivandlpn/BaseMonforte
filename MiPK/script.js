@@ -1519,19 +1519,18 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                         }
                     
 function generarContenidoCps() {
-    const cpsContentContainer = document.getElementById('cps-content'); // Obtener el contenedor de contenido CPS
-    cpsContentContainer.innerHTML = ''; // Limpiar el contenedor de contenido CPS
+    const cpsContentContainer = document.getElementById('cps-content');
+    cpsContentContainer.innerHTML = '';
 
-    operadoresCpsData.forEach(operador => { // Generar botones de operador (SIN CAMBIOS en esta parte)
+    operadoresCpsData.forEach(operador => {
         const botonCps = document.createElement('a');
         botonCps.href = `tel:${operador.telefono}`;
         botonCps.className = 'operador-button cps-option-button';
         botonCps.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`;
-        cpsContentContainer.appendChild(botonCps); // Añadir botón al contenedor (PRIMERO)
+        cpsContentContainer.appendChild(botonCps);
     });
 
-    // *** INICIO: AÑADIR TEXTO INFORMATIVO DEBAJO DE LOS BOTONES ***
-    if (window.pkMasCercano) { // Verificar si se ha calculado el PK del usuario
+    if (window.pkMasCercano) {
         const pkNumerico = pkToNumber(window.pkMasCercano.pk);
         const lineaUsuario = window.pkMasCercano.linea;
         let cpsRecomendado = "CPS Madrid";
@@ -1550,12 +1549,19 @@ function generarContenidoCps() {
         const infoParrafo = document.createElement('p');
         infoParrafo.className = 'cps-info-text';
         infoParrafo.innerHTML = textoInformativo;
-        cpsContentContainer.appendChild(infoParrafo); // Añadir párrafo al contenedor CPS (SEGUNDO - DESPUÉS DE LOS BOTONES)
+        cpsContentContainer.appendChild(infoParrafo);
+
+        // Destacar el botón del CPS recomendado
+        const botonesCps = cpsContentContainer.querySelectorAll('.cps-option-button');
+        botonesCps.forEach(boton => {
+            if (boton.innerHTML.includes(cpsRecomendado)) {
+                boton.style.backgroundColor = '#ffeb3b'; // Color de fondo destacado
+                boton.style.border = '2px solid #fbc02d'; // Borde destacado
+            }
+        });
     } else {
-        // Mensaje si no se puede determinar el PK del usuario (opcional)
-        cpsContentContainer.innerHTML += '<p style="font-style: italic;">No se pudo determinar tu ubicación para recomendar CPS.</p>'; // Usar += para añadir, no reemplazar
+        cpsContentContainer.innerHTML += '<p style="font-style: italic;">No se pudo determinar tu ubicación para recomendar CPS.</p>';
     }
-    // *** FIN: AÑADIR TEXTO INFORMATIVO DEBAJO DE LOS BOTONES ***
 }
                     });
                     
