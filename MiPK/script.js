@@ -498,7 +498,7 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
         className: 'icono-tiempo',
         // *** MODIFICADO: Usar la ruta al icono personalizado en el HTML ***
         html: `<img src="${iconoUrl}" alt="${datosTiempo.descripcion}">`,
-        iconSize: [5, 5], // Puedes ajustar el tamaño si es necesario
+       // iconSize: [5, 5], // Puedes ajustar el tamaño si es necesario
       }),
     })
       .addTo(mapa)
