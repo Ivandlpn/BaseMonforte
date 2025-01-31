@@ -555,10 +555,13 @@ checkMitramo.addEventListener('change', function () {
 
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
-let marcadoresTrazado = []; // Esta variable ya no se usa directamente para los marcadores, pero la dejo por si la usas en otra parte
-let ultimoPKPorLinea = {}; // Objeto para almacenar el último PK por línea - ya no es tan relevante para líneas, pero puede ser útil para otras lógicas
+let marcadoresTrazado = []; // Variable para almacenar los marcadores de trazado (puntos)
+let lineasTrazado = [];     // Variable para almacenar las polilíneas de trazado (líneas)
+let ultimoPKPorLinea = {}; // Objeto para almacenar el último PK por línea
 
 async function activarCapaTrazado() {
+    // Limpiar cualquier trazado existente antes de dibujar uno nuevo
+    limpiarCapaTrazado();
 
     try {
         const datosTrazado = await cargarArchivosJSON(rutasArchivos);
@@ -609,7 +612,6 @@ async function activarCapaTrazado() {
                 }
             }
         }
-        // Procesar el último segmento si tiene más de un punto
         if (segmentoActual.length > 1) {
             segmentosDeLinea.push([...segmentoActual]);
         }
@@ -617,11 +619,12 @@ async function activarCapaTrazado() {
 
         segmentosDeLinea.forEach(segmento => {
             const latlngsSegmento = segmento.map(punto => [parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
-            L.polyline(latlngsSegmento, {
+            const polyline = L.polyline(latlngsSegmento, { // Guardar la polilínea en una variable
                 color: 'blue', // Color de las líneas
                 weight: 2,    // Grosor de las líneas
                 opacity: 0.7   // Opacidad
             }).addTo(mapa);
+            lineasTrazado.push(polyline); // Añadir la polilínea al array de líneas de trazado
         });
     }
 
@@ -646,12 +649,22 @@ async function activarCapaTrazado() {
 }
 
 function desactivarCapaTrazado() {
-    // Eliminar todas las polilíneas del mapa (capa de trazado)
-    mapa.eachLayer(layer => {
-        if (layer instanceof L.Polyline) {
-            mapa.removeLayer(layer);
-        }
+    limpiarCapaTrazado();
+}
+
+function limpiarCapaTrazado() {
+    // Eliminar marcadores de punto
+    marcadoresTrazado.forEach(marcador => {
+        mapa.removeLayer(marcador);
     });
+    marcadoresTrazado = []; // Limpiar el array de marcadores
+
+    // Eliminar polilíneas (líneas)
+    lineasTrazado.forEach(linea => {
+        mapa.removeLayer(linea);
+    });
+    lineasTrazado = []; // Limpiar el array de líneas
+    ultimoPKPorLinea = {}; // Limpiar los últimos PKs por línea
 }
 
 
@@ -664,7 +677,6 @@ checkTrazado.addEventListener('change', function () {
 });
 
 /////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
-
 
 
 
