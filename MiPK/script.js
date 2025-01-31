@@ -489,9 +489,15 @@ function dibujarLineasCadaIntervaloPK(puntos, linea, intervaloPKMetros) {
 
 // Convierte "368+589" en 368589 (metros)
 function pkToNumber(pkString) {
-    const parts = pkString.split('+');
-    return parseInt(parts[0], 10) * 1000 + parseInt(parts[1] || 0);
+    const match = pkString.match(/^(\d+)\+(\d{3})$/); // Ejemplo: "463+890"
+    if (match) {
+        return parseInt(match[1]) * 1000 + parseInt(match[2]); 
+    } else {
+        console.error(`Formato de PK inválido: ${pkString}`);
+        return NaN; // Devuelve NaN si el formato no es correcto
+    }
 }
+
 
 // Cargar archivos JSON con los datos del trazado
 async function cargarArchivosJSON(rutas) {
