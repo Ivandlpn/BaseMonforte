@@ -416,10 +416,72 @@ document.addEventListener('click', function(event) {
 
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
+let trazadoLayer = null; // Variable para guardar la capa de trazado
 
+function activarCapaTrazado() { // <--- DEFINICIÓN DE activarCapaTrazado PRIMERO
+    console.log("Activar Capa Trazado (con líneas cada 2km)");
+    if (trazadoLayer) {
+        mapa.addLayer(trazadoLayer);
+        return;
+    }
+
+    trazadoLayer = L.layerGroup();
+    let lastPoint = null;
+    let currentLineCoordinates = [];
+    const distanciaSegmento = 2000;
+
+    cargarArchivosJSON(rutasArchivos)
+        .then(dataTrazado => {
+            dataTrazado.forEach(punto => {
+                const latlng = [punto.Latitud, punto.Longitud];
+
+                if (!lastPoint) {
+                    currentLineCoordinates.push(latlng);
+                    lastPoint = latlng;
+                } else {
+                    const distance = mapa.distance(lastPoint, latlng);
+
+                    if (distance <= distanciaSegmento) {
+                        currentLineCoordinates.push(latlng);
+                        lastPoint = latlng;
+                    } else {
+                        if (currentLineCoordinates.length > 1) {
+                            L.polyline(currentLineCoordinates, {
+                                color: 'blue',
+                                weight: 2,
+                                opacity: 0.7
+                            }).addTo(trazadoLayer);
+                        }
+                        currentLineCoordinates = [latlng];
+                        lastPoint = latlng;
+                    }
+                }
+            });
+
+            if (currentLineCoordinates.length > 1) {
+                L.polyline(currentLineCoordinates, {
+                    color: 'blue',
+                    weight: 2,
+                    opacity: 0.7
+                }).addTo(trazadoLayer);
+            }
+
+            mapa.addLayer(trazadoLayer);
+        })
+        .catch(error => {
+            console.error("Error al activar la capa de trazado:", error);
+        });
+}
+
+function desactivarCapaTrazado() { // <--- DEFINICIÓN DE desactivarCapaTrazado DESPUÉS
+    if (trazadoLayer && mapa.hasLayer(trazadoLayer)) {
+        mapa.removeLayer(trazadoLayer);
+    }
+}
 
 // Evento del checkbox para activar/desactivar la capa de trazado
-checkTrazado.addEventListener('change', function () {
+const checkTrazado = document.getElementById('check-trazado'); // <--- checkTrazado DESPUÉS de las funciones
+checkTrazado.addEventListener('change', function () { // <--- Event listener DESPUÉS de las funciones y checkTrazado
     if (this.checked) {
         console.log("Activando capa de trazado...");
         activarCapaTrazado();
@@ -428,7 +490,6 @@ checkTrazado.addEventListener('change', function () {
         desactivarCapaTrazado();
     }
 });
-
 
 ////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
