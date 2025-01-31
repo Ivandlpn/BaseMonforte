@@ -233,6 +233,7 @@ footer img {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra */
     position: relative; /* Para posicionar el botón de cierre */
     width: 60%; /* Ancho de la tarjeta */
+          font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
 }
 
 .close-button {
