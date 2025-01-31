@@ -396,7 +396,14 @@ footer img {
     flex-direction: column;
     gap: 10px;
     align-items: center;
-      flex: 1; /* Ajusta el tamaño de cada columna en movil */
+      flex: 1; /* Ajusta el tamaño de cada columna en movil *
+}
+
+  #plus-card h2 {
+    margin-bottom: 15px; /* Reduce un poco el margen inferior del título CPS */
+        font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
+    font-weight: 700; /* Añadir negrita */
+  font-size: 1.1em;
 }
 
 /* Ajuste del ancho de la tarjeta overlay-card (opcional, según necesidad) */
@@ -539,6 +546,8 @@ footer img {
         font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
     font-weight: 700; /* Añadir negrita */
 }
+
+
 
 .telemando-llamar-button {
     background-color: #ffc107; /* Amarillo/ámbar para los botones "Llamar" de TELEMANDO */
