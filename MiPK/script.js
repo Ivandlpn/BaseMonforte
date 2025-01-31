@@ -416,7 +416,7 @@ document.addEventListener('click', function(event) {
 
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
-const checkTrazado = document.getElementById('check-trazado');
+//const checkTrazado = document.getElementById('check-trazado');
 let trazadoLayer = null; // Variable para almacenar la capa de trazado
 const intervaloMetros = 50; // Intervalo de muestreo en metros (puedes ajustarlo)
 
