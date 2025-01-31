@@ -1416,12 +1416,46 @@ document.getElementById("cerrar-plus-card").addEventListener("click", () => {
                 
 // ----- INICIO FUNCIONALIDAD LISTADO OPERADORES CIRCULACIÓN -----
 
+
+
 const operadoresCirculacionData = [
     { nombre: "Operador Banda Albacete 1", descripcion: "L040: Pk 35+000 al Pk 240+574", telefono: "967539500" },
     { nombre: "Operador Banda Albacete 2", descripcion: "L040: Pk 272+379 al Pk 397+214", telefono: "967539502" },
     { nombre: "Operador Banda Albacete 3", descripcion: "L040: Pk 240+574 al Pk 272+379 - L042: Pk 248+102 al Pk 485+975 - L046: Pk 461+356 al Pk 467+551", telefono: "967539532" },
     { nombre: "Operador Banda Albacete 4", descripcion: "L046: Pk 467+551 al Pk 529+281", telefono: "967539511" },
     { nombre: "Operador Banda Atocha", descripcion: "L040: Pk 000+000 al Pk 35+000", telefono: "914688406" },
+];
+
+const operadoresCirculacionData = [
+    {
+        nombre: "Operador Banda Albacete 1",
+        lineas: [{ linea: "40", pk_inicio: 35000, pk_fin: 240574 }],
+        telefono: "967539500"
+    },
+    {
+        nombre: "Operador Banda Albacete 2",
+        lineas: [{ linea: "40", pk_inicio: 272379, pk_fin: 397214 }],
+        telefono: "967539502"
+    },
+    {
+        nombre: "Operador Banda Albacete 3",
+        lineas: [
+            { linea: "40", pk_inicio: 240574, pk_fin: 272379 },
+            { linea: "42", pk_inicio: 248102, pk_fin: 485975 },
+            { linea: "46", pk_inicio: 461356, pk_fin: 467551 }
+        ],
+        telefono: "967539532"
+    },
+    {
+        nombre: "Operador Banda Albacete 4",
+        lineas: [{ linea: "46", pk_inicio: 467551, pk_fin: 529281 }],
+        telefono: "967539511"
+    },
+    {
+        nombre: "Operador Banda Atocha",
+        lineas: [{ linea: "40", pk_inicio: 0, pk_fin: 35000 }],
+        telefono: "914688406"
+    },
 ];
 
 document.addEventListener('DOMContentLoaded', function() {
