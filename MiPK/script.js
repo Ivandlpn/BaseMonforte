@@ -1643,7 +1643,7 @@ function generarContenidoCsi() {
                                 if (operador.telefonos && operador.telefonos.length > 1) { // Handle second phone for Villaverde if it exists
                                     const botonTelemando2 = document.createElement('a');
                                     botonTelemando2.className = 'operador-button'; // Use ONLY 'operador-button' class (consistent style)
-                                    botonTelemando2.innerHTML = `<b>${operador.nombre} (Tel 2)</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`; // Indicate "(Tel 2)"
+                                    botonTelemando2.innerHTML = `<b>📞 ${operador.nombre} (Tel 2)</b><br><span class="operador-descripcion">${operador.lineas.join('<br>')}</span>`; // Indicate "(Tel 2)"
                                     botonTelemando2.href = `tel:${operador.telefonos[1]}`; // Link to the second phone number
                                     telemandoContentContainer.appendChild(botonTelemando2); // Append the second button as well
                                 }
