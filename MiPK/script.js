@@ -480,7 +480,7 @@ function desactivarCapaTrazado() { // <--- DEFINICIÓN DE desactivarCapaTrazado 
 }
 
 // Evento del checkbox para activar/desactivar la capa de trazado
-const checkTrazado = document.getElementById('check-trazado'); // <--- checkTrazado DESPUÉS de las funciones
+//const checkTrazado = document.getElementById('check-trazado'); // <--- checkTrazado DESPUÉS de las funciones
 checkTrazado.addEventListener('change', function () { // <--- Event listener DESPUÉS de las funciones y checkTrazado
     if (this.checked) {
         console.log("Activando capa de trazado...");
