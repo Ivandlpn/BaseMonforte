@@ -1831,7 +1831,7 @@ function mostrarResultadosEnTabla(resultados) {
              logoElement.classList.add('logo-fallback')
            }
            resultadoDiv.appendChild(logoElement);
-        } else if (item.Correo && item.Correo.includes('@ineco.com')) {
+        } else if (item.Correo && item.Correo.includes('@ineco.com') || item.Correo.includes('@externos.adif.es')) {
            if(logoIneco)
            {
                logoElement = logoIneco.cloneNode();
