@@ -416,94 +416,89 @@ document.addEventListener('click', function(event) {
 
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
-
-let marcadoresTrazado = [];
+let trazadosLinea = [];
 let ultimoPKPorLinea = {}; // Objeto para almacenar el último PK por línea
+const separacionPK = 2000; // Distancia entre puntos seleccionados
 
 async function activarCapaTrazado() {
-
     try {
         const datosTrazado = await cargarArchivosJSON(rutasArchivos);
         const puntosPorLinea = agruparPuntosPorLinea(datosTrazado);
+
         for (const linea in puntosPorLinea) {
             const puntosDeLaLinea = puntosPorLinea[linea];
-            dibujarPuntosCada20Metros(puntosDeLaLinea, linea);
+            dibujarLineasCada2000PK(puntosDeLaLinea, linea);
         }
     } catch (error) {
         console.error("Error al cargar o procesar los datos de trazado:", error);
     }
+}
 
-    function agruparPuntosPorLinea(datos) {
-        const puntosPorLinea = {};
-        datos.forEach(punto => {
-            if (!puntosPorLinea[punto.Linea]) {
-                puntosPorLinea[punto.Linea] = [];
-            }
-            puntosPorLinea[punto.Linea].push(punto);
-        });
-        return puntosPorLinea;
-    }
+function agruparPuntosPorLinea(datos) {
+    const puntosPorLinea = {};
+    datos.forEach(punto => {
+        if (!puntosPorLinea[punto.Linea]) {
+            puntosPorLinea[punto.Linea] = [];
+        }
+        puntosPorLinea[punto.Linea].push(punto);
+    });
+    return puntosPorLinea;
+}
 
+function dibujarLineasCada2000PK(puntos, linea) {
+    let siguientePK = ultimoPKPorLinea[linea] || null;
+    let coordenadas = [];
 
-    function dibujarPuntosCada20Metros(puntos, linea) {
-        let siguientePK = ultimoPKPorLinea[linea] || null; // Inicializar con el último PK de la línea o null
-        const separacionPK = 2000;
+    for (const punto of puntos) {
+        const pkActualNumerico = pkToNumber(punto.PK);
+        
+        if (siguientePK === null || pkActualNumerico >= siguientePK) {
+            const puntoLat = parseFloat(punto.Latitud);
+            const puntoLng = parseFloat(punto.Longitud);
 
-        for (const punto of puntos) {
-            const pkActualNumerico = pkToNumber(punto.PK);
-             console.log(`Línea: ${linea}, PK Actual: ${punto.PK}, Numérico: ${pkActualNumerico}, SiguientePK: ${siguientePK}, UltimoPKGlobal[linea]: ${ultimoPKPorLinea[linea]}`);
-
-            if (siguientePK === null || pkActualNumerico >= siguientePK) {
-                console.log(`   Dibujando punto en PK: ${punto.PK} (Línea: ${linea})`);
-                const puntoLat = parseFloat(punto.Latitud);
-                const puntoLng = parseFloat(punto.Longitud);
-
-                if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
-                    const marcador = L.circleMarker([puntoLat, puntoLng], {
-                        radius: 2,
-                        fillColor: "blue",
-                        color: "blue",
-                        weight: 1,
-                        opacity: 1,
-                        fillOpacity: 1
-                    }).addTo(mapa);
-                    marcadoresTrazado.push(marcador);
-                    ultimoPKPorLinea[linea] = pkActualNumerico; // Guardar el último PK de la línea
-                     siguientePK = pkActualNumerico + separacionPK;
-                } else {
-                    console.error("Latitud o Longitud no válidas:", punto);
-                }
+            if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
+                coordenadas.push([puntoLat, puntoLng]);
+                ultimoPKPorLinea[linea] = pkActualNumerico;
+                siguientePK = pkActualNumerico + separacionPK;
             } else {
-              //  console.log(`   No cumple la condición en PK: ${punto.PK} (Línea: ${linea})`);
+                console.error("Latitud o Longitud no válidas:", punto);
             }
         }
     }
 
-
-    function pkToNumber(pkString) {
-        return parseInt(pkString, 10);
-    }
-
-    async function cargarArchivosJSON(rutas) {
-        const todasPromesas = rutas.map(ruta =>
-            fetch(ruta)
-                .then(response => response.json())
-                .catch(error => {
-                    console.error(`Error al cargar ${ruta}:`, error);
-                    return [];
-                })
-        );
-        const datosCargados = await Promise.all(todasPromesas);
-        return datosCargados.flat();
+    if (coordenadas.length > 1) {
+        const lineaTrazado = L.polyline(coordenadas, {
+            color: "blue",
+            weight: 2,
+            opacity: 0.8
+        }).addTo(mapa);
+        trazadosLinea.push(lineaTrazado);
     }
 }
 
+function pkToNumber(pkString) {
+    return parseInt(pkString, 10);
+}
+
+async function cargarArchivosJSON(rutas) {
+    const todasPromesas = rutas.map(ruta =>
+        fetch(ruta)
+            .then(response => response.json())
+            .catch(error => {
+                console.error(`Error al cargar ${ruta}:`, error);
+                return [];
+            })
+    );
+    const datosCargados = await Promise.all(todasPromesas);
+    return datosCargados.flat();
+}
+
 function desactivarCapaTrazado() {
-    marcadoresTrazado.forEach(marcador => {
-        mapa.removeLayer(marcador);
+    trazadosLinea.forEach(linea => {
+        mapa.removeLayer(linea);
     });
-    marcadoresTrazado = [];
-     ultimoPKPorLinea = {}; // Limpiar los últimos PKs por línea al desactivar
+    trazadosLinea = [];
+    ultimoPKPorLinea = {}; // Limpiar los últimos PKs por línea al desactivar
 }
 
 checkTrazado.addEventListener('change', function () {
@@ -515,6 +510,7 @@ checkTrazado.addEventListener('change', function () {
 });
 
 /////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
+
 
 
 
