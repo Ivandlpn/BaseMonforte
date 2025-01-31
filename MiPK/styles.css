@@ -533,6 +533,13 @@ footer img {
 }
 
 /* Estilos específicos para los botones "Llamar" de la tarjeta TELEMANDO (opcional) */
+
+#telemando-card h2 {
+    margin-bottom: 15px; /* Reduce un poco el margen inferior del título CPS */
+        font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
+    font-weight: 700; /* Añadir negrita */
+}
+
 .telemando-llamar-button {
     background-color: #ffc107; /* Amarillo/ámbar para los botones "Llamar" de TELEMANDO */
     color: #212529; /* Color de texto más oscuro para contrastar con el amarillo */
