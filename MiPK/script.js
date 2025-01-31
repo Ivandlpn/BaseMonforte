@@ -584,46 +584,72 @@ async function activarCapaTrazado() {
     }
 
 
-    function dibujarLineasCadaIntervaloPK(puntos, linea, intervaloPKMetros) {
-        let segmentosDeLinea = [];
-        let segmentoActual = [];
-        let ultimoPkNumerico = null;
+function dibujarLineasCadaIntervaloPK(puntos, linea, intervaloPKMetros) {
+    console.log(`\n--- Dibujando líneas para la Línea ${linea}, Intervalo: ${intervaloPKMetros} metros ---`); // Mensaje de inicio para cada línea
+    let segmentosDeLinea = [];
+    let segmentoActual = [];
+    let ultimoPkNumerico = null;
 
-        for (const punto of puntos) {
-            const pkActualNumerico = pkToNumber(punto.PK);
+    for (const punto of puntos) {
+        const pkActualNumerico = pkToNumber(punto.PK);
+        // Añadimos logs dentro del bucle para cada punto
+        if (linea === '42') { // Solo para la línea 42 para no llenar la consola
+            console.log(`  Procesando punto PK: ${punto.PK}, Numérico: ${pkActualNumerico}, Línea: ${linea}`);
+        }
 
-            if (segmentoActual.length === 0) {
-                segmentoActual.push(punto); // Iniciar un nuevo segmento
+
+        if (segmentoActual.length === 0) {
+            if (linea === '42') console.log(`    [Línea 42] Iniciando nuevo segmento en PK: ${punto.PK}`);
+            segmentoActual.push(punto); // Iniciar un nuevo segmento
+            ultimoPkNumerico = pkActualNumerico;
+        } else {
+            const distanciaDesdeUltimoPunto = pkActualNumerico - ultimoPkNumerico;
+            if (linea === '42') console.log(`    [Línea 42] Distancia desde último punto: ${distanciaDesdeUltimoPunto}`);
+            if (distanciaDesdeUltimoPunto >= intervaloPKMetros) {
+                if (linea === '42') console.log(`    [Línea 42] Intervalo de ${intervaloPKMetros}m alcanzado en PK: ${punto.PK}. Añadiendo punto a segmento.`);
+                segmentoActual.push(punto); // Añadir punto al segmento
+                if (segmentoActual.length > 1) { // Asegurarse de que haya al menos 2 puntos para formar una línea
+                    if (linea === '42') {
+                        console.log(`    [Línea 42] Segmento completado con ${segmentoActual.length} puntos. Puntos PKs:`, segmentoActual.map(p => p.PK));
+                    }
+                    segmentosDeLinea.push([...segmentoActual]); // Añadir copia del segmento a la lista de segmentos
+                }
+                segmentoActual = [punto]; // Iniciar nuevo segmento con el punto actual
                 ultimoPkNumerico = pkActualNumerico;
             } else {
-                const distanciaDesdeUltimoPunto = pkActualNumerico - ultimoPkNumerico;
-                if (distanciaDesdeUltimoPunto >= intervaloPKMetros) {
-                    segmentoActual.push(punto); // Añadir punto al segmento
-                    if (segmentoActual.length > 1) { // Asegurarse de que haya al menos 2 puntos para formar una línea
-                        segmentosDeLinea.push([...segmentoActual]); // Añadir copia del segmento a la lista de segmentos
-                    }
-                    segmentoActual = [punto]; // Iniciar nuevo segmento con el punto actual
-                    ultimoPkNumerico = pkActualNumerico;
-                } else {
-                    segmentoActual.push(punto); // Añadir punto al segmento actual si no se alcanza el intervalo
-                }
+                if (linea === '42') console.log(`    [Línea 42] Añadiendo punto a segmento actual en PK: ${punto.PK}`);
+                segmentoActual.push(punto); // Añadir punto al segmento actual si no se alcanza el intervalo
             }
         }
-        // Procesar el último segmento si tiene más de un punto
-        if (segmentoActual.length > 1) {
-            segmentosDeLinea.push([...segmentoActual]);
+    }
+    // Procesar el último segmento si tiene más de un punto
+    if (segmentoActual.length > 1) {
+        if (linea === '42') {
+             console.log(`    [Línea 42] Segmento final completado con ${segmentoActual.length} puntos. Puntos PKs:`, segmentoActual.map(p => p.PK));
         }
+        segmentosDeLinea.push([...segmentoActual]);
+    }
 
 
-        segmentosDeLinea.forEach(segmento => {
-            const latlngsSegmento = segmento.map(punto => [parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
+    segmentosDeLinea.forEach(segmento => {
+        const latlngsSegmento = segmento.map(punto => [parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
+        if (latlngsSegmento.length > 1) { // Asegurarse de que haya al menos 2 puntos para crear una polyline
+            if (linea === '42') {
+                 console.log(`    [Línea 42] Creando Polyline con ${latlngsSegmento.length} puntos.`);
+            }
             L.polyline(latlngsSegmento, {
                 color: 'blue', // Color de las líneas
                 weight: 2,    // Grosor de las líneas
                 opacity: 0.7   // Opacidad
             }).addTo(mapa);
-        });
-    }
+        } else {
+            if (linea === '42') {
+                 console.warn(`    [Línea 42] Segmento con menos de 2 puntos, no se crea Polyline.`);
+            }
+        }
+    });
+     console.log(`--- Fin de dibujo de líneas para la Línea ${linea} ---`); // Mensaje de fin para cada línea
+}
 
 
     function pkToNumber(pkString) {
