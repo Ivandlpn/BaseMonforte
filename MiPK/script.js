@@ -414,6 +414,8 @@ document.addEventListener('click', function(event) {
 /////  FIN CAPA MI TRAMO /////---------------------------------------------------------------------------------------
 
 
+/////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
+
 
 let lineasTrazado = []; // Almacena las polilíneas de trazado
 
@@ -455,36 +457,33 @@ function dibujarLineasCadaIntervaloPK(puntos, linea, intervaloPKMetros) {
         const pkActualNumerico = pkToNumber(punto.PK);
         console.log(`PK actual: ${punto.PK} (${pkActualNumerico}), Último PK: ${ultimoPkNumerico}`);
 
-        if (segmentoActual.length === 0) {
+        if (ultimoPkNumerico === null) {
+            // Primer punto del segmento
             segmentoActual.push(punto);
             ultimoPkNumerico = pkActualNumerico;
         } else {
             const distanciaDesdeUltimoPunto = pkActualNumerico - ultimoPkNumerico;
             
             if (distanciaDesdeUltimoPunto >= intervaloPKMetros) {
-                segmentoActual.push(punto);
-                if (segmentoActual.length > 1) {
-                    segmentosDeLinea.push([...segmentoActual]);
-                }
-                segmentoActual = [punto]; // Nuevo segmento
+                segmentoActual.push(punto); // Agregar punto que cumple el intervalo
+                segmentosDeLinea.push([...segmentoActual]); // Guardar el segmento
+                segmentoActual = [punto]; // Iniciar un nuevo segmento
                 ultimoPkNumerico = pkActualNumerico;
             }
         }
     }
 
-    if (segmentoActual.length > 1) {
-        segmentosDeLinea.push([...segmentoActual]);
-    }
-
-    // Dibujar las líneas en el mapa
+    // Dibujar las líneas en el mapa solo si hay segmentos válidos
     segmentosDeLinea.forEach(segmento => {
-        const latlngsSegmento = segmento.map(punto => [parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
-        const polyline = L.polyline(latlngsSegmento, {
-            color: 'blue',
-            weight: 2,
-            opacity: 0.7
-        }).addTo(mapa);
-        lineasTrazado.push(polyline);
+        if (segmento.length > 1) { // Solo dibujar si hay al menos 2 puntos
+            const latlngsSegmento = segmento.map(punto => [parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
+            const polyline = L.polyline(latlngsSegmento, {
+                color: 'blue',
+                weight: 2,
+                opacity: 0.7
+            }).addTo(mapa);
+            lineasTrazado.push(polyline);
+        }
     });
 }
 
@@ -530,6 +529,8 @@ checkTrazado.addEventListener('change', function () {
     }
 });
 
+
+////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 
 
