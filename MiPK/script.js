@@ -555,9 +555,7 @@ checkMitramo.addEventListener('change', function () {
 
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
-let marcadoresTrazado = []; // Variable para almacenar los marcadores de trazado (puntos)
 let lineasTrazado = [];     // Variable para almacenar las polilíneas de trazado (líneas)
-let ultimoPKPorLinea = {}; // Objeto para almacenar el último PK por línea
 
 async function activarCapaTrazado() {
     // Limpiar cualquier trazado existente antes de dibujar uno nuevo
@@ -620,9 +618,9 @@ async function activarCapaTrazado() {
         segmentosDeLinea.forEach(segmento => {
             const latlngsSegmento = segmento.map(punto => [parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
             const polyline = L.polyline(latlngsSegmento, { // Guardar la polilínea en una variable
-                color: 'blue', // Color de las líneas
-                weight: 2,    // Grosor de las líneas
-                opacity: 0.7   // Opacidad
+                color: 'blue',
+                weight: 2,
+                opacity: 0.7
             }).addTo(mapa);
             lineasTrazado.push(polyline); // Añadir la polilínea al array de líneas de trazado
         });
@@ -653,12 +651,6 @@ function desactivarCapaTrazado() {
 }
 
 function limpiarCapaTrazado() {
-    // Eliminar marcadores de punto
-    marcadoresTrazado.forEach(marcador => {
-        mapa.removeLayer(marcador);
-    });
-    marcadoresTrazado = []; // Limpiar el array de marcadores
-
     // Eliminar polilíneas (líneas)
     lineasTrazado.forEach(linea => {
         mapa.removeLayer(linea);
