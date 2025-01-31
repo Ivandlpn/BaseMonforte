@@ -415,13 +415,10 @@ document.addEventListener('click', function(event) {
 
 
 
-/////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
-
-let lineasTrazado = []; // Variable para almacenar las polilíneas de trazado (líneas)
+let lineasTrazado = []; // Almacena las polilíneas de trazado
 
 async function activarCapaTrazado() {
-    // Limpiar cualquier trazado existente antes de dibujar uno nuevo
-    limpiarCapaTrazado();
+    limpiarCapaTrazado(); // Limpia antes de dibujar
 
     try {
         const datosTrazado = await cargarArchivosJSON(rutasArchivos);
@@ -429,106 +426,110 @@ async function activarCapaTrazado() {
 
         for (const linea in puntosPorLinea) {
             const puntosDeLaLinea = puntosPorLinea[linea];
-            dibujarLineasCada2000Metros(puntosDeLaLinea, linea); // Función SIMPLIFICADA para líneas cada 2000m
+            dibujarLineasCadaIntervaloPK(puntosDeLaLinea, linea, 2000); // Intervalo de 2000 metros
         }
     } catch (error) {
         console.error("Error al cargar o procesar los datos de trazado:", error);
     }
-
-    function agruparPuntosPorLinea(datos) {
-        const puntosPorLinea = {};
-        datos.forEach(punto => {
-            if (!puntosPorLinea[punto.Linea]) {
-                puntosPorLinea[punto.Linea] = [];
-            }
-            puntosPorLinea[punto.Linea].push(punto);
-        });
-        return puntosPorLinea;
-    }
-
-    function dibujarLineasCada2000Metros(puntos, linea) {
-        let segmentoActualLatLngs = [];
-        let ultimoPkNumericoSegmento = null;
-
-        for (let i = 0; i < puntos.length; i++) {
-            const punto = puntos[i];
-            const pkActualNumerico = pkToNumber(punto.PK);
-            const puntoLatLng = [parseFloat(punto.Latitud), parseFloat(punto.Longitud)];
-
-            if (segmentoActualLatLngs.length === 0) {
-                segmentoActualLatLngs.push(puntoLatLng); // Iniciar nuevo segmento
-                ultimoPkNumericoSegmento = pkActualNumerico;
-            } else {
-                const distanciaDesdeUltimoSegmento = pkActualNumerico - ultimoPkNumericoSegmento;
-                if (distanciaDesdeUltimoSegmento >= 2000) {
-                    segmentoActualLatLngs.push(puntoLatLng); // Añadir punto final del segmento
-                    if (segmentoActualLatLngs.length >= 2) { // Asegurarse de que haya al menos 2 puntos para la línea
-                        const polyline = L.polyline(segmentoActualLatLngs, {
-                            color: 'blue',
-                            weight: 2,
-                            opacity: 0.7
-                        }).addTo(mapa);
-                        lineasTrazado.push(polyline);
-                    }
-                    segmentoActualLatLngs = [puntoLatLng]; // Iniciar nuevo segmento
-                    ultimoPkNumericoSegmento = pkActualNumerico;
-                }
-            }
-        }
-         // Procesar el último segmento si tiene al menos 2 puntos
-        if (segmentoActualLatLngs.length >= 2) {
-             const polyline = L.polyline(segmentoActualLatLngs, {
-                    color: 'blue',
-                    weight: 2,
-                    opacity: 0.7
-                }).addTo(mapa);
-                lineasTrazado.push(polyline);
-        }
-    }
-
-
-    function pkToNumber(pkString) {
-        const parts = pkString.split('+');
-        return parseInt(parts[0], 10) * 1000 + parseInt(parts[1] || 0);
-    }
-
-    async function cargarArchivosJSON(rutas) {
-        const todasPromesas = rutas.map(ruta =>
-            fetch(ruta)
-                .then(response => response.json())
-                .catch(error => {
-                    console.error(`Error al cargar ${ruta}:`, error);
-                    return [];
-                })
-        );
-        const datosCargados = await Promise.all(todasPromesas);
-        return datosCargados.flat();
-    }
 }
 
+// Agrupa los puntos por línea ferroviaria
+function agruparPuntosPorLinea(datos) {
+    const puntosPorLinea = {};
+    datos.forEach(punto => {
+        if (!puntosPorLinea[punto.Linea]) {
+            puntosPorLinea[punto.Linea] = [];
+        }
+        puntosPorLinea[punto.Linea].push(punto);
+    });
+    return puntosPorLinea;
+}
+
+// Dibuja las líneas cada 2000 metros
+function dibujarLineasCadaIntervaloPK(puntos, linea, intervaloPKMetros) {
+    let segmentosDeLinea = [];
+    let segmentoActual = [];
+    let ultimoPkNumerico = null;
+
+    for (const punto of puntos) {
+        const pkActualNumerico = pkToNumber(punto.PK);
+        console.log(`PK actual: ${punto.PK} (${pkActualNumerico}), Último PK: ${ultimoPkNumerico}`);
+
+        if (segmentoActual.length === 0) {
+            segmentoActual.push(punto);
+            ultimoPkNumerico = pkActualNumerico;
+        } else {
+            const distanciaDesdeUltimoPunto = pkActualNumerico - ultimoPkNumerico;
+            
+            if (distanciaDesdeUltimoPunto >= intervaloPKMetros) {
+                segmentoActual.push(punto);
+                if (segmentoActual.length > 1) {
+                    segmentosDeLinea.push([...segmentoActual]);
+                }
+                segmentoActual = [punto]; // Nuevo segmento
+                ultimoPkNumerico = pkActualNumerico;
+            }
+        }
+    }
+
+    if (segmentoActual.length > 1) {
+        segmentosDeLinea.push([...segmentoActual]);
+    }
+
+    // Dibujar las líneas en el mapa
+    segmentosDeLinea.forEach(segmento => {
+        const latlngsSegmento = segmento.map(punto => [parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
+        const polyline = L.polyline(latlngsSegmento, {
+            color: 'blue',
+            weight: 2,
+            opacity: 0.7
+        }).addTo(mapa);
+        lineasTrazado.push(polyline);
+    });
+}
+
+// Convierte "368+589" en 368589 (metros)
+function pkToNumber(pkString) {
+    const parts = pkString.split('+');
+    return parseInt(parts[0], 10) * 1000 + parseInt(parts[1] || 0);
+}
+
+// Cargar archivos JSON con los datos del trazado
+async function cargarArchivosJSON(rutas) {
+    const todasPromesas = rutas.map(ruta =>
+        fetch(ruta)
+            .then(response => response.json())
+            .catch(error => {
+                console.error(`Error al cargar ${ruta}:`, error);
+                return [];
+            })
+    );
+    const datosCargados = await Promise.all(todasPromesas);
+    return datosCargados.flat();
+}
+
+// Desactiva la capa de trazado
 function desactivarCapaTrazado() {
     limpiarCapaTrazado();
 }
 
+// Limpia las líneas del mapa
 function limpiarCapaTrazado() {
-    // Eliminar polilíneas (líneas)
-    lineasTrazado.forEach(linea => {
-        mapa.removeLayer(linea);
-    });
-    lineasTrazado = []; // Limpiar el array de líneas
-    ultimoPKPorLinea = {}; // Limpiar los últimos PKs por línea
+    lineasTrazado.forEach(linea => mapa.removeLayer(linea));
+    lineasTrazado = [];
 }
 
-
+// Evento del checkbox para activar/desactivar la capa de trazado
 checkTrazado.addEventListener('change', function () {
     if (this.checked) {
+        console.log("Activando capa de trazado...");
         activarCapaTrazado();
     } else {
+        console.log("Desactivando capa de trazado...");
         desactivarCapaTrazado();
     }
 });
 
-/////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 
 
