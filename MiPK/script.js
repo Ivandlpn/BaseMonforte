@@ -1455,12 +1455,11 @@ function generarBotonesOperadores() {
     operadoresCirculacionData.forEach((operador) => {
         const botonOperador = document.createElement('a');
         botonOperador.href = `tel:${operador.telefono}`;
-        botonOperador.className = 'operador-button circulacion-option-button'; // Añadimos clase específica para Circulación
+        botonOperador.className = 'operador-button circulacion-option-button';
 
         let descripcionHTML = "";
-        const lineas = operador.descripcion.split(' - ');
-        lineas.forEach(linea => {
-            descripcionHTML += `🔹${linea}<br>`
+        operador.lineas.forEach(lineaInfo => {
+            descripcionHTML += `🔹L${lineaInfo.linea}: Pk ${formatearPK(lineaInfo.pk_inicio)} al Pk ${formatearPK(lineaInfo.pk_fin)}<br>`;
         });
 
         botonOperador.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${descripcionHTML}</span>`;
@@ -1471,7 +1470,7 @@ function generarBotonesOperadores() {
         operadoresContainer.appendChild(botonOperador);
     });
 
-    // Lógica para destacar el botón del operador recomendado
+    // Lógica simplificada para destacar el botón del operador recomendado
     if (window.pkMasCercano) {
         const pkNumericoUsuario = pkToNumber(window.pkMasCercano.pk);
         const lineaUsuario = window.pkMasCercano.linea;
@@ -1480,44 +1479,17 @@ function generarBotonesOperadores() {
 
         botonesOperadorCirculacion.forEach((boton, index) => {
             const operador = operadoresCirculacionData[index];
-            const descripcionOperador = operador.descripcion;
-            const lineasOperador = descripcionOperador.split(' - ');
             let operadorRecomendado = false;
 
-            for (const lineaDesc of lineasOperador) {
-                // Expresión regular para extraer LNNN: Pk XXX+XXX al Pk YYY+YYY
-                const regex = /L(\d+): Pk (\d+[\+]?\d+) al Pk (\d+[\+]?\d+)/;
-                const match = lineaDesc.match(regex);
-
-                if (match) {
-                    const lineaOperador = match[1];
-                    const pkInicioOperador = pkToNumber(match[2]);
-                    const pkFinOperador = pkToNumber(match[3]);
-
-                    if (lineaUsuario === lineaOperador && pkNumericoUsuario >= pkInicioOperador && pkNumericoUsuario <= pkFinOperador) {
-                        operadorRecomendado = true;
-                        break; // Si encontramos una coincidencia, no necesitamos seguir comprobando para este operador
-                    }
+            operador.lineas.forEach(lineaInfo => {
+                if (lineaUsuario === lineaInfo.linea && pkNumericoUsuario >= lineaInfo.pk_inicio && pkNumericoUsuario <= lineaInfo.pk_fin) {
+                    operadorRecomendado = true;
                 }
-                 // Expresión regular para extraer LNNN: Pk XXX+XXX al Pk YYY+YYY -  (para el operador 3 que tiene varias líneas)
-                const regexMultiLinea = /L(\d+): Pk (\d+[\+]?\d+) al Pk (\d+[\+]?\d+)/g;
-                let matchMultiLinea;
-                while ((matchMultiLinea = regexMultiLinea.exec(lineaDesc)) !== null) {
-                    const lineaOperadorMulti = matchMultiLinea[1];
-                    const pkInicioOperadorMulti = pkToNumber(matchMultiLinea[2]);
-                    const pkFinOperadorMulti = pkToNumber(matchMultiLinea[3]);
-
-                    if (lineaUsuario === lineaOperadorMulti && pkNumericoUsuario >= pkInicioOperadorMulti && pkNumericoUsuario <= pkFinOperadorMulti) {
-                        operadorRecomendado = true;
-                        break; // Si encontramos una coincidencia, no necesitamos seguir comprobando para este operador
-                    }
-                }
-                if (operadorRecomendado) break; // Si ya es recomendado, salir del bucle de líneasDesc
-            }
+            });
 
             if (operadorRecomendado) {
-                boton.style.backgroundColor = '#ffeb3b'; // Color de fondo destacado
-                boton.style.border = '4px solid #fbc02d'; // Borde destacado
+                boton.style.backgroundColor = '#ffeb3b';
+                boton.style.border = '4px solid #fbc02d';
             }
         });
     }
