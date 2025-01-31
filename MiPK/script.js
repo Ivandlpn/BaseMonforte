@@ -416,11 +416,97 @@ document.addEventListener('click', function(event) {
 
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
-const checkTrazado = document.getElementById('check-trazado');
-let trazadoLayer = null; // Variable para almacenar la capa de trazado
-const intervaloMetros = 50; // Intervalo de muestreo en metros (puedes ajustarlo)
 
-checkTrazado.addEventListener('change', function() { // <-- Usamos la variable checkTrazado YA DEFINIDA
+let marcadoresTrazado = [];
+let ultimoPKPorLinea = {}; // Objeto para almacenar el último PK por línea
+
+async function activarCapaTrazado() {
+
+    try {
+        const datosTrazado = await cargarArchivosJSON(rutasArchivos);
+        const puntosPorLinea = agruparPuntosPorLinea(datosTrazado);
+        for (const linea in puntosPorLinea) {
+            const puntosDeLaLinea = puntosPorLinea[linea];
+            dibujarPuntosCada20Metros(puntosDeLaLinea, linea);
+        }
+    } catch (error) {
+        console.error("Error al cargar o procesar los datos de trazado:", error);
+    }
+
+    function agruparPuntosPorLinea(datos) {
+        const puntosPorLinea = {};
+        datos.forEach(punto => {
+            if (!puntosPorLinea[punto.Linea]) {
+                puntosPorLinea[punto.Linea] = [];
+            }
+            puntosPorLinea[punto.Linea].push(punto);
+        });
+        return puntosPorLinea;
+    }
+
+
+    function dibujarPuntosCada20Metros(puntos, linea) {
+        let siguientePK = ultimoPKPorLinea[linea] || null; // Inicializar con el último PK de la línea o null
+        const separacionPK = 500;
+
+        for (const punto of puntos) {
+            const pkActualNumerico = pkToNumber(punto.PK);
+             console.log(`Línea: ${linea}, PK Actual: ${punto.PK}, Numérico: ${pkActualNumerico}, SiguientePK: ${siguientePK}, UltimoPKGlobal[linea]: ${ultimoPKPorLinea[linea]}`);
+
+            if (siguientePK === null || pkActualNumerico >= siguientePK) {
+                console.log(`   Dibujando punto en PK: ${punto.PK} (Línea: ${linea})`);
+                const puntoLat = parseFloat(punto.Latitud);
+                const puntoLng = parseFloat(punto.Longitud);
+
+                if (!isNaN(puntoLat) && !isNaN(puntoLng)) {
+                    const marcador = L.circleMarker([puntoLat, puntoLng], {
+                        radius: 2,
+                        fillColor: "blue",
+                        color: "blue",
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 1
+                    }).addTo(mapa);
+                    marcadoresTrazado.push(marcador);
+                    ultimoPKPorLinea[linea] = pkActualNumerico; // Guardar el último PK de la línea
+                     siguientePK = pkActualNumerico + separacionPK;
+                } else {
+                    console.error("Latitud o Longitud no válidas:", punto);
+                }
+            } else {
+              //  console.log(`   No cumple la condición en PK: ${punto.PK} (Línea: ${linea})`);
+            }
+        }
+    }
+
+
+    function pkToNumber(pkString) {
+        return parseInt(pkString, 10);
+    }
+
+    async function cargarArchivosJSON(rutas) {
+        const todasPromesas = rutas.map(ruta =>
+            fetch(ruta)
+                .then(response => response.json())
+                .catch(error => {
+                    console.error(`Error al cargar ${ruta}:`, error);
+                    return [];
+                })
+        );
+        const datosCargados = await Promise.all(todasPromesas);
+        return datosCargados.flat();
+    }
+}
+
+function desactivarCapaTrazado() {
+    marcadoresTrazado.forEach(marcador => {
+        mapa.removeLayer(marcador);
+    });
+    marcadoresTrazado = [];
+     ultimoPKPorLinea = {}; // Limpiar los últimos PKs por línea al desactivar
+}
+
+checkTrazado.addEventListener('change', function () {
     if (this.checked) {
         activarCapaTrazado();
     } else {
@@ -428,65 +514,7 @@ checkTrazado.addEventListener('change', function() { // <-- Usamos la variable c
     }
 });
 
-async function activarCapaTrazado() {
-    if (!trazadoLayer) {
-        try {
-            const dataTrazadoArrays = await cargarArchivosJSON(rutasArchivos); // Carga todos los archivos de traza
-            trazadoLayer = L.layerGroup(); // Usamos un layerGroup para agrupar todos los segmentos de línea
-
-            dataTrazadoArrays.forEach(lineaData => { // Iteramos sobre cada "línea" de datos (L40Ar, L40Br, etc.)
-                if (Array.isArray(lineaData)) { // *** AÑADIDO: VERIFICACIÓN DE ARRAY ***
-                    let puntosMuestreados = [];
-                    let distanciaAcumulada = 0;
-                    let puntoAnterior = null;
-
-                    lineaData.sort((a, b) => pkToNumber(a.PK) - pkToNumber(b.PK)); // Asegurar orden por PK
-
-                    lineaData.forEach(punto => {
-                        const puntoLatLng = L.latLng(punto.Latitud, punto.Longitud);
-
-                        if (puntoAnterior) {
-                            const distanciaSegmento = calcularDistancia(puntoAnterior.lat, puntoAnterior.lng, puntoLatLng.lat, puntoLatLng.lng);
-                            distanciaAcumulada += distanciaSegmento;
-
-                            if (distanciaAcumulada >= intervaloMetros) {
-                                puntosMuestreados.push(puntoLatLng);
-                                distanciaAcumulada = 0; // Reinicia la distancia acumulada
-                            }
-                        }
-                        puntoAnterior = puntoLatLng;
-                    });
-
-                    // Crear segmentos de línea con los puntos muestreados
-                    for (let i = 0; i < puntosMuestreados.length - 1; i++) {
-                        const segmentoLinea = L.polyline([puntosMuestreados[i], puntosMuestreados[i + 1]], {
-                            color: 'blue', // Color del trazado (puedes personalizar)
-                            weight: 3      // Grosor de línea (puedes personalizar)
-                        });
-                        trazadoLayer.addLayer(segmentoLinea); // Añade cada segmento a la capa
-                    }
-                } else {
-                    console.warn("lineaData no es un array, omitiendo:", lineaData); // Opcional: Log para depuración
-                }
-            });
-
-
-        } catch (error) {
-            console.error("Error al generar trazado dinámico:", error);
-            alert("Error al generar trazado dinámico.");
-            return;
-        }
-    }
-    mapa.addLayer(trazadoLayer);
-}
-
-function desactivarCapaTrazado() {
-    if (trazadoLayer) {
-        mapa.removeLayer(trazadoLayer);
-    }
-}
-
-////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
+/////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 
 
