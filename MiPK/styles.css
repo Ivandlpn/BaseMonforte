@@ -534,13 +534,6 @@ footer img {
     font-weight: 700; /* Añadir negrita */
 }
 
-#plus-card h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2em; /* Aumentar el tamaño de la fuente */
-    font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
-    font-weight: 700; /* Añadir negrita */
-}
 
 
 /* Estilos específicos para los botones "Llamar" de la tarjeta TELEMANDO (opcional) */
