@@ -418,7 +418,7 @@ document.addEventListener('click', function(event) {
 
 let trazadosLinea = [];
 let ultimoPKPorLinea = {}; // Último PK procesado por línea
-const separacionPK = 2000; // Selección de puntos cada 2000 unidades de PK
+const separacionPK = 500; // Selección de puntos cada 2000 unidades de PK
 
 async function activarCapaTrazado() {
     try {
