@@ -416,11 +416,11 @@ document.addEventListener('click', function(event) {
 
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
-//const checkTrazado = document.getElementById('check-trazado');
+const checkTrazado = document.getElementById('check-trazado');
 let trazadoLayer = null; // Variable para almacenar la capa de trazado
 const intervaloMetros = 50; // Intervalo de muestreo en metros (puedes ajustarlo)
 
-checkTrazado.addEventListener('change', function() {
+checkTrazado.addEventListener('change', function() { // <-- Usamos la variable checkTrazado YA DEFINIDA
     if (this.checked) {
         activarCapaTrazado();
     } else {
@@ -435,34 +435,38 @@ async function activarCapaTrazado() {
             trazadoLayer = L.layerGroup(); // Usamos un layerGroup para agrupar todos los segmentos de línea
 
             dataTrazadoArrays.forEach(lineaData => { // Iteramos sobre cada "línea" de datos (L40Ar, L40Br, etc.)
-                let puntosMuestreados = [];
-                let distanciaAcumulada = 0;
-                let puntoAnterior = null;
+                if (Array.isArray(lineaData)) { // *** AÑADIDO: VERIFICACIÓN DE ARRAY ***
+                    let puntosMuestreados = [];
+                    let distanciaAcumulada = 0;
+                    let puntoAnterior = null;
 
-                lineaData.sort((a, b) => pkToNumber(a.PK) - pkToNumber(b.PK)); // Asegurar orden por PK
+                    lineaData.sort((a, b) => pkToNumber(a.PK) - pkToNumber(b.PK)); // Asegurar orden por PK
 
-                lineaData.forEach(punto => {
-                    const puntoLatLng = L.latLng(punto.Latitud, punto.Longitud);
+                    lineaData.forEach(punto => {
+                        const puntoLatLng = L.latLng(punto.Latitud, punto.Longitud);
 
-                    if (puntoAnterior) {
-                        const distanciaSegmento = calcularDistancia(puntoAnterior.lat, puntoAnterior.lng, puntoLatLng.lat, puntoLatLng.lng);
-                        distanciaAcumulada += distanciaSegmento;
+                        if (puntoAnterior) {
+                            const distanciaSegmento = calcularDistancia(puntoAnterior.lat, puntoAnterior.lng, puntoLatLng.lat, puntoLatLng.lng);
+                            distanciaAcumulada += distanciaSegmento;
 
-                        if (distanciaAcumulada >= intervaloMetros) {
-                            puntosMuestreados.push(puntoLatLng);
-                            distanciaAcumulada = 0; // Reinicia la distancia acumulada
+                            if (distanciaAcumulada >= intervaloMetros) {
+                                puntosMuestreados.push(puntoLatLng);
+                                distanciaAcumulada = 0; // Reinicia la distancia acumulada
+                            }
                         }
-                    }
-                    puntoAnterior = puntoLatLng;
-                });
-
-                // Crear segmentos de línea con los puntos muestreados
-                for (let i = 0; i < puntosMuestreados.length - 1; i++) {
-                    const segmentoLinea = L.polyline([puntosMuestreados[i], puntosMuestreados[i + 1]], {
-                        color: 'blue', // Color del trazado (puedes personalizar)
-                        weight: 3      // Grosor de línea (puedes personalizar)
+                        puntoAnterior = puntoLatLng;
                     });
-                    trazadoLayer.addLayer(segmentoLinea); // Añade cada segmento a la capa
+
+                    // Crear segmentos de línea con los puntos muestreados
+                    for (let i = 0; i < puntosMuestreados.length - 1; i++) {
+                        const segmentoLinea = L.polyline([puntosMuestreados[i], puntosMuestreados[i + 1]], {
+                            color: 'blue', // Color del trazado (puedes personalizar)
+                            weight: 3      // Grosor de línea (puedes personalizar)
+                        });
+                        trazadoLayer.addLayer(segmentoLinea); // Añade cada segmento a la capa
+                    }
+                } else {
+                    console.warn("lineaData no es un array, omitiendo:", lineaData); // Opcional: Log para depuración
                 }
             });
 
@@ -481,7 +485,6 @@ function desactivarCapaTrazado() {
         mapa.removeLayer(trazadoLayer);
     }
 }
-
 
 ////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
