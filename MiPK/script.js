@@ -417,7 +417,7 @@ document.addEventListener('click', function(event) {
 
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
-let lineasTrazado = [];     // Variable para almacenar las polilíneas de trazado (líneas)
+let lineasTrazado = []; // Variable para almacenar las polilíneas de trazado (líneas)
 
 async function activarCapaTrazado() {
     // Limpiar cualquier trazado existente antes de dibujar uno nuevo
@@ -429,7 +429,7 @@ async function activarCapaTrazado() {
 
         for (const linea in puntosPorLinea) {
             const puntosDeLaLinea = puntosPorLinea[linea];
-            dibujarLineasCadaIntervaloPK(puntosDeLaLinea, linea, 2000); // Intervalo de 2000 metros (2km)
+            dibujarLineasCada2000Metros(puntosDeLaLinea, linea); // Función SIMPLIFICADA para líneas cada 2000m
         }
     } catch (error) {
         console.error("Error al cargar o procesar los datos de trazado:", error);
@@ -446,46 +446,44 @@ async function activarCapaTrazado() {
         return puntosPorLinea;
     }
 
+    function dibujarLineasCada2000Metros(puntos, linea) {
+        let segmentoActualLatLngs = [];
+        let ultimoPkNumericoSegmento = null;
 
-    function dibujarLineasCadaIntervaloPK(puntos, linea, intervaloPKMetros) {
-        let segmentosDeLinea = [];
-        let segmentoActual = [];
-        let ultimoPkNumerico = null;
-
-        for (const punto of puntos) {
+        for (let i = 0; i < puntos.length; i++) {
+            const punto = puntos[i];
             const pkActualNumerico = pkToNumber(punto.PK);
+            const puntoLatLng = [parseFloat(punto.Latitud), parseFloat(punto.Longitud)];
 
-            if (segmentoActual.length === 0) {
-                segmentoActual.push(punto); // Iniciar un nuevo segmento
-                ultimoPkNumerico = pkActualNumerico;
+            if (segmentoActualLatLngs.length === 0) {
+                segmentoActualLatLngs.push(puntoLatLng); // Iniciar nuevo segmento
+                ultimoPkNumericoSegmento = pkActualNumerico;
             } else {
-                const distanciaDesdeUltimoPunto = pkActualNumerico - ultimoPkNumerico;
-                if (distanciaDesdeUltimoPunto >= intervaloPKMetros) {
-                    segmentoActual.push(punto); // Añadir punto al segmento
-                    if (segmentoActual.length > 1) { // Asegurarse de que haya al menos 2 puntos para formar una línea
-                        segmentosDeLinea.push([...segmentoActual]); // Añadir copia del segmento a la lista de segmentos
+                const distanciaDesdeUltimoSegmento = pkActualNumerico - ultimoPkNumericoSegmento;
+                if (distanciaDesdeUltimoSegmento >= 2000) {
+                    segmentoActualLatLngs.push(puntoLatLng); // Añadir punto final del segmento
+                    if (segmentoActualLatLngs.length >= 2) { // Asegurarse de que haya al menos 2 puntos para la línea
+                        const polyline = L.polyline(segmentoActualLatLngs, {
+                            color: 'blue',
+                            weight: 2,
+                            opacity: 0.7
+                        }).addTo(mapa);
+                        lineasTrazado.push(polyline);
                     }
-                    segmentoActual = [punto]; // Iniciar nuevo segmento con el punto actual
-                    ultimoPkNumerico = pkActualNumerico;
-                } else {
-                    segmentoActual.push(punto); // Añadir punto al segmento actual si no se alcanza el intervalo
+                    segmentoActualLatLngs = [puntoLatLng]; // Iniciar nuevo segmento
+                    ultimoPkNumericoSegmento = pkActualNumerico;
                 }
             }
         }
-        if (segmentoActual.length > 1) {
-            segmentosDeLinea.push([...segmentoActual]);
+         // Procesar el último segmento si tiene al menos 2 puntos
+        if (segmentoActualLatLngs.length >= 2) {
+             const polyline = L.polyline(segmentoActualLatLngs, {
+                    color: 'blue',
+                    weight: 2,
+                    opacity: 0.7
+                }).addTo(mapa);
+                lineasTrazado.push(polyline);
         }
-
-
-        segmentosDeLinea.forEach(segmento => {
-            const latlngsSegmento = segmento.map(punto => [parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
-            const polyline = L.polyline(latlngsSegmento, { // Guardar la polilínea en una variable
-                color: 'blue',
-                weight: 2,
-                opacity: 0.7
-            }).addTo(mapa);
-            lineasTrazado.push(polyline); // Añadir la polilínea al array de líneas de trazado
-        });
     }
 
 
