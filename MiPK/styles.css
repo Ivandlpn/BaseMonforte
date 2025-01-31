@@ -359,8 +359,8 @@ footer img {
 }
 
 .icono-tiempo img {
-    width: 40px; /* Ancho deseado */
-    height: 40px; /* Alto deseado */
+    width: 80px; /* Ancho deseado */
+    height: 80px; /* Alto deseado */
 }
 
 .leaflet-popup-content-wrapper {
@@ -396,10 +396,8 @@ footer img {
     flex-direction: column;
     gap: 10px;
     align-items: center;
-      flex: 1; /* Ajusta el tamaño de cada columna en movil *
+      flex: 1; /* Ajusta el tamaño de cada columna en movil */
 }
-
-
 
 /* Ajuste del ancho de la tarjeta overlay-card (opcional, según necesidad) */
 .overlay-card {
@@ -482,8 +480,6 @@ footer img {
 /* Estilos adicionales para la tarjeta de operadores (opcional, puedes ajustar) */
 #circulacion-card h2 {
     margin-bottom: 20px; /* Reduce el margen inferior del título de la tarjeta de Circulación */
-        font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
-    font-weight: 700; /* Añadir negrita */
 }
 
 #operadores-container {
@@ -504,8 +500,6 @@ footer img {
 
 #cps-card h2 {
     margin-bottom: 15px; /* Reduce un poco el margen inferior del título CPS */
-        font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
-    font-weight: 700; /* Añadir negrita */
 }
 
 
@@ -528,24 +522,9 @@ footer img {
     margin-top: 30px; /* *** AÑADIDO: Espacio superior para separar del contenido anterior *** */
 }
 
-#csi-card h2 {
-    margin-bottom: 15px; /* Reduce un poco el margen inferior del título CPS */
-        font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
-    font-weight: 700; /* Añadir negrita */
-}
-
 
 
 /* Estilos específicos para los botones "Llamar" de la tarjeta TELEMANDO (opcional) */
-
-#telemando-card h2 {
-    margin-bottom: 15px; /* Reduce un poco el margen inferior del título CPS */
-        font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
-    font-weight: 700; /* Añadir negrita */
-}
-
-
-
 .telemando-llamar-button {
     background-color: #ffc107; /* Amarillo/ámbar para los botones "Llamar" de TELEMANDO */
     color: #212529; /* Color de texto más oscuro para contrastar con el amarillo */
