@@ -538,6 +538,7 @@ footer img {
     margin-bottom: 15px; /* Reduce un poco el margen inferior del título CPS */
         font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
     font-weight: 700; /* Añadir negrita */
+    font-size: 2em;
 }
 
 
