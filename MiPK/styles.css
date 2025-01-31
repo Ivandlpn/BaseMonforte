@@ -534,11 +534,12 @@ footer img {
     font-weight: 700; /* Añadir negrita */
 }
 
-  #plus-card h2 {
-    margin-bottom: 15px; /* Reduce un poco el margen inferior del título CPS */
-        font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
+#plus-card h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2em; /* Aumentar el tamaño de la fuente */
+    font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
     font-weight: 700; /* Añadir negrita */
-    font-size: 2em;
 }
 
 
