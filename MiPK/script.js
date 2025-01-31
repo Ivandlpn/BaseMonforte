@@ -1577,8 +1577,7 @@ function generarContenidoCsi() {
                                         nombre: "Telemando Albacete",
                                         lineas: [
                                             "L40 - Desde Bif.Torrejón hasta Valencia Est.",
-                                            "L42 - Desde Bif. Albacete hasta Alicante Est.",
-                                            "L46 - Toda la línea"
+                                            "L42 / L46 / L48 - Toda la línea"
                                         ],
                                         telefono: "967539503"
                                     },
@@ -1595,7 +1594,7 @@ function generarContenidoCsi() {
                                     {
                                         nombre: "Telemando Atocha",
                                         lineas: [
-                                            "L40 - Desde Madrid Chamartín hasta Bif.Torrejón"
+                                            "L40 - De Madrid Chamartín a Bif.Torrejón"
                                         ],
                                         telefono: "914688255"
                                     },
