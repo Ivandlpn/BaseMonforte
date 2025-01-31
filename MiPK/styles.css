@@ -399,12 +399,7 @@ footer img {
       flex: 1; /* Ajusta el tamaño de cada columna en movil *
 }
 
-  #plus-card h2 {
-    margin-bottom: 15px; 
-        font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
-    font-weight: 700; /* Añadir negrita */
-  font-size: 1.1em;
-}
+
 
 /* Ajuste del ancho de la tarjeta overlay-card (opcional, según necesidad) */
 .overlay-card {
