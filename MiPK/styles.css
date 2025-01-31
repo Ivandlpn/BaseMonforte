@@ -480,6 +480,8 @@ footer img {
 /* Estilos adicionales para la tarjeta de operadores (opcional, puedes ajustar) */
 #circulacion-card h2 {
     margin-bottom: 20px; /* Reduce el margen inferior del título de la tarjeta de Circulación */
+        font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
+    font-weight: 700; /* Añadir negrita */
 }
 
 #operadores-container {
@@ -500,6 +502,8 @@ footer img {
 
 #cps-card h2 {
     margin-bottom: 15px; /* Reduce un poco el margen inferior del título CPS */
+        font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
+    font-weight: 700; /* Añadir negrita */
 }
 
 
