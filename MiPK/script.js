@@ -566,7 +566,7 @@ async function activarCapaTrazado() {
 
         for (const linea in puntosPorLinea) {
             const puntosDeLaLinea = puntosPorLinea[linea];
-            dibujarLineasCadaIntervaloPK(puntosDeLaLinea, linea, 2000); // Intervalo de 1000 metros (1km) para las líneas
+            dibujarLineasCadaIntervaloPK(puntosDeLaLinea, linea, 3000); // Intervalo de 1000 metros (1km) para las líneas
         }
     } catch (error) {
         console.error("Error al cargar o procesar los datos de trazado:", error);
