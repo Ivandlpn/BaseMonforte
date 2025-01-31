@@ -1447,32 +1447,81 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('No se encontró el botón de cerrar de la tarjeta de Circulación');
     }
 
-    function generarBotonesOperadores() {
-        const operadoresContainer = document.getElementById('operadores-container');
-        operadoresContainer.innerHTML = '';
-        operadoresContainer.innerHTML += `<h3 style="text-align: center; margin-top: 10px; margin-bottom: 10px;"><u>CRC ALBACETE</u></h3>`;
+function generarBotonesOperadores() {
+    const operadoresContainer = document.getElementById('operadores-container');
+    operadoresContainer.innerHTML = '';
+    operadoresContainer.innerHTML += `<h3 style="text-align: center; margin-top: 10px; margin-bottom: 10px;"><u>CRC ALBACETE</u></h3>`;
 
-        operadoresCirculacionData.forEach((operador) => {
-            const botonOperador = document.createElement('a');
-            botonOperador.href = `tel:${operador.telefono}`;
-            botonOperador.className = 'operador-button';
+    operadoresCirculacionData.forEach((operador) => {
+        const botonOperador = document.createElement('a');
+        botonOperador.href = `tel:${operador.telefono}`;
+        botonOperador.className = 'operador-button circulacion-option-button'; // Añadimos clase específica para Circulación
 
-             let descripcionHTML = "";
-                const lineas = operador.descripcion.split(' - ');
-                lineas.forEach(linea =>
-                    {
-                      descripcionHTML += `🔹${linea}<br>`
-                   });
+        let descripcionHTML = "";
+        const lineas = operador.descripcion.split(' - ');
+        lineas.forEach(linea => {
+            descripcionHTML += `🔹${linea}<br>`
+        });
 
+        botonOperador.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${descripcionHTML}</span>`;
 
-             botonOperador.innerHTML = `<b>📞 ${operador.nombre}</b><br><span class="operador-descripcion">${descripcionHTML}</span>`;
+        if (operador.nombre === "Operador Banda Atocha") {
+            operadoresContainer.innerHTML += `<h3 style="text-align: center; margin-top: 20px; margin-bottom: 10px;"><u>CRC MADRID</u></h3>`;
+        }
+        operadoresContainer.appendChild(botonOperador);
+    });
 
-            if (operador.nombre === "Operador Banda Atocha") {
-                operadoresContainer.innerHTML += `<h3 style="text-align: center; margin-top: 20px; margin-bottom: 10px;"><u>CRC MADRID</u></h3>`;
+    // Lógica para destacar el botón del operador recomendado
+    if (window.pkMasCercano) {
+        const pkNumericoUsuario = pkToNumber(window.pkMasCercano.pk);
+        const lineaUsuario = window.pkMasCercano.linea;
+
+        const botonesOperadorCirculacion = operadoresContainer.querySelectorAll('.circulacion-option-button');
+
+        botonesOperadorCirculacion.forEach((boton, index) => {
+            const operador = operadoresCirculacionData[index];
+            const descripcionOperador = operador.descripcion;
+            const lineasOperador = descripcionOperador.split(' - ');
+            let operadorRecomendado = false;
+
+            for (const lineaDesc of lineasOperador) {
+                // Expresión regular para extraer LNNN: Pk XXX+XXX al Pk YYY+YYY
+                const regex = /L(\d+): Pk (\d+[\+]?\d+) al Pk (\d+[\+]?\d+)/;
+                const match = lineaDesc.match(regex);
+
+                if (match) {
+                    const lineaOperador = match[1];
+                    const pkInicioOperador = pkToNumber(match[2]);
+                    const pkFinOperador = pkToNumber(match[3]);
+
+                    if (lineaUsuario === lineaOperador && pkNumericoUsuario >= pkInicioOperador && pkNumericoUsuario <= pkFinOperador) {
+                        operadorRecomendado = true;
+                        break; // Si encontramos una coincidencia, no necesitamos seguir comprobando para este operador
+                    }
+                }
+                 // Expresión regular para extraer LNNN: Pk XXX+XXX al Pk YYY+YYY -  (para el operador 3 que tiene varias líneas)
+                const regexMultiLinea = /L(\d+): Pk (\d+[\+]?\d+) al Pk (\d+[\+]?\d+)/g;
+                let matchMultiLinea;
+                while ((matchMultiLinea = regexMultiLinea.exec(lineaDesc)) !== null) {
+                    const lineaOperadorMulti = matchMultiLinea[1];
+                    const pkInicioOperadorMulti = pkToNumber(matchMultiLinea[2]);
+                    const pkFinOperadorMulti = pkToNumber(matchMultiLinea[3]);
+
+                    if (lineaUsuario === lineaOperadorMulti && pkNumericoUsuario >= pkInicioOperadorMulti && pkNumericoUsuario <= pkFinOperadorMulti) {
+                        operadorRecomendado = true;
+                        break; // Si encontramos una coincidencia, no necesitamos seguir comprobando para este operador
+                    }
+                }
+                if (operadorRecomendado) break; // Si ya es recomendado, salir del bucle de líneasDesc
             }
-            operadoresContainer.appendChild(botonOperador);
+
+            if (operadorRecomendado) {
+                boton.style.backgroundColor = '#ffeb3b'; // Color de fondo destacado
+                boton.style.border = '4px solid #fbc02d'; // Borde destacado
+            }
         });
     }
+}
 });
 
 // ----- FIN FUNCIONALIDAD LISTADO OPERADORES CIRCULACIÓN -----
