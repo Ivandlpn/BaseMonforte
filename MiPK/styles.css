@@ -526,7 +526,11 @@ footer img {
     margin-top: 30px; /* *** AÑADIDO: Espacio superior para separar del contenido anterior *** */
 }
 
-
+#csi-card h2 {
+    margin-bottom: 15px; /* Reduce un poco el margen inferior del título CPS */
+        font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
+    font-weight: 700; /* Añadir negrita */
+}
 
 /* Estilos específicos para los botones "Llamar" de la tarjeta TELEMANDO (opcional) */
 .telemando-llamar-button {
