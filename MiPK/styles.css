@@ -534,6 +534,13 @@ footer img {
     font-weight: 700; /* Añadir negrita */
 }
 
+  #plus-card h2 {
+    margin-bottom: 15px; /* Reduce un poco el margen inferior del título CPS */
+        font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
+    font-weight: 700; /* Añadir negrita */
+}
+
+
 /* Estilos específicos para los botones "Llamar" de la tarjeta TELEMANDO (opcional) */
 
 #telemando-card h2 {
