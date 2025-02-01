@@ -657,7 +657,7 @@ async function activarCapaTiempo() {
   }
 
   // Establecer un nivel de zoom fijo al activar la capa Tiempo
-  mapa.setZoom(6); // Nivel de zoom fijo (puedes ajustarlo)
+  mapa.setZoom(15); // Nivel de zoom fijo (puedes ajustarlo)
 }
 
 function desactivarCapaTiempo() {
