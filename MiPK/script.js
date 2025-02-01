@@ -509,8 +509,10 @@ checkTrazado.addEventListener('change', function () {
 
 
 
-
 /////  INICIO CAPA TIEMPO /////---------------------------------------------------------------------------------------
+
+let cacheTiempo = {}; // Variable global para la caché de datos meteorológicos
+const tiempoValidezCache = 15 * 60 * 1000; // 15 minutos en milisegundos
 
 checkTiempo.addEventListener('change', function() {
     if (this.checked) {
@@ -520,7 +522,24 @@ checkTiempo.addEventListener('change', function() {
     }
 });
 
-async function obtenerDatosTiempo(lat, lon) {
+async function obtenerDatosTiempo(lat, lon, ciudadNombre) { // Añadimos ciudadNombre como parámetro
+  const ahora = new Date();
+
+  // 1. Comprobar si hay datos en la caché para esta ciudad
+  if (cacheTiempo[ciudadNombre]) {
+    const datosCacheados = cacheTiempo[ciudadNombre];
+    const tiempoCache = datosCacheados.timestamp;
+
+    // 2. Verificar si la caché es válida (menos de 15 minutos de antigüedad)
+    if (ahora - tiempoCache < tiempoValidezCache) {
+      console.log(`[Cache] Datos de tiempo para ${ciudadNombre} obtenidos de la caché.`);
+      return datosCacheados.data; // Devolver datos desde la caché
+    } else {
+      console.log(`[Cache] Datos de tiempo para ${ciudadNombre} en caché expirados. Actualizando...`);
+    }
+  }
+
+  // 3. Si no hay caché válida, realizar petición a la API
   const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKeyOpenWeatherMap}&units=metric&lang=es`;
 
   try {
@@ -528,19 +547,27 @@ async function obtenerDatosTiempo(lat, lon) {
     const data = await response.json();
 
     if (data.cod === 200) {
-      return {
+      const datosTiempo = { // Objeto con los datos que queremos guardar en caché
         temperatura: data.main.temp,
-        sensacion: data.main.feels_like, // Sensación térmica
-        viento: data.wind.speed, // Velocidad del viento
+        sensacion: data.main.feels_like,
+        viento: data.wind.speed,
         descripcion: data.weather[0].description,
         icono: data.weather[0].icon,
       };
+
+      // 4. Guardar los datos en la caché junto con la fecha y hora actual
+      cacheTiempo[ciudadNombre] = {
+        data: datosTiempo,
+        timestamp: ahora,
+      };
+      console.log(`[Cache] Datos de tiempo para ${ciudadNombre} actualizados y guardados en la caché.`);
+      return datosTiempo; // Devolver datos de la API
     } else {
-      console.error(`Error al obtener datos de tiempo: ${data.message}`);
+      console.error(`Error al obtener datos de tiempo para ${ciudadNombre}: ${data.message}`);
       return null;
     }
   } catch (error) {
-    console.error(`Error al obtener datos de tiempo:`, error);
+    console.error(`Error al obtener datos de tiempo para ${ciudadNombre}:`, error);
     return null;
   }
 }
@@ -589,9 +616,8 @@ let marcadoresTiempo = []; // Array para almacenar los marcadores de tiempo
 
 async function activarCapaTiempo() {
   const ciudades = [
-  
 
-    { nombre: "Almansa", provincia: "Albacete", pais: "ES", lat: 38.8706, lon: -1.0976 },
+{ nombre: "Almansa", provincia: "Albacete", pais: "ES", lat: 38.8706, lon: -1.0976 },
     { nombre: "Bonete", provincia: "Albacete", pais: "ES", lat: 38.9211, lon: -1.3480 },
 
 
@@ -610,11 +636,13 @@ async function activarCapaTiempo() {
     { nombre: "BM Requena", ciudad: "Requena", pais: "ES", lat: 39.5364, lon: -1.1565 },
     { nombre: "BM Gabaldón", ciudad: "Gabaldón", pais: "ES", lat: 39.6359, lon: -1.9448 }, 
     { nombre: "BM Monforte", provincia: "Alicante", pais: "ES", lat: 38.4069, lon: -0.6949 },
+      
   ];
 
   for (const ciudad of ciudades) {
         try {
-            const datosTiempo = await obtenerDatosTiempo(ciudad.lat, ciudad.lon);
+            // Pasar ciudad.nombre como tercer argumento a obtenerDatosTiempo()
+            const datosTiempo = await obtenerDatosTiempo(ciudad.lat, ciudad.lon, ciudad.nombre);
             if (datosTiempo) {
                 const marcador = mostrarInfoTiempo(ciudad.nombre, ciudad.lat, ciudad.lon, datosTiempo);
                 if (marcador) {
