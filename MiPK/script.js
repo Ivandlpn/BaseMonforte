@@ -656,17 +656,8 @@ async function activarCapaTiempo() {
     }
   }
 
-  // Calcular los límites del grupo de capas
-  if (marcadoresTiempoLayerGroup.getLayers().length > 0) { // Verificar si hay marcadores en el grupo
-    const bounds = marcadoresTiempoLayerGroup.getBounds();
-
-    // Ajustar el zoom del mapa para mostrar los límites
-    mapa.fitBounds(bounds, { padding: [20, 20] }); // Añadir un poco de padding alrededor de los límites
-
-    // *** Opcional: Ajustar el zoom ligeramente después de fitBounds ***
-    // const zoomActual = mapa.getZoom();
-    // mapa.setZoom(Math.min(zoomActual + 1, 14)); // Ajustar el valor '14' según sea necesario
-  }
+  // Establecer un nivel de zoom fijo al activar la capa Tiempo
+  mapa.setZoom(6); // Nivel de zoom fijo (puedes ajustarlo)
 }
 
 function desactivarCapaTiempo() {
