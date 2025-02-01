@@ -698,6 +698,26 @@ function crearIconoEdificio(tipo) {
     });
 }
 
+
+function compartirUbicacionEdificio(lat, lon, nombreEdificio) {
+    const googleMapsUrl = `https://www.google.com/maps?q=${lat},${lon}`;
+
+    if (navigator.share) {
+        navigator.share({
+            title: `Ubicación de ${nombreEdificio}`,
+            text: `Ubicación de ${nombreEdificio} en el mapa:`,
+            url: googleMapsUrl
+        }).then(() => {
+            console.log('Ubicación de edificio compartida exitosamente');
+        })
+        .catch((error) => console.error('Error al compartir ubicación de edificio', error));
+    } else {
+        // Si navigator.share no está soportado, muestra una alerta con el enlace
+        alert('Tu navegador no soporta la función de compartir. Aquí está el enlace a Google Maps:\n\n' + googleMapsUrl);
+    }
+}
+
+
 async function activarCapaEdificios(layerGroup, tipos) {
     try {
         // Cargar y combinar datos de ambos archivos
@@ -736,7 +756,14 @@ async function activarCapaEdificios(layerGroup, tipos) {
                     .bindPopup(`
                         <div style="text-align: center;">
                             <b style="font-size: 1.1em;">${elemento.NOMBRE}</b><br>
-                            ${pkFormateado} (L${lineaElemento})
+                            ${pkFormateado} (L${lineaElemento})<br><br>
+                            <button
+                                style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer; display:flex; align-items: center; gap: 5px; margin: 0 auto;"
+                                onclick="compartirUbicacionEdificio(${puntoCoordenadas.Latitud}, ${puntoCoordenadas.Longitud}, '${elemento.NOMBRE.replace(/'/g, "\\'")}');"
+                                aria-label="Compartir ubicación de ${elemento.NOMBRE}"
+                            >
+                                <img src="img/edificios/compartirubi.png" alt="Compartir Ubicación" style="width: 20px; height: 20px;"> Compartir
+                            </button>
                         </div>
                     `);
                 layerGroup.addLayer(marker);
@@ -746,9 +773,6 @@ async function activarCapaEdificios(layerGroup, tipos) {
             }
         });
         mapa.addLayer(layerGroup);
-        
-        // Establecer un nivel de zoom fijo al activar la capa Tiempo
-        mapa.setZoom(7); // Nivel de zoom fijo (puedes ajustarlo)
 
     } catch (error) {
         console.error("Error al activar la capa de edificios:", error);
