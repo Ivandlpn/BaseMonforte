@@ -359,8 +359,8 @@ footer img {
 }
 
 .icono-tiempo img {
-    width: 80px; /* Ancho deseado */
-    height: 80px; /* Alto deseado */
+    width: 25px; /* Ancho deseado */
+    height: 25px; /* Alto deseado */
 }
 
 .leaflet-popup-content-wrapper {
