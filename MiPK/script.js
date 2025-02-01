@@ -758,11 +758,11 @@ async function activarCapaEdificios(layerGroup, tipos) {
                             <b style="font-size: 1.1em;">${elemento.NOMBRE}</b><br>
                             ${pkFormateado} (L${lineaElemento})<br><br>
                             <button
-                                style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer; display:flex; align-items: center; gap: 5px; margin: 0 auto;"
+                                style="padding: 0; border: none; border-radius: 5px; background-color: transparent; cursor: pointer; display:flex; align-items: center; justify-content: center; margin: 0 auto;"
                                 onclick="compartirUbicacionEdificio(${puntoCoordenadas.Latitud}, ${puntoCoordenadas.Longitud}, '${elemento.NOMBRE.replace(/'/g, "\\'")}');"
                                 aria-label="Compartir ubicación de ${elemento.NOMBRE}"
                             >
-                                <img src="img/edificios/compartirubi.png" alt="Compartir Ubicación" style="width: 55px; height: 20px;"> Compartir
+                                <img src="img/edificios/compartirubi.png" alt="Compartir Ubicación" style="width: 30px; height: 30px;">
                             </button>
                         </div>
                     `);
