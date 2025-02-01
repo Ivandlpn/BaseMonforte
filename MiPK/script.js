@@ -762,7 +762,7 @@ async function activarCapaEdificios(layerGroup, tipos) {
                                 onclick="compartirUbicacionEdificio(${puntoCoordenadas.Latitud}, ${puntoCoordenadas.Longitud}, '${elemento.NOMBRE.replace(/'/g, "\\'")}');"
                                 aria-label="Compartir ubicación de ${elemento.NOMBRE}"
                             >
-                                <img src="img/edificios/compartirubi.png" alt="Compartir Ubicación" style="width: 75px; height: 35px;">
+                                <img src="img/edificios/compartirubi.png" alt="Compartir Ubicación" style="width: 77px; height: 35px;">
                             </button>
                         </div>
                     `);
