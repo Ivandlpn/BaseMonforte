@@ -513,6 +513,7 @@ checkTrazado.addEventListener('change', function () {
 
 let cacheTiempo = {}; // Variable global para la caché de datos meteorológicos
 const tiempoValidezCache = 15 * 60 * 1000; // 15 minutos en milisegundos
+let marcadoresTiempoLayerGroup; // Variable para el grupo de capas de marcadores de tiempo
 
 checkTiempo.addEventListener('change', function() {
     if (this.checked) {
@@ -615,54 +616,65 @@ function mostrarInfoTiempo(ciudad, lat, lon, datosTiempo) {
 let marcadoresTiempo = []; // Array para almacenar los marcadores de tiempo
 
 async function activarCapaTiempo() {
+  // Inicializar el grupo de capas al activar la capa
+  marcadoresTiempoLayerGroup = L.layerGroup().addTo(mapa);
+  marcadoresTiempo = []; // Limpiar el array de marcadores (opcional, ya que ahora usaremos layerGroup)
+
   const ciudades = [
+        { nombre: "Estación AVE Alicante", ciudad: "Alicante", pais: "ES", lat: 38.34504710449551, lon: -0.49624913479889377 }, // Estación de AVE de Alicante ,
+        { nombre: "Estación AVE Villena", ciudad: "Villena", pais: "ES", lat: 38.58458615754724, lon: -0.8737778624739008 }, // Estación de AVE de Villena ,
+        { nombre: "Estación AVE Albacete", ciudad: "Albacete", pais: "ES", lat: 39.0000, lon: -1.8482 }, // Estación de AVE de Albacete
+        { nombre: "Estación AVE Valencia", ciudad: "Valencia", pais: "ES", lat: 39.4598, lon: -0.3832 }, // Estación de AVE de Valencia (Joaquín Sorolla)
+        { nombre: "Estación AVE Requena", ciudad: "Requena", pais: "ES", lat: 39.4912, lon: -1.1049 }, // Estación de AVE de Requena-Utiel ,
+        { nombre: "Estación AVE Cuenca", ciudad: "Cuenca", pais: "ES", lat: 40.03475517879438, lon: -2.1447602073689995 }, // Estación de AVE de Cuenca (Fernando Zóbel) ,
+        { nombre: "Madrid Sur", ciudad: "Madrid", pais: "ES", lat: 40.347113073135155, lon: -3.6629191646569375 }, // 40.347113073135155, -3.6629191646569375
+        { nombre: "Estación Madrid Atocha", ciudad: "Madrid", pais: "ES", lat: 40.40305191998353, lon: -3.6880508709609807 }, // Estación de Madrid Atocha 40.40305191998353,
+        { nombre: "Madrid - Paseo Rey", ciudad: "Madrid", pais: "ES", lat: 40.42476032513849, lon: -3.722183550683615 }, // Estación de Madrid Atocha ,
+        { nombre: "Estación Madrid Chamartín", ciudad: "Madrid", pais: "ES", lat: 40.4722, lon: -3.6825 }, // Estación de Madrid Chamartín
 
-{ nombre: "Almansa", provincia: "Albacete", pais: "ES", lat: 38.8706, lon: -1.0976 },
-    { nombre: "Bonete", provincia: "Albacete", pais: "ES", lat: 38.9211, lon: -1.3480 },
-
-
-    { nombre: "Estación AVE Alicante", ciudad: "Alicante", pais: "ES", lat: 38.34504710449551, lon: -0.49624913479889377 }, // Estación de AVE de Alicante , 
-    { nombre: "Estación AVE Villena", ciudad: "Villena", pais: "ES", lat: 38.58458615754724, lon: -0.8737778624739008 }, // Estación de AVE de Villena , 
-    { nombre: "Estación AVE Albacete", ciudad: "Albacete", pais: "ES", lat: 39.0000, lon: -1.8482 }, // Estación de AVE de Albacete 
-    { nombre: "Estación AVE Valencia", ciudad: "Valencia", pais: "ES", lat: 39.4598, lon: -0.3832 }, // Estación de AVE de Valencia (Joaquín Sorolla)
-    { nombre: "Estación AVE Requena", ciudad: "Requena", pais: "ES", lat: 39.4912, lon: -1.1049 }, // Estación de AVE de Requena-Utiel , 
-    { nombre: "Estación AVE Cuenca", ciudad: "Cuenca", pais: "ES", lat: 40.03475517879438, lon: -2.1447602073689995 }, // Estación de AVE de Cuenca (Fernando Zóbel) , 
-    { nombre: "Madrid Sur", ciudad: "Madrid", pais: "ES", lat: 40.347113073135155, lon: -3.6629191646569375 }, // 40.347113073135155, -3.6629191646569375
-    { nombre: "Estación Madrid Atocha", ciudad: "Madrid", pais: "ES", lat: 40.40305191998353, lon: -3.6880508709609807 }, // Estación de Madrid Atocha 40.40305191998353, 
-    { nombre: "Madrid - Paseo Rey", ciudad: "Madrid", pais: "ES", lat: 40.42476032513849, lon: -3.722183550683615 }, // Estación de Madrid Atocha , 
-    { nombre: "Estación Madrid Chamartín", ciudad: "Madrid", pais: "ES", lat: 40.4722, lon: -3.6825 }, // Estación de Madrid Chamartín
-   
-    { nombre: "BM Villarrubia", ciudad: "Villarrubia", pais: "ES", lat: 39.9577, lon: -3.3513 },
-    { nombre: "BM Requena", ciudad: "Requena", pais: "ES", lat: 39.5364, lon: -1.1565 },
-    { nombre: "BM Gabaldón", ciudad: "Gabaldón", pais: "ES", lat: 39.6359, lon: -1.9448 }, 
-    { nombre: "BM Monforte", provincia: "Alicante", pais: "ES", lat: 38.4069, lon: -0.6949 },
-      
+        { nombre: "BM Villarrubia", ciudad: "Villarrubia", pais: "ES", lat: 39.9577, lon: -3.3513 },
+        { nombre: "BM Requena", ciudad: "Requena", pais: "ES", lat: 39.5364, lon: -1.1565 },
+        { nombre: "BM Gabaldón", ciudad: "Gabaldón", pais: "ES", lat: 39.6359, lon: -1.9448 },
+        { nombre: "BM Monforte", provincia: "Alicante", pais: "ES", lat: 38.4069, lon: -0.6949 },
   ];
 
   for (const ciudad of ciudades) {
-        try {
-            // Pasar ciudad.nombre como tercer argumento a obtenerDatosTiempo()
-            const datosTiempo = await obtenerDatosTiempo(ciudad.lat, ciudad.lon, ciudad.nombre);
-            if (datosTiempo) {
-                const marcador = mostrarInfoTiempo(ciudad.nombre, ciudad.lat, ciudad.lon, datosTiempo);
-                if (marcador) {
-                marcadoresTiempo.push(marcador);
-               }
-            }
-        } catch (error) {
-             console.error(
-               `Error al obtener datos de tiempo para ${ciudad.nombre}:`,
-              error
-            );
+    try {
+      const datosTiempo = await obtenerDatosTiempo(ciudad.lat, ciudad.lon, ciudad.nombre);
+      if (datosTiempo) {
+        const marcador = mostrarInfoTiempo(ciudad.nombre, ciudad.lat, ciudad.lon, datosTiempo);
+        if (marcador) {
+          marcadoresTiempo.push(marcador); // Mantener el array para referencia si es necesario
+          marcadoresTiempoLayerGroup.addLayer(marcador); // Añadir marcador al grupo de capas
         }
+      }
+    } catch (error) {
+      console.error(
+        `Error al obtener datos de tiempo para ${ciudad.nombre}:`,
+        error
+      );
     }
+  }
+
+  // Calcular los límites del grupo de capas
+  if (marcadoresTiempoLayerGroup.getLayers().length > 0) { // Verificar si hay marcadores en el grupo
+    const bounds = marcadoresTiempoLayerGroup.getBounds();
+
+    // Ajustar el zoom del mapa para mostrar los límites
+    mapa.fitBounds(bounds, { padding: [20, 20] }); // Añadir un poco de padding alrededor de los límites
+
+    // *** Opcional: Ajustar el zoom ligeramente después de fitBounds ***
+    // const zoomActual = mapa.getZoom();
+    // mapa.setZoom(Math.min(zoomActual + 1, 14)); // Ajustar el valor '14' según sea necesario
+  }
 }
 
 function desactivarCapaTiempo() {
-    marcadoresTiempo.forEach(marcador => {
-        mapa.removeLayer(marcador);
-    });
-    marcadoresTiempo = [];
+    if (marcadoresTiempoLayerGroup) {
+        mapa.removeLayer(marcadoresTiempoLayerGroup); // Eliminar el grupo de capas del mapa
+        marcadoresTiempoLayerGroup = null; // Limpiar la variable del grupo de capas
+    }
+    marcadoresTiempo = []; // Limpiar el array de marcadores
 }
 
 /////  FIN CAPA TIEMPO /////---------------------------------------------------------------------------------------
