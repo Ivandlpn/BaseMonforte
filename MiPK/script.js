@@ -590,22 +590,25 @@ let marcadoresTiempo = []; // Array para almacenar los marcadores de tiempo
 async function activarCapaTiempo() {
   const ciudades = [
   
-    { nombre: "Villena", provincia: "Alicante", pais: "ES", lat: 38.6333, lon: -0.8667 },
+
     { nombre: "Almansa", provincia: "Albacete", pais: "ES", lat: 38.8706, lon: -1.0976 },
     { nombre: "Bonete", provincia: "Albacete", pais: "ES", lat: 38.9211, lon: -1.3480 },
 
 
-    { nombre: "Estación AVE Alicante", ciudad: "Alicante", pais: "ES", lat: 38.3394, lon: -0.5015 }, // Estación de AVE de Alicante
-    { nombre: "Estación AVE Villena", ciudad: "Villena", pais: "ES", lat: 38.6536, lon: -0.8872 }, // Estación de AVE de Villena
-    { nombre: "Estación AVE Albacete", ciudad: "Albacete", pais: "ES", lat: 39.0045, lon: -1.8531 }, // Estación de AVE de Albacete
-    { nombre: "Estación AVE Cuenca", ciudad: "Cuenca", pais: "ES", lat: 40.0269, lon: -2.0985 }, // Estación de AVE de Cuenca (Fernando Zóbel)
-    { nombre: "Estación AVE Requena", ciudad: "Requena", pais: "ES", lat: 39.4558, lon: -1.0995 }, // Estación de AVE de Requena-Utiel
+    { nombre: "Estación AVE Alicante", ciudad: "Alicante", pais: "ES", lat: 38.34504710449551, lon: -0.49624913479889377 }, // Estación de AVE de Alicante , 
+    { nombre: "Estación AVE Villena", ciudad: "Villena", pais: "ES", lat: 38.58458615754724, lon: -0.8737778624739008 }, // Estación de AVE de Villena , 
+    { nombre: "Estación AVE Albacete", ciudad: "Albacete", pais: "ES", lat: 39.0000, lon: -1.8482 }, // Estación de AVE de Albacete 
     { nombre: "Estación AVE Valencia", ciudad: "Valencia", pais: "ES", lat: 39.4598, lon: -0.3832 }, // Estación de AVE de Valencia (Joaquín Sorolla)
+    { nombre: "Estación AVE Requena", ciudad: "Requena", pais: "ES", lat: 39.4912, lon: -1.1049 }, // Estación de AVE de Requena-Utiel , 
+    { nombre: "Estación AVE Cuenca", ciudad: "Cuenca", pais: "ES", lat: 40.03475517879438, lon: -2.1447602073689995 }, // Estación de AVE de Cuenca (Fernando Zóbel) , 
+    { nombre: "Madrid Sur", ciudad: "Madrid", pais: "ES", lat: 40.347113073135155, lon: -3.6629191646569375 }, // 40.347113073135155, -3.6629191646569375
+    { nombre: "Estación Madrid Atocha", ciudad: "Madrid", pais: "ES", lat: 40.40305191998353, lon: -3.6880508709609807 }, // Estación de Madrid Atocha 40.40305191998353, 
+    { nombre: "Madrid - Paseo Rey", ciudad: "Madrid", pais: "ES", lat: 40.42476032513849, lon: -3.722183550683615 }, // Estación de Madrid Atocha , 
     { nombre: "Estación Madrid Chamartín", ciudad: "Madrid", pais: "ES", lat: 40.4722, lon: -3.6825 }, // Estación de Madrid Chamartín
    
     { nombre: "BM Villarrubia", ciudad: "Villarrubia", pais: "ES", lat: 39.9577, lon: -3.3513 },
     { nombre: "BM Requena", ciudad: "Requena", pais: "ES", lat: 39.5364, lon: -1.1565 },
-    { nombre: "BM Gabaldón", ciudad: "Gabaldón", pais: "ES", lat: 39.6362, lon: -1.9438 },
+    { nombre: "BM Gabaldón", ciudad: "Gabaldón", pais: "ES", lat: 39.6359, lon: -1.9448 }, 
     { nombre: "BM Monforte", provincia: "Alicante", pais: "ES", lat: 38.4069, lon: -0.6949 },
   ];
 
