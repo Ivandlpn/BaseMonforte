@@ -746,6 +746,9 @@ async function activarCapaEdificios(layerGroup, tipos) {
             }
         });
         mapa.addLayer(layerGroup);
+        
+        // Establecer un nivel de zoom fijo al activar la capa Tiempo
+        mapa.setZoom(7); // Nivel de zoom fijo (puedes ajustarlo)
 
     } catch (error) {
         console.error("Error al activar la capa de edificios:", error);
