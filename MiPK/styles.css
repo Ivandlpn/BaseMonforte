@@ -735,6 +735,11 @@ footer img {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra reducida al hacer clic */
 }
 
+#contenido-instrucciones-trabajador {
+    padding: 15px;
+    text-align: justify; /* Asegúrate de que esté aquí en styles.css */
+}
+
 /* Estilos para el botón de teléfono de urgencias en tarjeta instrucciones trabajador */
 .telefono-urgencias-button {
     display: inline-block; /* Para que se comporte como bloque pero en línea */
@@ -777,6 +782,8 @@ footer img {
     color: #555; /* Sin cambios */
     margin-top: 30px; /* *** AÑADIDO: Espacio superior para separar del contenido anterior *** */
 }
+
+
 
   #actualizarUbicacion {
     font-size: 0.9em;
