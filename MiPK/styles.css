@@ -705,6 +705,37 @@ footer img {
     }
 
 
+/* Estilos para los botones TRABAJADOR y VEHÍCULO en la tarjeta ACCIDENTE */
+.boton-accidente-tipo {
+    background: none; /* Fondo transparente */
+    border: none;     /* Sin borde */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 15px 20px; /* Padding para hacerlos más grandes */
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    background-color: #f0f8ff; /* Color de fondo suave */
+    display: flex; /* Para centrar verticalmente imagen y texto */
+    flex-direction: column; /* Apilar imagen y texto verticalmente */
+    align-items: center; /* Centrar horizontalmente */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves */
+    width: 200px; /* Ancho fijo para los botones */
+    text-align: center; /* Asegurar centrado del texto */
+    color: #333; /* Color del texto */
+    text-decoration: none; /* Eliminar subrayado si es un enlace */
+}
+
+.boton-accidente-tipo:hover {
+    background-color: #ccebff; /* Fondo al pasar el ratón */
+    transform: scale(1.05); /* Ligeramente más grande al pasar el ratón */
+}
+
+.boton-accidente-tipo:active {
+    background-color: #b3e0ff; /* Fondo al hacer clic */
+    transform: scale(1.0); /* Volver al tamaño normal al hacer clic */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra reducida al hacer clic */
+}
+
+
 .csi-info-text {
    margin-bottom: 20px; /* Espacio debajo del texto informativo (sin cambios) */
     padding: 15px; /* Sin cambios */
