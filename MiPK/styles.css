@@ -795,7 +795,7 @@ footer img {
 
 #logo-alphabet-vehiculo {
     position: absolute; /* Posicionamiento absoluto dentro de la tarjeta */
-    top: 10px;          /* Ajusta la distancia desde la parte superior */
+    top: 12px;          /* Ajusta la distancia desde la parte superior */
     left: 10px;         /* Ajusta la distancia desde la izquierda */
     width: 130px;         /* Ajusta el ancho de la imagen */
     height: auto;        /* Mantener la proporción de la imagen */
