@@ -2134,6 +2134,20 @@ function mostrarResultadosEnTabla(resultados) {
 }
  // ----- FIN FUNCIONALIDAD BOTÓN SIMULADOR -----
 
+// ----- INICIO FUNCIONALIDAD BOTÓN ACCIDENTE -----
+    const accidenteButton = document.querySelector('.plus-option-button[aria-label="ACCIDENTE"]');
+
+    if (accidenteButton) {
+        accidenteButton.addEventListener('click', function() {
+            document.getElementById('plus-card-container').style.display = 'none'; // Ocultar la tarjeta PLUS al hacer clic en ACCIDENTE
+            alert("Botón ACCIDENTE pulsado. \n\nPróximamente: \nOpciones TRABAJADOR y VEHÍCULO"); // Mensaje temporal
+            // Aquí iría la lógica para mostrar los botones TRABAJADOR y VEHÍCULO (que implementaremos después)
+        });
+    } else {
+        console.error('No se encontró el botón ACCIDENTE');
+    }
+    // ----- FIN FUNCIONALIDAD BOTÓN ACCIDENTE -----
+
 
 
 // ----- INICIO FUNCIONALIDAD TRENES -----
