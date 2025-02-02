@@ -2134,20 +2134,29 @@ function mostrarResultadosEnTabla(resultados) {
 }
  // ----- FIN FUNCIONALIDAD BOTÓN SIMULADOR -----
 
-// ----- INICIO FUNCIONALIDAD BOTÓN ACCIDENTE -----
+    // ----- INICIO FUNCIONALIDAD BOTÓN ACCIDENTE -----
     const accidenteButton = document.querySelector('.plus-option-button[aria-label="ACCIDENTE"]');
+    const accidenteCardContainer = document.getElementById('accidente-card-container');
+    const plusCardContainer = document.getElementById('plus-card-container');
+    const cerrarAccidenteCardButton = document.getElementById('cerrar-accidente-card');
 
     if (accidenteButton) {
         accidenteButton.addEventListener('click', function() {
-            document.getElementById('plus-card-container').style.display = 'none'; // Ocultar la tarjeta PLUS al hacer clic en ACCIDENTE
-            alert("Botón ACCIDENTE pulsado. \n\nPróximamente: \nOpciones TRABAJADOR y VEHÍCULO"); // Mensaje temporal
-            // Aquí iría la lógica para mostrar los botones TRABAJADOR y VEHÍCULO (que implementaremos después)
+            plusCardContainer.style.display = 'none'; // Ocultar la tarjeta PLUS
+            accidenteCardContainer.style.display = 'flex'; // Mostrar la tarjeta ACCIDENTE
         });
     } else {
         console.error('No se encontró el botón ACCIDENTE');
     }
-    // ----- FIN FUNCIONALIDAD BOTÓN ACCIDENTE -----
 
+    if (cerrarAccidenteCardButton) {
+        cerrarAccidenteCardButton.addEventListener('click', function() {
+            accidenteCardContainer.style.display = 'none'; // Ocultar la tarjeta ACCIDENTE
+        });
+    } else {
+        console.error('No se encontró el botón de cerrar de la tarjeta ACCIDENTE');
+    }
+    // ----- FIN FUNCIONALIDAD BOTÓN ACCIDENTE -----
 
 
 // ----- INICIO FUNCIONALIDAD TRENES -----
