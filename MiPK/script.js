@@ -409,7 +409,118 @@ document.addEventListener('click', function(event) {
 
 /////  INICIO CAPA MI TRAMO  /////---------------------------------------------------------------------------------------
 
+let miTramoLayerGroup = null; // Usaremos un LayerGroup para las dos líneas del tramo
 
+function activarCapaMiTramo() {
+    if (!mapa || !window.pkMasCercano || !window.pkMasCercano.linea) {
+        console.warn("No se puede activar la capa 'Mi tramo' sin mapa, PK o línea.");
+        alert("Para activar 'Mi tramo', asegúrate de que la ubicación esté disponible y el PK calculado.");
+        checkMitramo.checked = false;
+        return;
+    }
+
+    const lineaUsuario = window.pkMasCercano.linea;
+    const pkUsuario = window.pkMasCercano.pk;
+    const pkUsuarioNumerico = pkToNumber(pkUsuario);
+    const rangoMetros = 2000; // Metros antes y después del PK del usuario
+    const pkInicioTramoNumerico = pkUsuarioNumerico - rangoMetros;
+    const pkFinTramoNumerico = pkUsuarioNumerico + rangoMetros;
+    const pkInicioTramoFormateado = numberToPk(pkInicioTramoNumerico); // Asegúrate de tener esta función o implementarla
+    const pkFinTramoFormateado = numberToPk(pkFinTramoNumerico);     // Asegúrate de tener esta función o implementarla
+
+    // Mostrar texto temporal "Cargando Mi Tramo ..."
+    const pkElement = document.getElementById("pkCercano"); // Usamos el mismo elemento para mostrar mensajes temporales
+    const textoOriginalPK = pkElement.innerHTML; // Guarda el texto original para restaurar
+    pkElement.innerHTML = `<span class="texto-buscando-mitramo">Cargando Mi Tramo...</span>`;
+
+    cargarArchivosJSON(rutasArchivos) // Reutilizamos cargarArchivosJSON
+        .then(datosTrazado => {
+            // 1. Filtrar puntos dentro del rango de PK y línea del usuario
+            const puntosTramo = datosTrazado.filter(punto =>
+                punto.Linea === lineaUsuario &&
+                pkToNumber(punto.PK) >= pkInicioTramoNumerico &&
+                pkToNumber(punto.PK) <= pkFinTramoNumerico
+            );
+
+            // 2. Ordenar puntos por PK (importante para dibujar líneas correctamente)
+            puntosTramo.sort((a, b) => pkToNumber(a.PK) - pkToNumber(b.PK));
+
+            if (puntosTramo.length >= 2) { // Necesitamos al menos 2 puntos para dibujar una línea
+                // 3. Encontrar el punto más cercano al PK del usuario dentro de los puntos del tramo
+                let puntoUsuarioEnTramo = null;
+                let distanciaMinima = Infinity;
+
+                for (const punto of puntosTramo) {
+                    const distancia = Math.abs(pkToNumber(punto.PK) - pkUsuarioNumerico);
+                    if (distancia < distanciaMinima) {
+                        distanciaMinima = distancia;
+                        puntoUsuarioEnTramo = punto;
+                    }
+                }
+
+                if (puntoUsuarioEnTramo) {
+                    // 4. Dividir los puntos en dos segmentos: antes y después del punto del usuario
+                    const puntosAntesUsuario = puntosTramo.filter(punto => pkToNumber(punto.PK) <= pkToNumber(puntoUsuarioEnTramo.PK));
+                    const puntosDespuesUsuario = puntosTramo.filter(punto => pkToNumber(punto.PK) >= pkToNumber(puntoUsuarioEnTramo.PK));
+
+                    miTramoLayerGroup = L.layerGroup(); // Inicializar el LayerGroup
+
+                    // Dibujar línea desde el inicio del tramo hasta el punto del usuario
+                    if (puntosAntesUsuario.length >= 2) { // Asegurar que hay suficientes puntos para dibujar la línea
+                        const coordenadasAntes = puntosAntesUsuario.map(punto => [parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
+                        const lineaAntes = L.polyline(coordenadasAntes, {
+                            color: 'purple', // Color para "Mi tramo"
+                            weight: 3,
+                            opacity: 1,
+                            dashArray: '10, 10' // Línea punteada para distinguirla
+                        });
+                        miTramoLayerGroup.addLayer(lineaAntes);
+                    }
+
+                    // Dibujar línea desde el punto del usuario hasta el final del tramo
+                    if (puntosDespuesUsuario.length >= 2) { // Asegurar que hay suficientes puntos para dibujar la línea
+                        const coordenadasDespues = puntosDespuesUsuario.map(punto => [parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
+                        const lineaDespues = L.polyline(coordenadasDespues, {
+                            color: 'purple', // Mismo color
+                            weight: 3,
+                            opacity: 1,
+                            dashArray: '10, 10' // Línea punteada
+                        });
+                        miTramoLayerGroup.addLayer(lineaDespues);
+                    }
+
+                    miTramoLayerGroup.addTo(mapa); // Añadir el LayerGroup al mapa
+                    // Opcional: Ajustar el zoom para que se vea el tramo completo
+                    // if (miTramoLayerGroup.getLayers().length > 0) {
+                    //     const bounds = miTramoLayerGroup.getBounds();
+                    //     if (bounds.isValid()) { // Verificar si bounds es válido antes de usar fitBounds
+                    //         mapa.fitBounds(bounds);
+                    //     }
+                    // }
+
+                } else {
+                    console.warn("No se encontró un punto de usuario válido dentro del tramo.");
+                    alert("No se pudo dibujar 'Mi tramo' alrededor de tu ubicación.");
+                }
+            } else {
+                console.warn("No hay suficientes puntos de trazado en el rango de PK para dibujar 'Mi tramo'.");
+                alert("No hay datos de trazado suficientes para dibujar 'Mi tramo' en esta ubicación.");
+            }
+             pkElement.innerHTML = textoOriginalPK; // Restaura el texto original
+        })
+        .catch(error => {
+            console.error("Error al cargar o procesar los datos de trazado para 'Mi tramo':", error);
+            alert("Error al cargar los datos necesarios para 'Mi tramo'.");
+             pkElement.innerHTML = textoOriginalPK; // Restaura el texto original
+        });
+}
+
+function desactivarCapaMiTramo() {
+    if (miTramoLayerGroup) {
+        mapa.removeLayer(miTramoLayerGroup);
+        miTramoLayerGroup = null; // Limpiar la variable del LayerGroup
+    }
+}
 
 /////  FIN CAPA MI TRAMO /////---------------------------------------------------------------------------------------
 
