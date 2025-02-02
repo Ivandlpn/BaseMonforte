@@ -2134,33 +2134,52 @@ function mostrarResultadosEnTabla(resultados) {
 }
  // ----- FIN FUNCIONALIDAD BOTÓN SIMULADOR -----
 
-    // ----- INICIO FUNCIONALIDAD BOTÓN TRABAJADOR (ACCIDENTE) -----
-    const botonTrabajadorAccidente = document.getElementById('boton-trabajador');
-    const instruccionesTrabajadorCardContainer = document.getElementById('instrucciones-trabajador-card-container'); // <-- Contenedor instrucciones trabajador
-    const accidenteCardContainer = document.getElementById('accidente-card-container'); // <-- Contenedor tarjeta ACCIDENTE
+    // ----- INICIO FUNCIONALIDAD BOTÓN ACCIDENTE -----
+    const accidenteButton = document.querySelector('.plus-option-button[aria-label="ACCIDENTE"]');
+    const accidenteCardContainer = document.getElementById('accidente-card-container');
+    const plusCardContainer = document.getElementById('plus-card-container');
+    const cerrarAccidenteCardButton = document.getElementById('cerrar-accidente-card');
 
-    if (botonTrabajadorAccidente) {
+    const botonTrabajadorAccidente = document.getElementById('boton-trabajador'); // <-- Botón TRABAJADOR
+    const instruccionesTrabajadorCardContainer = document.getElementById('instrucciones-trabajador-card-container'); // <-- Tarjeta instrucciones TRABAJADOR
+    const cerrarInstruccionesTrabajadorCardButton = document.getElementById('cerrar-instrucciones-trabajador-card'); // <-- Botón cerrar instrucciones TRABAJADOR
+
+
+    if (accidenteButton) {
+        accidenteButton.addEventListener('click', function() {
+            plusCardContainer.style.display = 'none'; // Ocultar la tarjeta PLUS
+            accidenteCardContainer.style.display = 'flex'; // Mostrar la tarjeta ACCIDENTE (tipos de accidente)
+        });
+    } else {
+        console.error('No se encontró el botón ACCIDENTE');
+    }
+
+    if (cerrarAccidenteCardButton) {
+        cerrarAccidenteCardButton.addEventListener('click', function() {
+            accidenteCardContainer.style.display = 'none'; // Ocultar la tarjeta ACCIDENTE (tipos de accidente)
+        });
+    } else {
+        console.error('No se encontró el botón de cerrar de la tarjeta ACCIDENTE');
+    }
+
+    if (botonTrabajadorAccidente) { // <-- Funcionalidad Botón TRABAJADOR
         botonTrabajadorAccidente.addEventListener('click', function() {
-            accidenteCardContainer.style.display = 'none'; // Ocultar la tarjeta ACCIDENTE
+            accidenteCardContainer.style.display = 'none'; // Ocultar tarjeta ACCIDENTE (tipos de accidente)
             instruccionesTrabajadorCardContainer.style.display = 'flex'; // Mostrar tarjeta instrucciones TRABAJADOR
         });
     } else {
         console.error('No se encontró el botón TRABAJADOR en tarjeta ACCIDENTE');
     }
-    // ----- FIN FUNCIONALIDAD BOTÓN TRABAJADOR (ACCIDENTE) -----
 
-    // ----- INICIO FUNCIONALIDAD BOTÓN CERRAR TARJETA INSTRUCCIONES TRABAJADOR -----
-    const cerrarInstruccionesTrabajadorCardButton = document.getElementById('cerrar-instrucciones-trabajador-card');
-    const instruccionesTrabajadorCardContainer = document.getElementById('instrucciones-trabajador-card-container');
-
-    if (cerrarInstruccionesTrabajadorCardButton) {
+    if (cerrarInstruccionesTrabajadorCardButton) { // <-- Funcionalidad Botón Cerrar Instrucciones TRABAJADOR
         cerrarInstruccionesTrabajadorCardButton.addEventListener('click', function() {
             instruccionesTrabajadorCardContainer.style.display = 'none'; // Ocultar tarjeta instrucciones TRABAJADOR
         });
     } else {
         console.error('No se encontró el botón de cerrar de la tarjeta instrucciones TRABAJADOR');
     }
-    // ----- FIN FUNCIONALIDAD BOTÓN CERRAR TARJETA INSTRUCCIONES TRABAJADOR -----
+
+    // ----- FIN FUNCIONALIDAD BOTÓN ACCIDENTE -----
 
 
 // ----- INICIO FUNCIONALIDAD TRENES -----
