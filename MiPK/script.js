@@ -509,10 +509,15 @@ async function activarCapaMiTramo() {
         return edificio.LINEA === lineaUsuario && pkNumericoEdificio >= pkInicioTramo && pkNumericoEdificio <= pkFinTramo;
     });
 
+        console.log("pkInicioTramo:", pkInicioTramo, "pkFinTramo:", pkFinTramo, "lineaUsuario:", lineaUsuario); // *** AÑADE ESTE CONSOLE.LOG ***
+    console.log("Edificios ANTES del filtro Mi Tramo (primeros 5):", dataEdificiosArraysGlobal.flat().slice(0, 5)); // *** AÑADE ESTE CONSOLE.LOG ***
+    console.log("Edificios DESPUÉS del filtro Mi Tramo:", edificiosMiTramo); // *** AÑADE ESTE CONSOLE.LOG **
+
     if (edificiosMiTramo.length > 0) {
         capaMiTramoEdificios = L.layerGroup(); // Usamos LayerGroup para agrupar marcadores
         edificiosMiTramo.forEach(edificio => {
             const puntoCoordenadas = window.coordenadasPorPKLineaGlobal.get(`${edificio.PK}-${edificio.LINEA}`); // Ajuste: usar coordenadasPorPKLineaGlobal
+                       console.log("Buscando coordenadas para edificio:", edificio.NOMBRE, "PK:", edificio.PK, "Linea:", edificio.LINEA, " - Coordenadas encontradas:", puntoCoordenadas); // *** AÑADE ESTE CONSOLE.LOG ***
             if (puntoCoordenadas) {
                 const icono = crearIconoEdificio(edificio.TIPO);
                 if (icono) {
