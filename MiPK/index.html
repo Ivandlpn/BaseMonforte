@@ -370,6 +370,34 @@
     </div>
     <!-- *** FIN: NUEVA TARJETA SUPERPUESTA SIMULADOR *** -->
 
+        <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA ACCIDENTE *** -->
+    <div id="accidente-card-container" class="overlay-card-container" style="display: none;">
+        <div id="accidente-card" class="overlay-card">
+
+            <!-- Botón para cerrar la tarjeta -->
+            <button id="cerrar-accidente-card" class="close-button" aria-label="Cerrar">
+                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+            </button>
+
+            <!-- Título de la tarjeta -->
+            <h2 style="text-align: center; margin-bottom: 25px;"><u>¿QUÉ TIPO DE ACCIDENTE?</u></h2>
+
+            <!-- Contenedor para los botones TRABAJADOR y VEHÍCULO -->
+            <div id="botones-accidente-container" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                <button id="boton-trabajador" class="boton-accidente-tipo">
+                    <img src="img/plus/trabajador.png" alt="TRABAJADOR" style="width: 100%; height: auto;">
+                    <span style="display: block; margin-top: 10px; font-size: 1.2em;">TRABAJADOR</span>
+                </button>
+                <button id="boton-vehiculo" class="boton-accidente-tipo">
+                    <img src="img/plus/vehiculo.png" alt="VEHÍCULO" style="width: 100%; height: auto;">
+                    <span style="display: block; margin-top: 10px; font-size: 1.2em;">VEHÍCULO</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA ACCIDENTE *** -->
+
 
     <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA TRENES *** -->
 <div id="trenes-card-container" class="overlay-card-container" style="display: none;">
