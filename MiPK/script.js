@@ -60,7 +60,7 @@ async function cargarDatosEdificiosGlobal() {
 }
 
 cargarDatosEdificiosGlobal(); // Llamar a la función para cargar datos de edificios globalmente al inicio
-
+console.log("dataEdificiosArraysGlobal después de cargar:", dataEdificiosArraysGlobal); // *** AÑADE ESTE CONSOLE.LOG ***
 
 
 function pkToNumber(pkString) { // <--- Definición en el ámbito global
