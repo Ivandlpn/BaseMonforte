@@ -797,7 +797,7 @@ footer img {
     position: absolute; /* Posicionamiento absoluto dentro de la tarjeta */
     top: 10px;          /* Ajusta la distancia desde la parte superior */
     left: 10px;         /* Ajusta la distancia desde la izquierda */
-    width: 10px;         /* Ajusta el ancho de la imagen */
+    width: 40px;         /* Ajusta el ancho de la imagen */
     height: auto;        /* Mantener la proporción de la imagen */
     z-index: 10;         /* Asegurar que la imagen esté por encima del contenido de la tarjeta */
     opacity: 0.7;       /* Opcional: Reducir un poco la opacidad de la imagen */
