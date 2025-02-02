@@ -727,17 +727,17 @@ footer img {
 }
 
 .boton-accidente-tipo:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Añadido: Fondo semitransparente blanco al pasar el ratón */
+    /* background-color: rgba(255, 255, 255, 0.2);  ELIMINADO: Fondo semitransparente blanco al pasar el ratón */
     transform: scale(1.05);
-    opacity: 1; /* Asegurar opacidad completa en hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añadida sombra en hover */
+    opacity: 1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .boton-accidente-tipo:active {
-    background-color: rgba(255, 255, 255, 0.3); /* Añadido: Fondo semitransparente blanco al hacer clic */
+    /* background-color: rgba(255, 255, 255, 0.3);  ELIMINADO: Fondo semitransparente blanco al hacer clic */
     transform: scale(1.0);
-    opacity: 1; /* Asegurar opacidad completa en active */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reducir sombra en active */
+    opacity: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 #contenido-instrucciones-trabajador {
