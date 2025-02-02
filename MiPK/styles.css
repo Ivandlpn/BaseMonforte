@@ -735,6 +735,24 @@ footer img {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Sombra reducida al hacer clic */
 }
 
+/* Estilos para el botón de teléfono de urgencias en tarjeta instrucciones trabajador */
+.telefono-urgencias-button {
+    display: inline-block; /* Para que se comporte como bloque pero en línea */
+    padding: 8px 15px; /* Relleno interior del botón */
+    background-color: white; /* Fondo blanco para contrastar con el azul de la tarjeta */
+    color: #007bff; /* Color azul similar al de la tarjeta para el texto */
+    border: 2px solid white; /* Borde blanco */
+    border-radius: 5px; /* Bordes redondeados */
+    text-decoration: none; /* Eliminar el subrayado del enlace */
+    font-weight: bold; /* Texto en negrita */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave para hover */
+}
+
+.telefono-urgencias-button:hover {
+    background-color: #e0f7fa; /* Un color de fondo ligeramente más claro al pasar el ratón */
+    color: #0056b3; /* Un color azul más oscuro al pasar el ratón */
+}
+
 
 .csi-info-text {
    margin-bottom: 20px; /* Espacio debajo del texto informativo (sin cambios) */
