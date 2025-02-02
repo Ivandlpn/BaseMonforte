@@ -40,27 +40,6 @@ async function cargarPuertas() {
     }
 }
 
-let dataEdificiosArraysGlobal = []; // Variable global para datos de edificios
-let coordenadasPorPKLineaGlobal = new Map(); // Variable global para mapa de coordenadas
-
-async function cargarDatosEdificiosGlobal() {
-    try {
-        const rutasEdificios = ["./doc/edificios/ALBALI.json", "./doc/edificios/TOVAL.json"];
-        dataEdificiosArraysGlobal = await Promise.all(rutasEdificios.map(ruta =>
-            fetch(ruta).then(response => response.json())
-        ));
-        console.log("Datos de edificios cargados globalmente:", dataEdificiosArraysGlobal);
-         coordenadasPorPKLineaGlobal = await crearMapaCoordenadas(); // Cargar mapa de coordenadas globalmente
-         console.log("Mapa de coordenadas cargado globalmente:", coordenadasPorPKLineaGlobal);
-
-    } catch (error) {
-        console.error("Error al cargar datos de edificios globalmente:", error);
-        alert("Error al cargar datos de edificios.");
-    }
-}
-
-cargarDatosEdificiosGlobal(); // Llamar a la función para cargar datos de edificios globalmente al inicio
-console.log("dataEdificiosArraysGlobal después de cargar:", dataEdificiosArraysGlobal); // *** AÑADE ESTE CONSOLE.LOG ***
 
 
 function pkToNumber(pkString) { // <--- Definición en el ámbito global
@@ -104,17 +83,17 @@ navigator.geolocation.watchPosition((position) => {
     timeout: 10000
 });
 
-async function calcularYActualizarPK() {
+function calcularYActualizarPK() {
     // Mostrar texto temporal "Buscando PK ..."
     const pkElement = document.getElementById("pkCercano");
-    if(pkElement){
-        pkElement.innerHTML = `<span class="texto-buscando-pk">Buscando PK...</span>`;
-    }
+   if(pkElement){
+      pkElement.innerHTML = `<span class="texto-buscando-pk">Buscando PK...</span>`;
+   }
     else {
-        console.error("No se ha encontrado el elemento con id pkCercano")
-        return;
+      console.error("No se ha encontrado el elemento con id pkCercano")
+      return;
     }
-
+    
     if (!lat || !lon) {
         console.error("No se ha obtenido la ubicación actual del usuario.");
         return;
@@ -134,17 +113,16 @@ async function calcularYActualizarPK() {
 
     cargarArchivosJSON(rutasArchivos)
         .then(datosCombinados => {
-            // *** MODIFICACIÓN IMPORTANTE: Guardar datosCombinados globalmente ***
-            window.datosCombinadosGlobal = datosCombinados; // <-- ASIGNACIÓN GLOBAL
             window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
             if(window.pkMasCercano && pkElement){ //Añadimos la comprobación de pkElement
-                mostrarPKMasCercano(window.pkMasCercano);
-                actualizarPosicionPK(window.pkMasCercano);
+               mostrarPKMasCercano(window.pkMasCercano);
+               actualizarPosicionPK(window.pkMasCercano);
             }
             // mostrarMensaje("   🔄 PK Actualizado");
         })
         .catch(error => console.error('Error al combinar datos de los archivos:', error));
 }
+
 
 // Propiedades Mensaje: PK Actualizado
 function mostrarMensaje(mensaje) {
@@ -431,134 +409,7 @@ document.addEventListener('click', function(event) {
 
 /////  INICIO CAPA MI TRAMO  /////---------------------------------------------------------------------------------------
 
-let capaMiTramoTrack = null; // Variable para la capa de trazado de "Mi Tramo"
-let capaMiTramoEdificios = null; // Variable para la capa de edificios de "Mi Tramo"
-const rangoMiTramo = 2000; // Rango en metros alrededor del PK del usuario para "Mi Tramo"
 
-// Función para activar la capa "Mi Tramo"
-async function activarCapaMiTramo() {
-    if (!window.pkMasCercano) {
-        console.warn("No se puede activar 'Mi Tramo' sin PK cercano.");
-        alert("Calculando PK actual antes de activar 'Mi Tramo'...");
-        await calcularYActualizarPK(); // Asegurarse de tener el PK calculado
-        if (!window.pkMasCercano) {
-            alert("No se pudo determinar el PK actual. 'Mi Tramo' no se activará.");
-            return;
-        }
-    }
-
-    const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk);
-    const lineaUsuario = window.pkMasCercano.linea;
-
-    const pkInicioTramo = pkUsuarioNumerico - rangoMiTramo;
-    const pkFinTramo = pkUsuarioNumerico + rangoMiTramo;
-
-    // 1. Filtrar trazado dentro del rango PK
-    const puntosTrazadoMiTramo = window.datosCombinadosGlobal.filter(punto => {
-        const pkNumericoPunto = pkToNumber(punto.PK);
-        return punto.Linea === lineaUsuario && pkNumericoPunto >= pkInicioTramo && pkNumericoPunto <= pkFinTramo;
-    });
-
-    // 2. Crear polilínea de trazado simplificada (dos segmentos)
-    if (puntosTrazadoMiTramo.length > 0) {
-        const coordenadasTrazadoMiTramo = puntosTrazadoMiTramo.map(punto => [parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
-
-        // Encontrar el índice del punto más cercano al PK del usuario (aproximado)
-        let indicePkUsuarioEnTramo = -1;
-        let distanciaMinima = Infinity;
-
-        for (let i = 0; i < puntosTrazadoMiTramo.length; i++) {
-            const pkNumericoPunto = pkToNumber(puntosTrazadoMiTramo[i].PK);
-            const distancia = Math.abs(pkNumericoPunto - pkUsuarioNumerico);
-            if (distancia < distanciaMinima) {
-                distanciaMinima = distancia;
-                indicePkUsuarioEnTramo = i;
-            }
-        }
-
-        let coordenadasSegmento1 = [];
-        let coordenadasSegmento2 = [];
-
-        if (indicePkUsuarioEnTramo !== -1) {
-            coordenadasSegmento1 = coordenadasTrazadoMiTramo.slice(0, indicePkUsuarioEnTramo + 1); // Desde inicio hasta PK usuario (incluido)
-            coordenadasSegmento2 = coordenadasTrazadoMiTramo.slice(indicePkUsuarioEnTramo); // Desde PK usuario (incluido) hasta el final
-        } else {
-            coordenadasSegmento1 = coordenadasTrazadoMiTramo; // Si no se encuentra el PK usuario, mostrar todo el tramo como un solo segmento
-            coordenadasSegmento2 = []; // No hay segundo segmento
-        }
-
-
-        capaMiTramoTrack = L.layerGroup(); // Usamos LayerGroup para agrupar segmentos
-
-        if (coordenadasSegmento1.length > 1) {
-            const polyline1 = L.polyline(coordenadasSegmento1, { color: 'red', weight: 3 }).addTo(mapa);
-            capaMiTramoTrack.addLayer(polyline1);
-        }
-        if (coordenadasSegmento2.length > 1) {
-            const polyline2 = L.polyline(coordenadasSegmento2, { color: 'red', weight: 3 }).addTo(mapa);
-            capaMiTramoTrack.addLayer(polyline2);
-        }
-         mapa.addLayer(capaMiTramoTrack);
-
-    }
-
-
-    // 3. Filtrar y mostrar edificios dentro del rango PK
-    const edificiosMiTramo = dataEdificiosArraysGlobal.flat().filter(edificio => { // Ajuste: usar dataEdificiosArraysGlobal
-        const pkNumericoEdificio = pkToNumber(edificio.PK);
-        return edificio.LINEA === lineaUsuario && pkNumericoEdificio >= pkInicioTramo && pkNumericoEdificio <= pkFinTramo;
-    });
-
-        console.log("pkInicioTramo:", pkInicioTramo, "pkFinTramo:", pkFinTramo, "lineaUsuario:", lineaUsuario); // *** AÑADE ESTE CONSOLE.LOG ***
-    console.log("Edificios ANTES del filtro Mi Tramo (primeros 5):", dataEdificiosArraysGlobal.flat().slice(0, 5)); // *** AÑADE ESTE CONSOLE.LOG ***
-    console.log("Edificios DESPUÉS del filtro Mi Tramo:", edificiosMiTramo); // *** AÑADE ESTE CONSOLE.LOG **
-
-    if (edificiosMiTramo.length > 0) {
-        capaMiTramoEdificios = L.layerGroup(); // Usamos LayerGroup para agrupar marcadores
-        edificiosMiTramo.forEach(edificio => {
-            const puntoCoordenadas = window.coordenadasPorPKLineaGlobal.get(`${edificio.PK}-${edificio.LINEA}`); // Ajuste: usar coordenadasPorPKLineaGlobal
-                       console.log("Buscando coordenadas para edificio:", edificio.NOMBRE, "PK:", edificio.PK, "Linea:", edificio.LINEA, " - Coordenadas encontradas:", puntoCoordenadas); // *** AÑADE ESTE CONSOLE.LOG ***
-            if (puntoCoordenadas) {
-                const icono = crearIconoEdificio(edificio.TIPO);
-                if (icono) {
-                    const marker = L.marker([puntoCoordenadas.Latitud, puntoCoordenadas.Longitud], { icon: icono })
-                        .bindPopup(`<div style="text-align: center;"><b>${edificio.NOMBRE}</b><br>${formatearPK(edificio.PK)} (L${edificio.LINEA})</div>`);
-                    capaMiTramoEdificios.addLayer(marker);
-                }
-            }
-        });
-        mapa.addLayer(capaMiTramoEdificios);
-    }
-
-    mapa.setZoom(16); // Ajustar zoom al activar "Mi Tramo"
-}
-
-
-// Función para desactivar la capa "Mi Tramo"
-function desactivarCapaMiTramo() {
-    if (capaMiTramoTrack) {
-        mapa.removeLayer(capaMiTramoTrack);
-        capaMiTramoTrack = null;
-    }
-    if (capaMiTramoEdificios) {
-        mapa.removeLayer(capaMiTramoEdificios);
-        capaMiTramoEdificios = null;
-    }
-}
-
-// Event listener para el checkbox "Mi tramo"
-const checkMitramo = document.getElementById('check-mitramo');
-if (checkMitramo) {
-    checkMitramo.addEventListener('change', function () {
-        if (this.checked) {
-            activarCapaMiTramo();
-        } else {
-            desactivarCapaMiTramo();
-        }
-    });
-} else {
-    console.error("No se encontró el checkbox 'check-mitramo'");
-}
 
 /////  FIN CAPA MI TRAMO /////---------------------------------------------------------------------------------------
 
