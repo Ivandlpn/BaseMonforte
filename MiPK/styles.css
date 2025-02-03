@@ -224,7 +224,7 @@ footer img {
 .overlay-card {
     background-color: #2a62b8; /* Azul */
     color: white;
-    border-radius: 10px;
+    border-radius: 20px;
     padding: 20px;
     max-width: 90%; /* Ancho máximo de la tarjeta */
     max-height: 70%; /* Alto máximo de la tarjeta */
