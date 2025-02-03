@@ -806,7 +806,7 @@ footer img {
 #titulo-plus {
     text-align: center;
     margin-bottom: 20px; /* Mantén el margen inferior */
-    font-size: 2.2em;       /* Aumenta el tamaño de la fuente (ajústalo si es necesario) */
+    font-size: 2.5em;       /* Aumenta el tamaño de la fuente (ajústalo si es necesario) */
     font-family: 'Poppins', sans-serif; /* Establece la fuente Poppins */
     font-weight: 700; /* Añadir negrita */
 }
