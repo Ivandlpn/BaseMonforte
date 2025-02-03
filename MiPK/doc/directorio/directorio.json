@@ -1,605 +1,642 @@
 [
- {
-   "Ubicación": "Madrid - Paseo del Rey",
-   "Nombre": "Mario García Aguado",
-   "Puesto": "Jefe de Área",
-   "Correo": "mgarciaaguado@adif.es",
-   "Teléfonos Interior": "166548 - 967600",
-   "Teléfono Exterior": 647923080,
-   "Dirección": "Paseo del Rey, 32 Planta baja y 3ª "
- },
- {
-   "Ubicación": "Madrid - Paseo del Rey",
-   "Nombre": "Lourdes Mirasierra Pérez ",
-   "Puesto": "Secretaria",
-   "Correo": "lmirasierra@externos.adif.es",
-   "Teléfonos Interior": "150866",
-   "Teléfono Exterior": 628895465,
-   "Dirección": "Paseo del Rey, 32 Planta baja y 3ª "
- },
- {
-   "Ubicación": "Madrid - Paseo del Rey",
-   "Nombre": "Pedro Luis Miguel Sánchez",
-   "Puesto": "Coordinador de Línea",
-   "Correo": "pedro.miguel@ineco.com",
-   "Teléfonos Interior": "150727",
-   "Teléfono Exterior": 661287618,
-   "Dirección": "Paseo del Rey, 32 Planta baja y 3ª "
- },
- {
-   "Ubicación": "Madrid - Paseo del Rey",
-   "Nombre": "Manuel Tirado Domínguez",
-   "Puesto": "Técnico de II.SS.",
-   "Correo": "mtirado@adif.es",
-   "Teléfonos Interior": "969088",
-   "Teléfono Exterior": 647615303,
-   "Dirección": "Paseo del Rey, 32 Planta baja y 3ª "
- },
- {
-   "Ubicación": "Madrid - Paseo del Rey",
-   "Nombre": "Samuel García Chaparro",
-   "Puesto": "Técnico Telecomunicaciones",
-   "Correo": "sgarciac@adif.es",
-   "Teléfonos Interior": "996722",
-   "Teléfono Exterior": 647813678,
-   "Dirección": "Paseo del Rey, 32 Planta baja y 3ª "
- },
- {
-   "Ubicación": "Madrid - Paseo del Rey",
-   "Nombre": "Héctor Sanz Mateos",
-   "Puesto": "Técnico De Infra y Vía Línea",
-   "Correo": "hector.sanz@ineco.com",
-   "Teléfonos Interior": "743001",
-   "Teléfono Exterior": 687940736,
-   "Dirección": "Paseo del Rey, 32 Planta baja y 3ª "
- },
- {
-   "Ubicación": "Madrid Sur",
-   "Nombre": "Alberto Sanz Berges",
-   "Puesto": "Técnico De Energía",
-   "Correo": "alberto.berges@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 662676920,
-   "Dirección": "BASE MTO. MADRID SUR Camino Tomateros, 2 - 28031 Madrid"
- },
- {
-   "Ubicación": "Madrid Sur",
-   "Nombre": "David Moreta Jiménez",
-   "Puesto": "Técnico de II.SS.",
-   "Correo": "david.moreta@ineco.com",
-   "Teléfonos Interior": "751076",
-   "Teléfono Exterior": 661262136,
-   "Dirección": "BASE MTO. MADRID SUR Camino Tomateros, 2 - 28031 Madrid"
- },
- {
-   "Ubicación": "Madrid Sur",
-   "Nombre": "David Garcia Pérez",
-   "Puesto": "Técnico de Proteccion Civil",
-   "Correo": "david.garcia2@ineco.com",
-   "Teléfonos Interior": "751074",
-   "Teléfono Exterior": 618990207,
-   "Dirección": "BASE MTO. MADRID SUR Camino Tomateros, 2 - 28031 Madrid"
- },
- {
-   "Ubicación": "BM Villarrubia",
-   "Nombre": "PTE NOMBRAMIENTO",
-   "Puesto": "Jefe de Base",
-   "Correo": "",
-   "Teléfonos Interior": "743000",
-   "Teléfono Exterior": null,
-   "Dirección": ""
- },
- {
-   "Ubicación": "BM Villarrubia",
-   "Nombre": "Javier Gambin Ortuño",
-   "Puesto": "C.T. Ingeniería Civil",
-   "Correo": "javier.gambin@adif.es",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 610165651,
-   "Dirección": "AUTOVÍA A40, SALIDA 196 CM-3001, KM.3 45360- VILLARRUBIA DE SANTIAGO (TOLEDO)"
- },
- {
-   "Ubicación": "BM Villarrubia",
-   "Nombre": "Rubén Antón Rodríguez",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "ruben.anton@ineco.com",
-   "Teléfonos Interior": "743002",
-   "Teléfono Exterior": 628715029,
-   "Dirección": "AUTOVÍA A40, SALIDA 196 CM-3001, KM.3 45360- VILLARRUBIA DE SANTIAGO (TOLEDO)"
- },
- {
-   "Ubicación": "BM Villarrubia",
-   "Nombre": "Juan José Recio Lanchas",
-   "Puesto": "Jefe de Unidad",
-   "Correo": "juan.recio@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 659727779,
-   "Dirección": "AUTOVÍA A40, SALIDA 196 CM-3001, KM.3 45360- VILLARRUBIA DE SANTIAGO (TOLEDO)"
- },
- {
-   "Ubicación": "BM Villarrubia",
-   "Nombre": "Silvia García Maroto",
-   "Puesto": "Técnico Documentalista",
-   "Correo": "silvia.maroto@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 683656405,
-   "Dirección": "AUTOVÍA A40, SALIDA 196 CM-3001, KM.3 45360- VILLARRUBIA DE SANTIAGO (TOLEDO)"
- },
- {
-   "Ubicación": "BM Villarrubia",
-   "Nombre": "Manuel García Díaz",
-   "Puesto": "Técnico De Inversiones",
-   "Correo": "mgarcia.diaz@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 610670612,
-   "Dirección": "AUTOVÍA A40, SALIDA 196 CM-3001, KM.3 45360- VILLARRUBIA DE SANTIAGO (TOLEDO)"
- },
- {
-   "Ubicación": "BM Villarrubia",
-   "Nombre": "Víctor Solana Ortíz ",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "victor.solana@ineco.com",
-   "Teléfonos Interior": "743005",
-   "Teléfono Exterior": 676655220,
-   "Dirección": "AUTOVÍA A40, SALIDA 196 CM-3001, KM.3 45360- VILLARRUBIA DE SANTIAGO (TOLEDO)"
- },
- {
-   "Ubicación": "BM Villarrubia",
-   "Nombre": "Antonio Maria Millan Seco",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "antonio.millan@ineco.com",
-   "Teléfonos Interior": "743008",
-   "Teléfono Exterior": 629156891,
-   "Dirección": "AUTOVÍA A40, SALIDA 196 CM-3001, KM.3 45360- VILLARRUBIA DE SANTIAGO (TOLEDO)"
- },
- {
-   "Ubicación": "BM Villarrubia",
-   "Nombre": "Gregorio Ramos Córdoba",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "gregorio.ramos@ineco.com",
-   "Teléfonos Interior": "743006",
-   "Teléfono Exterior": 670555183,
-   "Dirección": "AUTOVÍA A40, SALIDA 196 CM-3001, KM.3 45360- VILLARRUBIA DE SANTIAGO (TOLEDO)"
- },
- {
-   "Ubicación": "BM Villarrubia",
-   "Nombre": "Luis Martín del Valle Soria",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "luis.martin@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 660722020,
-   "Dirección": "AUTOVÍA A40, SALIDA 196 CM-3001, KM.3 45360- VILLARRUBIA DE SANTIAGO (TOLEDO)"
- },
- {
-   "Ubicación": "BM Villarrubia",
-   "Nombre": "Álvaro Barahona Serrano",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "alvaro.barahona@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 647985585,
-   "Dirección": "AUTOVÍA A40, SALIDA 196 CM-3001, KM.3 45360- VILLARRUBIA DE SANTIAGO (TOLEDO)"
- },
- {
-   "Ubicación": "BM Requena",
-   "Nombre": "Jesús Valero Núñez",
-   "Puesto": "Jefe de Base",
-   "Correo": "jvaleronunez@adif.es",
-   "Teléfonos Interior": "748203 - 950944 - 746013 Viernes Est.de Valencia",
-   "Teléfono Exterior": 678281833,
-   "Dirección": "AUTOVÍA A3, SALIDA 281 CAMINO AGRÍCOLA S/N 46390 SAN ANTONIO REQUENA (VALENCIA)\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Requena",
-   "Nombre": "Santiago Ferri Mateu",
-   "Puesto": "C.T. Ingeniería Civil",
-   "Correo": "sferri@adif.es",
-   "Teléfonos Interior": "748201",
-   "Teléfono Exterior": 610165643,
-   "Dirección": "AUTOVÍA A3, SALIDA 281 CAMINO AGRÍCOLA S/N 46390 SAN ANTONIO REQUENA (VALENCIA)\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Requena",
-   "Nombre": "Ramiro De Arriba Ramírez",
-   "Puesto": "Jefe de Unidad",
-   "Correo": "ramiro.arriba@ineco.com",
-   "Teléfonos Interior": "748205",
-   "Teléfono Exterior": 629156879,
-   "Dirección": "AUTOVÍA A3, SALIDA 281 CAMINO AGRÍCOLA S/N 46390 SAN ANTONIO REQUENA (VALENCIA)\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Requena",
-   "Nombre": "Antonio Pérez Gil",
-   "Puesto": "Técnico Explanaciones",
-   "Correo": "antonio.gil@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 636276615,
-   "Dirección": "AUTOVÍA A3, SALIDA 281 CAMINO AGRÍCOLA S/N 46390 SAN ANTONIO REQUENA (VALENCIA)\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Requena",
-   "Nombre": "José Molto Gallego",
-   "Puesto": "Técnico De Inversiones",
-   "Correo": "jose.molto@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 647392942,
-   "Dirección": "AUTOVÍA A3, SALIDA 281 CAMINO AGRÍCOLA S/N 46390 SAN ANTONIO REQUENA (VALENCIA)\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Requena",
-   "Nombre": "Marco Salinas Medina",
-   "Puesto": "Técnico Documentalista",
-   "Correo": "marco.salinas@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 670566166,
-   "Dirección": "AUTOVÍA A3, SALIDA 281 CAMINO AGRÍCOLA S/N 46390 SAN ANTONIO REQUENA (VALENCIA)\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Requena",
-   "Nombre": "José Ramón Hernández Vaquero",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "jose.vaquero@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 674816629,
-   "Dirección": "AUTOVÍA A3, SALIDA 281 CAMINO AGRÍCOLA S/N 46390 SAN ANTONIO REQUENA (VALENCIA)\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Requena",
-   "Nombre": "Jorge Losa Robledo",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "jorge.losa@ineco.com",
-   "Teléfonos Interior": "748212",
-   "Teléfono Exterior": 630894109,
-   "Dirección": "AUTOVÍA A3, SALIDA 281 CAMINO AGRÍCOLA S/N 46390 SAN ANTONIO REQUENA (VALENCIA)\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Requena",
-   "Nombre": "Santiago Morán Pérez",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "santiago.moran@ineco.com ",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 696511081,
-   "Dirección": "AUTOVÍA A3, SALIDA 281 CAMINO AGRÍCOLA S/N 46390 SAN ANTONIO REQUENA (VALENCIA)\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Requena",
-   "Nombre": "Antonio Valero Arrazola",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "antonio.valero@ineco.com",
-   "Teléfonos Interior": "748206",
-   "Teléfono Exterior": 627788481,
-   "Dirección": "AUTOVÍA A3, SALIDA 281 CAMINO AGRÍCOLA S/N 46390 SAN ANTONIO REQUENA (VALENCIA)\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Requena",
-   "Nombre": "José Martínez Gómez",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "luis.martinez@ineco.com",
-   "Teléfonos Interior": "748214",
-   "Teléfono Exterior": 696874294,
-   "Dirección": "AUTOVÍA A3, SALIDA 281 CAMINO AGRÍCOLA S/N 46390 SAN ANTONIO REQUENA (VALENCIA)\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Requena",
-   "Nombre": "Jorge García-Bermejo Morcillo",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "jorge.garcia-bermejo@ineco.com",
-   "Teléfonos Interior": "748222",
-   "Teléfono Exterior": 662078928,
-   "Dirección": "AUTOVÍA A3, SALIDA 281 CAMINO AGRÍCOLA S/N 46390 SAN ANTONIO REQUENA (VALENCIA)\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Requena",
-   "Nombre": "Manuel Jesús Del Pino García",
-   "Puesto": "Técnico De Energía",
-   "Correo": "manueljesus.delpino@ineco.com",
-   "Teléfonos Interior": "748202",
-   "Teléfono Exterior": 647982300,
-   "Dirección": "AUTOVÍA A3, SALIDA 281 CAMINO AGRÍCOLA S/N 46390 SAN ANTONIO REQUENA (VALENCIA)\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Gabaldón",
-   "Nombre": "Jesús Peña Cañada",
-   "Puesto": "Jefe de Base",
-   "Correo": "jpenacanada@adif.es",
-   "Teléfonos Interior": "748000- 969815",
-   "Teléfono Exterior": 647981929,
-   "Dirección": "C/San Isidro S/nº, 16214 GABALDÓN (Cuenca) \n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Gabaldón",
-   "Nombre": "Vicente Tortajada Rosa",
-   "Puesto": "C.T. Ingeniería Civil",
-   "Correo": "vtortajada@adif.es",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 610165636,
-   "Dirección": "C/San Isidro S/nº, 16214 GABALDÓN (Cuenca) \n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Gabaldón",
-   "Nombre": "José Luis López Marco",
-   "Puesto": "Jefe de Unidad",
-   "Correo": "jose.marco@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 687940499,
-   "Dirección": "C/San Isidro S/nº, 16214 GABALDÓN (Cuenca) \n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Gabaldón",
-   "Nombre": "Roberto Díaz Herráiz",
-   "Puesto": "Técnico De Inversiones",
-   "Correo": "rdiaz.herraiz@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 630742491,
-   "Dirección": "C/San Isidro S/nº, 16214 GABALDÓN (Cuenca) \n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Gabaldón",
-   "Nombre": "Antonio Olivares Nieto",
-   "Puesto": "Técnico De Inversiones",
-   "Correo": "antonio.olivares@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 608420275,
-   "Dirección": "C/San Isidro S/nº, 16214 GABALDÓN (Cuenca) \n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Gabaldón",
-   "Nombre": "Jaime Checa Migallón",
-   "Puesto": "Técnico Explanaciones",
-   "Correo": "jaime.checa@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 689177492,
-   "Dirección": "C/San Isidro S/nº, 16214 GABALDÓN (Cuenca) \n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Gabaldón",
-   "Nombre": "Patricia Macías de la Cuadra",
-   "Puesto": "Técnico Documentalista",
-   "Correo": "patricia.macias@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 663938459,
-   "Dirección": "C/San Isidro S/nº, 16214 GABALDÓN (Cuenca) \n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Gabaldón",
-   "Nombre": "Antonio Briz Piqueras",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "antonio.briz@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 661253512,
-   "Dirección": "C/San Isidro S/nº, 16214 GABALDÓN (Cuenca) \n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Gabaldón",
-   "Nombre": "Jose Luis Escobar",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "jose.escobar@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 671335029,
-   "Dirección": "C/San Isidro S/nº, 16214 GABALDÓN (Cuenca) \n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Gabaldón",
-   "Nombre": "José Núñez González",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "jose.nuñez@ineco.com ",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 661283459,
-   "Dirección": "C/San Isidro S/nº, 16214 GABALDÓN (Cuenca) \n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Gabaldón",
-   "Nombre": "Juan Luis Campos Pareja",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "juan.campos@ineco.com",
-   "Teléfonos Interior": "748008",
-   "Teléfono Exterior": 661302486,
-   "Dirección": "C/San Isidro S/nº, 16214 GABALDÓN (Cuenca) \n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Gabaldón",
-   "Nombre": "Mario Viejobueno",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "mario.viejobueno@ineco.com",
-   "Teléfonos Interior": "748006",
-   "Teléfono Exterior": 626906332,
-   "Dirección": "C/San Isidro S/nº, 16214 GABALDÓN (Cuenca) \n\n\n\n\n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "BM Gabaldón",
-   "Nombre": "Vicente Gómez Morcillo",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "vicente.morcillo@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 680759505,
-   "Dirección": "C/San Isidro S/nº, 16214 GABALDÓN (Cuenca) \n\n\n\n\n\n\n\n\n"
- },
- {
-   "Ubicación": "Estación Valencia",
-   "Nombre": "Esther Lorente Llenderrozas",
-   "Puesto": "Técnico de II.SS.",
-   "Correo": "elorente@adif.es",
-   "Teléfonos Interior": "746010 - 950786",
-   "Teléfono Exterior": 610541772,
-   "Dirección": "Estación Valencia Joaquín Sorolla\nC/ San Vicente Mártir nº 171 - 2º piso (D.O. AVE)\nCP 46007 Valencia "
- },
- {
-   "Ubicación": "ET Valencia",
-   "Nombre": "Raul Ureña Marcos",
-   "Puesto": "Técnico De Telecomunicaciones",
-   "Correo": "raul.urena@ineco.com",
-   "Teléfonos Interior": "746017",
-   "Teléfono Exterior": 661279273,
-   "Dirección": "Avda César Giorgeta frente a nº62, Valencia(46007)"
- },
- {
-   "Ubicación": "ET Valencia",
-   "Nombre": "Carlos Barrera Piqueres",
-   "Puesto": "Técnico De Telecomunicaciones",
-   "Correo": "carlos.barrera@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 649129443,
-   "Dirección": "Avda César Giorgeta frente a nº62, Valencia(46007)"
- },
- {
-   "Ubicación": "ET Valencia",
-   "Nombre": "José Antonio García López",
-   "Puesto": "Técnico de II.SS.",
-   "Correo": "antonio.lopez@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 680740828,
-   "Dirección": "Avda César Giorgeta frente a nº62, Valencia(46007)"
- },
- {
-   "Ubicación": "ET Albacete",
-   "Nombre": "Jose Manuel Señorans Rodriguez",
-   "Puesto": "Técnico De Energía",
-   "Correo": "jsenorans@adif.es",
-   "Teléfonos Interior": "740040-967072 ",
-   "Teléfono Exterior": 647377997,
-   "Dirección": "Edificio Técnico Albacete (Junto al CRC de Albacete) Autovía Alicante A-31, salida 76 (Entre estación AVE Y Autovía)  02001 - ALBACETE"
- },
- {
-   "Ubicación": "ET Albacete",
-   "Nombre": "Victor José Castillo Arenas",
-   "Puesto": "C.T. Ingeniería Industrial",
-   "Correo": "victorjose.castillo@adif.es",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 610165678,
-   "Dirección": "Edificio Técnico Albacete (Junto al CRC de Albacete) Autovía Alicante A-31, salida 76 (Entre estación AVE Y Autovía)  02001 - ALBACETE"
- },
- {
-   "Ubicación": "ET Albacete",
-   "Nombre": "Juan Gil Fernández ",
-   "Puesto": "Técnico de II.SS.",
-   "Correo": "juan.fernandez@ineco.com ",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 687430767,
-   "Dirección": "Edificio Técnico Albacete (Junto al CRC de Albacete) Autovía Alicante A-31, salida 76 (Entre estación AVE Y Autovía)  02001 - ALBACETE"
- },
- {
-   "Ubicación": "ET Albacete",
-   "Nombre": "Ramón Rada Collado",
-   "Puesto": "Técnico De Energía",
-   "Correo": "ramon.rada@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 661281078,
-   "Dirección": "Edificio Técnico Albacete (Junto al CRC de Albacete) Autovía Alicante A-31, salida 76 (Entre estación AVE Y Autovía)  02001 - ALBACETE"
- },
- {
-   "Ubicación": "BM Monforte",
-   "Nombre": "Juan Pablo Rodriguez De La Fuente",
-   "Puesto": "Jefe de Base",
-   "Correo": "jrodriguezdelafuente@adif.es",
-   "Teléfonos Interior": "748300-979223",
-   "Teléfono Exterior": 609120363,
-   "Dirección": "BASE MONFORTE DEL CID CARRETERA CV-825 , KM 9.5 03670 ALICANTE"
- },
- {
-   "Ubicación": "BM Monforte",
-   "Nombre": "Iván De La Paz Notario",
-   "Puesto": "Técnico De Telecomunicaciones",
-   "Correo": "ivan.delapaz@ineco.com ",
-   "Teléfonos Interior": "748316",
-   "Teléfono Exterior": 661350124,
-   "Dirección": "BASE MONFORTE DEL CID CARRETERA CV-825 , KM 9.5 03670 ALICANTE"
- },
- {
-   "Ubicación": "BM Monforte",
-   "Nombre": "Pascual Terol Ramos",
-   "Puesto": "Técnico de II.SS.",
-   "Correo": "pascual.terol@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 669488342,
-   "Dirección": "BASE MONFORTE DEL CID CARRETERA CV-825 , KM 9.5 03670 ALICANTE"
- },
- {
-   "Ubicación": "BM Monforte",
-   "Nombre": "Ernesto Botella Diez",
-   "Puesto": "Jefe de Unidad",
-   "Correo": "ernesto.botella@ineco.com",
-   "Teléfonos Interior": "748302-979920",
-   "Teléfono Exterior": 609645159,
-   "Dirección": "BASE MONFORTE DEL CID CARRETERA CV-825 , KM 9.5 03670 ALICANTE"
- },
- {
-   "Ubicación": "BM Monforte",
-   "Nombre": "Gloria Jover Escolano",
-   "Puesto": "Técnico De Inversiones",
-   "Correo": "maria.jover@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 619821783,
-   "Dirección": "BASE MONFORTE DEL CID CARRETERA CV-825 , KM 9.5 03670 ALICANTE"
- },
- {
-   "Ubicación": "BM Monforte",
-   "Nombre": "Irene Cuerda Berbel",
-   "Puesto": "Técnico Documentalista",
-   "Correo": "irene.cuerda@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 699173798,
-   "Dirección": "BASE MONFORTE DEL CID CARRETERA CV-825 , KM 9.5 03670 ALICANTE"
- },
- {
-   "Ubicación": "BM Monforte",
-   "Nombre": "José Luis Martín Mendoza",
-   "Puesto": "Técnico Explanaciones",
-   "Correo": "jose.mendoza@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 661350175,
-   "Dirección": "BASE MONFORTE DEL CID CARRETERA CV-825 , KM 9.5 03670 ALICANTE"
- },
- {
-   "Ubicación": "BM Monforte",
-   "Nombre": "Jose Antonio Córdoba Vega",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "jose.cordoba@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 661350206,
-   "Dirección": "BASE MONFORTE DEL CID CARRETERA CV-825 , KM 9.5 03670 ALICANTE"
- },
- {
-   "Ubicación": "BM Monforte",
-   "Nombre": "Raúl Delgado Sánchez ",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "raul.delgado@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 619382698,
-   "Dirección": "BASE MONFORTE DEL CID CARRETERA CV-825 , KM 9.5 03670 ALICANTE"
- },
- {
-   "Ubicación": "BM Monforte",
-   "Nombre": "Manuel Ureña Muñoz",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "manuel.urena@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 620830193,
-   "Dirección": "BASE MONFORTE DEL CID CARRETERA CV-825 , KM 9.5 03670 ALICANTE"
- },
- {
-   "Ubicación": "BM Monforte",
-   "Nombre": "Eduardo Cremades Henche",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "eduardo.cremades@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 647372545,
-   "Dirección": "BASE MONFORTE DEL CID CARRETERA CV-825 , KM 9.5 03670 ALICANTE"
- },
- {
-   "Ubicación": "BM Monforte",
-   "Nombre": "Ana Mª Codes Alarcón",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "ana.codes@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 662515177,
-   "Dirección": "BASE MONFORTE DEL CID CARRETERA CV-825 , KM 9.5 03670 ALICANTE"
- },
- {
-   "Ubicación": "BM Monforte",
-   "Nombre": "Iván Álvarez Pérez",
-   "Puesto": "Técnico De Infra y Vía",
-   "Correo": "ivan.alvarez@ineco.com",
-   "Teléfonos Interior": "",
-   "Teléfono Exterior": 682200164,
-   "Dirección": "BASE MONFORTE DEL CID CARRETERA CV-825 , KM 9.5 03670 ALICANTE"
- }
+  {
+    "Ubicación": "Madrid - Paseo del Rey",
+    "Nombre": "Mario García Aguado",
+    "Puesto": "Jefe de Área",
+    "Correo": "mgarciaaguado@adif.es",
+    "Teléfonos Interior": "166548 - 967600",
+    "Teléfono Exterior": 647923080
+  },
+  {
+    "Ubicación": "Madrid - Paseo del Rey",
+    "Nombre": "Lourdes Mirasierra Pérez",
+    "Puesto": "Secretaria",
+    "Correo": "lmirasierra@externos.adif.es",
+    "Teléfonos Interior": 150866,
+    "Teléfono Exterior": 628895465
+  },
+  {
+    "Ubicación": "Madrid - Paseo del Rey",
+    "Nombre": "Pedro Luis Miguel Sánchez",
+    "Puesto": "Coordinador de Línea",
+    "Correo": "pedro.miguel@ineco.com",
+    "Teléfonos Interior": 150727,
+    "Teléfono Exterior": 661287618
+  },
+  {
+    "Ubicación": "Madrid - Paseo del Rey",
+    "Nombre": "Manuel Tirado Domínguez",
+    "Puesto": "Técnico de II.SS.",
+    "Correo": "mtirado@adif.es",
+    "Teléfonos Interior": 969088,
+    "Teléfono Exterior": 647615303
+  },
+  {
+    "Ubicación": "Madrid - Paseo del Rey",
+    "Nombre": "Samuel García Chaparro",
+    "Puesto": "Técnico Telecomunicaciones",
+    "Correo": "sgarciac@adif.es",
+    "Teléfonos Interior": 996722,
+    "Teléfono Exterior": 647813678
+  },
+  {
+    "Ubicación": "Madrid - Paseo del Rey",
+    "Nombre": "Héctor Sanz Mateos",
+    "Puesto": "Técnico De Infra y Vía Línea",
+    "Correo": "hector.sanz@ineco.com",
+    "Teléfonos Interior": 743001,
+    "Teléfono Exterior": 687940736
+  },
+  {
+    "Ubicación": "Madrid Sur",
+    "Nombre": "Alberto Sanz Berges",
+    "Puesto": "Técnico De Energía",
+    "Correo": "alberto.berges@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 662676920
+  },
+  {
+    "Ubicación": "Madrid Sur",
+    "Nombre": "David Moreta Jiménez",
+    "Puesto": "Técnico de II.SS.",
+    "Correo": "david.moreta@ineco.com",
+    "Teléfonos Interior": 751076,
+    "Teléfono Exterior": 661262136
+  },
+  {
+    "Ubicación": "Madrid Sur",
+    "Nombre": "David Garcia Pérez",
+    "Puesto": "Técnico de Proteccion Civil",
+    "Correo": "david.garcia2@ineco.com",
+    "Teléfonos Interior": 751074,
+    "Teléfono Exterior": 618990207
+  },
+  {
+    "Ubicación": "BM Villarrubia",
+    "Nombre": "PTE NOMBRAMIENTO",
+    "Puesto": "Jefe de Base",
+    "Correo": "",
+    "Teléfonos Interior": 743000,
+    "Teléfono Exterior": ""
+  },
+  {
+    "Ubicación": "BM Villarrubia",
+    "Nombre": "Javier Gambin Ortuño",
+    "Puesto": "C.T. Ingeniería Civil",
+    "Correo": "javier.gambin@adif.es",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 610165651
+  },
+  {
+    "Ubicación": "BM Villarrubia",
+    "Nombre": "Rubén Antón Rodríguez",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "ruben.anton@ineco.com",
+    "Teléfonos Interior": 743002,
+    "Teléfono Exterior": 628715029
+  },
+  {
+    "Ubicación": "BM Villarrubia",
+    "Nombre": "Juan José Recio Lanchas",
+    "Puesto": "Jefe de Unidad",
+    "Correo": "juan.recio@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 659727779
+  },
+  {
+    "Ubicación": "BM Villarrubia",
+    "Nombre": "Silvia García Maroto",
+    "Puesto": "Técnico Documentalista",
+    "Correo": "silvia.maroto@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 683656405
+  },
+  {
+    "Ubicación": "BM Villarrubia",
+    "Nombre": "Manuel García Díaz",
+    "Puesto": "Técnico De Inversiones",
+    "Correo": "mgarcia.diaz@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 610670612
+  },
+  {
+    "Ubicación": "BM Villarrubia",
+    "Nombre": "Víctor Solana Ortíz",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "victor.solana@ineco.com",
+    "Teléfonos Interior": 743005,
+    "Teléfono Exterior": 676655220
+  },
+  {
+    "Ubicación": "BM Villarrubia",
+    "Nombre": "Antonio Maria Millan Seco",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "antonio.millan@ineco.com",
+    "Teléfonos Interior": 743008,
+    "Teléfono Exterior": 629156891
+  },
+  {
+    "Ubicación": "BM Villarrubia",
+    "Nombre": "Gregorio Ramos Córdoba",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "gregorio.ramos@ineco.com",
+    "Teléfonos Interior": 743006,
+    "Teléfono Exterior": 670555183
+  },
+  {
+    "Ubicación": "BM Villarrubia",
+    "Nombre": "Luis Martín del Valle Soria",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "luis.martin@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 660722020
+  },
+  {
+    "Ubicación": "BM Villarrubia",
+    "Nombre": "Álvaro Barahona Serrano",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "alvaro.barahona@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 647985585
+  },
+  {
+    "Ubicación": "BM Requena",
+    "Nombre": "Jesús Valero Núñez",
+    "Puesto": "Jefe de Base",
+    "Correo": "jvaleronunez@adif.es",
+    "Teléfonos Interior": "748203 - 950944 - 746013 Viernes Est.de Valencia",
+    "Teléfono Exterior": 678281833
+  },
+  {
+    "Ubicación": "BM Requena",
+    "Nombre": "Santiago Ferri Mateu",
+    "Puesto": "C.T. Ingeniería Civil",
+    "Correo": "sferri@adif.es",
+    "Teléfonos Interior": 748201,
+    "Teléfono Exterior": 610165643
+  },
+  {
+    "Ubicación": "BM Requena",
+    "Nombre": "Ramiro De Arriba Ramírez",
+    "Puesto": "Jefe de Unidad",
+    "Correo": "ramiro.arriba@ineco.com",
+    "Teléfonos Interior": 748205,
+    "Teléfono Exterior": 629156879
+  },
+  {
+    "Ubicación": "BM Requena",
+    "Nombre": "Antonio Pérez Gil",
+    "Puesto": "Técnico Explanaciones",
+    "Correo": "antonio.gil@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 636276615
+  },
+  {
+    "Ubicación": "BM Requena",
+    "Nombre": "José Molto Gallego",
+    "Puesto": "Técnico De Inversiones",
+    "Correo": "jose.molto@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 647392942
+  },
+  {
+    "Ubicación": "BM Requena",
+    "Nombre": "Marco Salinas Medina",
+    "Puesto": "Técnico Documentalista",
+    "Correo": "marco.salinas@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 670566166
+  },
+  {
+    "Ubicación": "BM Requena",
+    "Nombre": "José Ramón Hernández Vaquero",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "jose.vaquero@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 674816629
+  },
+  {
+    "Ubicación": "BM Requena",
+    "Nombre": "Jorge Losa Robledo",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "jorge.losa@ineco.com",
+    "Teléfonos Interior": 748212,
+    "Teléfono Exterior": 630894109
+  },
+  {
+    "Ubicación": "BM Requena",
+    "Nombre": "Santiago Morán Pérez",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "santiago.moran@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 696511081
+  },
+  {
+    "Ubicación": "BM Requena",
+    "Nombre": "Antonio Valero Arrazola",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "antonio.valero@ineco.com",
+    "Teléfonos Interior": 748206,
+    "Teléfono Exterior": 627788481
+  },
+  {
+    "Ubicación": "BM Requena",
+    "Nombre": "José Martínez Gómez",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "luis.martinez@ineco.com",
+    "Teléfonos Interior": 748214,
+    "Teléfono Exterior": 696874294
+  },
+  {
+    "Ubicación": "BM Requena",
+    "Nombre": "Jorge García-Bermejo Morcillo",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "jorge.garcia-bermejo@ineco.com",
+    "Teléfonos Interior": 748222,
+    "Teléfono Exterior": 662078928
+  },
+  {
+    "Ubicación": "BM Requena",
+    "Nombre": "Manuel Jesús Del Pino García",
+    "Puesto": "Técnico De Energía",
+    "Correo": "manueljesus.delpino@ineco.com",
+    "Teléfonos Interior": 748202,
+    "Teléfono Exterior": 647982300
+  },
+  {
+    "Ubicación": "BM Gabaldón",
+    "Nombre": "Jesús Peña Cañada",
+    "Puesto": "Jefe de Base",
+    "Correo": "jpenacanada@adif.es",
+    "Teléfonos Interior": "748000- 969815",
+    "Teléfono Exterior": 647981929
+  },
+  {
+    "Ubicación": "BM Gabaldón",
+    "Nombre": "Vicente Tortajada Rosa",
+    "Puesto": "C.T. Ingeniería Civil",
+    "Correo": "vtortajada@adif.es",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 610165636
+  },
+  {
+    "Ubicación": "BM Gabaldón",
+    "Nombre": "José Luis López Marco",
+    "Puesto": "Jefe de Unidad",
+    "Correo": "jose.marco@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 687940499
+  },
+  {
+    "Ubicación": "BM Gabaldón",
+    "Nombre": "Roberto Díaz Herráiz",
+    "Puesto": "Técnico De Inversiones",
+    "Correo": "rdiaz.herraiz@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 630742491
+  },
+  {
+    "Ubicación": "BM Gabaldón",
+    "Nombre": "Antonio Olivares Nieto",
+    "Puesto": "Técnico De Inversiones",
+    "Correo": "antonio.olivares@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 608420275
+  },
+  {
+    "Ubicación": "BM Gabaldón",
+    "Nombre": "Jaime Checa Migallón",
+    "Puesto": "Técnico Explanaciones",
+    "Correo": "jaime.checa@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 689177492
+  },
+  {
+    "Ubicación": "BM Gabaldón",
+    "Nombre": "Patricia Macías de la Cuadra",
+    "Puesto": "Técnico Documentalista",
+    "Correo": "patricia.macias@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 663938459
+  },
+  {
+    "Ubicación": "BM Gabaldón",
+    "Nombre": "Antonio Briz Piqueras",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "antonio.briz@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 661253512
+  },
+  {
+    "Ubicación": "BM Gabaldón",
+    "Nombre": "Jose Luis Escobar",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "jose.escobar@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 671335029
+  },
+  {
+    "Ubicación": "BM Gabaldón",
+    "Nombre": "José Núñez González",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "jose.nuñez@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 661283459
+  },
+  {
+    "Ubicación": "BM Gabaldón",
+    "Nombre": "Juan Luis Campos Pareja",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "juan.campos@ineco.com",
+    "Teléfonos Interior": 748008,
+    "Teléfono Exterior": 661302486
+  },
+  {
+    "Ubicación": "BM Gabaldón",
+    "Nombre": "Mario Viejobueno",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "mario.viejobueno@ineco.com",
+    "Teléfonos Interior": 748006,
+    "Teléfono Exterior": 626906332
+  },
+  {
+    "Ubicación": "BM Gabaldón",
+    "Nombre": "Vicente Gómez Morcillo",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "vicente.morcillo@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 680759505
+  },
+  {
+    "Ubicación": "Estación Valencia",
+    "Nombre": "Esther Lorente Llenderrozas",
+    "Puesto": "Técnico de II.SS.",
+    "Correo": "elorente@adif.es",
+    "Teléfonos Interior": "746010 - 950786",
+    "Teléfono Exterior": 610541772
+  },
+  {
+    "Ubicación": "ET Valencia",
+    "Nombre": "Raul Ureña Marcos",
+    "Puesto": "Técnico De Telecomunicaciones",
+    "Correo": "raul.urena@ineco.com",
+    "Teléfonos Interior": 746017,
+    "Teléfono Exterior": 661279273
+  },
+  {
+    "Ubicación": "ET Valencia",
+    "Nombre": "Carlos Barrera Piqueres",
+    "Puesto": "Técnico De Telecomunicaciones",
+    "Correo": "carlos.barrera@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 649129443
+  },
+  {
+    "Ubicación": "ET Valencia",
+    "Nombre": "José Antonio García López",
+    "Puesto": "Técnico de II.SS.",
+    "Correo": "antonio.lopez@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 680740828
+  },
+  {
+    "Ubicación": "ET Albacete",
+    "Nombre": "Jose Manuel Señorans Rodriguez",
+    "Puesto": "Técnico De Energía",
+    "Correo": "jsenorans@adif.es",
+    "Teléfonos Interior": "740040-967072",
+    "Teléfono Exterior": 647377997
+  },
+  {
+    "Ubicación": "ET Albacete",
+    "Nombre": "Victor José Castillo Arenas",
+    "Puesto": "C.T. Ingeniería Industrial",
+    "Correo": "victorjose.castillo@adif.es",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 610165678
+  },
+  {
+    "Ubicación": "ET Albacete",
+    "Nombre": "Juan Gil Fernández",
+    "Puesto": "Técnico de II.SS.",
+    "Correo": "juan.fernandez@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 687430767
+  },
+  {
+    "Ubicación": "ET Albacete",
+    "Nombre": "Ramón Rada Collado",
+    "Puesto": "Técnico De Energía",
+    "Correo": "ramon.rada@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 661281078
+  },
+  {
+    "Ubicación": "BM Monforte",
+    "Nombre": "Juan Pablo Rodriguez De La Fuente",
+    "Puesto": "Jefe de Base",
+    "Correo": "jrodriguezdelafuente@adif.es",
+    "Teléfonos Interior": "748300-979223",
+    "Teléfono Exterior": 609120363
+  },
+  {
+    "Ubicación": "BM Monforte",
+    "Nombre": "Iván De La Paz Notario",
+    "Puesto": "Técnico De Telecomunicaciones",
+    "Correo": "ivan.delapaz@ineco.com",
+    "Teléfonos Interior": 748316,
+    "Teléfono Exterior": 661350124
+  },
+  {
+    "Ubicación": "BM Monforte",
+    "Nombre": "Pascual Terol Ramos",
+    "Puesto": "Técnico de II.SS.",
+    "Correo": "pascual.terol@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 669488342
+  },
+  {
+    "Ubicación": "BM Monforte",
+    "Nombre": "Ernesto Botella Diez",
+    "Puesto": "Jefe de Unidad",
+    "Correo": "ernesto.botella@ineco.com",
+    "Teléfonos Interior": "748302-979920",
+    "Teléfono Exterior": 609645159
+  },
+  {
+    "Ubicación": "BM Monforte",
+    "Nombre": "Gloria Jover Escolano",
+    "Puesto": "Técnico De Inversiones",
+    "Correo": "maria.jover@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 619821783
+  },
+  {
+    "Ubicación": "BM Monforte",
+    "Nombre": "Irene Cuerda Berbel",
+    "Puesto": "Técnico Documentalista",
+    "Correo": "irene.cuerda@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 699173798
+  },
+  {
+    "Ubicación": "BM Monforte",
+    "Nombre": "José Luis Martín Mendoza",
+    "Puesto": "Técnico Explanaciones",
+    "Correo": "jose.mendoza@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 661350175
+  },
+  {
+    "Ubicación": "BM Monforte",
+    "Nombre": "Jose Antonio Córdoba Vega",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "jose.cordoba@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 661350206
+  },
+  {
+    "Ubicación": "BM Monforte",
+    "Nombre": "Raúl Delgado Sánchez",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "raul.delgado@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 619382698
+  },
+  {
+    "Ubicación": "BM Monforte",
+    "Nombre": "Manuel Ureña Muñoz",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "manuel.urena@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 620830193
+  },
+  {
+    "Ubicación": "BM Monforte",
+    "Nombre": "Eduardo Cremades Henche",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "eduardo.cremades@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 647372545
+  },
+  {
+    "Ubicación": "BM Monforte",
+    "Nombre": "Ana Mª Codes Alarcón",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "ana.codes@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 662515177
+  },
+  {
+    "Ubicación": "BM Monforte",
+    "Nombre": "Iván Álvarez Pérez",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "ivan.alvarez@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 682200164
+  },
+  {
+    "Ubicación": "CRC Albacete",
+    "Nombre": "José María Bañón Honrubia",
+    "Puesto": "Operador CSI",
+    "Correo": "jose.honrubia@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 967539504
+  },
+  {
+    "Ubicación": "CRC Albacete",
+    "Nombre": "José Ángel Cerezuela Rodenas",
+    "Puesto": "Operador CSI",
+    "Correo": "jose.cerezuela@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 967539504
+  },
+  {
+    "Ubicación": "CRC Albacete",
+    "Nombre": "Gabriel García Morote",
+    "Puesto": "Operador CSI",
+    "Correo": "gabriel.morote@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 967539504
+  },
+  {
+    "Ubicación": "CRC Albacete",
+    "Nombre": "Catalina Alexandra Mendoza López",
+    "Puesto": "Operador CSI",
+    "Correo": "catalina.mendoza@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 967539504
+  },
+  {
+    "Ubicación": "CRC Albacete",
+    "Nombre": "Adrián Ortega Iglesias",
+    "Puesto": "Operador CSI",
+    "Correo": "adrian.iglesias@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 967539504
+  },
+  {
+    "Ubicación": "CRC Albacete",
+    "Nombre": "Rada Collado Pablo Roberto",
+    "Puesto": "Operador CSI",
+    "Correo": "pablo.rada@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 967539504
+  },
+  {
+    "Ubicación": "CRC Albacete",
+    "Nombre": "Óscar Játiva Paterna",
+    "Puesto": "Operador Telemando",
+    "Correo": "oscar.jativa@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 967539503
+  },
+  {
+    "Ubicación": "CRC Albacete",
+    "Nombre": "Alberto López Lorenzo",
+    "Puesto": "Operador Telemando",
+    "Correo": "alberto.lopez@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 967539503
+  },
+  {
+    "Ubicación": "CRC Albacete",
+    "Nombre": "Gracia Requena Pérez",
+    "Puesto": "Operador Telemando",
+    "Correo": "gracia.requena@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 967539503
+  },
+  {
+    "Ubicación": "CRC Albacete",
+    "Nombre": "GerardoMoya Ortiz",
+    "Puesto": "Operador Telemando",
+    "Correo": "gerardo.moya@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 967539503
+  },
+  {
+    "Ubicación": "CRC Albacete",
+    "Nombre": "Jorge Jarabo Tevar",
+    "Puesto": "Operador Telemando",
+    "Correo": "jorge.jarabo@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 967539503
+  },
+  {
+    "Ubicación": "CRC Albacete",
+    "Nombre": "Isabel María García Morote",
+    "Puesto": "Operador Telemando",
+    "Correo": "isabel.garcia@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 967539503
+  },
+  {
+    "Ubicación": "CRC Albacete",
+    "Nombre": "Jesús Gómez Castillo",
+    "Puesto": "Operador Telemando",
+    "Correo": "jesus.castillo@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 967539503
+  }
 ]
