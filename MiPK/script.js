@@ -449,6 +449,8 @@ function agruparYFiltrarPuntos(datos) {
         const linea = punto.Linea;
         const pkNumerico = pkToNumber(punto.PK);
 
+        console.log(`Procesando: Linea=${linea}, PK String=${punto.PK}, PK Numerico=${pkNumerico}`);
+
         if (!puntosPorLinea[linea]) {
             puntosPorLinea[linea] = [];
             ultimoPKPorLinea[linea] = pkNumerico; // Inicia con el primer PK
@@ -457,9 +459,11 @@ function agruparYFiltrarPuntos(datos) {
         // **NUEVA LÓGICA: Excluir puntos en los rangos especificados para la Linea 40**
         if (linea === lineaAExcluir) {
             if (pkNumerico >= pkInicioExclusion1 && pkNumerico <= pkFinExclusion1) {
+                console.log(`Excluyendo (rango 1): Linea=${linea}, PK=${pkNumerico}`);
                 continue; // Saltar este punto (rango 1)
             }
             if (pkNumerico >= pkInicioExclusion2 && pkNumerico <= pkFinExclusion2) {
+                console.log(`Excluyendo (rango 2): Linea=${linea}, PK=${pkNumerico}`);
                 continue; // Saltar este punto (rango 2)
             }
         }
