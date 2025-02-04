@@ -857,6 +857,32 @@ checkTuneles.addEventListener('change', function () {
 
 /////  FIN CAPA EDIFICIOS /////---------------------------------------------------------------------------------------
 
+
+// ----- INICIO FUNCIONALIDAD GENERAR BOTONES OCUPACIÓN -----
+
+function generarBotonesOcupacion() {
+    const botonesOcupacionContainer = document.getElementById('botones-ocupacion-container');
+    botonesOcupacionContainer.innerHTML = ''; // Limpiar el contenedor antes de añadir nuevos botones
+
+    const botonesData = [
+        { nombre: "BM VILLARRUBIA", enlace: "#" }, // Reemplazar "#" con el enlace real
+        { nombre: "BM GABALDÓN", enlace: "#" },   // Reemplazar "#" con el enlace real
+        { nombre: "BM REQUENA", enlace: "#" },    // Reemplazar "#" con el enlace real
+        { nombre: "BM MONFORTE", enlace: "#" }    // Reemplazar "#" con el enlace real
+    ];
+
+    botonesData.forEach(botonData => {
+        const boton = document.createElement('a');
+        boton.href = botonData.enlace;
+        boton.target = "_blank"; // Para abrir el enlace en una nueva pestaña
+        boton.className = 'operador-button'; // Usamos la misma clase que los botones del Mallas
+        boton.textContent = botonData.nombre;
+        botonesOcupacionContainer.appendChild(boton);
+    });
+}
+
+// ----- FIN FUNCIONALIDAD GENERAR BOTONES OCUPACIÓN -----
+
     /////  INICIO PUERTAS /////---------------------------------------------------------------------------------------
 
 let cachedPuertasCercanas = null;
@@ -2028,6 +2054,35 @@ function mostrarResultadosEnTabla(resultados) {
 });
 
  // ----- FIN FUNCIONALIDAD BOTÓN DIRECTORIO -----
+
+
+
+    // ----- INICIO FUNCIONALIDAD BOTÓN OCUPACIÓN -----
+
+    const ocupacionButton = document.querySelector('.plus-option-button[aria-label="OCUPACIÓN"]');
+    const ocupacionCardContainer = document.getElementById('ocupacion-card-container');
+    const cerrarOcupacionCardButton = document.getElementById('cerrar-ocupacion-card');
+
+    if (ocupacionButton) {
+        ocupacionButton.addEventListener('click', function() {
+            ocupacionCardContainer.style.display = 'flex'; // Mostrar la tarjeta OCUPACIÓN
+            generarBotonesOcupacion(); // Llamamos a la función para generar los botones
+        });
+    } else {
+        console.error('No se encontró el botón OCUPACIÓN');
+    }
+
+    if (cerrarOcupacionCardButton) {
+        cerrarOcupacionCardButton.addEventListener('click', function() {
+            ocupacionCardContainer.style.display = 'none'; // Ocultar la tarjeta OCUPACIÓN al hacer clic en "Cerrar"
+        });
+    } else {
+        console.error('No se encontró el botón de cerrar de la tarjeta OCUPACIÓN');
+    }
+
+    // ----- FIN FUNCIONALIDAD BOTÓN OCUPACIÓN -----
+
+
 
  // ----- INICIO FUNCIONALIDAD BOTÓN SIMULADOR -----
 
