@@ -1,4 +1,4 @@
-const cacheName = 'mi-pk-cache-v1'; // Cambia la versión al actualizar la caché
+const cacheName = 'mi-pk-cache-v2'; // Cambia la versión al actualizar la caché
 const staticAssets = [
     '/',
     'index.html',
