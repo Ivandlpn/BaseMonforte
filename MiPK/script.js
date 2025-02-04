@@ -937,9 +937,10 @@ function mostrarPuertasCercanasInterno() {
             });
       }
 }
+
 function agregarEventosVerMapa(puertasCercanas) {
-      setTimeout(() => { // Asegurar que el contenido se ha renderizado
-        const enlacesVerMapa = document.querySelectorAll('.ver-en-mapa');
+    setTimeout(() => { // Asegurar que el contenido se ha renderizado
+        const enlacesVerMapa = document.querySelectorAll('.ver-en-mapa-button'); // *** Selector MODIFICADO ***
          enlacesVerMapa.forEach(enlace => {
             enlace.addEventListener('click', function(event) {
                 event.preventDefault(); // Evita que el enlace recargue la página
@@ -976,7 +977,7 @@ function agregarEventosVerMapa(puertasCercanas) {
         <p style="margin: 0; font-size: 1.2em;">Vía ${via}</p>
         <p style="margin: 0; font-size: 1.3em; font-weight: bold;">PK ${pk}</p><br>
         <button id="compartirUbicacionBtn"
-                onclick="compartirUbicacionPuerta(${latPuerta}, ${lonPuerta})" 
+                onclick="compartirUbicacionPuerta(${latPuerta}, ${lonPuerta})"
                 style="padding: 8px 12px; border: none; border-radius: 5px; background-color: #007bff; color: white; cursor: pointer;">Compartir 💬</button>
     </div>
 `);
