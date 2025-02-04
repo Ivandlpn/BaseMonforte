@@ -1,6 +1,11 @@
 [
     {
         "LINEA": "40",
+        "PK": "000000",
+        "TIPO": "EST",
+        "NOMBRE": "ESTACIÓN CHAMARTIN"
+    },{
+        "LINEA": "40",
         "PK": "001000",
         "TIPO": "CPS",
         "NOMBRE": "CPS MADRID ATOCHA/CHAMARTIN"
