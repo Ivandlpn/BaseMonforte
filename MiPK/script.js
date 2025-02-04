@@ -434,38 +434,19 @@ async function activarCapaTrazado() {
 // 🔹 **Agrupar y seleccionar puntos en un solo paso**
 function agruparYFiltrarPuntos(datos) {
     const puntosPorLinea = {};
-    const lineaAExcluir = "Linea 40";
-
-    // Rangos de exclusión 1
-    const pkInicioExclusion1 = 7000;
-    const pkFinExclusion1 = 8000;
-
-    // Rangos de exclusión 2
-    const pkInicioExclusion2 = 900000;
-    const pkFinExclusion2 = 902000;
-
 
     for (const punto of datos) {
         const linea = punto.Linea;
         const pkNumerico = pkToNumber(punto.PK);
 
-        console.log(`Procesando: Linea=${linea}, PK String=${punto.PK}, PK Numerico=${pkNumerico}`);
+        // ⛔ **Añadimos la condición para excluir PKs que empiezan por 900** ⛔
+        if (pkNumerico >= 900000 && pkNumerico <= 999999) {
+            continue; // Saltar este punto y pasar al siguiente
+        }
 
         if (!puntosPorLinea[linea]) {
             puntosPorLinea[linea] = [];
-            ultimoPKPorLinea[linea] = pkNumerico; // Inicia con el primer PK
-        }
-
-        // **NUEVA LÓGICA: Excluir puntos en los rangos especificados para la Linea 40**
-        if (linea === lineaAExcluir) {
-            if (pkNumerico >= pkInicioExclusion1 && pkNumerico <= pkFinExclusion1) {
-                console.log(`Excluyendo (rango 1): Linea=${linea}, PK=${pkNumerico}`);
-                continue; // Saltar este punto (rango 1)
-            }
-            if (pkNumerico >= pkInicioExclusion2 && pkNumerico <= pkFinExclusion2) {
-                console.log(`Excluyendo (rango 2): Linea=${linea}, PK=${pkNumerico}`);
-                continue; // Saltar este punto (rango 2)
-            }
+            ultimoPKPorLinea[linea] = pkNumerico; // Inicia con el primer PK (que no empieza por 900)
         }
 
         if (pkNumerico >= ultimoPKPorLinea[linea]) {
