@@ -1187,7 +1187,7 @@ async function obtenerCoordenadasPuertasCercanas(puertasCercanasPorVia) {
 }
 
 function generarHTMLPuertas(puertasCercanas) {
-    console.log("Generando HTML de puertas cercanas (DISEÑO MEJORADO)...", puertasCercanas);
+    console.log("Generando HTML de puertas cercanas (DISEÑO TIPO TABLA)...", puertasCercanas);
 
     let html = '';
 
@@ -1204,7 +1204,7 @@ function generarHTMLPuertas(puertasCercanas) {
         const tienePuertas = puertasCercanas[via].creciente || puertasCercanas[via].decreciente;
         if (tienePuertas) {
             console.log(`Agregando título de vía: ${via}`);
-           html += `<h3 style="margin-bottom: 15px; margin-top: 20px; color: white;"><u>Vía ${via}</u></h3>`; // Estilo título Vía
+           html += `<h3 style="margin-bottom: 10px; margin-top: 20px; color: white;"><u>Vía ${via}</u></h3>`; // Estilo título Vía
         }
 
         if (puertasCercanas[via].creciente) {
@@ -1214,15 +1214,15 @@ function generarHTMLPuertas(puertasCercanas) {
             console.log(`  - Agregando puerta creciente: PK ${puerta.PK}, distancia ${distanciaFormateada}, Latitud: ${puerta.Latitud}, Longitud: ${puerta.Longitud}`);
 
             html += `
-            <div class="puerta-fila">
-                <div class="icono-puerta-fila">🚪</div>  <!-- Icono de puerta -->
-                <div class="info-puerta-fila">
-                    <span class="distancia-puerta-fila">+${distanciaFormateada} metros</span>
-                    <span class="pk-puerta-fila">PK ${pkFormateado}</span>
+            <div class="puerta-row">
+                <div class="puerta-cell icono-cell">🚪</div>  <!-- Icono de puerta -->
+                <div class="puerta-cell distancia-cell">+${distanciaFormateada} metros</div>
+                <div class="puerta-cell pk-cell">PK ${pkFormateado}</div>
+                <div class="puerta-cell mapa-cell">
+                    <a href="#" class="ver-en-mapa-button" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
+                        Ver en Mapa
+                    </a>
                 </div>
-                <a href="#" class="ver-en-mapa-button" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
-                    Ver en Mapa
-                </a>
             </div>`;
             puertasArray.push(puerta);
         }
@@ -1233,15 +1233,15 @@ function generarHTMLPuertas(puertasCercanas) {
             const pkFormateado = formatearPK(puerta.PK);
             console.log(`  - Agregando puerta decreciente: PK ${puerta.PK}, distancia ${distanciaFormateada}, Latitud: ${puerta.Latitud}, Longitud: ${puerta.Longitud}`);
             html += `
-            <div class="puerta-fila">
-                <div class="icono-puerta-fila">🚪</div>  <!-- Icono de puerta -->
-                <div class="info-puerta-fila">
-                    <span class="distancia-puerta-fila">${distanciaFormateada} metros</span>
-                    <span class="pk-puerta-fila">PK ${pkFormateado}</span>
+            <div class="puerta-row">
+                <div class="puerta-cell icono-cell">🚪</div>  <!-- Icono de puerta -->
+                <div class="puerta-cell distancia-cell">${distanciaFormateada} metros</div>
+                <div class="puerta-cell pk-cell">PK ${pkFormateado}</div>
+                <div class="puerta-cell mapa-cell">
+                    <a href="#" class="ver-en-mapa-button" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
+                        Ver en Mapa
+                    </a>
                 </div>
-                <a href="#" class="ver-en-mapa-button" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
-                    Ver en Mapa
-                </a>
             </div>`;
             puertasArray.push(puerta);
         }
@@ -1267,11 +1267,10 @@ function generarHTMLPuertas(puertasCercanas) {
         </div>
     `;
     }
-      console.log("HTML de puertas generado (DISEÑO MEJORADO):", html);
+      console.log("HTML de puertas generado (DISEÑO TIPO TABLA):", html);
 
     return html;
 }
-
 
 
 
