@@ -865,10 +865,10 @@ function generarBotonesOcupacion() {
     botonesOcupacionContainer.innerHTML = ''; // Limpiar el contenedor antes de añadir nuevos botones
 
     const botonesData = [
-        { nombre: "BM VILLARRUBIA", enlace: "#" }, // Reemplazar "#" con el enlace real
-        { nombre: "BM GABALDÓN", enlace: "#" },   // Reemplazar "#" con el enlace real
-        { nombre: "BM REQUENA", enlace: "#" },    // Reemplazar "#" con el enlace real
-        { nombre: "BM MONFORTE", enlace: "#" }    // Reemplazar "#" con el enlace real
+        { nombre: "BM VILLARRUBIA", enlace: "https://inecospain-my.sharepoint.com/:f:/r/personal/maria_bausela_ineco_com/Documents/Ocupaci%C3%B3n%20de%20V%C3%ADa%20Levante/Ocupaci%C3%B3n%20Base%20Villarrubia?csf=1&web=1&e=3pdCf0" }, // Reemplazar "#" con el enlace real
+        { nombre: "BM GABALDÓN", enlace: "https://inecospain-my.sharepoint.com/:f:/r/personal/maria_bausela_ineco_com/Documents/Ocupaci%C3%B3n%20de%20V%C3%ADa%20Levante/Ocupaci%C3%B3n%20Base%20Gabald%C3%B3n?csf=1&web=1&e=32Zft1" },   // Reemplazar "#" con el enlace real
+        { nombre: "BM REQUENA", enlace: "https://inecospain-my.sharepoint.com/:f:/r/personal/maria_bausela_ineco_com/Documents/Ocupaci%C3%B3n%20de%20V%C3%ADa%20Levante/Ocupaci%C3%B3n%20Base%20Requena?csf=1&web=1&e=TpqMJK" },    // Reemplazar "#" con el enlace real
+        { nombre: "BM MONFORTE", enlace: "https://inecospain-my.sharepoint.com/:f:/r/personal/maria_bausela_ineco_com/Documents/Ocupaci%C3%B3n%20de%20V%C3%ADa%20Levante/Ocupaci%C3%B3n%20Base%20Monforte?csf=1&web=1&e=gSh5NK" }    // Reemplazar "#" con el enlace real
     ];
 
     botonesData.forEach(botonData => {
