@@ -689,6 +689,7 @@ const iconosEdificios = {
     "ATF": 'img/edificios/energia_icon.png',
     "BTS": 'img/edificios/bts_icon.png',
     "CS": 'img/edificios/iiss_icon.png',
+    "PICV": 'img/edificios/iiss_icon.png',
     "ET": 'img/edificios/iiss_icon.png',
     "ESTACIÓN": 'img/edificios/estaciones_icon.png',
     "TUNEL": 'img/edificios/tunel_icon.png',
@@ -839,7 +840,7 @@ checkBts.addEventListener('change', function () {
 const checkIiss = document.getElementById('check-iiss');
 const iissLayer = L.layerGroup();
 checkIiss.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(iissLayer, ["CS", "ET"]) : desactivarCapaEdificios(iissLayer);
+    this.checked ? activarCapaEdificios(iissLayer, ["CS","PICV,"ET"]) : desactivarCapaEdificios(iissLayer);
 });
 
 const checkEstaciones = document.getElementById('check-estaciones');
