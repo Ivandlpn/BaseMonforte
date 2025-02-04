@@ -1187,15 +1187,15 @@ async function obtenerCoordenadasPuertasCercanas(puertasCercanasPorVia) {
 }
 
 function generarHTMLPuertas(puertasCercanas) {
-    console.log("Generando HTML de puertas cercanas...", puertasCercanas);
+    console.log("Generando HTML de puertas cercanas (DISEÑO MEJORADO)...", puertasCercanas);
 
     let html = '';
 
     if (window.pkMasCercano) {
         const pkActualFormateado = formatearPK(window.pkMasCercano.pk);
-       html += `<p style="text-align: center; font-weight: bold; margin-bottom: 30px; font-size: 1.3em;">▶️ Estás en el PK: ${pkActualFormateado} ◀️</p>`;
+       html += `<p style="text-align: center; font-weight: bold; margin-bottom: 20px; font-size: 1.2em; color: white;">▶️ Estás en el PK: ${pkActualFormateado} ◀️</p>`; // Estilo texto PK actual
     } else {
-        html += `<p style="text-align: center; font-style: italic; margin-bottom: 30px;">Calculando PK actual...</p>`;
+        html += `<p style="text-align: center; font-style: italic; margin-bottom: 20px; color: white;">Calculando PK actual...</p>`; // Estilo texto "Calculando PK"
     }
 
     let puertasArray = [];
@@ -1204,9 +1204,8 @@ function generarHTMLPuertas(puertasCercanas) {
         const tienePuertas = puertasCercanas[via].creciente || puertasCercanas[via].decreciente;
         if (tienePuertas) {
             console.log(`Agregando título de vía: ${via}`);
-           html += `<h3 style="margin-bottom: 5px; margin-top: 25px;"><u>Vía ${via}</u></h3>`; // Subrayado aquí
+           html += `<h3 style="margin-bottom: 15px; margin-top: 20px; color: white;"><u>Vía ${via}</u></h3>`; // Estilo título Vía
         }
-
 
         if (puertasCercanas[via].creciente) {
             const puerta = puertasCercanas[via].creciente;
@@ -1214,44 +1213,51 @@ function generarHTMLPuertas(puertasCercanas) {
             const pkFormateado = formatearPK(puerta.PK);
             console.log(`  - Agregando puerta creciente: PK ${puerta.PK}, distancia ${distanciaFormateada}, Latitud: ${puerta.Latitud}, Longitud: ${puerta.Longitud}`);
 
-            html += `<div class="puerta-fila">
-                        <span>🚪 a + ${distanciaFormateada} metros - PK ${pkFormateado}
-                        <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
-                            <img src="img/vermapa.png" alt="Ver en el mapa" style="width: 20px; height: 20px; vertical-align: middle;">
-                        </a>
-                        </span>
-                    </div>`;
+            html += `
+            <div class="puerta-fila">
+                <div class="icono-puerta-fila">🚪</div>  <!-- Icono de puerta -->
+                <div class="info-puerta-fila">
+                    <span class="distancia-puerta-fila">+${distanciaFormateada} metros</span>
+                    <span class="pk-puerta-fila">PK ${pkFormateado}</span>
+                </div>
+                <a href="#" class="ver-en-mapa-button" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
+                    Ver en Mapa
+                </a>
+            </div>`;
             puertasArray.push(puerta);
         }
-
 
         if (puertasCercanas[via].decreciente) {
             const puerta = puertasCercanas[via].decreciente;
             const distanciaFormateada = puerta.diferenciaPK.toFixed(0);
             const pkFormateado = formatearPK(puerta.PK);
             console.log(`  - Agregando puerta decreciente: PK ${puerta.PK}, distancia ${distanciaFormateada}, Latitud: ${puerta.Latitud}, Longitud: ${puerta.Longitud}`);
-            html += `<div class="puerta-fila">
-                        <span>🚪 a ${distanciaFormateada} metros - PK ${pkFormateado}
-                        <a href="#" class="ver-en-mapa" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
-                            <img src="img/vermapa.png" alt="Ver en el mapa" style="width: 20px; height: 20px; vertical-align: middle;">
-                        </a>
-                        </span>
-                    </div>`;
+            html += `
+            <div class="puerta-fila">
+                <div class="icono-puerta-fila">🚪</div>  <!-- Icono de puerta -->
+                <div class="info-puerta-fila">
+                    <span class="distancia-puerta-fila">${distanciaFormateada} metros</span>
+                    <span class="pk-puerta-fila">PK ${pkFormateado}</span>
+                </div>
+                <a href="#" class="ver-en-mapa-button" data-lat="${puerta.Latitud}" data-lon="${puerta.Longitud}" data-via="${via}">
+                    Ver en Mapa
+                </a>
+            </div>`;
             puertasArray.push(puerta);
         }
     }
 
     if (html === '') {
            console.log("No se encontraron puertas cercanas. Mostrando mensaje.");
-        html = '<p>No se encontraron puertas cercanas.</p>';
+        html = '<p style="color: white;">No se encontraron puertas cercanas.</p>'; // Estilo mensaje "No se encontraron puertas"
     } else {
           console.log("Añadiendo enlaces para ver todas las puertas y buscar por PK");
         html += `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px; padding-top: 15px;">
-            <a href="#" id="ver-todas-puertas" data-puertas='${JSON.stringify(puertasArray)}' style="margin-right: auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 25px; padding-top: 15px; border-top: 1px solid rgba(255, 255, 255, 0.3);"> <!-- Separador superior y estilo contenedor enlaces -->
+            <a href="#" id="ver-todas-puertas" data-puertas='${JSON.stringify(puertasArray)}' class="enlace-puertas-card"> <!-- Clase para enlaces inferiores -->
                 <img src="img/vertodasmapa.png" alt="Ver todas las puertas en el mapa" style="width: 120px; height: auto;">
             </a>
-            <a href="#" id="buscar-puerta-por-pk">
+            <a href="#" id="buscar-puerta-por-pk" class="enlace-puertas-card"> <!-- Clase para enlaces inferiores -->
                 <img src="img/buscapuerta.png" alt="Buscar puerta por PK" style="width: 120px; height: auto;">
             </a>
         </div>
@@ -1261,7 +1267,7 @@ function generarHTMLPuertas(puertasCercanas) {
         </div>
     `;
     }
-      console.log("HTML de puertas generado:", html);
+      console.log("HTML de puertas generado (DISEÑO MEJORADO):", html);
 
     return html;
 }
