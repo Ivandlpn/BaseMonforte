@@ -472,7 +472,7 @@ function dibujarLineas(puntosPorLinea) {
             trazadosLinea.push(lineaTrazado);
         }
     }
-    mapa.setZoom(6); // Nivel de zoom fijo (puedes ajustarlo)
+    mapa.setZoom(7); // Nivel de zoom fijo (puedes ajustarlo)
 }
 
 // 🔹 **Cargar archivos JSON optimizado**
