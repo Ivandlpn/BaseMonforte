@@ -7,6 +7,12 @@
     },
     {
         "LINEA": "40",
+        "PK": "035840",
+        "TIPO": "BIF",
+        "NOMBRE": "BIF. TORREJÓN"
+    },
+        {
+        "LINEA": "40",
         "PK": "035850",
         "TIPO": "ET",
         "NOMBRE": "Bifurcación Torrejón"
@@ -1733,6 +1739,12 @@
         "TIPO": "VIADUCTO",
         "NOMBRE": "Viaducto sobre arroyo de Doña Aleja"
     },
+        {
+        "LINEA": "40",
+        "PK": "247420",
+        "TIPO": "BIF",
+        "NOMBRE": "BIF. ALBACETE"
+    },
     {
         "LINEA": "40",
         "PK": "247430",
@@ -2938,6 +2950,12 @@
         "PK": "391640",
         "TIPO": "BTS",
         "NOMBRE": "AMPVB17B"
+    },
+        {
+        "LINEA": "40",
+        "PK": "392710",
+        "TIPO": "BIF",
+        "NOMBRE": "BIF. XÁTIVA"
     },
     {
         "LINEA": "40",
