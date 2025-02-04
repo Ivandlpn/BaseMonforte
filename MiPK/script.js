@@ -420,23 +420,107 @@ let trazadosLinea = [];
 let ultimoPKPorLinea = {}; // Último PK procesado por línea
 const separacionPK = 500; // Selección de puntos cada 500 unidades de PK
 
-// *** MODIFICADA FUNCIÓN activarCapaTrazado para incluir ubicaciones singulares ***
+// 🔹 **Función activarCapaTrazado MODIFICADA para añadir etiquetas**
 async function activarCapaTrazado() {
     try {
         const datosTrazado = await cargarArchivosJSON(rutasArchivos);
         const puntosPorLinea = agruparYFiltrarPuntos(datosTrazado);
         dibujarLineas(puntosPorLinea);
 
-        // *** INICIO: Cargar y pintar ubicaciones singulares DESDE edificios.json ***
+        // *** AÑADIDO AQUÍ: Cargar y pintar ubicaciones singulares DESDE edificios.json ***
         await cargarYMostrarUbicacionesSingularesDesdeEdificios();
-        // *** FIN: Cargar y pintar ubicaciones singulares DESDE edificios.json ***
+        // *** FIN AÑADIDO ***
 
     } catch (error) {
         console.error("Error al cargar o procesar los datos de trazado:", error);
     }
 }
 
-// *** NUEVA FUNCIÓN: Cargar y mostrar ubicaciones singulares DESDE edificios.json ***
+// 🔹 **Función desactivarCapaTrazado MODIFICADA para eliminar etiquetas**
+function desactivarCapaTrazado() {
+    trazadosLinea.forEach(linea => mapa.removeLayer(linea));
+    trazadosLinea = [];
+    ultimoPKPorLinea = {};
+
+    // *** AÑADIDO AQUÍ: Eliminar marcadores de ubicaciones singulares al desactivar la capa ***
+    marcadoresUbicacionesSingulares.forEach(marcador => mapa.removeLayer(marcador));
+    marcadoresUbicacionesSingulares = [];
+    // *** FIN AÑADIDO ***
+}
+
+// 🔹 **Agrupar y seleccionar puntos en un solo paso**
+function agruparYFiltrarPuntos(datos) { // ESTA FUNCIÓN NO SE MODIFICA - MANTENER ORIGINAL
+    const puntosPorLinea = {};
+
+    for (const punto of datos) {
+        const linea = punto.Linea;
+        const pkNumerico = pkToNumber(punto.PK);
+
+        // ⛔ **Añadimos la condición para excluir PKs que empiezan por 900** ⛔
+        if (pkNumerico >= 900000 && pkNumerico <= 999999) {
+            continue; // Saltar este punto y pasar al siguiente
+        }
+
+        if (!puntosPorLinea[linea]) {
+            puntosPorLinea[linea] = [];
+            ultimoPKPorLinea[linea] = pkNumerico; // Inicia con el primer PK (que no empieza por 900)
+        }
+
+        if (pkNumerico >= ultimoPKPorLinea[linea]) {
+            puntosPorLinea[linea].push([parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
+            ultimoPKPorLinea[linea] = pkNumerico + separacionPK; // Salto de 500 PK
+        }
+    }
+
+    return puntosPorLinea;
+}
+
+// 🔹 **Dibujar líneas solo con los puntos seleccionados**
+function dibujarLineas(puntosPorLinea) { // ESTA FUNCIÓN NO SE MODIFICA - MANTENER ORIGINAL
+    for (const linea in puntosPorLinea) {
+        const coordenadas = puntosPorLinea[linea];
+
+        if (coordenadas.length > 1) {
+            const lineaTrazado = L.polyline(coordenadas, {
+                color: "blue",
+                weight: 2,
+                opacity: 0.8
+            }).addTo(mapa);
+            trazadosLinea.push(lineaTrazado);
+        }
+    }
+    mapa.setZoom(7); // Nivel de zoom fijo (puedes ajustarlo)
+}
+
+// 🔹 **Cargar archivos JSON optimizado**
+async function cargarArchivosJSON(rutas) { // ESTA FUNCIÓN NO SE MODIFICA - MANTENER ORIGINAL
+    const datosCargados = await Promise.all(
+        rutas.map(ruta =>
+            fetch(ruta)
+                .then(response => response.json())
+                .catch(error => {
+                    console.error(`Error al cargar ${ruta}:`, error);
+                    return [];
+                })
+        )
+    );
+    return datosCargados.flat();
+}
+
+// 🔹 **Conversión de PK a número**
+function pkToNumber(pkString) { // ESTA FUNCIÓN NO SE MODIFICA - MANTENER ORIGINAL
+    return parseInt(pkString, 10) || 0;
+}
+
+// 🔹 **Desactivar capa limpiando solo lo necesario**
+// LA FUNCIÓN desactivarCapaTrazado ESTÁ MODIFICADA ARRIBA - NO USAR ESTA VERSIÓN ANTIGUA
+
+// 🔹 **Manejo de evento de activación/desactivación**
+// EL EVENT LISTENER checkTrazado.addEventListener NO SE MODIFICA - MANTENER ORIGINAL
+
+/////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
+
+// *** NUEVA FUNCIÓN AÑADIDA (para etiquetas de ubicaciones singulares) - AÑADIR ESTA FUNCIÓN COMPLETA ***
 let marcadoresUbicacionesSingulares = []; // Array para guardar los marcadores de ubicaciones singulares
 
 async function cargarYMostrarUbicacionesSingularesDesdeEdificios() {
@@ -503,30 +587,7 @@ async function cargarYMostrarUbicacionesSingularesDesdeEdificios() {
     }
 }
 
-
-function desactivarCapaTrazado() {
-    trazadosLinea.forEach(linea => mapa.removeLayer(linea));
-    trazadosLinea = [];
-    ultimoPKPorLinea = {};
-
-    // *** INICIO: Eliminar marcadores de ubicaciones singulares (sin cambios) ***
-    marcadoresUbicacionesSingulares.forEach(marcador => mapa.removeLayer(marcador));
-    marcadoresUbicacionesSingulares = [];
-    // *** FIN: Eliminar marcadores de ubicaciones singulares (sin cambios) ***
-}
-
-// Event listener para el checkbox de Trazado (sin cambios)
-checkTrazado.addEventListener('change', function () {
-    if (this.checked) {
-        activarCapaTrazado();
-    } else {
-        desactivarCapaTrazado();
-    }
-});
-
-/////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
-
-
+///// FIN CAPA TRAZADO /////.
 
 
 /////  INICIO CAPA TIEMPO /////---------------------------------------------------------------------------------------
