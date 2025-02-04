@@ -414,95 +414,108 @@ document.addEventListener('click', function(event) {
 
 /////  FIN CAPA MI TRAMO /////---------------------------------------------------------------------------------------
 
-
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 let trazadosLinea = [];
 let ultimoPKPorLinea = {}; // Último PK procesado por línea
 const separacionPK = 500; // Selección de puntos cada 500 unidades de PK
 
+// *** MODIFICADA FUNCIÓN activarCapaTrazado para incluir ubicaciones singulares ***
 async function activarCapaTrazado() {
     try {
         const datosTrazado = await cargarArchivosJSON(rutasArchivos);
         const puntosPorLinea = agruparYFiltrarPuntos(datosTrazado);
         dibujarLineas(puntosPorLinea);
+
+        // *** INICIO: Cargar y pintar ubicaciones singulares DESDE edificios.json ***
+        await cargarYMostrarUbicacionesSingularesDesdeEdificios();
+        // *** FIN: Cargar y pintar ubicaciones singulares DESDE edificios.json ***
+
     } catch (error) {
         console.error("Error al cargar o procesar los datos de trazado:", error);
     }
 }
 
-// 🔹 **Agrupar y seleccionar puntos en un solo paso**
-function agruparYFiltrarPuntos(datos) {
-    const puntosPorLinea = {};
+// *** NUEVA FUNCIÓN: Cargar y mostrar ubicaciones singulares DESDE edificios.json ***
+let marcadoresUbicacionesSingulares = []; // Array para guardar los marcadores de ubicaciones singulares
 
-    for (const punto of datos) {
-        const linea = punto.Linea;
-        const pkNumerico = pkToNumber(punto.PK);
+async function cargarYMostrarUbicacionesSingularesDesdeEdificios() {
+    try {
+        // Cargar datos de edificios.json (ALBALI.json y TOVAL.json) usando la función existente
+        const rutasEdificios = ["./doc/edificios/ALBALI.json", "./doc/edificios/TOVAL.json"];
+        const datosEdificiosArrays = await Promise.all(rutasEdificios.map(ruta =>
+            fetch(ruta).then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error al cargar ${ruta}: ${response.statusText}`);
+                }
+                return response.json();
+            }).catch(error => {
+                console.error(`Error al cargar ${ruta}:`, error);
+                return [];
+            })
+        ));
+        const datosEdificios = datosEdificiosArrays.flat();
 
-        // ⛔ **Añadimos la condición para excluir PKs que empiezan por 900** ⛔
-        if (pkNumerico >= 900000 && pkNumerico <= 999999) {
-            continue; // Saltar este punto y pasar al siguiente
+        // Definir las ubicaciones singulares por PK y Línea
+        const ubicacionesDefinidas = [
+            { pk: "321+000", linea: "42" },
+            { pk: "247+420", linea: "40" },
+            { pk: "035+840", linea: "40" },
+            { pk: "392+710", linea: "40" }
+        ];
+
+        // Limpiar marcadores anteriores si existen
+        marcadoresUbicacionesSingulares.forEach(marcador => mapa.removeLayer(marcador));
+        marcadoresUbicacionesSingulares = [];
+
+        for (const ubicacionDefinida of ubicacionesDefinidas) {
+            const { pk, linea } = ubicacionDefinida;
+
+            // Buscar en datosEdificios el elemento que coincida con el PK y la Línea
+            const edificioSingular = datosEdificios.find(edificio =>
+                edificio.PK === pk && edificio.LINEA === linea
+            );
+
+            if (edificioSingular) {
+                const nombreUbicacion = edificioSingular.NOMBRE; // Usar el NOMBRE del edificio
+                const latitud = parseFloat(edificioSingular.Latitud);
+                const longitud = parseFloat(edificioSingular.Longitud);
+
+                // Crear un DivIcon para la etiqueta de texto (reutilizando el mismo código)
+                const iconoTexto = L.divIcon({
+                    className: 'etiqueta-ubicacion-singular',
+                    html: `<div class="etiqueta-texto">${nombreUbicacion}</div>`,
+                    iconSize: [null, null],
+                    iconAnchor: [0, 0],
+                    popupAnchor: [0, 0]
+                });
+
+                // Crear un marcador con el DivIcon y añadir al mapa
+                const marcadorUbicacion = L.marker([latitud, longitud], { icon: iconoTexto }).addTo(mapa);
+                marcadoresUbicacionesSingulares.push(marcadorUbicacion); // Guardar el marcador
+            } else {
+                console.warn(`No se encontró edificio singular para PK ${pk} y Línea ${linea} en edificios.json`);
+            }
         }
 
-        if (!puntosPorLinea[linea]) {
-            puntosPorLinea[linea] = [];
-            ultimoPKPorLinea[linea] = pkNumerico; // Inicia con el primer PK (que no empieza por 900)
-        }
-
-        if (pkNumerico >= ultimoPKPorLinea[linea]) {
-            puntosPorLinea[linea].push([parseFloat(punto.Latitud), parseFloat(punto.Longitud)]);
-            ultimoPKPorLinea[linea] = pkNumerico + separacionPK; // Salto de 500 PK
-        }
+    } catch (error) {
+        console.error("Error al cargar o mostrar ubicaciones singulares desde edificios.json:", error);
     }
-
-    return puntosPorLinea;
 }
 
-// 🔹 **Dibujar líneas solo con los puntos seleccionados**
-function dibujarLineas(puntosPorLinea) {
-    for (const linea in puntosPorLinea) {
-        const coordenadas = puntosPorLinea[linea];
 
-        if (coordenadas.length > 1) {
-            const lineaTrazado = L.polyline(coordenadas, {
-                color: "blue",
-                weight: 2,
-                opacity: 0.8
-            }).addTo(mapa);
-            trazadosLinea.push(lineaTrazado);
-        }
-    }
-    mapa.setZoom(7); // Nivel de zoom fijo (puedes ajustarlo)
-}
-
-// 🔹 **Cargar archivos JSON optimizado**
-async function cargarArchivosJSON(rutas) {
-    const datosCargados = await Promise.all(
-        rutas.map(ruta =>
-            fetch(ruta)
-                .then(response => response.json())
-                .catch(error => {
-                    console.error(`Error al cargar ${ruta}:`, error);
-                    return [];
-                })
-        )
-    );
-    return datosCargados.flat();
-}
-
-// 🔹 **Conversión de PK a número**
-function pkToNumber(pkString) {
-    return parseInt(pkString, 10) || 0;
-}
-
-// 🔹 **Desactivar capa limpiando solo lo necesario**
 function desactivarCapaTrazado() {
     trazadosLinea.forEach(linea => mapa.removeLayer(linea));
     trazadosLinea = [];
     ultimoPKPorLinea = {};
+
+    // *** INICIO: Eliminar marcadores de ubicaciones singulares (sin cambios) ***
+    marcadoresUbicacionesSingulares.forEach(marcador => mapa.removeLayer(marcador));
+    marcadoresUbicacionesSingulares = [];
+    // *** FIN: Eliminar marcadores de ubicaciones singulares (sin cambios) ***
 }
 
-// 🔹 **Manejo de evento de activación/desactivación**
+// Event listener para el checkbox de Trazado (sin cambios)
 checkTrazado.addEventListener('change', function () {
     if (this.checked) {
         activarCapaTrazado();
