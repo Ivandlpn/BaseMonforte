@@ -416,6 +416,8 @@ document.addEventListener('click', function(event) {
 
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
+/////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
+
 let trazadosLinea = [];
 let ultimoPKPorLinea = {}; // Último PK procesado por línea
 const separacionPK = 500; // Selección de puntos cada 500 unidades de PK
