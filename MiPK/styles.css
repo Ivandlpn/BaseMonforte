@@ -837,7 +837,7 @@ footer img {
     height: auto;
   }
 
-/* *** NUEVOS ESTILOS PARA TARJETA DE PUERTAS TIPO TABLA *** */
+/* *** NUEVOS ESTILOS SIMPLIFICADOS Y VERTICALES PARA TARJETA DE PUERTAS *** */
 
 #puertas-card {
     background-color: #2a62b8; /* Azul principal de la tarjeta */
@@ -851,8 +851,6 @@ footer img {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: relative;
     width: 90%; /* Ancho tarjeta en movil */
-    display: flex; /* Usar flexbox para el contenedor principal */
-    flex-direction: column; /* Alinear elementos verticalmente */
 }
 
 #puertas-card h2 {
@@ -872,70 +870,60 @@ footer img {
 }
 
 #puertas-info {
-    display: grid; /* Usar CSS Grid para el contenedor de puertas */
-    grid-template-columns: 40px 1fr 1fr 120px; /* Definir 4 columnas: Icono | Distancia | PK | Mapa Button */
-    gap: 10px; /* Espacio entre columnas y filas */
+    padding-left: 10px; /* Añadir un poco de padding izquierdo para alinear el contenido */
 }
 
-.puerta-row {
-    display: contents; /* Para que los hijos se comporten como items de grid directamente */
-    margin-bottom: 10px; /* Espacio entre filas de puertas */
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Separador entre filas */
+.puerta-fila {
+    margin-bottom: 20px; /* Aumentar el espacio entre filas */
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.05); /* Fondo muy sutil para cada fila */
+    border-radius: 15px; /* Bordes redondeados para las filas */
+    display: flex; /* Usar flexbox para la fila */
+    align-items: center; /* Alinear verticalmente en la fila */
 }
 
-.puerta-row:last-child {
-    border-bottom: none; /* Eliminar separador en la última fila */
-    margin-bottom: 0; /* Eliminar margen inferior en la última fila */
-    padding-bottom: 0; /* Eliminar padding inferior en la última fila */
+.icono-puerta-fila {
+    font-size: 1.8em; /* Tamaño del icono de puerta */
+    margin-right: 20px; /* Más espacio a la derecha del icono */
+    color: white;
+    opacity: 0.8; /* Icono ligeramente más transparente */
 }
 
-.puerta-cell {
-    padding: 8px; /* Padding general para celdas */
-    text-align: left; /* Alineación de texto por defecto a la izquierda */
-    align-self: center; /* Centrar verticalmente el contenido de las celdas */
-    color: white; /* Color de texto general de las celdas */
+.info-puerta-fila {
+    flex-grow: 1; /* La info ocupa el espacio restante */
+    display: flex;
+    flex-direction: column; /* Apilar info verticalmente */
 }
 
-.icono-cell {
-    font-size: 1.6em; /* Tamaño del icono de puerta */
-    text-align: center; /* Centrar icono */
+.distancia-puerta-fila {
+    font-size: 1em; /* Tamaño distancia */
+    color: #f0f8ff; /* Color más claro para distancia */
+    margin-bottom: 3px; /* Espacio bajo la distancia */
 }
 
-.distancia-cell {
-    font-size: 1em; /* Tamaño de fuente para la distancia */
-    white-space: nowrap; /* Evitar que la distancia se divida en líneas */
-}
-
-.pk-cell {
-    font-size: 1.1em; /* Tamaño de fuente para el PK */
+.pk-puerta-fila {
+    font-size: 1.2em; /* Tamaño PK */
     font-weight: bold; /* PK en negrita */
-    white-space: nowrap; /* Evitar que el PK se divida en líneas */
-}
-
-.mapa-cell {
-    text-align: right; /* Alinear el botón "Ver en Mapa" a la derecha */
+    color: white;
 }
 
 .ver-en-mapa-button {
-    background-color: #007bff; /* Azul botón "Ver en Mapa" */
+    background-color: #007bff; /* Azul botón */
     color: white;
     border: none;
-    padding: 8px 12px; /* Reducir padding vertical y horizontal */
-    border-radius: 8px; /* Bordes menos redondeados */
+    padding: 10px 14px; /* Padding botón */
+    border-radius: 10px; /* Bordes botón */
     cursor: pointer;
-    font-size: 0.9em; /* Reducir tamaño de fuente del botón */
+    font-size: 0.9em; /* Tamaño fuente botón */
     transition: background-color 0.3s ease;
     text-decoration: none;
     display: inline-block;
     text-align: center;
-    min-width: auto; /* Ancho automático para el botón */
-    width: 100%; /* Ancho completo de la celda en móvil */
-    box-sizing: border-box; /* Incluir padding y border en el ancho */
+    min-width: 80px; /* Ancho mínimo botón */
 }
 
 .ver-en-mapa-button:hover {
-    background-color: #0056b3;
+    background-color: #0056b3; /* Azul más oscuro hover */
 }
 
 .enlace-puertas-card {
@@ -943,33 +931,36 @@ footer img {
     text-decoration: none;
     color: white;
     transition: opacity 0.3s ease;
+    margin-top: 25px; /* Más espacio superior para los enlaces */
 }
 
 .enlace-puertas-card:hover {
     opacity: 0.8;
 }
 
-/* Ajustes para móvil (opcional, puedes personalizar más) */
+/* Ajustes para móvil (opcional) */
 @media (max-width: 600px) {
-    #puertas-info {
-        grid-template-columns: 30px 1fr 1fr 100px; /* Columnas más estrechas en móvil */
-        gap: 8px;
+    #puertas-card {
+        padding: 15px; /* Reducir padding tarjeta en móvil */
     }
-    .puerta-cell {
-        padding: 6px; /* Reducir padding en móvil */
-        font-size: 0.9em; /* Reducir tamaño de fuente general en móvil */
+    .puerta-fila {
+        padding: 12px; /* Reducir padding filas en móvil */
+        margin-bottom: 15px; /* Reducir margen entre filas en móvil */
     }
-     .icono-cell {
-        font-size: 1.4em; /* Reducir tamaño del icono en móvil */
+    .icono-puerta-fila {
+        font-size: 1.6em; /* Reducir tamaño icono en móvil */
+        margin-right: 15px; /* Reducir margen icono en móvil */
     }
-
     .ver-en-mapa-button {
-        font-size: 0.8em; /* Reducir aún más tamaño de fuente del botón en móvil */
-        padding: 6px 10px; /* Reducir padding del botón en móvil */
+        font-size: 0.85em; /* Reducir tamaño fuente botón en móvil */
+        padding: 8px 12px; /* Reducir padding botón en móvil */
+    }
+    .enlace-puertas-card {
+        margin-top: 20px; /* Reducir margen superior enlaces en móvil */
     }
 }
 
-/* *** FIN NUEVOS ESTILOS PARA TARJETA DE PUERTAS TIPO TABLA *** */
+/* *** FIN NUEVOS ESTILOS SIMPLIFICADOS Y VERTICALES PARA TARJETA DE PUERTAS *** */
 
 
 
