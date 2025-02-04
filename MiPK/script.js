@@ -955,7 +955,7 @@ function agregarEventosVerMapa(puertasCercanas) {
                 // Obtener el elemento padre .puerta-fila
                  const puertaFila = this.closest(".puerta-fila");
                 // Extraer el texto del SPAN, en este caso toda la info de la puerta
-                 const puertaTexto = puertaFila.querySelector("span").textContent;
+               const puertaTexto = puertaFila.querySelector(".pk-puerta-fila").textContent;
                 // Expresión regular para encontrar el PK en la cadena
                  const pkRegex = /PK (\d+[+]?\d+)/;
                 // Buscar el PK usando la expresión regular
