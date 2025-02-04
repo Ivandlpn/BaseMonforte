@@ -26,14 +26,6 @@ const apiKeyOpenWeatherMap = "14225e48c44f9d35291e12867b7f32cf"; // API Meteo
 cargarPuertas();
 
 
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')  // Ajusta la ruta al SW
-            .then(registration => console.log('Service Worker registrado:', registration))
-            .catch(error => console.log('Error al registrar el Service Worker:', error));
-    });
-}
-
 async function cargarPuertas() {
     try {
         console.log("Cargando datos de puertas...");
