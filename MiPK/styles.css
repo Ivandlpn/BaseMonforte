@@ -811,6 +811,24 @@ footer img {
     font-weight: 700; /* Añadir negrita */
 }
 
+/* Estilos para las etiquetas de ubicaciones singulares en el trazado */
+.etiqueta-ubicacion-singular {
+    background: transparent; /* Fondo transparente */
+    border: none;         /* Sin borde */
+    text-align: center;    /* Centrar texto */
+    white-space: nowrap;   /* Evitar saltos de línea */
+}
+
+.etiqueta-ubicacion-singular .etiqueta-texto {
+    background-color: white; /* Fondo blanco para el texto */
+    color: black;          /* Texto negro */
+    padding: 2px 5px;       /* Padding alrededor del texto */
+    border: 1px solid #ccc; /* Borde gris claro */
+    border-radius: 5px;     /* Bordes redondeados */
+    font-size: 0.9em;       /* Tamaño de fuente */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
+}
+
   #actualizarUbicacion {
     font-size: 0.9em;
   }
