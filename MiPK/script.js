@@ -435,8 +435,15 @@ async function activarCapaTrazado() {
 function agruparYFiltrarPuntos(datos) {
     const puntosPorLinea = {};
     const lineaAExcluir = "Linea 40";
-    const pkInicioExclusion = 7000; // PK desde donde se excluyen puntos (inclusive)
-    const pkFinExclusion = 8000;    // PK hasta donde se excluyen puntos (inclusive)
+
+    // Rangos de exclusión 1
+    const pkInicioExclusion1 = 7000;
+    const pkFinExclusion1 = 8000;
+
+    // Rangos de exclusión 2
+    const pkInicioExclusion2 = 900000;
+    const pkFinExclusion2 = 902000;
+
 
     for (const punto of datos) {
         const linea = punto.Linea;
@@ -447,9 +454,14 @@ function agruparYFiltrarPuntos(datos) {
             ultimoPKPorLinea[linea] = pkNumerico; // Inicia con el primer PK
         }
 
-        // **NUEVA LÓGICA: Excluir puntos en el rango especificado para la Linea 40**
-        if (linea === lineaAExcluir && pkNumerico >= pkInicioExclusion && pkNumerico <= pkFinExclusion) {
-            continue; // Saltar este punto
+        // **NUEVA LÓGICA: Excluir puntos en los rangos especificados para la Linea 40**
+        if (linea === lineaAExcluir) {
+            if (pkNumerico >= pkInicioExclusion1 && pkNumerico <= pkFinExclusion1) {
+                continue; // Saltar este punto (rango 1)
+            }
+            if (pkNumerico >= pkInicioExclusion2 && pkNumerico <= pkFinExclusion2) {
+                continue; // Saltar este punto (rango 2)
+            }
         }
 
         if (pkNumerico >= ultimoPKPorLinea[linea]) {
