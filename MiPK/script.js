@@ -418,42 +418,22 @@ document.addEventListener('click', function(event) {
 
 /////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
-/////  INICIO CAPA TRAZADO /////---------------------------------------------------------------------------------------
-
 let trazadosLinea = [];
 let ultimoPKPorLinea = {}; // Último PK procesado por línea
 const separacionPK = 500; // Selección de puntos cada 500 unidades de PK
 
-// 🔹 **Función activarCapaTrazado MODIFICADA para añadir etiquetas**
 async function activarCapaTrazado() {
     try {
         const datosTrazado = await cargarArchivosJSON(rutasArchivos);
         const puntosPorLinea = agruparYFiltrarPuntos(datosTrazado);
         dibujarLineas(puntosPorLinea);
-
-        // *** AÑADIDO AQUÍ: Cargar y pintar ubicaciones singulares DESDE edificios.json ***
-        await cargarYMostrarUbicacionesSingularesDesdeEdificios();
-        // *** FIN AÑADIDO ***
-
     } catch (error) {
         console.error("Error al cargar o procesar los datos de trazado:", error);
     }
 }
 
-// 🔹 **Función desactivarCapaTrazado MODIFICADA para eliminar etiquetas**
-function desactivarCapaTrazado() {
-    trazadosLinea.forEach(linea => mapa.removeLayer(linea));
-    trazadosLinea = [];
-    ultimoPKPorLinea = {};
-
-    // *** AÑADIDO AQUÍ: Eliminar marcadores de ubicaciones singulares al desactivar la capa ***
-    marcadoresUbicacionesSingulares.forEach(marcador => mapa.removeLayer(marcador));
-    marcadoresUbicacionesSingulares = [];
-    // *** FIN AÑADIDO ***
-}
-
 // 🔹 **Agrupar y seleccionar puntos en un solo paso**
-function agruparYFiltrarPuntos(datos) { // ESTA FUNCIÓN NO SE MODIFICA - MANTENER ORIGINAL
+function agruparYFiltrarPuntos(datos) {
     const puntosPorLinea = {};
 
     for (const punto of datos) {
@@ -480,7 +460,7 @@ function agruparYFiltrarPuntos(datos) { // ESTA FUNCIÓN NO SE MODIFICA - MANTEN
 }
 
 // 🔹 **Dibujar líneas solo con los puntos seleccionados**
-function dibujarLineas(puntosPorLinea) { // ESTA FUNCIÓN NO SE MODIFICA - MANTENER ORIGINAL
+function dibujarLineas(puntosPorLinea) {
     for (const linea in puntosPorLinea) {
         const coordenadas = puntosPorLinea[linea];
 
@@ -497,7 +477,7 @@ function dibujarLineas(puntosPorLinea) { // ESTA FUNCIÓN NO SE MODIFICA - MANTE
 }
 
 // 🔹 **Cargar archivos JSON optimizado**
-async function cargarArchivosJSON(rutas) { // ESTA FUNCIÓN NO SE MODIFICA - MANTENER ORIGINAL
+async function cargarArchivosJSON(rutas) {
     const datosCargados = await Promise.all(
         rutas.map(ruta =>
             fetch(ruta)
@@ -512,86 +492,28 @@ async function cargarArchivosJSON(rutas) { // ESTA FUNCIÓN NO SE MODIFICA - MAN
 }
 
 // 🔹 **Conversión de PK a número**
-function pkToNumber(pkString) { // ESTA FUNCIÓN NO SE MODIFICA - MANTENER ORIGINAL
+function pkToNumber(pkString) {
     return parseInt(pkString, 10) || 0;
 }
 
 // 🔹 **Desactivar capa limpiando solo lo necesario**
-// LA FUNCIÓN desactivarCapaTrazado ESTÁ MODIFICADA ARRIBA - NO USAR ESTA VERSIÓN ANTIGUA
+function desactivarCapaTrazado() {
+    trazadosLinea.forEach(linea => mapa.removeLayer(linea));
+    trazadosLinea = [];
+    ultimoPKPorLinea = {};
+}
 
 // 🔹 **Manejo de evento de activación/desactivación**
-// EL EVENT LISTENER checkTrazado.addEventListener NO SE MODIFICA - MANTENER ORIGINAL
+checkTrazado.addEventListener('change', function () {
+    if (this.checked) {
+        activarCapaTrazado();
+    } else {
+        desactivarCapaTrazado();
+    }
+});
 
 /////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
-// *** NUEVA FUNCIÓN AÑADIDA (para etiquetas de ubicaciones singulares) - AÑADIR ESTA FUNCIÓN COMPLETA ***
-let marcadoresUbicacionesSingulares = []; // Array para guardar los marcadores de ubicaciones singulares
-
-async function cargarYMostrarUbicacionesSingularesDesdeEdificios() {
-    try {
-        // Cargar datos de edificios.json (ALBALI.json y TOVAL.json) usando la función existente
-        const rutasEdificios = ["./doc/edificios/ALBALI.json", "./doc/edificios/TOVAL.json"];
-        const datosEdificiosArrays = await Promise.all(rutasEdificios.map(ruta =>
-            fetch(ruta).then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error al cargar ${ruta}: ${response.statusText}`);
-                }
-                return response.json();
-            }).catch(error => {
-                console.error(`Error al cargar ${ruta}:`, error);
-                return [];
-            })
-        ));
-        const datosEdificios = datosEdificiosArrays.flat();
-
-        // Definir las ubicaciones singulares por PK y Línea
-        const ubicacionesDefinidas = [
-            { pk: "321+000", linea: "42" },
-            { pk: "247+420", linea: "40" },
-            { pk: "035+840", linea: "40" },
-            { pk: "392+710", linea: "40" }
-        ];
-
-        // Limpiar marcadores anteriores si existen
-        marcadoresUbicacionesSingulares.forEach(marcador => mapa.removeLayer(marcador));
-        marcadoresUbicacionesSingulares = [];
-
-        for (const ubicacionDefinida of ubicacionesDefinidas) {
-            const { pk, linea } = ubicacionDefinida;
-
-            // Buscar en datosEdificios el elemento que coincida con el PK y la Línea
-            const edificioSingular = datosEdificios.find(edificio =>
-                edificio.PK === pk && edificio.LINEA === linea
-            );
-
-            if (edificioSingular) {
-                const nombreUbicacion = edificioSingular.NOMBRE; // Usar el NOMBRE del edificio
-                const latitud = parseFloat(edificioSingular.Latitud);
-                const longitud = parseFloat(edificioSingular.Longitud);
-
-                // Crear un DivIcon para la etiqueta de texto (reutilizando el mismo código)
-                const iconoTexto = L.divIcon({
-                    className: 'etiqueta-ubicacion-singular',
-                    html: `<div class="etiqueta-texto">${nombreUbicacion}</div>`,
-                    iconSize: [null, null],
-                    iconAnchor: [0, 0],
-                    popupAnchor: [0, 0]
-                });
-
-                // Crear un marcador con el DivIcon y añadir al mapa
-                const marcadorUbicacion = L.marker([latitud, longitud], { icon: iconoTexto }).addTo(mapa);
-                marcadoresUbicacionesSingulares.push(marcadorUbicacion); // Guardar el marcador
-            } else {
-                console.warn(`No se encontró edificio singular para PK ${pk} y Línea ${linea} en edificios.json`);
-            }
-        }
-
-    } catch (error) {
-        console.error("Error al cargar o mostrar ubicaciones singulares desde edificios.json:", error);
-    }
-}
-
-///// FIN CAPA TRAZADO /////.
 
 
 /////  INICIO CAPA TIEMPO /////---------------------------------------------------------------------------------------
