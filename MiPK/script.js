@@ -840,7 +840,7 @@ checkBts.addEventListener('change', function () {
 const checkIiss = document.getElementById('check-iiss');
 const iissLayer = L.layerGroup();
 checkIiss.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(iissLayer, ["CS","PICV,"ET"]) : desactivarCapaEdificios(iissLayer);
+    this.checked ? activarCapaEdificios(iissLayer, ["CS","PICV","ET"]) : desactivarCapaEdificios(iissLayer);
 });
 
 const checkEstaciones = document.getElementById('check-estaciones');
