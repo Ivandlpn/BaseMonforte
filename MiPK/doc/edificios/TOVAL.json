@@ -4,11 +4,42 @@
         "PK": "000000",
         "TIPO": "EST",
         "NOMBRE": "ESTACIÓN CHAMARTIN"
-    },{
+    },
+        {
+        "LINEA": "40",
+        "PK": "000384",
+        "TIPO": "ET",
+        "NOMBRE": "NUEVO CHAMARTÍN"
+    },
+    {
         "LINEA": "40",
         "PK": "001000",
         "TIPO": "CPS",
         "NOMBRE": "CPS MADRID ATOCHA/CHAMARTIN"
+    },
+    {
+        "LINEA": "40",
+        "PK": "900450",
+        "TIPO": "TUNEL",
+        "NOMBRE": "BY PASS PTA. ATOCHA"
+    },
+     {
+        "LINEA": "40",
+        "PK": "900035",
+        "TIPO": "ET",
+        "NOMBRE": "JARDIN BOTÁNICO"
+    },
+    {
+        "LINEA": "40",
+        "PK": "014827",
+        "TIPO": "ET",
+        "NOMBRE": "CANAL MANZANARES"
+    },
+    {
+        "LINEA": "40",
+        "PK": "024034",
+        "TIPO": "ET",
+        "NOMBRE": "CERRO DE LOS ÁNGELES"
     },
     {
         "LINEA": "40",
