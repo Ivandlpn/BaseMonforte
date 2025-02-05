@@ -2,10 +2,44 @@
 <html lang="es">
 
 <head>
-    <!-- Etiqueta de Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y2NT7MQYVZ"></script>
+    <!-- =====================================================================
+    |  METADATOS Y CONFIGURACIÓN INICIAL                                   |
+    ===================================================================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Título de la página (Aparece en la pestaña del navegador) -->
+    <title>Mi PK 📍</title>
+
+    <!-- Favicon (Icono que aparece en la pestaña del navegador) -->
+    <link rel="icon" href="img/FaviconMiPK.png?v=1" type="image/png">
+
+    <!-- Archivo Manifest (Para la instalación como aplicación web progresiva - PWA) -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- =====================================================================
+    |  METADATOS OPEN GRAPH (Para compartir en redes sociales)               |
+    ===================================================================== -->
+    <meta property="og:title" content="Mi PK 📍" />
+    <meta property="og:description" content="Consulta el PK más cercano" />
+    <meta property="og:image" content="img/FaviconMiPK.png" />
+    <meta property="og:url" content="https://ivandlpn.github.io/BaseMonforte/PKC/" />
+    <meta property="og:type" content="website" />
+
+    <!-- =====================================================================
+    |  LIBRERÍAS EXTERNAS (CSS y JavaScript)                                |
+    ===================================================================== -->
+    <!-- Leaflet CSS (Estilos para el mapa) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Leaflet Touch Rotation -->
     <script src="https://bernardocs.me/leaflet-touch-rotation/Leaflet.TouchRotation.js"></script>
 
+    <!-- Leaflet JavaScript (Funcionalidad del mapa) -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Etiqueta de Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y2NT7MQYVZ"></script>
 
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -16,36 +50,21 @@
         gtag('config', 'G-Y2NT7MQYVZ');
     </script>
 
-    <!-- Metadatos -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Título de la página -->
-    <title>Mi PK 📍</title>
-
-    <!-- Favicon -->
-    <link rel="icon" href="img/FaviconMiPK.png?v=1" type="image/png">
-    <link rel="manifest" href="manifest.json">
-
-    <!-- Metadatos Open Graph -->
-    <meta property="og:title" content="Mi PK 📍" />
-    <meta property="og:description" content="Consulta el PK más cercano" />
-    <meta property="og:image" content="img/FaviconMiPK.png" />
-    <meta property="og:url" content="https://ivandlpn.github.io/BaseMonforte/PKC/" />
-    <meta property="og:type" content="website" />
-
-    <!-- Biblioteca Leaflet.js -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <!-- Hoja de estilos personalizada -->
+    <!-- =====================================================================
+    |  HOJA DE ESTILOS PERSONALIZADA                                        |
+    ===================================================================== -->
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+    <!-- =====================================================================
+    |  CONTENEDOR PRINCIPAL DE LA APLICACIÓN                                  |
+    ===================================================================== -->
     <div class="contenedor">
 
-        <!-- Sección de encabezado -->
+        <!-- =================================================================
+        |  ENCABEZADO                                                         |
+        ================================================================= -->
         <header>
             <img src="img/CabeceraMiPK2.png" alt="Cabecera Mi PK">
         </header>
@@ -53,20 +72,24 @@
         <!-- Separador en forma de línea con gradiente -->
         <div class="linea-gradiente"></div>
 
-        <!-- Contenedor del mapa -->
-        <div id="map-container" style="height: 400px;">
+        <!-- =================================================================
+        |  CONTENEDOR DEL MAPA                                                  |
+        ================================================================= -->
+        <div id="map-container" class="map-container">  <!-- Añadida clase map-container -->
             <div id="map">
 
                 <!-- Botón para centrar el mapa -->
-                <img id="actualizarUbicacion" src="img/centrar.png" alt="Centrar" style="cursor: pointer;">
+                <img id="actualizarUbicacion" src="img/centrar.png" alt="Centrar" class="map-control-button"> <!-- Añadida clase map-control-button -->
 
-                <!-- Menú de control de capas -->
+                <!-- =============================================================
+                |  MENÚ DE CONTROL DE CAPAS                                      |
+                ============================================================= -->
                 <div id="control-capas">
                     <img src="img/capa.png" alt="Capas" id="boton-capas">
                     <div id="menu-capas" style="display: none;">
                         <label>
                             <input type="checkbox" id="check-mitramo"> 📍 Mi tramo
-                        </label> 
+                        </label>
                         <!-- Línea azul -->
                         <hr class="linea-azul">
                         <!-- Texto "LAV ESTE" -->
@@ -94,14 +117,18 @@
                         </label>
                     </div>
                 </div>
+                <!-- FIN MENÚ DE CONTROL DE CAPAS -->
 
             </div>
         </div>
+        <!-- FIN CONTENEDOR DEL MAPA -->
 
-        <!-- Otro separador con línea de gradiente -->
+        <!-- Separador con línea de gradiente -->
         <div class="linea-gradiente"></div>
 
-        <!-- Sección de cálculo de PK -->
+        <!-- =================================================================
+        |  SECCIÓN DE CÁLCULO DE PK                                           |
+        ================================================================= -->
         <div id="calculoPK">
 
             <!-- Contenedor de iconos -->
@@ -122,395 +149,375 @@
                 <!-- <p>Vía: <span id="distancia">1289.73 metros</span></p> -->
             </div>
         </div>
-        
+        <!-- FIN SECCIÓN DE CÁLCULO DE PK -->
 
-    <!-- Tarjeta superpuesta para opciones PLUS -->
-    <div id="plus-card-container" class="overlay-card-container" style="display: none;">
-    <div id="plus-card" class="overlay-card">
-        <!-- Botón para cerrar la tarjeta -->
-        <button id="cerrar-plus-card" class="close-button" aria-label="Cerrar">
-            <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-        </button>
 
-       <!-- Título de la tarjeta -->
-        <h2 id="titulo-plus"><u>Mi PK MÁS</u></h2>
+        <!-- =================================================================
+        |  TARJETAS SUPERPUESTAS (OVERLAY CARDS)                               |
+        ================================================================= -->
 
-        <!-- Contenedor principal para las dos columnas -->
-        <div style="display: flex; justify-content: center; gap: 10px;">
+        <!-- * * * TARJETAS PLUS * * * -->
+        <!-- Tarjeta superpuesta para opciones PLUS -->
+        <div id="plus-card-container" class="overlay-card-container" style="display: none;">
+            <div id="plus-card" class="overlay-card">
+                <!-- * * * TITULO * * * -->
+                <h2 id="titulo-plus"><u>Mi PK MÁS</u></h2>
 
-            <!-- Columna 1 -->
-            <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
-                <button class="plus-option-button" aria-label="CIRCULACIÓN">
-                    <img src="img/plus/circulacion.png" alt="CIRCULACIÓN" style="width: 100%; height: auto;">
-                </button>
-                <button class="plus-option-button" aria-label="CPS">
-                   <img src="img/plus/cps.png" alt="CPS" style="width: 100%; height: auto;">
-                </button>
-                  <button class="plus-option-button" aria-label="CSI">
-                     <img src="img/plus/csi.png" alt="CSI" style="width: 100%; height: auto;">
-                </button>
-                <button class="plus-option-button" aria-label="TELEMANDO">
-                    <img src="img/plus/telemando.png" alt="TELEMANDO" style="width: 100%; height: auto;">
-                </button>
-                     <button class="plus-option-button" aria-label="DIRECTORIO">
-                    <img src="img/plus/directorio.png" alt="DIRECTORIO" style="width: 100%; height: auto;">
-                </button>
-            </div>
+                <!-- * * * CONTENIDO PRINCIPAL (Botones) * * * -->
+                <div style="display: flex; justify-content: center; gap: 10px;">
 
-            <!-- Columna 2 -->
-            <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
-              <button class="plus-option-button" aria-label="OCUPACIÓN">
-                    <img src="img/plus/ocupacion.png" alt="OCUPACIÓN" style="width: 100%; height: auto;">
+                    <!-- Columna 1 -->
+                    <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+                        <button class="plus-option-button" aria-label="CIRCULACIÓN">
+                            <img src="img/plus/circulacion.png" alt="CIRCULACIÓN" style="width: 100%; height: auto;">
+                        </button>
+                        <button class="plus-option-button" aria-label="CPS">
+                            <img src="img/plus/cps.png" alt="CPS" style="width: 100%; height: auto;">
+                        </button>
+                        <button class="plus-option-button" aria-label="CSI">
+                            <img src="img/plus/csi.png" alt="CSI" style="width: 100%; height: auto;">
+                        </button>
+                        <button class="plus-option-button" aria-label="TELEMANDO">
+                            <img src="img/plus/telemando.png" alt="TELEMANDO" style="width: 100%; height: auto;">
+                        </button>
+                        <button class="plus-option-button" aria-label="DIRECTORIO">
+                            <img src="img/plus/directorio.png" alt="DIRECTORIO" style="width: 100%; height: auto;">
+                        </button>
+                    </div>
+
+                    <!-- Columna 2 -->
+                    <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
+                        <button class="plus-option-button" aria-label="OCUPACIÓN">
+                            <img src="img/plus/ocupacion.png" alt="OCUPACIÓN" style="width: 100%; height: auto;">
+                        </button>
+                        <button class="plus-option-button" aria-label="ACTAS">
+                            <img src="img/plus/acta.png" alt="ACTAS" style="width: 100%; height: auto;">
+                        </button>
+                        <button class="plus-option-button" aria-label="MALLAS">
+                            <img src="img/plus/mallas.png" alt="MALLAS" style="width: 100%; height: auto;">
+                        </button>
+                        <button class="plus-option-button" aria-label="ACCIDENTE">
+                            <img src="img/plus/accidente.png" alt="ACCIDENTE" style="width: 100%; height: auto;">
+                        </button>
+                        <button class="plus-option-button" aria-label="TRENES">
+                            <img src="img/plus/trenes.png" alt="TRENES" style="width: 100%; height: auto;">
+                        </button>
+                        <!-- Añade más botones aquí para la columna 2 -->
+                    </div>
+                </div>
+                <!-- * * * BOTÓN DE CIERRE * * * -->
+                <button id="cerrar-plus-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
                 </button>
-                  <button class="plus-option-button" aria-label="ACTAS">
-                    <img src="img/plus/acta.png" alt="ACTAS" style="width: 100%; height: auto;">
-                </button>
-                   <button class="plus-option-button" aria-label="MALLAS">
-                <img src="img/plus/mallas.png" alt="MALLAS" style="width: 100%; height: auto;">
-                </button>
-                <!-- <button class="plus-option-button" aria-label="SIMULADOR">-->
-                <!--<img src="img/plus/simulador.png" alt="SIMULADOR" style="width: 100%; height: auto;">-->
-               <!--</button>-->
-                <button class="plus-option-button" aria-label="ACCIDENTE">
-        <img src="img/plus/accidente.png" alt="ACCIDENTE" style="width: 100%; height: auto;">
-    </button>
-                <button class="plus-option-button" aria-label="TRENES">
-        <img src="img/plus/trenes.png" alt="TRENES" style="width: 100%; height: auto;">
-    </button>
-                <!-- Añade más botones aquí para la columna 2 -->
             </div>
         </div>
-    </div>
-</div>
 
+        <!-- * * * TARJETAS DE EMERGENCIA * * * -->
+        <!-- Tarjeta superpuesta para tipos de accidente -->
+        <div id="accidente-card-container" class="overlay-card-container" style="display: none;">
+            <div id="accidente-card" class="overlay-card">
 
-        <!-- Sección del pie de página -->
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-accidente-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>¿QUÉ TIPO DE ACCIDENTE?</u></h2>
+
+                <!-- Contenedor para los botones TRABAJADOR y VEHÍCULO -->
+                <div id="botones-accidente-container" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                    <button id="boton-trabajador" class="plus-option-button">
+                        <img src="img/plus/trabajador.png" alt="TRABAJADOR" style="width: 80%; height: auto;">
+                    </button>
+                    <button id="boton-vehiculo" class="plus-option-button">
+                        <img src="img/plus/vehiculo.png" alt="VEHÍCULO" style="width: 80%; height: auto;">
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta superpuesta para instrucciones accidente trabajador -->
+        <div id="instrucciones-trabajador-card-container" class="overlay-card-container" style="display: none;">
+            <div id="instrucciones-trabajador-card" class="overlay-card">
+
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-instrucciones-trabajador-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta -->
+                <h2 style="text-align: center; margin-bottom: 20px;"><u>INSTRUCCIONES EN CASO DE ACCIDENTE</u></h2>
+
+                <!-- Contenido de las instrucciones -->
+                <div id="contenido-instrucciones-trabajador" style="padding: 15px;">
+                    <p><b>1️⃣</b> Acude al centro asistencial MC MUTUAL más próximo. <a href="https://www.mc-mutual.com/red-de-centros?idMenuSel=538" target="_blank" class="telefono-urgencias-button">🔎 Buscador Centros</a> </p>
+                    <p><b>2️⃣</b> Si el accidente se produce fuera de las horas de consulta del centro o desconoces su ubicación, llama al teléfono de urgencias. <br> <a href="tel:900300144" class="telefono-urgencias-button"><b> 📞 900 300 144</b></a> </p>
+                    <p><b>3️⃣</b> En caso de que la gravedad o urgencia del accidente así lo aconseje, dirígete al centro médico más próximo, aunque no pertenezca a MC MUTUAL, y luego contacta con la mutua.</p>
+                    <p><b>4️⃣</b> En el teléfono de urgencias te indicarán el procedimiento a seguir y te facilitarán los medios de trabajo al lugar más conveniente.</p>
+                    <p><b>5️⃣</b> Se comunicará la situación del accidente a la Gerencia de Administración de Personal en el correo electrónico <br> <a href="mailto:admonpersonal@ineco.com" class="telefono-urgencias-button"><b>📧 admonpersonal@ineco.com</b></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta superpuesta para instrucciones vehículo accidente -->
+        <div id="instrucciones-vehiculo-card-container" class="overlay-card-container" style="display: none;">
+            <div id="instrucciones-vehiculo-card" class="overlay-card">
+                <img src="img/plus/alphabet.png" alt="Logo Alphabet" id="logo-alphabet-vehiculo">
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-instrucciones-vehiculo-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+                <!-- Título de la tarjeta -->
+                <h2 style="text-align: center; margin-bottom: 10px; margin-top: 30px;"><u>ASISTENCIA EN CARRETERA</u></h2>
+
+                <!-- Contenido de las instrucciones -->
+                <div id="contenido-instrucciones-vehiculo" style="padding: 15px; text-align: justify;">
+                    <p style="margin-bottom: 5px;">Ante una avería o un accidente que implique la inmovilización del vehículo, contacta con la <b>Plataforma de Atención al Conductor de ALPHABET</b> , marcando el número <b>1️⃣</b> correspondiente a emergencias. Tiempo medio por asistencia es de 45 minutos.</p>
+                </div>
+                <p style="margin-bottom: 10px;">
+                    <a href="tel:900374837" class="telefono-urgencias-button" style="display:block;"><b>📞 900 374 837</b></a>
+                </p>
+                <hr style="border: none; border-top: 2px solid white; margin: 10px 0;">
+                <p>Si el accidente es con uno de los siguientes vehículos:</p>
+                <p>◾ 9548-LZS</p>
+                <p>◾ 9547-LZS</p>
+                <p>◾ 8413-LZW</p>
+                <p>◾ 8420-LZW</p>
+                <p>debes llamar al Servicio de Atención en Carretera de ALD/ Ayven</p>
+                <p>
+                    <a href="tel:913336717" class="telefono-urgencias-button" style="display:block; margin-bottom:10px;"><b>📞 91 333 67 17</b></a>
+                </p>
+            </div>
+        </div>
+
+        <!-- * * * TARJETAS DE INFORMACIÓN * * * -->
+        <!-- Tarjeta superpuesta para puertas cercanas -->
+        <div id="puertas-card-container" class="overlay-card-container" style="display: none;">
+            <div id="puertas-card" class="overlay-card">
+
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-puertas-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>PUERTAS CERCANAS</u></h2>
+
+                <!-- Área de contenido para información de puertas cercanas -->
+                <div id="puertas-info">
+                    <!-- Insertado dinámicamente mediante JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta superpuesta para trenes -->
+        <div id="trenes-card-container" class="overlay-card-container" style="display: none;">
+            <div id="trenes-card" class="overlay-card">
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-trenes-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>PRÓXIMOS TRENES</u></h2>
+
+                <!-- Contenedor para los trenes -->
+                <div id="trenes-container">
+                    <!-- Aquí se insertará la tabla dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </div>
+
+         <!-- * * * TARJETAS OPERADORES * * * -->
+        <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA OPERADORES CIRCULACIÓN *** -->
+        <div id="circulacion-card-container" class="overlay-card-container" style="display: none;">
+            <div id="circulacion-card" class="overlay-card">
+
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-circulacion-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>OPERADORES CIRCULACIÓN</u></h2>
+
+                <!-- Contenedor para los botones de operadores -->
+                <div id="operadores-container">
+                    <!-- Aquí se insertarán los botones dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </div>
+        <!-- *** FIN: NUEVA TARJETA SUPERPUESTA OPERADORES CIRCULACIÓN *** -->
+
+        <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA CPS *** -->
+        <div id="cps-card-container" class="overlay-card-container" style="display: none;">
+            <div id="cps-card" class="overlay-card">
+
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-cps-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta -->
+                <h2 style="text-align: center; margin-bottom: 40px;"><u>OPERADORES CPS</u></h2>
+
+                <!-- Contenedor para el contenido de CPS -->
+                <div id="cps-content">
+                    <p style="text-align: center; font-style: italic;">Funcionalidad CPS en desarrollo...</p>
+                </div>
+            </div>
+        </div>
+        <!-- *** FIN: NUEVA TARJETA SUPERPUESTA CPS *** -->
+
+        <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA CSI *** -->
+        <div id="csi-card-container" class="overlay-card-container" style="display: none;">
+            <div id="csi-card" class="overlay-card">
+
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-csi-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>OPERADORES CSI</u></h2>
+
+                <!-- Contenedor para el contenido de CSI -->
+                <div id="csi-content">
+                    <!-- Aquí se insertará el contenido de CSI dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </div>
+        <!-- *** FIN: NUEVA TARJETA SUPERPUESTA CSI *** -->
+
+        <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA TELEMANDO *** -->
+        <div id="telemando-card-container" class="overlay-card-container" style="display: none;">
+            <div id="telemando-card" class="overlay-card">
+
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-telemando-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>OPERADORES TELEMANDO</u></h2>
+
+                <!-- Contenedor para el contenido de TELEMANDO -->
+                <div id="telemando-content">
+                    <!-- Aquí se insertará el contenido de TELEMANDO dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </div>
+          <!-- * * * TARJETA MALLAS * * * -->
+        <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA MALLAS *** -->
+        <div id="mallas-card-container" class="overlay-card-container" style="display: none;">
+            <div id="mallas-card" class="overlay-card">
+
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-mallas-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>MALLAS LAV ESTE</u></h2>
+
+                <!-- Contenedor para los botones de operadores -->
+                <div id="mallas-container">
+                    <!-- Aquí se insertarán los botones dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </div>
+        <!-- *** FIN: NUEVA TARJETA SUPERPUESTA MALLAS *** -->
+
+        <!-- * * * OTROS * * * -->
+        <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA DIRECTORIO *** -->
+        <div id="directorio-card-container" class="overlay-card-container" style="display: none;">
+            <div id="directorio-card" class="overlay-card">
+
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-directorio-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>DIRECTORIO</u></h2>
+
+                <!-- Contenedor para los enlaces del directorio -->
+                <div id="directorio-container">
+                    <!-- Aquí se insertarán los enlaces dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </div>
+        <!-- *** FIN: NUEVA TARJETA SUPERPUESTA DIRECTORIO *** -->
+
+        <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA SIMULADOR *** -->
+        <div id="simulador-card-container" class="overlay-card-container" style="display: none;">
+            <div id="simulador-card" class="overlay-card">
+
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-simulador-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>Simular Ubicación (En construcción)</u></h2>
+
+                <!-- Contenedor para el contenido del simulador -->
+                <div id="simulador-content">
+                    <!-- Contenido de la tarjeta (botones y formulario)-->
+                    <div id="simulador-opciones">
+                        <button id="simular-pk-btn" class="simulador-option-button">Simular PK</button>
+                        <button id="simular-mapa-btn" class="simulador-option-button">Ubicar en Mapa (Próximamente)</button>
+                    </div>
+                    <div id="simulador-pk-form" style="display:none;">
+                        <select id="simulador-linea-select">
+                            <option value="">Línea</option>
+                        </select>
+                        <input type="text" id="simulador-pk-input" placeholder="PK">
+                        <button id="aplicar-simulacion-btn">Aplicar Simulación</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- *** FIN: NUEVA TARJETA SUPERPUESTA SIMULADOR *** -->
+
+        <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA OCUPACIÓN *** -->
+        <div id="ocupacion-card-container" class="overlay-card-container" style="display: none;">
+            <div id="ocupacion-card" class="overlay-card">
+
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-ocupacion-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>OCUPACIÓN DE VÍA</u></h2>
+
+                <!-- Contenedor para los botones de OCUPACIÓN -->
+                <div id="ocupacion-content">
+                    <div id="botones-ocupacion-container" style="display: flex; flex-direction: column; align-items: stretch; margin-top: 10px; gap: 10px;">
+                        <!-- Aquí se insertarán los botones dinámicamente con JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- *** FIN: NUEVA TARJETA SUPERPUESTA OCUPACIÓN *** -->
+
+        <!-- FIN TARJETAS SUPERPUESTAS -->
+
+        <!-- =================================================================
+        |  PIE DE PÁGINA                                                      |
+        ================================================================= -->
         <footer>
             <img src="img/PieMiPK.png" alt="Pie de Página">
         </footer>
+        <!-- FIN PIE DE PÁGINA -->
 
     </div>
 
-    <!-- Tarjeta superpuesta para puertas cercanas -->
-    <div id="puertas-card-container" class="overlay-card-container" style="display: none;">
-        <div id="puertas-card" class="overlay-card">
-
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-puertas-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 25px;"><u>PUERTAS CERCANAS</u></h2>
-
-
-            <!-- Área de contenido para información de puertas cercanas -->
-            <div id="puertas-info">
-                <!-- Insertado dinámicamente mediante JavaScript -->
-            </div>
-
-        </div>
-    </div>
-
- <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA OPERADORES CIRCULACIÓN *** -->
-    <div id="circulacion-card-container" class="overlay-card-container" style="display: none;">
-        <div id="circulacion-card" class="overlay-card">
-
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-circulacion-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 25px;"><u>OPERADORES CIRCULACIÓN</u></h2>
-
-            <!-- Contenedor para los botones de operadores -->
-            <div id="operadores-container">
-                <!-- Aquí se insertarán los botones dinámicamente con JavaScript -->
-            </div>
-
-        </div>
-    </div>
-    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA OPERADORES CIRCULACIÓN *** -->
-
- <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA CPS *** -->
-    <div id="cps-card-container" class="overlay-card-container" style="display: none;">
-        <div id="cps-card" class="overlay-card">
-
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-cps-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 40px;"><u>OPERADORES CPS</u></h2>
-
-            <!-- Contenedor para el contenido de CPS -->
-            <div id="cps-content">
-                <p style="text-align: center; font-style: italic;">Funcionalidad CPS en desarrollo...</p>
-            </div>
-
-        </div>
-    </div>
-    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA CPS *** -->
-
-
-     <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA CSI *** -->
-    <div id="csi-card-container" class="overlay-card-container" style="display: none;">
-        <div id="csi-card" class="overlay-card">
-
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-csi-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 25px;"><u>OPERADORES CSI</u></h2>
-
-            <!-- Contenedor para el contenido de CSI -->
-            <div id="csi-content">
-                <!-- Aquí se insertará el contenido de CSI dinámicamente con JavaScript -->
-            </div>
-
-        </div>
-    </div>
-    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA CSI *** -->
-
-     <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA TELEMANDO *** -->
-    <div id="telemando-card-container" class="overlay-card-container" style="display: none;">
-        <div id="telemando-card" class="overlay-card">
-
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-telemando-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 25px;"><u>OPERADORES TELEMANDO</u></h2>
-
-            <!-- Contenedor para el contenido de TELEMANDO -->
-            <div id="telemando-content">
-                <!-- Aquí se insertará el contenido de TELEMANDO dinámicamente con JavaScript -->
-            </div>
-
-        </div>
-    </div>
-    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA TELEMANDO *** -->
-
-
-         <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA MALLAS *** -->
-    <div id="mallas-card-container" class="overlay-card-container" style="display: none;">
-        <div id="mallas-card" class="overlay-card">
-
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-mallas-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 25px;"><u>MALLAS LAV ESTE</u></h2>
-
-            <!-- Contenedor para los botones de operadores -->
-            <div id="mallas-container">
-                <!-- Aquí se insertarán los botones dinámicamente con JavaScript -->
-            </div>
-
-        </div>
-    </div>
-    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA MALLAS *** -->
-
-
-         <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA DIRECTORIO *** -->
-    <div id="directorio-card-container" class="overlay-card-container" style="display: none;">
-        <div id="directorio-card" class="overlay-card">
-
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-directorio-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 25px;"><u>DIRECTORIO</u></h2>
-
-            <!-- Contenedor para los enlaces del directorio -->
-            <div id="directorio-container">
-                <!-- Aquí se insertarán los enlaces dinámicamente con JavaScript -->
-            </div>
-
-        </div>
-    </div>
-    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA DIRECTORIO *** -->
-
-     <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA SIMULADOR *** -->
-    <div id="simulador-card-container" class="overlay-card-container" style="display: none;">
-        <div id="simulador-card" class="overlay-card">
-
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-simulador-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 25px;"><u>Simular Ubicación (En construcción)</u></h2>
-
-            <!-- Contenedor para el contenido del simulador -->
-            <div id="simulador-content">
-                <!-- Contenido de la tarjeta (botones y formulario)-->
-                    <div id="simulador-opciones">
-                            <button id="simular-pk-btn" class="simulador-option-button">Simular PK</button>
-                          <button id="simular-mapa-btn" class="simulador-option-button" >Ubicar en Mapa (Próximamente)</button>
-                     </div>
-                    <div id="simulador-pk-form" style="display:none;">
-                        <select id="simulador-linea-select">
-                             <option value="">Línea</option>
-                        </select>
-                          <input type="text" id="simulador-pk-input" placeholder="PK">
-                          <button id="aplicar-simulacion-btn">Aplicar Simulación</button>
-                      </div>
-            </div>
-
-        </div>
-    </div>
-    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA SIMULADOR *** -->
-
-<!-- *** INICIO: NUEVA TARJETA SUPERPUESTA OCUPACIÓN *** -->
-<div id="ocupacion-card-container" class="overlay-card-container" style="display: none;">
-    <div id="ocupacion-card" class="overlay-card">
-
-        <!-- Botón para cerrar la tarjeta -->
-        <button id="cerrar-ocupacion-card" class="close-button" aria-label="Cerrar">
-            <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-        </button>
-
-        <!-- Título de la tarjeta -->
-        <h2 style="text-align: center; margin-bottom: 25px;"><u>OCUPACIÓN DE VÍA</u></h2>
-
-        <!-- Contenedor para los botones de OCUPACIÓN -->
-        <div id="ocupacion-content">
-             <div id="botones-ocupacion-container" style="display: flex; flex-direction: column; align-items: stretch; margin-top: 10px; gap: 10px;">
-                <!-- Aquí se insertarán los botones dinámicamente con JavaScript -->
-            </div>
-        </div>
-
-    </div>
-</div>
-<!-- *** FIN: NUEVA TARJETA SUPERPUESTA OCUPACIÓN *** -->
-
-
-
-    
-
-        <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA ACCIDENTE *** -->
-    <div id="accidente-card-container" class="overlay-card-container" style="display: none;">
-        <div id="accidente-card" class="overlay-card">
-
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-accidente-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 25px;"><u>¿QUÉ TIPO DE ACCIDENTE?</u></h2>
-
-            <!-- Contenedor para los botones TRABAJADOR y VEHÍCULO -->
-            <div id="botones-accidente-container" style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
-    <button id="boton-trabajador" class="plus-option-button"> 
-        <img src="img/plus/trabajador.png" alt="TRABAJADOR" style="width: 80%; height: auto;">
-    </button>
-    <button id="boton-vehiculo" class="plus-option-button"> 
-        <img src="img/plus/vehiculo.png" alt="VEHÍCULO" style="width: 80%; height: auto;">
-    </button>
-</div>
-
-        </div>
-    </div>
-    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA ACCIDENTE *** -->
-
-
-    <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA INSTRUCCIONES TRABAJADOR ACCIDENTE *** -->
-    <div id="instrucciones-trabajador-card-container" class="overlay-card-container" style="display: none;">
-        <div id="instrucciones-trabajador-card" class="overlay-card">
-
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-instrucciones-trabajador-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-
-            <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 20px;"><u>INSTRUCCIONES EN CASO DE ACCIDENTE</u></h2>
-
-            <!-- Contenido de las instrucciones -->
-            <div id="contenido-instrucciones-trabajador" style="padding: 15px;">
-                <p><b>1️⃣</b> Acude al centro asistencial MC MUTUAL más próximo. <a href="https://www.mc-mutual.com/red-de-centros?idMenuSel=538" target="_blank" class="telefono-urgencias-button">🔎 Buscador Centros</a> </p>
-                <p><b>2️⃣</b> Si el accidente se produce fuera de las horas de consulta del centro o desconoces su ubicación, llama al teléfono de urgencias. <br> <a href="tel:900300144" class="telefono-urgencias-button"><b> 📞 900 300 144</b></a> </p>
-                <p><b>3️⃣</b> En caso de que la gravedad o urgencia del accidente así lo aconseje, dirígete al centro médico más próximo, aunque no pertenezca a MC MUTUAL, y luego contacta con la mutua.</p>
-                <p><b>4️⃣</b> En el teléfono de urgencias te indicarán el procedimiento a seguir y te facilitarán los medios de trabajo al lugar más conveniente.</p>
-                <p><b>5️⃣</b> Se comunicará la situación del accidente a la Gerencia de Administración de Personal en el correo electrónico <br> <a href="mailto:admonpersonal@ineco.com" class="telefono-urgencias-button"><b>📧 admonpersonal@ineco.com</b></a>
-            </div>
-
-        </div>
-    </div>
-    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA INSTRUCCIONES TRABAJADOR ACCIDENTE *** -->
-
-
-<!-- *** INICIO: NUEVA TARJETA SUPERPUESTA INSTRUCCIONES VEHÍCULO ACCIDENTE *** -->
-    <div id="instrucciones-vehiculo-card-container" class="overlay-card-container" style="display: none;">
-        <div id="instrucciones-vehiculo-card" class="overlay-card">
-        <img src="img/plus/alphabet.png" alt="Logo Alphabet" id="logo-alphabet-vehiculo">
-            <!-- Botón para cerrar la tarjeta -->
-            <button id="cerrar-instrucciones-vehiculo-card" class="close-button" aria-label="Cerrar">
-                <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-            </button>
-        <!-- Título de la tarjeta -->
-            <h2 style="text-align: center; margin-bottom: 10px; margin-top: 30px;"><u>ASISTENCIA EN CARRETERA</u></h2>
-
-            <!-- Contenido de las instrucciones -->
-            <div id="contenido-instrucciones-vehiculo" style="padding: 15px; text-align: justify;">
-                <p style="margin-bottom: 5px;">Ante una avería o un accidente que implique la inmovilización del vehículo, contacta con la <b>Plataforma de Atención al Conductor de ALPHABET</b> , marcando el número <b>1️⃣</b> correspondiente a emergencias. Tiempo medio por asistencia es de 45 minutos.</p>
-            </div>
-            <p style="margin-bottom: 10px;">
-                <a href="tel:900374837" class="telefono-urgencias-button" style="display:block;"><b>📞 900 374 837</b></a>
-            </p>
-            <hr style="border: none; border-top: 2px solid white; margin: 10px 0;">
-            <p>Si el accidente es con uno de los siguientes vehículos:</p>
-            <p>◾ 9548-LZS</p>
-            <p>◾ 9547-LZS</p>
-            <p>◾ 8413-LZW</p>
-            <p>◾ 8420-LZW</p>
-            <p>debes llamar al Servicio de Atención en Carretera de ALD/ Ayven</p>
-             <p>
-                <a href="tel:913336717" class="telefono-urgencias-button" style="display:block; margin-bottom:10px;"><b>📞 91 333 67 17</b></a>
-            </p>
-        </div>
-    </div>
-
-    <!-- *** FIN: NUEVA TARJETA SUPERPUESTA INSTRUCCIONES VEHÍCULO ACCIDENTE *** -->
-    
-
-
-    <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA TRENES *** -->
-<div id="trenes-card-container" class="overlay-card-container" style="display: none;">
-    <div id="trenes-card" class="overlay-card">
-        <!-- Botón para cerrar la tarjeta -->
-        <button id="cerrar-trenes-card" class="close-button" aria-label="Cerrar">
-            <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-        </button>
-
-        <!-- Título de la tarjeta -->
-        <h2 style="text-align: center; margin-bottom: 25px;"><u>PRÓXIMOS TRENES</u></h2>
-
-         <!-- Contenedor para los trenes -->
-         <div id="trenes-container">
-            <!-- Aquí se insertará la tabla dinámicamente con JavaScript -->
-        </div>
-
-    </div>
-</div>
-<!-- *** FIN: NUEVA TARJETA SUPERPUESTA TRENES *** -->
-
-    
-
-    <!-- Archivo JavaScript -->
+    <!-- =====================================================================
+    |  ARCHIVO JAVASCRIPT PRINCIPAL                                          |
+    ===================================================================== -->
     <script src="script.js" defer></script>
 
 </body>
