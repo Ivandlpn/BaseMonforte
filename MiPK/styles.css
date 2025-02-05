@@ -962,7 +962,14 @@ footer img {
 
 /* *** FIN NUEVOS ESTILOS SIMPLIFICADOS Y VERTICALES PARA TARJETA DE PUERTAS *** */
 
-
+/* ----- MAPA ----- */
+.map-container { /* Ahora usa clase en lugar de estilo inline */
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+  z-index: 500;
+  height: 400px; /* Agregado height */
+}
 
 }
 
