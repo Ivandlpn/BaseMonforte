@@ -1,34 +1,56 @@
-/* Estilos globales */
+/* =====================================================================
+|  VARIABLES CSS (Valores reutilizables para mantener la consistencia)  |
+===================================================================== */
+:root {
+    /* Colores principales */
+    --primary-color: #2a62b8; /* Azul principal de la aplicación */
+    --secondary-color: #f0f8ff; /* Color de fondo secundario (suave) */
+    --text-color: #333; /* Color de texto general */
+    --border-color: #a6d4ff; /* Color de borde para elementos interactivos */
+    --cartelon-azul: #3600FA;  /* Azul cartelón */
 
+    /* Otros */
+    --close-button-color: white; /* Color del botón de cierre */
+}
+
+/* =====================================================================
+|  ESTILOS GLOBALES (Aplicados a toda la página)                       |
+===================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
 
 html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-  font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* Oculta las barras de desplazamiento */
+    font-family: Arial, sans-serif; /* Fuente predeterminada */
 }
 
 .contenedor {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ocupa toda la altura de la ventana */
 }
 
+/* =====================================================================
+|  ENCABEZADO (Parte superior de la página)                              |
+===================================================================== */
 header {
-  text-align: center;
-  padding: 0;
-  flex: 0 0 auto;
-  height: 80px;
+    text-align: center; /* Centra el contenido horizontalmente */
+    padding: 0;
+    flex: 0 0 auto; /* Evita que el encabezado crezca o se encoja */
+    height: 80px; /* Altura fija del encabezado */
 }
 
 header img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%; /* La imagen ocupa todo el ancho del encabezado */
+    height: 100%; /* La imagen ocupa toda la altura del encabezado */
+    object-fit: cover; /* Ajusta la imagen para cubrir el área, recortando si es necesario */
 }
 
+/* =====================================================================
+|  LÍNEA DE GRADIENTE (Separador visual)                                |
+===================================================================== */
 .linea-gradiente {
     position: relative; /* Siempre visible en la ventana */
     left: 0;
@@ -38,48 +60,67 @@ header img {
     z-index: 1000; /* Asegura que esté por encima del mapa */
 }
 
-/* Estilos para el contenedor del mapa */
-   #map-container {
+/* =====================================================================
+|  CONTENEDOR DEL MAPA                                                   |
+===================================================================== */
+#map-container {
     width: 100%; /* Establece un ancho fijo o porcentual */
     position: relative;
     margin: 0 auto; /* Centra el contenedor */
-    z-index: 500
+    z-index: 500;
 }
 
 #map {
-  height: 100%;
-  width: 100%;
-  position: relative;
+    height: 100%;
+    width: 100%;
+    position: relative;
 }
 
- #actualizarUbicacion {
-     position: absolute;
-     bottom: 5px;
-     right: 10px;
-     z-index: 1000;
-     cursor: pointer;
-     width: 30px;
-     height: 30px;
-     background: url('img/centrar.png') no-repeat center center;
-     background-size: contain;
-     border: none; /* Ya está, pero nos aseguramos */
-     padding: 0;
-     font-size: 0;
-     background-color: transparent; /*Fondo transparente */
- }
+/* =====================================================================
+|  BOTÓN DE ACTUALIZACIÓN DE UBICACIÓN (Centrar el mapa)              |
+===================================================================== */
+#actualizarUbicacion {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    z-index: 1000;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    background: url('img/centrar.png') no-repeat center center;
+    background-size: contain;
+    border: none; /* Ya está, pero nos aseguramos */
+    padding: 0;
+    font-size: 0;
+    background-color: transparent; /*Fondo transparente */
+}
 
 #actualizarUbicacion:hover {
-  background-color: #005f99;
+    background-color: #005f99;
 }
 
 #actualizarUbicacion:active,
 #actualizarUbicacion:focus {
-  font-size: 1em; /* Asegura que no cambie el tamaño */
-  outline: none; /* Opcional: elimina el contorno */
-  transform: translateX(-50%); /* Mantén la misma posición */
- 
+    font-size: 1em; /* Asegura que no cambie el tamaño */
+    outline: none; /* Opcional: elimina el contorno */
+    transform: translateX(-50%); /* Mantén la misma posición */
+
 }
 
+/* =====================================================================
+|  SECCIÓN DE CÁLCULO DE PK                                           |
+===================================================================== */
+#calculoPK {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* =====================================================================
+|  CONTENEDOR DE ICONOS (Cámara, Mas, Puerta, Plus)                   |
+===================================================================== */
 .iconos-container {
     display: flex;
     flex-direction: column;
@@ -116,42 +157,32 @@ header img {
     background-image: url('img/plus.png');
 }
 
-#calculoPK {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background-color: #ffffff;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-}
-
-
-
-
+/* =====================================================================
+|  TARJETA DE INFORMACIÓN DEL PK                                       |
+===================================================================== */
 #calculoPK .tarjeta {
-  display: inline-block;
-  background-color: #3600FA; /* Azul cartelón */
-  border: 2px solid #003f5c;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 250px; /* Tamaño fijo */
-  height: 85px; /* Tamaño fijo */
-  width: 50%;
-  max-width: 400px;
-  margin-right: 5px;
-  text-align: center; /* Centrar el contenido */
-  overflow: hidden; /* Manejar desbordamiento de contenido */
+    display: inline-block;
+    background-color: var(--cartelon-azul); /* Azul cartelón */
+    border: 2px solid #003f5c;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    max-width: 400px;
+    margin-right: 5px;
+    text-align: center; /* Centrar el contenido */
+    overflow: hidden; /* Manejar desbordamiento de contenido */
 }
 
 #calculoPK .tarjeta h2 {
-  margin: 0;
-  font-size: 2.5em;
-  color: #ffffff;
-  text-align: center;
+    margin: 0;
+    font-size: 2.5em;
+    color: #ffffff;
+    text-align: center;
 }
 
 #calculoPK .tarjeta p {
-  font-size: 0.8em; /* Tamaño más pequeño */
+    font-size: 0.8em; /* Tamaño más pequeño */
     color: #ffffff;      /* Color gris tenue */
 }
 
@@ -165,8 +196,9 @@ header img {
     color: #ffffff;      /* Color gris tenue */
 }
 
-
-
+/* =====================================================================
+|  TEXTOS TEMPORALES (Buscando PK, etc.)                                |
+===================================================================== */
 .boton-control {
     margin: 0 5px; /* Ajusta el margen según sea necesario */
 }
@@ -193,21 +225,27 @@ header img {
     text-align: center; /* Asegura el centrado del texto */
 }
 
+/* =====================================================================
+|  PIE DE PÁGINA                                                       |
+===================================================================== */
 footer {
     margin-top: auto;
     margin-bottom: 0; /* Elimina margen inferior del footer */
     padding: 0; /* Elimina el padding del footer */
     background-color: #ffffff;
-  text-align: center;
+    text-align: center;
     flex: 0 0 auto;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
 footer img {
-  width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
-  height: auto; /* Mantiene la proporción de la imagen */
+    width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
+    height: auto; /* Mantiene la proporción de la imagen */
 }
 
+/* =====================================================================
+|  TARJETAS SUPERPUESTAS (OVERLAY CARDS) - ESTILOS GENERALES           |
+===================================================================== */
 .overlay-card-container {
     position: absolute;
     top: 0;
@@ -236,33 +274,37 @@ footer img {
 }
 
 .close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0; /* Eliminar padding */
-  font-size: 1.5em;
-  color: white;
-  text-shadow: 1px 1px 2px black; /* Sombra de texto para el contraste */
-  display: flex; /* Centrar contenido */
-  justify-content: center;
-  align-items: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0; /* Eliminar padding */
+    font-size: 1.5em;
+    color: var(--close-button-color); /* Usar variable para el color del botón de cierre */
+    text-shadow: 1px 1px 2px black; /* Sombra de texto para el contraste */
+    display: flex; /* Centrar contenido */
+    justify-content: center;
+    align-items: center;
 }
+
 .close-button:hover {
     opacity: 0.8;
 }
 
 .close-button:focus {
-  outline: none; /* Eliminar el contorno al enfocar */
+    outline: none; /* Eliminar el contorno al enfocar */
 }
 
- /* Estilos específicos para cada fila de información de puerta */
+/* =====================================================================
+|  ESTILOS ESPECÍFICOS PARA LA TARJETA DE PUERTAS CERCANAS            |
+===================================================================== */
+/* Estilos específicos para cada fila de información de puerta */
 .puerta-fila {
     margin-bottom: 5px; /* Espacio entre filas */
     padding: 5px;
-   
+
 }
 
 .puerta-fila span {
@@ -277,13 +319,16 @@ footer img {
     margin-top: 10px;
 }
 
-    /* Estilos para cuando la tarjeta está en móvil */
+/* Estilos para cuando la tarjeta está en móvil */
 @media (max-width: 600px) {
-   .overlay-card{
-       width: 90%; /* Ancho de la tarjeta en movil */
-   }
+    .overlay-card {
+        width: 90%; /* Ancho de la tarjeta en movil */
+    }
 }
 
+/* =====================================================================
+|  CONTROL DE CAPAS                                                     |
+===================================================================== */
 /* Contenedor del control de capas */
 #control-capas {
     position: absolute;
@@ -363,6 +408,9 @@ footer img {
     height: 25px; /* Alto deseado */
 }
 
+/* =====================================================================
+|  ESTILOS PARA LOS POPUPS DE LEAFLET                                   |
+===================================================================== */
 .leaflet-popup-content-wrapper {
     background-color: #ddc9f5 !important;  /* Fondo #ddc9f5 */
     color: black !important; /* Color del texto, puede que necesites cambiarlo para que haga contraste */
@@ -373,21 +421,23 @@ footer img {
 }
 
 .leaflet-popup-content {
-  margin: 0 !important;
+    margin: 0 !important;
 }
 
 .leaflet-popup-tip-container {
     display: none !important; /* Ocultar la flecha del popup */
 }
 
-/* Estilos para los botones de la tarjeta PLUS */
+/* =====================================================================
+|  ESTILOS PARA LOS BOTONES DE LA TARJETA PLUS                       |
+===================================================================== */
 /* Estilos para el contenedor principal de las dos columnas */
 #plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] {
     display: flex;
     justify-content: center;
     gap: 10px;
-        overflow-x: auto; /* Asegura el scroll horizontal si es necesario */
-     box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
+    overflow-x: auto; /* Asegura el scroll horizontal si es necesario */
+    box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
 }
 
 /* Estilos para los contenedores de cada columna */
@@ -396,7 +446,7 @@ footer img {
     flex-direction: column;
     gap: 10px;
     align-items: center;
-      flex: 1; /* Ajusta el tamaño de cada columna en movil */
+    flex: 1; /* Ajusta el tamaño de cada columna en movil */
 }
 
 /* Ajuste del ancho de la tarjeta overlay-card (opcional, según necesidad) */
@@ -404,8 +454,8 @@ footer img {
     /* Ajusta el valor según necesites */
     width: 90%;
     max-width: 700px; /* Ancho máximo */
-     overflow-x: auto; /* Asegura el scroll horizontal si es necesario */
-     box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
+    overflow-x: auto; /* Asegura el scroll horizontal si es necesario */
+    box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
 }
 
 /* Ajuste para dispositivos móviles */
@@ -414,18 +464,19 @@ footer img {
         flex-direction: row;
         align-items: flex-start;
         overflow-x: auto;
-         box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
+        box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
     }
-     #plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] > div[style*="display: flex; flex-direction: column; gap: 10px; align-items: center;"] {
-      
-       flex: 1;
+
+    #plus-card > div[style*="display: flex; justify-content: center; gap: 10px;"] > div[style*="display: flex; flex-direction: column; gap: 10px; align-items: center;"] {
+
+        flex: 1;
     }
 
     .overlay-card {
         width: 95%;
-         max-width: none; /* Elimina el ancho máximo en pantallas pequeñas */
-      overflow-x: auto; /* Asegura el scroll horizontal si es necesario */
-         box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
+        max-width: none; /* Elimina el ancho máximo en pantallas pequeñas */
+        overflow-x: auto; /* Asegura el scroll horizontal si es necesario */
+        box-sizing: border-box; /* Permite que el padding no afecte al ancho total */
     }
 }
 
@@ -452,9 +503,9 @@ footer img {
     opacity: 0.6; /* Ejemplo: reducir aún más la opacidad al hacer clic */
 }
 
-
-
-/* Estilos para los botones de operador en la tarjeta de Circulación */
+/* =====================================================================
+|  ESTILOS PARA LOS BOTONES DE OPERADOR (Circulación, CPS, CSI)        |
+===================================================================== */
 .operador-button {
     display: block; /* Para que cada botón ocupe una línea completa */
     padding: 10px 15px;
@@ -502,12 +553,9 @@ footer img {
     margin-bottom: 15px; /* Reduce un poco el margen inferior del título CPS */
 }
 
-
-
 .cps-llamar-button:hover {
     background-color: #0056b3;
 }
-
 
 /* Estilos para el texto informativo de CPS */
 .cps-info-text {
@@ -522,8 +570,9 @@ footer img {
     margin-top: 30px; /* *** AÑADIDO: Espacio superior para separar del contenido anterior *** */
 }
 
-
-
+/* =====================================================================
+|  ESTILOS ESPECÍFICOS PARA LA TARJETA TELEMANDO                       |
+===================================================================== */
 /* Estilos específicos para los botones "Llamar" de la tarjeta TELEMANDO (opcional) */
 .telemando-llamar-button {
     background-color: #ffc107; /* Amarillo/ámbar para los botones "Llamar" de TELEMANDO */
@@ -538,8 +587,9 @@ footer img {
     background-color: #c28e00; /* Amarillo/ámbar aún más oscuro al hacer clic */
 }
 
-
-/* Estilos para los botones de la tarjeta MALLAS */
+/* =====================================================================
+|  ESTILOS ESPECÍFICOS PARA LA TARJETA MALLAS                          |
+===================================================================== */
 #mallas-container .operador-button {
     padding: 15px 20px; /* Aumenta el padding para hacerlos más altos */
     margin-bottom: 10px; /* Aumenta el margen inferior para separarlos */
@@ -548,8 +598,9 @@ footer img {
     text-align: center;
 }
 
-
-
+/* =====================================================================
+|  ESTILOS ESPECÍFICOS PARA LA TARJETA DIRECTORIO                      |
+===================================================================== */
 /* Estilos para el formulario del directorio */
 
 /* Estilos para el título de la tarjeta Directorio */
@@ -557,7 +608,7 @@ footer img {
     text-align: center;
     margin-bottom: 25px;
     font-size: 2em; /* Aumentar el tamaño de la fuente */
-      font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
+    font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
     font-weight: 700; /* Añadir negrita */
 }
 
@@ -566,10 +617,11 @@ footer img {
     flex-direction: column;
     gap: 10px; /* Espacio entre campos */
 }
+
 #directorio-formulario .formulario-grupo {
-      display: flex;
-      flex-direction: column;
-     
+    display: flex;
+    flex-direction: column;
+
 }
 
 /* Estilos para aumentar el alto de los inputs y selects del directorio */
@@ -578,20 +630,20 @@ footer img {
     padding: 10px; /* Aumenta el padding vertical para hacerlos más altos */
     font-size: 1em;
     border: 1px solid #ccc; /* Mantener o ajustar el borde */
-  border-radius: 5px;
+    border-radius: 5px;
     margin-bottom: 5px;
 }
 
 /* Estilos para el botón de buscar del formulario del directorio*/
 #directorio-buscar-container {
     margin-top: 10px; /* Espacio superior para separar el botón del formulario */
-   margin-bottom: 20px
-   display:flex;
-   justify-content: center;
+    margin-bottom: 20px
+    display: flex;
+    justify-content: center;
 }
 
 #directorio-formulario #buscar-btn {
-   background-color: #3191f7; /* Fondo azul */
+    background-color: #3191f7; /* Fondo azul */
     color: white; /* Texto blanco */
     border: none; /* Eliminar borde */
     padding: 10px 20px; /* Padding para hacerlo mas grande */
@@ -605,12 +657,12 @@ footer img {
     background-color: #0056b3; /* Fondo azul más oscuro al pasar el ratón */
 }
 
- /* Estilos para el separador horizontal del directorio */
- #directorio-formulario #separador-resultados {
-     border: none;
-     border-top: 2px solid white;
-     margin: 10px 0 20px 0; /* Espacio arriba y abajo y sin margen horizontal */
- }
+/* Estilos para el separador horizontal del directorio */
+#directorio-formulario #separador-resultados {
+    border: none;
+    border-top: 2px solid white;
+    margin: 10px 0 20px 0; /* Espacio arriba y abajo y sin margen horizontal */
+}
 
 /* Estilos para los resultados del directorio */
 #directorio-resultados {
@@ -618,36 +670,41 @@ footer img {
 }
 
 .directorio-resultado {
-  margin-bottom: 15px; /* Espacio inferior para separar los resultados */
+    margin-bottom: 15px; /* Espacio inferior para separar los resultados */
     padding: 10px; /* Espacio alrededor de cada resultado */
     border: 1px solid #eee; /* Borde gris tenue para separar visualmente */
-  background-color: #f9f9f9; /* Fondo gris muy claro para contraste */
+    background-color: #f9f9f9; /* Fondo gris muy claro para contraste */
     border-radius: 5px;
-  text-align: left;
+    text-align: left;
     position: relative; /* Permitir posicionamiento absoluto de los logos */
 }
+
 .directorio-resultado p {
-   margin: 2px 0;  /* Espacio arriba y abajo de cada parrafo*/
-     font-size: 0.9em;
-     line-height: 1.2; /* Interlineado */
-     color: black; /*Añadido para que el texto sea negro*/
+    margin: 2px 0;  /* Espacio arriba y abajo de cada parrafo*/
+    font-size: 0.9em;
+    line-height: 1.2; /* Interlineado */
+    color: black; /*Añadido para que el texto sea negro*/
 }
-.logo-adif, .logo-ineco{
-   position: absolute;
-   top: 5px; /* Ajusta la posición vertical */
-   right: 5px; /* Ajusta la posición horizontal */
-   width: 54px; /* Ajusta el tamaño del logo */
+
+.logo-adif, .logo-ineco {
+    position: absolute;
+    top: 5px; /* Ajusta la posición vertical */
+    right: 5px; /* Ajusta la posición horizontal */
+    width: 54px; /* Ajusta el tamaño del logo */
     height: 17px;
 }
 
-.logo-fallback{
-     position: absolute;
-   top: 5px; /* Ajusta la posición vertical */
-   right: 5px; /* Ajusta la posición horizontal */
-   font-size: 1.3em; /* Ajusta el tamaño del texto */
+.logo-fallback {
+    position: absolute;
+    top: 5px; /* Ajusta la posición vertical */
+    right: 5px; /* Ajusta la posición horizontal */
+    font-size: 1.3em; /* Ajusta el tamaño del texto */
 }
 
-////////////////// SIMULADOR *//////////////////
+/* =====================================================================
+|  ESTILOS ESPECÍFICOS PARA LA TARJETA SIMULADOR                      |
+===================================================================== */
+/* -----  SIMULADOR  ----- */
 
 .simulador-option-button {
     display: block; /* Hacer que los botones ocupen todo el ancho */
@@ -662,48 +719,59 @@ footer img {
     cursor: pointer;
     transition: background-color 0.2s ease; /* Transición suave para hover */
 }
+
 .simulador-option-button:hover {
     background-color: #ccebff; /* Color de fondo al pasar el ratón */
 }
+
 .simulador-option-button:active {
     background-color: #b3e0ff; /* Color de fondo al hacer clic */
 }
-  /* Estilos para el formulario de simular PK */
-    #simulador-pk-form input[type="text"], #simulador-pk-form select {
+
+/* Estilos para el formulario de simular PK */
+#simulador-pk-form input[type="text"], #simulador-pk-form select {
     padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    }
-  #simulador-pk-form button {
-       margin-top: 10px;
-        background-color: #007bff;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-   #simulador-pk-form button:hover{
-       background-color: #0056b3;
-    }
-     #simulador-opciones{
-        display: flex;
-       flex-direction: column;
-    }
+}
 
+#simulador-pk-form button {
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
+#simulador-pk-form button:hover {
+    background-color: #0056b3;
+}
 
+#simulador-opciones {
+    display: flex;
+    flex-direction: column;
+}
+
+/* =====================================================================
+|  ESTILOS ESPECÍFICOS PARA LA TARJETA TRENES                      |
+===================================================================== */
 
 @media (max-width: 600px) {
     #trenes-card table {
-       font-size: 0.8em; /* Reducir tamaño de fuente */
-    }
-     #trenes-card th, #trenes-card td {
-          padding: 5px; /* Ajustar padding de celdas */
-       }
+        font-size: 0.8em; /* Reducir tamaño de fuente */
     }
 
+    #trenes-card th, #trenes-card td {
+        padding: 5px; /* Ajustar padding de celdas */
+    }
+}
+
+/* =====================================================================
+|  ESTILOS ESPECÍFICOS PARA LA TARJETA ACCIDENTE                      |
+===================================================================== */
 
 /* Estilos para los botones TRABAJADOR y VEHÍCULO en la tarjeta ACCIDENTE */
 .boton-accidente-tipo {
@@ -740,6 +808,9 @@ footer img {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
+/* =====================================================================
+|  ESTILOS ESPECÍFICOS PARA LA TARJETA ACCIDENTE                      |
+===================================================================== */
 #contenido-instrucciones-trabajador {
     padding: 15px;
     text-align: justify; /* Asegúrate de que esté aquí en styles.css */
@@ -763,9 +834,8 @@ footer img {
     color: #0056b3; /* Un color azul más oscuro al pasar el ratón */
 }
 
-
 .csi-info-text {
-   margin-bottom: 20px; /* Espacio debajo del texto informativo (sin cambios) */
+    margin-bottom: 20px; /* Espacio debajo del texto informativo (sin cambios) */
     padding: 15px; /* Sin cambios */
     background-color: #fff3cd; /* Sin cambios */
     border: 1px solid #ffe082; /* Sin cambios */
@@ -777,7 +847,7 @@ footer img {
 }
 
 .circulacion-info-text {
-   margin-bottom: 20px; /* Espacio debajo del texto informativo (sin cambios) */
+    margin-bottom: 20px; /* Espacio debajo del texto informativo (sin cambios) */
     padding: 15px; /* Sin cambios */
     background-color: #fff3cd; /* Sin cambios */
     border: 1px solid #ffe082; /* Sin cambios */
@@ -829,14 +899,17 @@ footer img {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Sombra suave */
 }
 
-  #actualizarUbicacion {
+#actualizarUbicacion {
     font-size: 0.9em;
-  }
+}
 
-  header img {
+header img {
     height: auto;
-  }
+}
 
+/* =====================================================================
+|  ESTILOS ESPECÍFICOS PARA LA TARJETA PUERTAS                        |
+===================================================================== */
 /* *** NUEVOS ESTILOS SIMPLIFICADOS Y VERTICALES PARA TARJETA DE PUERTAS *** */
 
 #puertas-card {
@@ -943,34 +1016,25 @@ footer img {
     #puertas-card {
         padding: 15px; /* Reducir padding tarjeta en móvil */
     }
+
     .puerta-fila {
         padding: 12px; /* Reducir padding filas en móvil */
         margin-bottom: 15px; /* Reducir margen entre filas en móvil */
     }
+
     .icono-puerta-fila {
         font-size: 1.6em; /* Reducir tamaño icono en móvil */
         margin-right: 15px; /* Reducir margen icono en móvil */
     }
+
     .ver-en-mapa-button {
         font-size: 0.85em; /* Reducir tamaño fuente botón en móvil */
         padding: 8px 12px; /* Reducir padding botón en móvil */
     }
+
     .enlace-puertas-card {
         margin-top: 20px; /* Reducir margen superior enlaces en móvil */
     }
 }
 
 /* *** FIN NUEVOS ESTILOS SIMPLIFICADOS Y VERTICALES PARA TARJETA DE PUERTAS *** */
-
-/* ----- MAPA ----- */
-.map-container { /* Ahora usa clase en lugar de estilo inline */
-  width: 100%;
-  position: relative;
-  margin: 0 auto;
-  z-index: 500;
-  height: 400px; /* Agregado height */
-}
-
-}
-
-
