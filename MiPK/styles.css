@@ -1041,7 +1041,7 @@ header img {
 /* Estilos para el logo MC Mutual en la tarjeta de instrucciones de TRABAJADOR */
 #instrucciones-trabajador-card {
     position: relative; /* Asegurar que la tarjeta es el contenedor relativo */
-        padding-top: 60px; /* AÑADIDO: Padding superior para bajar el texto */
+        padding-top: 80px; /* AÑADIDO: Padding superior para bajar el texto */
 }
 
 #logo-mcmutual-trabajador {
