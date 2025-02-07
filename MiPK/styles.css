@@ -1054,4 +1054,28 @@ header img {
     z-index: 10;         /* Asegurar que el logo esté por encima del contenido */
 }
 
+#ald-section {
+    display: flex; /* Usamos flexbox para alinear logo y texto */
+    align-items: flex-start; /* Alineamos los elementos al inicio (arriba) */
+    margin-top: 10px; /* Añade un poco de espacio superior desde la línea */
+}
+
+#logo-ald-vehiculo {
+    width: 70px;       /* Ajusta el ancho del logo ALD */
+    height: auto;
+    margin-right: 10px; /* Espacio entre el logo y el texto */
+    margin-bottom: 10px; /* Espacio debajo del logo para alineación vertical */
+}
+
+#ald-text-container {
+    flex-grow: 1; /* Permite que el texto ocupe el resto del espacio */
+}
+
+#ald-text-container p {
+    margin-top: 0; /* Elimina el margen superior de los párrafos dentro del contenedor de texto */
+    margin-bottom: 5px; /* Reduce el margen inferior entre párrafos */
+    font-size: 0.9em; /* Reduce ligeramente el tamaño de la fuente del texto de ALD si lo deseas */
+    text-align: left; /* Asegurar alineación a la izquierda del texto */
+}
+
 /* *** FIN NUEVOS ESTILOS SIMPLIFICADOS Y VERTICALES PARA TARJETA DE PUERTAS *** */
