@@ -1054,3 +1054,14 @@ header img {
     height: auto;        /* Mantener la proporción de la imagen */
     z-index: 10;         /* Asegurar que el logo esté por encima del contenido */
 }
+
+/* Estilos para la fila de tren destacado (parpadeo) */
+.tren-proximo-parpadeo {
+    animation: parpadeo 1.5s infinite; /* Animación parpadeo de 1.5 segundos, infinita */
+}
+
+@keyframes parpadeo {
+    0% { opacity: 1; }      /* Opacidad al 100% al inicio */
+    50% { opacity: 0.4; }    /* Opacidad al 40% en la mitad de la animación */
+    100% { opacity: 1; }     /* Opacidad al 100% al final de la animación */
+}
