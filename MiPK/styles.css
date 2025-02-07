@@ -23,7 +23,8 @@ html, body {
     padding: 0;
     height: 100%;
     overflow: hidden; /* Oculta las barras de desplazamiento */
-    font-family: Arial, sans-serif; /* Fuente predeterminada */
+   // font-family: Arial, sans-serif; /* Fuente predeterminada */
+    font-family: 'Poppins', sans-serif;
 }
 
 .contenedor {
