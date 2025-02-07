@@ -1049,7 +1049,7 @@ header img {
     position: absolute; /* Posicionamiento absoluto dentro de la tarjeta */
     top: 12px;          /* Ajusta la distancia desde la parte superior (similar a Alphabet) */
     left: 10px;         /* Ajusta la distancia desde la izquierda (similar a Alphabet) */
-    width: 130px;         /* Ajusta el ancho de la imagen (puedes probar con 130px o ajustarlo) */
+    width: 100px;         /* Ajusta el ancho de la imagen (puedes probar con 130px o ajustarlo) */
     height: auto;        /* Mantener la proporción de la imagen */
     z-index: 10;         /* Asegurar que el logo esté por encima del contenido */
 }
