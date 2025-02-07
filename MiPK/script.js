@@ -2385,15 +2385,20 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
 
             for (const trenResultado of resultadosTrenes) {
-                tablaHTML += `
-                        <tr style="border-bottom: 1px solid #ddd;">
-                            <td style="padding: 8px; color: white;">${trenResultado.horaPaso}</td>
-                            <td style="padding: 8px; color: white;">${trenResultado.minutosRestantes}</td>
-                            <td style="padding: 8px; color: white;">${trenResultado.via}</td>
-                            <td style="padding: 8px; color: white;">${trenResultado.origenDestino}</td>
-                            <td style="padding: 8px; color: white;">${trenResultado.horaProgramada}</td>
-                        </tr>
-                `;
+                let claseFila = ""; // Inicialmente sin clase adicional
+    if (Math.abs(trenResultado.minutosRestantes) <= 2) {
+        claseFila = "tren-proximo-parpadeo"; // Añadir clase para parpadeo si tren próximo
+    }
+
+    tablaHTML += `
+        <tr class="${claseFila}" style="border-bottom: 1px solid #ddd;">  <!-- Añadida clase CSS condicional -->
+            <td style="padding: 8px; color: white;">${trenResultado.horaPaso}</td>
+            <td style="padding: 8px; color: white;">${trenResultado.minutosRestantes}</td>
+            <td style="padding: 8px; color: white;">${trenResultado.via}</td>
+            <td style="padding: 8px; color: white;">${trenResultado.origenDestino}</td>
+            <td style="padding: 8px; color: white;">${trenResultado.horaProgramada}</td>
+        </tr>
+    `;
             }
 
             tablaHTML += `
