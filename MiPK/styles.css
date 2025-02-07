@@ -828,6 +828,7 @@ footer img {
     text-decoration: none; /* Eliminar el subrayado del enlace */
     font-weight: bold; /* Texto en negrita */
     transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave para hover */
+    margin-bottom: 10px; /* AÑADIDO: Margen inferior para separar de la línea */
 }
 
 .telefono-urgencias-button:hover {
