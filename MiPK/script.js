@@ -2419,45 +2419,41 @@ document.addEventListener('DOMContentLoaded', function() {
         return await response.json();
     }
 
-
 async function calcularTiempoViajeSegundos(pkInicio, pkFin, linea, sentido, velocidadesData) {
     let tiempoTotalSegundos = 0;
     let pkActual = pkInicio;
     const pkDestino = pkFin;
-
-
     let iteracionesSeguridad = 0;
-    const maxIteraciones = 2000; // Aumentado por seguridad
+    const maxIteraciones = 20; // Reducido intencionalmente para pruebas
 
+    console.log("--- calcularTiempoViajeSegundos INICIO ---"); // DEBUG INICIO
+    console.log(`PK Inicio: ${pkInicio}, PK Fin: ${pkFin}, Linea: ${linea}, Sentido: ${sentido}`); // DEBUG INICIO
 
-    while (true) {
+    while (iteracionesSeguridad < maxIteraciones) { // Condición de parada SIMPLIFICADA para depuración
         iteracionesSeguridad++;
-        if (iteracionesSeguridad > maxIteraciones) {
-            console.error("Error: Máximo de iteraciones alcanzado. Bucle infinito evitado.");
-            return 0; // Salida segura
-        }
+        console.log(`\n--- Iteración ${iteracionesSeguridad} ---`); // DEBUG ITERACIÓN
+        console.log(`PK Actual (Inicio Iteración): ${pkActual}`); // DEBUG ITERACIÓN
+        console.log(`PK Destino: ${pkDestino}`); // DEBUG ITERACIÓN
 
         let tramoVelocidadEncontrado = null;
         let pkFinTramoSuperpuesto = pkDestino;
-        let distanciaAlDestino = Math.abs(pkDestino - pkActual);
-
 
         for (const tramo of velocidadesData) {
             if (tramo.Línea === linea) {
                 const pkIniTramo = pkToNumber(tramo["PK INI"]);
                 const pkFinTramo = pkToNumber(tramo["PK FIN"]);
-
-
-                if (sentido === 'decreciente') { // Vía 1
-                    if (pkActual >= pkFinTramo && pkActual < pkIniTramo && pkActual > pkDestino) { // Añadido pkActual > pkDestino
+                if (sentido === 'decreciente') {
+                    if (pkActual >= pkFinTramo && pkActual < pkIniTramo) {
                         tramoVelocidadEncontrado = tramo;
                         pkFinTramoSuperpuesto = pkFinTramo;
+                        console.log(`  Tramo Encontrado (Decreciente): PK INI Tramo=${pkIniTramo}, PK FIN Tramo=${pkFinTramo}, Velocidad=${tramo.Velocidad}`); // DEBUG TRAMO
                         break;
                     }
-                } else { // Vía 2
-                    if (pkActual >= pkIniTramo && pkActual < pkFinTramo && pkActual < pkDestino) { // Añadido pkActual < pkDestino
+                } else { // sentido === 'creciente'
+                    if (pkActual >= pkIniTramo && pkActual < pkFinTramo) {
                         tramoVelocidadEncontrado = tramo;
                         pkFinTramoSuperpuesto = pkFinTramo;
+                        console.log(`  Tramo Encontrado (Creciente): PK INI Tramo=${pkIniTramo}, PK FIN Tramo=${pkFinTramo}, Velocidad=${tramo.Velocidad}`); // DEBUG TRAMO
                         break;
                     }
                 }
@@ -2469,56 +2465,47 @@ async function calcularTiempoViajeSegundos(pkInicio, pkFin, linea, sentido, velo
             const pkIniTramo = pkToNumber(tramoVelocidadEncontrado["PK INI"]);
             const pkFinTramo = pkToNumber(tramoVelocidadEncontrado["PK FIN"]);
             const velocidadTramo = parseInt(tramoVelocidadEncontrado.Velocidad);
-
             let pkFinCalculoTramo = pkFinTramoSuperpuesto;
-
             let distanciaTramo = 0;
             if (sentido === 'decreciente') {
-                 distanciaTramo = Math.max(0, Math.min(pkActual, pkIniTramo) - pkFinCalculoTramo); // Ajuste cálculo distancia decreciente
+                distanciaTramo = Math.max(0, pkActual - pkFinCalculoTramo);
             } else {
-                 distanciaTramo = Math.max(0, pkFinCalculoTramo - Math.max(pkActual, pkIniTramo)); // Ajuste cálculo distancia creciente
+                distanciaTramo = Math.max(0, pkFinCalculoTramo - pkActual);
             }
-
-
-            if (distanciaTramo < 0) distanciaTramo = 0;
-
             const tiempoTramoSegundos = (distanciaTramo / 1000) / (velocidadTramo / 3600);
             tiempoTotalSegundos += tiempoTramoSegundos;
-
-
             pkSiguienteTramo = pkFinCalculoTramo;
 
+            console.log(`  Tramo Procesado: Velocidad=${velocidadTramo}, Distancia=${distanciaTramo}, Tiempo=${tiempoTramoSegundos}`); // DEBUG CALCULO TRAMO
 
         } else {
-            // Velocidad por defecto si no se encuentra tramo
             const velocidadDefecto = 220;
             let pkFinCalculoTramo = pkDestino;
             let distanciaTramo = Math.abs(pkDestino - pkActual);
-             if (distanciaTramo < 0) distanciaTramo = 0;
-
             const tiempoTramoSegundos = (distanciaTramo / 1000) / (velocidadDefecto / 3600);
             tiempoTotalSegundos += tiempoTramoSegundos;
             pkSiguienteTramo = pkDestino;
+            console.log(`  Tramo NO Encontrado: Velocidad Defecto=${velocidadDefecto}, Distancia=${distanciaTramo}, Tiempo=${tiempoTramoSegundos}`); // DEBUG CALCULO TRAMO DEFECTO
         }
-
 
         pkActual = pkSiguienteTramo;
+        console.log(`PK Actual (Fin Iteración): ${pkActual}`); // DEBUG ITERACIÓN
 
-
-        distanciaAlDestino = Math.abs(pkDestino - pkActual); // Recalcular distancia restante
-
-
-        if (distanciaAlDestino < 100 || iteracionesSeguridad > maxIteraciones) { // Reducir tolerancia a 100m y añadir seguridad extra
-            break;
-        }
-
-
+        if (
+            (sentido === 'decreciente' && pkActual <= pkDestino) ||
+            (sentido === 'creciente' && pkActual >= pkDestino)
+           ) {
+           console.log("  Condición de parada alcanzada."); // DEBUG PARADA
+           break;
+       }
         if (isNaN(pkActual)) {
-            console.error("Error: pkActual se volvió NaN. Salida de seguridad por NaN.");
+            console.error("Error: pkActual se volvió NaN. Saliendo del bucle de seguridad.");
             break;
         }
     }
 
+    console.log(`Tiempo Total (segundos): ${Math.round(tiempoTotalSegundos)}`); // DEBUG FINAL
+    console.log("--- calcularTiempoViajeSegundos FIN ---\n\n"); // DEBUG FIN
     return Math.round(tiempoTotalSegundos);
 }
 
