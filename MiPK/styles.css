@@ -1055,13 +1055,13 @@ header img {
     z-index: 10;         /* Asegurar que el logo esté por encima del contenido */
 }
 
-/* Estilos para la fila de tren destacado (parpadeo) */
+/* Estilos para la fila de tren destacado (parpadeo en rojo) */
 .tren-proximo-parpadeo {
-    animation: parpadeo 1.5s infinite; /* Animación parpadeo de 1.5 segundos, infinita */
+    animation: parpadeoRojo 1.5s infinite; /* Animación parpadeoRojo de 1.5 segundos, infinita */
 }
 
-@keyframes parpadeo {
-    0% { opacity: 1; }      /* Opacidad al 100% al inicio */
-    50% { opacity: 0.4; }    /* Opacidad al 40% en la mitad de la animación */
-    100% { opacity: 1; }     /* Opacidad al 100% al final de la animación */
+@keyframes parpadeoRojo {
+    0% { background-color: transparent; color: white; }      /* Fondo transparente al inicio, texto blanco (o tu color de texto) */
+    50% { background-color: red; color: white; }    /* Fondo rojo en la mitad de la animación, texto blanco */
+    100% { background-color: transparent; color: white; }     /* Fondo transparente al final, texto blanco (o tu color de texto) */
 }
