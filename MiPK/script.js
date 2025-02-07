@@ -2303,7 +2303,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const trenesData = await cargarJSON("./doc/trenes/trenes.json");
-            const velocidadesData = await cargarJSON("./doc/velocidades.json");
+            const velocidadesData = await cargarJSON("./doc/trenes/velocidades.json");
 
             if (!window.pkMasCercano || !window.pkMasCercano.linea) {
                 trenesContainer.innerHTML = '<p style="text-align: center; color: red;">No se puede determinar la línea actual. PK desconocido.</p>';
