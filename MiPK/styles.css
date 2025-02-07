@@ -861,6 +861,7 @@ footer img {
 /* Estilos para el logo Alphabet en la tarjeta de instrucciones de VEHÍCULO */
 #instrucciones-vehiculo-card {
     position: relative; /* Añadido: Establecer contexto de posicionamiento relativo para la tarjeta */
+     padding-top: 40px; /* AÑADIDO: Padding superior para bajar el texto */
 }
 
 #logo-alphabet-vehiculo {
@@ -1038,3 +1039,17 @@ header img {
 }
 
 /* *** FIN NUEVOS ESTILOS SIMPLIFICADOS Y VERTICALES PARA TARJETA DE PUERTAS *** */
+
+#instrucciones-trabajador-card {
+    position: relative; /* Asegurar que la tarjeta es el contenedor relativo */
+    padding-top: 80px; /* AÑADIDO: Padding superior para bajar el texto */
+}
+
+#logo-mcmutual-trabajador {
+    position: absolute; /* Posicionamiento absoluto dentro de la tarjeta */
+    top: 12px;          /* Ajusta la distancia desde la parte superior (similar a Alphabet) */
+    left: 10px;         /* Ajusta la distancia desde la izquierda (similar a Alphabet) */
+    width: 130px;         /* Ajusta el ancho de la imagen (puedes probar con 130px o ajustarlo) */
+    height: auto;        /* Mantener la proporción de la imagen */
+    z-index: 10;         /* Asegurar que el logo esté por encima del contenido */
+}
