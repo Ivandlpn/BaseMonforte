@@ -2278,7 +2278,7 @@ async function cargarDatosTrenes() {
     try {
         const [velocidadesResponse, trenesResponse] = await Promise.all([
             fetch("./doc/trenes/velocidades.json"),
-            fetch("./doc/trenes/trenes.json")
+            fetch("./doc/trenes/trenes2.json")
         ]);
 
         if (!velocidadesResponse.ok) {

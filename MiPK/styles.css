@@ -23,8 +23,7 @@ html, body {
     padding: 0;
     height: 100%;
     overflow: hidden; /* Oculta las barras de desplazamiento */
-   font-family: Arial, sans-serif; /* Fuente predeterminada */
-    // font-family: 'Poppins', sans-serif;
+    font-family: Arial, sans-serif; /* Fuente predeterminada */
 }
 
 .contenedor {
@@ -828,7 +827,6 @@ footer img {
     text-decoration: none; /* Eliminar el subrayado del enlace */
     font-weight: bold; /* Texto en negrita */
     transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave para hover */
-    margin-bottom: 10px; /* AÑADIDO: Margen inferior para separar de la línea */
 }
 
 .telefono-urgencias-button:hover {
@@ -1037,45 +1035,6 @@ header img {
     .enlace-puertas-card {
         margin-top: 20px; /* Reducir margen superior enlaces en móvil */
     }
-}
-
-/* Estilos para el logo MC Mutual en la tarjeta de instrucciones de TRABAJADOR */
-#instrucciones-trabajador-card {
-    position: relative; /* Asegurar que la tarjeta es el contenedor relativo */
-        padding-top: 80px; /* AÑADIDO: Padding superior para bajar el texto */
-}
-
-#logo-mcmutual-trabajador {
-    position: absolute; /* Posicionamiento absoluto dentro de la tarjeta */
-    top: 12px;          /* Ajusta la distancia desde la parte superior (similar a Alphabet) */
-    left: 10px;         /* Ajusta la distancia desde la izquierda (similar a Alphabet) */
-    width: 130px;         /* Ajusta el ancho de la imagen (puedes probar con 130px o ajustarlo) */
-    height: auto;        /* Mantener la proporción de la imagen */
-    z-index: 10;         /* Asegurar que el logo esté por encima del contenido */
-}
-
-#ald-section {
-    display: flex; /* Usamos flexbox para alinear logo y texto */
-    align-items: flex-start; /* Alineamos los elementos al inicio (arriba) */
-    margin-top: 10px; /* Añade un poco de espacio superior desde la línea */
-}
-
-#logo-ald-vehiculo {
-    width: 70px;       /* Ajusta el ancho del logo ALD */
-    height: auto;
-    margin-right: 10px; /* Espacio entre el logo y el texto */
-    margin-bottom: 10px; /* Espacio debajo del logo para alineación vertical */
-}
-
-#ald-text-container {
-    flex-grow: 1; /* Permite que el texto ocupe el resto del espacio */
-}
-
-#ald-text-container p {
-    margin-top: 0; /* Elimina el margen superior de los párrafos dentro del contenedor de texto */
-    margin-bottom: 5px; /* Reduce el margen inferior entre párrafos */
-    font-size: 0.9em; /* Reduce ligeramente el tamaño de la fuente del texto de ALD si lo deseas */
-    text-align: left; /* Asegurar alineación a la izquierda del texto */
 }
 
 /* *** FIN NUEVOS ESTILOS SIMPLIFICADOS Y VERTICALES PARA TARJETA DE PUERTAS *** */
