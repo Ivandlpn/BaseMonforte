@@ -2424,21 +2424,23 @@ async function calcularTiempoViajeSegundos(pkInicio, pkFin, linea, sentido, velo
     let tiempoTotalSegundos = 0;
     let pkActual = pkInicio;
     const pkDestino = pkFin;
-    const factorDireccion = sentido === 'decreciente' ? -1 : 1;
 
-    let iteracionesSeguridad = 0; // Contador de iteraciones de seguridad
-    const maxIteraciones = 1000;   // Máximo de iteraciones para evitar bucles infinitos
+
+    let iteracionesSeguridad = 0;
+    const maxIteraciones = 2000; // Aumentado por seguridad
+
 
     while (true) {
         iteracionesSeguridad++;
         if (iteracionesSeguridad > maxIteraciones) {
-            console.error("Error: Máximo de iteraciones alcanzado en calcularTiempoViajeSegundos. Posible bucle infinito.");
-            return 0; // Salir con un tiempo de 0 para evitar bloqueo
+            console.error("Error: Máximo de iteraciones alcanzado. Bucle infinito evitado.");
+            return 0; // Salida segura
         }
-
 
         let tramoVelocidadEncontrado = null;
         let pkFinTramoSuperpuesto = pkDestino;
+        let distanciaAlDestino = Math.abs(pkDestino - pkActual);
+
 
         for (const tramo of velocidadesData) {
             if (tramo.Línea === linea) {
@@ -2446,14 +2448,14 @@ async function calcularTiempoViajeSegundos(pkInicio, pkFin, linea, sentido, velo
                 const pkFinTramo = pkToNumber(tramo["PK FIN"]);
 
 
-                if (sentido === 'decreciente') { // Vía 1: Decreciente
-                    if (pkActual >= pkFinTramo && pkActual < pkIniTramo) {
+                if (sentido === 'decreciente') { // Vía 1
+                    if (pkActual >= pkFinTramo && pkActual < pkIniTramo && pkActual > pkDestino) { // Añadido pkActual > pkDestino
                         tramoVelocidadEncontrado = tramo;
                         pkFinTramoSuperpuesto = pkFinTramo;
                         break;
                     }
-                } else { // sentido === 'creciente' Vía 2: Creciente
-                    if (pkActual >= pkIniTramo && pkActual < pkFinTramo) {
+                } else { // Vía 2
+                    if (pkActual >= pkIniTramo && pkActual < pkFinTramo && pkActual < pkDestino) { // Añadido pkActual < pkDestino
                         tramoVelocidadEncontrado = tramo;
                         pkFinTramoSuperpuesto = pkFinTramo;
                         break;
@@ -2469,45 +2471,30 @@ async function calcularTiempoViajeSegundos(pkInicio, pkFin, linea, sentido, velo
             const velocidadTramo = parseInt(tramoVelocidadEncontrado.Velocidad);
 
             let pkFinCalculoTramo = pkFinTramoSuperpuesto;
-            if (sentido === 'decreciente') {
-                 pkFinCalculoTramo = Math.max(pkDestino, pkFinTramo);
-            } else {
-                 pkFinCalculoTramo = Math.min(pkDestino, pkFinTramo);
-            }
 
             let distanciaTramo = 0;
             if (sentido === 'decreciente') {
-                distanciaTramo = Math.max(0, pkActual - pkFinCalculoTramo);
+                 distanciaTramo = Math.max(0, Math.min(pkActual, pkIniTramo) - pkFinCalculoTramo); // Ajuste cálculo distancia decreciente
             } else {
-                distanciaTramo = Math.max(0, pkFinCalculoTramo - pkActual);
+                 distanciaTramo = Math.max(0, pkFinCalculoTramo - Math.max(pkActual, pkIniTramo)); // Ajuste cálculo distancia creciente
             }
 
-            if (distanciaTramo < 0) distanciaTramo = 0; // Seguridad extra distancia no negativa
+
+            if (distanciaTramo < 0) distanciaTramo = 0;
 
             const tiempoTramoSegundos = (distanciaTramo / 1000) / (velocidadTramo / 3600);
-
-
             tiempoTotalSegundos += tiempoTramoSegundos;
-            if (sentido === 'decreciente') {
-                pkSiguienteTramo = pkFinCalculoTramo;
-                 if (pkSiguienteTramo > pkDestino) pkSiguienteTramo = pkFinTramo //Asegurar no sobrepasar tramo
-            } else {
-                pkSiguienteTramo = pkFinCalculoTramo;
-                if (pkSiguienteTramo < pkDestino) pkSiguienteTramo = pkIniTramo //Asegurar no sobrepasar tramo
-            }
+
+
+            pkSiguienteTramo = pkFinCalculoTramo;
 
 
         } else {
             // Velocidad por defecto si no se encuentra tramo
-            const velocidadDefecto = 220; // km/h
+            const velocidadDefecto = 220;
             let pkFinCalculoTramo = pkDestino;
-             let distanciaTramo = 0;
-             if (sentido === 'decreciente') {
-                distanciaTramo = Math.max(0, pkActual - pkFinCalculoTramo);
-            } else {
-                distanciaTramo = Math.max(0, pkFinCalculoTramo - pkActual);
-            }
-             if (distanciaTramo < 0) distanciaTramo = 0; // Seguridad extra distancia no negativa
+            let distanciaTramo = Math.abs(pkDestino - pkActual);
+             if (distanciaTramo < 0) distanciaTramo = 0;
 
             const tiempoTramoSegundos = (distanciaTramo / 1000) / (velocidadDefecto / 3600);
             tiempoTotalSegundos += tiempoTramoSegundos;
@@ -2517,17 +2504,17 @@ async function calcularTiempoViajeSegundos(pkInicio, pkFin, linea, sentido, velo
 
         pkActual = pkSiguienteTramo;
 
-        if (
-             (sentido === 'decreciente' && pkActual <= pkDestino) ||
-             (sentido === 'creciente' && pkActual >= pkDestino) ||
-              pkActual === pkFin || pkActual === pkInicio // Seguridad adicional parada
-            )
-             {
-            break; // Hemos llegado o sobrepasado el PK de destino
+
+        distanciaAlDestino = Math.abs(pkDestino - pkActual); // Recalcular distancia restante
+
+
+        if (distanciaAlDestino < 100 || iteracionesSeguridad > maxIteraciones) { // Reducir tolerancia a 100m y añadir seguridad extra
+            break;
         }
 
-        if (isNaN(pkActual)) { // Seguridad adicional para evitar bucles infinitos
-            console.error("Error: pkActual se volvió NaN. Saliendo del bucle de seguridad.");
+
+        if (isNaN(pkActual)) {
+            console.error("Error: pkActual se volvió NaN. Salida de seguridad por NaN.");
             break;
         }
     }
