@@ -477,25 +477,25 @@
         "Línea": "42",
         "PK INI": "468300",
         "PK FIN": "473500",
-        "Velocidad": "270"
+        "Velocidad": "250"
     },
     {
         "Línea": "42",
         "PK INI": "473500",
         "PK FIN": "480800",
-        "Velocidad": "200"
+        "Velocidad": "1800"
     },
     {
         "Línea": "42",
         "PK INI": "480800",
         "PK FIN": "483900",
-        "Velocidad": "140"
+        "Velocidad": "120"
     },
     {
         "Línea": "42",
         "PK INI": "483900",
         "PK FIN": "484000",
-        "Velocidad": "120"
+        "Velocidad": "100"
     },
     {
         "Línea": "42",
