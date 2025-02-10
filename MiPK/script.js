@@ -2374,7 +2374,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <table style="width:100%; border-collapse: collapse;">
                     <thead>
                         <tr style="border-bottom: 1px solid white;">
-                            <th style="padding: 8px; text-align: left; color: white;"⏱️PASO</th>
+                            <th style="padding: 8px; text-align: left; color: white;">⏱️PASO</th>
                             <th style="padding: 8px; text-align: left; color: white;">MINUTOS</th>
                             <th style="padding: 8px; text-align: left; color: white;">VÍA</th>
                             <th style="padding: 8px; text-align: left; color: white;">ORI/DES</th>
