@@ -2273,7 +2273,7 @@ function mostrarResultadosEnTabla(resultados) {
     // ----- FIN FUNCIONALIDAD BOTÓN ACCIDENTE -----
 
 
- // ----- INICIO FUNCIONALIDAD TRENES -----
+// ----- INICIO FUNCIONALIDAD TRENES -----
 
 document.addEventListener('DOMContentLoaded', function() {
     const trenesButton = document.querySelector('.plus-option-button[aria-label="TRENES"]');
@@ -2284,7 +2284,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (trenesButton) {
         trenesButton.addEventListener('click', function() {
             trenesCardContainer.style.display = 'flex';
-            mostrarTrenesCercanos();
+            mostrarTrenesCercanosInterpolado(); // Llamamos a la nueva función para cálculo interpolado
         });
     } else {
         console.error('No se encontró el botón TRENES');
@@ -2298,12 +2298,12 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('No se encontró el botón de cerrar de la tarjeta de Trenes');
     }
 
-    async function mostrarTrenesCercanos() {
+    async function mostrarTrenesCercanosInterpolado() { // Nueva función con cálculo interpolado
         trenesContainer.innerHTML = '<p style="text-align: center;">Cargando horarios de trenes...</p>';
 
         try {
             const trenesData = await cargarJSON("./doc/trenes/trenes.json");
-            const velocidadesData = await cargarJSON("./doc/trenes/velocidades.json");
+            const horaPasoData = await cargarJSON("./doc/trenes/horapaso.json"); // Cargamos horapaso.json
 
             if (!window.pkMasCercano || !window.pkMasCercano.linea) {
                 trenesContainer.innerHTML = '<p style="text-align: center; color: red;">No se puede determinar la línea actual. PK desconocido.</p>';
@@ -2327,25 +2327,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 const pkTrenReferenciaNumerico = pkToNumber(tren.PK);
                 const horaProgramadaParts = tren.Hora.split(':');
                 const horaProgramadaSegundos = parseInt(horaProgramadaParts[0]) * 3600 + parseInt(horaProgramadaParts[1]) * 60;
+                const sentidoVia = tren.Vía === '1' ? 'decreciente' : 'creciente';
 
-                const distanciaMetros = Math.abs(pkTrenReferenciaNumerico - pkUsuarioNumerico);
-                const sentidoVia = tren.Vía === '1' ? 'decreciente' : 'creciente'; // Vía 1: decreciente, Vía 2: creciente
-
-                const tiempoViajeSegundos = await calcularTiempoViajeSegundos(pkTrenReferenciaNumerico, pkUsuarioNumerico, lineaUsuario, sentidoVia, velocidadesData);
+                // Cálculo del tiempo de viaje interpolado usando horapaso.json
+                const tiempoViajeSegundosInterpolado = await calcularTiempoViajeInterpolado(pkTrenReferenciaNumerico, pkUsuarioNumerico, lineaUsuario, horaPasoData);
 
                 let horaPasoEstimadaSegundos;
                 if (sentidoVia === 'decreciente') {
-                    horaPasoEstimadaSegundos = horaProgramadaSegundos + tiempoViajeSegundos; // Sentido decreciente: sumamos tiempo
+                    horaPasoEstimadaSegundos = horaProgramadaSegundos + tiempoViajeSegundosInterpolado;
                 } else { // sentidoVia === 'creciente'
-                    horaPasoEstimadaSegundos = horaProgramadaSegundos - tiempoViajeSegundos; // Sentido creciente: restamos tiempo
+                    horaPasoEstimadaSegundos = horaProgramadaSegundos - tiempoViajeSegundosInterpolado;
                 }
 
-
-                const horaPasoEstimadaDate = new Date(); // Usamos la fecha actual
-                horaPasoEstimadaDate.setHours(0, 0, 0, 0); // Reset minutos, segundos, milisegundos
+                const horaPasoEstimadaDate = new Date();
+                horaPasoEstimadaDate.setHours(0, 0, 0, 0);
                 horaPasoEstimadaDate.setSeconds(horaPasoEstimadaSegundos);
-
-
                 const horaPasoFormateada = formatearHora(horaPasoEstimadaSegundos);
 
                 const tiempoRestanteSegundos = horaPasoEstimadaSegundos - (horaActualUsuario.getHours() * 3600 + horaActualUsuario.getMinutes() * 60 + horaActualUsuario.getSeconds());
@@ -2356,12 +2352,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     horaPaso: horaPasoFormateada,
                     minutosRestantes: minutosRestantes,
                     via: tren.Vía,
-                    origenDestino: "Alicante", //TODO:  En futuro cambiar para que sea dinamico
+                    origenDestino: "Alicante", //TODO: En futuro cambiar para que sea dinamico
                     horaProgramada: tren.Hora
                 });
             }
 
-            resultadosTrenes.sort((a, b) => { // Ordenar por hora de paso estimada
+            resultadosTrenes.sort((a, b) => {
                 const horaA_parts = a.horaPaso.split(':');
                 const horaB_parts = b.horaPaso.split(':');
                 const horaA_segundos = parseInt(horaA_parts[0]) * 3600 + parseInt(horaA_parts[1]) * 60;
@@ -2385,20 +2381,20 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
 
             for (const trenResultado of resultadosTrenes) {
-                let claseFila = ""; // Inicialmente sin clase adicional
-    if (Math.abs(trenResultado.minutosRestantes) <= 2) {
-        claseFila = "tren-proximo-parpadeo"; // Añadir clase para parpadeo si tren próximo
-    }
+                let claseFila = "";
+                if (Math.abs(trenResultado.minutosRestantes) <= 2) {
+                    claseFila = "tren-proximo-parpadeo";
+                }
 
-    tablaHTML += `
-        <tr class="${claseFila}" style="border-bottom: 1px solid #ddd;">  <!-- Añadida clase CSS condicional -->
-            <td style="padding: 8px; color: white;">${trenResultado.horaPaso}</td>
-            <td style="padding: 8px; color: white;">${trenResultado.minutosRestantes}</td>
-            <td style="padding: 8px; color: white;">${trenResultado.via}</td>
-            <td style="padding: 8px; color: white;">${trenResultado.origenDestino}</td>
-            <td style="padding: 8px; color: white;">${trenResultado.horaProgramada}</td>
-        </tr>
-    `;
+                tablaHTML += `
+                    <tr class="${claseFila}" style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 8px; color: white;">${trenResultado.horaPaso}</td>
+                        <td style="padding: 8px; color: white;">${trenResultado.minutosRestantes}</td>
+                        <td style="padding: 8px; color: white;">${trenResultado.via}</td>
+                        <td style="padding: 8px; color: white;">${trenResultado.origenDestino}</td>
+                        <td style="padding: 8px; color: white;">${trenResultado.horaProgramada}</td>
+                    </tr>
+                `;
             }
 
             tablaHTML += `
@@ -2424,99 +2420,69 @@ document.addEventListener('DOMContentLoaded', function() {
         return await response.json();
     }
 
-async function calcularTiempoViajeSegundos(pkInicio, pkFin, linea, sentido, velocidadesData) {
-    let tiempoTotalSegundos = 0;
-    let pkActual = pkInicio;
-    const pkDestino = pkFin;
-    let iteracionesSeguridad = 0;
-    const maxIteraciones = 20; // Reducido intencionalmente para pruebas
 
-    console.log("--- calcularTiempoViajeSegundos INICIO ---"); // DEBUG INICIO
-    console.log(`PK Inicio: ${pkInicio}, PK Fin: ${pkFin}, Linea: ${linea}, Sentido: ${sentido}`); // DEBUG INICIO
+    async function calcularTiempoViajeInterpolado(pkTrenReferencia, pkUsuario, linea, horaPasoData) {
+        const pkUsuarioNumerico = pkToNumber(pkUsuario);
+        const pkReferenciaNumerico = pkToNumber(pkTrenReferencia);
 
-    while (iteracionesSeguridad < maxIteraciones) { // Condición de parada SIMPLIFICADA para depuración
-        iteracionesSeguridad++;
-        console.log(`\n--- Iteración ${iteracionesSeguridad} ---`); // DEBUG ITERACIÓN
-        console.log(`PK Actual (Inicio Iteración): ${pkActual}`); // DEBUG ITERACIÓN
-        console.log(`PK Destino: ${pkDestino}`); // DEBUG ITERACIÓN
+        // Filtrar los datos de horapaso.json para la línea específica
+        const tiemposLinea = horaPasoData.filter(item => item.Linea === linea);
 
-        let tramoVelocidadEncontrado = null;
-        let pkFinTramoSuperpuesto = pkDestino;
+        if (tiemposLinea.length === 0) {
+            console.warn(`No hay datos de tiempo de paso para la línea ${linea}. Usando tiempo de viaje 0.`);
+            return 0; // No hay datos, devolvemos 0
+        }
 
-        for (const tramo of velocidadesData) {
-            if (tramo.Línea === linea) {
-                const pkIniTramo = pkToNumber(tramo["PK INI"]);
-                const pkFinTramo = pkToNumber(tramo["PK FIN"]);
-                if (sentido === 'decreciente') {
-                    if (pkActual >= pkFinTramo && pkActual < pkIniTramo) {
-                        tramoVelocidadEncontrado = tramo;
-                        pkFinTramoSuperpuesto = pkFinTramo;
-                        console.log(`  Tramo Encontrado (Decreciente): PK INI Tramo=${pkIniTramo}, PK FIN Tramo=${pkFinTramo}, Velocidad=${tramo.Velocidad}`); // DEBUG TRAMO
-                        break;
-                    }
-                } else { // sentido === 'creciente'
-                    if (pkActual >= pkIniTramo && pkActual < pkFinTramo) {
-                        tramoVelocidadEncontrado = tramo;
-                        pkFinTramoSuperpuesto = pkFinTramo;
-                        console.log(`  Tramo Encontrado (Creciente): PK INI Tramo=${pkIniTramo}, PK FIN Tramo=${pkFinTramo}, Velocidad=${tramo.Velocidad}`); // DEBUG TRAMO
-                        break;
-                    }
-                }
+        // Ordenar los puntos de tiempo por PK en orden descendente para facilitar la búsqueda
+        tiemposLinea.sort((a, b) => pkToNumber(b.PK) - pkToNumber(a.PK));
+
+        let pkTablaAnterior = null;
+        let pkTablaPosterior = null;
+
+        // Buscar los puntos de la tabla que "encierran" el PK del usuario
+        for (let i = 0; i < tiemposLinea.length; i++) {
+            const pkTablaActualNumerico = pkToNumber(tiemposLinea[i].PK);
+
+            if (pkTablaActualNumerico <= pkUsuarioNumerico) {
+                pkTablaAnterior = tiemposLinea[i];
+                pkTablaPosterior = tiemposLinea[i - 1] || pkTablaAnterior; // Si es el primero, el posterior es el mismo
+                break; // Encontramos el punto anterior o igual, podemos salir
             }
         }
 
-        let pkSiguienteTramo;
-        if (tramoVelocidadEncontrado) {
-            const pkIniTramo = pkToNumber(tramoVelocidadEncontrado["PK INI"]);
-            const pkFinTramo = pkToNumber(tramoVelocidadEncontrado["PK FIN"]);
-            const velocidadTramo = parseInt(tramoVelocidadEncontrado.Velocidad);
-            let pkFinCalculoTramo = pkFinTramoSuperpuesto;
-            let distanciaTramo = 0;
-            if (sentido === 'decreciente') {
-                distanciaTramo = Math.max(0, pkActual - pkFinCalculoTramo);
-            } else {
-                distanciaTramo = Math.max(0, pkFinCalculoTramo - pkActual);
-            }
-            const tiempoTramoSegundos = (distanciaTramo / 1000) / (velocidadTramo / 3600);
-            tiempoTotalSegundos += tiempoTramoSegundos;
-            pkSiguienteTramo = pkFinCalculoTramo;
-
-            console.log(`  Tramo Procesado: Velocidad=${velocidadTramo}, Distancia=${distanciaTramo}, Tiempo=${tiempoTramoSegundos}`); // DEBUG CALCULO TRAMO
-
-        } else {
-            const velocidadDefecto = 220;
-            let pkFinCalculoTramo = pkDestino;
-            let distanciaTramo = Math.abs(pkDestino - pkActual);
-            const tiempoTramoSegundos = (distanciaTramo / 1000) / (velocidadDefecto / 3600);
-            tiempoTotalSegundos += tiempoTramoSegundos;
-            pkSiguienteTramo = pkDestino;
-            console.log(`  Tramo NO Encontrado: Velocidad Defecto=${velocidadDefecto}, Distancia=${distanciaTramo}, Tiempo=${tiempoTramoSegundos}`); // DEBUG CALCULO TRAMO DEFECTO
+        // Si no se encontró un punto anterior, usar el primer punto como posterior y uno "artificial" anterior
+        if (!pkTablaAnterior) {
+            pkTablaAnterior = tiemposLinea[tiemposLinea.length - 1]; // El último punto (menor PK)
+            pkTablaPosterior = tiemposLinea[0]; // El primer punto (mayor PK)
         }
 
-        pkActual = pkSiguienteTramo;
-        console.log(`PK Actual (Fin Iteración): ${pkActual}`); // DEBUG ITERACIÓN
 
-        if (
-            (sentido === 'decreciente' && pkActual <= pkDestino) ||
-            (sentido === 'creciente' && pkActual >= pkDestino)
-           ) {
-           console.log("  Condición de parada alcanzada."); // DEBUG PARADA
-           break;
-       }
-        if (isNaN(pkActual)) {
-            console.error("Error: pkActual se volvió NaN. Saliendo del bucle de seguridad.");
-            break;
+        const pkAnteriorNumerico = pkToNumber(pkTablaAnterior.PK);
+        const pkPosteriorNumerico = pkToNumber(pkTablaPosterior.PK);
+        const tiempoAnterior = parseFloat(pkTablaAnterior.Tiempo);
+        const tiempoPosterior = parseFloat(pkTablaPosterior.Tiempo);
+
+
+        let tiempoInterpoladoMinutos;
+
+        // Caso especial: misma PK de referencia, tiempo es 0
+        if (pkUsuarioNumerico === pkReferenciaNumerico) {
+          tiempoInterpoladoMinutos = 0;
+        } else if (pkAnteriorNumerico === pkPosteriorNumerico) {
+            tiempoInterpoladoMinutos = tiempoAnterior; // Evitar división por cero si los PK son iguales
         }
+         else {
+            tiempoInterpoladoMinutos = tiempoAnterior + ((pkUsuarioNumerico - pkAnteriorNumerico) / (pkPosteriorNumerico - pkAnteriorNumerico)) * (tiempoPosterior - tiempoAnterior);
+        }
+
+
+        return Math.max(0, Math.round(tiempoInterpoladoMinutos * 60)); // Convertir a segundos y asegurar no negativo
     }
 
-    console.log(`Tiempo Total (segundos): ${Math.round(tiempoTotalSegundos)}`); // DEBUG FINAL
-    console.log("--- calcularTiempoViajeSegundos FIN ---\n\n"); // DEBUG FIN
-    return Math.round(tiempoTotalSegundos);
-}
 
     function formatearHora(segundosDesdeMedianoche) {
         if (isNaN(segundosDesdeMedianoche) || segundosDesdeMedianoche < 0) {
-            return "--:--"; // o un valor por defecto adecuado
+            return "--:--";
         }
         const horas = Math.floor(segundosDesdeMedianoche / 3600);
         const minutos = Math.floor((segundosDesdeMedianoche % 3600) / 60);
