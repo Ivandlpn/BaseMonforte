@@ -2302,7 +2302,8 @@ document.addEventListener('DOMContentLoaded', function() {
         trenesContainer.innerHTML = '<p style="text-align: center;">Cargando horarios de trenes...</p>';
 
         try {
-            const trenesData = await cargarJSON("./doc/trenes/trenes.json");
+            // MODIFICACIÓN: Cargar el nuevo archivo de horarios de trenes (trenesALI11022025.json)
+            const trenesData = await cargarJSON("./doc/trenes/trenesALI11022025.json");
             const horaPasoData = await cargarJSON("./doc/trenes/horapaso.json"); // Cargamos horapaso.json
 
             if (!window.pkMasCercano || !window.pkMasCercano.linea) {
@@ -2324,8 +2325,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const resultadosTrenes = [];
 
             for (const tren of trenesFiltrados) {
+                // MODIFICACIÓN: Filtrar solo trenes de "Red": "AV"
+                if (tren.Red !== "AV") {
+                    continue; // Saltar este tren si no es "AV"
+                }
+
                 const pkTrenReferenciaNumerico = pkToNumber(tren.PK);
-                const horaProgramadaParts = tren.Hora.split(':');
+                // MODIFICACIÓN: Usar "Hora" en lugar de "Hora de salida"
+                const horaProgramadaParts = tren["Hora"].split(':');
                 const horaProgramadaSegundos = parseInt(horaProgramadaParts[0]) * 3600 + parseInt(horaProgramadaParts[1]) * 60;
                 const sentidoVia = tren.Vía === '1' ? 'decreciente' : 'creciente';
 
@@ -2353,7 +2360,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     minutosRestantes: minutosRestantes,
                     via: tren.Vía,
                     origenDestino: "Alicante", //TODO: En futuro cambiar para que sea dinamico
-                    horaProgramada: tren.Hora
+                    // MODIFICACIÓN: Mostrar "Hora" en lugar de "Hora de salida"
+                    horaProgramada: tren["Hora"]
                 });
             }
 
@@ -2493,6 +2501,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ----- FIN FUNCIONALIDAD TRENES -----
+
+
+
 
 
 ///// FIN ICONO PLUS /////
