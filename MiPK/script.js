@@ -2319,9 +2319,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     } else {
         console.error('No se encontró el botón de cerrar de la tarjeta de Trenes');
-    }
-
-async function mostrarTrenesCercanosInterpolado() {
+    }async function mostrarTrenesCercanosInterpolado() {
     trenesContainer.innerHTML = '<p style="text-align: center;">Actualizando horarios de trenes...</p>';
 
     try {
@@ -2385,7 +2383,8 @@ async function mostrarTrenesCercanosInterpolado() {
                 minutosRestantes: minutosRestantes,
                 via: tren.Vía,
                 origenDestino: tren.OD,
-                horaProgramada: tren["Hora"]
+                horaProgramada: tren["Hora"],
+                modelo: tren.Modelo //Include the Model in result array
             });
         }
 
@@ -2401,41 +2400,63 @@ async function mostrarTrenesCercanosInterpolado() {
             return horaA_segundos - horaB_segundos;
         });
 
-       let tablaHTML = `
-    <table style="width:100%; border-collapse: collapse;">
-        <thead>
-            <tr style="border-bottom: 1px solid white;">
-                <th style="padding: 8px; color: white;">⏱️PASO</th>
-                <th style="padding: 8px; color: white;">MIN.</th>
-                <th style="padding: 8px; color: white;">VÍA</th>
-                <th style="padding: 8px; color: white;">ORI/DES</th>
-                <!-- <th style="padding: 8px; color: white;">🕒ALI</th>  <--- LINEA ELIMINADA O COMENTADA -->
-            </tr>
-        </thead>
-        <tbody>
-`;
+        let tablaHTML = `
+            <table style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 1px solid white;">
+                        <th style="padding: 8px; text-align: center; color: white;">⏱️PASO</th>
+                        <th style="padding: 8px; text-align: center; color: white;">MIN.</th>
+                        <th style="padding: 8px; text-align: center; color: white;">VÍA</th>
+                        <th style="padding: 8px; text-align: center; color: white;">ORI/DES</th>
+                        <th style="padding: 8px; text-align: center; color: white;">MODELO</th> <!-- ⭐️ NUEVA COLUMNA CABECERA -->
+                       <!-- <th style="padding: 8px; text-align: left; color: white;">🕒ALI</th>  <--- LINEA ELIMINADA O COMENTADA -->
+                    </tr>
+                </thead>
+                <tbody>
+        `;
 
         for (const trenResultado of resultadosTrenesFiltrados) {
             let claseFila = "";
-            let horaPasoCelda, minutosRestantesCelda; // ⭐️ Variables para las celdas
-
-            if (Math.abs(trenResultado.minutosRestantes) <= 3) {
+            let horaPasoCelda, minutosRestantesCelda;
+           
+            if (Math.abs(trenResultado.minutosRestantes) <= 2) {
                 claseFila = "tren-proximo-parpadeo";
-                horaPasoCelda = '🚆';           // ⭐️ Emoji de tren para "próximo"
-                minutosRestantesCelda = 'Próximo'; // ⭐️ Texto "Próximo"
+                horaPasoCelda = '🚆';
+                minutosRestantesCelda = 'Próximo';
             } else {
-                horaPasoCelda = trenResultado.horaPaso;         // ⭐️ Hora de paso normal
-                minutosRestantesCelda = trenResultado.minutosRestantes; // ⭐️ Minutos restantes normales
+                horaPasoCelda = trenResultado.horaPaso;
+                minutosRestantesCelda = trenResultado.minutosRestantes;
             }
 
+        // ⭐️ Mapeo de modelos a imágenes (añadir más si es necesario)
+        let imagenModelo = "";
+        const modeloTren = trenResultado.modelo.toUpperCase(); //Ensure case consistency for matching
 
+        if (modeloTren.includes("ALVIA")) {
+            imagenModelo = '<img src="img/trenes/alvia.png" alt="Alvia">';
+        } else if (modeloTren.includes("AVANT")) {
+            imagenModelo = '<img src="img/trenes/avant.png" alt="Avant">';
+        } else if (modeloTren.includes("AVE") && !modeloTren.includes("AVLO")) { // Ensure AVLO is not matched here
+            imagenModelo = '<img src="img/trenes/ave.png" alt="Ave">';
+        } else if (modeloTren.includes("AVLO")) {
+            imagenModelo = '<img src="img/trenes/avlo.png" alt="Avlo">';
+        } else if (modeloTren.includes("OUIGO")) {
+            imagenModelo = '<img src="img/trenes/ouigo.png" alt="Ouigo">';
+        } else if (modeloTren.includes("IRYO")) {
+             imagenModelo = '<img src="img/trenes/iryo.png" alt="Iryo">';
+        } else {
+           imagenModelo = '<span> - </span>';  // Or a default image, or empty string
+        }
+
+       
             tablaHTML += `
                 <tr class="${claseFila}" style="border-bottom: 1px solid #ddd;">
-                    <td style="padding: 8px; color: white;">${horaPasoCelda}</td>         <!-- ⭐️ Usa horaPasoCelda -->
-                    <td style="padding: 8px; color: white;">${minutosRestantesCelda}</td>    <!-- ⭐️ Usa minutosRestantesCelda -->
-                    <td style="padding: 8px; color: white;">${trenResultado.via}</td>
-                    <td style="padding: 8px; color: white;">${trenResultado.origenDestino}</td>
-                         <!-- <td style="padding: 8px; text-align: left; color: white;">${trenResultado.horaProgramada}</td> <--- LINEA ELIMINADA O COMENTADA -->
+                    <td style="padding: 8px; color: white; text-align: center">${horaPasoCelda}</td>
+                    <td style="padding: 8px; color: white; text-align: center">${minutosRestantesCelda}</td>
+                    <td style="padding: 8px; color: white; text-align: center">${trenResultado.via}</td>
+                    <td style="padding: 8px; color: white; text-align: center">${trenResultado.origenDestino}</td>
+                    <td style="padding: 8px; color: white; text-align: center">${imagenModelo}</td>  <!-- ⭐️ NUEVA CELDA con la imagen -->
+                     <!-- <td style="padding: 8px; text-align: left; color: white;">🕒ALI</th>  <--- LINEA ELIMINADA O COMENTADA -->
                 </tr>
             `;
         }
