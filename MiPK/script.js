@@ -125,6 +125,14 @@ function calcularYActualizarPK() {
         .catch(error => console.error('Error al combinar datos de los archivos:', error));
 }
 
+async function cargarJSON(rutaArchivo) {
+    const response = await fetch(rutaArchivo);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status} en ${rutaArchivo}`);
+    }
+    return await response.json();
+}
+
 
 // Propiedades Mensaje: PK Actualizado
 function mostrarMensaje(mensaje) {
@@ -620,7 +628,7 @@ async function actualizarCapaPositren() {
 
     } catch (error) {
         console.error("Error al actualizar capa Positren:", error);
-        trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al actualizar Positren.</p>'; // Opcional: Mostrar mensaje de error en la tarjeta de trenes (si la tienes visible)
+        // trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al actualizar Positren.</p>'; // ELIMINADO
     }
 }
 
@@ -692,7 +700,6 @@ function numberToPk(pkNumber) { // Función para convertir número a formato PK 
 
 
 /////  FIN CAPA POSITREN /////---------------------------------------------------------------------------------------
-
 
 
 
