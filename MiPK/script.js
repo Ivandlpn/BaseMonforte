@@ -2330,14 +2330,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const tipoTren = tren.Tipo; // Obtener el tipo de tren
 
-                // *** NUEVA CONDICIÓN: FILTRAR TRENES TIPO C POR RANGO DE PK ***
+                // *** CONDICIÓN CORREGIDA: FILTRAR TRENES TIPO C POR RANGO DE PK 465000 - 485900 ***
                 if (tipoTren === 'C') {
                     const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk); // Asegurarse de tener el PK numérico del usuario
-                    if (pkUsuarioNumerico < 46500 || pkUsuarioNumerico > 485900) {
-                        continue; // Saltar este tren tipo C si el PK del usuario está fuera del rango
+                    if (pkUsuarioNumerico < 465000 || pkUsuarioNumerico > 485900) {
+                        continue; // Saltar este tren tipo C si el PK del usuario está fuera del rango CORRECTO
                     }
                 }
-                // *** FIN DE NUEVA CONDICIÓN ***
+                // *** FIN DE CONDICIÓN CORREGIDA ***
 
 
                 const pkTrenReferenciaNumerico = pkToNumber(tren.PK);
@@ -2387,14 +2387,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     <thead>
                         <tr style="border-bottom: 1px solid white;">
                             <th style="padding: 8px; text-align: left; color: white;">⏱️PASO</th>
-                            <th style="padding: 8px; text-align: left; color: white;">MINUTOS</th>
-                            <th style="padding: 8px; text-align: left; color: white;">VÍA</th>
-                            <th style="padding: 8px; text-align: left; color: white;">ORI/DES</th>
-                            <th style="padding: 8px; text-align: left; color: white;">🕒HORA</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+                        <th style="padding: 8px; text-align: left; color: white;">MINUTOS</th>
+                        <th style="padding: 8px; text-align: left; color: white;">VÍA</th>
+                        <th style="padding: 8px; text-align: left; color: white;">ORI/DES</th>
+                        <th style="padding: 8px; text-align: left; color: white;">🕒HORA</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
 
             for (const trenResultado of resultadosTrenes) {
                 let claseFila = "";
@@ -2519,7 +2519,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ----- FIN FUNCIONALIDAD TRENES -----
-
 
 
 ///// FIN ICONO PLUS /////
