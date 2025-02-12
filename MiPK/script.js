@@ -2302,9 +2302,9 @@ document.addEventListener('DOMContentLoaded', function() {
         trenesContainer.innerHTML = '<p style="text-align: center;">Cargando horarios de trenes...</p>';
 
         try {
-            // MODIFICACIÓN: Cargar el nuevo archivo de horarios de trenes (trenesALI11022025.json)
-            const trenesData = await cargarJSON("./doc/trenes/trenesALI11022025.json");
-            const horaPasoData = await cargarJSON("./doc/trenes/horapaso.json"); // Cargamos horapaso.json
+            // MODIFICACIÓN: Cargar el nuevo archivo de horarios de trenes (TrenesALIEne25.json)
+            const trenesData = await cargarJSON("./doc/trenes/TrenesALIEne25.json");
+            const horaPasoData = await cargarJSON("./doc/trenes/horapasoA.json"); // Cargamos horapasoA.json
 
             if (!window.pkMasCercano || !window.pkMasCercano.linea) {
                 trenesContainer.innerHTML = '<p style="text-align: center; color: red;">No se puede determinar la línea actual. PK desconocido.</p>';
@@ -2336,7 +2336,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const horaProgramadaSegundos = parseInt(horaProgramadaParts[0]) * 3600 + parseInt(horaProgramadaParts[1]) * 60;
                 const sentidoVia = tren.Vía === '1' ? 'decreciente' : 'creciente';
 
-                // Cálculo del tiempo de viaje interpolado usando horapaso.json
+                // Cálculo del tiempo de viaje interpolado usando horapasoA.json
                 const tiempoViajeSegundosInterpolado = await calcularTiempoViajeInterpolado(pkTrenReferenciaNumerico, pkUsuarioNumerico, lineaUsuario, horaPasoData);
 
                 let horaPasoEstimadaSegundos;
@@ -2359,7 +2359,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     horaPaso: horaPasoFormateada,
                     minutosRestantes: minutosRestantes,
                     via: tren.Vía,
-                    origenDestino: "Alicante", //TODO: En futuro cambiar para que sea dinamico
+                    origenDestino: tren.OD, // MODIFICADO PARA USAR OD del JSON
                     // MODIFICACIÓN: Mostrar "Hora" en lugar de "Hora de salida"
                     horaProgramada: tren["Hora"]
                 });
@@ -2433,7 +2433,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const pkUsuarioNumerico = pkToNumber(pkUsuario);
         const pkReferenciaNumerico = pkToNumber(pkTrenReferencia);
 
-        // Filtrar los datos de horapaso.json para la línea específica
+        // Filtrar los datos de horapasoA.json para la línea específica
         const tiemposLinea = horaPasoData.filter(item => item.Linea === linea);
 
         if (tiemposLinea.length === 0) {
@@ -2467,8 +2467,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const pkAnteriorNumerico = pkToNumber(pkTablaAnterior.PK);
         const pkPosteriorNumerico = pkToNumber(pkTablaPosterior.PK);
-        const tiempoAnterior = parseFloat(pkTablaAnterior.Tiempo);
-        const tiempoPosterior = parseFloat(pkTablaPosterior.Tiempo);
+        const tiempoAnterior = parseFloat(pkTablaAnterior.A); // MODIFICACIÓN: Usar columna "A"
+        const tiempoPosterior = parseFloat(pkTablaPosterior.A); // MODIFICACIÓN: Usar columna "A"
 
 
         let tiempoInterpoladoMinutos;
