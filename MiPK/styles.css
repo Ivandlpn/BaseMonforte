@@ -769,6 +769,44 @@ footer img {
     }
 }
 
+/* Estilos para la tabla dentro de la tarjeta de trenes */
+#trenes-card table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#trenes-card th {
+    padding: 8px;
+    text-align: left;
+    color: white;
+}
+
+#trenes-card td {
+    padding: 8px;
+    color: white;
+    border-bottom: 1px solid #ddd; /* Borde inferior para separar filas */
+}
+
+/* Estilos para la cabecera de la tabla (fila <tr> dentro de <thead>) - ¡CABECERA PEGADIZA! */
+#trenes-card thead tr {
+    border-bottom: 1px solid white;
+    position: sticky; /* ⭐️ Habilita la posición "sticky" */
+    top: 0;          /* ⭐️  Pega la cabecera a la parte superior */
+    background-color: #2a62b8; /* ⭐️  Asegura un fondo para la cabecera pegajosa */
+    z-index: 100;      /* ⭐️  Asegura que la cabecera esté por encima del contenido al hacer scroll */
+}
+
+/* Estilos para la fila de tren destacado (parpadeo en rojo) */
+.tren-proximo-parpadeo {
+    animation: parpadeoRojo 1.5s infinite; /* Animación parpadeoRojo de 1.5 segundos, infinita */
+}
+
+@keyframes parpadeoRojo {
+    0% { background-color: transparent; color: white; }      /* Fondo transparente al inicio, texto blanco (o tu color de texto) */
+    50% { background-color: red; color: white; }    /* Fondo rojo en la mitad de la animación, texto blanco */
+    100% { background-color: transparent; color: white; }     /* Fondo transparente al final, texto blanco (o tu color de texto) */
+}
+
 /* =====================================================================
 |  ESTILOS ESPECÍFICOS PARA LA TARJETA ACCIDENTE                      |
 ===================================================================== */
@@ -1055,13 +1093,3 @@ header img {
     z-index: 10;         /* Asegurar que el logo esté por encima del contenido */
 }
 
-/* Estilos para la fila de tren destacado (parpadeo en rojo) */
-.tren-proximo-parpadeo {
-    animation: parpadeoRojo 1.5s infinite; /* Animación parpadeoRojo de 1.5 segundos, infinita */
-}
-
-@keyframes parpadeoRojo {
-    0% { background-color: transparent; color: white; }      /* Fondo transparente al inicio, texto blanco (o tu color de texto) */
-    50% { background-color: red; color: white; }    /* Fondo rojo en la mitad de la animación, texto blanco */
-    100% { background-color: transparent; color: white; }     /* Fondo transparente al final, texto blanco (o tu color de texto) */
-}
