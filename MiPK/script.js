@@ -2419,7 +2419,7 @@ async function mostrarTrenesCercanosInterpolado() {
             let claseFila = "";
             let horaPasoCelda, minutosRestantesCelda; // ⭐️ Variables para las celdas
 
-            if (Math.abs(trenResultado.minutosRestantes) <= 2) {
+            if (Math.abs(trenResultado.minutosRestantes) <= 3) {
                 claseFila = "tren-proximo-parpadeo";
                 horaPasoCelda = '🚆';           // ⭐️ Emoji de tren para "próximo"
                 minutosRestantesCelda = 'Próximo'; // ⭐️ Texto "Próximo"
