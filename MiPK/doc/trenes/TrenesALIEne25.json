@@ -1,0 +1,552 @@
+[
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "5:50",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RF - AVE05063"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "7:00",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09075"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "7:24",
+        "OD": "Ourense",
+        "Modelo": "RF - AVE05273"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "7:34",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09067"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "7:53",
+        "OD": "Valladolid Campo Grande",
+        "Modelo": "RI - OUIGO06885"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "8:35",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RF - AVE05083"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "8:40",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09085"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "8:48",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RF - AVLO05668"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "8:56",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVLO05668"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "9:09",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09087"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "9:35",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RF - AVE05072"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "9:40",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RF - AVE05093"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "10:26",
+        "OD": "Santander",
+        "Modelo": "RF - ALVIA04143"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "10:37",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09105"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "11:04",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09107"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "11:24",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVLO05817"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "11:29",
+        "OD": "León",
+        "Modelo": "RF - AVE05092"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "11:36",
+        "OD": "Valladolid Campo Grande",
+        "Modelo": "RF - AVLO05817"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "12:10",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RF - AVE05102"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "12:37",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RI - OUIGO06504"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "12:50",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09125"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "13:30",
+        "OD": "Málaga María Zambrano",
+        "Modelo": "RF - AVE05913"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "13:39",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVE05913"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "13:44",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09127"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "14:00",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RI - OUIGO06545"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "14:35",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RF - AVE05143"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "14:43",
+        "OD": "Santander",
+        "Modelo": "RF - ALVIA04072"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "14:55",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09155"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "15:26",
+        "OD": "Gijón-Sanz Crespo",
+        "Modelo": "RF - ALVIA04181"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "15:52",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09157"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "16:05",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RF - AVE05153"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "16:23",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVE05863"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "16:28",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RF - AVE05142"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "16:35",
+        "OD": "Málaga María Zambrano",
+        "Modelo": "RF - AVE05863"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "16:44",
+        "OD": "Valladolid Campo Grande",
+        "Modelo": "RI - OUIGO06944"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "16:52",
+        "OD": "Madrid Puerta de Atocha Almudena Grandes",
+        "Modelo": "RF - AVE05742"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "17:00",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVE05742"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "17:15",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09175"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "17:43",
+        "OD": "León",
+        "Modelo": "RF - AVE05183"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "17:44",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09167"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "18:00",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RI - OUIGO06585"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "18:34",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RF - AVE05162"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "19:34",
+        "OD": "Valladolid Campo Grande",
+        "Modelo": "RF - AVLO05178"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "19:48",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVE05903"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "19:50",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09195"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "20:00",
+        "OD": "Madrid Puerta de Atocha Almudena Grandes",
+        "Modelo": "RF - AVE05903"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "20:24",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RF - AVE05182"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "20:32",
+        "OD": "Villena",
+        "Modelo": "RF - REGIONAL14478"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "20:44",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09197"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "21:05",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RF - AVLO05217"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "21:28",
+        "OD": "Ourense",
+        "Modelo": "RF - AVE05383"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "1",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "21:55",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09215"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "C",
+        "Hora": "22:14",
+        "OD": "Murcia del Carmen",
+        "Modelo": "RF - AVANT09217"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "22:39",
+        "OD": "Madrid Chamartín Clara Campoamor",
+        "Modelo": "RI - OUIGO06604"
+    },
+    {
+        "Línea": "42",
+        "Día": "L",
+        "Vía": "2",
+        "Red": "AV",
+        "Tipo": "A",
+        "Hora": "22:56",
+        "OD": "Gijón-Sanz Crespo",
+        "Modelo": "RF - ALVIA04140"
+    }
+]
