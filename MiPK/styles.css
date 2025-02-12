@@ -808,6 +808,13 @@ footer img {
     100% { background-color: transparent; color: white; }     /* Fondo transparente al final, texto blanco (o tu color de texto) */
 }
 
+/*Tamaño de imágenes de modelo*/
+#trenes-card img {
+    max-width: 50px; /* Ajusta este valor según sea necesario */
+    max-height: 30px; /* Ajusta este valor según sea necesario */
+    vertical-align: middle; /*Alinea las imágenes verticalmente en el centro de la celda*/
+}
+
 /* =====================================================================
 |  ESTILOS ESPECÍFICOS PARA LA TARJETA ACCIDENTE                      |
 ===================================================================== */
