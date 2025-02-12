@@ -516,6 +516,187 @@ checkTrazado.addEventListener('change', function () {
 /////  FIN CAPA TRAZADO /////---------------------------------------------------------------------------------------
 
 
+/////  INICIO CAPA POSITREN/////---------------------------------------------------------------------------------------
+let positrenLayerGroup; // Grupo de capas para los marcadores de Positren
+let positrenInterval;   // Variable para el intervalo de actualización de Positren
+const checkPositren = document.getElementById('check-positren'); // Checkbox de Positren
+const iconoTrenPositren = L.icon({ // Icono para los trenes de Positren
+    iconUrl: 'img/iconotren.png', // Reemplaza 'img/iconotren.png' con la ruta a tu icono de tren
+    iconSize: [25, 25],
+    iconAnchor: [12, 12],
+    popupAnchor: [0, 0] // Ajusta si es necesario
+});
+
+checkPositren.addEventListener('change', function() {
+    if (this.checked) {
+        activarCapaPositren();
+        // *** INICIO: CONFIGURAR INTERVALO PARA ACTUALIZACIÓN CADA MINUTO DE POSITREN ***
+        if (!positrenInterval) { // Verifica si el intervalo ya existe para evitar duplicados
+            positrenInterval = setInterval(actualizarCapaPositren, 60000); // 60000 ms = 1 minuto
+        }
+        // *** FIN: CONFIGURAR INTERVALO ***
+    } else {
+        desactivarCapaPositren();
+        // *** INICIO: LIMPIAR INTERVALO AL DESACTIVAR LA CAPA POSITREN ***
+        clearInterval(positrenInterval);
+        positrenInterval = null; // Resetear la variable del intervalo
+        // *** FIN: LIMPIAR INTERVALO ***
+    }
+});
+
+function activarCapaPositren() {
+    console.log("Activando capa Positren...");
+    positrenLayerGroup = L.layerGroup().addTo(mapa); // Inicializar el grupo de capas y añadirlo al mapa
+    actualizarCapaPositren(); // Llama a la función de actualización inmediatamente al activar la capa
+    mapa.setZoom(7); // Nivel de zoom fijo (puedes ajustarlo)
+}
+
+function desactivarCapaPositren() {
+    console.log("Desactivando capa Positren...");
+    if (positrenLayerGroup) {
+        mapa.removeLayer(positrenLayerGroup); // Eliminar el grupo de capas del mapa
+        positrenLayerGroup = null; // Limpiar la variable del grupo de capas
+    }
+}
+
+async function actualizarCapaPositren() {
+    console.log("Actualizando capa Positren...");
+    if (!positrenLayerGroup) return; // Si la capa no está activa, no hacer nada
+
+    positrenLayerGroup.clearLayers(); // Limpiar marcadores existentes
+
+    try {
+        const trenesData = await cargarJSON("./doc/trenes/TrenesALIEne25.json");
+        const horaPasoData = await cargarJSON("./doc/trenes/horapasoA.json");
+        const coordenadasPorPKLinea = await crearMapaCoordenadas(); // Asegúrate de que esta función esté definida y funcione correctamente
+
+        const horaActualSistema = new Date();
+        const marcadoresTrenes = [];
+
+        for (const tren of trenesData) {
+            if (tren.Red !== "AV") continue;
+
+            const horaProgramadaParts = tren["Hora"].split(':');
+            const horaProgramadaDate = new Date();
+            horaProgramadaDate.setHours(parseInt(horaProgramadaParts[0]), parseInt(horaProgramadaParts[1]), 0, 0);
+
+            // Verificar si el tren está "en movimiento" (hora de salida ya pasó)
+            if (horaProgramadaDate < horaActualSistema) {
+                const pkTrenReferenciaNumerico = pkToNumber(tren.PK);
+                const lineaUsuario = tren.Línea; // Usar la línea del tren, no la del usuario
+                const tipoTren = tren.Tipo;
+
+                // Estimar el PK actual del tren basado en el tiempo transcurrido desde la hora programada
+                const tiempoTranscurridoSegundos = (horaActualSistema - horaProgramadaDate) / 1000;
+                const pkEstimadoNumerico = await estimarPKPorTiempoTranscurrido(
+                    pkTrenReferenciaNumerico,
+                    tiempoTranscurridoSegundos,
+                    lineaUsuario,
+                    horaPasoData,
+                    tipoTren
+                );
+
+                if (pkEstimadoNumerico !== null) {
+                    // Formatear PK estimado para buscar coordenadas
+                    const pkEstimadoFormateado = numberToPk(pkEstimadoNumerico); // Asume que tienes esta función o créala
+                    const keyCoordenadas = `${pkEstimadoFormateado}-${lineaUsuario}`;
+                    const puntoCoordenadas = coordenadasPorPKLinea.get(keyCoordenadas);
+
+                    if (puntoCoordenadas) {
+                        const popupContent = `<b>Tren ${tren.OD}</b><br>Hora Salida: ${tren["Hora"]}<br>PK Estimado: ${pkEstimadoFormateado}`;
+                        const marcadorTren = L.marker([puntoCoordenadas.Latitud, puntoCoordenadas.Longitud], { icon: iconoTrenPositren })
+                            .bindPopup(popupContent);
+                        marcadoresTrenes.push(marcadorTren);
+                    } else {
+                        console.warn(`No se encontraron coordenadas para PK Estimado ${pkEstimadoFormateado} (Tren ${tren.OD})`);
+                    }
+                } else {
+                    console.warn(`No se pudo estimar PK para Tren ${tren.OD}`);
+                }
+            }
+        }
+
+        L.layerGroup(marcadoresTrenes).addTo(positrenLayerGroup); // Añadir todos los marcadores al layerGroup de una vez
+
+    } catch (error) {
+        console.error("Error al actualizar capa Positren:", error);
+        trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al actualizar Positren.</p>'; // Opcional: Mostrar mensaje de error en la tarjeta de trenes (si la tienes visible)
+    }
+}
+
+
+async function estimarPKPorTiempoTranscurrido(pkReferencia, tiempoTranscurridoSegundos, linea, horaPasoData, tipoTren) {
+    const tiemposLinea = horaPasoData.filter(item => item.Linea === linea);
+    if (tiemposLinea.length === 0) {
+        console.warn(`No hay datos de tiempo de paso para la línea ${linea} para estimar PK.`);
+        return null;
+    }
+
+    tiemposLinea.sort((a, b) => pkToNumber(a.PK) - pkToNumber(b.PK)); // Ordenar por PK ASCENDENTE
+
+    let pkTablaAnterior = null;
+    let pkTablaPosterior = null;
+    let tiempoAnterior = 0; // Tiempo acumulado en el PK anterior
+    let tiempoPosterior = 0; // Tiempo acumulado en el PK posterior
+
+
+    for (let i = 0; i < tiemposLinea.length -1; i++) { // Iterar hasta el penúltimo elemento
+        pkTablaAnterior = tiemposLinea[i];
+        pkTablaPosterior = tiemposLinea[i+1];
+
+
+        let tiempoTramoMinutosPosterior, tiempoTramoMinutosAnterior;
+
+
+        switch (tipoTren) {
+            case 'A':
+                tiempoTramoMinutosAnterior = parseFloat(pkTablaAnterior.A) || 0;
+                tiempoTramoMinutosPosterior = parseFloat(pkTablaPosterior.A) || 0;
+                break;
+            case 'B':
+                tiempoTramoMinutosAnterior = parseFloat(pkTablaAnterior.B) || 0;
+                tiempoTramoMinutosPosterior = parseFloat(pkTablaPosterior.B) || 0;
+                break;
+            case 'C':
+                tiempoTramoMinutosAnterior = parseFloat(pkTablaAnterior.C) || 0;
+                tiempoTramoMinutosPosterior = parseFloat(pkTablaPosterior.C) || 0;
+                break;
+            default:
+                tiempoTramoMinutosAnterior = parseFloat(pkTablaAnterior.A) || 0;
+                tiempoTramoMinutosPosterior = parseFloat(pkTablaPosterior.A) || 0;
+        }
+
+        tiempoAnterior = tiempoTramoMinutosAnterior * 60; // Convertir a segundos
+        tiempoPosterior = tiempoTramoMinutosPosterior * 60; // Convertir a segundos
+
+
+        if (tiempoTranscurridoSegundos >= tiempoAnterior && tiempoTranscurridoSegundos <= tiempoPosterior) {
+            const pkAnteriorNumerico = pkToNumber(pkTablaAnterior.PK);
+            const pkPosteriorNumerico = pkToNumber(pkTablaPosterior.PK);
+            const tiempoTramoSegundos = tiempoPosterior - tiempoAnterior;
+            const proporcionTiempo = (tiempoTranscurridoSegundos - tiempoAnterior) / tiempoTramoSegundos;
+            const pkInterpoladoNumerico = pkAnteriorNumerico + proporcionTiempo * (pkPosteriorNumerico - pkAnteriorNumerico);
+            return Math.round(pkInterpoladoNumerico);
+        }
+    }
+
+    return null; // No se pudo estimar el PK
+}
+
+
+function numberToPk(pkNumber) { // Función para convertir número a formato PK (si no la tienes ya)
+    const parteEntera = Math.floor(pkNumber / 1000);
+    const parteDecimal = pkNumber % 1000;
+    return `${parteEntera}+${parteDecimal.toString().padStart(3, '0')}`;
+}
+
+
+/////  FIN CAPA POSITREN /////---------------------------------------------------------------------------------------
+
+
+
+
+
 
 /////  INICIO CAPA TIEMPO /////---------------------------------------------------------------------------------------
 
