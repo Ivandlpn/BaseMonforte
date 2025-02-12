@@ -2398,7 +2398,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <th style="padding: 8px; text-align: left; color: white;">MINUTOS</th>
                             <th style="padding: 8px; text-align: left; color: white;">VÍA</th>
                             <th style="padding: 8px; text-align: left; color: white;">ORI/DES</th>
-                            <th style="padding: 8px; text-align: left; color: white;">🕒HORA</th>
+                            <th style="padding: 8px; text-align: left; color: white;">🕒ALICANTE</th>
                         </tr>
                     </thead>
                     <tbody>
