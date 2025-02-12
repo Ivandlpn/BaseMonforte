@@ -785,6 +785,7 @@ footer img {
     padding: 8px;
     color: white;
     border-bottom: 1px solid #ddd; /* Borde inferior para separar filas */
+    text-align: center; 
 }
 
 /* Estilos para la cabecera de la tabla (fila <tr> dentro de <thead>) - ¡CABECERA PEGADIZA! */
