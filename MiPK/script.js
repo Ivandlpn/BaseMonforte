@@ -2280,11 +2280,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const trenesCardContainer = document.getElementById('trenes-card-container');
     const trenesContainer = document.getElementById('trenes-container');
     const cerrarTrenesCardButton = document.getElementById('cerrar-trenes-card');
+    let trenesInterval; // Variable para almacenar el intervalo
 
     if (trenesButton) {
         trenesButton.addEventListener('click', function() {
             trenesCardContainer.style.display = 'flex';
-            mostrarTrenesCercanosInterpolado();
+            mostrarTrenesCercanosInterpolado(); // Carga inicial de la tabla
+            // *** INICIO: CONFIGURAR INTERVALO PARA ACTUALIZACIÓN CADA MINUTO ***
+            if (!trenesInterval) { // Verifica si el intervalo ya existe para evitar duplicados
+                trenesInterval = setInterval(mostrarTrenesCercanosInterpolado, 60000); // 60000 ms = 1 minuto
+            }
+            // *** FIN: CONFIGURAR INTERVALO ***
         });
     } else {
         console.error('No se encontró el botón TRENES');
@@ -2293,13 +2299,17 @@ document.addEventListener('DOMContentLoaded', function() {
     if (cerrarTrenesCardButton) {
         cerrarTrenesCardButton.addEventListener('click', function() {
             trenesCardContainer.style.display = 'none';
+            // *** INICIO: LIMPIAR INTERVALO AL CERRAR LA TARJETA ***
+            clearInterval(trenesInterval);
+            trenesInterval = null; // Resetear la variable del intervalo
+            // *** FIN: LIMPIAR INTERVALO ***
         });
     } else {
         console.error('No se encontró el botón de cerrar de la tarjeta de Trenes');
     }
 
     async function mostrarTrenesCercanosInterpolado() {
-        trenesContainer.innerHTML = '<p style="text-align: center;">Cargando horarios de trenes...</p>';
+        trenesContainer.innerHTML = '<p style="text-align: center;">Actualizando horarios de trenes...</p>'; // Mensaje de "Actualizando"
 
         try {
             const trenesData = await cargarJSON("./doc/trenes/TrenesALIEne25.json");
@@ -2328,16 +2338,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     continue;
                 }
 
-                const tipoTren = tren.Tipo; // Obtener el tipo de tren
+                const tipoTren = tren.Tipo;
 
-                // *** CONDICIÓN CORREGIDA: FILTRAR TRENES TIPO C POR RANGO DE PK 465000 - 485900 ***
                 if (tipoTren === 'C') {
-                    const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk); // Asegurarse de tener el PK numérico del usuario
+                    const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk);
                     if (pkUsuarioNumerico < 465000 || pkUsuarioNumerico > 485900) {
-                        continue; // Saltar este tren tipo C si el PK del usuario está fuera del rango CORRECTO
+                        continue;
                     }
                 }
-                // *** FIN DE CONDICIÓN CORREGIDA ***
 
 
                 const pkTrenReferenciaNumerico = pkToNumber(tren.PK);
@@ -2387,14 +2395,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     <thead>
                         <tr style="border-bottom: 1px solid white;">
                             <th style="padding: 8px; text-align: left; color: white;">⏱️PASO</th>
-                        <th style="padding: 8px; text-align: left; color: white;">MINUTOS</th>
-                        <th style="padding: 8px; text-align: left; color: white;">VÍA</th>
-                        <th style="padding: 8px; text-align: left; color: white;">ORI/DES</th>
-                        <th style="padding: 8px; text-align: left; color: white;">🕒HORA</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
+                            <th style="padding: 8px; text-align: left; color: white;">MINUTOS</th>
+                            <th style="padding: 8px; text-align: left; color: white;">VÍA</th>
+                            <th style="padding: 8px; text-align: left; color: white;">ORI/DES</th>
+                            <th style="padding: 8px; text-align: left; color: white;">🕒HORA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
 
             for (const trenResultado of resultadosTrenes) {
                 let claseFila = "";
@@ -2436,10 +2444,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return await response.json();
     }
 
-    // MODIFICADO: AÑADIDO tipoTren COMO PARÁMETRO
     async function calcularTiempoViajeInterpolado(pkTrenReferencia, pkUsuario, linea, horaPasoData, tipoTren) {
         const pkUsuarioNumerico = pkToNumber(pkUsuario);
-        const pkReferenciaNumerico = pkToNumber(pkTrenReferencia);
+        const pkTrenReferenciaNumerico = pkToNumber(pkTrenReferencia);
 
         const tiemposLinea = horaPasoData.filter(item => item.Linea === linea);
 
@@ -2472,10 +2479,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const pkPosteriorNumerico = pkToNumber(pkTablaPosterior.PK);
         let tiempoAnterior, tiempoPosterior;
 
-        // MODIFICADO: SELECCIONAR COLUMNA DE TIEMPO SEGÚN tipoTren
         switch (tipoTren) {
             case 'A':
-                tiempoAnterior = parseFloat(pkTablaAnterior.A) || 0; // Usar 0 si es undefined o vacío
+                tiempoAnterior = parseFloat(pkTablaAnterior.A) || 0;
                 tiempoPosterior = parseFloat(pkTablaPosterior.A) || 0;
                 break;
             case 'B':
@@ -2495,7 +2501,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let tiempoInterpoladoMinutos;
 
-        if (pkUsuarioNumerico === pkReferenciaNumerico) {
+        if (pkUsuarioNumerico === pkTrenReferenciaNumerico) {
             tiempoInterpoladoMinutos = 0;
         } else if (pkAnteriorNumerico === pkPosteriorNumerico) {
             tiempoInterpoladoMinutos = tiempoAnterior;
