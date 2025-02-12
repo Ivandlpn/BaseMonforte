@@ -2284,7 +2284,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (trenesButton) {
         trenesButton.addEventListener('click', function() {
             trenesCardContainer.style.display = 'flex';
-            mostrarTrenesCercanosInterpolado(); // Llamamos a la nueva función para cálculo interpolado
+            mostrarTrenesCercanosInterpolado();
         });
     } else {
         console.error('No se encontró el botón TRENES');
@@ -2298,13 +2298,12 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('No se encontró el botón de cerrar de la tarjeta de Trenes');
     }
 
-    async function mostrarTrenesCercanosInterpolado() { // Nueva función con cálculo interpolado
+    async function mostrarTrenesCercanosInterpolado() {
         trenesContainer.innerHTML = '<p style="text-align: center;">Cargando horarios de trenes...</p>';
 
         try {
-            // MODIFICACIÓN: Cargar el nuevo archivo de horarios de trenes (TrenesALIEne25.json)
             const trenesData = await cargarJSON("./doc/trenes/TrenesALIEne25.json");
-            const horaPasoData = await cargarJSON("./doc/trenes/horapasoA.json"); // Cargamos horapasoA.json
+            const horaPasoData = await cargarJSON("./doc/trenes/horapasoA.json");
 
             if (!window.pkMasCercano || !window.pkMasCercano.linea) {
                 trenesContainer.innerHTML = '<p style="text-align: center; color: red;">No se puede determinar la línea actual. PK desconocido.</p>';
@@ -2325,24 +2324,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const resultadosTrenes = [];
 
             for (const tren of trenesFiltrados) {
-                // MODIFICACIÓN: Filtrar solo trenes de "Red": "AV"
                 if (tren.Red !== "AV") {
-                    continue; // Saltar este tren si no es "AV"
+                    continue;
                 }
 
                 const pkTrenReferenciaNumerico = pkToNumber(tren.PK);
-                // MODIFICACIÓN: Usar "Hora" en lugar de "Hora de salida"
                 const horaProgramadaParts = tren["Hora"].split(':');
                 const horaProgramadaSegundos = parseInt(horaProgramadaParts[0]) * 3600 + parseInt(horaProgramadaParts[1]) * 60;
                 const sentidoVia = tren.Vía === '1' ? 'decreciente' : 'creciente';
+                const tipoTren = tren.Tipo; // <---- OBTENER EL TIPO DE TREN
 
-                // Cálculo del tiempo de viaje interpolado usando horapasoA.json
-                const tiempoViajeSegundosInterpolado = await calcularTiempoViajeInterpolado(pkTrenReferenciaNumerico, pkUsuarioNumerico, lineaUsuario, horaPasoData);
+                // MODIFICADO: PASAR tipoTren A calcularTiempoViajeInterpolado
+                const tiempoViajeSegundosInterpolado = await calcularTiempoViajeInterpolado(pkTrenReferenciaNumerico, pkUsuarioNumerico, lineaUsuario, horaPasoData, tipoTren);
 
                 let horaPasoEstimadaSegundos;
                 if (sentidoVia === 'decreciente') {
                     horaPasoEstimadaSegundos = horaProgramadaSegundos + tiempoViajeSegundosInterpolado;
-                } else { // sentidoVia === 'creciente'
+                } else {
                     horaPasoEstimadaSegundos = horaProgramadaSegundos - tiempoViajeSegundosInterpolado;
                 }
 
@@ -2359,8 +2357,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     horaPaso: horaPasoFormateada,
                     minutosRestantes: minutosRestantes,
                     via: tren.Vía,
-                    origenDestino: tren.OD, // MODIFICADO PARA USAR OD del JSON
-                    // MODIFICACIÓN: Mostrar "Hora" en lugar de "Hora de salida"
+                    origenDestino: tren.OD,
                     horaProgramada: tren["Hora"]
                 });
             }
@@ -2381,8 +2378,8 @@ document.addEventListener('DOMContentLoaded', function() {
                             <th style="padding: 8px; text-align: left; color: white;">⏱️PASO</th>
                             <th style="padding: 8px; text-align: left; color: white;">MINUTOS</th>
                             <th style="padding: 8px; text-align: left; color: white;">VÍA</th>
-                           // <th style="padding: 8px; text-align: left; color: white;">ORI/DES</th>
-                            <th style="padding: 8px; text-align: left; color: white;">🕒HORA ALI</th>
+                            <th style="padding: 8px; text-align: left; color: white;">ORI/DES</th>
+                            <th style="padding: 8px; text-align: left; color: white;">🕒HORA</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -2428,63 +2425,74 @@ document.addEventListener('DOMContentLoaded', function() {
         return await response.json();
     }
 
-
-    async function calcularTiempoViajeInterpolado(pkTrenReferencia, pkUsuario, linea, horaPasoData) {
+    // MODIFICADO: AÑADIDO tipoTren COMO PARÁMETRO
+    async function calcularTiempoViajeInterpolado(pkTrenReferencia, pkUsuario, linea, horaPasoData, tipoTren) {
         const pkUsuarioNumerico = pkToNumber(pkUsuario);
         const pkReferenciaNumerico = pkToNumber(pkTrenReferencia);
 
-        // Filtrar los datos de horapasoA.json para la línea específica
         const tiemposLinea = horaPasoData.filter(item => item.Linea === linea);
 
         if (tiemposLinea.length === 0) {
             console.warn(`No hay datos de tiempo de paso para la línea ${linea}. Usando tiempo de viaje 0.`);
-            return 0; // No hay datos, devolvemos 0
+            return 0;
         }
 
-        // Ordenar los puntos de tiempo por PK en orden descendente para facilitar la búsqueda
         tiemposLinea.sort((a, b) => pkToNumber(b.PK) - pkToNumber(a.PK));
 
         let pkTablaAnterior = null;
         let pkTablaPosterior = null;
 
-        // Buscar los puntos de la tabla que "encierran" el PK del usuario
         for (let i = 0; i < tiemposLinea.length; i++) {
             const pkTablaActualNumerico = pkToNumber(tiemposLinea[i].PK);
 
             if (pkTablaActualNumerico <= pkUsuarioNumerico) {
                 pkTablaAnterior = tiemposLinea[i];
-                pkTablaPosterior = tiemposLinea[i - 1] || pkTablaAnterior; // Si es el primero, el posterior es el mismo
-                break; // Encontramos el punto anterior o igual, podemos salir
+                pkTablaPosterior = tiemposLinea[i - 1] || pkTablaAnterior;
+                break;
             }
         }
 
-        // Si no se encontró un punto anterior, usar el primer punto como posterior y uno "artificial" anterior
         if (!pkTablaAnterior) {
-            pkTablaAnterior = tiemposLinea[tiemposLinea.length - 1]; // El último punto (menor PK)
-            pkTablaPosterior = tiemposLinea[0]; // El primer punto (mayor PK)
+            pkTablaAnterior = tiemposLinea[tiemposLinea.length - 1];
+            pkTablaPosterior = tiemposLinea[0];
         }
-
 
         const pkAnteriorNumerico = pkToNumber(pkTablaAnterior.PK);
         const pkPosteriorNumerico = pkToNumber(pkTablaPosterior.PK);
-        const tiempoAnterior = parseFloat(pkTablaAnterior.A); // MODIFICACIÓN: Usar columna "A"
-        const tiempoPosterior = parseFloat(pkTablaPosterior.A); // MODIFICACIÓN: Usar columna "A"
+        let tiempoAnterior, tiempoPosterior;
+
+        // MODIFICADO: SELECCIONAR COLUMNA DE TIEMPO SEGÚN tipoTren
+        switch (tipoTren) {
+            case 'A':
+                tiempoAnterior = parseFloat(pkTablaAnterior.A) || 0; // Usar 0 si es undefined o vacío
+                tiempoPosterior = parseFloat(pkTablaPosterior.A) || 0;
+                break;
+            case 'B':
+                tiempoAnterior = parseFloat(pkTablaAnterior.B) || 0;
+                tiempoPosterior = parseFloat(pkTablaPosterior.B) || 0;
+                break;
+            case 'C':
+                tiempoAnterior = parseFloat(pkTablaAnterior.C) || 0;
+                tiempoPosterior = parseFloat(pkTablaPosterior.C) || 0;
+                break;
+            default: // Tipo desconocido, usar tipo A por defecto
+                tiempoAnterior = parseFloat(pkTablaAnterior.A) || 0;
+                tiempoPosterior = parseFloat(pkTablaPosterior.A) || 0;
+                console.warn(`Tipo de tren desconocido: ${tipoTren}. Usando tipo A por defecto.`);
+        }
 
 
         let tiempoInterpoladoMinutos;
 
-        // Caso especial: misma PK de referencia, tiempo es 0
         if (pkUsuarioNumerico === pkReferenciaNumerico) {
-          tiempoInterpoladoMinutos = 0;
+            tiempoInterpoladoMinutos = 0;
         } else if (pkAnteriorNumerico === pkPosteriorNumerico) {
-            tiempoInterpoladoMinutos = tiempoAnterior; // Evitar división por cero si los PK son iguales
-        }
-         else {
+            tiempoInterpoladoMinutos = tiempoAnterior;
+        } else {
             tiempoInterpoladoMinutos = tiempoAnterior + ((pkUsuarioNumerico - pkAnteriorNumerico) / (pkPosteriorNumerico - pkAnteriorNumerico)) * (tiempoPosterior - tiempoAnterior);
         }
 
-
-        return Math.max(0, Math.round(tiempoInterpoladoMinutos * 60)); // Convertir a segundos y asegurar no negativo
+        return Math.max(0, Math.round(tiempoInterpoladoMinutos * 60));
     }
 
 
@@ -2496,7 +2504,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const minutos = Math.floor((segundosDesdeMedianoche % 3600) / 60);
         return String(horas).padStart(2, '0') + ':' + String(minutos).padStart(2, '0');
     }
-
 
 });
 
