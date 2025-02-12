@@ -2328,13 +2328,24 @@ document.addEventListener('DOMContentLoaded', function() {
                     continue;
                 }
 
+                const tipoTren = tren.Tipo; // Obtener el tipo de tren
+
+                // *** NUEVA CONDICIÓN: FILTRAR TRENES TIPO C POR RANGO DE PK ***
+                if (tipoTren === 'C') {
+                    const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk); // Asegurarse de tener el PK numérico del usuario
+                    if (pkUsuarioNumerico < 46500 || pkUsuarioNumerico > 485900) {
+                        continue; // Saltar este tren tipo C si el PK del usuario está fuera del rango
+                    }
+                }
+                // *** FIN DE NUEVA CONDICIÓN ***
+
+
                 const pkTrenReferenciaNumerico = pkToNumber(tren.PK);
                 const horaProgramadaParts = tren["Hora"].split(':');
                 const horaProgramadaSegundos = parseInt(horaProgramadaParts[0]) * 3600 + parseInt(horaProgramadaParts[1]) * 60;
                 const sentidoVia = tren.Vía === '1' ? 'decreciente' : 'creciente';
-                const tipoTren = tren.Tipo; // <---- OBTENER EL TIPO DE TREN
 
-                // MODIFICADO: PASAR tipoTren A calcularTiempoViajeInterpolado
+
                 const tiempoViajeSegundosInterpolado = await calcularTiempoViajeInterpolado(pkTrenReferenciaNumerico, pkUsuarioNumerico, lineaUsuario, horaPasoData, tipoTren);
 
                 let horaPasoEstimadaSegundos;
@@ -2508,7 +2519,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ----- FIN FUNCIONALIDAD TRENES -----
-
 
 
 
