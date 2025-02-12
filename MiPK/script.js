@@ -2389,11 +2389,11 @@ async function mostrarTrenesCercanosInterpolado() {
             });
         }
 
-        // ⭐️ NUEVO: Filtrar trenes que pasaron hace más de 30 minutos
-        const tiempoLimitePasadoMinutos = -30; // Define el límite de tiempo pasado en minutos
+        // Filtrar trenes que pasaron hace más de 30 minutos
+        const tiempoLimitePasadoMinutos = -30;
         const resultadosTrenesFiltrados = resultadosTrenes.filter(tren => tren.minutosRestantes > tiempoLimitePasadoMinutos);
 
-        resultadosTrenesFiltrados.sort((a, b) => { // ⭐️ Usa resultadosTrenesFiltrados
+        resultadosTrenesFiltrados.sort((a, b) => {
             const horaA_parts = a.horaPaso.split(':');
             const horaB_parts = b.horaPaso.split(':');
             const horaA_segundos = parseInt(horaA_parts[0]) * 3600 + parseInt(horaA_parts[1]) * 60;
@@ -2415,16 +2415,24 @@ async function mostrarTrenesCercanosInterpolado() {
                 <tbody>
         `;
 
-        for (const trenResultado of resultadosTrenesFiltrados) { // ⭐️ Usa resultadosTrenesFiltrados
+        for (const trenResultado of resultadosTrenesFiltrados) {
             let claseFila = "";
+            let horaPasoCelda, minutosRestantesCelda; // ⭐️ Variables para las celdas
+
             if (Math.abs(trenResultado.minutosRestantes) <= 2) {
                 claseFila = "tren-proximo-parpadeo";
+                horaPasoCelda = '🚆';           // ⭐️ Emoji de tren para "próximo"
+                minutosRestantesCelda = 'Próximo'; // ⭐️ Texto "Próximo"
+            } else {
+                horaPasoCelda = trenResultado.horaPaso;         // ⭐️ Hora de paso normal
+                minutosRestantesCelda = trenResultado.minutosRestantes; // ⭐️ Minutos restantes normales
             }
+
 
             tablaHTML += `
                 <tr class="${claseFila}" style="border-bottom: 1px solid #ddd;">
-                    <td style="padding: 8px; color: white;">${trenResultado.horaPaso}</td>
-                    <td style="padding: 8px; color: white;">${trenResultado.minutosRestantes}</td>
+                    <td style="padding: 8px; color: white;">${horaPasoCelda}</td>         <!-- ⭐️ Usa horaPasoCelda -->
+                    <td style="padding: 8px; color: white;">${minutosRestantesCelda}</td>    <!-- ⭐️ Usa minutosRestantesCelda -->
                     <td style="padding: 8px; color: white;">${trenResultado.via}</td>
                     <td style="padding: 8px; color: white;">${trenResultado.origenDestino}</td>
                          <!-- <td style="padding: 8px; text-align: left; color: white;">${trenResultado.horaProgramada}</td> <--- LINEA ELIMINADA O COMENTADA -->
