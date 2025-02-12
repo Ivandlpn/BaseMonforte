@@ -2411,7 +2411,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <th style="padding: 8px; text-align: left; color: white;">MIN.</th>
                             <th style="padding: 8px; text-align: left; color: white;">VÍA</th>
                             <th style="padding: 8px; text-align: left; color: white;">ORI/DES</th>
-                           <!-- <th style="padding: 8px; text-align: left; color: white;">🕒ALI</th>
+                           <!-- <th style="padding: 8px; text-align: left; color: white;">🕒ALI</th>  <--- LINEA ELIMINADA O COMENTADA -->
                         </tr>
                     </thead>
                     <tbody>
@@ -2429,7 +2429,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <td style="padding: 8px; color: white;">${trenResultado.minutosRestantes}</td>
                         <td style="padding: 8px; color: white;">${trenResultado.via}</td>
                         <td style="padding: 8px; color: white;">${trenResultado.origenDestino}</td>
-                        <!-- <td style="padding: 8px; color: white;">${trenResultado.horaProgramada}</td>
+                             <!-- <td style="padding: 8px; text-align: left; color: white;">${trenResultado.horaProgramada}</td> <--- LINEA ELIMINADA O COMENTADA -->
                     </tr>
                 `;
             }
