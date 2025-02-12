@@ -792,7 +792,7 @@ footer img {
     border-bottom: 1px solid white;
     position: sticky; /* ⭐️ Habilita la posición "sticky" */
     top: 0;          /* ⭐️  Pega la cabecera a la parte superior */
-    background-color: #2a62b8; /* ⭐️  Asegura un fondo para la cabecera pegajosa */
+    background-color: #00204a; /* ⭐️  Asegura un fondo para la cabecera pegajosa */
     z-index: 100;      /* ⭐️  Asegura que la cabecera esté por encima del contenido al hacer scroll */
 }
 
