@@ -6,7 +6,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "5:50",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RF - AVE05063"
     },
     {
@@ -16,7 +16,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "7:00",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09075"
     },
     {
@@ -36,7 +36,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "7:34",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09067"
     },
     {
@@ -46,7 +46,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "7:53",
-        "OD": "Valladolid Campo Grande",
+        "OD": "Valladolid",
         "Modelo": "RI - OUIGO06885"
     },
     {
@@ -56,7 +56,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "8:35",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RF - AVE05083"
     },
     {
@@ -66,7 +66,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "8:40",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09085"
     },
     {
@@ -76,7 +76,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "8:48",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RF - AVLO05668"
     },
     {
@@ -86,7 +86,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "8:56",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVLO05668"
     },
     {
@@ -96,7 +96,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "9:09",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09087"
     },
     {
@@ -106,7 +106,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "9:35",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RF - AVE05072"
     },
     {
@@ -116,7 +116,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "9:40",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RF - AVE05093"
     },
     {
@@ -136,7 +136,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "10:37",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09105"
     },
     {
@@ -146,7 +146,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "11:04",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09107"
     },
     {
@@ -156,7 +156,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "11:24",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVLO05817"
     },
     {
@@ -176,7 +176,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "11:36",
-        "OD": "Valladolid Campo Grande",
+        "OD": "Valladolid",
         "Modelo": "RF - AVLO05817"
     },
     {
@@ -186,7 +186,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "12:10",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RF - AVE05102"
     },
     {
@@ -196,7 +196,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "12:37",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RI - OUIGO06504"
     },
     {
@@ -206,7 +206,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "12:50",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09125"
     },
     {
@@ -216,7 +216,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "13:30",
-        "OD": "Málaga María Zambrano",
+        "OD": "Málaga",
         "Modelo": "RF - AVE05913"
     },
     {
@@ -226,7 +226,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "13:39",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVE05913"
     },
     {
@@ -236,7 +236,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "13:44",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09127"
     },
     {
@@ -246,7 +246,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "14:00",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RI - OUIGO06545"
     },
     {
@@ -256,7 +256,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "14:35",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RF - AVE05143"
     },
     {
@@ -276,7 +276,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "14:55",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09155"
     },
     {
@@ -286,7 +286,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "15:26",
-        "OD": "Gijón-Sanz Crespo",
+        "OD": "Gijón",
         "Modelo": "RF - ALVIA04181"
     },
     {
@@ -296,7 +296,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "15:52",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09157"
     },
     {
@@ -306,7 +306,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "16:05",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RF - AVE05153"
     },
     {
@@ -316,7 +316,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "16:23",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVE05863"
     },
     {
@@ -326,7 +326,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "16:28",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RF - AVE05142"
     },
     {
@@ -336,7 +336,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "16:35",
-        "OD": "Málaga María Zambrano",
+        "OD": "Málaga",
         "Modelo": "RF - AVE05863"
     },
     {
@@ -346,7 +346,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "16:44",
-        "OD": "Valladolid Campo Grande",
+        "OD": "Valladolid",
         "Modelo": "RI - OUIGO06944"
     },
     {
@@ -356,7 +356,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "16:52",
-        "OD": "Madrid Puerta de Atocha Almudena Grandes",
+        "OD": "Madrid Atocha",
         "Modelo": "RF - AVE05742"
     },
     {
@@ -366,7 +366,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "17:00",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVE05742"
     },
     {
@@ -376,7 +376,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "17:15",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09175"
     },
     {
@@ -396,7 +396,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "17:44",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09167"
     },
     {
@@ -406,7 +406,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "18:00",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RI - OUIGO06585"
     },
     {
@@ -416,7 +416,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "18:34",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RF - AVE05162"
     },
     {
@@ -426,7 +426,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "19:34",
-        "OD": "Valladolid Campo Grande",
+        "OD": "Valladolid",
         "Modelo": "RF - AVLO05178"
     },
     {
@@ -436,7 +436,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "19:48",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVE05903"
     },
     {
@@ -446,7 +446,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "19:50",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09195"
     },
     {
@@ -456,7 +456,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "20:00",
-        "OD": "Madrid Puerta de Atocha Almudena Grandes",
+        "OD": "Madrid Atocha",
         "Modelo": "RF - AVE05903"
     },
     {
@@ -466,7 +466,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "20:24",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RF - AVE05182"
     },
     {
@@ -486,7 +486,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "20:44",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09197"
     },
     {
@@ -496,7 +496,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "21:05",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RF - AVLO05217"
     },
     {
@@ -516,7 +516,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "21:55",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09215"
     },
     {
@@ -526,7 +526,7 @@
         "Red": "AV",
         "Tipo": "C",
         "Hora": "22:14",
-        "OD": "Murcia del Carmen",
+        "OD": "Murcia",
         "Modelo": "RF - AVANT09217"
     },
     {
@@ -536,7 +536,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "22:39",
-        "OD": "Madrid Chamartín Clara Campoamor",
+        "OD": "Madrid Chamartín",
         "Modelo": "RI - OUIGO06604"
     },
     {
@@ -546,7 +546,7 @@
         "Red": "AV",
         "Tipo": "A",
         "Hora": "22:56",
-        "OD": "Gijón-Sanz Crespo",
+        "OD": "Gijón",
         "Modelo": "RF - ALVIA04140"
     }
 ]
