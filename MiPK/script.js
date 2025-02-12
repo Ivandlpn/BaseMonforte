@@ -634,11 +634,15 @@ async function actualizarCapaPositren() {
 
 
 async function estimarPKPorTiempoTranscurrido(pkReferencia, tiempoTranscurridoSegundos, linea, horaPasoData, tipoTren) {
+    console.log(`estimarPKPorTiempoTranscurrido - Inicio: PK Ref: ${pkReferencia}, Tiempo Transcurrido: ${tiempoTranscurridoSegundos}, Línea: ${linea}, Tipo Tren: ${tipoTren}`);
+
     const tiemposLinea = horaPasoData.filter(item => item.Linea === linea);
     if (tiemposLinea.length === 0) {
         console.warn(`No hay datos de tiempo de paso para la línea ${linea} para estimar PK.`);
         return null;
     }
+
+    console.log("tiemposLinea para esta línea:", tiemposLinea); // *** LOGGING: Ver datos de tiemposLinea
 
     tiemposLinea.sort((a, b) => pkToNumber(a.PK) - pkToNumber(b.PK)); // Ordenar por PK ASCENDENTE
 
@@ -647,14 +651,11 @@ async function estimarPKPorTiempoTranscurrido(pkReferencia, tiempoTranscurridoSe
     let tiempoAnterior = 0; // Tiempo acumulado en el PK anterior
     let tiempoPosterior = 0; // Tiempo acumulado en el PK posterior
 
-
-    for (let i = 0; i < tiemposLinea.length -1; i++) { // Iterar hasta el penúltimo elemento
+    for (let i = 0; i < tiemposLinea.length - 1; i++) { // Iterar hasta el penúltimo elemento
         pkTablaAnterior = tiemposLinea[i];
-        pkTablaPosterior = tiemposLinea[i+1];
-
+        pkTablaPosterior = tiemposLinea[i + 1];
 
         let tiempoTramoMinutosPosterior, tiempoTramoMinutosAnterior;
-
 
         switch (tipoTren) {
             case 'A':
@@ -677,6 +678,7 @@ async function estimarPKPorTiempoTranscurrido(pkReferencia, tiempoTranscurridoSe
         tiempoAnterior = tiempoTramoMinutosAnterior * 60; // Convertir a segundos
         tiempoPosterior = tiempoTramoMinutosPosterior * 60; // Convertir a segundos
 
+        console.log(`  Iteración ${i}: PK Anterior: ${pkTablaAnterior.PK}, Tiempo Anterior: ${tiempoAnterior}, PK Posterior: ${pkTablaPosterior.PK}, Tiempo Posterior: ${tiempoPosterior}, Tiempo Transcurrido: ${tiempoTranscurridoSegundos}`); // *** LOGGING: Valores en cada iteración
 
         if (tiempoTranscurridoSegundos >= tiempoAnterior && tiempoTranscurridoSegundos <= tiempoPosterior) {
             const pkAnteriorNumerico = pkToNumber(pkTablaAnterior.PK);
@@ -684,10 +686,14 @@ async function estimarPKPorTiempoTranscurrido(pkReferencia, tiempoTranscurridoSe
             const tiempoTramoSegundos = tiempoPosterior - tiempoAnterior;
             const proporcionTiempo = (tiempoTranscurridoSegundos - tiempoAnterior) / tiempoTramoSegundos;
             const pkInterpoladoNumerico = pkAnteriorNumerico + proporcionTiempo * (pkPosteriorNumerico - pkAnteriorNumerico);
+            console.log(`  ¡PK Estimado Encontrado! PK Interpolado: ${pkInterpoladoNumerico}`); // *** LOGGING: PK Estimado encontrado
             return Math.round(pkInterpoladoNumerico);
+        } else {
+            console.log(`  Tiempo Transcurrido NO está en el rango. Continúa iterando...`); // *** LOGGING: Tiempo fuera de rango
         }
     }
 
+    console.warn(`estimarPKPorTiempoTranscurrido - Fin: No se pudo estimar PK para PK Ref: ${pkReferencia}, Tiempo Transcurrido: ${tiempoTranscurridoSegundos}, Línea: ${linea}, Tipo Tren: ${tipoTren} - Retornando NULL`); // *** LOGGING: No se pudo estimar PK
     return null; // No se pudo estimar el PK
 }
 
