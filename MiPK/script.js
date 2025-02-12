@@ -2388,8 +2388,8 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Filtrar trenes que pasaron hace más de 30 minutos
-        const tiempoLimitePasadoMinutos = -30;
+        // Filtrar trenes que pasaron hace más de 15 minutos
+        const tiempoLimitePasadoMinutos = -15;
         const resultadosTrenesFiltrados = resultadosTrenes.filter(tren => tren.minutosRestantes > tiempoLimitePasadoMinutos);
 
         resultadosTrenesFiltrados.sort((a, b) => {
