@@ -2404,7 +2404,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <table style="width:100%; border-collapse: collapse;">
                 <thead>
                     <tr style="border-bottom: 1px solid white;">
-                        <th style="padding: 8px; text-align: center; color: white;">⏱️PASO</th>
+                        <th style="padding: 8px; text-align: center; color: white;">HORA</th>
                         <th style="padding: 8px; text-align: center; color: white;">MIN.</th>
                         <th style="padding: 8px; text-align: center; color: white;">VÍA</th>
                         <th style="padding: 8px; text-align: center; color: white;">ORI/DES</th>
@@ -2421,7 +2421,7 @@ document.addEventListener('DOMContentLoaded', function() {
            
             if (Math.abs(trenResultado.minutosRestantes) <= 2) {
                 claseFila = "tren-proximo-parpadeo";
-                horaPasoCelda = '🚆';
+                horaPasoCelda = '🕒';
                 minutosRestantesCelda = 'Próximo';
             } else {
                 horaPasoCelda = trenResultado.horaPaso;
