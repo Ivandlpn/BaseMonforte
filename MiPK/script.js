@@ -2401,19 +2401,19 @@ async function mostrarTrenesCercanosInterpolado() {
             return horaA_segundos - horaB_segundos;
         });
 
-        let tablaHTML = `
-            <table style="width:100%; border-collapse: collapse;">
-                <thead>
-                    <tr style="border-bottom: 1px solid white;">
-                        <th style="padding: 8px; text-align: left; color: white;">⏱️PASO</th>
-                        <th style="padding: 8px; text-align: left; color: white;">MIN.</th>
-                        <th style="padding: 8px; text-align: left; color: white;">VÍA</th>
-                        <th style="padding: 8px; text-align: left; color: white;">ORI/DES</th>
-                       <!-- <th style="padding: 8px; text-align: left; color: white;">🕒ALI</th>  <--- LINEA ELIMINADA O COMENTADA -->
-                    </tr>
-                </thead>
-                <tbody>
-        `;
+       let tablaHTML = `
+    <table style="width:100%; border-collapse: collapse;">
+        <thead>
+            <tr style="border-bottom: 1px solid white;">
+                <th style="padding: 8px; color: white;">⏱️PASO</th>
+                <th style="padding: 8px; color: white;">MIN.</th>
+                <th style="padding: 8px; color: white;">VÍA</th>
+                <th style="padding: 8px; color: white;">ORI/DES</th>
+                <!-- <th style="padding: 8px; color: white;">🕒ALI</th>  <--- LINEA ELIMINADA O COMENTADA -->
+            </tr>
+        </thead>
+        <tbody>
+`;
 
         for (const trenResultado of resultadosTrenesFiltrados) {
             let claseFila = "";
