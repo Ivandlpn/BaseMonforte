@@ -2321,132 +2321,129 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('No se encontró el botón de cerrar de la tarjeta de Trenes');
     }
 
-    async function mostrarTrenesCercanosInterpolado() {
-        trenesContainer.innerHTML = '<p style="text-align: center;">Actualizando horarios de trenes...</p>'; // Mensaje de "Actualizando"
+async function mostrarTrenesCercanosInterpolado() {
+    trenesContainer.innerHTML = '<p style="text-align: center;">Actualizando horarios de trenes...</p>';
 
-        try {
-            const trenesData = await cargarJSON("./doc/trenes/TrenesALIEne25.json");
-            const horaPasoData = await cargarJSON("./doc/trenes/horapasoA.json");
+    try {
+        const trenesData = await cargarJSON("./doc/trenes/TrenesALIEne25.json");
+        const horaPasoData = await cargarJSON("./doc/trenes/horapasoA.json");
 
-            if (!window.pkMasCercano || !window.pkMasCercano.linea) {
-                trenesContainer.innerHTML = '<p style="text-align: center; color: red;">No se puede determinar la línea actual. PK desconocido.</p>';
-                return;
+        if (!window.pkMasCercano || !window.pkMasCercano.linea) {
+            trenesContainer.innerHTML = '<p style="text-align: center; color: red;">No se puede determinar la línea actual. PK desconocido.</p>';
+            return;
+        }
+
+        const lineaUsuario = window.pkMasCercano.linea;
+        const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk);
+        const horaActualUsuario = new Date();
+
+        const trenesFiltrados = trenesData.filter(tren => tren.Línea === lineaUsuario);
+
+        if (trenesFiltrados.length === 0) {
+            trenesContainer.innerHTML = '<p style="text-align: center;">No hay trenes programados para la línea actual.</p>';
+            return;
+        }
+
+        const resultadosTrenes = [];
+
+        for (const tren of trenesFiltrados) {
+            if (tren.Red !== "AV") {
+                continue;
             }
-
-            const lineaUsuario = window.pkMasCercano.linea;
-            const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk);
-            const horaActualUsuario = new Date();
-
-            const trenesFiltrados = trenesData.filter(tren => tren.Línea === lineaUsuario);
-
-            if (trenesFiltrados.length === 0) {
-                trenesContainer.innerHTML = '<p style="text-align: center;">No hay trenes programados para la línea actual.</p>';
-                return;
-            }
-
-            const resultadosTrenes = [];
-
-            for (const tren of trenesFiltrados) {
-                if (tren.Red !== "AV") {
+            const tipoTren = tren.Tipo;
+            if (tipoTren === 'C') {
+                const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk);
+                if (pkUsuarioNumerico < 465000 || pkUsuarioNumerico > 485900) {
                     continue;
                 }
-
-                const tipoTren = tren.Tipo;
-
-                if (tipoTren === 'C') {
-                    const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk);
-                    if (pkUsuarioNumerico < 465000 || pkUsuarioNumerico > 485900) {
-                        continue;
-                    }
-                }
-
-
-                const pkTrenReferenciaNumerico = pkToNumber(tren.PK);
-                const horaProgramadaParts = tren["Hora"].split(':');
-                const horaProgramadaSegundos = parseInt(horaProgramadaParts[0]) * 3600 + parseInt(horaProgramadaParts[1]) * 60;
-                const sentidoVia = tren.Vía === '1' ? 'decreciente' : 'creciente';
-
-
-                const tiempoViajeSegundosInterpolado = await calcularTiempoViajeInterpolado(pkTrenReferenciaNumerico, pkUsuarioNumerico, lineaUsuario, horaPasoData, tipoTren);
-
-                let horaPasoEstimadaSegundos;
-                if (sentidoVia === 'decreciente') {
-                    horaPasoEstimadaSegundos = horaProgramadaSegundos + tiempoViajeSegundosInterpolado;
-                } else {
-                    horaPasoEstimadaSegundos = horaProgramadaSegundos - tiempoViajeSegundosInterpolado;
-                }
-
-                const horaPasoEstimadaDate = new Date();
-                horaPasoEstimadaDate.setHours(0, 0, 0, 0);
-                horaPasoEstimadaDate.setSeconds(horaPasoEstimadaSegundos);
-                const horaPasoFormateada = formatearHora(horaPasoEstimadaSegundos);
-
-                const tiempoRestanteSegundos = horaPasoEstimadaSegundos - (horaActualUsuario.getHours() * 3600 + horaActualUsuario.getMinutes() * 60 + horaActualUsuario.getSeconds());
-                const minutosRestantes = Math.round(tiempoRestanteSegundos / 60);
-
-
-                resultadosTrenes.push({
-                    horaPaso: horaPasoFormateada,
-                    minutosRestantes: minutosRestantes,
-                    via: tren.Vía,
-                    origenDestino: tren.OD,
-                    horaProgramada: tren["Hora"]
-                });
             }
 
-            resultadosTrenes.sort((a, b) => {
-                const horaA_parts = a.horaPaso.split(':');
-                const horaB_parts = b.horaPaso.split(':');
-                const horaA_segundos = parseInt(horaA_parts[0]) * 3600 + parseInt(horaA_parts[1]) * 60;
-                const horaB_segundos = parseInt(horaB_parts[0]) * 3600 + parseInt(horaB_parts[1]) * 60;
-                return horaA_segundos - horaB_segundos;
+            const pkTrenReferenciaNumerico = pkToNumber(tren.PK);
+            const horaProgramadaParts = tren["Hora"].split(':');
+            const horaProgramadaSegundos = parseInt(horaProgramadaParts[0]) * 3600 + parseInt(horaProgramadaParts[1]) * 60;
+            const sentidoVia = tren.Vía === '1' ? 'decreciente' : 'creciente';
+
+            const tiempoViajeSegundosInterpolado = await calcularTiempoViajeInterpolado(pkTrenReferenciaNumerico, pkUsuarioNumerico, lineaUsuario, horaPasoData, tipoTren);
+
+            let horaPasoEstimadaSegundos;
+            if (sentidoVia === 'decreciente') {
+                horaPasoEstimadaSegundos = horaProgramadaSegundos + tiempoViajeSegundosInterpolado;
+            } else {
+                horaPasoEstimadaSegundos = horaProgramadaSegundos - tiempoViajeSegundosInterpolado;
+            }
+
+            const horaPasoEstimadaDate = new Date();
+            horaPasoEstimadaDate.setHours(0, 0, 0, 0);
+            horaPasoEstimadaDate.setSeconds(horaPasoEstimadaSegundos);
+            const horaPasoFormateada = formatearHora(horaPasoEstimadaSegundos);
+
+            const tiempoRestanteSegundos = horaPasoEstimadaSegundos - (horaActualUsuario.getHours() * 3600 + horaActualUsuario.getMinutes() * 60 + horaActualUsuario.getSeconds());
+            const minutosRestantes = Math.round(tiempoRestanteSegundos / 60);
+
+            resultadosTrenes.push({
+                horaPaso: horaPasoFormateada,
+                minutosRestantes: minutosRestantes,
+                via: tren.Vía,
+                origenDestino: tren.OD,
+                horaProgramada: tren["Hora"]
             });
+        }
 
+        // ⭐️ NUEVO: Filtrar trenes que pasaron hace más de 30 minutos
+        const tiempoLimitePasadoMinutos = -30; // Define el límite de tiempo pasado en minutos
+        const resultadosTrenesFiltrados = resultadosTrenes.filter(tren => tren.minutosRestantes > tiempoLimitePasadoMinutos);
 
-            let tablaHTML = `
-                <table style="width:100%; border-collapse: collapse;">
-                    <thead>
-                        <tr style="border-bottom: 1px solid white;">
-                            <th style="padding: 8px; text-align: left; color: white;">⏱️PASO</th>
-                            <th style="padding: 8px; text-align: left; color: white;">MIN.</th>
-                            <th style="padding: 8px; text-align: left; color: white;">VÍA</th>
-                            <th style="padding: 8px; text-align: left; color: white;">ORI/DES</th>
-                           <!-- <th style="padding: 8px; text-align: left; color: white;">🕒ALI</th>  <--- LINEA ELIMINADA O COMENTADA -->
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
+        resultadosTrenesFiltrados.sort((a, b) => { // ⭐️ Usa resultadosTrenesFiltrados
+            const horaA_parts = a.horaPaso.split(':');
+            const horaB_parts = b.horaPaso.split(':');
+            const horaA_segundos = parseInt(horaA_parts[0]) * 3600 + parseInt(horaA_parts[1]) * 60;
+            const horaB_segundos = parseInt(horaB_parts[0]) * 3600 + parseInt(horaB_parts[1]) * 60;
+            return horaA_segundos - horaB_segundos;
+        });
 
-            for (const trenResultado of resultadosTrenes) {
-                let claseFila = "";
-                if (Math.abs(trenResultado.minutosRestantes) <= 2) {
-                    claseFila = "tren-proximo-parpadeo";
-                }
-
-                tablaHTML += `
-                    <tr class="${claseFila}" style="border-bottom: 1px solid #ddd;">
-                        <td style="padding: 8px; color: white;">${trenResultado.horaPaso}</td>
-                        <td style="padding: 8px; color: white;">${trenResultado.minutosRestantes}</td>
-                        <td style="padding: 8px; color: white;">${trenResultado.via}</td>
-                        <td style="padding: 8px; color: white;">${trenResultado.origenDestino}</td>
-                             <!-- <td style="padding: 8px; text-align: left; color: white;">${trenResultado.horaProgramada}</td> <--- LINEA ELIMINADA O COMENTADA -->
+        let tablaHTML = `
+            <table style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 1px solid white;">
+                        <th style="padding: 8px; text-align: left; color: white;">⏱️PASO</th>
+                        <th style="padding: 8px; text-align: left; color: white;">MIN.</th>
+                        <th style="padding: 8px; text-align: left; color: white;">VÍA</th>
+                        <th style="padding: 8px; text-align: left; color: white;">ORI/DES</th>
+                       <!-- <th style="padding: 8px; text-align: left; color: white;">🕒ALI</th>  <--- LINEA ELIMINADA O COMENTADA -->
                     </tr>
-                `;
+                </thead>
+                <tbody>
+        `;
+
+        for (const trenResultado of resultadosTrenesFiltrados) { // ⭐️ Usa resultadosTrenesFiltrados
+            let claseFila = "";
+            if (Math.abs(trenResultado.minutosRestantes) <= 2) {
+                claseFila = "tren-proximo-parpadeo";
             }
 
             tablaHTML += `
-                    </tbody>
-                </table>
+                <tr class="${claseFila}" style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 8px; color: white;">${trenResultado.horaPaso}</td>
+                    <td style="padding: 8px; color: white;">${trenResultado.minutosRestantes}</td>
+                    <td style="padding: 8px; color: white;">${trenResultado.via}</td>
+                    <td style="padding: 8px; color: white;">${trenResultado.origenDestino}</td>
+                         <!-- <td style="padding: 8px; text-align: left; color: white;">${trenResultado.horaProgramada}</td> <--- LINEA ELIMINADA O COMENTADA -->
+                </tr>
             `;
-
-            trenesContainer.innerHTML = tablaHTML;
-
-
-        } catch (error) {
-            console.error("Error al cargar datos de trenes o calcular tiempos:", error);
-            trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al cargar horarios de trenes.</p>';
         }
+
+        tablaHTML += `
+                </tbody>
+            </table>
+        `;
+
+        trenesContainer.innerHTML = tablaHTML;
+
+    } catch (error) {
+        console.error("Error al cargar datos de trenes o calcular tiempos:", error);
+        trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al cargar horarios de trenes.</p>';
     }
+}
 
 
     async function cargarJSON(rutaArchivo) {
