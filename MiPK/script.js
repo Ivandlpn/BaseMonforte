@@ -2322,12 +2322,12 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error('No se encontró el botón de cerrar de la tarjeta de Trenes');
     }
+    
 async function mostrarTrenesCercanosInterpolado() {
     trenesContainer.innerHTML = '<p style="text-align: center;">Actualizando horarios de trenes...</p>';
 
-    // *** 1. OBTENER ESTADO DEL CHECKBOX (SI EXISTE) ***
+    // Obtener el estado del checkbox (si existe).  Si no existe, por defecto es 'false'.
     const checkboxMostrarAnteriores = document.getElementById('check-anteriores');
-    // Si el checkbox existe, usamos su estado 'checked'. Si no, por defecto es 'false' (solo futuros).
     const mostrarAnteriores = checkboxMostrarAnteriores ? checkboxMostrarAnteriores.checked : false;
 
     try {
@@ -2392,20 +2392,21 @@ async function mostrarTrenesCercanosInterpolado() {
                 origenDestino: tren.OD,
                 horaProgramada: tren["Hora"],
                 modelo: tren.Modelo,
-                // *** 2. AÑADIR PROPIEDAD 'pasado' ***
-                pasado: minutosRestantes <= -15  // Consideramos "pasado" si tiene -15 minutos o menos.
+                pasado: minutosRestantes <= -15
             });
         }
 
-        // *** 3. FILTRADO CONDICIONAL ***
+        // *** LÓGICA DE FILTRADO *DENTRO* DEL IF/ELSE ***
         let resultadosTrenesFiltrados;
-          if (mostrarAnteriores) {
-              resultadosTrenesFiltrados = resultadosTrenes; // Mostrar todos si la opción está activa
-          } else {
-            //   Filtrar si la opción "Mostrar anteriores" NO está activa
+        if (mostrarAnteriores) {
+            resultadosTrenesFiltrados = resultadosTrenes; // Mostrar todos si la opción está activa
+        } else {
+            // *** AHORA el filtro está AQUÍ ***
             const tiempoLimitePasadoMinutos = -15;
             resultadosTrenesFiltrados = resultadosTrenes.filter(tren => tren.minutosRestantes > tiempoLimitePasadoMinutos);
         }
+
+
         resultadosTrenesFiltrados.sort((a, b) => {
             const horaA_parts = a.horaPaso.split(':');
             const horaB_parts = b.horaPaso.split(':');
@@ -2414,11 +2415,10 @@ async function mostrarTrenesCercanosInterpolado() {
             return horaA_segundos - horaB_segundos;
         });
 
-        // *** 4. CONSTRUCCIÓN DE LA TABLA HTML (CON CHECKBOX) ***
         let tablaHTML = `
             <table style="width:100%; border-collapse: collapse;">
                 <thead>
-                    <tr>  <!-- Fila para el checkbox -->
+                    <tr>
                         <th colspan="5" style="text-align: left; padding: 8px; color: white;">
                             <div style="display: flex; align-items: center;">
                                 <input type="checkbox" id="check-anteriores" style="margin-right: 5px;" ${mostrarAnteriores ? 'checked' : ''}>
@@ -2437,11 +2437,11 @@ async function mostrarTrenesCercanosInterpolado() {
                 <tbody>
         `;
 
-        for (const trenResultado of resultadosTrenesFiltrados) {
+       for (const trenResultado of resultadosTrenesFiltrados) {
             let claseFila = "";
             let horaPasoCelda, minutosRestantesCelda;
 
-            if (Math.abs(trenResultado.minutosRestantes) <= 2 && !mostrarAnteriores) { // Solo parpadea si son futuros y próximos, y si no estamos mostrando anteriores
+            if (Math.abs(trenResultado.minutosRestantes) <= 2 && !mostrarAnteriores) {
                 claseFila = "tren-proximo-parpadeo";
                 horaPasoCelda = '🕒';
                 minutosRestantesCelda = 'Próximo';
@@ -2450,40 +2450,38 @@ async function mostrarTrenesCercanosInterpolado() {
                 minutosRestantesCelda = trenResultado.minutosRestantes;
             }
 
-            // *** 5. APLICAR CLASE CSS 'tren-pasado' ***
+            // Aplicar clase 'tren-pasado' si corresponde
             if (trenResultado.pasado) {
                 claseFila = "tren-pasado";
             }
 
-        // ⭐️ Mapeo de modelos a imágenes (añadir más si es necesario)
-        let imagenModelo = "";
-        const modeloTren = trenResultado.modelo.toUpperCase(); //Ensure case consistency for matching
+            let imagenModelo = "";
+            const modeloTren = trenResultado.modelo.toUpperCase();
 
-        if (modeloTren.includes("ALVIA")) {
-            imagenModelo = '<img src="img/trenes/alvia.png" alt="Alvia">';
-        } else if (modeloTren.includes("AVANT")) {
-            imagenModelo = '<img src="img/trenes/avant.png" alt="Avant">';
-        } else if (modeloTren.includes("AVE") && !modeloTren.includes("AVLO")) { // Ensure AVLO is not matched here
-            imagenModelo = '<img src="img/trenes/ave.png" alt="Ave">';
-        } else if (modeloTren.includes("AVLO")) {
-            imagenModelo = '<img src="img/trenes/avlo.png" alt="Avlo">';
-        } else if (modeloTren.includes("OUIGO")) {
-            imagenModelo = '<img src="img/trenes/ouigo.png" alt="Ouigo">';
-        } else if (modeloTren.includes("IRYO")) {
-             imagenModelo = '<img src="img/trenes/iryo.png" alt="Iryo">';
-        } else {
-           imagenModelo = '<span> - </span>';  // Or a default image, or empty string
-        }
+            if (modeloTren.includes("ALVIA")) {
+                imagenModelo = '<img src="img/trenes/alvia.png" alt="Alvia">';
+            } else if (modeloTren.includes("AVANT")) {
+                imagenModelo = '<img src="img/trenes/avant.png" alt="Avant">';
+            } else if (modeloTren.includes("AVE") && !modeloTren.includes("AVLO")) {
+                imagenModelo = '<img src="img/trenes/ave.png" alt="Ave">';
+            } else if (modeloTren.includes("AVLO")) {
+                imagenModelo = '<img src="img/trenes/avlo.png" alt="Avlo">';
+            } else if (modeloTren.includes("OUIGO")) {
+                imagenModelo = '<img src="img/trenes/ouigo.png" alt="Ouigo">';
+            } else if (modeloTren.includes("IRYO")) {
+                imagenModelo = '<img src="img/trenes/iryo.png" alt="Iryo">';
+            } else {
+                imagenModelo = '<span> - </span>';
+            }
 
-       
+
             tablaHTML += `
                 <tr class="${claseFila}" style="border-bottom: 1px solid #ddd;">
                     <td style="padding: 8px; color: white; text-align: center">${horaPasoCelda}</td>
                     <td style="padding: 8px; color: white; text-align: center">${minutosRestantesCelda}</td>
                     <td style="padding: 8px; color: white; text-align: center">${trenResultado.via}</td>
                     <td style="padding: 8px; color: white; text-align: center">${trenResultado.origenDestino}</td>
-                    <td style="padding: 8px; color: white; text-align: center">${imagenModelo}</td>  <!-- ⭐️ NUEVA CELDA con la imagen -->
-                     <!-- <td style="padding: 8px; text-align: left; color: white;">🕒ALI</th>  <--- LINEA ELIMINADA O COMENTADA -->
+                    <td style="padding: 8px; color: white; text-align: center">${imagenModelo}</td>
                 </tr>
             `;
         }
@@ -2495,17 +2493,17 @@ async function mostrarTrenesCercanosInterpolado() {
 
         trenesContainer.innerHTML = tablaHTML;
 
-        // *** 6. AÑADIR EVENT LISTENER AL CHECKBOX ***
-        const checkbox = document.getElementById('check-anteriores'); // Obtener el checkbox
-        if (checkbox) { // Verificar si el checkbox existe
-            checkbox.addEventListener('change', mostrarTrenesCercanosInterpolado); // Añadir el listener, que re-ejecuta la función.
-        }
+        //Añadir el event listener del checkbox
+        const checkbox = document.getElementById('check-anteriores');
+           if (checkbox) { //Asegurarse que el checkbox existe
+              checkbox.addEventListener('change', mostrarTrenesCercanosInterpolado);
+          }
+
     } catch (error) {
         console.error("Error al cargar datos de trenes o calcular tiempos:", error);
         trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al cargar horarios de trenes.</p>';
     }
 }
-
 
     async function cargarJSON(rutaArchivo) {
         const response = await fetch(rutaArchivo);
