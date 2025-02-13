@@ -1,0 +1,18 @@
+{
+  "semanas": [
+    {
+      "semana": 9,
+      "fechaInicioFin": "Del 24 al 28 de febrero de 2025",
+      "actaILT": "32",
+      "actaEstaciones": "31",
+      "guardia": "Ernesto"
+    },
+    {
+      "semana": 10,
+      "fechaInicioFin": "Del 3 al 7 de marzo de 2025",
+      "actaILT": "",
+      "actaEstaciones": "",
+      "guardia": ""
+    }
+  ]
+}
