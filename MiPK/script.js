@@ -9,7 +9,7 @@ const puertasContainer = document.getElementById("puertas-card-container");
 const puertasInfoDiv = document.getElementById("puertas-info");
 const cerrarPuertasCard = document.getElementById("cerrar-puertas-card");
 
-const DATA_URL = 'https://api.jsonbin.io/v3/b/67adda6ead19ca34f801ebd2'; // **REEMPLAZA ESTO con la URL pública de tu archivo guardiactas_data.json**
+const DATA_URL = 'https://api.jsonbin.io/v3/b/67ade997ad19ca34f801f7d7'; // **REEMPLAZA ESTO con la URL pública de tu archivo guardiactas_data.json**
 
 const apiKeyOpenWeatherMap = "14225e48c44f9d35291e12867b7f32cf"; // API Meteo
 
