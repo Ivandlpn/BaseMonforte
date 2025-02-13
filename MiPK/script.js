@@ -2567,7 +2567,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ----- FIN FUNCIONALIDAD TRENES -----
 
-
 ///// INICIO ICONO GUARDIA ACTAS /////
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -2733,7 +2732,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('cerrar-mensaje-button').addEventListener('click', function() {
         mensajeCardContainer.style.display = 'none';
     });
-   
+
     async function cargarDatosGuardiaActas() {
         try {
             const response = await fetch(DATA_URL, { // <-- DATA_URL se queda igual
@@ -2753,10 +2752,10 @@ document.addEventListener('DOMContentLoaded', function() {
             return { semanas: [] }; // Devolver datos vacíos para evitar errores
         }
     }
-    
 
     async function guardarDatosSemanaGuardiaActas(semana, actaILT, actaEstaciones, guardia) {
         try {
+            // --- LOGGING AÑADIDO PARA VER DATOS A GUARDAR ---
             const jsonData = await cargarDatosGuardiaActas();
             const semanaIndex = jsonData.semanas.findIndex(s => s.semana === parseInt(semana));
             if (semanaIndex !== -1) {
@@ -2776,6 +2775,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     guardia: guardia
                 });
             }
+
+            console.log("Datos JSON que se intentan GUARDAR:", jsonData); // <-- LOGGING AÑADIDO
 
             const response = await fetch(DATA_URL, { // Enviar los datos actualizados de vuelta al archivo JSON
                 method: 'PUT', // **OJO: Algunos servicios de hosting pueden no permitir PUT. Si falla, usa POST y gestiona la actualización en el backend si es posible.**
@@ -2820,7 +2821,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 ///// FIN ICONO GUARDIA ACTAS /////
-
 
 
 
