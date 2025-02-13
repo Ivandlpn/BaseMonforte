@@ -2297,6 +2297,39 @@ document.addEventListener('DOMContentLoaded', function() {
     const cerrarTrenesCardButton = document.getElementById('cerrar-trenes-card');
     let trenesInterval; // Variable para almacenar el intervalo
 
+    // *** AÑADIDO: Crear la cabecera de la tabla UNA SOLA VEZ ***
+    let tablaHTML = `
+        <table style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th colspan="5" style="text-align: left; padding: 8px; color: white;">
+                        <div style="display: flex; align-items: center; cursor: pointer;">
+                            <input type="checkbox" id="check-anteriores" style="margin-right: 5px;">
+                            <label for="check-anteriores" style="margin:0; cursor: pointer;">Mostrar anteriores</label>
+                        </div>
+                    </th>
+                </tr>
+                <tr style="border-bottom: 1px solid white;">
+                    <th style="padding: 8px; text-align: center; color: white;">HORA</th>
+                    <th style="padding: 8px; text-align: center; color: white;">MIN.</th>
+                    <th style="padding: 8px; text-align: center; color: white;">VÍA</th>
+                    <th style="padding: 8px; text-align: center; color: white;">ORI/DES</th>
+                    <th style="padding: 8px; text-align: center; color: white;">MODELO</th>
+                </tr>
+            </thead>
+            <tbody>  <!-- CUERPO DE LA TABLA VACÍO INICIALMENTE -->
+            </tbody>
+        </table>
+    `;
+    trenesContainer.innerHTML = tablaHTML; // Insertar la cabecera
+
+    // *** AÑADIDO: Event listener para el checkbox (fuera de mostrarTrenesCercanosInterpolado) ***
+    const checkboxMostrarAnteriores = document.getElementById('check-anteriores');
+    if (checkboxMostrarAnteriores) {
+        checkboxMostrarAnteriores.addEventListener('change', mostrarTrenesCercanosInterpolado);
+    }
+
+
     if (trenesButton) {
         trenesButton.addEventListener('click', function() {
             trenesCardContainer.style.display = 'flex';
@@ -2322,12 +2355,21 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error('No se encontró el botón de cerrar de la tarjeta de Trenes');
     }
-    
-async function mostrarTrenesCercanosInterpolado() {
-    trenesContainer.innerHTML = '<p style="text-align: center;">Actualizando horarios de trenes...</p>';
 
-    // Obtener el estado del checkbox (si existe).  Si no existe, por defecto es 'false'.
-    const checkboxMostrarAnteriores = document.getElementById('check-anteriores');
+}); // Fin del DOMContentLoaded
+
+
+async function mostrarTrenesCercanosInterpolado() {
+     // Obtener el tbody de la tabla (ya existente)
+    const tbody = document.querySelector('#trenes-container tbody');
+    if (!tbody) {
+        console.error("mostrarTrenesCercanosInterpolado: No se encontró el tbody de la tabla.");
+        return;
+    }
+    tbody.innerHTML = '<p style="text-align: center;">Actualizando horarios de trenes...</p>'; // Mensaje de carga
+
+    // *** OBTENER ESTADO DEL CHECKBOX (si existe) ***
+     const checkboxMostrarAnteriores = document.getElementById('check-anteriores');
     const mostrarAnteriores = checkboxMostrarAnteriores ? checkboxMostrarAnteriores.checked : false;
 
     try {
@@ -2392,20 +2434,18 @@ async function mostrarTrenesCercanosInterpolado() {
                 origenDestino: tren.OD,
                 horaProgramada: tren["Hora"],
                 modelo: tren.Modelo,
-                pasado: minutosRestantes <= -15
+                pasado: minutosRestantes <= -15  //  "pasado" si son 15 minutos o más
             });
         }
 
-        // *** LÓGICA DE FILTRADO *DENTRO* DEL IF/ELSE ***
+        // Filtrado condicional
         let resultadosTrenesFiltrados;
         if (mostrarAnteriores) {
-            resultadosTrenesFiltrados = resultadosTrenes; // Mostrar todos si la opción está activa
+              resultadosTrenesFiltrados = resultadosTrenes;
         } else {
-            // *** AHORA el filtro está AQUÍ ***
             const tiempoLimitePasadoMinutos = -15;
             resultadosTrenesFiltrados = resultadosTrenes.filter(tren => tren.minutosRestantes > tiempoLimitePasadoMinutos);
         }
-
 
         resultadosTrenesFiltrados.sort((a, b) => {
             const horaA_parts = a.horaPaso.split(':');
@@ -2415,33 +2455,13 @@ async function mostrarTrenesCercanosInterpolado() {
             return horaA_segundos - horaB_segundos;
         });
 
-        let tablaHTML = `
-            <table style="width:100%; border-collapse: collapse;">
-                <thead>
-                    <tr>
-                        <th colspan="5" style="text-align: left; padding: 8px; color: white;">
-                            <div style="display: flex; align-items: center;">
-                                <input type="checkbox" id="check-anteriores" style="margin-right: 5px;" ${mostrarAnteriores ? 'checked' : ''}>
-                                <label for="check-anteriores" style="margin:0; cursor: pointer;">Mostrar anteriores</label>
-                            </div>
-                        </th>
-                    </tr>
-                    <tr style="border-bottom: 1px solid white;">
-                        <th style="padding: 8px; text-align: center; color: white;">HORA</th>
-                        <th style="padding: 8px; text-align: center; color: white;">MIN.</th>
-                        <th style="padding: 8px; text-align: center; color: white;">VÍA</th>
-                        <th style="padding: 8px; text-align: center; color: white;">ORI/DES</th>
-                        <th style="padding: 8px; text-align: center; color: white;">MODELO</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-
-       for (const trenResultado of resultadosTrenesFiltrados) {
+        // *** MODIFICADO: Construir SOLO el <tbody> ***
+        let tablaHTML = ''; // Ya no se necesita la tabla completa, solo el tbody
+        for (const trenResultado of resultadosTrenesFiltrados) {
             let claseFila = "";
             let horaPasoCelda, minutosRestantesCelda;
 
-            if (Math.abs(trenResultado.minutosRestantes) <= 2 && !mostrarAnteriores) {
+            if (Math.abs(trenResultado.minutosRestantes) <= 2 && !mostrarAnteriores) { // Solo parpadea si son futuros y próximos.
                 claseFila = "tren-proximo-parpadeo";
                 horaPasoCelda = '🕒';
                 minutosRestantesCelda = 'Próximo';
@@ -2455,55 +2475,45 @@ async function mostrarTrenesCercanosInterpolado() {
                 claseFila = "tren-pasado";
             }
 
-            let imagenModelo = "";
-            const modeloTren = trenResultado.modelo.toUpperCase();
+        //  Mapeo de modelos a imágenes (añadir más si es necesario)
+        let imagenModelo = "";
+        const modeloTren = trenResultado.modelo.toUpperCase(); //Ensure case consistency for matching
 
-            if (modeloTren.includes("ALVIA")) {
-                imagenModelo = '<img src="img/trenes/alvia.png" alt="Alvia">';
-            } else if (modeloTren.includes("AVANT")) {
-                imagenModelo = '<img src="img/trenes/avant.png" alt="Avant">';
-            } else if (modeloTren.includes("AVE") && !modeloTren.includes("AVLO")) {
-                imagenModelo = '<img src="img/trenes/ave.png" alt="Ave">';
-            } else if (modeloTren.includes("AVLO")) {
-                imagenModelo = '<img src="img/trenes/avlo.png" alt="Avlo">';
-            } else if (modeloTren.includes("OUIGO")) {
-                imagenModelo = '<img src="img/trenes/ouigo.png" alt="Ouigo">';
-            } else if (modeloTren.includes("IRYO")) {
-                imagenModelo = '<img src="img/trenes/iryo.png" alt="Iryo">';
-            } else {
-                imagenModelo = '<span> - </span>';
-            }
-
-
+        if (modeloTren.includes("ALVIA")) {
+            imagenModelo = '<img src="img/trenes/alvia.png" alt="Alvia">';
+        } else if (modeloTren.includes("AVANT")) {
+            imagenModelo = '<img src="img/trenes/avant.png" alt="Avant">';
+        } else if (modeloTren.includes("AVE") && !modeloTren.includes("AVLO")) { // Ensure AVLO is not matched here
+            imagenModelo = '<img src="img/trenes/ave.png" alt="Ave">';
+        } else if (modeloTren.includes("AVLO")) {
+            imagenModelo = '<img src="img/trenes/avlo.png" alt="Avlo">';
+        } else if (modeloTren.includes("OUIGO")) {
+            imagenModelo = '<img src="img/trenes/ouigo.png" alt="Ouigo">';
+        } else if (modeloTren.includes("IRYO")) {
+             imagenModelo = '<img src="img/trenes/iryo.png" alt="Iryo">';
+        } else {
+           imagenModelo = '<span> - </span>';  // Or a default image, or empty string
+        }
             tablaHTML += `
                 <tr class="${claseFila}" style="border-bottom: 1px solid #ddd;">
                     <td style="padding: 8px; color: white; text-align: center">${horaPasoCelda}</td>
                     <td style="padding: 8px; color: white; text-align: center">${minutosRestantesCelda}</td>
                     <td style="padding: 8px; color: white; text-align: center">${trenResultado.via}</td>
                     <td style="padding: 8px; color: white; text-align: center">${trenResultado.origenDestino}</td>
-                    <td style="padding: 8px; color: white; text-align: center">${imagenModelo}</td>
+                    <td style="padding: 8px; color: white; text-align: center">${imagenModelo}</td>  <!-- ⭐️ NUEVA CELDA con la imagen -->
+                     <!-- <td style="padding: 8px; text-align: left; color: white;">🕒ALI</th>  <--- LINEA ELIMINADA O COMENTADA -->
                 </tr>
             `;
         }
 
-        tablaHTML += `
-                </tbody>
-            </table>
-        `;
-
-        trenesContainer.innerHTML = tablaHTML;
-
-        //Añadir el event listener del checkbox
-        const checkbox = document.getElementById('check-anteriores');
-           if (checkbox) { //Asegurarse que el checkbox existe
-              checkbox.addEventListener('change', mostrarTrenesCercanosInterpolado);
-          }
+        tbody.innerHTML = tablaHTML; // Insertar el tbody generado en la tabla existente.
 
     } catch (error) {
         console.error("Error al cargar datos de trenes o calcular tiempos:", error);
         trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al cargar horarios de trenes.</p>';
     }
 }
+
 
     async function cargarJSON(rutaArchivo) {
         const response = await fetch(rutaArchivo);
@@ -2590,9 +2600,6 @@ async function mostrarTrenesCercanosInterpolado() {
         const minutos = Math.floor((segundosDesdeMedianoche % 3600) / 60);
         return String(horas).padStart(2, '0') + ':' + String(minutos).padStart(2, '0');
     }
-
-});
-
 // ----- FIN FUNCIONALIDAD TRENES -----
 
 ///// INICIO ICONO GUARDIA ACTAS /////
