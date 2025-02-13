@@ -2736,11 +2736,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function cargarDatosGuardiaActas() {
         try {
-            const response = await fetch(DATA_URL, { // <-- DATA_URL se queda igual
-                headers: {
-                    'X-Access-Key': '$2a$10$BdLPeO9xqlQBYEKv1bRlveyRzLg0RbL6sFPah9tQYdzG.j42pUCtC' // <-- ¡PEGA LA CLAVE AQUÍ!
-                }
-            });
+            const response = await fetch(DATA_URL);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
