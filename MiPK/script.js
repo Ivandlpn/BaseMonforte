@@ -2390,9 +2390,18 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Filtrar trenes que pasaron hace más de 15 minutos
-        const tiempoLimitePasadoMinutos = -15;
-        const resultadosTrenesFiltrados = resultadosTrenes.filter(tren => tren.minutosRestantes > tiempoLimitePasadoMinutos);
+        // *** LÓGICA DE FILTRADO CONDICIONAL BASADA EN CHECKBOX "MOSTRAR ANTERIORES" ***
+        const checkboxMostrarAnteriores = document.getElementById('check-anteriores');
+        let resultadosTrenesFiltrados;
+
+        if (checkboxMostrarAnteriores && checkboxMostrarAnteriores.checked) {
+            // Si el checkbox "Mostrar anteriores" está marcado, mostrar todos los trenes
+            resultadosTrenesFiltrados = resultadosTrenes; // Mostrar todos los trenes calculados
+        } else {
+            // Si el checkbox NO está marcado (o no existe), aplicar el filtro original (solo trenes futuros)
+            const tiempoLimitePasadoMinutos = -15;
+            resultadosTrenesFiltrados = resultadosTrenes.filter(tren => tren.minutosRestantes > tiempoLimitePasadoMinutos); // Filtrar trenes pasados
+        }
 
         resultadosTrenesFiltrados.sort((a, b) => {
             const horaA_parts = a.horaPaso.split(':');
@@ -2405,6 +2414,15 @@ document.addEventListener('DOMContentLoaded', function() {
         let tablaHTML = `
             <table style="width:100%; border-collapse: collapse;">
                 <thead>
+                    <tr>  <!-- *** NUEVA FILA DE CABECERA CON CHECKBOX "MOSTRAR ANTERIORES" *** -->
+                        <th colspan="4" style="text-align: left; padding: 8px; color: white;">
+                           <div id="opcion-mostrar-anteriores" style="display: flex; align-items: center; cursor: pointer;">
+                                <input type="checkbox" id="check-anteriores" style="margin-right: 5px;">
+                                <label for="check-anteriores" style="margin: 0; cursor: pointer;">Mostrar anteriores</label>
+                           </div>
+                        </th>
+                        <th></th> <!-- Columna extra para alinear con "MODELO" -->
+                    </tr>
                     <tr style="border-bottom: 1px solid white;">
                         <th style="padding: 8px; text-align: center; color: white;">HORA</th>
                         <th style="padding: 8px; text-align: center; color: white;">MIN.</th>
@@ -2420,7 +2438,7 @@ document.addEventListener('DOMContentLoaded', function() {
         for (const trenResultado of resultadosTrenesFiltrados) {
             let claseFila = "";
             let horaPasoCelda, minutosRestantesCelda;
-           
+
             if (Math.abs(trenResultado.minutosRestantes) <= 2) {
                 claseFila = "tren-proximo-parpadeo";
                 horaPasoCelda = '🕒';
@@ -2430,27 +2448,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 minutosRestantesCelda = trenResultado.minutosRestantes;
             }
 
-        // ⭐️ Mapeo de modelos a imágenes (añadir más si es necesario)
-        let imagenModelo = "";
-        const modeloTren = trenResultado.modelo.toUpperCase(); //Ensure case consistency for matching
+            // ⭐️ Mapeo de modelos a imágenes (añadir más si es necesario)
+            let imagenModelo = "";
+            const modeloTren = trenResultado.modelo.toUpperCase(); //Ensure case consistency for matching
 
-        if (modeloTren.includes("ALVIA")) {
-            imagenModelo = '<img src="img/trenes/alvia.png" alt="Alvia">';
-        } else if (modeloTren.includes("AVANT")) {
-            imagenModelo = '<img src="img/trenes/avant.png" alt="Avant">';
-        } else if (modeloTren.includes("AVE") && !modeloTren.includes("AVLO")) { // Ensure AVLO is not matched here
-            imagenModelo = '<img src="img/trenes/ave.png" alt="Ave">';
-        } else if (modeloTren.includes("AVLO")) {
-            imagenModelo = '<img src="img/trenes/avlo.png" alt="Avlo">';
-        } else if (modeloTren.includes("OUIGO")) {
-            imagenModelo = '<img src="img/trenes/ouigo.png" alt="Ouigo">';
-        } else if (modeloTren.includes("IRYO")) {
-             imagenModelo = '<img src="img/trenes/iryo.png" alt="Iryo">';
-        } else {
-           imagenModelo = '<span> - </span>';  // Or a default image, or empty string
-        }
+            if (modeloTren.includes("ALVIA")) {
+                imagenModelo = '<img src="img/trenes/alvia.png" alt="Alvia">';
+            } else if (modeloTren.includes("AVANT")) {
+                imagenModelo = '<img src="img/trenes/avant.png" alt="Avant">';
+            } else if (modeloTren.includes("AVE") && !modeloTren.includes("AVLO")) { // Ensure AVLO is not matched here
+                imagenModelo = '<img src="img/trenes/ave.png" alt="Ave">';
+            } else if (modeloTren.includes("AVLO")) {
+                imagenModelo = '<img src="img/trenes/avlo.png" alt="Avlo">';
+            } else if (modeloTren.includes("OUIGO")) {
+                imagenModelo = '<img src="img/trenes/ouigo.png" alt="Ouigo">';
+            } else if (modeloTren.includes("IRYO")) {
+                imagenModelo = '<img src="img/trenes/iryo.png" alt="Iryo">';
+            } else {
+                imagenModelo = '<span> - </span>';  // Or a default image, or empty string
+            }
 
-       
+
             tablaHTML += `
                 <tr class="${claseFila}" style="border-bottom: 1px solid #ddd;">
                     <td style="padding: 8px; color: white; text-align: center">${horaPasoCelda}</td>
@@ -2470,12 +2488,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
         trenesContainer.innerHTML = tablaHTML;
 
+        // *** AÑADIR EVENT LISTENER AL CHECKBOX "MOSTRAR ANTERIORES" ***
+        const checkboxMostrarAnteriores = document.getElementById('check-anteriores');
+        checkboxMostrarAnteriores.addEventListener('change', function() {
+            mostrarTrenesCercanosInterpolado(); // Volver a llamar a la función para regenerar la tabla
+        });
+
     } catch (error) {
         console.error("Error al cargar datos de trenes o calcular tiempos:", error);
         trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al cargar horarios de trenes.</p>';
     }
 }
-
 
     async function cargarJSON(rutaArchivo) {
         const response = await fetch(rutaArchivo);
@@ -2566,7 +2589,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ----- FIN FUNCIONALIDAD TRENES -----
-
 ///// INICIO ICONO GUARDIA ACTAS /////
 
 document.addEventListener('DOMContentLoaded', function() {
