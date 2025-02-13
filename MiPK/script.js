@@ -9,6 +9,8 @@ const puertasContainer = document.getElementById("puertas-card-container");
 const puertasInfoDiv = document.getElementById("puertas-info");
 const cerrarPuertasCard = document.getElementById("cerrar-puertas-card");
 
+const DATA_URL = 'https://ivandlpn.github.io/BaseMonforte/MiPK/doc/guardiactas/guardiactas_data.json'; // **REEMPLAZA ESTO con la URL pública de tu archivo guardiactas_data.json**
+
 const apiKeyOpenWeatherMap = "14225e48c44f9d35291e12867b7f32cf"; // API Meteo
 
     const rutasArchivos = [
