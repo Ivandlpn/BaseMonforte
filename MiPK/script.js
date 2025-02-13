@@ -2734,13 +2734,17 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('cerrar-mensaje-button').addEventListener('click', function() {
         mensajeCardContainer.style.display = 'none';
     });
-
+    
     async function cargarDatosGuardiaActas() {
         try {
-            const cacheBuster = Math.random().toString(36).substring(7); // Generar una cadena aleatoria como "cache buster"
-            const urlConCacheBuster = `${DATA_URL}?cache=${cacheBuster}`; // Añadir "?cache=cadena_aleatoria" a la URL
-            const response = await fetch(urlConCacheBuster, { // Usar la URL MODIFICADA con el "cache buster"
-                method: 'GET' // Mantenemos method GET (opcional, pero explícito)
+            const cacheBuster = Math.random().toString(36).substring(7); // Cache buster aleatorio
+            const urlConCacheBuster = `${DATA_URL}?cache=${cacheBuster}`; // URL con cache buster
+            const response = await fetch(urlConCacheBuster, { // Usar URL con cache buster
+                method: 'GET',
+                headers: { // Añadir headers para DESACTIVAR CACHÉ (¡NUEVO!)
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache'
+                }
             });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
