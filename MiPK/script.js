@@ -2610,6 +2610,7 @@ document.addEventListener('DOMContentLoaded', function() {
         guardiaActasPasswordContainer.style.display = 'none';
 
         const jsonData = await cargarDatosGuardiaActas(); // Cargar datos desde el archivo JSON
+        console.log("jsonData después de cargarDatosGuardiaActas:", jsonData); // <-- LOGGING AÑADIDO
         const semanasData = jsonData.semanas;
 
         const semanaActual = obtenerNumeroSemana(new Date());
@@ -2779,7 +2780,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log("Datos JSON que se intentan GUARDAR:", jsonData); // <-- LOGGING AÑADIDO
 
             const response = await fetch(DATA_URL, { // Enviar los datos actualizados de vuelta al archivo JSON
-                method: 'PUT', // **OJO: Algunos servicios de hosting pueden no permitir PUT. Si falla, usa POST y gestiona la actualización en el backend si es posible.**
+                method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(jsonData)
             });
