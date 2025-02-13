@@ -2566,6 +2566,218 @@ document.addEventListener('DOMContentLoaded', function() {
 // ----- FIN FUNCIONALIDAD TRENES -----
 
 
++///// INICIO ICONO GUARDIA ACTAS /////
++
++document.addEventListener('DOMContentLoaded', function() {
++    const guardiaActasButtonPlus = document.querySelector('.plus-option-button[aria-label="GUARDIA ACTAS"]');
++    const guardiaActasCardContainer = document.getElementById('guardiactas-card-container');
++    const cerrarGuardiaActasCardButton = document.getElementById('cerrar-guardiactas-card');
++    const guardiaActasListContainer = document.getElementById('guardiactas-list');
++    const guardiaActasDetailsCard = document.getElementById('guardiactas-details-card');
++    const guardiaActasEditCard = document.getElementById('guardiactas-edit-card');
++    const guardiaActasPasswordContainer = document.getElementById('guardiactas-password-container');
++    const mensajeCardContainer = document.getElementById('mensaje-card-container');
++
++    const guardiasLista = ["Ana", "Edu", "Ernesto", "Iván", "Manuel", "Pepe", "Raúl"]; // Lista de guardias
++
++    if (guardiaActasButtonPlus) {
++        guardiaActasButtonPlus.addEventListener('click', function() {
++            guardiaActasCardContainer.style.display = 'flex';
++            mostrarListaSemanasGuardiaActas();
++        });
++    }
++
++    if (cerrarGuardiaActasCardButton) {
++        cerrarGuardiaActasCardButton.addEventListener('click', function() {
++            guardiaActasCardContainer.style.display = 'none';
++            ocultarTarjetasGuardiaActas();
++        });
++    }
++
++    function ocultarTarjetasGuardiaActas() {
++        guardiaActasDetailsCard.style.display = 'none';
++        guardiaActasEditCard.style.display = 'none';
++        guardiaActasPasswordContainer.style.display = 'none';
++        mensajeCardContainer.style.display = 'none';
++    }
++
++    function mostrarListaSemanasGuardiaActas() {
++        guardiaActasListContainer.innerHTML = ''; // Limpiar lista anterior
++        guardiaActasListContainer.style.display = 'block'; // Asegurar que se muestra la lista
++        guardiaActasDetailsCard.style.display = 'none';
++        guardiaActasEditCard.style.display = 'none';
++        guardiaActasPasswordContainer.style.display = 'none';
++
++        const semanaActual = obtenerNumeroSemana(new Date());
++        for (let i = 0; i < 2; i++) { // Mostrar semana actual y anterior
++            const semana = semanaActual - i;
++            const fechaInicioFin = obtenerRangoFechasSemana(semana, new Date().getFullYear());
++            const datosSemana = obtenerDatosSemanaGuardiaActas(semana);
++            const semanaDiv = document.createElement('div');
++            semanaDiv.innerHTML = `
++                Semana ${semana} (${fechaInicioFin})
++                <button class="boton-ver-guardiactas" data-semana="${semana}">👁️</button>
++                <button class="boton-editar-guardiactas" data-semana="${semana}">✏️</button>
++            `;
++            guardiaActasListContainer.appendChild(semanaDiv);
++        }
++        agregarEventosBotonesSemana();
++    }
++
++    function agregarEventosBotonesSemana() {
++        document.querySelectorAll('.boton-ver-guardiactas').forEach(button => {
++            button.addEventListener('click', function() {
++                const semana = this.dataset.semana;
++                mostrarDetallesSemanaGuardiaActas(semana);
++            });
++        });
++        document.querySelectorAll('.boton-editar-guardiactas').forEach(button => {
++            button.addEventListener('click', function() {
++                const semana = this.dataset.semana;
++                mostrarPasswordCardGuardiaActas(semana);
++            });
++        });
++    }
++
++    function mostrarDetallesSemanaGuardiaActas(semana) {
++        const datosSemana = obtenerDatosSemanaGuardiaActas(semana);
++        guardiaActasListContainer.style.display = 'none';
++        guardiaActasDetailsCard.style.display = 'block';
++
++        document.getElementById('guardiactas-details-semana').textContent = semana;
++        document.getElementById('guardiactas-details-fecha').textContent = obtenerRangoFechasSemana(semana, new Date().getFullYear());
++        document.getElementById('guardiactas-details-ilt').textContent = datosSemana.actaILT || 'Sin datos';
++        document.getElementById('guardiactas-details-estaciones').textContent = datosSemana.actaEstaciones || 'Sin datos';
++        document.getElementById('guardiactas-details-guardia').textContent = datosSemana.guardia || 'Sin datos';
++    }
++
++    document.getElementById('guardiactas-details-volver-button').addEventListener('click', function() {
++        mostrarListaSemanasGuardiaActas();
++    });
++
++    function mostrarPasswordCardGuardiaActas(semana) {
++        guardiaActasListContainer.style.display = 'none';
++        guardiaActasPasswordContainer.style.display = 'flex';
++
++        const confirmarPasswordButton = document.getElementById('guardiactas-password-confirmar-button');
++        const passwordInput = document.getElementById('guardiactas-password-input');
++
++        const confirmarPasswordHandler = function() {
++            if (passwordInput.value === 'MDC') {
++                guardiaActasPasswordContainer.style.display = 'none';
++                mostrarEditarSemanaGuardiaActas(semana);
++                // Eliminar el event listener después de usarlo para evitar múltiples ejecuciones
++                confirmarPasswordButton.removeEventListener('click', confirmarPasswordHandler);
++            } else {
++                mostrarMensajeGuardiaActas("Error", "Contraseña incorrecta");
++                // Eliminar el event listener también en caso de contraseña incorrecta
++                confirmarPasswordButton.removeEventListener('click', confirmarPasswordHandler);
++            }
++        };
++
++        // Asignar el event listener CADA VEZ que se muestra la tarjeta de contraseña
++        confirmarPasswordButton.addEventListener('click', confirmarPasswordHandler);
++    }
++
++    function mostrarEditarSemanaGuardiaActas(semana) {
++        const datosSemana = obtenerDatosSemanaGuardiaActas(semana);
++        guardiaActasEditCard.style.display = 'block';
++        guardiaActasListContainer.style.display = 'none';
++        guardiaActasDetailsCard.style.display = 'none';
++
++        document.getElementById('guardiactas-edit-semana').textContent = semana;
++        document.getElementById('guardiactas-edit-ilt').value = datosSemana.actaILT || '';
++        document.getElementById('guardiactas-edit-estaciones').value = datosSemana.actaEstaciones || '';
++
++        const guardiaSelect = document.getElementById('guardiactas-edit-guardia');
++        guardiaSelect.innerHTML = '<option value="">Seleccionar Guardia</option>'; // Limpiar opciones previas
++        guardiasLista.forEach(guardia => {
++            const option = document.createElement('option');
++            option.value = guardia;
++            option.text = guardia;
++            if (guardia === datosSemana.guardia) {
++                option.selected = true;
++            }
++            guardiaSelect.appendChild(option);
++        });
++    }
++
++    document.getElementById('guardiactas-edit-cancelar-button').addEventListener('click', function() {
++        mostrarListaSemanasGuardiaActas();
++    });
++
++    document.getElementById('guardiactas-edit-guardar-button').addEventListener('click', function() {
++        const semana = document.getElementById('guardiactas-edit-semana').textContent;
++        const actaILT = document.getElementById('guardiactas-edit-ilt').value;
++        const actaEstaciones = document.getElementById('guardiactas-edit-estaciones').value;
++        const guardia = document.getElementById('guardiactas-edit-guardia').value;
++
++        guardarDatosSemanaGuardiaActas(semana, actaILT, actaEstaciones, guardia);
++        mostrarMensajeGuardiaActas("Éxito", "Datos guardados correctamente");
++        mostrarListaSemanasGuardiaActas(); // Volver a la lista de semanas tras guardar
++    });
++
++    function mostrarMensajeGuardiaActas(titulo, texto) {
++        mensajeCardContainer.style.display = 'flex';
++        document.getElementById('mensaje-titulo').textContent = titulo;
++        document.getElementById('mensaje-texto').textContent = texto;
++    }
++
++    document.getElementById('cerrar-mensaje-button').addEventListener('click', function() {
++        mensajeCardContainer.style.display = 'none';
++    });
++
++    function obtenerDatosSemanaGuardiaActas(semana) {
++        const datosGuardiaActasString = localStorage.getItem('datosGuardiaActas');
++        let datosGuardiaActas = datosGuardiaActasString ? JSON.parse(datosGuardiaActasString) : {};
++        return datosGuardiaActas[semana] || {};
++    }
++
++    function guardarDatosSemanaGuardiaActas(semana, actaILT, actaEstaciones, guardia) {
++        const datosGuardiaActasString = localStorage.getItem('datosGuardiaActas');
++        let datosGuardiaActas = datosGuardiaActasString ? JSON.parse(datosGuardiaActasString) : {};
++        datosGuardiaActas[semana] = {
++            actaILT: actaILT,
++            actaEstaciones: actaEstaciones,
++            guardia: guardia
++        };
++        localStorage.setItem('datosGuardiaActas', JSON.stringify(datosGuardiaActas));
++    }
++
++    function obtenerNumeroSemana(fecha) {
++        const date = new Date(Date.UTC(fecha.getFullYear(), fecha.getMonth(), fecha.getDate()));
++        date.setUTCDate(date.getUTCDate() + 4 - (date.getUTCDay()||7));
++        const yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1));
++        const weekNo = Math.ceil(( ( (date - yearStart) / 86400000) + 1)/7);
++        return weekNo;
++    }
++
++    function obtenerRangoFechasSemana(semana, year) {
++        const primerDiaAnio = new Date(year, 0, 1);
++        let primerLunesAnio = new Date(primerDiaAnio.getTime());
++        if (primerDiaAnio.getDay() !== 1) {
++            primerLunesAnio.setDate(primerDiaAnio.getDate() + (8 - primerDiaAnio.getDay()) % 7);
++        }
++        const primerDiaSemana = new Date(primerLunesAnio.getFullYear(), primerLunesAnio.getMonth(), primerLunesAnio.getDate() + (semana - 1) * 7);
++        const ultimoDiaSemana = new Date(primerDiaSemana.getFullYear(), primerDiaSemana.getMonth(), primerDiaSemana.getDate() + 6);
++
++        const formatoFecha = { day: 'numeric', month: 'long' };
++        const inicioSemanaFormateado = primerDiaSemana.toLocaleDateString('es-ES', formatoFecha);
++        const finSemanaFormateado = ultimoDiaSemana.toLocaleDateString('es-ES', formatoFecha);
++
++        return `${inicioSemanaFormateado} - ${finSemanaFormateado}`;
++    }
++
++});
++
++///// FIN ICONO GUARDIA ACTAS /////
+
+
+
+
+
+
+
 ///// FIN ICONO PLUS /////
 
 
