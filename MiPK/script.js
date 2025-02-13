@@ -2603,18 +2603,21 @@ document.addEventListener('DOMContentLoaded', function() {
         mensajeCardContainer.style.display = 'none';
     }
 
-    function mostrarListaSemanasGuardiaActas() {
+    async function mostrarListaSemanasGuardiaActas() {
         guardiaActasListContainer.innerHTML = ''; // Limpiar lista anterior
         guardiaActasListContainer.style.display = 'block'; // Asegurar que se muestra la lista
         guardiaActasDetailsCard.style.display = 'none';
         guardiaActasEditCard.style.display = 'none';
         guardiaActasPasswordContainer.style.display = 'none';
 
+        const jsonData = await cargarDatosGuardiaActas(); // Cargar datos desde el archivo JSON
+        const semanasData = jsonData.semanas;
+
         const semanaActual = obtenerNumeroSemana(new Date());
         for (let i = 0; i < 2; i++) { // Mostrar semana actual y anterior
             const semana = semanaActual - i;
             const fechaInicioFin = obtenerRangoFechasSemana(semana, new Date().getFullYear());
-            const datosSemana = obtenerDatosSemanaGuardiaActas(semana);
+            const datosSemana = semanasData.find(s => s.semana === semana) || {}; // Buscar datos de la semana en jsonData
             const semanaDiv = document.createElement('div');
             semanaDiv.innerHTML = `
                 Semana ${semana} (${fechaInicioFin})
@@ -2641,8 +2644,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function mostrarDetallesSemanaGuardiaActas(semana) {
-        const datosSemana = obtenerDatosSemanaGuardiaActas(semana);
+    async function mostrarDetallesSemanaGuardiaActas(semana) {
+        const jsonData = await cargarDatosGuardiaActas();
+        const datosSemana = jsonData.semanas.find(s => s.semana === parseInt(semana)) || {};
         guardiaActasListContainer.style.display = 'none';
         guardiaActasDetailsCard.style.display = 'block';
 
@@ -2681,8 +2685,9 @@ document.addEventListener('DOMContentLoaded', function() {
         confirmarPasswordButton.addEventListener('click', confirmarPasswordHandler);
     }
 
-    function mostrarEditarSemanaGuardiaActas(semana) {
-        const datosSemana = obtenerDatosSemanaGuardiaActas(semana);
+    async function mostrarEditarSemanaGuardiaActas(semana) {
+        const jsonData = await cargarDatosGuardiaActas();
+        const datosSemana = jsonData.semanas.find(s => s.semana === parseInt(semana)) || {};
         guardiaActasEditCard.style.display = 'block';
         guardiaActasListContainer.style.display = 'none';
         guardiaActasDetailsCard.style.display = 'none';
@@ -2708,13 +2713,13 @@ document.addEventListener('DOMContentLoaded', function() {
         mostrarListaSemanasGuardiaActas();
     });
 
-    document.getElementById('guardiactas-edit-guardar-button').addEventListener('click', function() {
+    document.getElementById('guardiactas-edit-guardar-button').addEventListener('click', async function() {
         const semana = document.getElementById('guardiactas-edit-semana').textContent;
         const actaILT = document.getElementById('guardiactas-edit-ilt').value;
         const actaEstaciones = document.getElementById('guardiactas-edit-estaciones').value;
         const guardia = document.getElementById('guardiactas-edit-guardia').value;
 
-        guardarDatosSemanaGuardiaActas(semana, actaILT, actaEstaciones, guardia);
+        await guardarDatosSemanaGuardiaActas(semana, actaILT, actaEstaciones, guardia); // Guardar datos en el archivo JSON
         mostrarMensajeGuardiaActas("Éxito", "Datos guardados correctamente");
         mostrarListaSemanasGuardiaActas(); // Volver a la lista de semanas tras guardar
     });
@@ -2729,21 +2734,56 @@ document.addEventListener('DOMContentLoaded', function() {
         mensajeCardContainer.style.display = 'none';
     });
 
-    function obtenerDatosSemanaGuardiaActas(semana) {
-        const datosGuardiaActasString = localStorage.getItem('datosGuardiaActas');
-        let datosGuardiaActas = datosGuardiaActasString ? JSON.parse(datosGuardiaActasString) : {};
-        return datosGuardiaActas[semana] || {};
+    async function cargarDatosGuardiaActas() {
+        try {
+            const response = await fetch(DATA_URL);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error("Error al cargar datos de Guardia Actas:", error);
+            mensajeCardContainer.style.display = 'flex'; // Mostrar mensaje de error en tarjeta
+            document.getElementById('mensaje-titulo').textContent = "Error al cargar datos";
+            document.getElementById('mensaje-texto').textContent = "No se pudieron cargar los datos de Guardia Actas. Inténtalo de nuevo más tarde.";
+            return { semanas: [] }; // Devolver datos vacíos para evitar errores
+        }
     }
 
-    function guardarDatosSemanaGuardiaActas(semana, actaILT, actaEstaciones, guardia) {
-        const datosGuardiaActasString = localStorage.getItem('datosGuardiaActas');
-        let datosGuardiaActas = datosGuardiaActasString ? JSON.parse(datosGuardiaActasString) : {};
-        datosGuardiaActas[semana] = {
-            actaILT: actaILT,
-            actaEstaciones: actaEstaciones,
-            guardia: guardia
-        };
-        localStorage.setItem('datosGuardiaActas', JSON.stringify(datosGuardiaActas));
+    async function guardarDatosSemanaGuardiaActas(semana, actaILT, actaEstaciones, guardia) {
+        try {
+            const jsonData = await cargarDatosGuardiaActas();
+            const semanaIndex = jsonData.semanas.findIndex(s => s.semana === parseInt(semana));
+            if (semanaIndex !== -1) {
+                jsonData.semanas[semanaIndex] = {
+                    semana: parseInt(semana),
+                    fechaInicioFin: obtenerRangoFechasSemana(semana, new Date().getFullYear()), // Mantener fecha original
+                    actaILT: actaILT,
+                    actaEstaciones: actaEstaciones,
+                    guardia: guardia
+                };
+            } else { // Si la semana no existe, la añade (opcional, decide si quieres añadir nuevas semanas o solo editar las existentes)
+                jsonData.semanas.push({
+                    semana: parseInt(semana),
+                    fechaInicioFin: obtenerRangoFechasSemana(semana, new Date().getFullYear()),
+                    actaILT: actaILT,
+                    actaEstaciones: actaEstaciones,
+                    guardia: guardia
+                });
+            }
+
+            const response = await fetch(DATA_URL, { // Enviar los datos actualizados de vuelta al archivo JSON
+                method: 'PUT', // **OJO: Algunos servicios de hosting pueden no permitir PUT. Si falla, usa POST y gestiona la actualización en el backend si es posible.**
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(jsonData)
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+        } catch (error) {
+            console.error("Error al guardar datos de Guardia Actas:", error);
+            mostrarMensajeGuardiaActas("Error al guardar", "No se pudieron guardar los datos. Inténtalo de nuevo más tarde.");
+        }
     }
 
     function obtenerNumeroSemana(fecha) {
