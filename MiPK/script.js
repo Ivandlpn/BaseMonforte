@@ -2321,8 +2321,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     } else {
         console.error('No se encontró el botón de cerrar de la tarjeta de Trenes');
-    }async function mostrarTrenesCercanosInterpolado() {
+    }
+async function mostrarTrenesCercanosInterpolado() {
     trenesContainer.innerHTML = '<p style="text-align: center;">Actualizando horarios de trenes...</p>';
+
+    // *** 1. OBTENER ESTADO DEL CHECKBOX (SI EXISTE) ***
+    const checkboxMostrarAnteriores = document.getElementById('check-anteriores');
+    // Si el checkbox existe, usamos su estado 'checked'. Si no, por defecto es 'false' (solo futuros).
+    const mostrarAnteriores = checkboxMostrarAnteriores ? checkboxMostrarAnteriores.checked : false;
 
     try {
         const trenesData = await cargarJSON("./doc/trenes/TrenesALIEne25.json");
@@ -2352,7 +2358,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             const tipoTren = tren.Tipo;
             if (tipoTren === 'C') {
-                const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk);
                 if (pkUsuarioNumerico < 465000 || pkUsuarioNumerico > 485900) {
                     continue;
                 }
@@ -2386,14 +2391,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 via: tren.Vía,
                 origenDestino: tren.OD,
                 horaProgramada: tren["Hora"],
-                modelo: tren.Modelo //Include the Model in result array
+                modelo: tren.Modelo,
+                // *** 2. AÑADIR PROPIEDAD 'pasado' ***
+                pasado: minutosRestantes <= -15  // Consideramos "pasado" si tiene -15 minutos o menos.
             });
         }
 
-        // Filtrar trenes que pasaron hace más de 15 minutos
-        const tiempoLimitePasadoMinutos = -15;
-        const resultadosTrenesFiltrados = resultadosTrenes.filter(tren => tren.minutosRestantes > tiempoLimitePasadoMinutos);
-
+        // *** 3. FILTRADO CONDICIONAL ***
+        let resultadosTrenesFiltrados;
+          if (mostrarAnteriores) {
+              resultadosTrenesFiltrados = resultadosTrenes; // Mostrar todos si la opción está activa
+          } else {
+            //   Filtrar si la opción "Mostrar anteriores" NO está activa
+            const tiempoLimitePasadoMinutos = -15;
+            resultadosTrenesFiltrados = resultadosTrenes.filter(tren => tren.minutosRestantes > tiempoLimitePasadoMinutos);
+        }
         resultadosTrenesFiltrados.sort((a, b) => {
             const horaA_parts = a.horaPaso.split(':');
             const horaB_parts = b.horaPaso.split(':');
@@ -2402,16 +2414,24 @@ document.addEventListener('DOMContentLoaded', function() {
             return horaA_segundos - horaB_segundos;
         });
 
+        // *** 4. CONSTRUCCIÓN DE LA TABLA HTML (CON CHECKBOX) ***
         let tablaHTML = `
             <table style="width:100%; border-collapse: collapse;">
                 <thead>
+                    <tr>  <!-- Fila para el checkbox -->
+                        <th colspan="5" style="text-align: left; padding: 8px; color: white;">
+                            <div style="display: flex; align-items: center;">
+                                <input type="checkbox" id="check-anteriores" style="margin-right: 5px;" ${mostrarAnteriores ? 'checked' : ''}>
+                                <label for="check-anteriores" style="margin:0; cursor: pointer;">Mostrar anteriores</label>
+                            </div>
+                        </th>
+                    </tr>
                     <tr style="border-bottom: 1px solid white;">
                         <th style="padding: 8px; text-align: center; color: white;">HORA</th>
                         <th style="padding: 8px; text-align: center; color: white;">MIN.</th>
                         <th style="padding: 8px; text-align: center; color: white;">VÍA</th>
                         <th style="padding: 8px; text-align: center; color: white;">ORI/DES</th>
-                        <th style="padding: 8px; text-align: center; color: white;">MODELO</th> <!-- ⭐️ NUEVA COLUMNA CABECERA -->
-                       <!-- <th style="padding: 8px; text-align: left; color: white;">🕒ALI</th>  <--- LINEA ELIMINADA O COMENTADA -->
+                        <th style="padding: 8px; text-align: center; color: white;">MODELO</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -2420,14 +2440,19 @@ document.addEventListener('DOMContentLoaded', function() {
         for (const trenResultado of resultadosTrenesFiltrados) {
             let claseFila = "";
             let horaPasoCelda, minutosRestantesCelda;
-           
-            if (Math.abs(trenResultado.minutosRestantes) <= 2) {
+
+            if (Math.abs(trenResultado.minutosRestantes) <= 2 && !mostrarAnteriores) { // Solo parpadea si son futuros y próximos, y si no estamos mostrando anteriores
                 claseFila = "tren-proximo-parpadeo";
                 horaPasoCelda = '🕒';
                 minutosRestantesCelda = 'Próximo';
             } else {
                 horaPasoCelda = trenResultado.horaPaso;
                 minutosRestantesCelda = trenResultado.minutosRestantes;
+            }
+
+            // *** 5. APLICAR CLASE CSS 'tren-pasado' ***
+            if (trenResultado.pasado) {
+                claseFila = "tren-pasado";
             }
 
         // ⭐️ Mapeo de modelos a imágenes (añadir más si es necesario)
@@ -2470,6 +2495,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         trenesContainer.innerHTML = tablaHTML;
 
+        // *** 6. AÑADIR EVENT LISTENER AL CHECKBOX ***
+        const checkbox = document.getElementById('check-anteriores'); // Obtener el checkbox
+        if (checkbox) { // Verificar si el checkbox existe
+            checkbox.addEventListener('change', mostrarTrenesCercanosInterpolado); // Añadir el listener, que re-ejecuta la función.
+        }
     } catch (error) {
         console.error("Error al cargar datos de trenes o calcular tiempos:", error);
         trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al cargar horarios de trenes.</p>';
