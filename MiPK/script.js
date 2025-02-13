@@ -2610,7 +2610,7 @@ document.addEventListener('DOMContentLoaded', function() {
         guardiaActasPasswordContainer.style.display = 'none';
 
         const jsonData = await cargarDatosGuardiaActas(); // Cargar datos desde el archivo JSON
-        console.log("jsonData después de cargarDatosGuardiaActas:", jsonData); // <-- LOGGING AÑADIDO
+        console.log("jsonData después de cargarDatosGuardiaActas (mostrarListaSemanasGuardiaActas):", jsonData); // <-- LOGGING AÑADIDO
         const semanasData = jsonData.semanas;
 
         const semanaActual = obtenerNumeroSemana(new Date());
@@ -2647,6 +2647,7 @@ document.addEventListener('DOMContentLoaded', function() {
     async function mostrarDetallesSemanaGuardiaActas(semana) {
         const jsonData = await cargarDatosGuardiaActas();
         const datosSemana = jsonData.semanas.find(s => s.semana === parseInt(semana)) || {};
+        console.log("datosSemana en mostrarDetallesSemanaGuardiaActas:", datosSemana); // <-- LOGGING AÑADIDO (¡NUEVO!)
         guardiaActasListContainer.style.display = 'none';
         guardiaActasDetailsCard.style.display = 'block';
 
