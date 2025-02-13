@@ -2785,8 +2785,10 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
+            return await response.json();
         } catch (error) {
-            console.error("Error al guardar datos de Guardia Actas:", error);
+            console.error("Error al guardar datos de Guardia Actas:", error); // Mantenemos este mensaje general
+            console.error("Error DETALLADO al guardar:", error); // <-- **AÑADIMOS ESTE console.error PARA VER EL ERROR COMPLETO**
             mostrarMensajeGuardiaActas("Error al guardar", "No se pudieron guardar los datos. Inténtalo de nuevo más tarde.");
         }
     }
