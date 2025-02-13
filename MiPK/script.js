@@ -2455,13 +2455,14 @@ async function mostrarTrenesCercanosInterpolado() {
             return horaA_segundos - horaB_segundos;
         });
 
-        // *** MODIFICADO: Construir SOLO el <tbody> ***
+        //  Construir SOLO el <tbody>
         let tablaHTML = ''; // Ya no se necesita la tabla completa, solo el tbody
         for (const trenResultado of resultadosTrenesFiltrados) {
             let claseFila = "";
             let horaPasoCelda, minutosRestantesCelda;
 
-            if (Math.abs(trenResultado.minutosRestantes) <= 2 && !mostrarAnteriores) { // Solo parpadea si son futuros y próximos.
+            // *** CORREGIDO: El parpadeo ahora es SIEMPRE para trenes próximos (<= 2 minutos) ***
+            if (Math.abs(trenResultado.minutosRestantes) <= 2) {
                 claseFila = "tren-proximo-parpadeo";
                 horaPasoCelda = '🕒';
                 minutosRestantesCelda = 'Próximo';
@@ -2470,10 +2471,9 @@ async function mostrarTrenesCercanosInterpolado() {
                 minutosRestantesCelda = trenResultado.minutosRestantes;
             }
 
-            // Aplicar clase 'tren-pasado' si corresponde
-            if (trenResultado.pasado) {
-                claseFila = "tren-pasado";
-            }
+             if (trenResultado.pasado) {
+                claseFila = "tren-pasado"; // Aplica clase para trenes pasados
+             }
 
         //  Mapeo de modelos a imágenes (añadir más si es necesario)
         let imagenModelo = "";
@@ -2494,26 +2494,27 @@ async function mostrarTrenesCercanosInterpolado() {
         } else {
            imagenModelo = '<span> - </span>';  // Or a default image, or empty string
         }
+
             tablaHTML += `
                 <tr class="${claseFila}" style="border-bottom: 1px solid #ddd;">
                     <td style="padding: 8px; color: white; text-align: center">${horaPasoCelda}</td>
                     <td style="padding: 8px; color: white; text-align: center">${minutosRestantesCelda}</td>
                     <td style="padding: 8px; color: white; text-align: center">${trenResultado.via}</td>
                     <td style="padding: 8px; color: white; text-align: center">${trenResultado.origenDestino}</td>
-                    <td style="padding: 8px; color: white; text-align: center">${imagenModelo}</td>  <!-- ⭐️ NUEVA CELDA con la imagen -->
-                     <!-- <td style="padding: 8px; text-align: left; color: white;">🕒ALI</th>  <--- LINEA ELIMINADA O COMENTADA -->
+                    <td style="padding: 8px; color: white; text-align: center">${imagenModelo}</td>
                 </tr>
             `;
         }
 
+
         tbody.innerHTML = tablaHTML; // Insertar el tbody generado en la tabla existente.
+
 
     } catch (error) {
         console.error("Error al cargar datos de trenes o calcular tiempos:", error);
         trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al cargar horarios de trenes.</p>';
     }
 }
-
 
     async function cargarJSON(rutaArchivo) {
         const response = await fetch(rutaArchivo);
