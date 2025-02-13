@@ -2324,6 +2324,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }async function mostrarTrenesCercanosInterpolado() {
     trenesContainer.innerHTML = '<p style="text-align: center;">Actualizando horarios de trenes...</p>';
 
+    // *** DECLARACIÓN ÚNICA DE checkboxMostrarAnteriores AL INICIO DE LA FUNCIÓN ***
+    const checkboxMostrarAnteriores = document.getElementById('check-anteriores');
+
     try {
         const trenesData = await cargarJSON("./doc/trenes/TrenesALIEne25.json");
         const horaPasoData = await cargarJSON("./doc/trenes/horapasoA.json");
@@ -2391,7 +2394,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // *** LÓGICA DE FILTRADO CONDICIONAL BASADA EN CHECKBOX "MOSTRAR ANTERIORES" ***
-        const checkboxMostrarAnteriores = document.getElementById('check-anteriores');
         let resultadosTrenesFiltrados;
 
         if (checkboxMostrarAnteriores && checkboxMostrarAnteriores.checked) {
@@ -2488,8 +2490,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         trenesContainer.innerHTML = tablaHTML;
 
-        // *** AÑADIR EVENT LISTENER AL CHECKBOX "MOSTRAR ANTERIORES" ***
-        const checkboxMostrarAnteriores = document.getElementById('check-anteriores');
+        // *** EVENT LISTENER DEL CHECKBOX "MOSTRAR ANTERIORES" (SIN REDECLARACIÓN) ***
         checkboxMostrarAnteriores.addEventListener('change', function() {
             mostrarTrenesCercanosInterpolado(); // Volver a llamar a la función para regenerar la tabla
         });
@@ -2589,6 +2590,9 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ----- FIN FUNCIONALIDAD TRENES -----
+
+
+
 ///// INICIO ICONO GUARDIA ACTAS /////
 
 document.addEventListener('DOMContentLoaded', function() {
