@@ -2738,7 +2738,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const response = await fetch(DATA_URL, { // <-- DATA_URL se queda igual
                 headers: {
-                    'X-Access-Key': '$2a$10$/lO1CRHSFDT2J.bvN9ntNO2r2xcYSbt3dWEFNiN9nxFwWOM/CJUC.' // <-- ¡PEGA LA CLAVE AQUÍ!
+                    'X-Access-Key': '$2a$10$BdLPeO9xqlQBYEKv1bRlveyRzLg0RbL6sFPah9tQYdzG.j42pUCtC' // <-- ¡PEGA LA CLAVE AQUÍ!
                 }
             });
             if (!response.ok) {
