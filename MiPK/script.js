@@ -2737,15 +2737,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function cargarDatosGuardiaActas() {
         try {
-            const response = await fetch(DATA_URL, { // <-- DATA_URL se queda igual
+            const cacheBuster = Date.now(); // Generar una marca de tiempo única (actual)
+            const urlConCacheBuster = `${DATA_URL}?cache=${cacheBuster}`; // Añadir la marca de tiempo como parámetro a la URL
+            const response = await fetch(urlConCacheBuster, { // Usar la URL MODIFICADA con el "cache buster"
                 method: 'GET' // Mantenemos method GET (opcional, pero explícito)
             });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const jsonDataCompleto = await response.json(); // <-- Guardamos la respuesta JSON COMPLETA en jsonDataCompleto
-            const jsonData = jsonDataCompleto.record; // <-- EXTRAEMOS los datos REALES de jsonDataCompleto.record
-            return jsonData; // <-- Devolvemos AHORA jsonData (que YA CONTIENE la propiedad "semanas")
+            const jsonDataCompleto = await response.json();
+            const jsonData = jsonDataCompleto.record;
+            return jsonData;
         } catch (error) {
             console.error("Error al cargar datos de Guardia Actas:", error);
             mensajeCardContainer.style.display = 'flex'; // Mostrar mensaje de error en tarjeta
