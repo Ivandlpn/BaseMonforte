@@ -510,7 +510,7 @@
 
         <!-- * * * TARJETA GUARDIA ACTAS * * * -->
         <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA GUARDIA ACTAS *** -->
-       <div id="guardiactas-card-container" class="overlay-card-container" style="display: none;">
+        <div id="guardiactas-card-container" class="overlay-card-container" style="display: none;">
             <div id="guardiactas-card" class="overlay-card">
 
                 <!-- Botón para cerrar la tarjeta -->
@@ -532,74 +532,72 @@
                     <p><b>📅 Semana:</b> <span id="guardiactas-details-fecha"></span></p>
                     <p><b>📝 Acta ILT:</b> <span id="guardiactas-details-ilt"></span></p>
                     <p><b>🏢 Acta Estaciones:</b> <span id="guardiactas-details-estaciones"></span></p>
-+                    <p><b>👷 Guardia:</b> <span id="guardiactas-details-guardia"></span></p>
-+                    <div style="text-align: center; margin-top: 20px;">
-+                        <button id="guardiactas-details-volver-button" class="simulador-option-button">Volver a Semanas</button>
-+                    </div>
-+                </div>
+                    <p><b>👷 Guardia:</b> <span id="guardiactas-details-guardia"></span></p>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button id="guardiactas-details-volver-button" class="simulador-option-button">Volver a Semanas</button>
+                    </div>
+                </div>
 
-+                <!-- Contenedor para la tarjeta de edición (EDITAR) -->
-+                <div id="guardiactas-edit-card" style="display: none;">
-+                    <h3 style="text-align: center; margin-bottom: 20px;"><u>Editar Semana <span id="guardiactas-edit-semana"></span></u></h3>
-+                    <div id="guardiactas-edit-form">
-+                        <div class="formulario-grupo">
-+                            <label for="guardiactas-edit-ilt"><b>📝 Acta ILT:</b></label>
-+                            <input type="text" id="guardiactas-edit-ilt" placeholder="Acta ILT">
-+                        </div>
-+                        <div class="formulario-grupo">
-+                            <label for="guardiactas-edit-estaciones"><b>🏢 Acta Estaciones:</b></label>
-+                            <input type="text" id="guardiactas-edit-estaciones" placeholder="Acta Estaciones">
-+                        </div>
-+                        <div class="formulario-grupo">
-+                            <label for="guardiactas-edit-guardia"><b>👷 Guardia:</b></label>
-+                            <select id="guardiactas-edit-guardia">
-+                                <option value="">Seleccionar Guardia</option>
-+                                <!-- Las opciones del desplegable se insertarán con JavaScript -->
-+                            </select>
-+                        </div>
-+                        <div style="display: flex; justify-content: space-around; margin-top: 20px;">
-+                            <button id="guardiactas-edit-guardar-button" class="simulador-option-button">Guardar</button>
-+                            <button id="guardiactas-edit-cancelar-button" class="simulador-option-button">Cancelar</button>
-+                        </div>
-+                    </div>
-+                </div>
+                <!-- Contenedor para la tarjeta de edición (EDITAR) -->
+                <div id="guardiactas-edit-card" style="display: none;">
+                    <h3 style="text-align: center; margin-bottom: 20px;"><u>Editar Semana <span id="guardiactas-edit-semana"></span></u></h3>
+                    <div id="guardiactas-edit-form">
+                        <div class="formulario-grupo">
+                            <label for="guardiactas-edit-ilt"><b>📝 Acta ILT:</b></label>
+                            <input type="text" id="guardiactas-edit-ilt" placeholder="Acta ILT">
+                        </div>
+                        <div class="formulario-grupo">
+                            <label for="guardiactas-edit-estaciones"><b>🏢 Acta Estaciones:</b></label>
+                            <input type="text" id="guardiactas-edit-estaciones" placeholder="Acta Estaciones">
+                        </div>
+                        <div class="formulario-grupo">
+                            <label for="guardiactas-edit-guardia"><b>👷 Guardia:</b></label>
+                            <select id="guardiactas-edit-guardia">
+                                <option value="">Seleccionar Guardia</option>
+                                <!-- Las opciones del desplegable se insertarán con JavaScript -->
+                            </select>
+                        </div>
+                        <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+                            <button id="guardiactas-edit-guardar-button" class="simulador-option-button">Guardar</button>
+                            <button id="guardiactas-edit-cancelar-button" class="simulador-option-button">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
 
-+                <!-- Campo de contraseña para editar -->
-+                <div id="guardiactas-password-container" style="display: none;">
-+                    <h3 style="text-align: center; margin-bottom: 20px;"><u>Contraseña de Edición</u></h3>
-+                    <div style="text-align: center;">
-+                        <input type="password" id="guardiactas-password-input" placeholder="Contraseña">
-+                        <button id="guardiactas-password-confirmar-button" class="simulador-option-button" style="margin-top: 10px;">Confirmar</button>
-+                    </div>
-+                </div>
+                <!-- Campo de contraseña para editar -->
+                <div id="guardiactas-password-container" style="display: none;">
+                    <h3 style="text-align: center; margin-bottom: 20px;"><u>Contraseña de Edición</u></h3>
+                    <div style="text-align: center;">
+                        <input type="password" id="guardiactas-password-input" placeholder="Contraseña">
+                        <button id="guardiactas-password-confirmar-button" class="simulador-option-button" style="margin-top: 10px;">Confirmar</button>
+                    </div>
+                </div>
 
-+            </div>
-+        </div>
-+        <!-- *** FIN: NUEVA TARJETA SUPERPUESTA GUARDIA ACTAS *** -->
+            </div>
+        </div>
+        <!-- *** FIN: NUEVA TARJETA SUPERPUESTA GUARDIA ACTAS *** -->
 
-+        <!-- * * * TARJETA MENSAJE * * * -->
-+        <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA MENSAJE *** -->
-+        <div id="mensaje-card-container" class="overlay-card-container" style="display: none;">
-+            <div id="mensaje-card" class="overlay-card">
+        <!-- * * * TARJETA MENSAJE * * * -->
+        <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA MENSAJE *** -->
+        <div id="mensaje-card-container" class="overlay-card-container" style="display: none;">
+            <div id="mensaje-card" class="overlay-card">
 
-+                <!-- Botón para cerrar la tarjeta -->
-+                <button id="cerrar-mensaje-card" class="close-button" aria-label="Cerrar">
-+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
-+                </button>
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-mensaje-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
 
-+                <!-- Contenedor para el contenido del mensaje -->
-+                <div id="mensaje-content">
-+                    <h2 id="mensaje-titulo" style="text-align: center; margin-bottom: 25px;"></h2>
-+                    <p id="mensaje-texto" style="text-align: center; margin-bottom: 25px;"></p>
-+                    <div style="text-align: center;">
-+                        <button id="cerrar-mensaje-button" class="simulador-option-button">Cerrar</button>
-+                    </div>
-+                </div>
-+            </div>
-+        </div>
-+        <!-- *** FIN: NUEVA TARJETA SUPERPUESTA MENSAJE *** -->
-
-         <!-- FIN TARJETAS SUPERPUESTAS -->
+                <!-- Contenedor para el contenido del mensaje -->
+                <div id="mensaje-content">
+                    <h2 id="mensaje-titulo" style="text-align: center; margin-bottom: 25px;"></h2>
+                    <p id="mensaje-texto" style="text-align: center; margin-bottom: 25px;"></p>
+                    <div style="text-align: center;">
+                        <button id="cerrar-mensaje-button" class="simulador-option-button">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- *** FIN: NUEVA TARJETA SUPERPUESTA MENSAJE *** -->
 +
 
  
