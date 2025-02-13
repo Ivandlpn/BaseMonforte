@@ -2734,25 +2734,21 @@ document.addEventListener('DOMContentLoaded', function() {
         mensajeCardContainer.style.display = 'none';
     });
 
-async function cargarDatosGuardiaActas() {
-    try {
-        const response = await fetch(DATA_URL, { // 
-            headers: {
-                'X-Access-Key': '$2a$10$BdLPeO9xqlQBYEKv1bRlveyRzLg0RbL6sFPah9tQYdzG.j42pUCtC' // <-- ¡PEGASTE LA CLAVE AQUÍ!
+    async function cargarDatosGuardiaActas() {
+        try {
+            const response = await fetch(DATA_URL);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        });
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+            return await response.json();
+        } catch (error) {
+            console.error("Error al cargar datos de Guardia Actas:", error);
+            mensajeCardContainer.style.display = 'flex'; // Mostrar mensaje de error en tarjeta
+            document.getElementById('mensaje-titulo').textContent = "Error al cargar datos";
+            document.getElementById('mensaje-texto').textContent = "No se pudieron cargar los datos de Guardia Actas. Inténtalo de nuevo más tarde.";
+            return { semanas: [] }; // Devolver datos vacíos para evitar errores
         }
-        return await response.json();
-    } catch (error) {
-        console.error("Error al cargar datos de Guardia Actas:", error);
-        mensajeCardContainer.style.display = 'flex'; // Mostrar mensaje de error en tarjeta
-        document.getElementById('mensaje-titulo').textContent = "Error al cargar datos";
-        document.getElementById('mensaje-texto').textContent = "No se pudieron cargar los datos de Guardia Actas. Inténtalo de nuevo más tarde.";
-        return { semanas: [] }; // Devolver datos vacíos para evitar errores
     }
-}
 
     async function guardarDatosSemanaGuardiaActas(semana, actaILT, actaEstaciones, guardia) {
         try {
@@ -2817,7 +2813,6 @@ async function cargarDatosGuardiaActas() {
 });
 
 ///// FIN ICONO GUARDIA ACTAS /////
-
 
 
 
