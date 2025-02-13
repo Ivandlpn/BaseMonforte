@@ -815,6 +815,10 @@ footer img {
     vertical-align: middle; /*Alinea las imágenes verticalmente en el centro de la celda*/
 }
 
+    if (trenResultado.pasado) {
+        claseFila = "tren-pasado";
+    }
+
 /* =====================================================================
 |  ESTILOS ESPECÍFICOS PARA LA TARJETA ACCIDENTE                      |
 ===================================================================== */
