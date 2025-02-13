@@ -2733,22 +2733,22 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('cerrar-mensaje-button').addEventListener('click', function() {
         mensajeCardContainer.style.display = 'none';
     });
-
+   
     async function cargarDatosGuardiaActas() {
         try {
-            const response = await fetch(DATA_URL);
+            const response = await fetch(DATA_URL, { // <-- DATA_URL se queda igual
+                method: 'GET' // Mantenemos method GET (opcional, pero explícito)
+                // ¡¡¡HEMOS ELIMINADO COMPLETAMENTE EL BLOQUE headers: { ... } !!!
+            });
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             return await response.json();
         } catch (error) {
-            console.error("Error al cargar datos de Guardia Actas:", error);
-            mensajeCardContainer.style.display = 'flex'; // Mostrar mensaje de error en tarjeta
-            document.getElementById('mensaje-titulo').textContent = "Error al cargar datos";
-            document.getElementById('mensaje-texto').textContent = "No se pudieron cargar los datos de Guardia Actas. Inténtalo de nuevo más tarde.";
-            return { semanas: [] }; // Devolver datos vacíos para evitar errores
+            // ... (código de manejo de errores) ...
         }
     }
+    
 
     async function guardarDatosSemanaGuardiaActas(semana, actaILT, actaEstaciones, guardia) {
         try {
