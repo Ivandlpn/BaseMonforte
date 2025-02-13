@@ -1101,3 +1101,18 @@ header img {
     z-index: 10;         /* Asegurar que el logo esté por encima del contenido */
 }
 
+#iconoGuardiaActas {
+    background-image: url('img/guardiactas.png'); /* Asegúrate de que la ruta es correcta */
+}
+
+/* Estilos para los input y select de la tarjeta GUARDIA ACTAS */
+#guardiactas-edit-card input[type="text"],
+#guardiactas-edit-card select,
+#guardiactas-password-container input[type="password"] {
+    display: block; /* Para que los campos ocupen todo el ancho */
+    width: calc(100% - 20px); /* Ancho del 100% menos el padding */
+    padding: 10px; /* Aumentar el padding para mayor tamaño */
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
