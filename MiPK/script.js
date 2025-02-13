@@ -9,7 +9,7 @@ const puertasContainer = document.getElementById("puertas-card-container");
 const puertasInfoDiv = document.getElementById("puertas-info");
 const cerrarPuertasCard = document.getElementById("cerrar-puertas-card");
 
-const DATA_URL = 'https://ivandlpn.github.io/BaseMonforte/MiPK/doc/guardiactas/guardiactas_data.json'; // **REEMPLAZA ESTO con la URL pública de tu archivo guardiactas_data.json**
+const DATA_URL = 'https://api.jsonbin.io/v3/b/67adda6ead19ca34f801ebd2'; // **REEMPLAZA ESTO con la URL pública de tu archivo guardiactas_data.json**
 
 const apiKeyOpenWeatherMap = "14225e48c44f9d35291e12867b7f32cf"; // API Meteo
 
@@ -2734,21 +2734,25 @@ document.addEventListener('DOMContentLoaded', function() {
         mensajeCardContainer.style.display = 'none';
     });
 
-    async function cargarDatosGuardiaActas() {
-        try {
-            const response = await fetch(DATA_URL);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+async function cargarDatosGuardiaActas() {
+    try {
+        const response = await fetch(DATA_URL, { // 
+            headers: {
+                'X-Access-Key': '$2a$10$BdLPeO9xqlQBYEKv1bRlveyRzLg0RbL6sFPah9tQYdzG.j42pUCtC' // <-- ¡PEGASTE LA CLAVE AQUÍ!
             }
-            return await response.json();
-        } catch (error) {
-            console.error("Error al cargar datos de Guardia Actas:", error);
-            mensajeCardContainer.style.display = 'flex'; // Mostrar mensaje de error en tarjeta
-            document.getElementById('mensaje-titulo').textContent = "Error al cargar datos";
-            document.getElementById('mensaje-texto').textContent = "No se pudieron cargar los datos de Guardia Actas. Inténtalo de nuevo más tarde.";
-            return { semanas: [] }; // Devolver datos vacíos para evitar errores
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+        return await response.json();
+    } catch (error) {
+        console.error("Error al cargar datos de Guardia Actas:", error);
+        mensajeCardContainer.style.display = 'flex'; // Mostrar mensaje de error en tarjeta
+        document.getElementById('mensaje-titulo').textContent = "Error al cargar datos";
+        document.getElementById('mensaje-texto').textContent = "No se pudieron cargar los datos de Guardia Actas. Inténtalo de nuevo más tarde.";
+        return { semanas: [] }; // Devolver datos vacíos para evitar errores
     }
+}
 
     async function guardarDatosSemanaGuardiaActas(semana, actaILT, actaEstaciones, guardia) {
         try {
