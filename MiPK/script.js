@@ -2737,8 +2737,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function cargarDatosGuardiaActas() {
         try {
-            const cacheBuster = Date.now(); // Generar una marca de tiempo única (actual)
-            const urlConCacheBuster = `${DATA_URL}?cache=${cacheBuster}`; // Añadir la marca de tiempo como parámetro a la URL
+            const cacheBuster = Math.random().toString(36).substring(7); // Generar una cadena aleatoria como "cache buster"
+            const urlConCacheBuster = `${DATA_URL}?cache=${cacheBuster}`; // Añadir "?cache=cadena_aleatoria" a la URL
             const response = await fetch(urlConCacheBuster, { // Usar la URL MODIFICADA con el "cache buster"
                 method: 'GET' // Mantenemos method GET (opcional, pero explícito)
             });
