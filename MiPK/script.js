@@ -2934,16 +2934,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    async function cargarYGenerarOpcionesEmplazamientos() {
+     async function cargarYGenerarOpcionesEmplazamientos() {
         const data = await cargarDatosEmplazamientos();
         if (!data || data.length === 0) {
             return; // Si no hay datos, salir de la función
         }
 
-        // Generar opciones para el select de Línea
-        const lineasUnicas = [...new Set(data.map(item => item["Tipo Vía"].substring(0, 3).replace(/[^0-9]/g, '')))]
-                                .filter(linea => linea && ['040', '042', '046', '048', '024'].includes(linea.padStart(3, '0').slice(1)))
-                                .sort();
+        // --- MODIFICACIÓN IMPORTANTE: Extracción de línea con REGEX ---
+        const lineasUnicas = [...new Set(data.map(item => {
+            const tipoVia = item["Tipo Vía"];
+            const match = tipoVia.match(/^(\d{2,3})\s*-/); // Busca un número de 2 o 3 dígitos al inicio seguido de " - "
+            return match ? match[1] : null; // Devuelve el número capturado o null si no hay coincidencia
+        }))]
+            .filter(linea => linea && ['024', '040', '042', '046', '048'].includes(linea)) // Filtrar líneas válidas
+            .sort();
+
         const lineaSelect = document.getElementById('emplazamiento-linea-select');
         lineaSelect.innerHTML = '<option value="">Línea</option>'; // Opción por defecto
         lineasUnicas.forEach(linea => {
@@ -2954,7 +2959,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
 
-        // Generar opciones para el select de Tipo de Emplazamiento
+        // Generar opciones para el select de Tipo de Emplazamiento (sin cambios)
         const tiposUnicos = [...new Set(data.map(item => item["Tipo de Emplazamiento"]))].sort();
         const tipoSelect = document.getElementById('emplazamiento-tipo-select');
         tipoSelect.innerHTML = '<option value="">Tipo Emplazamiento</option>'; // Opción por defecto
