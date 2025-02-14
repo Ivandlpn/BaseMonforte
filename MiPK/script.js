@@ -2934,13 +2934,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-     async function cargarYGenerarOpcionesEmplazamientos() {
+async function cargarYGenerarOpcionesEmplazamientos() {
         const data = await cargarDatosEmplazamientos();
         if (!data || data.length === 0) {
             return; // Si no hay datos, salir de la función
         }
 
-        // --- MODIFICACIÓN IMPORTANTE: Extracción de línea con REGEX ---
+        // Generar opciones para el select de Línea (MODIFICADO para mostrar solo el número)
         const lineasUnicas = [...new Set(data.map(item => {
             const tipoVia = item["Tipo Vía"];
             const match = tipoVia.match(/^(\d{2,3})\s*-/); // Busca un número de 2 o 3 dígitos al inicio seguido de " - "
@@ -2954,10 +2954,9 @@ document.addEventListener('DOMContentLoaded', function() {
         lineasUnicas.forEach(linea => {
             const option = document.createElement('option');
             option.value = linea;
-            option.text = "Línea " + linea; // Texto a mostrar en el desplegable
+            option.text = linea; // MODIFICADO: Mostrar solo el número de línea como texto
             lineaSelect.appendChild(option);
         });
-
 
         // Generar opciones para el select de Tipo de Emplazamiento (sin cambios)
         const tiposUnicos = [...new Set(data.map(item => item["Tipo de Emplazamiento"]))].sort();
@@ -2999,7 +2998,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    function mostrarTablaResultadosEmplazamientos(resultados) {
+       function mostrarTablaResultadosEmplazamientos(resultados) {
         const tbodyResultados = document.querySelector('#emplazamientos-tabla-resultados tbody');
         tbodyResultados.innerHTML = ''; // Limpiar resultados anteriores
 
@@ -3011,18 +3010,17 @@ document.addEventListener('DOMContentLoaded', function() {
         resultados.forEach(emplazamiento => {
             const fila = tbodyResultados.insertRow();
 
-            // *** INICIO: Lógica de extracción de línea REUTILIZANDO la expresión regular ***
+            // *** INICIO: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
             let linea = '-'; // Valor por defecto si no se encuentra la línea
             const tipoVia = emplazamiento["Tipo Vía"];
-            const match = tipoVia.match(/^(\d{2,3})\s*-/); // <--- MISMA EXPRESIÓN REGULAR
+            const match = tipoVia.match(/^(\d{2,3})\s*-/);
             if (match && ['024', '040', '042', '046', '048'].includes(match[1])) {
-                linea = "Línea " + match[1]; // Usar el número de línea extraído
+                linea = match[1]; // MODIFICADO: Mostrar solo el número de línea
             }
-            // *** FIN: Lógica de extracción de línea REUTILIZANDO la expresión regular ***
-
+            // *** FIN: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
 
             const cellLinea = fila.insertCell();
-            cellLinea.textContent = linea;
+            cellLinea.textContent = linea; // MODIFICADO: Mostrar solo el número de línea en la celda
 
             const cellPK = fila.insertCell();
             cellPK.textContent = formatearPK(emplazamiento["PK"]); // Formatear PK
@@ -3037,6 +3035,7 @@ document.addEventListener('DOMContentLoaded', function() {
             cellVia.textContent = emplazamiento["Vía/s"] || 'No especificada'; // Usar 'No especificada' si está vacío
         });
     }
+
 
     ///// *** FIN: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
 
