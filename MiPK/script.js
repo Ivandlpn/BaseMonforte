@@ -3002,7 +3002,9 @@ async function cargarYGenerarOpcionesEmplazamientos() {
 
             if (baseSeleccionada) {
                 const pkNumerico = pkToNumber(item["PK"]);
-                const linea = item["Tipo Vía"].substring(0, 3).replace(/[^0-9]/g, ''); // Extraer línea para comparación
+                const linea = item["Tipo Vía"].substring(0, 3).replace(/[^0-9]/g, '');
+
+                console.log(`Base Seleccionada: ${baseSeleccionada}, Emplazamiento: ${item["Emplazamiento"]}, Línea: ${linea}, PK Numérico: ${pkNumerico}`); // <-- LOGGING
 
                 baseCoincide = false; // Inicialmente, no coincide con ninguna base
 
@@ -3017,6 +3019,7 @@ async function cargarYGenerarOpcionesEmplazamientos() {
                 } else if (baseSeleccionada === "BM MONFORTE" && linea === '042' && pkNumerico >= 364286 && pkNumerico <= 485925) {
                     baseCoincide = true;
                 }
+                 console.log(`Base Coincide: ${baseCoincide}`); // <-- LOGGING
             }
             // *** FIN: NUEVA LÓGICA DE FILTRADO POR BASE (REEMPLAZA LA ANTERIOR) ***
 
