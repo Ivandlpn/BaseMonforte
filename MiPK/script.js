@@ -2540,23 +2540,23 @@ async function mostrarTrenesCercanosInterpolado() {
 
         const trenesCard = document.getElementById('trenes-card');
         trenesCard.insertAdjacentHTML('beforeend', otroPkFormHTML);
+
+        // *** AÑADIDO: Mostrar/ocultar el formulario al hacer clic en el botón "Otro PK" (MOVIDO AQUÍ) ***
+        const botonOtroPk = document.getElementById('boton-otro-pk');
+        const otroPkForm = document.getElementById('otro-pk-form');
+
+        botonOtroPk.addEventListener('click', () => {
+            if (otroPkForm.style.display === 'none') {
+                otroPkForm.style.display = 'block';
+            } else {
+                otroPkForm.style.display = 'none';
+            }
+        });
     } catch (error) {
         console.error("Error al cargar datos de trenes o calcular tiempos:", error);
         trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al cargar horarios de trenes.</p>';
     }
 }
-
-    // *** AÑADIDO: Mostrar/ocultar el formulario al hacer clic en el botón "Otro PK" ***
-    const botonOtroPk = document.getElementById('boton-otro-pk');
-    const otroPkForm = document.getElementById('otro-pk-form');
-
-    botonOtroPk.addEventListener('click', () => {
-        if (otroPkForm.style.display === 'none') {
-            otroPkForm.style.display = 'block';
-        } else {
-            otroPkForm.style.display = 'none';
-        }
-    });
 
     async function cargarJSON(rutaArchivo) {
         const response = await fetch(rutaArchivo);
