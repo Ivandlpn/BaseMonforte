@@ -2879,7 +2879,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    ///// INICIO FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS /////
+    ///// *** INICIO: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
 
     document.addEventListener('DOMContentLoaded', function() {
         const emplazamientosButtonPlus = document.querySelector('.plus-option-button[aria-label="EMPLAZAMIENTOS"]');
@@ -2921,7 +2921,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return emplazamientosData; // Si ya están cargados, devolver los datos en caché
         }
         try {
-            const response = await fetch("./doc/emplazamientos/emplazamientos.json"); // Ruta al archivo emplazamientos.json
+            const response = await fetch("./doc/emplazamientos.json"); // Ruta al archivo emplazamientos.json
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -2999,7 +2999,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tbodyResultados.innerHTML = ''; // Limpiar resultados anteriores
 
         if (resultados.length === 0) {
-            tbodyResultados.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:10px;">No se encontraron emplazamientos.</td></tr>`;
+            tbodyResultados.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:10px;">No se encontraron emplazamientos.</td></tr>`;
             return;
         }
 
@@ -3021,14 +3021,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const cellTipo = fila.insertCell();
             cellTipo.textContent = emplazamiento["Tipo de Emplazamiento"];
 
+            const cellNombre = fila.insertCell(); // *** NUEVA CELDA PARA NOMBRE EMPLAZAMIENTO ***
+            cellNombre.textContent = emplazamiento["Emplazamiento"]; // *** MOSTRAR NOMBRE EMPLAZAMIENTO ***
+
             const cellVia = fila.insertCell();
             cellVia.textContent = emplazamiento["Vía/s"] || 'No especificada'; // Usar 'No especificada' si está vacío
         });
     }
 
-    ///// FIN FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS /////
-
-
+    ///// *** FIN: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
 
 
 
