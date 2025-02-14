@@ -378,6 +378,13 @@ function actualizarPosicionPK(pk) {
 
 function formatearPK(pk) {
     const pkStr = pk.toString();
+
+    // 1. Verificar si el PK ya tiene el formato XXX+XXX (o similar)
+    if (pkStr.includes('+')) {
+        return pkStr; // Si ya tiene '+', asumir que está formateado y devolverlo tal cual
+    }
+
+    // 2. Si no tiene '+', aplicar la lógica de formateo original
     if (pkStr.length > 6) {
         return pkStr.slice(0, 3) + '+' + pkStr.slice(3, 6);
     } else if (pkStr.length === 6) {
