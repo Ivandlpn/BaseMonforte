@@ -1135,19 +1135,22 @@ header img {
 }
 
 #operadores-card .plus-option-button {
-    width: 80%;           /* Reducir el ancho de los botones */
-    max-width: 150px;      /* Ancho máximo para evitar que crezcan demasiado */
-    padding: 8px 12px;       /* Reducir el padding */
-    font-size: 0.9em;        /* Reducir el tamaño de la fuente */
-    margin-bottom: 5px;      /* Reducir el margen inferior */
-    display: flex;            /* Para centrar el contenido */
-    flex-direction: column;   /* Para apilar la imagen y el texto */
-    align-items: center;      /* Centrar horizontalmente */
-    text-align: center;       /* Asegurar el centrado del texto */
+    width: 80%;
+    max-width: 150px;
+    padding: 0; /* Eliminar el padding */
+    font-size: 0; /* Ocultar el texto */
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: none; /* Eliminar el fondo */
+    border: none;       /* Eliminar el borde */
+    box-shadow: none;     /* Eliminar la sombra */
 }
 
 #operadores-card .plus-option-button img {
-    width: 70%;           /* Reducir el tamaño de las imágenes */
+    width: 100%;           /* Ajustar el ancho de la imagen al 100% */
     height: auto;          /* Mantener la proporción */
-    margin-bottom: 5px;      /* Espacio entre la imagen y el texto */
+    margin-bottom: 0;      /* Eliminar el margen inferior de la imagen */
 }
