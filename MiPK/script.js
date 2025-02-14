@@ -3011,12 +3011,16 @@ document.addEventListener('DOMContentLoaded', function() {
         resultados.forEach(emplazamiento => {
             const fila = tbodyResultados.insertRow();
 
-            let linea = emplazamiento["Tipo Vía"].substring(0, 3).replace(/[^0-9]/g, '');
-             if (!['24', '40', '42', '46', '48'].includes(linea.padStart(2, '0'))) {
-                linea = '-'; // o un valor por defecto si no coincide con las líneas esperadas
-            } else {
-                linea = "Línea " + linea;
+            // *** INICIO: Lógica de extracción de línea REUTILIZANDO la expresión regular ***
+            let linea = '-'; // Valor por defecto si no se encuentra la línea
+            const tipoVia = emplazamiento["Tipo Vía"];
+            const match = tipoVia.match(/^(\d{2,3})\s*-/); // <--- MISMA EXPRESIÓN REGULAR
+            if (match && ['024', '040', '042', '046', '048'].includes(match[1])) {
+                linea = "Línea " + match[1]; // Usar el número de línea extraído
             }
+            // *** FIN: Lógica de extracción de línea REUTILIZANDO la expresión regular ***
+
+
             const cellLinea = fila.insertCell();
             cellLinea.textContent = linea;
 
@@ -3026,8 +3030,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const cellTipo = fila.insertCell();
             cellTipo.textContent = emplazamiento["Tipo de Emplazamiento"];
 
-            const cellNombre = fila.insertCell(); // *** NUEVA CELDA PARA NOMBRE EMPLAZAMIENTO ***
-            cellNombre.textContent = emplazamiento["Emplazamiento"]; // *** MOSTRAR NOMBRE EMPLAZAMIENTO ***
+            const cellNombre = fila.insertCell();
+            cellNombre.textContent = emplazamiento["Emplazamiento"];
 
             const cellVia = fila.insertCell();
             cellVia.textContent = emplazamiento["Vía/s"] || 'No especificada'; // Usar 'No especificada' si está vacío
