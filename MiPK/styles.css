@@ -1173,8 +1173,8 @@ header img {
 
 
 #operadores-card .plus-option-button {
-    width: 95%;
-    max-width: 150px;
+    width: 100%;
+    max-width: 180px;
     padding: 0; /* Eliminar el padding */
     font-size: 0; /* Ocultar el texto */
     margin-bottom: 3px;
@@ -1186,6 +1186,8 @@ header img {
     border: none;       /* Eliminar el borde */
     box-shadow: none;     /* Eliminar la sombra */
 }
+
+
 
 #operadores-card .plus-option-button img {
     width: 100%;           /* Ajustar el ancho de la imagen al 100% */
