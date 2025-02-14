@@ -2359,7 +2359,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }); // Fin del DOMContentLoaded
 
 
-async function mostrarTrenesCercanosInterpolado(lineaUsuario, pkUsuarioNumerico) {
+async function mostrarTrenesCercanosInterpolado() {
     // Obtener el tbody de la tabla (ya existente)
     const tbody = document.querySelector('#trenes-container tbody');
     if (!tbody) {
@@ -2375,24 +2375,25 @@ async function mostrarTrenesCercanosInterpolado(lineaUsuario, pkUsuarioNumerico)
     // *** AÑADIDO: Obtener referencia al elemento trenes-pk-actual ***
     const trenesPkActualElement = document.getElementById('trenes-pk-actual');
 
-   // *** AÑADIDO: Actualizar el texto del elemento con el PK formateado ***
-    let pkFormateado;
-     if (!lineaUsuario || !pkUsuarioNumerico) {
-         trenesPkActualElement.textContent = 'Calculando PK...';
+    // *** AÑADIDO: Actualizar el texto del elemento con el PK formateado ***
+    if (window.pkMasCercano) {
+        const pkFormateado = formatearPK(window.pkMasCercano.pk);
+        trenesPkActualElement.textContent = `PK: ${pkFormateado}`;
     } else {
-         pkFormateado = formatearPK(pkUsuarioNumerico);
-         trenesPkActualElement.textContent = `PK: ${pkFormateado}`;
-      }
+        trenesPkActualElement.textContent = 'Calculando PK...';
+    }
 
     try {
         const trenesData = await cargarJSON("./doc/trenes/TrenesALIEne25.json");
         const horaPasoData = await cargarJSON("./doc/trenes/horapasoA.json");
 
-        if (!lineaUsuario || !pkUsuarioNumerico) {
+        if (!window.pkMasCercano || !window.pkMasCercano.linea) {
             trenesContainer.innerHTML = '<p style="text-align: center; color: red;">No se puede determinar la línea actual. PK desconocido.</p>';
             return;
         }
 
+        const lineaUsuario = window.pkMasCercano.linea;
+        const pkUsuarioNumerico = pkToNumber(window.pkMasCercano.pk);
         const horaActualUsuario = new Date();
 
         const trenesFiltrados = trenesData.filter(tren => tren.Línea === lineaUsuario);
@@ -2519,97 +2520,7 @@ async function mostrarTrenesCercanosInterpolado(lineaUsuario, pkUsuarioNumerico)
 
         tbody.innerHTML = tablaHTML; // Insertar el tbody generado en la tabla existente.
 
-        // *** AÑADIDO: Insertar el HTML del formulario de selección de PK ***
-        const otroPkFormHTML = `
-            <div id="otro-pk-form">
-                <label for="otro-pk-linea">Línea:</label>
-                <select id="otro-pk-linea">
-                    <option value="40">40</option>
-                    <option value="42">42</option>
-                    <option value="46">46</option>
-                    <option value="48">48</option>
-                </select>
 
-                <label for="otro-pk-pk">PK:</label>
-                <input type="text" id="otro-pk-pk" placeholder="XXX+XXX">
-
-                <button id="boton-ver-trenes-proximos">Ver Trenes Próximos</button>
-            </div>
-        `;
-
-        const trenesCard = document.getElementById('trenes-card');
-        trenesCard.insertAdjacentHTML('beforeend', otroPkFormHTML);
-
-        // *** AÑADIDO: Mostrar/ocultar el formulario al hacer clic en el botón "Otro PK" (MOVIDO AQUÍ) ***
-        const botonOtroPk = document.getElementById('boton-otro-pk');
-        const otroPkForm = document.getElementById('otro-pk-form');
-
-        botonOtroPk.addEventListener('click', () => {
-            if (otroPkForm.style.display === 'none') {
-                otroPkForm.style.display = 'block';
-            } else {
-                otroPkForm.style.display = 'none';
-            }
-        });
-
-       // *** AÑADIDO: Mover la función validarYFormatearPK dentro de mostrarTrenesCercanosInterpolado ***
-        function validarYFormatearPK(pk) {
-            // Eliminar espacios en blanco
-            pk = pk.trim();
-
-            // Reemplazar coma por punto
-            pk = pk.replace(',', '.');
-
-            // Intentar formatear el PK usando diferentes patrones
-            let pkNumerico = null;
-
-            // Patrón XXX+XXX
-            if (pk.includes('+')) {
-                const partes = pk.split('+');
-                if (partes.length === 2 && /^\d+$/.test(partes[0]) && /^\d+$/.test(partes[1])) {
-                    pkNumerico = parseInt(partes[0]) * 1000 + parseInt(partes[1]);
-                }
-            }
-            // Patrón XXXXXX (6 dígitos)
-            else if (/^\d{6}$/.test(pk)) {
-                pkNumerico = parseInt(pk);
-            }
-            // Patrón XXX.XXX o XXX.XXX
-            else if (/^\d+\.\d+$/.test(pk)) {
-                pkNumerico = parseFloat(pk) * 1000;
-            }
-
-            // Si se pudo formatear el PK, redondearlo y devolverlo
-            if (pkNumerico !== null) {
-                return Math.round(pkNumerico);
-            }
-
-            // Si no se pudo formatear, devolver null
-            return null;
-        }
-
-    // *** AÑADIDO: Event listener para el botón "Ver Trenes Próximos" ***
-        const botonVerTrenesProximos = document.getElementById('boton-ver-trenes-proximos');
-
-        botonVerTrenesProximos.addEventListener('click', () => {
-            // Obtener los valores del formulario
-            const lineaSeleccionada = document.getElementById('otro-pk-linea').value;
-            const pkIntroducido = document.getElementById('otro-pk-pk').value;
-
-            // Validar y formatear el PK
-            const pkNumerico = validarYFormatearPK(pkIntroducido);
-
-            if (pkNumerico === null) {
-                alert("Formato de PK incorrecto. Utilice XXX+XXX, XXXXXX, XXX.XXX o XXX,XXX");
-                return;
-            }
-
-            // Actualizar el listado de trenes próximos
-            mostrarTrenesCercanosInterpolado(lineaSeleccionada, pkNumerico);
-
-            // Ocultar el formulario
-            otroPkForm.style.display = 'none';
-        });
     } catch (error) {
         console.error("Error al cargar datos de trenes o calcular tiempos:", error);
         trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al cargar horarios de trenes.</p>';
