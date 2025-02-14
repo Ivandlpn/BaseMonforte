@@ -2520,12 +2520,43 @@ async function mostrarTrenesCercanosInterpolado() {
 
         tbody.innerHTML = tablaHTML; // Insertar el tbody generado en la tabla existente.
 
+        // *** AÑADIDO: Insertar el HTML del formulario de selección de PK ***
+        const otroPkFormHTML = `
+            <div id="otro-pk-form">
+                <label for="otro-pk-linea">Línea:</label>
+                <select id="otro-pk-linea">
+                    <option value="40">40</option>
+                    <option value="42">42</option>
+                    <option value="46">46</option>
+                    <option value="48">48</option>
+                </select>
 
+                <label for="otro-pk-pk">PK:</label>
+                <input type="text" id="otro-pk-pk" placeholder="XXX+XXX">
+
+                <button id="boton-ver-trenes-proximos">Ver Trenes Próximos</button>
+            </div>
+        `;
+
+        const trenesCard = document.getElementById('trenes-card');
+        trenesCard.insertAdjacentHTML('beforeend', otroPkFormHTML);
     } catch (error) {
         console.error("Error al cargar datos de trenes o calcular tiempos:", error);
         trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al cargar horarios de trenes.</p>';
     }
 }
+
+    // *** AÑADIDO: Mostrar/ocultar el formulario al hacer clic en el botón "Otro PK" ***
+    const botonOtroPk = document.getElementById('boton-otro-pk');
+    const otroPkForm = document.getElementById('otro-pk-form');
+
+    botonOtroPk.addEventListener('click', () => {
+        if (otroPkForm.style.display === 'none') {
+            otroPkForm.style.display = 'block';
+        } else {
+            otroPkForm.style.display = 'none';
+        }
+    });
 
     async function cargarJSON(rutaArchivo) {
         const response = await fetch(rutaArchivo);
