@@ -503,6 +503,43 @@ footer img {
     opacity: 0.6; /* Ejemplo: reducir aún más la opacidad al hacer clic */
 }
 
+
+/* =====================================================================
+|  Estilos para el contenedor  DE OPERADORES      |
+===================================================================== */
+
+#operadores-plus-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.operador-plus-button {
+    background: none; /* Fondo transparente */
+    border: none;     /* Eliminar borde */
+    border-radius: 0; /* Eliminar bordes redondeados si los hubiera */
+    padding: 0;       /* Opcional: Eliminar padding para que la imagen ocupe todo el botón */
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease; /* Transición suave */
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    color: black;
+}
+
+.operador-plus-button:hover {
+    opacity: 0.8; /* Ejemplo: reducir la opacidad de la imagen al pasar el ratón */
+}
+
+.operador-plus-button:active {
+    opacity: 0.6; /* Ejemplo: reducir aún más la opacidad al hacer clic */
+}
+
+
+
 /* =====================================================================
 |  ESTILOS PARA LOS BOTONES DE OPERADOR (Circulación, CPS, CSI)        |
 ===================================================================== */
