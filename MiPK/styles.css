@@ -1196,4 +1196,77 @@ header img {
 }
 
 
+/* =====================================================================
+|  ESTILOS ESPECÍFICOS PARA LA TARJETA DE EMPLAZAMIENTOS             |
+===================================================================== */
+
+/* Estilos para el formulario de búsqueda de emplazamientos */
+#emplazamientos-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espacio entre campos del formulario */
+    margin-bottom: 20px; /* Espacio debajo del formulario antes de la línea */
+}
+
+#emplazamientos-formulario input[type="text"],
+#emplazamientos-formulario select {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white; /* Fondo blanco para los campos */
+    color: #333; /* Color de texto oscuro */
+}
+
+#emplazamientos-formulario select {
+    appearance: none; /* Elimina estilos nativos del sistema operativo */
+    -webkit-appearance: none; /* Para Safari */
+    -moz-appearance: none; /* Para Firefox */
+    background-image: url('img/flecha-desplegable.png'); /* Imagen de flecha */
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px; /* Ajusta el tamaño de la flecha */
+    padding-right: 35px; /* Espacio para la flecha */
+}
+
+/* Estilos para el botón de buscar en emplazamientos (reutilizando clase de simulador) */
+#emplazamiento-buscar-btn {
+    /* Hereda estilos de .simulador-option-button definidos previamente en styles.css */
+    /* Puedes añadir estilos adicionales específicos si es necesario */
+    width: 50%; /* Ancho del botón, ajusta según necesites */
+    margin: 15px auto 0 auto; /* Centrar horizontalmente */
+    display: block; /* Asegurar que se comporte como bloque */
+}
+
+
+/* Estilos para la línea separadora de resultados */
+#emplazamientos-separador-resultados {
+    border: none;
+    border-top: 2px solid white; /* Línea blanca */
+    margin: 20px 0; /* Espacio arriba y abajo de la línea */
+}
+
+/* Estilos para la tabla de resultados */
+#emplazamientos-tabla-resultados {
+    width: 100%;
+    border-collapse: collapse; /* Colapsar bordes de tabla */
+    color: white; /* Texto blanco para la tabla */
+}
+
+#emplazamientos-tabla-resultados th,
+#emplazamientos-tabla-resultados td {
+    padding: 8px;
+    text-align: left; /* Alinear texto a la izquierda en celdas */
+    border-bottom: 1px solid #ddd; /* Línea divisoria entre filas */
+}
+
+#emplazamientos-tabla-resultados th {
+    font-weight: bold; /* Cabeceras de tabla en negrita */
+    color: white; /* Color del texto de cabecera */
+    text-align: left; /* Asegurar alineación a la izquierda en cabeceras */
+}
+
+#emplazamientos-tabla-resultados tbody tr:last-child td {
+    border-bottom: none; /* Eliminar borde inferior de la última fila */
+}
 
