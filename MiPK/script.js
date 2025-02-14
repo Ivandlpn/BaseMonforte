@@ -2936,7 +2936,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return emplazamientosData; // Si ya están cargados, devolver los datos en caché
         }
         try {
-            const response = await fetch("./doc/emplazamientos.json"); // Ruta al archivo emplazamientos.json
+            const response = await fetch("./doc/emplazamientos/emplazamientos.json"); // Ruta al archivo emplazamientos.json
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
