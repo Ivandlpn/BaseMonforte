@@ -3185,3 +3185,18 @@ imagenCompartir.addEventListener("click", async () => {
 });
 
 });
+
+// Obtener referencias a los elementos
+const botonOperadores = document.getElementById('boton-operadores');
+const operadoresCardContainer = document.getElementById('operadores-card-container');
+const cerrarOperadoresCardButton = document.getElementById('cerrar-operadores-card');
+
+// Event listener para el botón "Operadores"
+botonOperadores.addEventListener('click', () => {
+    operadoresCardContainer.style.display = 'flex'; // Mostrar la tarjeta
+});
+
+// Event listener para el botón de cerrar
+cerrarOperadoresCardButton.addEventListener('click', () => {
+    operadoresCardContainer.style.display = 'none'; // Ocultar la tarjeta
+});
