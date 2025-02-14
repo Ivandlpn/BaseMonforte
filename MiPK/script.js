@@ -2988,17 +2988,40 @@ async function cargarYGenerarOpcionesEmplazamientos() {
         const lineaSeleccionada = document.getElementById('emplazamiento-linea-select').value;
         const pkBusqueda = document.getElementById('emplazamiento-pk-input').value.toUpperCase().trim();
         const tipoSeleccionado = document.getElementById('emplazamiento-tipo-select').value;
-        const baseSeleccionada = document.getElementById('emplazamiento-base-select').value; // Aún no se usa, para lógica "Base" futura
+        const baseSeleccionada = document.getElementById('emplazamiento-base-select').value; // Base seleccionada para FILTRO
 
 
         const resultadosFiltrados = data.filter(item => {
             const nombreCoincide = item["Emplazamiento"].toLowerCase().includes(nombreBusqueda);
             const lineaCoincide = !lineaSeleccionada || item["Tipo Vía"].startsWith(lineaSeleccionada.padStart(3, '0'));
-            const pkCoincide = !pkBusqueda || formatearPK(item["PK"]) === formatearPK(pkBusqueda); // Formatear PK para comparación
+            const pkCoincide = !pkBusqueda || formatearPK(item["PK"]) === formatearPK(pkBusqueda);
             const tipoCoincide = !tipoSeleccionado || item["Tipo de Emplazamiento"] === tipoSeleccionado;
-            // const baseCoincide = ... (lógica para "Base" se añadirá aquí más adelante)
 
-            return nombreCoincide && lineaCoincide && pkCoincide && tipoCoincide; //&& baseCoincide; // Añadir baseCoincide cuando se implemente
+            // *** INICIO: NUEVA LÓGICA DE FILTRADO POR BASE (REEMPLAZA LA ANTERIOR) ***
+            let baseCoincide = true; // Por defecto, no filtra por base
+
+            if (baseSeleccionada) {
+                const pkNumerico = pkToNumber(item["PK"]);
+                const linea = item["Tipo Vía"].substring(0, 3).replace(/[^0-9]/g, ''); // Extraer línea para comparación
+
+                baseCoincide = false; // Inicialmente, no coincide con ninguna base
+
+                if (baseSeleccionada === "BM VILLARRUBIA" && linea === '040' && pkNumerico >= 0 && pkNumerico <= 199176) {
+                    baseCoincide = true;
+                } else if (baseSeleccionada === "BM GABALDON") {
+                    if ((linea === '040' && pkNumerico >= 199177 && pkNumerico <= 286287) || (linea === '042' && pkNumerico >= 247026 && pkNumerico <= 364285)) {
+                        baseCoincide = true;
+                    }
+                } else if (baseSeleccionada === "BM REQUENA" && linea === '040' && pkNumerico >= 286288 && pkNumerico <= 397213) {
+                    baseCoincide = true;
+                } else if (baseSeleccionada === "BM MONFORTE" && linea === '042' && pkNumerico >= 364286 && pkNumerico <= 485925) {
+                    baseCoincide = true;
+                }
+            }
+            // *** FIN: NUEVA LÓGICA DE FILTRADO POR BASE (REEMPLAZA LA ANTERIOR) ***
+
+
+            return nombreCoincide && lineaCoincide && pkCoincide && tipoCoincide && baseCoincide;
         });
 
         mostrarTablaResultadosEmplazamientos(resultadosFiltrados);
