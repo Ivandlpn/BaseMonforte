@@ -2545,13 +2545,37 @@ async function mostrarTrenesCercanosInterpolado() {
         const botonOtroPk = document.getElementById('boton-otro-pk');
         const otroPkForm = document.getElementById('otro-pk-form');
 
-        botonOtroPk.addEventListener('click', () => {
-            if (otroPkForm.style.display === 'none') {
-                otroPkForm.style.display = 'block';
-            } else {
-                otroPkForm.style.display = 'none';
-            }
-        });
+       botonOtroPk.addEventListener('click', () => {
+        if (otroPkForm.style.display === 'none') {
+            otroPkForm.style.display = 'block';
+        } else {
+            otroPkForm.style.display = 'none';
+        }
+    });
+
+    // *** AÑADIDO: Event listener para el botón "Ver Trenes Próximos" ***
+    const botonVerTrenesProximos = document.getElementById('boton-ver-trenes-proximos');
+
+    botonVerTrenesProximos.addEventListener('click', () => {
+        // Obtener los valores del formulario
+        const lineaSeleccionada = document.getElementById('otro-pk-linea').value;
+        const pkIntroducido = document.getElementById('otro-pk-pk').value;
+
+        // Validar y formatear el PK
+        const pkNumerico = validarYFormatearPK(pkIntroducido);
+
+        if (pkNumerico === null) {
+            alert("Formato de PK incorrecto. Utilice XXX+XXX, XXXXXX, XXX.XXX o XXX,XXX");
+            return;
+        }
+
+        // Actualizar el listado de trenes próximos
+        mostrarTrenesCercanosInterpolado(lineaSeleccionada, pkNumerico);
+
+        // Ocultar el formulario
+        otroPkForm.style.display = 'none';
+    });
+        
     } catch (error) {
         console.error("Error al cargar datos de trenes o calcular tiempos:", error);
         trenesContainer.innerHTML = '<p style="text-align: center; color: red;">Error al cargar horarios de trenes.</p>';
