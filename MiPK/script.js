@@ -2360,7 +2360,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 async function mostrarTrenesCercanosInterpolado() {
-     // Obtener el tbody de la tabla (ya existente)
+    // Obtener el tbody de la tabla (ya existente)
     const tbody = document.querySelector('#trenes-container tbody');
     if (!tbody) {
         console.error("mostrarTrenesCercanosInterpolado: No se encontró el tbody de la tabla.");
@@ -2369,8 +2369,19 @@ async function mostrarTrenesCercanosInterpolado() {
     tbody.innerHTML = '<p style="text-align: center;">Actualizando horarios de trenes...</p>'; // Mensaje de carga
 
     // *** OBTENER ESTADO DEL CHECKBOX (si existe) ***
-     const checkboxMostrarAnteriores = document.getElementById('check-anteriores');
+    const checkboxMostrarAnteriores = document.getElementById('check-anteriores');
     const mostrarAnteriores = checkboxMostrarAnteriores ? checkboxMostrarAnteriores.checked : false;
+
+    // *** AÑADIDO: Obtener referencia al elemento trenes-pk-actual ***
+    const trenesPkActualElement = document.getElementById('trenes-pk-actual');
+
+    // *** AÑADIDO: Actualizar el texto del elemento con el PK formateado ***
+    if (window.pkMasCercano) {
+        const pkFormateado = formatearPK(window.pkMasCercano.pk);
+        trenesPkActualElement.textContent = `PK: ${pkFormateado}`;
+    } else {
+        trenesPkActualElement.textContent = 'Calculando PK...';
+    }
 
     try {
         const trenesData = await cargarJSON("./doc/trenes/TrenesALIEne25.json");
