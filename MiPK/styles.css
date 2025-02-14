@@ -1183,3 +1183,62 @@ header img {
     height: auto;          /* Mantener la proporción */
     margin-bottom: 0;      /* Eliminar el margen inferior de la imagen */
 }
+
+
+#boton-otro-pk {
+    background-color: #007bff; /* Azul */
+    color: white;             /* Texto blanco */
+    padding: 10px 15px;        /* Relleno */
+    border: none;             /* Sin borde */
+    border-radius: 5px;        /* Bordes redondeados */
+    cursor: pointer;           /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.2s ease; /* Transición suave */
+}
+
+#boton-otro-pk:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el ratón */
+}
+
+/* Estilos para el formulario de selección de PK (inicialmente oculto) */
+#otro-pk-form {
+    display: none; /* Ocultar el formulario por defecto */
+    position: absolute;  /* Posicionamiento absoluto */
+    bottom: 50px;         /* Ajustar la distancia desde la parte inferior */
+    right: 10px;          /* Ajustar la distancia desde la derecha */
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
+    padding: 10px;         /* Relleno */
+    border-radius: 5px;    /* Bordes redondeados */
+    z-index: 2;           /* Asegurar que esté por encima de otros elementos */
+    width: 200px;         /* Ancho del formulario */
+    text-align: left;      /* Alineación del texto a la izquierda */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+#otro-pk-form label {
+    display: block;       /* Cada etiqueta ocupa una línea */
+    margin-bottom: 5px;    /* Espacio debajo de cada etiqueta */
+}
+
+#otro-pk-form select,
+#otro-pk-form input[type="text"] {
+    width: 100%;           /* Ocupar todo el ancho disponible */
+    padding: 5px;          /* Relleno */
+    margin-bottom: 10px;   /* Espacio debajo de cada campo */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 3px;    /* Bordes redondeados */
+}
+
+#otro-pk-form button {
+    background-color: #007bff; /* Azul */
+    color: white;             /* Texto blanco */
+    padding: 8px 12px;        /* Relleno */
+    border: none;             /* Sin borde */
+    border-radius: 5px;        /* Bordes redondeados */
+    cursor: pointer;           /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.2s ease; /* Transición suave */
+    width: 100%;            /* Ocupar todo el ancho disponible */
+}
+
+#otro-pk-form button:hover {
+    background-color: #0056b3; /* Azul más oscuro al pasar el ratón */
+}
