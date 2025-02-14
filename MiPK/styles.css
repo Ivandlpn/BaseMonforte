@@ -1120,3 +1120,16 @@ header img {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
+/* Estilos para la tarjeta OPERADORES (puedes ajustarlos) */
+#operadores-card-container {
+    /* Por defecto es "display: none;" */
+}
+
+#operadores-card {
+    /* Hereda los estilos generales de .overlay-card */
+}
+
+#operadores-card .plus-option-button {
+    /* Si quieres estilos específicos para los botones dentro de esta tarjeta */
+}
