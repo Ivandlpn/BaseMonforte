@@ -2553,6 +2553,41 @@ async function mostrarTrenesCercanosInterpolado() {
         }
     });
 
+        function validarYFormatearPK(pk) {
+    // Eliminar espacios en blanco
+    pk = pk.trim();
+
+    // Reemplazar coma por punto
+    pk = pk.replace(',', '.');
+
+    // Intentar formatear el PK usando diferentes patrones
+    let pkNumerico = null;
+
+    // Patrón XXX+XXX
+    if (pk.includes('+')) {
+        const partes = pk.split('+');
+        if (partes.length === 2 && /^\d+$/.test(partes[0]) && /^\d+$/.test(partes[1])) {
+            pkNumerico = parseInt(partes[0]) * 1000 + parseInt(partes[1]);
+        }
+    }
+    // Patrón XXXXXX (6 dígitos)
+    else if (/^\d{6}$/.test(pk)) {
+        pkNumerico = parseInt(pk);
+    }
+    // Patrón XXX.XXX o XXX.XXX
+    else if (/^\d+\.\d+$/.test(pk)) {
+        pkNumerico = parseFloat(pk) * 1000;
+    }
+
+    // Si se pudo formatear el PK, redondearlo y devolverlo
+    if (pkNumerico !== null) {
+        return Math.round(pkNumerico);
+    }
+
+    // Si no se pudo formatear, devolver null
+    return null;
+}
+
     // *** AÑADIDO: Event listener para el botón "Ver Trenes Próximos" ***
     const botonVerTrenesProximos = document.getElementById('boton-ver-trenes-proximos');
 
