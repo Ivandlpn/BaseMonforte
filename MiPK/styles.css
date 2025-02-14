@@ -1163,6 +1163,15 @@ header img {
     /* Si quieres estilos específicos para los botones dentro de esta tarjeta */
 }
 
+#operadores-card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 2em; /* Aumentar el tamaño de la fuente */
+    font-family: 'Poppins', sans-serif; /* Añadir la fuente Poppins */
+    font-weight: 700; /* Añadir negrita */
+}
+
+
 #operadores-card .plus-option-button {
     width: 95%;
     max-width: 150px;
