@@ -309,6 +309,8 @@ function calcularPKMasCercano(lat, lon, data) {
         return parseInt(parts[0]) * 1000 + parseInt(parts[1] || 0);
     }
 
+    
+
     // Función para convertir un número de nuevo al formato PK
     function numberToPk(pkNumber) {
         const parteEntera = Math.floor(pkNumber / 1000);
@@ -2886,7 +2888,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    ///// *** INICIO: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
+    ///// *** INICIO: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR (CÓDIGO COMPLETO) *** /////
+
+    // Objeto con rangos de PKs en formato de cadena de 6 dígitos para cada Base
+    const rangosBase = {
+        "BM VILLARRUBIA": {
+            "40": { inicio: "000000", fin: "199176" }
+        },
+        "BM GABALDON": {
+            "40": { inicio: "199177", fin: "286287" },
+            "42": { inicio: "247026", fin: "364285" }
+        },
+        "BM REQUENA": {
+            "40": { inicio: "286288", fin: "397213" }
+        },
+        "BM MONFORTE": {
+            "42": { inicio: "364286", fin: "485925" }
+        }
+    };
+
 
     document.addEventListener('DOMContentLoaded', function() {
         const emplazamientosButtonPlus = document.querySelector('.plus-option-button[aria-label="EMPLAZAMIENTOS"]');
@@ -2941,31 +2961,27 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-async function cargarYGenerarOpcionesEmplazamientos() {
+    async function cargarYGenerarOpcionesEmplazamientos() {
         const data = await cargarDatosEmplazamientos();
         if (!data || data.length === 0) {
             return; // Si no hay datos, salir de la función
         }
 
-        // Generar opciones para el select de Línea (MODIFICADO para mostrar solo el número)
-        const lineasUnicas = [...new Set(data.map(item => {
-            const tipoVia = item["Tipo Vía"];
-            const match = tipoVia.match(/^(\d{2,3})\s*-/); // Busca un número de 2 o 3 dígitos al inicio seguido de " - "
-            return match ? match[1] : null; // Devuelve el número capturado o null si no hay coincidencia
-        }))]
-            .filter(linea => linea && ['024', '040', '042', '046', '048'].includes(linea)) // Filtrar líneas válidas
+        // Generar opciones para el select de Línea
+        const lineasUnicas = [...new Set(data.map(item => item["Tipo Vía"].substring(0, 3).replace(/[^0-9]/g, '')))]
+            .filter(linea => linea && ['024', '040', '042', '046', '048'].includes(linea.padStart(3, '0').slice(1)))
             .sort();
-
         const lineaSelect = document.getElementById('emplazamiento-linea-select');
         lineaSelect.innerHTML = '<option value="">Línea</option>'; // Opción por defecto
         lineasUnicas.forEach(linea => {
             const option = document.createElement('option');
             option.value = linea;
-            option.text = linea; // MODIFICADO: Mostrar solo el número de línea como texto
+            option.text = linea; // Mostrar solo el número de línea como texto
             lineaSelect.appendChild(option);
         });
 
-        // Generar opciones para el select de Tipo de Emplazamiento (sin cambios)
+
+        // Generar opciones para el select de Tipo de Emplazamiento
         const tiposUnicos = [...new Set(data.map(item => item["Tipo de Emplazamiento"]))].sort();
         const tipoSelect = document.getElementById('emplazamiento-tipo-select');
         tipoSelect.innerHTML = '<option value="">Tipo Emplazamiento</option>'; // Opción por defecto
@@ -2975,6 +2991,23 @@ async function cargarYGenerarOpcionesEmplazamientos() {
             option.text = tipo;
             tipoSelect.appendChild(option);
         });
+    }
+
+
+    function pkToString6(pkString) {
+        if (!pkString) {
+            return "000000"; // Valor por defecto en string si el PK es null o undefined
+        }
+
+        const parts = pkString.split('+');
+        let pkNumber = parseInt(parts[0], 10) * 1000; // Parte entera (miles)
+        if (parts[1]) {
+            pkNumber += parseInt(parts[1], 10); // Parte decimal (metros)
+        }
+
+        let pkString6 = pkNumber.toString().padStart(6, '0'); // Convertir a string de 6 dígitos
+
+        return isNaN(pkString6) ? "000000" : pkString6; // Devuelve "000000" si la conversión falla
     }
 
 
@@ -2997,31 +3030,24 @@ async function cargarYGenerarOpcionesEmplazamientos() {
             const pkCoincide = !pkBusqueda || formatearPK(item["PK"]) === formatearPK(pkBusqueda);
             const tipoCoincide = !tipoSeleccionado || item["Tipo de Emplazamiento"] === tipoSeleccionado;
 
-            // *** INICIO: NUEVA LÓGICA DE FILTRADO POR BASE (REEMPLAZA LA ANTERIOR) ***
+            // *** INICIO: LÓGICA DE FILTRADO POR BASE (CON CADENAS DE 6 DÍGITOS) ***
             let baseCoincide = true; // Por defecto, no filtra por base
 
             if (baseSeleccionada) {
-                const pkNumerico = pkToNumber(item["PK"]);
-                const linea = item["Tipo Vía"].substring(0, 3).replace(/[^0-9]/g, '');
-
-                console.log(`Base Seleccionada: ${baseSeleccionada}, Emplazamiento: ${item["Emplazamiento"]}, Línea: ${linea}, PK Numérico: ${pkNumerico}`); // <-- LOGGING
+                const pkString6 = pkToString6(item["PK"]); // CONVERTIR PK A STRING DE 6 DIGITOS
+                const linea = item["Tipo Vía"].substring(0, 3).replace(/[^0-9]/g, ''); // Extraer línea
 
                 baseCoincide = false; // Inicialmente, no coincide con ninguna base
+                const rangos = rangosBase[baseSeleccionada]; // Obtener rangos para la base seleccionada
 
-                if (baseSeleccionada === "BM VILLARRUBIA" && linea === '040' && pkNumerico >= 0 && pkNumerico <= 199176) {
-                    baseCoincide = true;
-                } else if (baseSeleccionada === "BM GABALDON") {
-                    if ((linea === '040' && pkNumerico >= 199177 && pkNumerico <= 286287) || (linea === '042' && pkNumerico >= 247026 && pkNumerico <= 364285)) {
+                if (rangos && rangos[linea]) { // Verificar si hay rangos definidos para la base y línea
+                    const rango = rangos[linea];
+                    if (pkString6 >= rango.inicio && pkString6 <= rango.fin) { // COMPARACIÓN DE CADENAS
                         baseCoincide = true;
                     }
-                } else if (baseSeleccionada === "BM REQUENA" && linea === '040' && pkNumerico >= 286288 && pkNumerico <= 397213) {
-                    baseCoincide = true;
-                } else if (baseSeleccionada === "BM MONFORTE" && linea === '042' && pkNumerico >= 364286 && pkNumerico <= 485925) {
-                    baseCoincide = true;
                 }
-                 console.log(`Base Coincide: ${baseCoincide}`); // <-- LOGGING
             }
-            // *** FIN: NUEVA LÓGICA DE FILTRADO POR BASE (REEMPLAZA LA ANTERIOR) ***
+            // *** FIN: LÓGICA DE FILTRADO POR BASE (CON CADENAS DE 6 DÍGITOS) ***
 
 
             return nombreCoincide && lineaCoincide && pkCoincide && tipoCoincide && baseCoincide;
@@ -3031,7 +3057,7 @@ async function cargarYGenerarOpcionesEmplazamientos() {
     }
 
 
-       function mostrarTablaResultadosEmplazamientos(resultados) {
+    function mostrarTablaResultadosEmplazamientos(resultados) {
         const tbodyResultados = document.querySelector('#emplazamientos-tabla-resultados tbody');
         tbodyResultados.innerHTML = ''; // Limpiar resultados anteriores
 
@@ -3043,17 +3069,14 @@ async function cargarYGenerarOpcionesEmplazamientos() {
         resultados.forEach(emplazamiento => {
             const fila = tbodyResultados.insertRow();
 
-            // *** INICIO: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
-            let linea = '-'; // Valor por defecto si no se encuentra la línea
-            const tipoVia = emplazamiento["Tipo Vía"];
-            const match = tipoVia.match(/^(\d{2,3})\s*-/);
-            if (match && ['024', '040', '042', '046', '048'].includes(match[1])) {
-                linea = match[1]; // MODIFICADO: Mostrar solo el número de línea
+            let linea = emplazamiento["Tipo Vía"].substring(0, 3).replace(/[^0-9]/g, '');
+            if (!['24', '40', '42', '46', '48'].includes(linea.padStart(2, '0'))) {
+                linea = '-'; // o un valor por defecto si no coincide con las líneas esperadas
+            } else {
+                linea = linea; // Mostrar solo el número de línea
             }
-            // *** FIN: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
-
             const cellLinea = fila.insertCell();
-            cellLinea.textContent = linea; // MODIFICADO: Mostrar solo el número de línea en la celda
+            cellLinea.textContent = linea; // Mostrar solo el número de línea en la celda
 
             const cellPK = fila.insertCell();
             cellPK.textContent = formatearPK(emplazamiento["PK"]); // Formatear PK
@@ -3069,9 +3092,7 @@ async function cargarYGenerarOpcionesEmplazamientos() {
         });
     }
 
-
-    ///// *** FIN: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
-
+    ///// *** FIN: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR (CÓDIGO COMPLETO) *** /////
 
 
 
