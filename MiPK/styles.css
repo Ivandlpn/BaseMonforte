@@ -781,6 +781,14 @@ footer img {
     color: white;
 }
 
+
+#trenes-card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    margin-top: 10px; /* AÑADIDO: Margen superior */
+    /* ... otros estilos ... */
+}
+
 #trenes-card td {
     padding: 8px;
     color: white;
