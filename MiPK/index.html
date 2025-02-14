@@ -175,6 +175,9 @@
                         <button class="plus-option-button" aria-label="DIRECTORIO">
                             <img src="img/plus/directorio.png" alt="DIRECTORIO" style="width: 100%; height: auto;">
                         </button>
+                         <button class="plus-option-button" aria-label="EMPLAZAMIENTOS" id="boton-emplazamientos">
+                                <img src="img/plus/localizador.png" alt="EMPLAZAMIENTOS" style="width: 100%; height: auto;">
+                            </button>
                         <button class="plus-option-button" aria-label="OCUPACIÓN">
                             <img src="img/plus/ocupacion.png" alt="OCUPACIÓN" style="width: 100%; height: auto;">
                         </button>
@@ -627,6 +630,88 @@
             </div>
         </div>
         <!-- *** FIN: NUEVA TARJETA SUPERPUESTA MENSAJE *** -->
+
+        
+
+ 
+  <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA DIRECTORIO *** -->
+        <div id="directorio-card-container" class="overlay-card-container" style="display: none;">
+            <div id="directorio-card" class="overlay-card">
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-directorio-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>DIRECTORIO</u></h2>
+
+                <!-- Contenedor para los enlaces del directorio -->
+                <div id="directorio-container">
+                    <!-- Aquí se insertarán los enlaces dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </div>
+        <!-- *** FIN: NUEVA TARJETA SUPERPUESTA DIRECTORIO *** -->
+
+
+        <!-- *** INICIO: NUEVA TARJETA SUPERPUESTA EMPLAZAMIENTOS *** -->
+        <div id="emplazamientos-card-container" class="overlay-card-container" style="display: none;">
+            <div id="emplazamientos-card" class="overlay-card">
+
+                <!-- Botón para cerrar la tarjeta -->
+                <button id="cerrar-emplazamientos-card" class="close-button" aria-label="Cerrar">
+                    <img src="img/cerrar.png" alt="Cerrar" style="width: 20px; height: 20px;">
+                </button>
+
+                <!-- Título de la tarjeta -->
+                <h2 style="text-align: center; margin-bottom: 25px;"><u>EMPLAZAMIENTOS</u></h2>
+
+                <!-- Formulario de búsqueda -->
+                <div id="emplazamientos-formulario">
+                    <input type="text" id="emplazamiento-nombre-input" placeholder="Nombre Emplazamiento">
+                    <select id="emplazamiento-linea-select">
+                        <option value="">Línea</option>
+                    </select>
+                    <input type="text" id="emplazamiento-pk-input" placeholder="PK">
+                    <select id="emplazamiento-tipo-select">
+                        <option value="">Tipo Emplazamiento</option>
+                    </select>
+                    <select id="emplazamiento-base-select">
+                        <option value="">Base</option>
+                        <option value="BM VILLARRUBIA">BM Villarrubia</option>
+                        <option value="BM GABALDON">BM Gabaldón</option>
+                        <option value="BM REQUENA">BM Requena</option>
+                        <option value="BM MONFORTE">BM Monforte</option>
+                    </select>
+                    <div style="text-align: center; margin-top: 15px;">
+                        <button id="emplazamiento-buscar-btn" class="simulador-option-button">Buscar</button>
+                    </div>
+                    <hr id="emplazamientos-separador-resultados">
+                </div>
+
+                <!-- Contenedor para los resultados de la búsqueda (en formato tabla) -->
+                <div id="emplazamientos-resultados">
+                    <table id="emplazamientos-tabla-resultados" style="width:100%; border-collapse: collapse;">
+                        <thead>
+                            <tr>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid white;">Línea</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid white;">PK</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid white;">Tipo Emplazamiento</th>
+                                <th style="padding: 8px; text-align: left; border-bottom: 1px solid white;">Vía</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Aquí se insertarán las filas de resultados con JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+ <!-- *** FIN: NUEVA TARJETA SUPERPUESTA EMPLAZAMIENTOS *** -->
+
+
+
 
 
  
