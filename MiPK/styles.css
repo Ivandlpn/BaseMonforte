@@ -819,6 +819,26 @@ footer img {
         claseFila = "tren-pasado";
     }
 
+
+/* Estilos específicos para la tarjeta de trenes */
+#trenes-card {
+    /* Estilos existentes de la tarjeta de trenes */
+    position: relative; /* Asegura que la tarjeta es el contenedor relativo */
+}
+
+#trenes-pk-actual {
+    position: absolute; /* Posicionamiento absoluto dentro de la tarjeta */
+    top: 10px;         /* Ajusta la distancia desde la parte superior */
+    left: 10px;        /* Ajusta la distancia desde la izquierda */
+    background-color: white; /* Fondo blanco */
+    color: blue;           /* Texto azul */
+    padding: 3px 6px;      /* Relleno pequeño */
+    border-radius: 5px;    /* Bordes redondeados */
+    font-size: 0.8em;       /* Tamaño de fuente pequeño */
+    z-index: 1;           /* Asegura que esté por encima de otros elementos */
+    font-weight: bold;    /* Opcional: Añadir negrita */
+}
+
 /* =====================================================================
 |  ESTILOS ESPECÍFICOS PARA LA TARJETA ACCIDENTE                      |
 ===================================================================== */
@@ -850,6 +870,7 @@ footer img {
     opacity: 1;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 
 .boton-accidente-tipo:active {
     /* background-color: rgba(255, 255, 255, 0.3);  ELIMINADO: Fondo semitransparente blanco al hacer clic */
