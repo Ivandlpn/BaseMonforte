@@ -1256,7 +1256,7 @@ header img {
 #emplazamientos-tabla-resultados th,
 #emplazamientos-tabla-resultados td {
     padding: 8px;
-    text-align: left; /* Alinear texto a la izquierda en celdas */
+    text-align: center; /* Alinear texto a la izquierda en celdas */
     border-bottom: 1px solid #ddd; /* Línea divisoria entre filas */
 }
 
