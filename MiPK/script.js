@@ -3147,7 +3147,7 @@ function mostrarTablaResultadosEmplazamientos(resultados, columnaOrdenacion = nu
         const tipoVia = emplazamiento["Tipo Vía"];
         const match = tipoVia.match(/^(\d{2,3})\s*-/);
         if (match && ['024', '040', '042', '046', '048'].includes(match[1])) {
-            linea = match[1]; // MODIFICADO: Mostrar solo el número de línea
+        linea = parseInt(match[1], 10).toString(); // ✨ MODIFICADO: Convertir a número y luego a string para quitar "0" inicial
         }
         // *** FIN: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
 
