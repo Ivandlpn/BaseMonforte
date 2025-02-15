@@ -3269,18 +3269,46 @@ async function mostrarEmplazamientoEnMapa(linea, pk) {
 
 // Función para BUSCAR COORDENADAS de un emplazamiento por Línea y PK en archivos de trazado (REUTILIZADA y ADAPTADA de calcularPKMasCercano)
 async function buscarCoordenadasEmplazamiento(linea, pk) {
+    console.log(`\n--- BUSCANDO COORDENADAS PARA: Línea ${linea}, PK ${pk} ---`); // 1. Mensaje de inicio de búsqueda
+
     if (!preprocessedTraceData.has(linea)) {
-        console.warn(`No hay datos preprocesados para la línea ${linea}`);
+        console.log(`[buscarCoordenadasEmplazamiento] No hay datos preprocesados para la línea ${linea}`); // 2. Comprobar si hay datos para la línea
         return null;
     }
 
     const lineMap = preprocessedTraceData.get(linea);
-    const pkNumerico = pkToNumber(pk);
-    const puntoEncontrado = lineMap.get(pkNumerico);
+    const pkNumericoBuscado = pkToNumber(pk);
+    console.log(`[buscarCoordenadasEmplazamiento] PK Numerico Buscado: ${pkNumericoBuscado}`); // 3. Mostrar PK numérico buscado
 
-    return puntoEncontrado || null;
+    let puntoEncontrado = null;
+    let puntoCercanoDebug = null; // Para guardar un punto cercano para debug
+
+    lineMap.forEach((punto, pkNumericoPunto) => { // Iterar sobre el mapa de PKs de la línea
+        console.log(`[buscarCoordenadasEmplazamiento]  - PK Trazado: ${pkNumericoPunto}, Línea Trazado: ${punto.Linea}`); // 4. Log de cada PK del trazado que se comprueba
+
+        if (pkNumericoPunto === pkNumericoBuscado) {
+            puntoEncontrado = punto;
+            console.log("[buscarCoordenadasEmplazamiento]  ✅ ¡Punto ENCONTRADO! PK:", punto.PK, "Linea:", punto.Linea); // 5. Log cuando se encuentra el punto
+        }
+
+        if (Math.abs(pkNumericoPunto - pkNumericoBuscado) < 1000) { // Buscar un punto cercano para debug (opcional)
+            if (!puntoCercanoDebug || Math.abs(pkNumericoPunto - pkNumericoBuscado) < Math.abs(pkToNumber(puntoCercanoDebug.PK) - pkNumericoBuscado)) {
+                puntoCercanoDebug = punto; // Guardar punto cercano si es más cercano que el anterior
+            }
+        }
+    });
+
+
+    if (!puntoEncontrado) {
+        console.log("[buscarCoordenadasEmplazamiento]  ❌ Punto NO ENCONTRADO para PK:", pk, "Linea:", linea); // 6. Log si NO se encuentra el punto
+        if (puntoCercanoDebug) {
+            console.log("[buscarCoordenadasEmplazamiento]  ⚠️ Punto CERCANO (para debug): PK:", puntoCercanoDebug.PK, "Linea:", puntoCercanoDebug.Linea, "Distancia PK:", Math.abs(pkToNumber(puntoCercanoDebug.PK) - pkNumericoBuscado)); // 7. Log de punto cercano (si hay)
+        }
+    }
+
+    return puntoEncontrado || puntoCercanoDebug || null; // MODIFICADO: Devolver puntoCercanoDebug si no se encuentra exacto (solo para DEBUGGING)
+    // return puntoEncontrado || null;  <--  Código original (para producción, usar este)
 }
-
 
 // Función para PRE-PROCESAR los datos de trazado al inicio (NUEVA y OPTIMIZADA)
 async function preprocesarDatosTrazado() {
