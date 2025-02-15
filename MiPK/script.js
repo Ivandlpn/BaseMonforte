@@ -3049,7 +3049,11 @@ async function filtrarYMostrarResultadosEmplazamientos() {
     const resultadosFiltrados = data.filter(item => {
         const nombreCoincide = item["Emplazamiento"].toLowerCase().includes(nombreBusqueda);
         const lineaCoincide = !lineaSeleccionada || item["Tipo Vía"].startsWith(lineaSeleccionada.padStart(3, '0'));
-        const pkCoincide = !pkBusqueda || formatearPK(item["PK"]) === formatearPK(pkBusqueda); // Formatear PK para comparación
+         const pkBusquedaMiles = pkBusqueda.substring(0, 3); // ✨ NUEVO: Obtener solo los 3 primeros dígitos del PK buscado
+        const pkEmplazamientoFormateado = formatearPK(item["PK"]); // Formatear PK del emplazamiento
+        const pkEmplazamientoMiles = pkEmplazamientoFormateado.split('+')[0]; // ✨ NUEVO: Obtener los "miles" del PK del emplazamiento
+
+        const pkCoincide = !pkBusqueda || (pkEmplazamientoMiles && pkEmplazamientoMiles === pkBusquedaMiles); // ✨ MODIFICADO: Coincidencia por "miles"
         const tipoCoincide = !tipoSeleccionado || item["Tipo de Emplazamiento"] === tipoSeleccionado;
 
         let baseCoincide = true; // Inicialmente no filtra por base
