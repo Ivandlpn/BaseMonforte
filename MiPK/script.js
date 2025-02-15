@@ -3124,7 +3124,19 @@ function mostrarTablaResultadosEmplazamientos(resultados) {
         cellNombre.textContent = emplazamiento["Emplazamiento"];
 
         const cellVia = fila.insertCell();
-        cellVia.textContent = emplazamiento["Vía/s"] || 'No especificada'; // Usar 'No especificada' si está vacío
+        // *** INICIO: NUEVA LÓGICA PARA MOSTRAR "VÍA" SEGÚN REQUERIMIENTOS ***
+        const viasValor = emplazamiento["Vía/s"];
+        let textoVia = "Todas"; // Valor por defecto para otros casos
+
+        if (viasValor === "Ninguna") {
+            textoVia = "-";
+        } else if (viasValor === "1") {
+            textoVia = "1";
+        } else if (viasValor === "2") {
+            textoVia = "2";
+        }
+        cellVia.textContent = textoVia;
+        // *** FIN: NUEVA LÓGICA PARA MOSTRAR "VÍA" SEGÚN REQUERIMIENTOS ***
     });
 }
 
