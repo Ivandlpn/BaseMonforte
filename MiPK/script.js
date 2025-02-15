@@ -3278,18 +3278,26 @@ async function mostrarEmplazamientoEnMapa(linea, pk) {
 
 // Función para BUSCAR COORDENADAS de un emplazamiento por Línea y PK en archivos de trazado (REUTILIZADA y ADAPTADA de calcularPKMasCercano)
 async function buscarCoordenadasEmplazamiento(linea, pk) {
-    // Cargar datos de trazado (rutasArchivos ya debería estar definida globalmente)
+    console.log(`Buscar coordenadas para Línea: ${linea}, PK: ${pk}`); // <-- AÑADIDO: Log PK de búsqueda
     const datosTrazado = await cargarArchivosJSON(rutasArchivos);
-
-    // Formatear PK a número para comparación
     const pkNumerico = pkToNumber(pk);
+    console.log(`PK Numerico (buscando): ${pkNumerico}`); // <-- AÑADIDO: Log PK numérico de búsqueda
 
-    // Buscar el punto en los datos de trazado que coincida con la línea y el PK
+
     const puntoEncontrado = datosTrazado.find(punto => {
-        return punto.Linea === linea && pkToNumber(punto.PK) === pkNumerico;
+        const pkNumericoPunto = pkToNumber(punto.PK);
+        console.log(`PK Numerico (punto trazado): ${pkNumericoPunto}, Linea (punto trazado): ${punto.Linea}`); // <-- AÑADIDO: Log PK y Línea de cada punto en trazado
+        return punto.Linea === linea && pkNumericoPunto === pkNumerico;
     });
 
-    return puntoEncontrado || null; // Devolver el punto encontrado o null si no se encuentra
+    if (puntoEncontrado) {
+        console.log("Punto ENCONTRADO en trazado:", puntoEncontrado); // <-- AÑADIDO: Log punto encontrado
+    } else {
+        console.log("Punto NO ENCONTRADO en trazado para PK:", pk, "Linea:", linea); // <-- AÑADIDO: Log NO encontrado
+    }
+
+
+    return puntoEncontrado || null;
 }
 
 ///// *** FIN: NUEVA FUNCIÓN PARA MOSTRAR EMPLAZAMIENTO EN MAPA *** /////
