@@ -666,13 +666,19 @@
                 <!-- Título de la tarjeta -->
                 <h2 style="text-align: center; margin-bottom: 25px;"><u>EMPLAZAMIENTOS</u></h2>
 
-                <!-- Formulario de búsqueda -->
+                 <!-- Formulario de búsqueda -->
                 <div id="emplazamientos-formulario">
                     <input type="text" id="emplazamiento-nombre-input" placeholder="Nombre Emplazamiento">
-                    <select id="emplazamiento-linea-select">
-                        <option value="">Línea</option>
-                    </select>
-                    <input type="text" id="emplazamiento-pk-input" placeholder="PK">
+
+                    <!-- Nuevo contenedor para Linea y PK en línea horizontal ✨ -->
+                    <div class="formulario-fila-horizontal">
+                        <select id="emplazamiento-linea-select">
+                            <option value="">Línea</option>
+                        </select>
+                        <input type="text" id="emplazamiento-pk-input" placeholder="PK">
+                    </div>
+                    <!-- Fin del contenedor horizontal ✨ -->
+
                     <select id="emplazamiento-tipo-select">
                         <option value="">Tipo Emplazamiento</option>
                     </select>
