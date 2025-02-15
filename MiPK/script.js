@@ -3018,11 +3018,9 @@ async function filtrarYMostrarResultadosEmplazamientos() {
     // Definir los ambitos de cada Base (NUEVO para filtro Base)
     const baseAmbitos = {
         "BM VILLARRUBIA": {
-            lineas: ["040", "024"], // Ahora abarca las líneas 040 y 024
-            pk_rangos: [
-                { linea: "040", pk_inicio: formatPKToNumberForComparison("0+000"), pk_fin: formatPKToNumberForComparison("199+176") }, // Rango para L40
-                { linea: "024", pk_inicio: formatPKToNumberForComparison("0+000"), pk_fin: formatPKToNumberForComparison("199+176") }  // Rango para L24 (MISMO RANGO INICIALMENTE)
-            ]
+            linea: "040",
+            pk_inicio: formatPKToNumberForComparison("0+000"), // PK 0+000 en formato numérico
+            pk_fin: formatPKToNumberForComparison("199+176")   // PK 199+176 en formato numérico
         },
         "BM GABALDON": {
             lineas: ["040", "042"], // Abarca dos líneas
@@ -3057,22 +3055,16 @@ async function filtrarYMostrarResultadosEmplazamientos() {
 
             const emplazamientoLineaTipoVia = item["Tipo Vía"];
             const emplazamientoPKString = item["PK"];
-            const emplazamientoLinea = emplazamientoLineaTipoVia.match(/^(\d{2,3})\s*-/)?.[1]; //Extraer línea del tipo de vía
-
 
             if (baseSeleccionada === "BM VILLARRUBIA" || baseSeleccionada === "BM REQUENA" || baseSeleccionada === "BM MONFORTE") {
                 const ambitoBaseUnicaLinea = baseAmbitos[baseSeleccionada];
-                // *** MODIFICADO: Iterar sobre pk_rangos para bases de una línea o varias ***
-                ambitoBaseUnicaLinea.pk_rangos.forEach(rango => {
-                    if (emplazamientoLinea === rango.linea) { //Comprobar si la línea coincide
-                        const emplazamientoPKNumber = formatPKToNumberForComparison(emplazamientoPKString);
-                        if (emplazamientoPKNumber >= rango.pk_inicio && emplazamientoPKNumber <= rango.pk_fin) {
-                            baseCoincide = true; // Coincide con el ámbito de la base
-                        }
+                const emplazamientoLinea = emplazamientoLineaTipoVia.match(/^(\d{2,3})\s*-/)?.[1]; //Extraer línea del tipo de vía
+                if (emplazamientoLinea === ambitoBaseUnicaLinea.linea) { //Comprobar si la línea coincide
+                    const emplazamientoPKNumber = formatPKToNumberForComparison(emplazamientoPKString);
+                    if (emplazamientoPKNumber >= ambitoBaseUnicaLinea.pk_inicio && emplazamientoPKNumber <= ambitoBaseUnicaLinea.pk_fin) {
+                        baseCoincide = true; // Coincide con el ámbito de la base
                     }
-                     if (baseCoincide) return; // Si ya coincide, salir del forEach
-                });
-
+                }
 
             } else if (baseSeleccionada === "BM GABALDON") {
                 const ambitoBaseGabaldon = baseAmbitos["BM GABALDON"];
