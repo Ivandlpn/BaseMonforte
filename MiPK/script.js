@@ -2888,171 +2888,247 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-    ///// INICIO ICONO PLUS /////
-    // ... (código existente para iconoPlus) ...
 
-    ///// FIN ICONO PLUS /////
+   ///// *** INICIO: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
 
+document.addEventListener('DOMContentLoaded', function() {
+    const emplazamientosButtonPlus = document.querySelector('.plus-option-button[aria-label="EMPLAZAMIENTOS"]');
+    const emplazamientosCardContainer = document.getElementById('emplazamientos-card-container');
+    const cerrarEmplazamientosCardButton = document.getElementById('cerrar-emplazamientos-card');
 
-    ///// *** INICIO: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const emplazamientosButtonPlus = document.querySelector('.plus-option-button[aria-label="EMPLAZAMIENTOS"]');
-        const emplazamientosCardContainer = document.getElementById('emplazamientos-card-container');
-        const cerrarEmplazamientosCardButton = document.getElementById('cerrar-emplazamientos-card');
-
-        if (emplazamientosButtonPlus) {
-            emplazamientosButtonPlus.addEventListener('click', function() {
-                emplazamientosCardContainer.style.display = 'flex';
-                cargarYGenerarOpcionesEmplazamientos(); // Cargar datos y generar opciones de selects al abrir la tarjeta
-            });
-        } else {
-            console.error('No se encontró el botón EMPLAZAMIENTOS');
-        }
-
-        if (cerrarEmplazamientosCardButton) {
-            cerrarEmplazamientosCardButton.addEventListener('click', function() {
-                emplazamientosCardContainer.style.display = 'none';
-            });
-        } else {
-            console.error('No se encontró el botón de cerrar de la tarjeta EMPLAZAMIENTOS');
-        }
-
-        const buscarEmplazamientosBtn = document.getElementById('emplazamiento-buscar-btn');
-        if (buscarEmplazamientosBtn) {
-            buscarEmplazamientosBtn.addEventListener('click', function(event) {
-                event.preventDefault(); // Evitar la recarga de la página al hacer clic en "Buscar"
-                filtrarYMostrarResultadosEmplazamientos(); // Llamar a la función para filtrar y mostrar resultados
-            });
-        } else {
-            console.error('No se encontró el botón BUSCAR EMPLAZAMIENTOS');
-        }
-    });
-
-    let emplazamientosData = []; // Variable global para almacenar los datos de emplazamientos
-
-    async function cargarDatosEmplazamientos() {
-        if (emplazamientosData.length > 0) {
-            return emplazamientosData; // Si ya están cargados, devolver los datos en caché
-        }
-        try {
-            const response = await fetch("./doc/emplazamientos/emplazamientos.json"); // Ruta al archivo emplazamientos.json
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            emplazamientosData = await response.json(); // Cargar y parsear JSON
-            return emplazamientosData;
-        } catch (error) {
-            console.error("Error al cargar datos de emplazamientos:", error);
-            alert("Error al cargar los datos de emplazamientos. Por favor, intenta de nuevo más tarde.");
-            return []; // Devolver un array vacío en caso de error
-        }
+    if (emplazamientosButtonPlus) {
+        emplazamientosButtonPlus.addEventListener('click', function() {
+            emplazamientosCardContainer.style.display = 'flex';
+            cargarYGenerarOpcionesEmplazamientos(); // Cargar datos y generar opciones de selects al abrir la tarjeta
+        });
+    } else {
+        console.error('No se encontró el botón EMPLAZAMIENTOS');
     }
+
+    if (cerrarEmplazamientosCardButton) {
+        cerrarEmplazamientosCardButton.addEventListener('click', function() {
+            emplazamientosCardContainer.style.display = 'none';
+        });
+    } else {
+        console.error('No se encontró el botón de cerrar de la tarjeta EMPLAZAMIENTOS');
+    }
+
+    const buscarEmplazamientosBtn = document.getElementById('emplazamiento-buscar-btn');
+    if (buscarEmplazamientosBtn) {
+        buscarEmplazamientosBtn.addEventListener('click', function(event) {
+            event.preventDefault(); // Evitar la recarga de la página al hacer clic en "Buscar"
+            filtrarYMostrarResultadosEmplazamientos(); // Llamar a la función para filtrar y mostrar resultados
+        });
+    } else {
+        console.error('No se encontró el botón BUSCAR EMPLAZAMIENTOS');
+    }
+});
+
+let emplazamientosData = []; // Variable global para almacenar los datos de emplazamientos
+
+async function cargarDatosEmplazamientos() {
+    if (emplazamientosData.length > 0) {
+        return emplazamientosData; // Si ya están cargados, devolver los datos en caché
+    }
+    try {
+        const response = await fetch("./doc/emplazamientos/emplazamientos.json"); // Ruta al archivo emplazamientos.json
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        emplazamientosData = await response.json(); // Cargar y parsear JSON
+        return emplazamientosData;
+    } catch (error) {
+        console.error("Error al cargar datos de emplazamientos:", error);
+        alert("Error al cargar los datos de emplazamientos. Por favor, intenta de nuevo más tarde.");
+        return []; // Devolver un array vacío en caso de error
+    }
+}
 
 async function cargarYGenerarOpcionesEmplazamientos() {
-        const data = await cargarDatosEmplazamientos();
-        if (!data || data.length === 0) {
-            return; // Si no hay datos, salir de la función
-        }
-
-        // Generar opciones para el select de Línea (MODIFICADO para mostrar solo el número)
-        const lineasUnicas = [...new Set(data.map(item => {
-            const tipoVia = item["Tipo Vía"];
-            const match = tipoVia.match(/^(\d{2,3})\s*-/); // Busca un número de 2 o 3 dígitos al inicio seguido de " - "
-            return match ? match[1] : null; // Devuelve el número capturado o null si no hay coincidencia
-        }))]
-            .filter(linea => linea && ['024', '040', '042', '046', '048'].includes(linea)) // Filtrar líneas válidas
-            .sort();
-
-        const lineaSelect = document.getElementById('emplazamiento-linea-select');
-        lineaSelect.innerHTML = '<option value="">Línea</option>'; // Opción por defecto
-        lineasUnicas.forEach(linea => {
-            const option = document.createElement('option');
-            option.value = linea;
-            option.text = linea; // MODIFICADO: Mostrar solo el número de línea como texto
-            lineaSelect.appendChild(option);
-        });
-
-        // Generar opciones para el select de Tipo de Emplazamiento (sin cambios)
-        const tiposUnicos = [...new Set(data.map(item => item["Tipo de Emplazamiento"]))].sort();
-        const tipoSelect = document.getElementById('emplazamiento-tipo-select');
-        tipoSelect.innerHTML = '<option value="">Tipo Emplazamiento</option>'; // Opción por defecto
-        tiposUnicos.forEach(tipo => {
-            const option = document.createElement('option');
-            option.value = tipo;
-            option.text = tipo;
-            tipoSelect.appendChild(option);
-        });
+    const data = await cargarDatosEmplazamientos();
+    if (!data || data.length === 0) {
+        return; // Si no hay datos, salir de la función
     }
 
-    async function filtrarYMostrarResultadosEmplazamientos() {
-        const data = await cargarDatosEmplazamientos();
-        if (!data || data.length === 0) {
-            return;
-        }
+    // Generar opciones para el select de Línea (MODIFICADO para mostrar solo el número)
+    const lineasUnicas = [...new Set(data.map(item => {
+        const tipoVia = item["Tipo Vía"];
+        const match = tipoVia.match(/^(\d{2,3})\s*-/); // Busca un número de 2 o 3 dígitos al inicio seguido de " - "
+        return match ? match[1] : null; // Devuelve el número capturado o null si no hay coincidencia
+    }))]
+        .filter(linea => linea && ['024', '040', '042', '046', '048'].includes(linea)) // Filtrar líneas válidas
+        .sort();
 
-        const nombreBusqueda = document.getElementById('emplazamiento-nombre-input').value.toLowerCase().trim();
-        const lineaSeleccionada = document.getElementById('emplazamiento-linea-select').value;
-        const pkBusqueda = document.getElementById('emplazamiento-pk-input').value.toUpperCase().trim();
-        const tipoSeleccionado = document.getElementById('emplazamiento-tipo-select').value;
-        const baseSeleccionada = document.getElementById('emplazamiento-base-select').value; // Aún no se usa, para lógica "Base" futura
+    const lineaSelect = document.getElementById('emplazamiento-linea-select');
+    lineaSelect.innerHTML = '<option value="">Línea</option>'; // Opción por defecto
+    lineasUnicas.forEach(linea => {
+        const option = document.createElement('option');
+        option.value = linea;
+        option.text = linea; // MODIFICADO: Mostrar solo el número de línea como texto
+        lineaSelect.appendChild(option);
+    });
+
+    // Generar opciones para el select de Tipo de Emplazamiento (sin cambios)
+    const tiposUnicos = [...new Set(data.map(item => item["Tipo de Emplazamiento"]))].sort();
+    const tipoSelect = document.getElementById('emplazamiento-tipo-select');
+    tipoSelect.innerHTML = '<option value="">Tipo Emplazamiento</option>'; // Opción por defecto
+    tiposUnicos.forEach(tipo => {
+        const option = document.createElement('option');
+        option.value = tipo;
+        option.text = tipo;
+        tipoSelect.appendChild(option);
+    });
+
+    // Generar opciones para el select de Base (NUEVO para el filtro Base)
+    const basesUnicas = [
+        "BM VILLARRUBIA",
+        "BM GABALDON",
+        "BM REQUENA",
+        "BM MONFORTE"
+    ];
+    const baseSelect = document.getElementById('emplazamiento-base-select');
+    baseSelect.innerHTML = '<option value="">Base</option>'; // Opción por defecto
+    basesUnicas.forEach(base => {
+        const option = document.createElement('option');
+        option.value = base;
+        option.text = base;
+        baseSelect.appendChild(option);
+    });
+}
+
+// Función para formatear PK a número de 6 dígitos para comparación (NUEVA para filtro Base)
+function formatPKToNumberForComparison(pkString) {
+    let pkNumber = pkToNumber(pkString); // Reutilizamos tu función pkToNumber existente
+    let pkStringNumber = String(pkNumber);
+    return pkStringNumber.padStart(6, '0'); // Rellenar con ceros a la izquierda hasta 6 dígitos
+}
 
 
-        const resultadosFiltrados = data.filter(item => {
-            const nombreCoincide = item["Emplazamiento"].toLowerCase().includes(nombreBusqueda);
-            const lineaCoincide = !lineaSeleccionada || item["Tipo Vía"].startsWith(lineaSeleccionada.padStart(3, '0'));
-            const pkCoincide = !pkBusqueda || formatearPK(item["PK"]) === formatearPK(pkBusqueda); // Formatear PK para comparación
-            const tipoCoincide = !tipoSeleccionado || item["Tipo de Emplazamiento"] === tipoSeleccionado;
-            // const baseCoincide = ... (lógica para "Base" se añadirá aquí más adelante)
-
-            return nombreCoincide && lineaCoincide && pkCoincide && tipoCoincide; //&& baseCoincide; // Añadir baseCoincide cuando se implemente
-        });
-
-        mostrarTablaResultadosEmplazamientos(resultadosFiltrados);
+async function filtrarYMostrarResultadosEmplazamientos() {
+    const data = await cargarDatosEmplazamientos();
+    if (!data || data.length === 0) {
+        return;
     }
 
+    const nombreBusqueda = document.getElementById('emplazamiento-nombre-input').value.toLowerCase().trim();
+    const lineaSeleccionada = document.getElementById('emplazamiento-linea-select').value;
+    const pkBusqueda = document.getElementById('emplazamiento-pk-input').value.toUpperCase().trim();
+    const tipoSeleccionado = document.getElementById('emplazamiento-tipo-select').value;
+    const baseSeleccionada = document.getElementById('emplazamiento-base-select').value; // Valor de Base Seleccionada
 
-    function mostrarTablaResultadosEmplazamientos(resultados) {
-        const tbodyResultados = document.querySelector('#emplazamientos-tabla-resultados tbody');
-        tbodyResultados.innerHTML = ''; // Limpiar resultados anteriores
-
-        if (resultados.length === 0) {
-            tbodyResultados.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:10px;">No se encontraron emplazamientos.</td></tr>`;
-            return;
+    // Definir los ambitos de cada Base (NUEVO para filtro Base)
+    const baseAmbitos = {
+        "BM VILLARRUBIA": {
+            linea: "040",
+            pk_inicio: formatPKToNumberForComparison("0+000"), // PK 0+000 en formato numérico
+            pk_fin: formatPKToNumberForComparison("199+176")   // PK 199+176 en formato numérico
+        },
+        "BM GABALDON": {
+            lineas: ["040", "042"], // Abarca dos líneas
+            pk_rangos: [
+                { linea: "040", pk_inicio: formatPKToNumberForComparison("199+177"), pk_fin: formatPKToNumberForComparison("286+287") }, // Rango para L40
+                { linea: "042", pk_inicio: formatPKToNumberForComparison("247+026"), pk_fin: formatPKToNumberForComparison("364+285") }  // Rango para L42
+            ]
+        },
+        "BM REQUENA": {
+            linea: "040",
+            pk_inicio: formatPKToNumberForComparison("286+288"), // PK 286+288 en formato numérico
+            pk_fin: formatPKToNumberForComparison("397+213")   // PK 397+213 en formato numérico
+        },
+        "BM MONFORTE": {
+            linea: "042",
+            pk_inicio: formatPKToNumberForComparison("364+286"), // PK 364+286 en formato numérico
+            pk_fin: formatPKToNumberForComparison("485+925")   // PK 485+925 en formato numérico
         }
+    };
 
-        resultados.forEach(emplazamiento => {
-            const fila = tbodyResultados.insertRow();
 
-            // *** INICIO: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
-            let linea = '-'; // Valor por defecto si no se encuentra la línea
-            const tipoVia = emplazamiento["Tipo Vía"];
-            const match = tipoVia.match(/^(\d{2,3})\s*-/);
-            if (match && ['024', '040', '042', '046', '048'].includes(match[1])) {
-                linea = match[1]; // MODIFICADO: Mostrar solo el número de línea
+    const resultadosFiltrados = data.filter(item => {
+        const nombreCoincide = item["Emplazamiento"].toLowerCase().includes(nombreBusqueda);
+        const lineaCoincide = !lineaSeleccionada || item["Tipo Vía"].startsWith(lineaSeleccionada.padStart(3, '0'));
+        const pkCoincide = !pkBusqueda || formatearPK(item["PK"]) === formatearPK(pkBusqueda); // Formatear PK para comparación
+        const tipoCoincide = !tipoSeleccionado || item["Tipo de Emplazamiento"] === tipoSeleccionado;
+
+        let baseCoincide = true; // Inicialmente no filtra por base
+
+        if (baseSeleccionada && baseSeleccionada !== "") {
+            baseCoincide = false; // Si se selecciona base, empezamos asumiendo que NO coincide
+
+            const emplazamientoLineaTipoVia = item["Tipo Vía"];
+            const emplazamientoPKString = item["PK"];
+
+            if (baseSeleccionada === "BM VILLARRUBIA" || baseSeleccionada === "BM REQUENA" || baseSeleccionada === "BM MONFORTE") {
+                const ambitoBaseUnicaLinea = baseAmbitos[baseSeleccionada];
+                const emplazamientoLinea = emplazamientoLineaTipoVia.match(/^(\d{2,3})\s*-/)?.[1]; //Extraer línea del tipo de vía
+                if (emplazamientoLinea === ambitoBaseUnicaLinea.linea) { //Comprobar si la línea coincide
+                    const emplazamientoPKNumber = formatPKToNumberForComparison(emplazamientoPKString);
+                    if (emplazamientoPKNumber >= ambitoBaseUnicaLinea.pk_inicio && emplazamientoPKNumber <= ambitoBaseUnicaLinea.pk_fin) {
+                        baseCoincide = true; // Coincide con el ámbito de la base
+                    }
+                }
+
+            } else if (baseSeleccionada === "BM GABALDON") {
+                const ambitoBaseGabaldon = baseAmbitos["BM GABALDON"];
+                ambitoBaseGabaldon.pk_rangos.forEach(rango => {
+                    const emplazamientoLinea = emplazamientoLineaTipoVia.match(/^(\d{2,3})\s*-/)?.[1]; //Extraer línea del tipo de vía
+                    if (emplazamientoLinea === rango.linea) { //Comprobar si la línea coincide
+                        const emplazamientoPKNumber = formatPKToNumberForComparison(emplazamientoPKString);
+                        if (emplazamientoPKNumber >= rango.pk_inicio && emplazamientoPKNumber <= rango.pk_fin) {
+                            baseCoincide = true; // Coincide con el ámbito de la base
+                        }
+                    }
+                    if (baseCoincide) return; // Si ya coincide, salir del forEach
+                });
             }
-            // *** FIN: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
+        }
 
-            const cellLinea = fila.insertCell();
-            cellLinea.textContent = linea; // MODIFICADO: Mostrar solo el número de línea en la celda
 
-            const cellPK = fila.insertCell();
-            cellPK.textContent = formatearPK(emplazamiento["PK"]); // Formatear PK
+        return nombreCoincide && lineaCoincide && pkCoincide && tipoCoincide && baseCoincide;
+    });
 
-            const cellTipo = fila.insertCell();
-            cellTipo.textContent = emplazamiento["Tipo de Emplazamiento"];
+    mostrarTablaResultadosEmplazamientos(resultadosFiltrados);
+}
 
-            const cellNombre = fila.insertCell();
-            cellNombre.textContent = emplazamiento["Emplazamiento"];
 
-            const cellVia = fila.insertCell();
-            cellVia.textContent = emplazamiento["Vía/s"] || 'No especificada'; // Usar 'No especificada' si está vacío
-        });
+function mostrarTablaResultadosEmplazamientos(resultados) {
+    const tbodyResultados = document.querySelector('#emplazamientos-tabla-resultados tbody');
+    tbodyResultados.innerHTML = ''; // Limpiar resultados anteriores
+
+    if (resultados.length === 0) {
+        tbodyResultados.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:10px;">No se encontraron emplazamientos.</td></tr>`;
+        return;
     }
 
-    ///// *** FIN: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
+    resultados.forEach(emplazamiento => {
+        const fila = tbodyResultados.insertRow();
 
+        // *** INICIO: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
+        let linea = '-'; // Valor por defecto si no se encuentra la línea
+        const tipoVia = emplazamiento["Tipo Vía"];
+        const match = tipoVia.match(/^(\d{2,3})\s*-/);
+        if (match && ['024', '040', '042', '046', '048'].includes(match[1])) {
+            linea = match[1]; // MODIFICADO: Mostrar solo el número de línea
+        }
+        // *** FIN: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
 
+        const cellLinea = fila.insertCell();
+        cellLinea.textContent = linea; // MODIFICADO: Mostrar solo el número de línea en la celda
+
+        const cellPK = fila.insertCell();
+        cellPK.textContent = formatearPK(emplazamiento["PK"]); // Formatear PK
+
+        const cellTipo = fila.insertCell();
+        cellTipo.textContent = emplazamiento["Tipo de Emplazamiento"];
+
+        const cellNombre = fila.insertCell();
+        cellNombre.textContent = emplazamiento["Emplazamiento"];
+
+        const cellVia = fila.insertCell();
+        cellVia.textContent = emplazamiento["Vía/s"] || 'No especificada'; // Usar 'No especificada' si está vacío
+    });
+}
+
+///// *** FIN: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
 
 
 
