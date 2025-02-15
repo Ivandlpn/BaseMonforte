@@ -1245,6 +1245,12 @@ header img {
     margin: 20px 0; /* Espacio arriba y abajo de la línea */
 }
 
+/* Estilos para la tabla de resultados */
+#emplazamientos-tabla-resultados {
+    width: 100%;
+    border-collapse: collapse; /* Colapsar bordes de tabla */
+    color: white; /* Texto blanco para la tabla */
+}
 
 /* Estilos para la cabecera de la tabla */
 #emplazamientos-tabla-resultados thead tr {
@@ -1255,7 +1261,13 @@ header img {
     z-index: 100;
 }
 
-
+#emplazamientos-tabla-resultados th,
+#emplazamientos-tabla-resultados td {
+    padding: 8px;
+    text-align: center; /* Centrar texto */
+    border-bottom: 1px solid #ddd; /* Línea divisoria entre filas */
+    white-space: nowrap; /* ✨ Añadido: Evitar wrapping de texto en celdas */
+}
 
 #emplazamientos-tabla-resultados th {
     font-weight: bold; /* Cabeceras de tabla en negrita */
@@ -1266,33 +1278,3 @@ header img {
 #emplazamientos-tabla-resultados tbody tr:last-child td {
     border-bottom: none; /* Eliminar borde inferior de la última fila */
 }
-
-#emplazamientos-resultados {
-    /* ... otros estilos que ya tenías ... */
-    width: 100%;        /* 👈 ASEGÚRATE DE TENER ESTA LÍNEA */
-    overflow-x: auto;   /* 👈 ASEGÚRATE DE TENER ESTA LÍNEA */
-    box-sizing: border-box; /* 👈 ASEGÚRATE DE TENER ESTA LÍNEA */
-}
-
-/* Estilos para la tabla de resultados */
-#emplazamientos-tabla-resultados {
-    width: 100%;
-    border-collapse: collapse; /* Colapsar bordes de tabla */
-    color: white; /* Texto blanco para la tabla */
-    table-layout: fixed; /* ✨ Añadido: Layout de tabla fijo */
-    word-break: break-word; /* ✨ Añadido: Romper palabras largas para evitar desbordamiento */
-    overflow-x: auto; /* ✨ Mantenemos: Scroll horizontal como último recurso */
-    box-sizing: border-box; /* ✨ Mantenemos: Incluir padding y border en el ancho total */
-}
-
-
-#emplazamientos-tabla-resultados th,
-#emplazamientos-tabla-resultados td {
-    padding: 8px;
-    text-align: center; /* Centrar texto */
-    border-bottom: 1px solid #ddd; /* Línea divisoria entre filas */
-    word-break: break-word; /* ✨ Añadido TAMBIÉN AQUÍ: Romper palabras largas en celdas */
-    overflow-wrap: break-word; /* ✨ Añadido: Alternativa a word-break para el wrapping */
-}
-
-/* ... (resto de estilos de tabla) ... */
