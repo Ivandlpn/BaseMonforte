@@ -2925,6 +2925,7 @@ document.addEventListener('DOMContentLoaded', function() {
 let emplazamientosData = []; // Variable global para almacenar los datos de emplazamientos
 let columnaOrdenActual = null; // Variable global para rastrear la columna de ordenación actual
 let ordenActual = 'asc';       // Variable global para rastrear el orden actual (ascendente/descendente)
+let marcadoresEmplazamientos = []; // Array para almacenar marcadores de emplazamientos en el mapa (NUEVO)
 
 
 async function cargarDatosEmplazamientos() {
@@ -2950,6 +2951,11 @@ async function cargarYGenerarOpcionesEmplazamientos() {
     if (!data || data.length === 0) {
         return; // Si no hay datos, salir de la función
     }
+
+    // *** INICIO: LIMPIAR MARCADORES EXISTENTES AL ABRIR TARJETA (OPCIONAL - decide si quieres esto) ***
+    // limpiarMarcadoresEmplazamientos(); // Limpiar marcadores del mapa al abrir la tarjeta (OPCIONAL)
+    // *** FIN: LIMPIAR MARCADORES EXISTENTES AL ABRIR TARJETA ***
+
 
     // Generar opciones para el select de Línea (MODIFICADO para mostrar solo el número)
     const lineasUnicas = [...new Set(data.map(item => {
@@ -2996,6 +3002,16 @@ async function cargarYGenerarOpcionesEmplazamientos() {
         baseSelect.appendChild(option);
     });
 }
+
+
+// Función para LIMPIAR los marcadores de emplazamientos del mapa (NUEVA - OPCIONAL)
+function limpiarMarcadoresEmplazamientos() {
+    marcadoresEmplazamientos.forEach(marcador => {
+        mapa.removeLayer(marcador); // Eliminar marcador del mapa
+    });
+    marcadoresEmplazamientos = []; // Vaciar el array de marcadores
+}
+
 
 // Función para formatear PK a número de 6 dígitos para comparación (NUEVA para filtro Base)
 function formatPKToNumberForComparison(pkString) {
@@ -3049,7 +3065,7 @@ async function filtrarYMostrarResultadosEmplazamientos() {
     const resultadosFiltrados = data.filter(item => {
         const nombreCoincide = item["Emplazamiento"].toLowerCase().includes(nombreBusqueda);
         const lineaCoincide = !lineaSeleccionada || item["Tipo Vía"].startsWith(lineaSeleccionada.padStart(3, '0'));
-         const pkBusquedaMiles = pkBusqueda.substring(0, 3); // ✨ NUEVO: Obtener solo los 3 primeros dígitos del PK buscado
+        const pkBusquedaMiles = pkBusqueda.substring(0, 3); // ✨ NUEVO: Obtener solo los 3 primeros dígitos del PK buscado
         const pkEmplazamientoFormateado = formatearPK(item["PK"]); // Formatear PK del emplazamiento
         const pkEmplazamientoMiles = pkEmplazamientoFormateado.split('+')[0]; // ✨ NUEVO: Obtener los "miles" del PK del emplazamiento
 
@@ -3109,7 +3125,7 @@ function mostrarTablaResultadosEmplazamientos(resultados, columnaOrdenacion = nu
         return;
     }
 
-    // *** INICIO: LÓGICA DE ORDENACIÓN (si se especifica columnaOrdenacion) ***
+    // *** INICIO: LÓGICA DE ORDENACIÓN (sin cambios) ***
     if (columnaOrdenacion) {
         resultados.sort((a, b) => {
             let valorA, valorB;
@@ -3145,6 +3161,19 @@ function mostrarTablaResultadosEmplazamientos(resultados, columnaOrdenacion = nu
 
     resultados.forEach(emplazamiento => {
         const fila = tbodyResultados.insertRow();
+
+        // *** INICIO: NUEVAS MODIFICACIONES PARA HACER FILA CLICABLE y AÑADIR ID ✨ ***
+        const pkFormateadoParaID = formatearPK(emplazamiento["PK"]).replace('+', '-'); // Formatear PK para usarlo en ID (reemplazar '+' con '-')
+        const filaId = `emplazamiento-fila-L${emplazamiento["Tipo Vía"].match(/^(\d{2,3})\s*-/)?.[1]}-PK${pkFormateadoParaID}`; // Crear ID único
+        fila.id = filaId; // Asignar ID a la fila
+        fila.style.cursor = 'pointer'; // Cambiar cursor a "manita" al pasar por encima
+        fila.onclick = function() { // Añadir evento onclick a la fila
+            const lineaEmplazamiento = emplazamiento["Tipo Vía"].match(/^(\d{2,3})\s*-/)?.[1];
+            const pkEmplazamiento = emplazamiento["PK"];
+            mostrarEmplazamientoEnMapa(lineaEmplazamiento, pkEmplazamiento); // Llamar a la nueva función al hacer clic
+        };
+        // *** FIN: NUEVAS MODIFICACIONES PARA HACER FILA CLICABLE y AÑADIR ID ✨ ***
+
 
         // *** INICIO: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
         let linea = '-'; // Valor por defecto si no se encuentra la línea
@@ -3209,6 +3238,61 @@ document.getElementById('emplazamientos-tabla-resultados').addEventListener('cli
 
 ///// *** FIN: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
 
+
+// *** INICIO: NUEVA FUNCIÓN PARA MOSTRAR EMPLAZAMIENTO EN MAPA (Paso 2 del plan) ***
+async function mostrarEmplazamientoEnMapa(linea, pk) {
+    console.log(`Mostrar emplazamiento en mapa: Línea ${linea}, PK ${pk}`);
+
+    // 1. Buscar coordenadas del emplazamiento en archivos de trazado (REUTILIZANDO lógica de calcularPKMasCercano)
+    const coordenadasEmplazamiento = await buscarCoordenadasEmplazamiento(linea, pk);
+
+    if (coordenadasEmplazamiento) {
+        const latEmplazamiento = parseFloat(coordenadasEmplazamiento.Latitud);
+        const lonEmplazamiento = parseFloat(coordenadasEmplazamiento.Longitud);
+
+        console.log(`Coordenadas encontradas: Lat ${latEmplazamiento}, Lon ${lonEmplazamiento}`);
+
+        // 2. Centrar el mapa en las coordenadas del emplazamiento
+        mapa.setView([latEmplazamiento, lonEmplazamiento], 17); // Zoom 17 para mostrar detalle
+
+        // 3. Crear un marcador para el emplazamiento
+        const marcadorEmplazamiento = L.marker([latEmplazamiento, lonEmplazamiento])
+            .bindPopup(`<b>Emplazamiento</b><br>Línea ${linea}, PK ${formatearPK(pk)}<br>${coordenadasEmplazamiento.Nombre || ''}<br>Tipo: ${coordenadasEmplazamiento.Tipo}`); // Popup con info
+
+        // 4. Añadir el marcador al mapa
+        marcadorEmplazamiento.addTo(mapa);
+
+        // 5. Añadir marcador al array de marcadores de emplazamientos (para gestión futura - opcional)
+        marcadoresEmplazamientos.push(marcadorEmplazamiento);
+
+        // 6. Abrir el popup del marcador automáticamente (opcional)
+        marcadorEmplazamiento.openPopup();
+
+
+    } else {
+        console.error(`No se encontraron coordenadas para el emplazamiento: Línea ${linea}, PK ${pk}`);
+        alert(`No se pudo ubicar el emplazamiento PK ${formatearPK(pk)} Línea ${linea} en el mapa.`); // Alerta al usuario si no se encuentran coordenadas
+    }
+}
+
+
+// Función para BUSCAR COORDENADAS de un emplazamiento por Línea y PK en archivos de trazado (REUTILIZADA y ADAPTADA de calcularPKMasCercano)
+async function buscarCoordenadasEmplazamiento(linea, pk) {
+    // Cargar datos de trazado (rutasArchivos ya debería estar definida globalmente)
+    const datosTrazado = await cargarArchivosJSON(rutasArchivos);
+
+    // Formatear PK a número para comparación
+    const pkNumerico = pkToNumber(pk);
+
+    // Buscar el punto en los datos de trazado que coincida con la línea y el PK
+    const puntoEncontrado = datosTrazado.find(punto => {
+        return punto.Linea === linea && pkToNumber(punto.PK) === pkNumerico;
+    });
+
+    return puntoEncontrado || null; // Devolver el punto encontrado o null si no se encuentra
+}
+
+///// *** FIN: NUEVA FUNCIÓN PARA MOSTRAR EMPLAZAMIENTO EN MAPA *** /////
 
 
 
