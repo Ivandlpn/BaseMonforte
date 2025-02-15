@@ -2957,7 +2957,7 @@ async function cargarYGenerarOpcionesEmplazamientos() {
         const match = tipoVia.match(/^(\d{2,3})\s*-/); // Busca un número de 2 o 3 dígitos al inicio seguido de " - "
         return match ? match[1] : null; // Devuelve el número capturado o null si no hay coincidencia
     }))]
-        .filter(linea => linea && ['024', '040', '042', '046', '048'].includes(linea)) // Filtrar líneas válidas
+        .filter(linea => linea && ['24', '40', '42', '46', '48'].includes(linea)) // Filtrar líneas válidas
         .sort();
 
     const lineaSelect = document.getElementById('emplazamiento-linea-select');
@@ -3020,26 +3020,26 @@ async function filtrarYMostrarResultadosEmplazamientos() {
     // Definir los ambitos de cada Base (NUEVO para filtro Base)
     const baseAmbitos = {
         "BM VILLARRUBIA": {
-            lineas: ["040", "024"], // Ahora abarca las líneas 040 y 024
+            lineas: ["40", "24"], // Ahora abarca las líneas 040 y 024
             pk_rangos: [
-                { linea: "040", pk_inicio: formatPKToNumberForComparison("0+000"), pk_fin: formatPKToNumberForComparison("199+176") }, // Rango para L40
-                { linea: "024", pk_inicio: formatPKToNumberForComparison("0+000"), pk_fin: formatPKToNumberForComparison("199+176") }  // Rango para L24 (MISMO RANGO INICIALMENTE)
+                { linea: "40", pk_inicio: formatPKToNumberForComparison("0+000"), pk_fin: formatPKToNumberForComparison("199+176") }, // Rango para L40
+                { linea: "24", pk_inicio: formatPKToNumberForComparison("0+000"), pk_fin: formatPKToNumberForComparison("199+176") }  // Rango para L24 (MISMO RANGO INICIALMENTE)
             ]
         },
         "BM GABALDON": {
-            lineas: ["040", "042"], // Abarca dos líneas
+            lineas: ["40", "42"], // Abarca dos líneas
             pk_rangos: [
-                { linea: "040", pk_inicio: formatPKToNumberForComparison("199+177"), pk_fin: formatPKToNumberForComparison("286+287") }, // Rango para L40
-                { linea: "042", pk_inicio: formatPKToNumberForComparison("247+026"), pk_fin: formatPKToNumberForComparison("364+285") }  // Rango para L42
+                { linea: "40", pk_inicio: formatPKToNumberForComparison("199+177"), pk_fin: formatPKToNumberForComparison("286+287") }, // Rango para L40
+                { linea: "42", pk_inicio: formatPKToNumberForComparison("247+026"), pk_fin: formatPKToNumberForComparison("364+285") }  // Rango para L42
             ]
         },
         "BM REQUENA": {
-            linea: "040",
+            linea: "40",
             pk_inicio: formatPKToNumberForComparison("286+288"), // PK 286+288 en formato numérico
             pk_fin: formatPKToNumberForComparison("397+213")   // PK 397+213 en formato numérico
         },
         "BM MONFORTE": {
-            linea: "042",
+            linea: "42",
             pk_inicio: formatPKToNumberForComparison("364+286"), // PK 364+286 en formato numérico
             pk_fin: formatPKToNumberForComparison("485+925")   // PK 485+925 en formato numérico
         }
@@ -3146,7 +3146,7 @@ function mostrarTablaResultadosEmplazamientos(resultados, columnaOrdenacion = nu
         let linea = '-'; // Valor por defecto si no se encuentra la línea
         const tipoVia = emplazamiento["Tipo Vía"];
         const match = tipoVia.match(/^(\d{2,3})\s*-/);
-        if (match && ['024', '040', '042', '046', '048'].includes(match[1])) {
+        if (match && ['24', '40', '42', '46', '48'].includes(match[1])) {
             linea = match[1]; // MODIFICADO: Mostrar solo el número de línea
         }
         // *** FIN: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
