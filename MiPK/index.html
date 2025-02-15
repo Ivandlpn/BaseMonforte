@@ -689,23 +689,24 @@
                     <hr id="emplazamientos-separador-resultados">
                 </div>
 
-                <!-- Contenedor para los resultados de la búsqueda (en formato tabla) -->
-                <div id="emplazamientos-resultados">
-                    <table id="emplazamientos-tabla-resultados" style="width:100%; border-collapse: collapse;">
-                        <thead>
-                            <tr>
-                                <th style="padding: 8px; text-align: center; border-bottom: 1px solid white;">Línea</th>
-                                <th style="padding: 8px; text-align: center; border-bottom: 1px solid white;">PK</th>
-                                <th style="padding: 8px; text-align: center; border-bottom: 1px solid white;">Tipo</th>
-                                 <th style="padding: 8px; text-align: center; border-bottom: 1px solid white;">Nombre</th>
-                                <th style="padding: 8px; text-align: center; border-bottom: 1px solid white;">Vía</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Aquí se insertarán las filas de resultados con JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
+             
+<!-- Contenedor para los resultados de la búsqueda (en formato tabla) -->
+        <div id="emplazamientos-resultados">
+            <table id="emplazamientos-tabla-resultados" style="width:100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 1px solid white;">
+                        <th style="padding: 8px; text-align: center; border-bottom: 1px solid white; cursor: pointer;" data-columna="linea">Línea</th>
+                        <th style="padding: 8px; text-align: center; border-bottom: 1px solid white; cursor: pointer;" data-columna="pk">PK</th>
+                        <th style="padding: 8px; text-align: center; border-bottom: 1px solid white; cursor: pointer;" data-columna="tipo">Tipo</th>
+                        <th style="padding: 8px; text-align: center; border-bottom: 1px solid white; cursor: pointer;" data-columna="nombre">Nombre</th>
+                        <th style="padding: 8px; text-align: center; border-bottom: 1px solid white; cursor: pointer;" data-columna="via">Vía</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí se insertarán las filas de resultados con JavaScript -->
+                </tbody>
+            </table>
+        </div>
 
             </div>
         </div>
