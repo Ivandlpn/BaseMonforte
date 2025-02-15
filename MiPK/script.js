@@ -2887,7 +2887,7 @@ document.addEventListener('DOMContentLoaded', function() {
 ///// FIN ICONO GUARDIA ACTAS /////
 
 
-///// *** INICIO: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
+///// *** INICIO: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR (CÓDIGO OPTIMIZADO) *** /////
 
 document.addEventListener('DOMContentLoaded', function() {
     const emplazamientosButtonPlus = document.querySelector('.plus-option-button[aria-label="EMPLAZAMIENTOS"]');
@@ -2925,7 +2925,8 @@ document.addEventListener('DOMContentLoaded', function() {
 let emplazamientosData = []; // Variable global para almacenar los datos de emplazamientos
 let columnaOrdenActual = null; // Variable global para rastrear la columna de ordenación actual
 let ordenActual = 'asc';       // Variable global para rastrear el orden actual (ascendente/descendente)
-let marcadoresEmplazamientos = []; // Array para almacenar marcadores de emplazamientos en el mapa (NUEVO)
+let marcadoresEmplazamientos = []; // Array para almacenar marcadores de emplazamientos en el mapa
+let preprocessedTraceData = new Map(); // Mapa global para datos de trazado pre-procesados (NUEVO)
 
 
 async function cargarDatosEmplazamientos() {
@@ -2951,11 +2952,6 @@ async function cargarYGenerarOpcionesEmplazamientos() {
     if (!data || data.length === 0) {
         return; // Si no hay datos, salir de la función
     }
-
-    // *** INICIO: LIMPIAR MARCADORES EXISTENTES AL ABRIR TARJETA (OPCIONAL - decide si quieres esto) ***
-    // limpiarMarcadoresEmplazamientos(); // Limpiar marcadores del mapa al abrir la tarjeta (OPCIONAL)
-    // *** FIN: LIMPIAR MARCADORES EXISTENTES AL ABRIR TARJETA ***
-
 
     // Generar opciones para el select de Línea (MODIFICADO para mostrar solo el número)
     const lineasUnicas = [...new Set(data.map(item => {
@@ -3004,7 +3000,7 @@ async function cargarYGenerarOpcionesEmplazamientos() {
 }
 
 
-// Función para LIMPIAR los marcadores de emplazamientos del mapa (NUEVA - OPCIONAL)
+// Función para LIMPIAR los marcadores de emplazamientos del mapa
 function limpiarMarcadoresEmplazamientos() {
     marcadoresEmplazamientos.forEach(marcador => {
         mapa.removeLayer(marcador); // Eliminar marcador del mapa
@@ -3013,11 +3009,11 @@ function limpiarMarcadoresEmplazamientos() {
 }
 
 
-// Función para formatear PK a número de 6 dígitos para comparación (NUEVA para filtro Base)
+// Función para formatear PK a número de 6 dígitos para comparación
 function formatPKToNumberForComparison(pkString) {
-    let pkNumber = pkToNumber(pkString); // Reutilizamos tu función pkToNumber existente
+    let pkNumber = pkToNumber(pkString);
     let pkStringNumber = String(pkNumber);
-    return pkStringNumber.padStart(6, '0'); // Rellenar con ceros a la izquierda hasta 6 dígitos
+    return pkStringNumber.padStart(6, '0');
 }
 
 
@@ -3031,33 +3027,33 @@ async function filtrarYMostrarResultadosEmplazamientos() {
     const lineaSeleccionada = document.getElementById('emplazamiento-linea-select').value;
     const pkBusqueda = document.getElementById('emplazamiento-pk-input').value.toUpperCase().trim();
     const tipoSeleccionado = document.getElementById('emplazamiento-tipo-select').value;
-    const baseSeleccionada = document.getElementById('emplazamiento-base-select').value; // Valor de Base Seleccionada
+    const baseSeleccionada = document.getElementById('emplazamiento-base-select').value;
 
-    // Definir los ambitos de cada Base (NUEVO para filtro Base)
+    // Definir los ambitos de cada Base
     const baseAmbitos = {
         "BM VILLARRUBIA": {
-            lineas: ["040", "024"], // Ahora abarca las líneas 040 y 024
+            lineas: ["040", "024"],
             pk_rangos: [
-                { linea: "040", pk_inicio: formatPKToNumberForComparison("0+000"), pk_fin: formatPKToNumberForComparison("199+176") }, // Rango para L40
-                { linea: "024", pk_inicio: formatPKToNumberForComparison("0+000"), pk_fin: formatPKToNumberForComparison("199+176") }  // Rango para L24 (MISMO RANGO INICIALMENTE)
+                { linea: "040", pk_inicio: formatPKToNumberForComparison("0+000"), pk_fin: formatPKToNumberForComparison("199+176") },
+                { linea: "024", pk_inicio: formatPKToNumberForComparison("0+000"), pk_fin: formatPKToNumberForComparison("199+176") }
             ]
         },
         "BM GABALDON": {
-            lineas: ["040", "042"], // Abarca dos líneas
+            lineas: ["040", "042"],
             pk_rangos: [
-                { linea: "040", pk_inicio: formatPKToNumberForComparison("199+177"), pk_fin: formatPKToNumberForComparison("286+287") }, // Rango para L40
-                { linea: "042", pk_inicio: formatPKToNumberForComparison("247+026"), pk_fin: formatPKToNumberForComparison("364+285") }  // Rango para L42
+                { linea: "040", pk_inicio: formatPKToNumberForComparison("199+177"), pk_fin: formatPKToNumberForComparison("286+287") },
+                { linea: "042", pk_inicio: formatPKToNumberForComparison("247+026"), pk_fin: formatPKToNumberForComparison("364+285") }
             ]
         },
         "BM REQUENA": {
             linea: "040",
-            pk_inicio: formatPKToNumberForComparison("286+288"), // PK 286+288 en formato numérico
-            pk_fin: formatPKToNumberForComparison("397+213")   // PK 397+213 en formato numérico
+            pk_inicio: formatPKToNumberForComparison("286+288"),
+            pk_fin: formatPKToNumberForComparison("397+213")
         },
         "BM MONFORTE": {
             linea: "042",
-            pk_inicio: formatPKToNumberForComparison("364+286"), // PK 364+286 en formato numérico
-            pk_fin: formatPKToNumberForComparison("485+925")   // PK 485+925 en formato numérico
+            pk_inicio: formatPKToNumberForComparison("364+286"),
+            pk_fin: formatPKToNumberForComparison("485+925")
         }
     };
 
@@ -3065,26 +3061,24 @@ async function filtrarYMostrarResultadosEmplazamientos() {
     const resultadosFiltrados = data.filter(item => {
         const nombreCoincide = item["Emplazamiento"].toLowerCase().includes(nombreBusqueda);
         const lineaCoincide = !lineaSeleccionada || item["Tipo Vía"].startsWith(lineaSeleccionada.padStart(3, '0'));
-        const pkBusquedaMiles = pkBusqueda.substring(0, 3); // ✨ NUEVO: Obtener solo los 3 primeros dígitos del PK buscado
-        const pkEmplazamientoFormateado = formatearPK(item["PK"]); // Formatear PK del emplazamiento
-        const pkEmplazamientoMiles = pkEmplazamientoFormateado.split('+')[0]; // ✨ NUEVO: Obtener los "miles" del PK del emplazamiento
+        const pkBusquedaMiles = pkBusqueda.substring(0, 3);
+        const pkEmplazamientoFormateado = formatearPK(item["PK"]);
+        const pkEmplazamientoMiles = pkEmplazamientoFormateado.split('+')[0];
 
-        const pkCoincide = !pkBusqueda || (pkEmplazamientoMiles && pkEmplazamientoMiles === pkBusquedaMiles); // ✨ MODIFICADO: Coincidencia por "miles"
+        const pkCoincide = !pkBusqueda || (pkEmplazamientoMiles && pkEmplazamientoMiles === pkBusquedaMiles);
         const tipoCoincide = !tipoSeleccionado || item["Tipo de Emplazamiento"] === tipoSeleccionado;
 
-        let baseCoincide = true; // Inicialmente no filtra por base
+        let baseCoincide = true;
 
         if (baseSeleccionada && baseSeleccionada !== "") {
-            baseCoincide = false; // Si se selecciona base, empezamos asumiendo que NO coincide
+            baseCoincide = false;
 
             const emplazamientoLineaTipoVia = item["Tipo Vía"];
             const emplazamientoPKString = item["PK"];
-            const emplazamientoLinea = emplazamientoLineaTipoVia.match(/^(\d{2,3})\s*-/)?.[1]; //Extraer línea del tipo de vía
-
+            const emplazamientoLinea = emplazamientoLineaTipoVia.match(/^(\d{2,3})\s*-/)?.[1];
 
             if (baseSeleccionada === "BM VILLARRUBIA" || baseSeleccionada === "BM GABALDON") {
-                // Lógica para BM VILLARRUBIA y BM GABALDON (con pk_rangos)
-                const ambitoBaseMultiLinea = baseAmbitos[baseSeleccionada]; // Usamos ambitoBaseMultiLinea para claridad
+                const ambitoBaseMultiLinea = baseAmbitos[baseSeleccionada];
                 ambitoBaseMultiLinea.pk_rangos.forEach(rango => {
                     if (emplazamientoLinea === rango.linea) {
                         const emplazamientoPKNumber = formatPKToNumberForComparison(emplazamientoPKString);
@@ -3092,17 +3086,16 @@ async function filtrarYMostrarResultadosEmplazamientos() {
                             baseCoincide = true;
                         }
                     }
-                    if (baseCoincide) return; // Si ya coincide, salir del forEach
+                    if (baseCoincide) return;
                 });
 
 
             } else if (baseSeleccionada === "BM REQUENA" || baseSeleccionada === "BM MONFORTE") {
-                // Lógica para BM REQUENA y BM MONFORTE (sin pk_rangos, acceso directo)
-                const ambitoBaseUnicaLinea = baseAmbitos[baseSeleccionada]; // Reutilizamos ambitoBaseUnicaLinea (ahora correcto para estas bases)
-                if (emplazamientoLinea === ambitoBaseUnicaLinea.linea) { //Comprobar si la línea coincide
+                const ambitoBaseUnicaLinea = baseAmbitos[baseSeleccionada];
+                if (emplazamientoLinea === ambitoBaseUnicaLinea.linea) {
                     const emplazamientoPKNumber = formatPKToNumberForComparison(emplazamientoPKString);
                     if (emplazamientoPKNumber >= ambitoBaseUnicaLinea.pk_inicio && emplazamientoPKNumber <= ambitoBaseUnicaLinea.pk_fin) {
-                        baseCoincide = true; // Coincide con el ámbito de la base
+                        baseCoincide = true;
                     }
                 }
             }
@@ -3125,7 +3118,7 @@ function mostrarTablaResultadosEmplazamientos(resultados, columnaOrdenacion = nu
         return;
     }
 
-    // *** INICIO: LÓGICA DE ORDENACIÓN (sin cambios) ***
+    // *** INICIO: LÓGICA DE ORDENACIÓN
     if (columnaOrdenacion) {
         resultados.sort((a, b) => {
             let valorA, valorB;
@@ -3146,49 +3139,49 @@ function mostrarTablaResultadosEmplazamientos(resultados, columnaOrdenacion = nu
                 valorA = a["Vía/s"];
                 valorB = b["Vía/s"];
             } else {
-                return 0; // Columna de ordenación no válida, no ordenar
+                return 0;
             }
 
             if (typeof valorA === 'number' && typeof valorB === 'number') {
-                return orden === 'asc' ? valorA - valorB : valorB - valorA; // Orden numérico
+                return orden === 'asc' ? valorA - valorB : valorB - valorA;
             } else {
-                return orden === 'asc' ? String(valorA).localeCompare(String(valorB)) : String(valorB).localeCompare(String(valorA)); // Orden alfabético
+                return orden === 'asc' ? String(valorA).localeCompare(String(valorB)) : String(valorB).localeCompare(String(valorA));
             }
         });
     }
-    // *** FIN: LÓGICA DE ORDENACIÓN ***
+    // *** FIN: LÓGICA DE ORDENACIÓN
 
 
     resultados.forEach(emplazamiento => {
         const fila = tbodyResultados.insertRow();
 
-        // *** INICIO: NUEVAS MODIFICACIONES PARA HACER FILA CLICABLE y AÑADIR ID ✨ ***
-        const pkFormateadoParaID = formatearPK(emplazamiento["PK"]).replace('+', '-'); // Formatear PK para usarlo en ID (reemplazar '+' con '-')
-        const filaId = `emplazamiento-fila-L${emplazamiento["Tipo Vía"].match(/^(\d{2,3})\s*-/)?.[1]}-PK${pkFormateadoParaID}`; // Crear ID único
-        fila.id = filaId; // Asignar ID a la fila
-        fila.style.cursor = 'pointer'; // Cambiar cursor a "manita" al pasar por encima
-        fila.onclick = function() { // Añadir evento onclick a la fila
+        // *** INICIO: NUEVAS MODIFICACIONES PARA HACER FILA CLICABLE y AÑADIR ID
+        const pkFormateadoParaID = formatearPK(emplazamiento["PK"]).replace('+', '-');
+        const filaId = `emplazamiento-fila-L${emplazamiento["Tipo Vía"].match(/^(\d{2,3})\s*-/)?.[1]}-PK${pkFormateadoParaID}`;
+        fila.id = filaId;
+        fila.style.cursor = 'pointer';
+        fila.onclick = function() {
             const lineaEmplazamiento = emplazamiento["Tipo Vía"].match(/^(\d{2,3})\s*-/)?.[1];
             const pkEmplazamiento = emplazamiento["PK"];
-            mostrarEmplazamientoEnMapa(lineaEmplazamiento, pkEmplazamiento); // Llamar a la nueva función al hacer clic
+            mostrarEmplazamientoEnMapa(lineaEmplazamiento, pkEmplazamiento);
         };
-        // *** FIN: NUEVAS MODIFICACIONES PARA HACER FILA CLICABLE y AÑADIR ID ✨ ***
+        // *** FIN: NUEVAS MODIFICACIONES PARA HACER FILA CLICABLE y AÑADIR ID
 
 
-        // *** INICIO: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
-        let linea = '-'; // Valor por defecto si no se encuentra la línea
+        // *** INICIO: Lógica de extracción de línea REUTILIZANDO la expresión regular
+        let linea = '-';
         const tipoVia = emplazamiento["Tipo Vía"];
         const match = tipoVia.match(/^(\d{2,3})\s*-/);
         if (match && ['024', '040', '042', '046', '048'].includes(match[1])) {
-        linea = parseInt(match[1], 10).toString(); // ✨ MODIFICADO: Convertir a número y luego a string para quitar "0" inicial
+        linea = parseInt(match[1], 10).toString();
         }
-        // *** FIN: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
+        // *** FIN: Lógica de extracción de línea REUTILIZANDO la expresión regular
 
         const cellLinea = fila.insertCell();
-        cellLinea.textContent = linea; // MODIFICADO: Mostrar solo el número de línea en la celda
+        cellLinea.textContent = linea;
 
         const cellPK = fila.insertCell();
-        cellPK.textContent = formatearPK(emplazamiento["PK"]); // Formatear PK
+        cellPK.textContent = formatearPK(emplazamiento["PK"]);
 
         const cellTipo = fila.insertCell();
         cellTipo.textContent = emplazamiento["Tipo de Emplazamiento"];
@@ -3197,9 +3190,8 @@ function mostrarTablaResultadosEmplazamientos(resultados, columnaOrdenacion = nu
         cellNombre.textContent = emplazamiento["Emplazamiento"];
 
         const cellVia = fila.insertCell();
-        // *** INICIO: NUEVA LÓGICA PARA MOSTRAR "VÍA" SEGÚN REQUERIMIENTOS (sin cambios) ***
         const viasValor = emplazamiento["Vía/s"];
-        let textoVia = "Todas"; // Valor por defecto para otros casos
+        let textoVia = "Todas";
 
         if (viasValor === "Ninguna") {
             textoVia = "-";
@@ -3209,11 +3201,10 @@ function mostrarTablaResultadosEmplazamientos(resultados, columnaOrdenacion = nu
             textoVia = "2";
         }
         cellVia.textContent = textoVia;
-        // *** FIN: NUEVA LÓGICA PARA MOSTRAR "VÍA" SEGÚN REQUERIMIENTOS (sin cambios) ***
     });
 }
 
-// *** INICIO: EVENT LISTENER PARA ORDENACIÓN DE COLUMNAS ***
+// *** INICIO: EVENT LISTENER PARA ORDENACIÓN DE COLUMNAS
 document.getElementById('emplazamientos-tabla-resultados').addEventListener('click', function(event) {
     const elementoClicado = event.target;
 
@@ -3234,12 +3225,12 @@ document.getElementById('emplazamientos-tabla-resultados').addEventListener('cli
         }
     }
 });
-// *** FIN: EVENT LISTENER PARA ORDENACIÓN DE COLUMNAS ***
+// *** FIN: EVENT LISTENER PARA ORDENACIÓN DE COLUMNAS
 
 ///// *** FIN: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
 
 
-// *** INICIO: NUEVA FUNCIÓN PARA MOSTRAR EMPLAZAMIENTO EN MAPA (Paso 2 del plan) ***
+// *** INICIO: NUEVA FUNCIÓN PARA MOSTRAR EMPLAZAMIENTO EN MAPA (Paso 2 del plan)
 async function mostrarEmplazamientoEnMapa(linea, pk) {
     console.log(`Mostrar emplazamiento en mapa: Línea ${linea}, PK ${pk}`);
 
@@ -3257,12 +3248,12 @@ async function mostrarEmplazamientoEnMapa(linea, pk) {
 
         // 3. Crear un marcador para el emplazamiento
         const marcadorEmplazamiento = L.marker([latEmplazamiento, lonEmplazamiento])
-            .bindPopup(`<b>Emplazamiento</b><br>Línea ${linea}, PK ${formatearPK(pk)}<br>${coordenadasEmplazamiento.Nombre || ''}<br>Tipo: ${coordenadasEmplazamiento.Tipo}`); // Popup con info
+            .bindPopup(`<b>Emplazamiento</b><br>Línea ${linea}, PK ${formatearPK(pk)}<br>${coordenadasEmplazamiento.Emplazamiento || ''}<br>Tipo: ${coordenadasEmplazamiento["Tipo de Emplazamiento"]}`); // Popup con info MODIFICADO para usar más info de emplazamientos.json
 
         // 4. Añadir el marcador al mapa
         marcadorEmplazamiento.addTo(mapa);
 
-        // 5. Añadir marcador al array de marcadores de emplazamientos (para gestión futura - opcional)
+        // 5. Añadir marcador al array de marcadores de emplazamientos
         marcadoresEmplazamientos.push(marcadorEmplazamiento);
 
         // 6. Abrir el popup del marcador automáticamente (opcional)
@@ -3271,36 +3262,50 @@ async function mostrarEmplazamientoEnMapa(linea, pk) {
 
     } else {
         console.error(`No se encontraron coordenadas para el emplazamiento: Línea ${linea}, PK ${pk}`);
-        alert(`No se pudo ubicar el emplazamiento PK ${formatearPK(pk)} Línea ${linea} en el mapa.`); // Alerta al usuario si no se encuentran coordenadas
+        alert(`No se pudo ubicar el emplazamiento PK ${formatearPK(pk)} Línea ${linea} en el mapa.`);
     }
 }
 
 
 // Función para BUSCAR COORDENADAS de un emplazamiento por Línea y PK en archivos de trazado (REUTILIZADA y ADAPTADA de calcularPKMasCercano)
 async function buscarCoordenadasEmplazamiento(linea, pk) {
-    console.log(`Buscar coordenadas para Línea: ${linea}, PK: ${pk}`); // <-- AÑADIDO: Log PK de búsqueda
-    const datosTrazado = await cargarArchivosJSON(rutasArchivos);
-    const pkNumerico = pkToNumber(pk);
-    console.log(`PK Numerico (buscando): ${pkNumerico}`); // <-- AÑADIDO: Log PK numérico de búsqueda
-
-
-    const puntoEncontrado = datosTrazado.find(punto => {
-        const pkNumericoPunto = pkToNumber(punto.PK);
-        console.log(`PK Numerico (punto trazado): ${pkNumericoPunto}, Linea (punto trazado): ${punto.Linea}`); // <-- AÑADIDO: Log PK y Línea de cada punto en trazado
-        return punto.Linea === linea && pkNumericoPunto === pkNumerico;
-    });
-
-    if (puntoEncontrado) {
-        console.log("Punto ENCONTRADO en trazado:", puntoEncontrado); // <-- AÑADIDO: Log punto encontrado
-    } else {
-        console.log("Punto NO ENCONTRADO en trazado para PK:", pk, "Linea:", linea); // <-- AÑADIDO: Log NO encontrado
+    if (!preprocessedTraceData.has(linea)) {
+        console.warn(`No hay datos preprocesados para la línea ${linea}`);
+        return null;
     }
 
+    const lineMap = preprocessedTraceData.get(linea);
+    const pkNumerico = pkToNumber(pk);
+    const puntoEncontrado = lineMap.get(pkNumerico);
 
     return puntoEncontrado || null;
 }
 
-///// *** FIN: NUEVA FUNCIÓN PARA MOSTRAR EMPLAZAMIENTO EN MAPA *** /////
+
+// Función para PRE-PROCESAR los datos de trazado al inicio (NUEVA y OPTIMIZADA)
+async function preprocesarDatosTrazado() {
+    console.log("Preprocesando datos de trazado...");
+    const datosTrazado = await cargarArchivosJSON(rutasArchivos);
+    const mapaTrazado = new Map();
+
+    datosTrazado.forEach(punto => {
+        const linea = punto.Linea;
+        const pkNumerico = pkToNumber(punto.PK);
+
+        if (!mapaTrazado.has(linea)) {
+            mapaTrazado.set(linea, new Map());
+        }
+        mapaTrazado.get(linea).set(pkNumerico, punto);
+    });
+
+    preprocessedTraceData = mapaTrazado; // Asignar al mapa global
+    console.log("Datos de trazado preprocesados y guardados en cache.");
+}
+
+// Llamar a preprocesarDatosTrazado() al cargar el script (¡LLAMAR SOLO UNA VEZ!)
+preprocesarDatosTrazado();
+
+///// *** FIN: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
 
 
 
