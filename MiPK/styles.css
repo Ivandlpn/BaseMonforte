@@ -1195,7 +1195,6 @@ header img {
     margin-bottom: 0;      /* Eliminar el margen inferior de la imagen */
 }
 
-
 /* =====================================================================
 |  ESTILOS ESPECÍFICOS PARA LA TARJETA DE EMPLAZAMIENTOS             |
 ===================================================================== */
@@ -1253,20 +1252,28 @@ header img {
     color: white; /* Texto blanco para la tabla */
 }
 
+/* Estilos para la cabecera de la tabla */
+#emplazamientos-tabla-resultados thead tr {
+    background-color: #00204a; /* Fondo más oscuro */
+    color: white;
+    position: sticky; /* Cabecera pegajosa */
+    top: 0;
+    z-index: 100;
+}
+
 #emplazamientos-tabla-resultados th,
 #emplazamientos-tabla-resultados td {
     padding: 8px;
-    text-align: center; /* Alinear texto a la izquierda en celdas */
+    text-align: center; /* Centrar texto */
     border-bottom: 1px solid #ddd; /* Línea divisoria entre filas */
 }
 
 #emplazamientos-tabla-resultados th {
     font-weight: bold; /* Cabeceras de tabla en negrita */
     color: white; /* Color del texto de cabecera */
-    text-align: left; /* Asegurar alineación a la izquierda en cabeceras */
+    text-align: center; /* Asegurar alineación centrada en cabeceras */
 }
 
 #emplazamientos-tabla-resultados tbody tr:last-child td {
     border-bottom: none; /* Eliminar borde inferior de la última fila */
 }
-
