@@ -1278,3 +1278,20 @@ header img {
 #emplazamientos-tabla-resultados tbody tr:last-child td {
     border-bottom: none; /* Eliminar borde inferior de la última fila */
 }
+
+
+/* Estilos para la fila horizontal de Línea y PK en el formulario ✨ */
+.formulario-fila-horizontal {
+    display: flex;          /* ✨ Habilitar Flexbox para la fila horizontal */
+    flex-direction: row;    /* ✨ Alinear elementos en fila (horizontal) */
+    gap: 10px;             /* ✨ Espacio entre los campos de Línea y PK */
+    margin-bottom: 10px;    /* ✨ Espacio debajo de la fila horizontal */
+}
+
+.formulario-fila-horizontal select,
+.formulario-fila-horizontal input[type="text"] {
+    flex: 1; /* ✨ Permitir que los campos se expandan y ocupen espacio disponible */
+    width: auto; /* ✨ Resetear ancho para que flex: 1 funcione correctamente */
+    margin-bottom: 0; /* ✨ Eliminar margen inferior, ya que la fila tiene margin-bottom */
+}
+
