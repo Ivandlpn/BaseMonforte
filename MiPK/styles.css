@@ -1277,3 +1277,10 @@ header img {
 #emplazamientos-tabla-resultados tbody tr:last-child td {
     border-bottom: none; /* Eliminar borde inferior de la última fila */
 }
+
+#emplazamientos-resultados {
+    /* ... otros estilos que ya tenías ... */
+    width: 100%;        /* 👈 ASEGÚRATE DE TENER ESTA LÍNEA */
+    overflow-x: auto;   /* 👈 ASEGÚRATE DE TENER ESTA LÍNEA */
+    box-sizing: border-box; /* 👈 ASEGÚRATE DE TENER ESTA LÍNEA */
+}
