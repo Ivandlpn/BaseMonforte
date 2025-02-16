@@ -1295,3 +1295,21 @@ header img {
     margin-bottom: 0; /* ✨ Eliminar margen inferior, ya que la fila tiene margin-bottom */
 }
 
+/* =====================================================================
+|  ESTILOS ESPECÍFICOS PARA CHECKBOX "MiPK" EN TARJETA EMPLAZAMIENTOS  |
+===================================================================== */
+.formulario-grupo-checkbox {
+    display: flex;
+    align-items: center; /* Alinea verticalmente el checkbox y el texto */
+    margin-right: 15px; /* Separación del select de Línea */
+}
+
+.formulario-grupo-checkbox label {
+    margin-left: 5px; /* Espacio entre el checkbox y el texto "MiPK" */
+    color: white; /* Color del texto "MiPK" (ajusta si es necesario) */
+}
+
+#emplazamiento-check-mipk {
+    /* No se necesitan estilos adicionales por ahora, se pueden añadir si es necesario */
+}
+
