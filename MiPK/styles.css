@@ -1296,34 +1296,37 @@ header img {
 }
 
 /* =====================================================================
-|  ESTILOS MODIFICADOS PARA FILA HORIZONTAL CHECKBOX "MiPK" Y CAMPOS    |
+|  ESTILOS MODIFICADOS PARA FILA HORIZONTAL: DISTRIBUCIÓN EQUITATIVA    |
 ===================================================================== */
 .formulario-fila-horizontal {
     display: flex;
-    flex-direction: row; /* Asegurar dirección horizontal */
-    gap: 10px;             /* Espacio entre elementos en la fila */
-    margin-bottom: 10px;    /* Espacio debajo de la fila horizontal */
-    align-items: center;     /* ⭐️ Añadido: Alinear verticalmente los elementos dentro de la fila */
+    flex-direction: row;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
 }
 
 .formulario-grupo-checkbox {
     display: flex;
     align-items: center;
-    margin-right: 10px; /* Reducir un poco el margen derecho */
-    flex: none; /* ⭐️ Añadido: No permitir que el checkbox crezca */
+    margin-right: 10px;
+    flex: 1; /* ⭐️ Añadido: Permitir que el checkbox ocupe espacio */
+    min-width: 0; /* ⭐️ Añadido: Permite que los elementos se encojan si es necesario */
 }
 
 .formulario-grupo-checkbox label {
     margin-left: 5px;
     color: white;
+     white-space: nowrap; /* ⭐️ Añadido: Evitar que el texto "MiPK" se divida */
 }
 
-/* Ajustar estilos para select y input dentro de la fila horizontal */
+/* Estilos para select y input DENTRO de .formulario-fila-horizontal */
 .formulario-fila-horizontal select,
 .formulario-fila-horizontal input[type="text"] {
-    flex: 1; /* Permitir que select e input se expandan */
-    width: auto; /* Resetear ancho */
-    margin-bottom: 0; /* Eliminar margen inferior */
-    padding: 10px; /* Asegurar padding consistente */
-    font-size: 1em; /* Asegurar tamaño de fuente consistente */
+    flex: 2; /* ⭐️ MODIFICADO: Darles un poco más de "peso" que al checkbox */
+    width: auto;
+    margin-bottom: 0;
+    padding: 10px;
+    font-size: 1em;
+    min-width: 0; /* ⭐️ Añadido: Permite que los elementos se encojan si es necesario */
 }
