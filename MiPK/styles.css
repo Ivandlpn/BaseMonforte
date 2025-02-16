@@ -1296,37 +1296,37 @@ header img {
 }
 
 /* =====================================================================
-|  ESTILOS MODIFICADOS PARA FILA HORIZONTAL: DISTRIBUCIÓN EQUITATIVA    |
+|  ESTILOS MODIFICADOS PARA FILA HORIZONTAL: CORRECCIÓN DE SUPERPOSICIÓN |
 ===================================================================== */
 .formulario-fila-horizontal {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 10px; /* Espacio entre elementos */
     margin-bottom: 10px;
-    align-items: center;
+    align-items: flex-start; /* ⭐️ MODIFICADO: Alineación al inicio (arriba) */
 }
 
 .formulario-grupo-checkbox {
     display: flex;
     align-items: center;
-    margin-right: 10px;
-    flex: 1; /* ⭐️ Añadido: Permitir que el checkbox ocupe espacio */
-    min-width: 0; /* ⭐️ Añadido: Permite que los elementos se encojan si es necesario */
+    margin-right: 10px; /* Separación del select */
+    flex: 0 0 auto; /* ⭐️ MODIFICADO: No crezca ni se encoja, tamaño automático */
+    width: auto;     /* ⭐️ Añadido: Ancho automático basado en contenido */
 }
 
 .formulario-grupo-checkbox label {
     margin-left: 5px;
     color: white;
-     white-space: nowrap; /* ⭐️ Añadido: Evitar que el texto "MiPK" se divida */
+    white-space: nowrap;
 }
 
 /* Estilos para select y input DENTRO de .formulario-fila-horizontal */
 .formulario-fila-horizontal select,
 .formulario-fila-horizontal input[type="text"] {
-    flex: 2; /* ⭐️ MODIFICADO: Darles un poco más de "peso" que al checkbox */
+    flex: 1; /* Permitir que select e input se expandan y ocupen espacio */
     width: auto;
     margin-bottom: 0;
     padding: 10px;
     font-size: 1em;
-    min-width: 0; /* ⭐️ Añadido: Permite que los elementos se encojan si es necesario */
+    min-width: 0;
 }
