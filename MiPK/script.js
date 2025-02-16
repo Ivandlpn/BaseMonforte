@@ -2887,7 +2887,7 @@ document.addEventListener('DOMContentLoaded', function() {
 ///// FIN ICONO GUARDIA ACTAS /////
 
 
-///// *** INICIO: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
+    ///// *** INICIO: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
 
 document.addEventListener('DOMContentLoaded', function() {
     const emplazamientosButtonPlus = document.querySelector('.plus-option-button[aria-label="EMPLAZAMIENTOS"]');
@@ -2920,6 +2920,49 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         console.error('No se encontró el botón BUSCAR EMPLAZAMIENTOS');
     }
+
+    // ----- INICIO FUNCIONALIDAD CHECKBOX "MiPK" EN TARJETA EMPLAZAMIENTOS -----
+
+    const checkMiPKEmplazamientos = document.getElementById('emplazamiento-check-mipk');
+    const lineaSelectEmplazamientos = document.getElementById('emplazamiento-linea-select');
+    const pkInputEmplazamientos = document.getElementById('emplazamiento-pk-input');
+
+    if (checkMiPKEmplazamientos) { // Verificar que el checkbox existe en el DOM
+        checkMiPKEmplazamientos.addEventListener('change', function() {
+            if (this.checked) { // Si el checkbox está activado
+                if (window.pkMasCercano && window.pkMasCercano.linea && window.pkMasCercano.pk) {
+                    lineaSelectEmplazamientos.value = window.pkMasCercano.linea;
+                    pkInputEmplazamientos.value = formatearPKMiles(window.pkMasCercano.pk); // Usar función formatearPKMiles
+                } else {
+                    alert("Ubicación PK no disponible. Asegúrate de que la aplicación tiene acceso a tu ubicación y ha calculado el PK.");
+                    checkMiPKEmplazamientos.checked = false; // Desmarcar el checkbox si no hay PK
+                    // Opcionalmente, podrías indicar "No disponible" en el label del checkbox en lugar de alert:
+                    // checkMiPKEmplazamientos.nextElementSibling.textContent = "MiPK (No disponible)";
+                }
+            } else {
+                // Opcionalmente, si quieres hacer algo al desmarcar el checkbox (por ahora no se requiere nada)
+                // Por ejemplo, podrías limpiar los campos:
+                // lineaSelectEmplazamientos.value = "";
+                // pkInputEmplazamientos.value = "";
+            }
+        });
+    } else {
+        console.error("No se encontró el checkbox 'MiPK' en la tarjeta Emplazamientos.");
+    }
+
+    // Función auxiliar para formatear PK a "miles" (XXX)
+    function formatearPKMiles(pk) {
+        const pkStr = pk.toString();
+        if (pkStr.includes('+')) {
+            return pkStr.split('+')[0]; // Devuelve solo la parte antes del '+' (los "miles")
+        } else if (pkStr.length >= 3) {
+            return pkStr.slice(0, 3); // Si no tiene '+', devuelve los primeros 3 caracteres si tiene al menos 3
+        } else {
+            return pkStr; // Si tiene menos de 3 caracteres, devuelve tal cual
+        }
+    }
+
+    // ----- FIN FUNCIONALIDAD CHECKBOX "MiPK" EN TARJETA EMPLAZAMIENTOS -----
 });
 
 let emplazamientosData = []; // Variable global para almacenar los datos de emplazamientos
