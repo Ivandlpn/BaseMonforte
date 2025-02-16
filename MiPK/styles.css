@@ -1301,9 +1301,9 @@ header img {
 .formulario-fila-horizontal {
     display: flex;
     flex-direction: row;
-    gap: 10px; /* Espacio entre elementos */
+    gap: 10px;
     margin-bottom: 10px;
-    align-items: flex-start; /* ⭐️ MODIFICADO: Alineación al inicio (arriba) */
+    align-items: center; /* ⭐️ VUELVE A: Alineación vertical al centro */
 }
 
 .formulario-grupo-checkbox {
