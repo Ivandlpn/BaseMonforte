@@ -1296,20 +1296,34 @@ header img {
 }
 
 /* =====================================================================
-|  ESTILOS ESPECÍFICOS PARA CHECKBOX "MiPK" EN TARJETA EMPLAZAMIENTOS  |
+|  ESTILOS MODIFICADOS PARA FILA HORIZONTAL CHECKBOX "MiPK" Y CAMPOS    |
 ===================================================================== */
+.formulario-fila-horizontal {
+    display: flex;
+    flex-direction: row; /* Asegurar dirección horizontal */
+    gap: 10px;             /* Espacio entre elementos en la fila */
+    margin-bottom: 10px;    /* Espacio debajo de la fila horizontal */
+    align-items: center;     /* ⭐️ Añadido: Alinear verticalmente los elementos dentro de la fila */
+}
+
 .formulario-grupo-checkbox {
     display: flex;
-    align-items: center; /* Alinea verticalmente el checkbox y el texto */
-    margin-right: 15px; /* Separación del select de Línea */
+    align-items: center;
+    margin-right: 10px; /* Reducir un poco el margen derecho */
+    flex: none; /* ⭐️ Añadido: No permitir que el checkbox crezca */
 }
 
 .formulario-grupo-checkbox label {
-    margin-left: 5px; /* Espacio entre el checkbox y el texto "MiPK" */
-    color: white; /* Color del texto "MiPK" (ajusta si es necesario) */
+    margin-left: 5px;
+    color: white;
 }
 
-#emplazamiento-check-mipk {
-    /* No se necesitan estilos adicionales por ahora, se pueden añadir si es necesario */
+/* Ajustar estilos para select y input dentro de la fila horizontal */
+.formulario-fila-horizontal select,
+.formulario-fila-horizontal input[type="text"] {
+    flex: 1; /* Permitir que select e input se expandan */
+    width: auto; /* Resetear ancho */
+    margin-bottom: 0; /* Eliminar margen inferior */
+    padding: 10px; /* Asegurar padding consistente */
+    font-size: 1em; /* Asegurar tamaño de fuente consistente */
 }
-
