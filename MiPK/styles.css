@@ -1285,7 +1285,7 @@ header img {
     display: flex;          /* ✨ Habilitar Flexbox para la fila horizontal */
     flex-direction: row;    /* ✨ Alinear elementos en fila (horizontal) */
     gap: 10px;             /* ✨ Espacio entre los campos de Línea y PK */
-    margin-bottom: 10px;    /* ✨ Espacio debajo de la fila horizontal */
+    margin-bottom: 2px;    /* ✨ Espacio debajo de la fila horizontal */
 }
 
 .formulario-fila-horizontal select,
