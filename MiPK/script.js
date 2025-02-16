@@ -2931,7 +2931,7 @@ document.addEventListener('DOMContentLoaded', function() {
         checkMiPKEmplazamientos.addEventListener('change', function() {
             if (this.checked) { // Si el checkbox está activado
                 if (window.pkMasCercano && window.pkMasCercano.linea && window.pkMasCercano.pk) {
-                    lineaSelectEmplazamientos.value = window.pkMasCercano.linea;
+                    lineaSelectEmplazamientos.value = formatearLineaEmplazamientos(window.pkMasCercano.linea); // Usar función formatearLineaEmplazamientos
                     pkInputEmplazamientos.value = formatearPKMiles(window.pkMasCercano.pk); // Usar función formatearPKMiles
                 } else {
                     alert("Ubicación PK no disponible. Asegúrate de que la aplicación tiene acceso a tu ubicación y ha calculado el PK.");
@@ -2960,6 +2960,12 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             return pkStr; // Si tiene menos de 3 caracteres, devuelve tal cual
         }
+    }
+
+        // Función auxiliar para formatear la línea a 3 dígitos (ej. "40" -> "040")
+    function formatearLineaEmplazamientos(linea) {
+        const lineaStr = String(linea); // Convertir a string por si acaso es un número
+        return lineaStr.padStart(3, '0'); // Rellenar con ceros a la izquierda hasta 3 dígitos
     }
 
     // ----- FIN FUNCIONALIDAD CHECKBOX "MiPK" EN TARJETA EMPLAZAMIENTOS -----
