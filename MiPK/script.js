@@ -2887,7 +2887,7 @@ document.addEventListener('DOMContentLoaded', function() {
 ///// FIN ICONO GUARDIA ACTAS /////
 
 
-    ///// *** INICIO: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
+///// *** INICIO: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
 
 document.addEventListener('DOMContentLoaded', function() {
     const emplazamientosButtonPlus = document.querySelector('.plus-option-button[aria-label="EMPLAZAMIENTOS"]');
@@ -3062,62 +3062,28 @@ async function filtrarYMostrarResultadosEmplazamientos() {
 
     const nombreBusqueda = document.getElementById('emplazamiento-nombre-input').value.toLowerCase().trim();
     const lineaSeleccionada = document.getElementById('emplazamiento-linea-select').value;
-    const pkBusqueda = document.getElementById('emplazamiento-pk-input').value.toUpperCase().trim();
+    const pkBusquedaMilesStr = document.getElementById('emplazamiento-pk-input').value.trim(); // <--- PK como string
     const tipoSeleccionado = document.getElementById('emplazamiento-tipo-select').value;
-    const baseSeleccionada = document.getElementById('emplazamiento-base-select').value; // Valor de Base Seleccionada
+    const baseSeleccionada = document.getElementById('emplazamiento-base-select').value;
 
-    // Definir los ambitos de cada Base (NUEVO para filtro Base)
-    const baseAmbitos = {
-        "BM VILLARRUBIA": {
-            lineas: ["040", "024"], // Ahora abarca las líneas 040 y 024
-            pk_rangos: [
-                { linea: "040", pk_inicio: formatPKToNumberForComparison("0+000"), pk_fin: formatPKToNumberForComparison("199+176") }, // Rango para L40
-                { linea: "024", pk_inicio: formatPKToNumberForComparison("0+000"), pk_fin: formatPKToNumberForComparison("199+176") }  // Rango para L24 (MISMO RANGO INICIALMENTE)
-            ]
-        },
-        "BM GABALDON": {
-            lineas: ["040", "042"], // Abarca dos líneas
-            pk_rangos: [
-                { linea: "040", pk_inicio: formatPKToNumberForComparison("199+177"), pk_fin: formatPKToNumberForComparison("286+287") }, // Rango para L40
-                { linea: "042", pk_inicio: formatPKToNumberForComparison("247+026"), pk_fin: formatPKToNumberForComparison("364+285") }  // Rango para L42
-            ]
-        },
-        "BM REQUENA": {
-            linea: "040",
-            pk_inicio: formatPKToNumberForComparison("286+288"), // PK 286+288 en formato numérico
-            pk_fin: formatPKToNumberForComparison("397+213")   // PK 397+213 en formato numérico
-        },
-        "BM MONFORTE": {
-            linea: "042",
-            pk_inicio: formatPKToNumberForComparison("364+286"), // PK 364+286 en formato numérico
-            pk_fin: formatPKToNumberForComparison("485+925")   // PK 485+925 en formato numérico
-        }
-    };
+    const pkBusquedaMiles = pkBusquedaMilesStr ? parseInt(pkBusquedaMilesStr, 10) : null; // <--- PK a número o null
+    const pkReferenciaNumerico = pkBusquedaMiles !== null ? pkBusquedaMiles * 1000 : null; // <--- PK numérico de referencia
 
+    // *** Funciones de filtro REUTILIZADAS ***
+    const nombreCoincideFn = (item) => item["Emplazamiento"].toLowerCase().includes(nombreBusqueda);
+    const lineaCoincideFn = (item) => !lineaSeleccionada || item["Tipo Vía"].startsWith(lineaSeleccionada.padStart(3, '0'));
+    const tipoCoincideFn = (item) => !tipoSeleccionado || item["Tipo de Emplazamiento"] === tipoSeleccionado;
 
-    const resultadosFiltrados = data.filter(item => {
-        const nombreCoincide = item["Emplazamiento"].toLowerCase().includes(nombreBusqueda);
-        const lineaCoincide = !lineaSeleccionada || item["Tipo Vía"].startsWith(lineaSeleccionada.padStart(3, '0'));
-         const pkBusquedaMiles = pkBusqueda.substring(0, 3); // ✨ NUEVO: Obtener solo los 3 primeros dígitos del PK buscado
-        const pkEmplazamientoFormateado = formatearPK(item["PK"]); // Formatear PK del emplazamiento
-        const pkEmplazamientoMiles = pkEmplazamientoFormateado.split('+')[0]; // ✨ NUEVO: Obtener los "miles" del PK del emplazamiento
-
-        const pkCoincide = !pkBusqueda || (pkEmplazamientoMiles && pkEmplazamientoMiles === pkBusquedaMiles); // ✨ MODIFICADO: Coincidencia por "miles"
-        const tipoCoincide = !tipoSeleccionado || item["Tipo de Emplazamiento"] === tipoSeleccionado;
-
-        let baseCoincide = true; // Inicialmente no filtra por base
-
-        if (baseSeleccionada && baseSeleccionada !== "") {
-            baseCoincide = false; // Si se selecciona base, empezamos asumiendo que NO coincide
-
+    let baseCoincideFn = () => true; // Por defecto no filtra por base
+    if (baseSeleccionada && baseSeleccionada !== "") {
+        baseCoincideFn = (item) => {
+            let baseCoincide = false;
             const emplazamientoLineaTipoVia = item["Tipo Vía"];
             const emplazamientoPKString = item["PK"];
-            const emplazamientoLinea = emplazamientoLineaTipoVia.match(/^(\d{2,3})\s*-/)?.[1]; //Extraer línea del tipo de vía
-
+            const emplazamientoLinea = emplazamientoLineaTipoVia.match(/^(\d{2,3})\s*-/)?.[1];
 
             if (baseSeleccionada === "BM VILLARRUBIA" || baseSeleccionada === "BM GABALDON") {
-                // Lógica para BM VILLARRUBIA y BM GABALDON (con pk_rangos)
-                const ambitoBaseMultiLinea = baseAmbitos[baseSeleccionada]; // Usamos ambitoBaseMultiLinea para claridad
+                const ambitoBaseMultiLinea = baseAmbitos[baseSeleccionada];
                 ambitoBaseMultiLinea.pk_rangos.forEach(rango => {
                     if (emplazamientoLinea === rango.linea) {
                         const emplazamientoPKNumber = formatPKToNumberForComparison(emplazamientoPKString);
@@ -3125,102 +3091,130 @@ async function filtrarYMostrarResultadosEmplazamientos() {
                             baseCoincide = true;
                         }
                     }
-                    if (baseCoincide) return; // Si ya coincide, salir del forEach
                 });
-
-
             } else if (baseSeleccionada === "BM REQUENA" || baseSeleccionada === "BM MONFORTE") {
-                // Lógica para BM REQUENA y BM MONFORTE (sin pk_rangos, acceso directo)
-                const ambitoBaseUnicaLinea = baseAmbitos[baseSeleccionada]; // Reutilizamos ambitoBaseUnicaLinea (ahora correcto para estas bases)
-                if (emplazamientoLinea === ambitoBaseUnicaLinea.linea) { //Comprobar si la línea coincide
+                const ambitoBaseUnicaLinea = baseAmbitos[baseSeleccionada];
+                if (emplazamientoLinea === ambitoBaseUnicaLinea.linea) {
                     const emplazamientoPKNumber = formatPKToNumberForComparison(emplazamientoPKString);
                     if (emplazamientoPKNumber >= ambitoBaseUnicaLinea.pk_inicio && emplazamientoPKNumber <= ambitoBaseUnicaLinea.pk_fin) {
-                        baseCoincide = true; // Coincide con el ámbito de la base
+                        baseCoincide = true;
                     }
                 }
             }
-        }
+            return baseCoincide;
+        };
+    }
 
 
-        return nombreCoincide && lineaCoincide && pkCoincide && tipoCoincide && baseCoincide;
+    // ... (resto del código de filtro principal - CASI SIN CAMBIOS) ...
+    const resultadosFiltrados = data.filter(item => {
+        const pkBusquedaMiles = pkBusquedaMilesStr.substring(0, 3); // ✨ NUEVO: Obtener solo los 3 primeros dígitos del PK buscado
+        const pkEmplazamientoFormateado = formatearPK(item["PK"]); // Formatear PK del emplazamiento
+        const pkEmplazamientoMiles = pkEmplazamientoFormateado.split('+')[0]; // ✨ NUEVO: Obtener los "miles" del PK del emplazamiento
+        const pkCoincide = !pkBusquedaMilesStr || (pkEmplazamientoMiles && pkEmplazamientoMiles === pkBusquedaMiles); // ✨ MODIFICADO: Coincidencia por "miles"
+
+        return nombreCoincideFn(item) && lineaCoincideFn(item) && pkCoincide && tipoCoincideFn(item) && baseCoincideFn(item);
     });
 
-    mostrarTablaResultadosEmplazamientos(resultadosFiltrados, columnaOrdenActual, ordenActual);
+    mostrarTablaResultadosEmplazamientos(resultadosFiltrados, columnaOrdenActual, ordenActual); // Tabla principal
+
+
+    // *** INICIO: Lógica para tabla de emplazamientos cercanos (LÍNEAS REUTILIZADAS) ***
+    if (lineaSeleccionada && pkReferenciaNumerico !== null) { // <--- Condición: Línea Y PK
+
+        const resultadosCercanos = data.filter(item => {
+            if (!lineaCoincideFn(item)) return false; // Filtro de Línea (REUTILIZAR función)
+            if (!tipoCoincideFn(item)) return false; // Otros filtros (Tipo, Base, Nombre) <--- REUTILIZAR funciones de filtro
+            if (!baseCoincideFn(item)) return false;
+            if (!nombreCoincideFn(item)) return false;
+
+            const pkEmplazamientoNumerico = pkToNumber(item["PK"]);
+            const distanciaPK = Math.abs(pkEmplazamientoNumerico - pkReferenciaNumerico);
+            return distanciaPK <= 10000; // Rango de 10km
+        });
+
+        resultadosCercanos.sort((a, b) => {
+            const pkNumericoA = pkToNumber(a["PK"]);
+            const pkNumericoB = pkToNumber(b["PK"]);
+            const distanciaA = Math.abs(pkNumericoA - pkReferenciaNumerico);
+            const distanciaB = Math.abs(pkNumericoB - pkReferenciaNumerico);
+            return distanciaA - distanciaB;
+        });
+
+
+        // Insertar separador y título (REUTILIZAR código)
+        const directorioResultados = document.getElementById('emplazamientos-resultados');
+        directorioResultados.innerHTML += `<hr style="border: none; border-top: 2px solid white; margin: 20px 0;">`;
+        directorioResultados.innerHTML += `<h3 style="text-align: center; margin-bottom: 15px; color: white;">Emplazamientos Cercanos +/- 10kM</h3>`;
+
+        mostrarTablaResultadosEmplazamientosCercanos(resultadosCercanos); // <--- Nueva función para tabla cercana (REUTILIZAR)
+
+    } else {
+        // Limpiar contenedor de resultados cercanos (REUTILIZAR código)
+        const directorioResultados = document.getElementById('emplazamientos-resultados');
+        const separador = directorioResultados.querySelector('hr');
+        const tituloCercanos = directorioResultados.querySelector('h3');
+        const tablaCercanos = directorioResultados.querySelector('#emplazamientos-tabla-resultados-cercanos');
+
+        if (separador) separador.remove();
+        if (tituloCercanos) tituloCercanos.remove();
+        if (tablaCercanos) tablaCercanos.remove();
+    }
+    // *** FIN: Lógica para tabla de emplazamientos cercanos (LÍNEAS REUTILIZADAS) ***
+
 }
 
 
-function mostrarTablaResultadosEmplazamientos(resultados, columnaOrdenacion = null, orden = 'asc') {
-    const tbodyResultados = document.querySelector('#emplazamientos-tabla-resultados tbody');
-    tbodyResultados.innerHTML = ''; // Limpiar resultados anteriores
+// *** NUEVA FUNCIÓN: mostrarTablaResultadosEmplazamientosCercanos ***
+function mostrarTablaResultadosEmplazamientosCercanos(resultadosCercanos) {
+    const directorioResultados = document.getElementById('emplazamientos-resultados');
+    let tablaCercanos = document.getElementById('emplazamientos-tabla-resultados-cercanos');
 
-    if (resultados.length === 0) {
-        tbodyResultados.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:10px;">No se encontraron emplazamientos.</td></tr>`;
+    if (!tablaCercanos) {
+        tablaCercanos = document.createElement('table');
+        tablaCercanos.id = 'emplazamientos-tabla-resultados-cercanos';
+        tablaCercanos.style.width = '100%';
+        tablaCercanos.style.borderCollapse = 'collapse';
+        tablaCercanos.innerHTML = `
+            <thead>
+                <tr style="border-bottom: 1px solid white;">
+                    <th style="padding: 8px; text-align: center; border-bottom: 1px solid white;">Línea</th>
+                    <th style="padding: 8px; text-align: center; border-bottom: 1px solid white;">PK</th>
+                    <th style="padding: 8px; text-align: center; border-bottom: 1px solid white;">Tipo</th>
+                    <th style="padding: 8px; text-align: center; border-bottom: 1px solid white;">Nombre</th>
+                    <th style="padding: 8px; text-align: center; border-bottom: 1px solid white;">Vía</th>
+                    <th style="padding: 8px; text-align: center; border-bottom: 1px solid white;">Distancia PK</th> <--- Nueva columna
+                </tr>
+            </thead>
+            <tbody></tbody>
+        `;
+        directorioResultados.appendChild(tablaCercanos);
+    }
+
+    const tbodyCercanos = tablaCercanos.querySelector('tbody');
+    tbodyCercanos.innerHTML = ''; // Limpiar tabla de resultados cercanos anterior
+
+    if (resultadosCercanos.length === 0) {
+        tbodyCercanos.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:10px;">No hay emplazamientos cercanos en un radio de 10km.</td></tr>`;
         return;
     }
 
-    // *** INICIO: LÓGICA DE ORDENACIÓN (si se especifica columnaOrdenacion) ***
-    if (columnaOrdenacion) {
-        resultados.sort((a, b) => {
-            let valorA, valorB;
+    resultadosCercanos.forEach(emplazamiento => {
+        const fila = tbodyCercanos.insertRow();
 
-            if (columnaOrdenacion === 'linea') {
-                valorA = a["Tipo Vía"].match(/^(\d{2,3})\s*-/)?.[1] || '-';
-                valorB = b["Tipo Vía"].match(/^(\d{2,3})\s*-/)?.[1] || '-';
-            } else if (columnaOrdenacion === 'pk') {
-                valorA = pkToNumber(a["PK"]);
-                valorB = pkToNumber(b["PK"]);
-            } else if (columnaOrdenacion === 'tipo') {
-                valorA = a["Tipo de Emplazamiento"];
-                valorB = b["Tipo de Emplazamiento"];
-            } else if (columnaOrdenacion === 'nombre') {
-                valorA = a["Emplazamiento"];
-                valorB = b["Emplazamiento"];
-            } else if (columnaOrdenacion === 'via') {
-                valorA = a["Vía/s"];
-                valorB = b["Vía/s"];
-            } else {
-                return 0; // Columna de ordenación no válida, no ordenar
-            }
-
-            if (typeof valorA === 'number' && typeof valorB === 'number') {
-                return orden === 'asc' ? valorA - valorB : valorB - valorA; // Orden numérico
-            } else {
-                return orden === 'asc' ? String(valorA).localeCompare(String(valorB)) : String(valorB).localeCompare(String(valorA)); // Orden alfabético
-            }
-        });
-    }
-    // *** FIN: LÓGICA DE ORDENACIÓN ***
-
-
-    resultados.forEach(emplazamiento => {
-        const fila = tbodyResultados.insertRow();
-
-        // *** INICIO: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
-        let linea = '-'; // Valor por defecto si no se encuentra la línea
+        let linea = '-';
         const tipoVia = emplazamiento["Tipo Vía"];
         const match = tipoVia.match(/^(\d{2,3})\s*-/);
         if (match && ['024', '040', '042', '046', '048'].includes(match[1])) {
-        linea = parseInt(match[1], 10).toString(); // ✨ MODIFICADO: Convertir a número y luego a string para quitar "0" inicial
+            linea = parseInt(match[1], 10).toString();
         }
-        // *** FIN: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
+        fila.insertCell().textContent = linea;
+        fila.insertCell().textContent = formatearPK(emplazamiento["PK"]);
+        fila.insertCell().textContent = emplazamiento["Tipo de Emplazamiento"];
+        fila.insertCell().textContent = emplazamiento["Emplazamiento"];
 
-        const cellLinea = fila.insertCell();
-        cellLinea.textContent = linea; // MODIFICADO: Mostrar solo el número de línea en la celda
-
-        const cellPK = fila.insertCell();
-        cellPK.textContent = formatearPK(emplazamiento["PK"]); // Formatear PK
-
-        const cellTipo = fila.insertCell();
-        cellTipo.textContent = emplazamiento["Tipo de Emplazamiento"];
-
-        const cellNombre = fila.insertCell();
-        cellNombre.textContent = emplazamiento["Emplazamiento"];
-
-        const cellVia = fila.insertCell();
-        // *** INICIO: NUEVA LÓGICA PARA MOSTRAR "VÍA" SEGÚN REQUERIMIENTOS (sin cambios) ***
         const viasValor = emplazamiento["Vía/s"];
-        let textoVia = "Todas"; // Valor por defecto para otros casos
-
+        let textoVia = "Todas";
         if (viasValor === "Ninguna") {
             textoVia = "-";
         } else if (viasValor === "1") {
@@ -3228,37 +3222,19 @@ function mostrarTablaResultadosEmplazamientos(resultados, columnaOrdenacion = nu
         } else if (viasValor === "2") {
             textoVia = "2";
         }
-        cellVia.textContent = textoVia;
-        // *** FIN: NUEVA LÓGICA PARA MOSTRAR "VÍA" SEGÚN REQUERIMIENTOS (sin cambios) ***
+        fila.insertCell().textContent = textoVia;
+
+        // *** NUEVA COLUMNA: Distancia PK ***
+        const pkEmplazamientoNumerico = pkToNumber(emplazamiento["PK"]);
+        const pkBusquedaMilesStr = document.getElementById('emplazamiento-pk-input').value.trim();
+        const pkBusquedaMiles = pkBusquedaMilesStr ? parseInt(pkBusquedaMilesStr, 10) : null;
+        const pkReferenciaNumerico = pkBusquedaMiles !== null ? pkBusquedaMiles * 1000 : null;
+        const distanciaPK = Math.abs(pkEmplazamientoNumerico - pkReferenciaNumerico);
+        fila.insertCell().textContent = distanciaPK.toFixed(0) + " m"; // Distancia PK formateada
     });
 }
 
-// *** INICIO: EVENT LISTENER PARA ORDENACIÓN DE COLUMNAS ***
-document.getElementById('emplazamientos-tabla-resultados').addEventListener('click', function(event) {
-    const elementoClicado = event.target;
-
-    if (elementoClicado.tagName === 'TH') {
-        const columnaClicada = elementoClicado.dataset.columna;
-
-        if (columnaClicada) {
-            if (columnaOrdenActual === columnaClicada) {
-                // Si se hace clic en la misma columna, cambiar el orden
-                ordenActual = ordenActual === 'asc' ? 'desc' : 'asc';
-            } else {
-                // Si se hace clic en una columna diferente, establecerla como columna de ordenación y usar orden ascendente
-                columnaOrdenActual = columnaClicada;
-                ordenActual = 'asc';
-            }
-
-            filtrarYMostrarResultadosEmplazamientos(); // Volver a filtrar y mostrar resultados (ahora ordenados)
-        }
-    }
-});
-// *** FIN: EVENT LISTENER PARA ORDENACIÓN DE COLUMNAS ***
-
 ///// *** FIN: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
-
-
 
 
 
