@@ -2887,7 +2887,7 @@ document.addEventListener('DOMContentLoaded', function() {
 ///// FIN ICONO GUARDIA ACTAS /////
 
 
-    ///// *** INICIO: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
+///// *** INICIO: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
 
 document.addEventListener('DOMContentLoaded', function() {
     const emplazamientosButtonPlus = document.querySelector('.plus-option-button[aria-label="EMPLAZAMIENTOS"]');
@@ -3050,7 +3050,7 @@ async function filtrarYMostrarResultadosEmplazamientos() {
     }
 
     const emplazamientosCercanosContainer = document.getElementById('emplazamientos-resultados');
-    emplazamientosCercanosContainer.innerHTML = '';
+    emplazamientosCercanosContainer.innerHTML = ''; // Limpiar contenedor ANTES de añadir nuevas tablas
 
     let resultadosFiltrados = [];
 
@@ -3063,7 +3063,7 @@ async function filtrarYMostrarResultadosEmplazamientos() {
             return aplicarFiltrosBasicos(item) && pkCoincide;
         });
     }
-    mostrarTablaResultadosEmplazamientos(resultadosFiltrados, columnaOrdenActual, ordenActual);
+    mostrarTablaResultadosEmplazamientos(resultadosFiltrados, columnaOrdenActual, ordenActual,  document.querySelector('#emplazamientos-tabla-resultados tbody')); // Pasa el tbody correcto
 
     let resultadosTablaCercaniaHTML = '';
     if (pkBusquedaNumerico !== null) {
@@ -3118,15 +3118,16 @@ async function filtrarYMostrarResultadosEmplazamientos() {
     columnaOrdenActual = null;
 }
 
-function mostrarTablaResultadosEmplazamientos(resultados, columnaOrdenacion = null, orden = 'asc') {
-    const tbodyResultados = document.querySelector('#emplazamientos-tabla-resultados tbody');
-    tbodyResultados.innerHTML = '';
+function mostrarTablaResultadosEmplazamientos(resultados, columnaOrdenacion = null, orden = 'asc', tbody ){ // Acepta el tbody como parámetro
+    //const tbodyResultados = document.querySelector('#emplazamientos-tabla-resultados tbody'); //Eliminado selector fijo
+    tbody.innerHTML = ''; // Usar el tbody pasado como argumento
 
-    if (resultados.length === 0) {
-        tbodyResultados.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:10px;">No se encontraron emplazamientos.</td></tr>`;
+     if (resultados.length === 0 ) {
+         tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:10px;">No se encontraron emplazamientos.</td></tr>`;
         return;
     }
 
+        // *** INICIO: LÓGICA DE ORDENACIÓN (si se especifica columnaOrdenacion) ***
     if (columnaOrdenacion) {
         resultados.sort((a, b) => {
             let valorA, valorB;
@@ -3157,42 +3158,47 @@ function mostrarTablaResultadosEmplazamientos(resultados, columnaOrdenacion = nu
             }
         });
     }
+        // *** FIN: LÓGICA DE ORDENACIÓN ***
 
-    resultados.forEach(emplazamiento => {
-        const fila = tbodyResultados.insertRow();
+        resultados.forEach(emplazamiento => {
+            const fila = tbody.insertRow(); // Usar el tbody pasado como argumento
 
-        let linea = '-';
+        // *** INICIO: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
+        let linea = '-'; // Valor por defecto si no se encuentra la línea
         const tipoVia = emplazamiento["Tipo Vía"];
         const match = tipoVia.match(/^(\d{2,3})\s*-/);
         if (match && ['024', '040', '042', '046', '048'].includes(match[1])) {
-            linea = parseInt(match[1], 10).toString();
+            linea = parseInt(match[1], 10).toString(); // ✨ MODIFICADO: Convertir a número y luego a string para quitar "0" inicial
         }
+            // *** FIN: Lógica de extracción de línea REUTILIZANDO la expresión regular (sin cambios) ***
 
-        const cellLinea = fila.insertCell();
-        cellLinea.textContent = linea;
+            const cellLinea = fila.insertCell();
+            cellLinea.textContent = linea; // MODIFICADO: Mostrar solo el número de línea en la celda
 
-        const cellPK = fila.insertCell();
-        cellPK.textContent = formatearPK(emplazamiento["PK"]);
+            const cellPK = fila.insertCell();
+            cellPK.textContent = formatearPK(emplazamiento["PK"]); // Formatear PK
 
-        const cellTipo = fila.insertCell();
-        cellTipo.textContent = emplazamiento["Tipo de Emplazamiento"];
+            const cellTipo = fila.insertCell();
+            cellTipo.textContent = emplazamiento["Tipo de Emplazamiento"];
 
-        const cellNombre = fila.insertCell();
-        cellNombre.textContent = emplazamiento["Emplazamiento"];
+            const cellNombre = fila.insertCell();
+            cellNombre.textContent = emplazamiento["Emplazamiento"];
 
-        const cellVia = fila.insertCell();
-        const viasValor = emplazamiento["Vía/s"];
-        let textoVia = "Todas";
+            const cellVia = fila.insertCell();
+            // *** INICIO: NUEVA LÓGICA PARA MOSTRAR "VÍA" SEGÚN REQUERIMIENTOS (sin cambios) ***
+            const viasValor = emplazamiento["Vía/s"];
+            let textoVia = "Todas"; // Valor por defecto para otros casos
 
-        if (viasValor === "Ninguna") {
-            textoVia = "-";
-        } else if (viasValor === "1") {
-            textoVia = "1";
-        } else if (viasValor === "2") {
-            textoVia = "2";
-        }
-        cellVia.textContent = textoVia;
-    });
+            if (viasValor === "Ninguna") {
+                textoVia = "-";
+            } else if (viasValor === "1") {
+                textoVia = "1";
+            } else if (viasValor === "2") {
+                textoVia = "2";
+            }
+            cellVia.textContent = textoVia;
+            // *** FIN: NUEVA LÓGICA PARA MOSTRAR "VÍA" SEGÚN REQUERIMIENTOS (sin cambios) ***
+        });
 }
 
 document.getElementById('emplazamientos-tabla-resultados').addEventListener('click', function(event) {
@@ -3230,7 +3236,6 @@ function formatearLineaEmplazamientos(linea) {
 }
 
 ///// *** FIN: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
-
 
 
 
