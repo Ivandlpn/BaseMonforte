@@ -3069,6 +3069,36 @@ async function filtrarYMostrarResultadosEmplazamientos() {
     const pkBusquedaMiles = pkBusquedaMilesStr ? parseInt(pkBusquedaMilesStr, 10) : null; // <--- PK a número o null
     const pkReferenciaNumerico = pkBusquedaMiles !== null ? pkBusquedaMiles * 1000 : null; // <--- PK numérico de referencia
 
+    // *** DEFINICIÓN de baseAmbitos AQUÍ DENTRO de la función  ***
+    const baseAmbitos = {
+        "BM VILLARRUBIA": {
+            lineas: ["040", "024"], // Ahora abarca las líneas 040 y 024
+            pk_rangos: [
+                { linea: "040", pk_inicio: formatPKToNumberForComparison("0+000"), pk_fin: formatPKToNumberForComparison("199+176") }, // Rango para L40
+                { linea: "024", pk_inicio: formatPKToNumberForComparison("0+000"), pk_fin: formatPKToNumberForComparison("199+176") }  // Rango para L24 (MISMO RANGO INICIALMENTE)
+            ]
+        },
+        "BM GABALDON": {
+            lineas: ["040", "042"], // Abarca dos líneas
+            pk_rangos: [
+                { linea: "040", pk_inicio: formatPKToNumberForComparison("199+177"), pk_fin: formatPKToNumberForComparison("286+287") }, // Rango para L40
+                { linea: "042", pk_inicio: formatPKToNumberForComparison("247+026"), pk_fin: formatPKToNumberForComparison("364+285") }  // Rango para L42
+            ]
+        },
+        "BM REQUENA": {
+            linea: "040",
+            pk_inicio: formatPKToNumberForComparison("286+288"), // PK 286+288 en formato numérico
+            pk_fin: formatPKToNumberForComparison("397+213")   // PK 397+213 en formato numérico
+        },
+        "BM MONFORTE": {
+            linea: "042",
+            pk_inicio: formatPKToNumberForComparison("364+286"), // PK 364+286 en formato numérico
+            pk_fin: formatPKToNumberForComparison("485+925")   // PK 485+925 en formato numérico
+        }
+    };
+    // *** FIN DEFINICIÓN de baseAmbitos ***
+
+
     // *** Funciones de filtro REUTILIZADAS ***
     const nombreCoincideFn = (item) => item["Emplazamiento"].toLowerCase().includes(nombreBusqueda);
     const lineaCoincideFn = (item) => !lineaSeleccionada || item["Tipo Vía"].startsWith(lineaSeleccionada.padStart(3, '0'));
@@ -3235,7 +3265,6 @@ function mostrarTablaResultadosEmplazamientosCercanos(resultadosCercanos) {
 }
 
 ///// *** FIN: FUNCIONALIDAD BOTÓN EMPLAZAMIENTOS - LOCALIZADOR *** /////
-
 
 
 
