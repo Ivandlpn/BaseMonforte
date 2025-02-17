@@ -3080,11 +3080,11 @@ async function filtrarYMostrarResultadosEmplazamientos() {
         const lineaCoincide = !lineaSeleccionada || item["Tipo Vía"].startsWith(lineaSeleccionada.padStart(3, '0'));
         const tipoCoincide = !tipoSeleccionado || item["Tipo de Emplazamiento"] === tipoSeleccionado;
 
-        // ***** FILTRO BASE *****
         let baseCoincide = true; // Inicialmente no filtra por base
         if (baseSeleccionada && baseSeleccionada !== "") {
             baseCoincide = false;
-            if (baseSeleccionada === item["Base Mantenimiento"]) {
+            // Verificar si el campo "Base Mantenimiento" existe y no es nulo antes de comparar
+            if (item["Base Mantenimiento"] && baseSeleccionada === item["Base Mantenimiento"]) {
                 baseCoincide = true;
             }
         }
@@ -3092,34 +3092,37 @@ async function filtrarYMostrarResultadosEmplazamientos() {
         return nombreCoincide && lineaCoincide && tipoCoincide && baseCoincide;
     }
 
-    // Filtrar los datos para la tabla principal
-    const resultadosFiltrados = data.filter(item => {
-        const pkEmplazamientoFormateado = formatearPK(item["PK"]); // Formatear PK del emplazamiento
-        const pkEmplazamientoMiles = pkEmplazamientoFormateado.split('+')[0];
-
-        const pkCoincide = !pkBusqueda || (pkEmplazamientoMiles && pkEmplazamientoMiles === pkBusqueda.substring(0,3));
-
-        return aplicarFiltrosBasicos(item) && pkCoincide;
-    });
-
-    // Mostrar la tabla principal
-    mostrarTablaResultadosEmplazamientos(resultadosFiltrados, columnaOrdenActual, ordenActual, "tabla-principal");
-
-    // Preparar y mostrar la tabla de cercanía si hay un PK especificado
+    // Preparar el contenedor de los resultados y limpiar los resultados anteriores
     const emplazamientosCercanosContainer = document.getElementById('emplazamientos-resultados');
     emplazamientosCercanosContainer.innerHTML = '';
 
-    let resultadosTablaCercaniaHTML = ''; // Inicializa el HTML de la tabla de cercanía
+    // *** TABLA PRINCIPAL (Coincidencia por "miles") ***
+    let resultadosFiltrados = [];
+
+    if(pkBusquedaNumerico !== null){
+        const pkBusquedaMiles = pkBusqueda.substring(0, 3);
+
+        resultadosFiltrados = data.filter(item => {
+            const pkEmplazamientoFormateado = formatearPK(item["PK"]);
+            const pkEmplazamientoMiles = pkEmplazamientoFormateado.split('+')[0];
+            const pkCoincide = pkEmplazamientoMiles === pkBusquedaMiles;
+            return aplicarFiltrosBasicos(item) && pkCoincide;
+        });
+    }
+    // Mostrar la tabla principal
+    mostrarTablaResultadosEmplazamientos(resultadosFiltrados, columnaOrdenActual, ordenActual);
+
+    // *** TABLA DE CERCANÍA (rango de +/- 10 km) ***
+    let resultadosTablaCercaniaHTML = '';
 
     if (pkBusquedaNumerico !== null) {
-        // Calcular los límites de cercanía
         const rangoCercania = 10000; // 10 km en metros
         const pkMinimo = pkBusquedaNumerico - rangoCercania;
         const pkMaximo = pkBusquedaNumerico + rangoCercania;
 
         // Filtrar los datos para la tabla de cercanía
         const resultadosCercanosFiltrados = data.filter(item => {
-            const pkItemNumerico = pkToNumber(item["PK"]); //Convertir a numero para comparar
+            const pkItemNumerico = pkToNumber(item["PK"]);
             return aplicarFiltrosBasicos(item) && pkItemNumerico >= pkMinimo && pkItemNumerico <= pkMaximo;
         });
 
@@ -3130,12 +3133,12 @@ async function filtrarYMostrarResultadosEmplazamientos() {
             return Math.abs(pkA - pkBusquedaNumerico) - Math.abs(pkB - pkBusquedaNumerico);
         });
 
-    // Mostrar el mensaje de "No hay emplazamientos cercanos" si no hay resultados
+        // Mostrar el mensaje de "No hay emplazamientos cercanos" si no hay resultados
         if (resultadosCercanosFiltrados.length === 0) {
-        resultadosTablaCercaniaHTML = '<p style="color: white; text-align: center; margin-top: 10px;">No hay emplazamientos en +/- 10km.</p>';
+            resultadosTablaCercaniaHTML = '<p style="color: white; text-align: center; margin-top: 10px;">No hay emplazamientos en +/- 10km.</p>';
         } else {
-        // Construir el HTML para la tabla de cercanía
-        resultadosTablaCercaniaHTML = `
+            // Construir el HTML para la tabla de cercanía
+            resultadosTablaCercaniaHTML = `
                 <hr style="border: none; border-top: 2px solid white; margin: 20px 0;">
                 <p style="color: white; text-align: center; font-weight: bold;">Emplazamientos cercanos +/- 10Km</p>
                 <table id="emplazamientos-tabla-cercania" style="width:100%; border-collapse: collapse;">
@@ -3161,20 +3164,20 @@ async function filtrarYMostrarResultadosEmplazamientos() {
                     </tbody>
                 </table>
                 `;
-            }
-
         }
+    }
+
     emplazamientosCercanosContainer.innerHTML += resultadosTablaCercaniaHTML;
     columnaOrdenActual = null;
 }
 
 // *** MODIFICAR: Función para mostrar los resultados en la tabla (mostrarTablaResultadosEmplazamientos)
-function mostrarTablaResultadosEmplazamientos(resultados, columnaOrdenacion = null, orden = 'asc', tipoTabla = "tabla-principal") {
+function mostrarTablaResultadosEmplazamientos(resultados, columnaOrdenacion = null, orden = 'asc') {
     const tbodyResultados = document.querySelector('#emplazamientos-tabla-resultados tbody');
     //Limpiar el contenido de la tabla principal
     tbodyResultados.innerHTML = '';
 
-     if (resultados.length === 0 && tipoTabla==="tabla-principal") {
+     if (resultados.length === 0) {
          tbodyResultados.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:10px;">No se encontraron emplazamientos.</td></tr>`;
         return;
     }
