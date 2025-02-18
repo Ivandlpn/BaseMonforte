@@ -3105,20 +3105,11 @@ async function filtrarYMostrarResultadosEmplazamientos() {
             return nombreCoincide && lineaCoincide && tipoCoincide && baseCoincide && pkEnRango;
         });
 
-        const pkBusquedaMiles = pkBusqueda.substring(0, 3);
-        const resultadosCoincidentesPk = data.filter(item => {
-            const nombreCoincide = item["Emplazamiento"].toLowerCase().includes(nombreBusqueda);
-            const lineaCoincide = item["Tipo Vía"].startsWith(lineaSeleccionada.padStart(3, '0'));
-            const pkEmplazamientoFormateado = formatearPK(item["PK"]);
-            const pkEmplazamientoMiles = pkEmplazamientoFormateado.split('+')[0];
-            const pkCoincide = !pkBusqueda || (pkEmplazamientoMiles && pkEmplazamientoMiles === pkBusquedaMiles);
-            const tipoCoincide = !tipoSeleccionado || item["Tipo de Emplazamiento"] === tipoSeleccionado;
-            const baseCoincide = filtrarPorBase(item, baseSeleccionada);
+        // **[!] ELIMINAMOS LA BÚSQUEDA DE COINCIDENCIA POR "PK MILES" !**
+        // **[!] AHORA SOLO USAMOS LOS RESULTADOS DEL RANGO DE 10KM       !**
+        resultadosFiltrados = resultadosRangoPk;
 
-            return nombreCoincide && lineaCoincide && pkCoincide && tipoCoincide && baseCoincide;
-        });
 
-        resultadosFiltrados = [...new Set([...resultadosCoincidentesPk, ...resultadosRangoPk])];
     } else {
         resultadosFiltrados = data.filter(item => {
             const nombreCoincide = item["Emplazamiento"].toLowerCase().includes(nombreBusqueda);
