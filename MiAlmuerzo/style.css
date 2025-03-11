@@ -1,0 +1,358 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const nuevoPedidoBtn = document.getElementById('nuevo-pedido');
+    const verPedidosBtn = document.getElementById('ver-pedidos');
+    const formularioPedido = document.getElementById('formulario-pedido');
+    const listaBebidas = document.getElementById('lista-bebidas');
+
+    // Secciones de Comida
+    const seleccionFormatoComidaSection = document.getElementById('seleccion-formato-comida');
+    const seleccionIngredientesSection = document.getElementById('seleccion-ingredientes');
+    const formatoSeleccionadoNombreSpan = document.getElementById('formato-seleccionado-nombre');
+    const botonesFormato = document.querySelectorAll('.boton-formato');
+    const carnesCheckboxesDiv = document.getElementById('carnes-checkboxes');
+    const pescadosCheckboxesDiv = document.getElementById('pescados-checkboxes');
+    const quesosCheckboxesDiv = document.getElementById('quesos-checkboxes');
+    const extrasCheckboxesDiv = document.getElementById('extras-checkboxes');
+    const volverFormatoBtn = document.getElementById('volver-formato');
+    const añadirComidaBtn = document.getElementById('añadir-comida');
+    const nuevaComidaBtn = document.getElementById('nueva-comida');
+    const listaComidasPedidoUl = document.getElementById('items-comida-pedido');
+    const listaComidasPedidoSection = document.getElementById('lista-comidas-pedido');
+
+
+    const resumenPedidoSection = document.getElementById('resumen-pedido');
+    const itemsPedidoList = document.getElementById('items-pedido');
+    const precioTotalElement = document.getElementById('precio-total');
+    const enviarCocinaBtn = document.getElementById('enviar-cocina');
+
+    let pedidoActual = [];
+    let precioTotal = 0;
+    let formatoComidaSeleccionado = null;
+    let ingredientesSeleccionadosComida = [];
+    let comidasEnPedido = []; // Array para guardar las comidas añadidas al pedido
+
+
+    // Datos de ejemplo (expandidos y organizados)
+    const bebidas = [
+        { nombre: 'Café Solo', precio: 1.20 },
+        { nombre: 'Café con Leche', precio: 1.50 },
+        { nombre: 'Cortado', precio: 1.30 },
+        { nombre: 'Carajillo', precio: 2.00 },
+        { nombre: 'Bombón', precio: 2.20 },
+        { nombre: 'Cremaet', precio: 2.50 },
+        { nombre: 'Americano', precio: 1.40 },
+        { nombre: 'Zumo Naranja Natural', precio: 2.50 },
+        { nombre: 'Zumo Limón', precio: 2.00 },
+        { nombre: 'Coca-Cola', precio: 2.00 },
+        { nombre: 'Fanta Naranja', precio: 2.00 },
+        { nombre: 'Aquarius', precio: 2.20 },
+        { nombre: 'Cerveza Rubia', precio: 2.00 },
+        { nombre: 'Cerveza Tostada', precio: 2.20 },
+        { nombre: 'Cerveza Sin Alcohol', precio: 2.00 },
+        { nombre: 'Radler', precio: 2.20 },
+        { nombre: 'Vermut', precio: 2.50 },
+        { nombre: 'Cazalla', precio: 3.00 },
+        { nombre: 'Mistela', precio: 2.80 },
+        { nombre: 'Orujo', precio: 3.20 },
+        { nombre: 'Gin-Tonic', precio: 6.00 },
+        { nombre: 'Agua con Gas', precio: 1.50 },
+        { nombre: 'Agua sin Gas', precio: 1.50 },
+        { nombre: 'Leche', precio: 1.00 },
+        { nombre: 'Horchata', precio: 2.50 }
+    ];
+
+    const ingredientesComida = {
+        carnes: [
+            { nombre: 'Jamón Serrano', precio: 1.50 },
+            { nombre: 'Jamón York', precio: 1.00 },
+            { nombre: 'Chorizo', precio: 1.20 },
+            { nombre: 'Longaniza', precio: 1.30 },
+            { nombre: 'Salchicha', precio: 1.10 },
+            { nombre: 'Lomo', precio: 1.40 },
+            { nombre: 'Panceta', precio: 1.20 },
+            { nombre: 'Blanco y Negro', precio: 1.60 },
+            { nombre: 'Pollo', precio: 1.30 },
+            { nombre: 'Ternera', precio: 1.70 },
+            { nombre: 'Pulled Pork', precio: 2.00 },
+            { nombre: 'Sobrasada', precio: 1.50 },
+            { nombre: 'Morcilla', precio: 1.40 },
+            { nombre: 'Pinchos Morunos', precio: 1.80 },
+            { nombre: 'Carne Mechada', precio: 1.90 },
+            { nombre: 'Pastrami', precio: 2.20 }
+        ],
+        pescados: [
+            { nombre: 'Atún', precio: 1.20 },
+            { nombre: 'Anchoas', precio: 1.80 },
+            { nombre: 'Boquerones', precio: 1.60 },
+            { nombre: 'Salmón Ahumado', precio: 2.50 },
+            { nombre: 'Bacalao Ahumado', precio: 2.30 },
+            { nombre: 'Melva', precio: 2.00 },
+            { nombre: 'Surimi', precio: 1.00 },
+            { nombre: 'Gambas Peladas', precio: 3.00 },
+            { nombre: 'Gambas Cocidas', precio: 2.80 }
+        ],
+        quesos: [
+            { nombre: 'Manchego', precio: 1.80 },
+            { nombre: 'Curado', precio: 1.60 },
+            { nombre: 'Fresco', precio: 1.00 },
+            { nombre: 'De Cabra', precio: 2.00 },
+            { nombre: 'Emmental', precio: 1.50 },
+            { nombre: 'Havarti', precio: 1.40 },
+            { nombre: 'Cheddar', precio: 1.70 },
+            { nombre: 'Provolone', precio: 1.90 },
+            { nombre: 'Mozzarella', precio: 1.30 },
+            { nombre: 'Tetilla', precio: 1.60 },
+            { nombre: 'Azul', precio: 2.20 },
+            { nombre: 'Brie', precio: 2.10 },
+            { nombre: 'Camembert', precio: 2.30 }
+        ],
+        extras: [
+            { nombre: 'Alioli', precio: 0.50 },
+            { nombre: 'Tomate Natural', precio: 0.30 },
+            { nombre: 'Aceite de Oliva', precio: 0.20 },
+            { nombre: 'Mahonesa', precio: 0.40 },
+            { nombre: 'Queso Fundido', precio: 0.80 },
+            { nombre: 'Mostaza', precio: 0.30 },
+            { nombre: 'Ketchup', precio: 0.30 },
+            { nombre: 'Salsa Brava', precio: 0.60 },
+            { nombre: 'Salsa Rosa', precio: 0.50 },
+            { nombre: 'Chimichurri', precio: 0.70 },
+            { nombre: 'Pesto', precio: 0.90 },
+            { nombre: 'Guacamole', precio: 1.00 },
+            { nombre: 'Miel y Mostaza', precio: 0.60 },
+            { nombre: 'Cebolla Caramelizada', precio: 0.80 },
+            { nombre: 'Pimientos Asados', precio: 0.70 },
+            { nombre: 'Champiñones Salteados', precio: 0.90 },
+            { nombre: 'Aceitunas Verdes', precio: 0.40 },
+            { nombre: 'Aceitunas Negras', precio: 0.40 },
+            { nombre: 'Pepinillos', precio: 0.30 },
+            { nombre: 'Alcaparras', precio: 0.50 },
+            { nombre: 'Rúcula', precio: 0.60 },
+            { nombre: 'Canónigos', precio: 0.60 },
+            { nombre: 'Espinacas Frescas', precio: 0.70 },
+            { nombre: 'Huevo Frito', precio: 1.00 },
+            { nombre: 'Huevo a la Plancha', precio: 1.00 },
+            { nombre: 'Tortilla Francesa', precio: 1.50 }
+        ]
+    };
+
+
+    // Funciones para mostrar productos en el menú (Bebidas - sin cambios)
+    function mostrarBebidas() {
+        listaBebidas.innerHTML = ''; // Limpiar contenido anterior
+        bebidas.forEach(bebida => {
+            const productoDiv = crearProductoElement(bebida);
+            listaBebidas.appendChild(productoDiv);
+        });
+    }
+
+    function crearProductoElement(producto) {
+        const productoDiv = document.createElement('div');
+        productoDiv.classList.add('producto');
+        productoDiv.innerHTML = `
+            <h4>${producto.nombre}</h4>
+            <p>${producto.precio.toFixed(2)} €</p>
+        `;
+        productoDiv.addEventListener('click', () => agregarAlPedido(producto));
+        return productoDiv;
+    }
+
+
+    // Funciones para Comidas
+    function mostrarCheckboxesIngredientes() {
+        // Limpiar checkboxes anteriores
+        carnesCheckboxesDiv.innerHTML = '';
+        pescadosCheckboxesDiv.innerHTML = '';
+        quesosCheckboxesDiv.innerHTML = '';
+        extrasCheckboxesDiv.innerHTML = '';
+
+        // Crear checkboxes para cada categoría de ingredientes
+        crearCheckboxesCategoria(ingredientesComida.carnes, carnesCheckboxesDiv);
+        crearCheckboxesCategoria(ingredientesComida.pescados, pescadosCheckboxesDiv);
+        crearCheckboxesCategoria(ingredientesComida.quesos, quesosCheckboxesDiv);
+        crearCheckboxesCategoria(ingredientesComida.extras, extrasCheckboxesDiv);
+    }
+
+    function crearCheckboxesCategoria(ingredientes, contenedor) {
+        ingredientes.forEach(ingrediente => {
+            const label = document.createElement('label');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = ingrediente.nombre;
+            label.appendChild(checkbox);
+            label.appendChild(document.createTextNode(`${ingrediente.nombre} (+${ingrediente.precio.toFixed(2)}€)`));
+            contenedor.appendChild(label);
+        });
+    }
+
+    function agregarComidaAlPedido() {
+        if (!formatoComidaSeleccionado) {
+            alert('Por favor, elige un formato de comida.');
+            return;
+        }
+
+        ingredientesSeleccionadosComida = [];
+        // Recoger ingredientes seleccionados
+        document.querySelectorAll('#seleccion-ingredientes input[type="checkbox"]:checked').forEach(checkbox => {
+            const ingredienteNombre = checkbox.value;
+            // Buscar precio del ingrediente (podrías optimizar esto si es necesario)
+            let precioIngrediente = 0;
+            for (const categoria in ingredientesComida) {
+                const ingredienteEncontrado = ingredientesComida[categoria].find(ing => ing.nombre === ingredienteNombre);
+                if (ingredienteEncontrado) {
+                    precioIngrediente = ingredienteEncontrado.precio;
+                    break;
+                }
+            }
+            ingredientesSeleccionadosComida.push({ nombre: ingredienteNombre, precio: precioIngrediente });
+        });
+
+        let precioComidaBase = 0; // Precio base según el formato (puedes definir precios base si quieres)
+        if (formatoComidaSeleccionado === 'tostada') precioComidaBase = 2.00; // Ejemplo
+        if (formatoComidaSeleccionado === 'medio bocadillo') precioComidaBase = 3.00; // Ejemplo
+        if (formatoComidaSeleccionado === 'bocadillo entero') precioComidaBase = 4.50; // Ejemplo
+
+
+        let precioTotalComida = precioComidaBase;
+        ingredientesSeleccionadosComida.forEach(ingrediente => {
+            precioTotalComida += ingrediente.precio;
+        });
+
+        const comidaDescripcion = `${formatoComidaSeleccionado.charAt(0).toUpperCase() + formatoComidaSeleccionado.slice(1)} con: ${ingredientesSeleccionadosComida.map(ing => ing.nombre).join(', ')}`;
+
+        const comidaPedido = {
+            nombre: comidaDescripcion,
+            precio: precioTotalComida,
+            formato: formatoComidaSeleccionado,
+            ingredientes: ingredientesSeleccionadosComida
+        };
+        comidasEnPedido.push(comidaPedido);
+        actualizarListaComidasPedido();
+        actualizarResumenPedido();
+
+        // Resetear selección de ingredientes para la siguiente comida
+        formatoComidaSeleccionado = null;
+        ingredientesSeleccionadosComida = [];
+        seleccionIngredientesSection.classList.add('oculto');
+        seleccionFormatoComidaSection.classList.remove('oculto');
+        botonesFormato.forEach(boton => boton.classList.remove('seleccionado'));
+        resumenPedidoSection.classList.remove('oculto'); // Mostrar resumen al añadir la primera comida
+
+    }
+
+    function actualizarListaComidasPedido() {
+        listaComidasPedidoUl.innerHTML = '';
+        comidasEnPedido.forEach((comida, index) => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${comida.nombre} - ${comida.precio.toFixed(2)} €`;
+            listaComidasPedidoUl.appendChild(listItem);
+        });
+        if (comidasEnPedido.length > 0) {
+            listaComidasPedidoSection.classList.remove('oculto');
+        } else {
+            listaComidasPedidoSection.classList.add('oculto');
+        }
+    }
+
+
+    // Funciones de Pedido y Resumen (actualizadas para comidas)
+    function agregarAlPedido(producto) {
+        pedidoActual.push(producto);
+        actualizarResumenPedido();
+        resumenPedidoSection.classList.remove('oculto');
+    }
+
+    function actualizarResumenPedido() {
+        itemsPedidoList.innerHTML = '';
+        precioTotal = 0;
+
+        // Añadir bebidas al resumen
+        pedidoActual.forEach(item => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${item.nombre} - ${item.precio.toFixed(2)} € (Bebida)`;
+            itemsPedidoList.appendChild(listItem);
+            precioTotal += item.precio;
+        });
+        // Añadir comidas al resumen
+        comidasEnPedido.forEach(comida => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${comida.nombre} - ${comida.precio.toFixed(2)} € (Comida)`;
+            itemsPedidoList.appendChild(listItem);
+            precioTotal += comida.precio;
+        });
+
+
+        precioTotalElement.textContent = `Total: ${precioTotal.toFixed(2)} €`;
+    }
+
+
+    // Event listeners
+    nuevoPedidoBtn.addEventListener('click', () => {
+        formularioPedido.classList.remove('oculto');
+        document.getElementById('acciones-principales').classList.add('oculto');
+        mostrarBebidas();
+        seleccionFormatoComidaSection.classList.remove('oculto'); // Mostrar selección de formato de comida primero
+        seleccionIngredientesSection.classList.add('oculto'); // Ocultar selección de ingredientes al inicio
+        listaComidasPedidoSection.classList.add('oculto'); // Ocultar lista de comidas al inicio
+
+        pedidoActual = []; // Limpiar pedido de bebidas
+        comidasEnPedido = []; // Limpiar pedido de comidas
+        precioTotal = 0;
+        actualizarListaComidasPedido(); // Asegurar que la lista de comidas esté vacía al inicio
+        resumenPedidoSection.classList.add('oculto'); // Ocultar resumen al inicio de nuevo pedido
+    });
+
+    verPedidosBtn.addEventListener('click', () => {
+        alert('Funcionalidad para ver pedidos abiertos (en desarrollo)');
+        // Aquí iría la lógica para mostrar pedidos abiertos
+    });
+
+    enviarCocinaBtn.addEventListener('click', () => {
+        if (pedidoActual.length > 0 || comidasEnPedido.length > 0) { // Comprobar si hay bebidas o comidas en el pedido
+            alert('Comanda enviada a cocina (funcionalidad simulada)');
+            // Aquí iría la lógica para enviar la comanda (ej. AJAX request)
+            formularioPedido.classList.add('oculto');
+            document.getElementById('acciones-principales').classList.remove('oculto');
+        } else {
+            alert('El pedido está vacío. Añade productos antes de enviar.');
+        }
+    });
+
+
+    // Event listeners para selección de formato de comida
+    botonesFormato.forEach(boton => {
+        boton.addEventListener('click', () => {
+            botonesFormato.forEach(btn => btn.classList.remove('seleccionado')); // Deseleccionar otros botones
+            boton.classList.add('seleccionado'); // Seleccionar el botón actual
+            formatoComidaSeleccionado = boton.dataset.formato;
+            formatoSeleccionadoNombreSpan.textContent = formatoComidaSeleccionado;
+            seleccionFormatoComidaSection.classList.add('oculto');
+            seleccionIngredientesSection.classList.remove('oculto');
+            mostrarCheckboxesIngredientes(); // Cargar checkboxes de ingredientes al seleccionar formato
+        });
+    });
+
+    // Event listeners para navegación en selección de ingredientes
+    volverFormatoBtn.addEventListener('click', () => {
+        seleccionIngredientesSection.classList.add('oculto');
+        seleccionFormatoComidaSection.classList.remove('oculto');
+    });
+
+    añadirComidaBtn.addEventListener('click', () => {
+        agregarComidaAlPedido();
+        // Después de añadir comida, podrías volver a la selección de formato o dejar en blanco para añadir más bebidas
+        seleccionFormatoComidaSection.classList.remove('oculto'); // Volver a selección de formato para añadir más comidas
+        seleccionIngredientesSection.classList.add('oculto');
+        botonesFormato.forEach(boton => boton.classList.remove('seleccionado')); // Deseleccionar botones de formato
+
+    });
+
+    nuevaComidaBtn.addEventListener('click', () => {
+        agregarComidaAlPedido(); // Añadir la comida actual al pedido antes de empezar una nueva
+        seleccionFormatoComidaSection.classList.remove('oculto'); // Volver a selección de formato para añadir otra comida
+        seleccionIngredientesSection.classList.add('oculto');
+        botonesFormato.forEach(boton => boton.classList.remove('seleccionado')); // Deseleccionar botones de formato
+    });
+
+
+});
