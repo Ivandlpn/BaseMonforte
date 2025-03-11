@@ -1,0 +1,181 @@
+/* Estilos generales */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+    margin-left: 10px; /* Espacio entre logo y título */
+}
+
+.logo {
+    height: 30px; /* Ajusta el tamaño del logo */
+    vertical-align: middle; /* Alinea verticalmente con el texto */
+}
+
+
+main {
+    padding: 20px;
+}
+
+footer {
+    background-color: #34495e;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.boton-principal, .boton-secundario {
+    background-color: #27ae60;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.boton-secundario {
+    background-color: #3498db;
+}
+
+.boton-principal:hover, .boton-secundario:hover {
+    opacity: 0.8;
+}
+
+.oculto {
+    display: none !important;
+}
+
+/* Secciones principales */
+#acciones-principales {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#formulario-pedido h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#seccion-bebidas, #seccion-comidas {
+    margin-bottom: 30px;
+}
+
+#seccion-bebidas h3, #seccion-comidas h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+/* Grid de productos */
+.grid-productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Ajusta según necesites */
+    gap: 15px;
+}
+
+.producto {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.producto:hover {
+    transform: scale(1.05);
+    background-color: #f9f9f9;
+}
+
+.producto h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.producto p {
+    margin: 0;
+    font-size: 14px;
+    color: #777;
+}
+
+/* Resumen del pedido */
+#resumen-pedido {
+    background-color: #e0f7fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+#resumen-pedido h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+#items-pedido {
+    list-style: none;
+    padding: 0;
+}
+
+#items-pedido li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px dashed #ccc;
+}
+
+#items-pedido li:last-child {
+    border-bottom: none;
+}
+
+#precio-total {
+    font-weight: bold;
+    text-align: right;
+    margin-top: 15px;
+}
+
+
+/* Media Queries para dispositivos móviles (Opcional, pero recomendable) */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column; /* Apila logo y título en pantallas pequeñas */
+    }
+    header h1 {
+        margin-left: 0; /* Elimina margen en pantallas pequeñas */
+        margin-top: 10px; /* Espacio entre logo y título apilados */
+    }
+    .logo {
+        height: 40px; /* Logo más grande en móvil */
+    }
+    .grid-productos {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Columnas más estrechas en móvil */
+    }
+    .boton-principal, .boton-secundario {
+        font-size: 14px; /* Botones más pequeños en móvil */
+        padding: 10px 15px;
+    }
+}

@@ -1,1 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comandas Restaurante</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1><img src="logo-restaurante.png" alt="Logo Restaurante" class="logo"> Comandas</h1>
+    </header>
+    <main>
+        <section id="acciones-principales">
+            <button id="nuevo-pedido" class="boton-principal">Nuevo Pedido</button>
+            <button id="ver-pedidos" class="boton-secundario">Ver Pedidos Abiertos</button>
+        </section>
 
+        <section id="formulario-pedido" class="oculto">
+            <h2>Nuevo Pedido</h2>
+
+            <div id="seccion-bebidas">
+                <h3>Bebidas</h3>
+                <div class="grid-productos" id="lista-bebidas">
+                    </div>
+            </div>
+
+            <div id="seccion-comidas">
+                <h3>Comidas</h3>
+                <div class="grid-productos" id="lista-comidas">
+                </div>
+            </div>
+
+            <div id="resumen-pedido" class="oculto">
+                <h3>Resumen del Pedido</h3>
+                <ul id="items-pedido"></ul>
+                <p id="precio-total">Total: 0.00 €</p>
+                <button id="enviar-cocina" class="boton-principal">Enviar a Cocina</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 Gestión de Comandas - [Nombre del Restaurante]</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
