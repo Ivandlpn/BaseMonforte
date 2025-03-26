@@ -23,7 +23,6 @@
             <div id="trainInfo" class="info-box">
                 <p id="serviceType" class="service-type"></p> <!-- Para mostrar Operador y Tipo (AV/MD) -->
                 <p><strong>Ruta Probable:</strong> <span id="routeInfo"></span></p>
-                 <!-- Ya no se muestran Empresa ni Dato Curioso -->
             </div>
         </div>
 
@@ -33,19 +32,19 @@
 
         <div class="extra-features">
              <button id="exploreMoreButton">Explorar Rangos de Números</button>
-             <!-- Sin opción de sonido -->
         </div>
 
         <!-- Sección oculta para "Explorar Más" -->
         <div id="rangeInfoSection" class="range-info-section" style="display: none;">
             <h2>Guía Rápida de Números de Tren</h2>
             <ul>
-                <li><strong>Renfe AVE (AV):</strong> 000xx, 02xxx, 03xxx, 04xxx, 05xxx, 097xx, 1xxxx (algunos)</li>
-                <li><strong>Renfe Avant (MD AV):</strong> 08xxx, 090xx-093xx, 33xxx, 34xxx, 1xxxx (algunos)</li>
+                 <!-- Actualizado para mencionar Alvia -->
+                <li><strong>Renfe AVE/Alvia (AV):</strong> 000xx, 02xxx, 03xxx, 04xxx, 05xxx, 097xx, 1xxxx</li>
+                <li><strong>Renfe Avant (MD AV):</strong> 08xxx, 090xx-093xx, 33xxx, 34xxx</li>
                 <li><strong>Iryo (AV):</strong> 06000-06399 (y quizás 38xxx)</li>
-                <li><strong>Ouigo (AV):</strong> 06400-06999 (y algunos 097xx internacionales)</li>
+                <li><strong>Ouigo (AV):</strong> 06400-06999 (y algunos 097xx)</li>
             </ul>
-            <p><em>Nota: AV=Alta Velocidad, MD AV=Media Distancia por Vía de Alta Velocidad. Las rutas son probables. ¡Consulta tu billete!</em></p>
+            <p><em>Nota: AV=Alta Velocidad, MD AV=Media Distancia AV. Rutas probables. ¡Consulta tu billete!</em></p>
             <button id="closeRangeInfoButton">Cerrar Guía</button>
         </div>
     </div>
