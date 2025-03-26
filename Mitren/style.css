@@ -1,6 +1,6 @@
 /* Variables de color */
 :root {
-    --ave-color: #0066cc; /* Azul Renfe/Avant */
+    --ave-color: #0066cc; /* Azul Renfe (AVE y Avant) */
     --iryo-color: #d50032; /* Rojo Iryo */
     --ouigo-color: #cc007a; /* Rosa/Morado Ouigo */
     --background-light: #f8f8f8;
@@ -35,6 +35,7 @@ body {
 h1 {
     color: var(--text-dark);
     margin-bottom: 25px;
+    font-size: 2.2em; /* Un poco más grande */
 }
 
 .input-area {
@@ -43,11 +44,13 @@ h1 {
 
 .input-area label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 10px; /* Más espacio */
     font-weight: bold;
     color: #555;
+    font-size: 1.1em;
 }
 
+/* Input más grande */
 .input-area input[type="text"] {
     width: calc(100% - 44px);
     padding: 20px;
@@ -55,7 +58,7 @@ h1 {
     border: 2px solid #ccc;
     border-radius: 30px;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px; /* Más espacio */
     transition: border-color 0.3s ease;
     box-sizing: border-box;
 }
@@ -66,13 +69,13 @@ h1 {
 }
 
 .input-area button {
-    padding: 12px 25px;
-    font-size: 1.1em;
+    padding: 15px 30px; /* Botón más grande */
+    font-size: 1.2em; /* Texto del botón más grande */
     font-weight: bold;
     color: white;
     background-color: var(--button-color);
     border: none;
-    border-radius: 25px;
+    border-radius: 30px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.1s ease;
 }
@@ -82,6 +85,7 @@ h1 {
     transform: scale(1.05);
 }
 
+/* Área de Resultados */
 .result-area {
     margin-top: 30px;
     display: none; /* Oculto por defecto */
@@ -89,6 +93,7 @@ h1 {
     align-items: center;
 }
 
+/* Logo más grande y uniforme */
 .operator-logo {
     width: 320px;
     height: 320px;
@@ -98,6 +103,7 @@ h1 {
     display: block;
 }
 
+/* Animación BounceIn */
 @keyframes bounceIn {
     0% { transform: scale(0.3); opacity: 0; }
     50% { transform: scale(1.05); opacity: 1; }
@@ -105,44 +111,53 @@ h1 {
     100% { transform: scale(1); }
 }
 
+
 .info-box {
     padding: 20px;
     border-radius: 10px;
     margin-top: 15px;
-    width: 90%;
+    width: 95%; /* Un poco más ancho */
     color: white;
     animation: fadeIn 0.5s ease-in-out;
-    text-align: center; /* Centrado ahora que hay menos info */
+    text-align: center; /* Centrado */
+    box-sizing: border-box;
 }
 
 .info-box p {
-    margin: 10px 0; /* Un poco más de espacio vertical */
+    margin: 10px 0;
     line-height: 1.6;
 }
+.info-box p strong {
+    display: block; /* Hace que "Ruta Probable:" esté en su propia línea */
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    opacity: 0.9;
+}
 
-/* Estilo específico para el tipo de servicio (AVE/Avant) */
+/* Estilo específico para el tipo de servicio (Operador + AV/MD AV) */
 .service-type {
     font-weight: bold;
-    font-size: 1.2em;
-    margin-bottom: 15px; /* Más espacio debajo */
+    font-size: 1.3em; /* Más prominente */
+    margin-bottom: 15px;
 }
 
 /* Clases específicas para colores de fondo */
 .info-box--ave { background-color: var(--ave-color); }
 .info-box--iryo { background-color: var(--iryo-color); }
 .info-box--ouigo { background-color: var(--ouigo-color); }
-/* Usaremos la misma clase ave para Avant ya que es Renfe */
-.info-box--avant { background-color: var(--ave-color); }
+.info-box--avant { background-color: var(--ave-color); } /* Mismo color que AVE para Avant */
 
 .error-message {
     color: var(--error-color);
     font-weight: bold;
     margin-top: 20px;
     display: none;
+    font-size: 1.1em;
 }
 
+/* Características Adicionales */
 .extra-features {
-    margin-top: 30px;
+    margin-top: 40px; /* Más espacio */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -163,8 +178,9 @@ h1 {
     background-color: #5a6268;
 }
 
+/* Sección "Explorar Más" */
 .range-info-section {
-    margin-top: 20px;
+    margin-top: 25px;
     padding: 20px;
     border: 1px solid #eee;
     border-radius: 10px;
@@ -174,20 +190,40 @@ h1 {
 .range-info-section h2 {
     text-align: center;
     margin-bottom: 15px;
+    color: var(--text-dark);
 }
 .range-info-section ul {
-    list-style: disc; /* Mejorar legibilidad */
-    padding-left: 25px; /* Indentación */
+    list-style: disc; /* Viñetas */
+    padding-left: 25px;
+    margin-bottom: 15px;
 }
 .range-info-section li {
     margin-bottom: 10px;
-    line-height: 1.4;
+    line-height: 1.5;
+    color: #555;
+}
+.range-info-section li strong {
+    color: var(--text-dark);
+}
+.range-info-section p {
+    font-style: italic;
+    color: #777;
+    text-align: center;
+    margin-bottom: 15px;
 }
 .range-info-section button {
      display: block;
      margin: 15px auto 0;
+     padding: 8px 15px; /* Botón de cerrar más pequeño */
+     font-size: 0.9em;
+     background-color: #dc3545; /* Rojo para cerrar */
+     border-radius: 15px;
+}
+.range-info-section button:hover {
+    background-color: #c82333;
 }
 
+/* Animación FadeIn */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -195,20 +231,26 @@ h1 {
 
 /* Responsividad */
 @media (max-width: 768px) {
-    .container { padding: 20px; }
-    h1 { font-size: 1.8em; }
+    .container { padding: 20px 25px; }
+    h1 { font-size: 2em; }
     .input-area input[type="text"] {
         font-size: 1.3em; padding: 15px; width: calc(100% - 34px); border-radius: 25px;
     }
-    .input-area button { padding: 10px 20px; font-size: 1em; }
+    .input-area button { padding: 12px 25px; font-size: 1.1em; }
     .operator-logo { width: 240px; height: 240px; }
     .info-box { width: 100%; padding: 15px; }
+    .service-type { font-size: 1.2em; }
 }
 
 @media (max-width: 480px) {
-     h1 { font-size: 1.5em; }
+     h1 { font-size: 1.7em; }
+     .input-area label { font-size: 1em; }
      .operator-logo { width: 180px; height: 180px; }
      .input-area input[type="text"] {
         font-size: 1.2em; padding: 12px; width: calc(100% - 28px); border-radius: 20px;
     }
+    .input-area button { padding: 10px 20px; font-size: 1em; }
+    .info-box { padding: 12px; }
+    .service-type { font-size: 1.1em; }
+    .info-box p strong { font-size: 0.85em; }
 }
