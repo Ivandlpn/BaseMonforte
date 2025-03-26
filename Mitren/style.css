@@ -1,11 +1,11 @@
 /* Variables de color */
 :root {
-    --ave-color: #0066cc;
-    --iryo-color: #d50032;
-    --ouigo-color: #cc007a; /* Ajustar al tono exacto si es necesario */
+    --ave-color: #0066cc; /* Azul Renfe/Avant */
+    --iryo-color: #d50032; /* Rojo Iryo */
+    --ouigo-color: #cc007a; /* Rosa/Morado Ouigo */
     --background-light: #f8f8f8;
     --text-dark: #333333;
-    --button-color: #4CAF50; /* Verde como ejemplo */
+    --button-color: #4CAF50; /* Verde ejemplo */
     --error-color: #f44336;
     --font-family: 'Poppins', sans-serif;
 }
@@ -21,10 +21,6 @@ body {
     align-items: center;
     min-height: 100vh;
     text-align: center;
-    /* Opcional: Fondo con mapa estilizado */
-    /* background-image: url('img/spain-map-stylized.png'); */
-    /* background-size: cover; */
-    /* background-position: center; */
 }
 
 .container {
@@ -52,21 +48,20 @@ h1 {
     color: #555;
 }
 
-/* --- MODIFICADO: Input más grande --- */
 .input-area input[type="text"] {
-    width: calc(100% - 44px); /* Ajustado por el nuevo padding */
-    padding: 20px; /* Aumentado */
-    font-size: 1.5em; /* Aumentado */
+    width: calc(100% - 44px);
+    padding: 20px;
+    font-size: 1.5em;
     border: 2px solid #ccc;
-    border-radius: 30px; /* Aumentado */
+    border-radius: 30px;
     text-align: center;
     margin-bottom: 15px;
     transition: border-color 0.3s ease;
-    box-sizing: border-box; /* Importante */
+    box-sizing: border-box;
 }
 
 .input-area input[type="text"]:focus {
-    border-color: var(--ave-color); /* O un color neutro */
+    border-color: var(--ave-color);
     outline: none;
 }
 
@@ -83,11 +78,10 @@ h1 {
 }
 
 .input-area button:hover {
-    background-color: #45a049; /* Un poco más oscuro */
+    background-color: #45a049;
     transform: scale(1.05);
 }
 
-/* Área de Resultados */
 .result-area {
     margin-top: 30px;
     display: none; /* Oculto por defecto */
@@ -95,17 +89,15 @@ h1 {
     align-items: center;
 }
 
-/* --- MODIFICADO: Logo más grande y uniforme --- */
 .operator-logo {
-    width: 320px;  /* Tamaño fijo más grande (ancho) */
-    height: 320px; /* Tamaño fijo más grande (alto) */
-    object-fit: contain; /* Escala manteniendo proporción */
-    margin: 0 auto 20px auto; /* Centra horizontalmente, margen inferior */
+    width: 320px;
+    height: 320px;
+    object-fit: contain;
+    margin: 0 auto 20px auto;
     animation: bounceIn 0.6s ease-out;
-    display: block; /* Asegura comportamiento de bloque */
+    display: block;
 }
 
-/* Animación BounceIn (sin cambios) */
 @keyframes bounceIn {
     0% { transform: scale(0.3); opacity: 0; }
     50% { transform: scale(1.05); opacity: 1; }
@@ -113,48 +105,54 @@ h1 {
     100% { transform: scale(1); }
 }
 
-
 .info-box {
     padding: 20px;
     border-radius: 10px;
     margin-top: 15px;
     width: 90%;
-    color: white; /* Texto blanco para contraste */
+    color: white;
     animation: fadeIn 0.5s ease-in-out;
-    text-align: left; /* O centrado si prefieres */
+    text-align: center; /* Centrado ahora que hay menos info */
 }
 
 .info-box p {
-    margin: 8px 0;
-    line-height: 1.5;
+    margin: 10px 0; /* Un poco más de espacio vertical */
+    line-height: 1.6;
 }
 
-/* Clases específicas para colores de fondo (sin cambios) */
+/* Estilo específico para el tipo de servicio (AVE/Avant) */
+.service-type {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 15px; /* Más espacio debajo */
+}
+
+/* Clases específicas para colores de fondo */
 .info-box--ave { background-color: var(--ave-color); }
 .info-box--iryo { background-color: var(--iryo-color); }
 .info-box--ouigo { background-color: var(--ouigo-color); }
+/* Usaremos la misma clase ave para Avant ya que es Renfe */
+.info-box--avant { background-color: var(--ave-color); }
 
-/* Mensaje de Error (sin cambios) */
 .error-message {
     color: var(--error-color);
     font-weight: bold;
     margin-top: 20px;
-    display: none; /* Oculto por defecto */
+    display: none;
 }
 
-/* Características Adicionales (sin cambios) */
 .extra-features {
     margin-top: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px; /* Espacio entre elementos */
+    gap: 15px;
 }
 
 .extra-features button {
     padding: 10px 20px;
     font-size: 0.9em;
-    background-color: #6c757d; /* Gris */
+    background-color: #6c757d;
     color: white;
     border: none;
     border-radius: 20px;
@@ -165,18 +163,6 @@ h1 {
     background-color: #5a6268;
 }
 
-.sound-toggle {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 0.9em;
-    color: #555;
-}
-.sound-toggle input[type="checkbox"] {
-    margin-right: 8px;
-}
-
-/* Sección "Explorar Más" (sin cambios) */
 .range-info-section {
     margin-top: 20px;
     padding: 20px;
@@ -190,8 +176,8 @@ h1 {
     margin-bottom: 15px;
 }
 .range-info-section ul {
-    list-style: none;
-    padding: 0;
+    list-style: disc; /* Mejorar legibilidad */
+    padding-left: 25px; /* Indentación */
 }
 .range-info-section li {
     margin-bottom: 10px;
@@ -199,56 +185,30 @@ h1 {
 }
 .range-info-section button {
      display: block;
-     margin: 15px auto 0; /* Centrar botón */
+     margin: 15px auto 0;
 }
 
-
-/* Animación FadeIn (sin cambios) */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
 
-/* --- MODIFICADO: Responsividad ajustada --- */
+/* Responsividad */
 @media (max-width: 768px) {
-    .container {
-        padding: 20px;
-    }
-    h1 {
-        font-size: 1.8em;
-    }
+    .container { padding: 20px; }
+    h1 { font-size: 1.8em; }
     .input-area input[type="text"] {
-        font-size: 1.3em; /* Reducido ligeramente */
-        padding: 15px;    /* Reducido */
-        width: calc(100% - 34px); /* Recalculado */
-        border-radius: 25px; /* Ajustado */
+        font-size: 1.3em; padding: 15px; width: calc(100% - 34px); border-radius: 25px;
     }
-    .input-area button {
-        padding: 10px 20px;
-        font-size: 1em;
-    }
-    .operator-logo {
-        width: 240px; /* Reducido para tablets */
-        height: 240px;
-    }
-    .info-box {
-        width: 100%;
-        padding: 15px;
-    }
+    .input-area button { padding: 10px 20px; font-size: 1em; }
+    .operator-logo { width: 240px; height: 240px; }
+    .info-box { width: 100%; padding: 15px; }
 }
 
 @media (max-width: 480px) {
-     h1 {
-        font-size: 1.5em;
-    }
-    .operator-logo {
-        width: 180px; /* Más pequeño para móviles */
-        height: 180px;
-    }
+     h1 { font-size: 1.5em; }
+     .operator-logo { width: 180px; height: 180px; }
      .input-area input[type="text"] {
-        font-size: 1.2em; /* Reducido */
-        padding: 12px;    /* Reducido */
-        width: calc(100% - 28px); /* Recalculado */
-        border-radius: 20px; /* Ajustado */
+        font-size: 1.2em; padding: 12px; width: calc(100% - 28px); border-radius: 20px;
     }
 }
