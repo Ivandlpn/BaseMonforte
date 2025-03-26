@@ -1,0 +1,240 @@
+/* Variables de color */
+:root {
+    --ave-color: #0066cc;
+    --iryo-color: #d50032;
+    --ouigo-color: #cc007a; /* Ajustar al tono exacto si es necesario */
+    --background-light: #f8f8f8;
+    --text-dark: #333333;
+    --button-color: #4CAF50; /* Verde como ejemplo */
+    --error-color: #f44336;
+    --font-family: 'Poppins', sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-light);
+    color: var(--text-dark);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    /* Opcional: Fondo con mapa estilizado */
+    /* background-image: url('img/spain-map-stylized.png'); */
+    /* background-size: cover; */
+    /* background-position: center; */
+}
+
+.container {
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 90%;
+}
+
+h1 {
+    color: var(--text-dark);
+    margin-bottom: 25px;
+}
+
+.input-area {
+    margin-bottom: 30px;
+}
+
+.input-area label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.input-area input[type="text"] {
+    width: calc(100% - 22px); /* Ajusta según padding */
+    padding: 15px;
+    font-size: 1.2em;
+    border: 2px solid #ccc;
+    border-radius: 25px; /* Más redondeado */
+    text-align: center;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+}
+
+.input-area input[type="text"]:focus {
+    border-color: var(--ave-color); /* O un color neutro */
+    outline: none;
+}
+
+.input-area button {
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: white;
+    background-color: var(--button-color);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.input-area button:hover {
+    background-color: #45a049; /* Un poco más oscuro */
+    transform: scale(1.05);
+}
+
+/* Área de Resultados */
+.result-area {
+    margin-top: 30px;
+    display: none; /* Oculto por defecto */
+    flex-direction: column;
+    align-items: center;
+}
+
+.operator-logo {
+    max-width: 250px; /* Tamaño base del logo */
+    height: auto;
+    margin-bottom: 20px;
+    animation: bounceIn 0.6s ease-out;
+    display: block; /* Asegura que se comporte como bloque */
+}
+
+/* Animación BounceIn */
+@keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.05); opacity: 1; }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+
+.info-box {
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+    width: 90%;
+    color: white; /* Texto blanco para contraste */
+    animation: fadeIn 0.5s ease-in-out;
+    text-align: left; /* O centrado si prefieres */
+}
+
+.info-box p {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+/* Clases específicas para colores de fondo */
+.info-box--ave { background-color: var(--ave-color); }
+.info-box--iryo { background-color: var(--iryo-color); }
+.info-box--ouigo { background-color: var(--ouigo-color); }
+
+/* Mensaje de Error */
+.error-message {
+    color: var(--error-color);
+    font-weight: bold;
+    margin-top: 20px;
+    display: none; /* Oculto por defecto */
+}
+
+/* Características Adicionales */
+.extra-features {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Espacio entre elementos */
+}
+
+.extra-features button {
+    padding: 10px 20px;
+    font-size: 0.9em;
+    background-color: #6c757d; /* Gris */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.extra-features button:hover {
+    background-color: #5a6268;
+}
+
+.sound-toggle {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 0.9em;
+    color: #555;
+}
+.sound-toggle input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* Sección "Explorar Más" */
+.range-info-section {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    text-align: left;
+}
+.range-info-section h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+.range-info-section ul {
+    list-style: none;
+    padding: 0;
+}
+.range-info-section li {
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+.range-info-section button {
+     display: block;
+     margin: 15px auto 0; /* Centrar botón */
+}
+
+
+/* Animación FadeIn */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    h1 {
+        font-size: 1.8em;
+    }
+    .input-area input[type="text"] {
+        font-size: 1em;
+        padding: 12px;
+    }
+    .input-area button {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+    .operator-logo {
+        max-width: 180px; /* Más pequeño en móviles */
+    }
+    .info-box {
+        width: 100%;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+     h1 {
+        font-size: 1.5em;
+    }
+    .operator-logo {
+        max-width: 150px;
+    }
+}

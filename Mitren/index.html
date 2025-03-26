@@ -1,1 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descubre tu Tren de Alta Velocidad</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Puedes agregar un icono para la pestaña del navegador (favicon) -->
+    <link rel="icon" href="img/train-icon.png" type="image/png">
+</head>
+<body>
+    <div class="container">
+        <h1>¡Descubre tu Tren! 🚂</h1>
 
+        <div class="input-area">
+            <label for="trainNumberInput">Introduce el número de tu tren (5 dígitos):</label>
+            <input type="text" id="trainNumberInput" maxlength="5" placeholder="Ej: 03155">
+            <button id="submitButton">¡Descubre!</button>
+        </div>
+
+        <div id="resultArea" class="result-area" aria-live="polite">
+            <img id="operatorLogo" src="" alt="Logo del operador" class="operator-logo">
+            <div id="trainInfo" class="info-box">
+                <p><strong>Empresa:</strong> <span id="operatorName"></span></p>
+                <p><strong>Ruta Probable:</strong> <span id="routeInfo"></span></p>
+                <p><strong>Dato Curioso:</strong> <span id="funFact"></span></p>
+            </div>
+        </div>
+
+        <div id="errorMessage" class="error-message">
+            <!-- Mensajes de error se mostrarán aquí -->
+        </div>
+
+        <div class="extra-features">
+             <button id="exploreMoreButton">Explorar Más sobre Rangos</button>
+            <label class="sound-toggle">
+                <input type="checkbox" id="soundCheckbox"> ¡Activar sonido Choo-Choo! 🔊
+            </label>
+        </div>
+
+        <!-- Sección oculta para "Explorar Más" (se puede mostrar con JS) -->
+        <div id="rangeInfoSection" class="range-info-section" style="display: none;">
+            <h2>Guía Rápida de Números de Tren</h2>
+            <ul>
+                <li><strong>00040–00099 (AVE):</strong> Rutas cortas Sur (Andalucía).</li>
+                <li><strong>02000–02999 (AVE):</strong> Rutas desde/hacia Andalucía.</li>
+                <li><strong>03000–03999 (AVE):</strong> Rutas desde/hacia Cataluña/Noreste.</li>
+                <li><strong>05000–05999 (AVE):</strong> Rutas desde/hacia Levante/Noroeste.</li>
+                <li><strong>06000–06299 (Iryo):</strong> Rutas de alta velocidad Iryo.</li>
+                <li><strong>06400–06999 (Ouigo):</strong> Rutas de bajo coste Ouigo.</li>
+                <li><strong>09700–11368 (AVE):</strong> Rutas especiales/internacionales.</li>
+            </ul>
+            <p><em>Nota: Las rutas son probables y pueden variar. ¡Consulta siempre tu billete!</em></p>
+            <button id="closeRangeInfoButton">Cerrar Guía</button>
+        </div>
+
+    </div>
+
+    <audio id="chooChooSound" src="audio/choo-choo.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
