@@ -52,15 +52,17 @@ h1 {
     color: #555;
 }
 
+/* --- MODIFICADO: Input más grande --- */
 .input-area input[type="text"] {
-    width: calc(100% - 22px); /* Ajusta según padding */
-    padding: 15px;
-    font-size: 1.2em;
+    width: calc(100% - 44px); /* Ajustado por el nuevo padding */
+    padding: 20px; /* Aumentado */
+    font-size: 1.5em; /* Aumentado */
     border: 2px solid #ccc;
-    border-radius: 25px; /* Más redondeado */
+    border-radius: 30px; /* Aumentado */
     text-align: center;
     margin-bottom: 15px;
     transition: border-color 0.3s ease;
+    box-sizing: border-box; /* Importante */
 }
 
 .input-area input[type="text"]:focus {
@@ -93,15 +95,17 @@ h1 {
     align-items: center;
 }
 
+/* --- MODIFICADO: Logo más grande y uniforme --- */
 .operator-logo {
-    max-width: 250px; /* Tamaño base del logo */
-    height: auto;
-    margin-bottom: 20px;
+    width: 320px;  /* Tamaño fijo más grande (ancho) */
+    height: 320px; /* Tamaño fijo más grande (alto) */
+    object-fit: contain; /* Escala manteniendo proporción */
+    margin: 0 auto 20px auto; /* Centra horizontalmente, margen inferior */
     animation: bounceIn 0.6s ease-out;
-    display: block; /* Asegura que se comporte como bloque */
+    display: block; /* Asegura comportamiento de bloque */
 }
 
-/* Animación BounceIn */
+/* Animación BounceIn (sin cambios) */
 @keyframes bounceIn {
     0% { transform: scale(0.3); opacity: 0; }
     50% { transform: scale(1.05); opacity: 1; }
@@ -125,12 +129,12 @@ h1 {
     line-height: 1.5;
 }
 
-/* Clases específicas para colores de fondo */
+/* Clases específicas para colores de fondo (sin cambios) */
 .info-box--ave { background-color: var(--ave-color); }
 .info-box--iryo { background-color: var(--iryo-color); }
 .info-box--ouigo { background-color: var(--ouigo-color); }
 
-/* Mensaje de Error */
+/* Mensaje de Error (sin cambios) */
 .error-message {
     color: var(--error-color);
     font-weight: bold;
@@ -138,7 +142,7 @@ h1 {
     display: none; /* Oculto por defecto */
 }
 
-/* Características Adicionales */
+/* Características Adicionales (sin cambios) */
 .extra-features {
     margin-top: 30px;
     display: flex;
@@ -172,7 +176,7 @@ h1 {
     margin-right: 8px;
 }
 
-/* Sección "Explorar Más" */
+/* Sección "Explorar Más" (sin cambios) */
 .range-info-section {
     margin-top: 20px;
     padding: 20px;
@@ -199,13 +203,13 @@ h1 {
 }
 
 
-/* Animación FadeIn */
+/* Animación FadeIn (sin cambios) */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
 
-/* Responsividad */
+/* --- MODIFICADO: Responsividad ajustada --- */
 @media (max-width: 768px) {
     .container {
         padding: 20px;
@@ -214,15 +218,18 @@ h1 {
         font-size: 1.8em;
     }
     .input-area input[type="text"] {
-        font-size: 1em;
-        padding: 12px;
+        font-size: 1.3em; /* Reducido ligeramente */
+        padding: 15px;    /* Reducido */
+        width: calc(100% - 34px); /* Recalculado */
+        border-radius: 25px; /* Ajustado */
     }
     .input-area button {
         padding: 10px 20px;
         font-size: 1em;
     }
     .operator-logo {
-        max-width: 180px; /* Más pequeño en móviles */
+        width: 240px; /* Reducido para tablets */
+        height: 240px;
     }
     .info-box {
         width: 100%;
@@ -235,6 +242,13 @@ h1 {
         font-size: 1.5em;
     }
     .operator-logo {
-        max-width: 150px;
+        width: 180px; /* Más pequeño para móviles */
+        height: 180px;
+    }
+     .input-area input[type="text"] {
+        font-size: 1.2em; /* Reducido */
+        padding: 12px;    /* Reducido */
+        width: calc(100% - 28px); /* Recalculado */
+        border-radius: 20px; /* Ajustado */
     }
 }
