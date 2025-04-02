@@ -3,25 +3,27 @@ const botonComenzar = document.getElementById('boton-comenzar');
 const pantallaInicial = document.getElementById('pantalla-inicial');
 const juegoContenedor = document.getElementById('juego-contenedor');
 const infoTurno = document.getElementById('info-turno');
-const celdas = document.querySelectorAll('.celda');
+const celdas = document.querySelectorAll('.celda'); // NodeList de todas las celdas
 const botonReiniciar = document.getElementById('boton-reiniciar');
-// NUEVAS REFERENCIAS PARA EL MARCADOR
 const marcadorHugoElem = document.getElementById('marcador-hugo');
 const marcadorSaulElem = document.getElementById('marcador-saul');
 
 // --- Constantes y Variables del Juego ---
 const JUGADORES = ['Hugo', 'Saúl'];
-const MARCA_HUGO = 'X';
-const MARCA_SAUL = 'O';
+const MARCA_HUGO = 'X'; // Hugo usará X
+const MARCA_SAUL = 'O'; // Saúl usará O
 let jugadorActual;
-let juegoActivo = false;
+let juegoActivo = false; // El juego no está activo hasta que se presiona "Comenzar"
+// Array para guardar el estado del tablero. '' significa vacío.
 let estadoTablero = ['', '', '', '', '', '', '', '', ''];
+
+// Combinaciones ganadoras (índices del array estadoTablero)
 const COMBINACIONES_GANADORAS = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8],
-    [0, 3, 6], [1, 4, 7], [2, 5, 8],
-    [0, 4, 8], [2, 4, 6]
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontales
+    [0, 3, 6], [1, 4, 7], [2, 5, 8], // Verticales
+    [0, 4, 8], [2, 4, 6]             // Diagonales
 ];
-// NUEVAS VARIABLES PARA PUNTUACIONES (se mantienen entre partidas)
+// Variables para puntuaciones (se mantienen entre partidas)
 let puntajeHugo = 0;
 let puntajeSaul = 0;
 
@@ -61,11 +63,13 @@ function iniciarJuego() {
     const marcaInicial = jugadorActual === 'Hugo' ? MARCA_HUGO : MARCA_SAUL;
     infoTurno.textContent = `¡Empieza ${jugadorActual}! Te toca (${marcaInicial})`;
 
-    // 7. Preparar las celdas
+    // 7. Preparar las celdas: limpiar (con innerHTML) y añadir listeners
     celdas.forEach(celda => {
-        celda.textContent = '';
-        celda.classList.remove('ganadora');
+        celda.innerHTML = ''; // Limpia el contenido, incluyendo el posible span anterior
+        celda.classList.remove('ganadora'); // Quitar resaltado
+        // Quitamos listeners antiguos por si acaso (aunque 'once' ayuda mucho)
         celda.removeEventListener('click', manejarClickCelda);
+        // Añadimos el listener nuevo para esta partida. { once: true } es clave.
         celda.addEventListener('click', manejarClickCelda, { once: true });
     });
 
@@ -77,26 +81,44 @@ function iniciarJuego() {
  * @param {Event} evento - El objeto del evento de clic.
  */
 function manejarClickCelda(evento) {
-    // ... (lógica interna igual que antes: verificar activo, celda ocupada, poner marca) ...
+    // Si el juego no está activo, no hacer nada (seguridad extra)
     if (!juegoActivo) return;
-    const celdaClickeada = evento.target;
+
+    const celdaClickeada = evento.target; // La celda específica que se clickeó
+    // Obtenemos el índice (0-8) del atributo data-index y lo convertimos a número
     const indiceCelda = parseInt(celdaClickeada.getAttribute('data-index'));
-    if (estadoTablero[indiceCelda] !== '') return;
+
+    // Verificar si la casilla ya está jugada en nuestro estado interno (doble chequeo)
+    if (estadoTablero[indiceCelda] !== '') {
+        console.warn("Intento de clic en celda ya ocupada:", indiceCelda);
+        return; // No hacer nada si ya tiene una marca
+    }
+
+    // 1. Determinar la marca a colocar
     const marcaActual = jugadorActual === 'Hugo' ? MARCA_HUGO : MARCA_SAUL;
+
+    // 2. Colocar la marca en el estado interno
     estadoTablero[indiceCelda] = marcaActual;
-    celdaClickeada.textContent = marcaActual;
 
-    // ... (comprobar victoria y empate, igual que antes) ...
+    // 3. Colocar la marca visualmente CON ANIMACIÓN
+    // Insertamos un span con la clase CSS que activa la animación
+    celdaClickeada.innerHTML = `<span class="marca-animada">${marcaActual}</span>`;
+
+    console.log(`Celda ${indiceCelda} clickeada por ${jugadorActual}. Marca: ${marcaActual} (animada)`);
+
+    // 4. Comprobar si hay un ganador
     if (comprobarVictoria(marcaActual)) {
-        finalizarJuego(false);
-        return;
-    }
-    if (comprobarEmpate()) {
-        finalizarJuego(true);
-        return;
+        finalizarJuego(false); // false indica que NO es un empate
+        return; // Termina el turno, no cambiar de jugador
     }
 
-    // ... (cambiar turno, igual que antes) ...
+    // 5. Comprobar si hay empate (si no hubo victoria)
+    if (comprobarEmpate()) {
+        finalizarJuego(true); // true indica que SÍ es un empate
+        return; // Termina el turno
+    }
+
+    // 6. Si no hay victoria ni empate, cambiar el turno
     cambiarTurno();
 }
 
@@ -106,15 +128,19 @@ function manejarClickCelda(evento) {
  * @returns {boolean} - True si hay victoria, false si no.
  */
 function comprobarVictoria(marca) {
-    // ... (lógica igual que antes) ...
+    // Iteramos sobre cada combinación ganadora posible
     for (const combinacion of COMBINACIONES_GANADORAS) {
+        // Desestructuramos para obtener los 3 índices de la combinación
         const [a, b, c] = combinacion;
+        // Comprobamos si las 3 celdas en el estadoTablero tienen la marca del jugador actual
         if (estadoTablero[a] === marca && estadoTablero[b] === marca && estadoTablero[c] === marca) {
-            resaltarCeldasGanadoras(combinacion);
-            return true;
+            console.log(`Victoria detectada para ${marca} en combinación: ${a},${b},${c}`);
+            // Resaltar las celdas ganadoras
+             resaltarCeldasGanadoras(combinacion);
+            return true; // ¡Hay un ganador!
         }
     }
-    return false;
+    return false; // No se encontró ninguna combinación ganadora
 }
 
 /**
@@ -122,18 +148,26 @@ function comprobarVictoria(marca) {
  * @returns {boolean} - True si es empate, false si no.
  */
 function comprobarEmpate() {
-    // ... (lógica igual que antes) ...
-    return estadoTablero.every(celda => celda !== '');
+    // Si todas las celdas en estadoTablero son diferentes de '', es un empate
+    // El método every() comprueba si TODOS los elementos del array cumplen la condición
+    const empate = estadoTablero.every(celda => celda !== '');
+    if (empate) {
+        console.log("Empate detectado.");
+    }
+    return empate;
 }
 
 /**
  * Cambia el turno al otro jugador y actualiza el mensaje.
  */
 function cambiarTurno() {
-    // ... (lógica igual que antes) ...
+    // Cambia al otro jugador
     jugadorActual = jugadorActual === JUGADORES[0] ? JUGADORES[1] : JUGADORES[0];
+    // Determina la marca del nuevo jugador actual
     const marcaSiguiente = jugadorActual === 'Hugo' ? MARCA_HUGO : MARCA_SAUL;
+    // Actualiza el mensaje informativo
     infoTurno.textContent = `Turno de: ${jugadorActual} (${marcaSiguiente})`;
+    console.log(`Turno cambiado a: ${jugadorActual}`);
 }
 
 /**
@@ -142,7 +176,7 @@ function cambiarTurno() {
  * @param {boolean} esEmpate - Indica si el final fue por empate.
  */
 function finalizarJuego(esEmpate) {
-    juegoActivo = false;
+    juegoActivo = false; // Detiene la posibilidad de más clics
 
     if (esEmpate) {
         infoTurno.textContent = "¡Vaya! Ha sido un empate.";
@@ -172,8 +206,8 @@ function finalizarJuego(esEmpate) {
  * @param {number[]} combinacion - Array con los 3 índices ganadores.
  */
  function resaltarCeldasGanadoras(combinacion) {
-    // ... (lógica igual que antes) ...
     combinacion.forEach(indice => {
+        // Asegurarnos de acceder a la celda correcta usando el NodeList 'celdas'
         if(celdas[indice]) {
             celdas[indice].classList.add('ganadora');
         } else {
@@ -186,10 +220,5 @@ function finalizarJuego(esEmpate) {
 // --- Event Listeners Iniciales ---
 botonComenzar.addEventListener('click', iniciarJuego);
 botonReiniciar.addEventListener('click', iniciarJuego);
-
-// --- INICIALIZACIÓN (opcional pero bueno): Asegurar que el marcador se muestre con 0 al cargar ---
-// Se podría llamar aquí a actualizarMarcadorDisplay() si el juego empezara visible,
-// pero como empieza oculto, la llamada dentro de iniciarJuego() es suficiente la primera vez.
-// actualizarMarcadorDisplay(); // Descomentar si fuera necesario
 
 // --- Fin del script ---
