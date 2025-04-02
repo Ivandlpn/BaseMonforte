@@ -181,6 +181,30 @@ html, body {
     to { opacity: 0.7; }
 }
 
+/* === NUEVOS ESTILOS PARA LA ANIMACIÓN DE LA MARCA === */
+
+/* Define la animación 'aparecerMarca' */
+@keyframes aparecerMarca {
+  from {
+    opacity: 0; /* Empieza transparente */
+    transform: scale(0.3); /* Empieza pequeña */
+  }
+  to {
+    opacity: 1; /* Termina opaca */
+    transform: scale(1); /* Termina a tamaño normal */
+  }
+}
+
+/* Clase que se aplicará al span que contiene la X o O */
+.marca-animada {
+  display: inline-block; /* Necesario para que transform funcione correctamente */
+  /* Aplica la animación definida arriba */
+  animation-name: aparecerMarca;
+  animation-duration: 0.3s; /* Duración corta y rápida */
+  animation-timing-function: ease-out; /* Empieza rápido, desacelera al final */
+  /* animation-fill-mode: forwards; */ /* Mantiene el estado final (implícito en este caso) */
+}
+
 
 /* === BOTÓN DE REINICIO === */
 #boton-reiniciar {
