@@ -8,26 +8,15 @@
 html, body {
     height: 100%;
     font-family: 'Arial', sans-serif;
-    /* Eliminamos el fondo degradado */
-    /* background: linear-gradient(135deg, #6dd5ed, #2193b0); */
-
-    /* NUEVO: Fondo de imagen */
-    background-image: url('img/portada.png'); /* Ruta a tu imagen */
-    background-size: cover; /* Cubre todo el espacio disponible */
-    background-position: center center; /* Centra la imagen */
-    background-repeat: no-repeat; /* Evita que se repita */
-    background-attachment: fixed; /* Fija el fondo al hacer scroll (opcional) */
-    /* Color de fondo de respaldo si la imagen no carga */
+    background-image: url('img/portada.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-color: #1e6a8c;
-
-    color: #fff; /* Mantenemos texto blanco por defecto */
+    color: #fff;
     text-align: center;
-    /* Eliminamos flexbox del body, lo controlaremos dentro de #pantalla-inicial */
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-items: center; */
-    /* overflow: hidden; */ /* Puede ser necesario quitarlo si el contenido del juego es más alto */
-    padding: 0; /* Quitamos padding global si no es necesario */
+    padding: 0;
 }
 
 /* === CLASE UTILITARIA PARA OCULTAR ELEMENTOS === */
@@ -35,22 +24,18 @@ html, body {
     display: none !important;
 }
 
-
-/* === PANTALLA INICIAL (Rediseñada) === */
+/* === PANTALLA INICIAL === */
 #pantalla-inicial {
-    width: 100%; /* Ocupa todo el ancho */
-    height: 100vh; /* Ocupa toda la altura visible (viewport height) */
-    display: flex; /* Usa flexbox para posicionar el botón */
-    flex-direction: column; /* Apila elementos verticalmente (aunque solo hay uno) */
-    justify-content: flex-end; /* Empuja el contenido (botón) hacia abajo */
-    align-items: center; /* Centra el botón horizontalmente */
-    padding: 20px; /* Espaciado general interno */
-    padding-bottom: 5vh; /* Espacio específico desde el borde inferior (porcentaje de la altura) */
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px;
+    padding-bottom: 5vh;
 }
 
-/* Estilos para #titulo-juego eliminados */
-
-/* Estilos para #boton-comenzar (mantenemos la mayoría) */
 #boton-comenzar {
     padding: 18px 35px;
     font-size: clamp(1.2rem, 5vw, 1.8rem);
@@ -60,100 +45,114 @@ html, body {
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Sombra un poco más oscura para contraste */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease;
     animation: pulsoBrillante 2s infinite ease-in-out;
-    /* Añadimos un max-width por si acaso en pantallas muy anchas */
     max-width: 90%;
 }
+#boton-comenzar:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(255, 196, 0, 0.7); background: linear-gradient(45deg, #fff8a0, #ffc94d); }
+#boton-comenzar:active { transform: scale(0.98); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); }
+@keyframes pulsoBrillante { 0%, 100% { box-shadow: 0 5px 15px rgba(255, 217, 0, 0.5); } 50% { box-shadow: 0 5px 30px rgba(255, 217, 0, 0.9); } }
 
-#boton-comenzar:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(255, 196, 0, 0.7); /* Sombra hover más intensa */
-    background: linear-gradient(45deg, #fff8a0, #ffc94d);
-}
-
-#boton-comenzar:active {
-    transform: scale(0.98);
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-}
-
-/* Animación pulsoBrillante (sin cambios) */
-@keyframes pulsoBrillante {
-    0%, 100% { box-shadow: 0 5px 15px rgba(255, 217, 0, 0.5); }
-    50% { box-shadow: 0 5px 30px rgba(255, 217, 0, 0.9); }
-}
-
-
-/* === CONTENEDOR DEL JUEGO (Cuando se muestra) === */
-/* Ajustamos el contenedor del juego para que se muestre correctamente sobre el fondo */
+/* === CONTENEDOR DEL JUEGO === */
 #juego-contenedor {
-    /* Cuando se muestre, debe ocupar espacio y centrarse */
-    /* Lo volvemos a hacer flex para centrarlo */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* Centra verticalmente el contenido del juego */
+    justify-content: center;
     width: 100%;
-    min-height: 100vh; /* Asegura que ocupe al menos la altura de la pantalla */
-    padding: 20px; /* Espaciado interno */
-    /* Fondo semitransparente opcional para mejorar legibilidad sobre la imagen de fondo */
-    background-color: rgba(30, 106, 140, 0.5); /* Un azul semitransparente */
-    backdrop-filter: blur(3px); /* Efecto blur opcional (soporte limitado) */
+    min-height: 100vh;
+    padding: 20px;
+    background-color: rgba(30, 106, 140, 0.5);
+    backdrop-filter: blur(3px);
 }
 
-/* === MARCADOR (Sin cambios, pero dentro del nuevo #juego-contenedor) === */
+/* === NUEVOS ESTILOS MARCADOR ESTILO ESTADIO === */
 #marcador {
-    display: flex;
-    justify-content: space-around;
-    width: 80%;
-    max-width: 300px;
-    margin-bottom: 20px;
-    background-color: rgba(0, 0, 0, 0.2); /* Aumentamos un poco la opacidad para contraste */
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    display: flex; /* Alinea las secciones de jugador y el separador */
+    align-items: center; /* Centra verticalmente los elementos */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    gap: 15px; /* Espacio entre secciones de jugador y separador */
+    background-color: #1a1a1a; /* Fondo oscuro, casi negro */
+    border: 4px solid #444; /* Borde grueso gris oscuro */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 10px 25px; /* Relleno interno */
+    margin-bottom: 30px; /* Más espacio debajo del marcador */
+    width: 90%; /* Ancho relativo */
+    max-width: 380px; /* Ancho máximo, un poco más grande */
+    box-shadow: 0 5px 10px rgba(0,0,0,0.5), inset 0 0 8px rgba(0,0,0,0.4); /* Sombra externa e interna */
 }
 
-#marcador span {
-    font-size: clamp(1rem, 4vw, 1.4rem);
-    font-weight: bold;
-    color: #fff;
-    padding: 5px 10px;
+.marcador-jugador {
+    display: flex;
+    flex-direction: column; /* Apila nombre y puntaje */
+    align-items: center; /* Centra nombre y puntaje */
 }
+
+.nombre-jugador {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* Tamaño más pequeño y adaptable */
+    font-weight: bold;
+    color: #bbb; /* Gris claro */
+    text-transform: uppercase; /* Mayúsculas como en estadios */
+    margin-bottom: 4px; /* Pequeño espacio bajo el nombre */
+    letter-spacing: 1px; /* Espaciado entre letras */
+}
+
+.puntaje-jugador {
+    font-family: 'Courier New', Courier, monospace; /* Fuente monoespaciada para look digital */
+    font-size: clamp(2.8rem, 10vw, 4rem); /* ¡MUY GRANDE! */
+    font-weight: bold;
+    color: #f0e68c; /* Amarillo pálido (Khaki) - color digital común */
+    line-height: 1; /* Ajusta la altura de línea para números grandes */
+    background-color: #111; /* Fondo ligeramente diferente para los números */
+    padding: 5px 10px; /* Relleno alrededor del número */
+    border-radius: 5px; /* Bordes redondeados para el fondo del número */
+    min-width: 1.5em; /* Asegura un ancho mínimo para que 0 y 10 se vean bien */
+    text-align: center;
+    text-shadow: 0 0 5px rgba(240, 230, 140, 0.5); /* Ligero brillo amarillo */
+}
+
+.marcador-separador {
+    font-size: clamp(2rem, 7vw, 3rem); /* Tamaño grande para el separador */
+    font-weight: bold;
+    color: #777; /* Color gris */
+    line-height: 1;
+    padding-bottom: 5px; /* Ajuste vertical si es necesario */
+}
+/* === FIN NUEVOS ESTILOS MARCADOR === */
+
 
 /* === TEXTO INFORMATIVO (Turno/Resultado) === */
 #info-turno {
     font-size: clamp(1.3rem, 5.5vw, 1.8rem);
     margin-bottom: 25px;
     font-weight: bold;
-    background-color: rgba(0, 0, 0, 0.3); /* Más opaco */
+    background-color: rgba(0, 0, 0, 0.4); /* Más opaco para contraste */
     padding: 10px 20px;
     border-radius: 15px;
     min-height: 1.5em;
     line-height: 1.4;
-    color: #fff; /* Asegurar texto blanco */
+    color: #fff;
 }
 
-/* === TABLERO 3x3 (Sin cambios funcionales) === */
+/* === TABLERO 3x3 === */
 #tablero {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     gap: 8px;
-    /* Limitamos el ancho del tablero para que no sea gigante en pantallas anchas */
     width: 90%;
-    max-width: 350px; /* Ajusta este valor según necesites */
+    max-width: 350px;
     aspect-ratio: 1 / 1;
-    background-color: rgba(255, 255, 255, 0.15); /* Un poco más opaco */
+    background-color: rgba(255, 255, 255, 0.15);
     padding: 8px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-/* === CELDAS INDIVIDUALES (Sin cambios funcionales) === */
+/* === CELDAS INDIVIDUALES === */
 .celda {
-    background-color: rgba(255, 255, 255, 0.85); /* Más opacas */
+    background-color: rgba(255, 255, 255, 0.85);
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -166,36 +165,15 @@ html, body {
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
+.celda:hover { background-color: rgba(255, 255, 255, 1); }
+.celda.ganadora { background-color: #ffd700; color: #333; animation: parpadeoGanador 0.8s infinite alternate; }
+@keyframes parpadeoGanador { from { opacity: 1; } to { opacity: 0.7; } }
 
-.celda:hover {
-    background-color: rgba(255, 255, 255, 1);
-}
+/* === ANIMACIÓN DE LA MARCA === */
+@keyframes aparecerMarca { from { opacity: 0; transform: scale(0.3); } to { opacity: 1; transform: scale(1); } }
+.marca-animada { display: inline-block; animation-name: aparecerMarca; animation-duration: 0.3s; animation-timing-function: ease-out; }
 
-.celda.ganadora {
-    background-color: #ffd700;
-    color: #333;
-    animation: parpadeoGanador 0.8s infinite alternate;
-}
-
-@keyframes parpadeoGanador {
-    from { opacity: 1; }
-    to { opacity: 0.7; }
-}
-
-/* === ANIMACIÓN DE LA MARCA (Sin cambios) === */
-@keyframes aparecerMarca {
-  from { opacity: 0; transform: scale(0.3); }
-  to { opacity: 1; transform: scale(1); }
-}
-.marca-animada {
-  display: inline-block;
-  animation-name: aparecerMarca;
-  animation-duration: 0.3s;
-  animation-timing-function: ease-out;
-}
-
-
-/* === BOTÓN DE REINICIO (Ajustado para el nuevo contenedor) === */
+/* === BOTÓN DE REINICIO === */
 #boton-reiniciar {
     margin-top: 30px;
     padding: 12px 25px;
@@ -208,21 +186,200 @@ html, body {
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease;
-    max-width: 90%; /* Consistencia con el botón comenzar */
+    max-width: 90%;
+}
+#boton-reiniciar:hover { transform: scale(1.05); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); background: linear-gradient(45deg, #6dd5ed, #2aabd1); }
+#boton-reiniciar:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
+#juego-contenedor.oculto #boton-reiniciar { display: none; }/* === RESET Y ESTILOS BASE === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-#boton-reiniciar:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
-    background: linear-gradient(45deg, #6dd5ed, #2aabd1);
+html, body {
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    background-image: url('img/portada.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-color: #1e6a8c;
+    color: #fff;
+    text-align: center;
+    padding: 0;
 }
 
-#boton-reiniciar:active {
-    transform: scale(0.98);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+/* === CLASE UTILITARIA PARA OCULTAR ELEMENTOS === */
+.oculto {
+    display: none !important;
 }
 
-/* Regla para ocultar si el contenedor está oculto */
-#juego-contenedor.oculto #boton-reiniciar {
-    display: none;
+/* === PANTALLA INICIAL === */
+#pantalla-inicial {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 20px;
+    padding-bottom: 5vh;
 }
+
+#boton-comenzar {
+    padding: 18px 35px;
+    font-size: clamp(1.2rem, 5vw, 1.8rem);
+    font-weight: bold;
+    color: #1f7a8c;
+    background: linear-gradient(45deg, #f7ff00, #ffb700);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease;
+    animation: pulsoBrillante 2s infinite ease-in-out;
+    max-width: 90%;
+}
+#boton-comenzar:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(255, 196, 0, 0.7); background: linear-gradient(45deg, #fff8a0, #ffc94d); }
+#boton-comenzar:active { transform: scale(0.98); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4); }
+@keyframes pulsoBrillante { 0%, 100% { box-shadow: 0 5px 15px rgba(255, 217, 0, 0.5); } 50% { box-shadow: 0 5px 30px rgba(255, 217, 0, 0.9); } }
+
+/* === CONTENEDOR DEL JUEGO === */
+#juego-contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: rgba(30, 106, 140, 0.5);
+    backdrop-filter: blur(3px);
+}
+
+/* === NUEVOS ESTILOS MARCADOR ESTILO ESTADIO === */
+#marcador {
+    display: flex; /* Alinea las secciones de jugador y el separador */
+    align-items: center; /* Centra verticalmente los elementos */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    gap: 15px; /* Espacio entre secciones de jugador y separador */
+    background-color: #1a1a1a; /* Fondo oscuro, casi negro */
+    border: 4px solid #444; /* Borde grueso gris oscuro */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 10px 25px; /* Relleno interno */
+    margin-bottom: 30px; /* Más espacio debajo del marcador */
+    width: 90%; /* Ancho relativo */
+    max-width: 380px; /* Ancho máximo, un poco más grande */
+    box-shadow: 0 5px 10px rgba(0,0,0,0.5), inset 0 0 8px rgba(0,0,0,0.4); /* Sombra externa e interna */
+}
+
+.marcador-jugador {
+    display: flex;
+    flex-direction: column; /* Apila nombre y puntaje */
+    align-items: center; /* Centra nombre y puntaje */
+}
+
+.nombre-jugador {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* Tamaño más pequeño y adaptable */
+    font-weight: bold;
+    color: #bbb; /* Gris claro */
+    text-transform: uppercase; /* Mayúsculas como en estadios */
+    margin-bottom: 4px; /* Pequeño espacio bajo el nombre */
+    letter-spacing: 1px; /* Espaciado entre letras */
+}
+
+.puntaje-jugador {
+    font-family: 'Courier New', Courier, monospace; /* Fuente monoespaciada para look digital */
+    font-size: clamp(2.8rem, 10vw, 4rem); /* ¡MUY GRANDE! */
+    font-weight: bold;
+    color: #f0e68c; /* Amarillo pálido (Khaki) - color digital común */
+    line-height: 1; /* Ajusta la altura de línea para números grandes */
+    background-color: #111; /* Fondo ligeramente diferente para los números */
+    padding: 5px 10px; /* Relleno alrededor del número */
+    border-radius: 5px; /* Bordes redondeados para el fondo del número */
+    min-width: 1.5em; /* Asegura un ancho mínimo para que 0 y 10 se vean bien */
+    text-align: center;
+    text-shadow: 0 0 5px rgba(240, 230, 140, 0.5); /* Ligero brillo amarillo */
+}
+
+.marcador-separador {
+    font-size: clamp(2rem, 7vw, 3rem); /* Tamaño grande para el separador */
+    font-weight: bold;
+    color: #777; /* Color gris */
+    line-height: 1;
+    padding-bottom: 5px; /* Ajuste vertical si es necesario */
+}
+/* === FIN NUEVOS ESTILOS MARCADOR === */
+
+
+/* === TEXTO INFORMATIVO (Turno/Resultado) === */
+#info-turno {
+    font-size: clamp(1.3rem, 5.5vw, 1.8rem);
+    margin-bottom: 25px;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.4); /* Más opaco para contraste */
+    padding: 10px 20px;
+    border-radius: 15px;
+    min-height: 1.5em;
+    line-height: 1.4;
+    color: #fff;
+}
+
+/* === TABLERO 3x3 === */
+#tablero {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 8px;
+    width: 90%;
+    max-width: 350px;
+    aspect-ratio: 1 / 1;
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* === CELDAS INDIVIDUALES === */
+.celda {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(3rem, 15vw, 5rem);
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+.celda:hover { background-color: rgba(255, 255, 255, 1); }
+.celda.ganadora { background-color: #ffd700; color: #333; animation: parpadeoGanador 0.8s infinite alternate; }
+@keyframes parpadeoGanador { from { opacity: 1; } to { opacity: 0.7; } }
+
+/* === ANIMACIÓN DE LA MARCA === */
+@keyframes aparecerMarca { from { opacity: 0; transform: scale(0.3); } to { opacity: 1; transform: scale(1); } }
+.marca-animada { display: inline-block; animation-name: aparecerMarca; animation-duration: 0.3s; animation-timing-function: ease-out; }
+
+/* === BOTÓN DE REINICIO === */
+#boton-reiniciar {
+    margin-top: 30px;
+    padding: 12px 25px;
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(45deg, #2193b0, #1f7a8c);
+    border: 2px solid #fff;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease;
+    max-width: 90%;
+}
+#boton-reiniciar:hover { transform: scale(1.05); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); background: linear-gradient(45deg, #6dd5ed, #2aabd1); }
+#boton-reiniciar:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
+#juego-contenedor.oculto #boton-reiniciar { display: none; }
