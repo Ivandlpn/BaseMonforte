@@ -1,72 +1,72 @@
-/* Estilos generales y reseteo básico */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; /* Hace que padding y border no añadan tamaño extra */
+/* === ESTILOS ANTERIORES (Los que ya teníamos) === */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #6dd5ed, #2193b0); display: flex; justify-content: center; align-items: center; overflow: hidden; color: #fff; text-align: center; }
+#pantalla-inicial { display: flex; flex-direction: column; align-items: center; padding: 20px; }
+#titulo-juego { font-size: clamp(2.5rem, 8vw, 4.5rem); margin-bottom: 40px; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); line-height: 1.2; }
+#boton-comenzar { padding: 18px 35px; font-size: clamp(1.2rem, 5vw, 1.8rem); font-weight: bold; color: #1f7a8c; background: linear-gradient(45deg, #f7ff00, #ffb700); border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease; animation: pulsoBrillante 2s infinite ease-in-out; }
+#boton-comenzar:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(255, 196, 0, 0.6); background: linear-gradient(45deg, #fff8a0, #ffc94d); }
+#boton-comenzar:active { transform: scale(0.98); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+@keyframes pulsoBrillante { 0%, 100% { box-shadow: 0 5px 15px rgba(255, 217, 0, 0.4); } 50% { box-shadow: 0 5px 30px rgba(255, 217, 0, 0.8); } }
+
+/* === NUEVOS ESTILOS === */
+
+/* Clase para ocultar elementos */
+.oculto {
+    display: none !important; /* !important para asegurar que anule otros display */
 }
 
-html, body {
-    height: 100%; /* Asegura que el body ocupe toda la altura */
-    font-family: 'Arial', sans-serif; /* Una fuente básica, puedes cambiarla */
-    background: linear-gradient(135deg, #6dd5ed, #2193b0); /* Un fondo degradado azulado */
-    display: flex; /* Usamos Flexbox para centrar fácilmente */
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    overflow: hidden; /* Evita barras de scroll innecesarias en esta pantalla */
-    color: #fff; /* Color de texto por defecto blanco */
-    text-align: center; /* Centra el texto por defecto */
+/* Contenedor del juego */
+#juego-contenedor {
+    display: flex; /* Lo hacemos flex para centrar su contenido */
+    flex-direction: column; /* Apilamos el texto y el tablero */
+    align-items: center; /* Centramos horizontalmente */
+    width: 90%; /* Ocupa casi todo el ancho disponible */
+    max-width: 400px; /* Pero con un máximo para pantallas grandes */
 }
 
-#pantalla-inicial {
-    display: flex;
-    flex-direction: column; /* Coloca los elementos uno debajo del otro */
-    align-items: center; /* Centra los elementos dentro del contenedor */
-    padding: 20px;
-}
-
-#titulo-juego {
-    font-size: clamp(2.5rem, 8vw, 4.5rem); /* Tamaño de fuente adaptable */
-    margin-bottom: 40px; /* Espacio debajo del título */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para destacar */
-    line-height: 1.2; /* Ajusta el espacio entre líneas si usaste <br> */
-}
-
-#boton-comenzar {
-    padding: 18px 35px; /* Tamaño del botón (vertical, horizontal) */
-    font-size: clamp(1.2rem, 5vw, 1.8rem); /* Tamaño de fuente adaptable */
+/* Texto informativo del turno */
+#info-turno {
+    font-size: clamp(1.3rem, 6vw, 2rem); /* Tamaño adaptable */
+    margin-bottom: 25px; /* Espacio antes del tablero */
     font-weight: bold;
-    color: #1f7a8c; /* Color del texto del botón */
-    background: linear-gradient(45deg, #f7ff00, #ffb700); /* Degradado amarillo-naranja brillante */
-    border: none; /* Sin borde */
-    border-radius: 50px; /* Bordes muy redondeados */
-    cursor: pointer; /* Cambia el cursor a una mano al pasar por encima */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra para efecto 3D */
-    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease; /* Transiciones suaves */
-
-    /* Animación sutil para hacerlo llamativo */
-    animation: pulsoBrillante 2s infinite ease-in-out;
+    background-color: rgba(0, 0, 0, 0.2); /* Fondo semitransparente */
+    padding: 10px 20px;
+    border-radius: 15px;
 }
 
-#boton-comenzar:hover {
-    transform: scale(1.05); /* Agranda ligeramente el botón al pasar el ratón */
-    box-shadow: 0 8px 20px rgba(255, 196, 0, 0.6); /* Sombra más pronunciada y coloreada */
-    background: linear-gradient(45deg, #fff8a0, #ffc94d); /* Aclara el fondo al pasar el ratón */
+/* El tablero 3x3 */
+#tablero {
+    display: grid;
+    /* 3 columnas de igual tamaño, fr significa fracción del espacio disponible */
+    grid-template-columns: repeat(3, 1fr);
+    /* 3 filas de igual tamaño */
+    grid-template-rows: repeat(3, 1fr);
+    /* Espacio entre las celdas */
+    gap: 8px;
+    width: 100%; /* Ocupa el ancho de su contenedor (#juego-contenedor) */
+    /* Hacemos que el tablero sea cuadrado */
+    aspect-ratio: 1 / 1;
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo ligero para el área del grid */
+    padding: 8px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-#boton-comenzar:active {
-    transform: scale(0.98); /* Encoge ligeramente al hacer clic */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Sombra más pequeña al hacer clic */
+/* Estilo de cada celda */
+.celda {
+    background-color: rgba(255, 255, 255, 0.8); /* Blanco semitransparente */
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(3rem, 15vw, 5rem); /* Tamaño GRANDE para X y O */
+    font-weight: bold;
+    color: #333; /* Color oscuro para X y O */
+    cursor: pointer;
+    transition: background-color 0.2s ease; /* Transición suave al pasar el ratón */
+    user-select: none; /* Evita que se seleccione el texto (X/O) */
 }
 
-/* Definición de la animación 'pulsoBrillante' */
-@keyframes pulsoBrillante {
-    0% {
-        box-shadow: 0 5px 15px rgba(255, 217, 0, 0.4);
-    }
-    50% {
-        box-shadow: 0 5px 30px rgba(255, 217, 0, 0.8); /* Más brillo en la mitad */
-    }
-    100% {
-        box-shadow: 0 5px 15px rgba(255, 217, 0, 0.4);
-    }
+.celda:hover {
+    background-color: rgba(255, 255, 255, 1); /* Más opaco al pasar el ratón */
 }
