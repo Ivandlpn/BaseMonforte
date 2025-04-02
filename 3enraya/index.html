@@ -2,27 +2,32 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- Meta tag esencial para diseño responsive en móviles y tablets -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3 en Raya De la Paz Perez</title>
-    <!-- Enlace a la hoja de estilos CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Pantalla Inicial: Visible al principio -->
+    <!-- Pantalla Inicial -->
     <div id="pantalla-inicial">
         <h1 id="titulo-juego">3 en Raya<br>De la Paz Perez</h1>
         <button id="boton-comenzar">Comenzar Juego</button>
     </div>
 
-    <!-- Contenedor del Juego: Inicialmente oculto -->
+    <!-- Contenedor del Juego (inicialmente oculto) -->
     <div id="juego-contenedor" class="oculto">
+
+        <!-- NUEVO: Contenedor del Marcador -->
+        <div id="marcador">
+            <span id="marcador-hugo">Hugo: 0</span>
+            <span id="marcador-saul">Saúl: 0</span>
+        </div>
+
         <!-- Párrafo para mostrar información del turno o resultado -->
         <p id="info-turno">Turno de:</p>
 
         <!-- El tablero de 3x3 -->
         <div id="tablero">
-            <!-- Las 9 celdas del tablero. data-index es usado por JS -->
+            <!-- ... (las 9 celdas igual que antes) ... -->
             <div class="celda" data-index="0"></div>
             <div class="celda" data-index="1"></div>
             <div class="celda" data-index="2"></div>
@@ -34,11 +39,10 @@
             <div class="celda" data-index="8"></div>
         </div>
 
-        <!-- Botón de Reinicio: Inicialmente oculto, aparece al final del juego -->
+        <!-- Botón de Reinicio -->
         <button id="boton-reiniciar" class="oculto">Jugar de Nuevo</button>
     </div>
 
-    <!-- Enlace al archivo JavaScript (al final para mejor rendimiento) -->
     <script src="script.js"></script>
 </body>
 </html>
