@@ -7,18 +7,28 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Pantalla Inicial: Ahora con fondo de imagen, sin título, botón abajo -->
+    <!-- Pantalla Inicial -->
     <div id="pantalla-inicial">
-        <!-- El título H1 ha sido eliminado -->
         <button id="boton-comenzar">Comenzar Juego</button>
     </div>
 
     <!-- Contenedor del Juego (inicialmente oculto) -->
     <div id="juego-contenedor" class="oculto">
+
+        <!-- NUEVA ESTRUCTURA: Marcador Estilo Estadio -->
         <div id="marcador">
-            <span id="marcador-hugo">Hugo: 0</span>
-            <span id="marcador-saul">Saúl: 0</span>
+            <div class="marcador-jugador">
+                <span class="nombre-jugador">HUGO</span>
+                <span class="puntaje-jugador" id="puntaje-hugo">0</span>
+            </div>
+            <span class="marcador-separador">:</span>
+            <div class="marcador-jugador">
+                <span class="nombre-jugador">SAÚL</span>
+                <span class="puntaje-jugador" id="puntaje-saul">0</span>
+            </div>
         </div>
+        <!-- Fin del Marcador -->
+
         <p id="info-turno">Turno de:</p>
         <div id="tablero">
             <div class="celda" data-index="0"></div>
