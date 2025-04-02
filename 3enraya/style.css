@@ -1,0 +1,72 @@
+/* Estilos generales y reseteo básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Hace que padding y border no añadan tamaño extra */
+}
+
+html, body {
+    height: 100%; /* Asegura que el body ocupe toda la altura */
+    font-family: 'Arial', sans-serif; /* Una fuente básica, puedes cambiarla */
+    background: linear-gradient(135deg, #6dd5ed, #2193b0); /* Un fondo degradado azulado */
+    display: flex; /* Usamos Flexbox para centrar fácilmente */
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    overflow: hidden; /* Evita barras de scroll innecesarias en esta pantalla */
+    color: #fff; /* Color de texto por defecto blanco */
+    text-align: center; /* Centra el texto por defecto */
+}
+
+#pantalla-inicial {
+    display: flex;
+    flex-direction: column; /* Coloca los elementos uno debajo del otro */
+    align-items: center; /* Centra los elementos dentro del contenedor */
+    padding: 20px;
+}
+
+#titulo-juego {
+    font-size: clamp(2.5rem, 8vw, 4.5rem); /* Tamaño de fuente adaptable */
+    margin-bottom: 40px; /* Espacio debajo del título */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Sombra para destacar */
+    line-height: 1.2; /* Ajusta el espacio entre líneas si usaste <br> */
+}
+
+#boton-comenzar {
+    padding: 18px 35px; /* Tamaño del botón (vertical, horizontal) */
+    font-size: clamp(1.2rem, 5vw, 1.8rem); /* Tamaño de fuente adaptable */
+    font-weight: bold;
+    color: #1f7a8c; /* Color del texto del botón */
+    background: linear-gradient(45deg, #f7ff00, #ffb700); /* Degradado amarillo-naranja brillante */
+    border: none; /* Sin borde */
+    border-radius: 50px; /* Bordes muy redondeados */
+    cursor: pointer; /* Cambia el cursor a una mano al pasar por encima */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Sombra para efecto 3D */
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease; /* Transiciones suaves */
+
+    /* Animación sutil para hacerlo llamativo */
+    animation: pulsoBrillante 2s infinite ease-in-out;
+}
+
+#boton-comenzar:hover {
+    transform: scale(1.05); /* Agranda ligeramente el botón al pasar el ratón */
+    box-shadow: 0 8px 20px rgba(255, 196, 0, 0.6); /* Sombra más pronunciada y coloreada */
+    background: linear-gradient(45deg, #fff8a0, #ffc94d); /* Aclara el fondo al pasar el ratón */
+}
+
+#boton-comenzar:active {
+    transform: scale(0.98); /* Encoge ligeramente al hacer clic */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Sombra más pequeña al hacer clic */
+}
+
+/* Definición de la animación 'pulsoBrillante' */
+@keyframes pulsoBrillante {
+    0% {
+        box-shadow: 0 5px 15px rgba(255, 217, 0, 0.4);
+    }
+    50% {
+        box-shadow: 0 5px 30px rgba(255, 217, 0, 0.8); /* Más brillo en la mitad */
+    }
+    100% {
+        box-shadow: 0 5px 15px rgba(255, 217, 0, 0.4);
+    }
+}
