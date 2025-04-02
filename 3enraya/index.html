@@ -2,20 +2,35 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <!-- Asegura la correcta visualización y zoom en móviles/tablets -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3 en Raya De la Paz Perez</title>
-    <!-- Enlazamos nuestra hoja de estilos -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Contenedor principal para centrar contenido -->
+    <!-- Pantalla Inicial (se ocultará) -->
     <div id="pantalla-inicial">
         <h1 id="titulo-juego">3 en Raya<br>De la Paz Perez</h1>
         <button id="boton-comenzar">Comenzar Juego</button>
     </div>
 
-    <!-- Enlazamos nuestro archivo JavaScript (al final para que el HTML cargue primero) -->
+    <!-- Contenedor del Juego (inicialmente oculto) -->
+    <div id="juego-contenedor" class="oculto">
+        <p id="info-turno">Turno de:</p>
+        <div id="tablero">
+            <!-- Las 9 celdas del tablero (generaremos con JS o las ponemos aquí) -->
+            <div class="celda" data-index="0"></div>
+            <div class="celda" data-index="1"></div>
+            <div class="celda" data-index="2"></div>
+            <div class="celda" data-index="3"></div>
+            <div class="celda" data-index="4"></div>
+            <div class="celda" data-index="5"></div>
+            <div class="celda" data-index="6"></div>
+            <div class="celda" data-index="7"></div>
+            <div class="celda" data-index="8"></div>
+        </div>
+        <!-- Podríamos añadir un botón de reinicio aquí más tarde -->
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
