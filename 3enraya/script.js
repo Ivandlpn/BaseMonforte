@@ -50,8 +50,11 @@ function iniciarJuego() {
     jugadorActual = JUGADORES[indiceAleatorio];
 
     // 3. Ocultar pantalla inicial y mostrar tablero
+    // Ahora usamos 'display: none' directamente o a través de la clase 'oculto'
     pantallaInicial.classList.add('oculto');
     juegoContenedor.classList.remove('oculto');
+    // Aseguramos que juegoContenedor use flex si es necesario (ya está en CSS)
+    // juegoContenedor.style.display = 'flex';
 
     // 4. OCULTAR el botón de reiniciar
     botonReiniciar.classList.add('oculto');
@@ -84,11 +87,19 @@ function manejarClickCelda(evento) {
     // Si el juego no está activo, no hacer nada (seguridad extra)
     if (!juegoActivo) return;
 
-    const celdaClickeada = evento.target; // La celda específica que se clickeó
+    // IMPORTANTE: Asegurarnos de que el target es la celda y no el span interno
+    let celdaClickeada = evento.target;
+    if (celdaClickeada.tagName === 'SPAN') {
+      celdaClickeada = celdaClickeada.parentElement; // Subir al div.celda si se hizo clic en el span
+    }
+
+    // Verificar si la celda tiene el atributo data-index (seguridad extra)
+    if (!celdaClickeada.hasAttribute('data-index')) return;
+
     // Obtenemos el índice (0-8) del atributo data-index y lo convertimos a número
     const indiceCelda = parseInt(celdaClickeada.getAttribute('data-index'));
 
-    // Verificar si la casilla ya está jugada en nuestro estado interno (doble chequeo)
+    // Verificar si la casilla ya está jugada en nuestro estado interno
     if (estadoTablero[indiceCelda] !== '') {
         console.warn("Intento de clic en celda ya ocupada:", indiceCelda);
         return; // No hacer nada si ya tiene una marca
@@ -149,7 +160,6 @@ function comprobarVictoria(marca) {
  */
 function comprobarEmpate() {
     // Si todas las celdas en estadoTablero son diferentes de '', es un empate
-    // El método every() comprueba si TODOS los elementos del array cumplen la condición
     const empate = estadoTablero.every(celda => celda !== '');
     if (empate) {
         console.log("Empate detectado.");
@@ -177,6 +187,16 @@ function cambiarTurno() {
  */
 function finalizarJuego(esEmpate) {
     juegoActivo = false; // Detiene la posibilidad de más clics
+
+    // Hacemos que todas las celdas dejen de ser clickables explícitamente
+    // aunque 'once: true' ya ayuda mucho, esto es una capa extra de seguridad
+    // y evita que se mantenga el cursor 'pointer'
+    celdas.forEach(celda => {
+        celda.removeEventListener('click', manejarClickCelda);
+        // Opcional: quitar cursor pointer
+        // celda.style.cursor = 'default';
+    });
+
 
     if (esEmpate) {
         infoTurno.textContent = "¡Vaya! Ha sido un empate.";
