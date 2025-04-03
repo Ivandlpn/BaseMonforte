@@ -19,22 +19,28 @@ const fotoSaulElem = document.getElementById('foto-saul');
 
 // --- Constantes y Variables del Juego ---
 const JUGADORES = ['Hugo', 'Saúl'];
-const FICHAS_DISPONIBLES = ['X.png', 'O.png', 'P_logo.png', 'escudo_torremolinos.png'];
+const FICHAS_DISPONIBLES = ['X.png', 'O.png', 'pinar.png', 'torremolinos.png'];
 const RUTA_FICHAS = 'img/fichas/';
 
-let jugadorActual;
-let jugadorSeleccionando;
-let fichaHugo = null;
-let fichaSaul = null;
+let jugadorActual; // Quién tiene el turno AHORA ('Hugo' o 'Saúl')
+let jugadorSeleccionando; // Quién está eligiendo ficha
+let fichaHugo = null; // Nombre archivo ficha Hugo
+let fichaSaul = null; // Nombre archivo ficha Saúl
 let juegoActivo = false;
+// Estado: null (vacío), 'Hugo', o 'Saúl'
 let estadoTablero = [null, null, null, null, null, null, null, null, null];
 let puntajeHugo = 0;
 let puntajeSaul = 0;
-let procesandoClick = false;
 
-// --- Funciones ---
+// Combinaciones ganadoras (índices)
+const COMBINACIONES_GANADORAS = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6]
+];
 
-/** Limpia y puebla el contenedor de selección de fichas */
+// --- Funciones de Selección de Fichas ---
+
 function mostrarFichasParaSeleccion() {
     contenedorFichasElem.innerHTML = '';
     FICHAS_DISPONIBLES.forEach(nombreFicha => {
@@ -44,67 +50,68 @@ function mostrarFichasParaSeleccion() {
         imgFicha.classList.add('ficha-seleccionable');
         imgFicha.dataset.filename = nombreFicha;
 
+        // ¿Ya fue elegida por el OTRO jugador?
         const fichaYaElegidaPorOtro = (jugadorSeleccionando === JUGADORES[1] && nombreFicha === fichaHugo);
         if (fichaYaElegidaPorOtro) {
-            imgFicha.classList.add('seleccionada');
+            imgFicha.classList.add('seleccionada'); // Marcar como no seleccionable
         } else {
-            // Aseguramos quitar listener viejo antes de añadir (extra seguridad)
-            imgFicha.removeEventListener('click', manejarSeleccionFicha);
-            imgFicha.addEventListener('click', manejarSeleccionFicha); // No necesita 'once' aquí
+            // Si NO está seleccionada por el otro, añadir listener
+            imgFicha.removeEventListener('click', manejarSeleccionFicha); // Limpiar por si acaso
+            imgFicha.addEventListener('click', manejarSeleccionFicha);
         }
         contenedorFichasElem.appendChild(imgFicha);
     });
 }
 
-/** Maneja el clic sobre una ficha durante la selección */
 function manejarSeleccionFicha(evento) {
     const fichaClickeada = evento.target;
-    if (fichaClickeada.classList.contains('seleccionada')) return; // Ignorar si ya está deshabilitada
+    if (fichaClickeada.classList.contains('seleccionada')) return;
 
     const nombreFichaSeleccionada = fichaClickeada.dataset.filename;
 
-    if (jugadorSeleccionando === JUGADORES[0]) { // Hugo elige
+    if (jugadorSeleccionando === JUGADORES[0]) { // Hugo
         fichaHugo = nombreFichaSeleccionada;
         fichaElegidaHugoImg.src = RUTA_FICHAS + fichaHugo;
-        jugadorSeleccionando = JUGADORES[1];
+        jugadorSeleccionando = JUGADORES[1]; // Pasa a Saúl
         instruccionSeleccionElem.textContent = `Elige tu ficha, ${jugadorSeleccionando}`;
-        mostrarFichasParaSeleccion(); // Actualiza visualización
+        mostrarFichasParaSeleccion(); // Actualizar para deshabilitar la de Hugo
         fichasElegidasContenedor.classList.remove('oculto');
-    } else { // Saúl elige
+    } else { // Saúl
         fichaSaul = nombreFichaSeleccionada;
         fichaElegidaSaulImg.src = RUTA_FICHAS + fichaSaul;
-        pantallaSeleccion.classList.add('oculto'); // Ocultar selección
-        iniciarJuego(); // Pasar al juego
+        // Ambos han elegido -> Iniciar juego
+        pantallaSeleccion.classList.add('oculto');
+        iniciarJuegoTablero(); // Llamar a la función que configura el tablero
     }
 }
 
-/** Inicia el proceso de selección de fichas */
 function iniciarProcesoSeleccion() {
-    console.log("--- Iniciando Proceso Selección ---");
-    // Resetear TODO el estado relacionado con una partida
+    console.log("Iniciando Proceso Selección");
+    // Resetear selección y estado de juego
     fichaHugo = null;
     fichaSaul = null;
     juegoActivo = false;
-    procesandoClick = false;
-    estadoTablero = [null, null, null, null, null, null, null, null, null];
-    jugadorActual = null; // Nadie tiene turno aún
+    estadoTablero = Array(9).fill(null); // Resetear tablero lógico
+    jugadorActual = null;
 
     fichasElegidasContenedor.classList.add('oculto');
     fichaElegidaHugoImg.src = "";
     fichaElegidaSaulImg.src = "";
-    jugadorSeleccionando = JUGADORES[0]; // Hugo empieza a elegir
+    jugadorSeleccionando = JUGADORES[0]; // Hugo empieza
 
     tituloSeleccionElem.textContent = `Hola Hugo y Saúl`;
     instruccionSeleccionElem.textContent = `Elige tu ficha, ${jugadorSeleccionando}`;
     mostrarFichasParaSeleccion();
 
-    // Gestionar visibilidad
+    // Mostrar/Ocultar pantallas
     pantallaInicial.classList.add('oculto');
     juegoContenedor.classList.add('oculto');
     pantallaSeleccion.classList.remove('oculto');
     botonReiniciar.classList.add('oculto');
-    actualizarResaltadoFoto(); // Quitar resaltados
+    actualizarResaltadoFoto(); // Quitar resaltado fotos
 }
+
+// --- Funciones del Juego Principal (Basadas en el código que funcionaba) ---
 
 /** Actualiza la visualización del marcador (puntajes). */
 function actualizarMarcadorDisplay() {
@@ -114,224 +121,165 @@ function actualizarMarcadorDisplay() {
 
 /** Resalta la foto del jugador activo y quita el resaltado del otro. */
 function actualizarResaltadoFoto() {
-    // Si no hay jugador actual (inicio o fin), quitar ambos
-    if (!jugadorActual) {
+    if (!jugadorActual) { // Si no hay jugador (inicio/fin)
         fotoHugoElem.classList.remove('activa');
         fotoSaulElem.classList.remove('activa');
         return;
     }
-    // Resaltar el activo
-    if (jugadorActual === JUGADORES[0]) {
-        fotoHugoElem.classList.add('activa');
-        fotoSaulElem.classList.remove('activa');
-    } else {
-        fotoSaulElem.classList.add('activa');
-        fotoHugoElem.classList.remove('activa');
-    }
+    fotoHugoElem.classList.toggle('activa', jugadorActual === JUGADORES[0]);
+    fotoSaulElem.classList.toggle('activa', jugadorActual === JUGADORES[1]);
 }
 
-/** Inicia una nueva partida del juego (tablero) */
-function iniciarJuego() {
-    console.log("--- Iniciando Juego (Tablero) ---");
-    pantallaSeleccion.classList.add('oculto');
-    juegoContenedor.classList.remove('oculto');
-
-    estadoTablero = [null, null, null, null, null, null, null, null, null];
+/** Prepara e inicia una partida en el tablero (llamada DESPUÉS de selección) */
+function iniciarJuegoTablero() {
+    console.log("Iniciando Juego Tablero");
+    estadoTablero = Array(9).fill(null); // Asegurar reset tablero lógico
     juegoActivo = true;
-    procesandoClick = false; // Listo para el primer clic
 
-    // Elegir jugador inicial aleatorio
+    // Elegir jugador inicial aleatorio para ESTA partida
     const indiceAleatorio = Math.floor(Math.random() * JUGADORES.length);
     jugadorActual = JUGADORES[indiceAleatorio];
-    console.log(`Primer jugador: ${jugadorActual}`);
+    console.log(`Primer turno para: ${jugadorActual}`);
 
+    // Actualizar interfaz
+    juegoContenedor.classList.remove('oculto'); // Mostrar tablero
     botonReiniciar.classList.add('oculto');
     actualizarMarcadorDisplay();
-    actualizarResaltadoFoto();
-
+    actualizarResaltadoFoto(); // Resaltar foto del que empieza
     infoTurno.textContent = `¡Empieza ${jugadorActual}! Te toca.`;
 
-    // Preparar celdas: Limpiar y añadir listeners CUIDADOSAMENTE
+    // Preparar celdas: limpiar y añadir listeners
     celdas.forEach(celda => {
-        celda.innerHTML = ''; // Limpiar contenido visual
+        celda.innerHTML = ''; // Limpiar (quita imágenes previas)
         celda.classList.remove('ganadora'); // Quitar estilo ganador
 
-        // *** GESTIÓN DE LISTENERS CRÍTICA ***
-        // 1. Eliminar CUALQUIER listener de clic anterior explícitamente.
-        //    Es vital para evitar duplicados si algo salió mal antes.
-        celda.removeEventListener('click', manejarClickCelda);
-
-        // 2. Añadir el nuevo listener con { once: true }.
-        //    Esto asegura que UNA VEZ que esta celda se clickea y el handler
-        //    se ejecuta, este listener específico se auto-elimina.
-        //    No necesitamos quitarlo manualmente DENTRO de manejarClickCelda.
-        celda.addEventListener('click', manejarClickCelda, { once: true });
+        // Gestionar listeners CUIDADOSAMENTE
+        celda.removeEventListener('click', manejarClickCelda); // Siempre quitar el viejo
+        celda.addEventListener('click', manejarClickCelda, { once: true }); // Añadir nuevo con auto-eliminación
     });
-    console.log("Listeners de celdas añadidos con { once: true }.");
+    console.log("Listeners de celdas añadidos para la partida.");
 }
 
 /** Maneja el evento de clic en una celda del tablero */
 function manejarClickCelda(evento) {
-    console.log(`\n--- Click Detectado ---`);
-    console.log(`DEBUG: Inicio manejarClickCelda. juegoActivo=${juegoActivo}, procesandoClick=${procesandoClick}`);
-    // LOG INICIAL: Mostrar quién se supone que juega AHORA MISMO
-    console.log(`DEBUG: jugadorActual al entrar: ${jugadorActual}`);
-
-
-    // --- Validaciones Iniciales ---
+    console.log(`--- Click en Celda --- (Jugador actual ANTES: ${jugadorActual})`);
+    // Validaciones básicas
     if (!juegoActivo) {
-        console.warn("DEBUG: Clic ignorado (juego inactivo)");
-        return; // Salir si el juego no está activo
+        console.warn("Clic ignorado: juego inactivo.");
+        return;
     }
-    if (procesandoClick) {
-        console.warn("DEBUG: Clic ignorado (ya se está procesando otro)");
-        return; // Salir si ya hay un clic en proceso
-    }
-
-    procesandoClick = true; // Bloquear clics subsiguientes
-    console.log("DEBUG: procesandoClick = true");
 
     let celdaClickeada = evento.target;
-    // Asegurar que trabajamos con el DIV.celda
-    if (celdaClickeada.tagName !== 'DIV' && celdaClickeada.parentElement.classList.contains('celda')) {
-        celdaClickeada = celdaClickeada.parentElement;
+    // Asegurar que es el DIV.celda
+    if (!celdaClickeada.classList.contains('celda')) {
+        celdaClickeada = celdaClickeada.closest('.celda'); // Intentar subir al padre .celda
     }
-    // Verificar que sea una celda válida con índice
-    if (!celdaClickeada.classList.contains('celda') || !celdaClickeada.hasAttribute('data-index')) {
-        console.error("DEBUG: Clic en elemento inválido.");
-        procesandoClick = false; // Desbloquear
-        console.log("DEBUG: procesandoClick = false (elemento inválido)");
-        // Re-añadir listener por si {once:true} se quitó prematuramente? No debería pasar.
-        return;
+    // Si sigue sin ser una celda válida, salir
+    if (!celdaClickeada || !celdaClickeada.hasAttribute('data-index')) {
+         console.error("Clic en elemento no válido dentro del tablero.");
+         return;
     }
 
     const indiceCelda = parseInt(celdaClickeada.getAttribute('data-index'));
 
-    // Verificar si la celda YA está ocupada LÓGICAMENTE
-    // Esto es crucial porque {once: true} solo evita que el *mismo listener* se dispare dos veces.
-    // No previene que otro evento (si hubiera un bug) intente marcar una celda ya marcada.
+    // Comprobación lógica: ¿Está ya ocupada en nuestro array?
     if (estadoTablero[indiceCelda] !== null) {
-        console.warn(`DEBUG: Celda ${indiceCelda} YA OCUPADA por ${estadoTablero[indiceCelda]}. Ignorando clic.`);
-        procesandoClick = false; // Desbloquear
-        console.log("DEBUG: procesandoClick = false (celda lógicamente ocupada)");
-        // El listener {once: true} ya debería haberse ido, no necesitamos re-añadir/quitar.
+        console.warn(`Clic ignorado: Celda ${indiceCelda} ya ocupada por ${estadoTablero[indiceCelda]}.`);
+        // Nota: El listener {once: true} debería haber prevenido esto, pero es una buena doble comprobación.
         return;
     }
 
-    // --- Procesamiento del Movimiento Válido ---
-    console.log(`DEBUG: Procesando movimiento válido en celda ${indiceCelda} por ${jugadorActual}`);
+    // --- Procesar movimiento ---
     const jugadorQueJugo = jugadorActual; // Guardar quién hizo este movimiento
+    console.log(`Movimiento válido en celda ${indiceCelda} por ${jugadorQueJugo}`);
 
-    // 1. Actualizar estado interno LÓGICO
+    // 1. Actualizar estado lógico
     estadoTablero[indiceCelda] = jugadorQueJugo;
-    console.log(`DEBUG: estadoTablero[${indiceCelda}] = ${jugadorQueJugo}`);
 
-    // 2. Actualizar estado VISUAL (colocar ficha)
-    const fichaAColocar = jugadorQueJugo === JUGADORES[0] ? fichaHugo : fichaSaul;
-    celdaClickeada.innerHTML = `<img src="${RUTA_FICHAS}${fichaAColocar}" alt="Ficha ${jugadorQueJugo}" class="ficha-en-tablero">`;
-    console.log(`DEBUG: Ficha ${fichaAColocar} colocada visualmente.`);
+    // 2. Actualizar estado visual (poner imagen)
+    const fichaSrc = RUTA_FICHAS + (jugadorQueJugo === JUGADORES[0] ? fichaHugo : fichaSaul);
+    celdaClickeada.innerHTML = `<img src="${fichaSrc}" alt="Ficha ${jugadorQueJugo}" class="ficha-en-tablero">`;
 
-    // 3. Comprobar Victoria
-    const huboVictoria = comprobarVictoria(jugadorQueJugo);
-    console.log(`DEBUG: Resultado comprobarVictoria(${jugadorQueJugo}): ${huboVictoria}`);
-    if (huboVictoria) {
-        finalizarJuego(false); // 'false' significa que no es empate
-        console.log("DEBUG: Saliendo de manejarClickCelda por victoria.");
-        // finalizarJuego ya gestiona juegoActivo y procesandoClick
-        return; // ¡Importante salir aquí!
+    // 3. Comprobar victoria
+    if (comprobarVictoria(jugadorQueJugo)) {
+        console.log(`VICTORIA de ${jugadorQueJugo}`);
+        finalizarJuego(false); // Termina el juego (no es empate)
+        return; // Salir, no cambiar turno
     }
 
-    // 4. Comprobar Empate (solo si no hubo victoria)
-    const huboEmpate = comprobarEmpate();
-    console.log(`DEBUG: Resultado comprobarEmpate(): ${huboEmpate}`);
-    if (huboEmpate) {
-        finalizarJuego(true); // 'true' significa que sí es empate
-        console.log("DEBUG: Saliendo de manejarClickCelda por empate.");
-        // finalizarJuego ya gestiona juegoActivo y procesandoClick
-        return; // ¡Importante salir aquí!
+    // 4. Comprobar empate (si no hubo victoria)
+    if (comprobarEmpate()) {
+        console.log("EMPATE");
+        finalizarJuego(true); // Termina el juego (sí es empate)
+        return; // Salir, no cambiar turno
     }
 
-    // 5. Si NO hubo victoria NI empate -> CAMBIAR TURNO
-    console.log("DEBUG: No hubo fin de juego, llamando a cambiarTurno...");
-    cambiarTurno(); // Actualiza jugadorActual para el SIGUIENTE clic
-
-    // 6. Desbloquear para el próximo clic
-    procesandoClick = false;
-    console.log("DEBUG: procesandoClick = false (fin normal del manejo)");
-    console.log(`--- Fin Manejo Clic (Turno ahora de: ${jugadorActual}) ---`);
+    // 5. Si no hay fin de juego -> Cambiar turno
+    console.log("No hay fin de juego, cambiando turno...");
+    cambiarTurno();
+    console.log(`Turno cambiado a: ${jugadorActual}`);
 }
 
-/** Comprueba si el jugador dado ha ganado */
+/** Comprueba si el jugador (nombre) ha ganado */
 function comprobarVictoria(jugador) {
-    for (const combinacion of COMBINACIONES_GANADORAS) {
-        const [a, b, c] = combinacion;
-        if (estadoTablero[a] === jugador && estadoTablero[b] === jugador && estadoTablero[c] === jugador) {
-             resaltarCeldasGanadoras(combinacion);
-            return true;
+    return COMBINACIONES_GANADORAS.some(combinacion => {
+        // every comprueba si todos los índices de la combinación pertenecen al jugador
+        const victoria = combinacion.every(index => estadoTablero[index] === jugador);
+        if (victoria) {
+            resaltarCeldasGanadoras(combinacion); // Resaltar si hay victoria
         }
-    }
-    return false;
+        return victoria;
+    });
 }
 
-/** Comprueba si hay empate (ninguna celda es null) */
+/** Comprueba si hay empate (tablero lleno) */
 function comprobarEmpate() {
-    // every(callback) devuelve true si callback devuelve true para TODOS los elementos
+    // every comprueba si ninguna celda es null
     return estadoTablero.every(celda => celda !== null);
 }
 
-/** Cambia el turno al otro jugador, actualiza mensaje y resalta foto */
+/** Cambia el turno al otro jugador y actualiza la interfaz */
 function cambiarTurno() {
-    console.log(`DEBUG: --- Entrando a cambiarTurno ---`);
-    console.log(`DEBUG: jugadorActual ANTES: ${jugadorActual}`);
+    // Cambiar jugador lógicamente
     jugadorActual = (jugadorActual === JUGADORES[0]) ? JUGADORES[1] : JUGADORES[0];
-    console.log(`DEBUG: jugadorActual DESPUÉS: ${jugadorActual}`);
+    // Actualizar interfaz
     infoTurno.textContent = `Turno de: ${jugadorActual}`;
     actualizarResaltadoFoto();
-    console.log(`DEBUG: --- Saliendo de cambiarTurno ---`);
 }
 
 /** Finaliza la partida actual */
 function finalizarJuego(esEmpate) {
-    console.log(`DEBUG: --- Entrando a finalizarJuego (esEmpate: ${esEmpate}) ---`);
-    juegoActivo = false;
-    procesandoClick = false; // Asegurar desbloqueo por si acaso
-    console.log(`DEBUG: juegoActivo = false, procesandoClick = false`);
+    console.log(`Finalizando juego. Empate: ${esEmpate}`);
+    juegoActivo = false; // Marcar juego como inactivo
 
-    // Quitar listeners explícitamente (aunque {once: true} ayuda)
-    // Esto previene clics accidentales *después* de que el juego ha terminado.
+    // Quitar listeners restantes (por si acaso, aunque {once: true} debería haberlos quitado)
     celdas.forEach(celda => {
         celda.removeEventListener('click', manejarClickCelda);
-        // Opcional: resetear cursor
-        // celda.style.cursor = 'default';
     });
-    console.log(`DEBUG: Listeners de celdas eliminados en finalizarJuego.`);
 
-    actualizarResaltadoFoto(); // Quita resaltados
+    actualizarResaltadoFoto(); // Quitar resaltado fotos
 
     if (esEmpate) {
         infoTurno.textContent = "¡Vaya! Ha sido un empate.";
-        console.log("Juego finalizado: Empate.");
     } else {
-        // jugadorActual aquí ES el ganador porque cambiarTurno no se llamó
+        // jugadorActual aquí es el GANADOR
         infoTurno.textContent = `¡Felicidades ${jugadorActual}! ¡Has ganado! 🎉`;
-        console.log(`Juego finalizado: Ganador ${jugadorActual}.`);
+        // Actualizar puntaje
         if (jugadorActual === JUGADORES[0]) { puntajeHugo++; } else { puntajeSaul++; }
         actualizarMarcadorDisplay();
-        console.log(`Marcador actualizado: Hugo ${puntajeHugo} - Saúl ${puntajeSaul}`);
     }
-    botonReiniciar.classList.remove('oculto');
-    console.log(`DEBUG: --- Saliendo de finalizarJuego ---`);
+    botonReiniciar.classList.remove('oculto'); // Mostrar botón para volver a selección
 }
 
 /** Añade clase ganadora a las celdas */
 function resaltarCeldasGanadoras(combinacion) {
     combinacion.forEach(indice => {
         if(celdas[indice]) { celdas[indice].classList.add('ganadora'); }
-        else { console.error("Índice de celda fuera de rango:", indice); }
     });
 }
 
 // --- Event Listeners Iniciales ---
+// Ambos botones ahora inician el proceso de SELECCIÓN
 botonComenzar.addEventListener('click', iniciarProcesoSeleccion);
 botonReiniciar.addEventListener('click', iniciarProcesoSeleccion);
 
