@@ -21,7 +21,7 @@ const fotoSaulElem = document.getElementById('foto-saul');
 // --- Constantes y Variables del Juego ---
 const JUGADORES = ['Hugo', 'Saúl'];
 // IMPORTANTE: Define aquí los nombres EXACTOS de tus archivos de fichas
-const FICHAS_DISPONIBLES = ['X.png', 'O.png', 'P_logo.png', 'escudo_torremolinos.png'];
+const FICHAS_DISPONIBLES = ['X.png', 'O.png', 'pinar.png', 'torremolinos.png'];
 const RUTA_FICHAS = 'img/fichas/'; // Ruta a la carpeta de fichas
 
 let jugadorActual; // Quién tiene el turno en el juego
