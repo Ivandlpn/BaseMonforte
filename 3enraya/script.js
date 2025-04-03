@@ -5,9 +5,11 @@ const juegoContenedor = document.getElementById('juego-contenedor');
 const infoTurno = document.getElementById('info-turno');
 const celdas = document.querySelectorAll('.celda');
 const botonReiniciar = document.getElementById('boton-reiniciar');
-// ACTUALIZADAS las referencias para los puntajes en el nuevo marcador
 const puntajeHugoElem = document.getElementById('puntaje-hugo');
 const puntajeSaulElem = document.getElementById('puntaje-saul');
+// NUEVAS REFERENCIAS para las fotos
+const fotoHugoElem = document.getElementById('foto-hugo');
+const fotoSaulElem = document.getElementById('foto-saul');
 
 // --- Constantes y Variables del Juego ---
 const JUGADORES = ['Hugo', 'Saúl'];
@@ -27,12 +29,24 @@ let puntajeSaul = 0;
 // --- Funciones ---
 
 /**
- * Actualiza la visualización del marcador en el HTML (solo los números).
+ * Actualiza la visualización del marcador (puntajes).
  */
 function actualizarMarcadorDisplay() {
-    // Ahora solo actualizamos el contenido de los spans de puntaje
     puntajeHugoElem.textContent = puntajeHugo;
     puntajeSaulElem.textContent = puntajeSaul;
+}
+
+/**
+ * Resalta la foto del jugador activo y quita el resaltado del otro.
+ */
+function actualizarResaltadoFoto() {
+    if (jugadorActual === 'Hugo') {
+        fotoHugoElem.classList.add('activa');
+        fotoSaulElem.classList.remove('activa');
+    } else {
+        fotoSaulElem.classList.add('activa');
+        fotoHugoElem.classList.remove('activa');
+    }
 }
 
 /**
@@ -47,8 +61,10 @@ function iniciarJuego() {
     juegoContenedor.classList.remove('oculto');
     botonReiniciar.classList.add('oculto');
 
-    // Actualiza el display del marcador al iniciar (muestra 0-0 la primera vez)
+    // Actualiza el display del marcador al iniciar
     actualizarMarcadorDisplay();
+    // Resalta la foto del jugador que empieza
+    actualizarResaltadoFoto();
 
     const marcaInicial = jugadorActual === 'Hugo' ? MARCA_HUGO : MARCA_SAUL;
     infoTurno.textContent = `¡Empieza ${jugadorActual}! Te toca (${marcaInicial})`;
@@ -117,22 +133,30 @@ function comprobarEmpate() {
 }
 
 /**
- * Cambia el turno al otro jugador y actualiza el mensaje.
+ * Cambia el turno al otro jugador, actualiza el mensaje y resalta la foto.
  */
 function cambiarTurno() {
     jugadorActual = jugadorActual === JUGADORES[0] ? JUGADORES[1] : JUGADORES[0];
     const marcaSiguiente = jugadorActual === 'Hugo' ? MARCA_HUGO : MARCA_SAUL;
     infoTurno.textContent = `Turno de: ${jugadorActual} (${marcaSiguiente})`;
+    // Actualiza el resaltado de la foto para el nuevo turno
+    actualizarResaltadoFoto();
+    console.log(`Turno cambiado a: ${jugadorActual}`);
 }
 
 /**
- * Finaliza la partida actual, actualiza marcador si hay ganador, muestra resultado y botón reiniciar.
+ * Finaliza la partida actual, actualiza marcador, muestra resultado y botón reiniciar.
+ * También quita el resaltado de las fotos al finalizar.
  */
 function finalizarJuego(esEmpate) {
     juegoActivo = false;
     celdas.forEach(celda => {
         celda.removeEventListener('click', manejarClickCelda);
     });
+
+    // Quitar resaltado de ambas fotos al final del juego
+    fotoHugoElem.classList.remove('activa');
+    fotoSaulElem.classList.remove('activa');
 
     if (esEmpate) {
         infoTurno.textContent = "¡Vaya! Ha sido un empate.";
@@ -145,7 +169,6 @@ function finalizarJuego(esEmpate) {
         } else {
             puntajeSaul++;
         }
-        // ACTUALIZAR DISPLAY DEL MARCADOR (ahora solo los números)
         actualizarMarcadorDisplay();
         console.log(`Marcador actualizado: Hugo ${puntajeHugo} - Saúl ${puntajeSaul}`);
     }
