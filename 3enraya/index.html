@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3 en Raya</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Opcional: Fuente divertida (descomentar si se usa) -->
+    <!-- Opcional: Fuente divertida (descomentar si se usa y se enlaza en CSS) -->
     <!-- <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet"> -->
 </head>
 <body>
@@ -49,7 +49,7 @@
 
         <!-- Botón Siguiente Ronda -->
         <button id="boton-reiniciar" class="oculto">🔄 Siguiente Ronda 🔄</button>
-        <!-- Botón Nuevo Juego Completo (se usa desde pantalla ganador) -->
+        <!-- Botón Nuevo Juego Completo (controlado por JS) -->
         <button id="boton-nuevo-juego" class="oculto">🌟 Nuevo Juego Completo 🌟</button>
     </div>
 
@@ -85,14 +85,13 @@
         <div class="ejercicio-contenido">
             <h2>¡Pausa Activa! 🤸‍♀️💨</h2>
             <p id="nombre-ejercicio">¡A moverse!</p>
-            <div id="contador-ejercicio" class="contador">10</div>
+            <div id="contador-ejercicio" class="contador">15</div> <!-- O 10 si prefieres -->
         </div>
     </div>
 
-
-    <!-- Scripts -->
-    <script src="preguntas.js"></script> <!-- Carga las 150 preguntas -->
-    <script src="ejercicios.js"></script> <!-- Carga los 50 ejercicios -->
-    <script src="script.js"></script>    <!-- Carga la lógica principal -->
+    <!-- Scripts (IMPORTANTE EL ORDEN) -->
+    <script src="preguntas.js"></script> <!-- Carga las preguntas primero -->
+    <script src="ejercicios.js"></script> <!-- Carga los ejercicios después -->
+    <script src="script.js"></script>    <!-- Carga la lógica principal al final -->
 </body>
 </html>
