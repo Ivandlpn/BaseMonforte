@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3 en Raya</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Opcional: Fuente divertida (descomentar si se usa) -->
     <!-- <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet"> -->
 </head>
 <body>
@@ -15,21 +16,25 @@
 
     <!-- Contenedor del Juego (inicialmente oculto) -->
     <div id="juego-contenedor" class="oculto">
+        <!-- Marcador -->
         <div id="marcador">
              <div class="marcador-jugador">
                 <img src="img/jugadores/hugo.png" alt="Foto Hugo" class="foto-jugador" id="foto-hugo">
                 <span class="nombre-jugador">HUGO</span>
-                <span class="puntaje-jugador" id="puntaje-hugo">0</span>
+                <span class="puntaje-jugador" id="puntaje-hugo" data-last-score="0">0</span>
             </div>
             <span class="marcador-separador">:</span>
             <div class="marcador-jugador">
                 <img src="img/jugadores/saul.png" alt="Foto Saúl" class="foto-jugador" id="foto-saul">
                 <span class="nombre-jugador">SAÚL</span>
-                <span class="puntaje-jugador" id="puntaje-saul">0</span>
+                <span class="puntaje-jugador" id="puntaje-saul" data-last-score="0">0</span>
             </div>
         </div>
 
+        <!-- Info Turno/Resultado -->
         <p id="info-turno">Turno de:</p>
+
+        <!-- Tablero -->
         <div id="tablero">
             <div class="celda" data-index="0"></div>
             <div class="celda" data-index="1"></div>
@@ -41,13 +46,16 @@
             <div class="celda" data-index="7"></div>
             <div class="celda" data-index="8"></div>
         </div>
+
+        <!-- Botón Siguiente Ronda -->
         <button id="boton-reiniciar" class="oculto">🔄 Siguiente Ronda 🔄</button>
+        <!-- Botón Nuevo Juego Completo (se usa desde pantalla ganador) -->
         <button id="boton-nuevo-juego" class="oculto">🌟 Nuevo Juego Completo 🌟</button>
     </div>
 
     <!-- PANTALLA: Ganador del Juego -->
     <div id="pantalla-ganador" class="oculto">
-        <div class="confeti-contenedor"></div>
+        <div class="confeti-contenedor"></div> <!-- Para efectos visuales -->
         <h2 id="texto-ganador">¡EL GANADOR ES...!</h2>
         <img src="" alt="Foto del Ganador" id="foto-ganador" class="foto-ganador">
         <p id="nombre-ganador" class="nombre-ganador"></p>
@@ -63,6 +71,7 @@
             <h3 id="titulo-pregunta">¡Pregunta para ganar el punto!</h3>
             <p id="texto-pregunta">Aquí va la pregunta...</p>
             <div id="opciones-pregunta" class="opciones-quiz">
+                <!-- Botones se generan dinámicamente -->
                 <button class="opcion-btn" data-index="0">Opción A</button>
                 <button class="opcion-btn" data-index="1">Opción B</button>
                 <button class="opcion-btn" data-index="2">Opción C</button>
@@ -71,7 +80,7 @@
         </div>
     </div>
 
-    <!-- NUEVA PANTALLA: Ejercicio Pausa Activa (inicialmente oculta) -->
+    <!-- PANTALLA: Ejercicio Pausa Activa -->
     <div id="pantalla-ejercicio" class="oculto">
         <div class="ejercicio-contenido">
             <h2>¡Pausa Activa! 🤸‍♀️💨</h2>
@@ -82,8 +91,8 @@
 
 
     <!-- Scripts -->
-    <script src="preguntas.js"></script> <!-- Carga las preguntas -->
-    <script src="ejercicios.js"></script> <!-- Carga los ejercicios -->
-    <script src="script.js"></script>    <!-- Carga la lógica del juego -->
+    <script src="preguntas.js"></script> <!-- Carga las 150 preguntas -->
+    <script src="ejercicios.js"></script> <!-- Carga los 50 ejercicios -->
+    <script src="script.js"></script>    <!-- Carga la lógica principal -->
 </body>
 </html>
