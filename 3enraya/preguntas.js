@@ -1269,7 +1269,418 @@ const preguntasQuiz = [
         pregunta: "Si encuentras una cartera perdida en la calle en Málaga, ¿dónde la podrías llevar?",
         opciones: ["A una tienda de ropa", "A la oficina de objetos perdidos de la Policía Local", "A la estación de autobuses"],
         respuestaCorrecta: 1 // Policía Local (Objetos Perdidos) - Cercana: Estación de autobuses (a veces tienen), Lejana: Tienda
+    },
+    // --- Bloque Adicional: Preguntas 231-310 ---
+
+    // === Categoría 3: Libros, Arte y Música (Más allá de lo básico) (231-250) ===
+    {
+        pregunta: "¿Qué famoso museo se encuentra en París y alberga la Mona Lisa?",
+        opciones: ["El Prado (Madrid)", "El Louvre", "El British Museum (Londres)"],
+        respuestaCorrecta: 1 // Louvre
+    },
+    {
+        pregunta: "En música, ¿qué significa 'forte' (como indicación, no el instrumento)?",
+        opciones: ["Tocar muy rápido", "Tocar suavemente", "Tocar fuerte"],
+        respuestaCorrecta: 2 // Fuerte
+    },
+    {
+        pregunta: "Verdadero o Falso: Los cómics de superhéroes como Spider-Man o Batman son originarios de Japón.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Son principalmente de EE.UU. (Manga es el estilo japonés).
+    },
+    {
+        pregunta: "¿Qué instrumento musical grande tiene muchas cuerdas y se toca sentado usando pedales?",
+        opciones: ["Violonchelo", "Arpa", "Contrabajo"],
+        respuestaCorrecta: 1 // Arpa
+    },
+    {
+        pregunta: "Un cuadro que representa objetos como frutas, flores o cacharros se llama:",
+        opciones: ["Retrato", "Bodegón (o Naturaleza muerta)", "Paisaje"],
+        respuestaCorrecta: 1 // Bodegón
+    },
+    {
+        pregunta: "¿Qué escritor español creó al personaje 'Capitán Alatriste'?",
+        opciones: ["Carlos Ruiz Zafón", "Arturo Pérez-Reverte", "Javier Sierra"],
+        respuestaCorrecta: 1 // Pérez-Reverte
+    },
+    {
+        pregunta: "Verdadero o Falso: La 'Sinfonía nº 5' con el famoso 'ta-ta-ta-TAAAN' fue compuesta por Mozart.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Fue Beethoven.
+    },
+    {
+        pregunta: "¿Qué tipo de arte utiliza arcilla o barro que luego se cuece en un horno?",
+        opciones: ["Escultura en madera", "Cerámica", "Pintura al óleo"],
+        respuestaCorrecta: 1 // Cerámica
+    },
+    {
+        pregunta: "En un libro, la lista de capítulos al principio se llama:",
+        opciones: ["Índice", "Epílogo", "Prólogo"],
+        respuestaCorrecta: 0 // Índice
+    },
+    {
+        pregunta: "La guitarra eléctrica necesita conectarse a un... para sonar fuerte.",
+        opciones: ["Micrófono", "Altavoz", "Amplificador"],
+        respuestaCorrecta: 2 // Amplificador
+    },
+     {
+        pregunta: "¿Quién escribió la serie de libros 'Las Crónicas de Narnia'?",
+        opciones: ["J.R.R. Tolkien", "C.S. Lewis", "J.K. Rowling"],
+        respuestaCorrecta: 1 // C.S. Lewis
+    },
+    {
+        pregunta: "El estilo de pintura que usa pequeños puntos de color para formar una imagen se llama:",
+        opciones: ["Cubismo", "Puntillismo", "Surrealismo"],
+        respuestaCorrecta: 1 // Puntillismo
+    },
+    {
+        pregunta: "Verdadero o Falso: El 'tempo' en música se refiere a lo rápido o lento que es.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+     {
+        pregunta: "¿Qué instrumento de viento metal tiene varas que se deslizan para cambiar las notas?",
+        opciones: ["Trompeta", "Tuba", "Trombón"],
+        respuestaCorrecta: 2 // Trombón
+    },
+    {
+        pregunta: "El arte de crear figuras tridimensionales tallando piedra o madera se llama:",
+        opciones: ["Pintura", "Escultura", "Grabado"],
+        respuestaCorrecta: 1 // Escultura
+    },
+    {
+        pregunta: "El libro 'El Principito' fue escrito por Antoine de...",
+        opciones: ["Saint-Exupéry", "Verne", "Dumas"],
+        respuestaCorrecta: 0 // Saint-Exupéry
+    },
+    {
+        pregunta: "Verdadero o Falso: Un 'acorde' en música es una sola nota tocada muy fuerte.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Es un conjunto de notas que suenan a la vez.
+    },
+     {
+        pregunta: "¿Qué famoso artista español es conocido por pintar relojes blandos y paisajes extraños?",
+        opciones: ["Miró", "Dalí", "Goya"],
+        respuestaCorrecta: 1 // Dalí
+    },
+    {
+        pregunta: "La familia de instrumentos que incluye el tambor, los platillos y el xilófono se llama:",
+        opciones: ["Cuerda", "Viento", "Percusión"],
+        respuestaCorrecta: 2 // Percusión
+    },
+    {
+        pregunta: "Verdadero o Falso: La 'acuarela' es un tipo de pintura que se mezcla con aceite.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Se mezcla con agua.
+    },
+
+    // === Categoría 4: Tecnología y Ciencia Divertida (251-270) ===
+    {
+        pregunta: "¿Qué significan las siglas 'GPS' que usamos para saber dónde estamos?",
+        opciones: ["Gran Posicionador Satelital", "Sistema de Posicionamiento Global", "Guía Precisa Siempre"],
+        respuestaCorrecta: 1 // Sistema de Posicionamiento Global
+    },
+    {
+        pregunta: "Verdadero o Falso: El sonido viaja más rápido que la luz.",
+        tipo: 'vf',
+        respuestaCorrecta: false // La luz es mucho más rápida.
+    },
+    {
+        pregunta: "¿Cómo se llama la capa de gases que rodea la Tierra y nos protege?",
+        opciones: ["Hidrosfera", "Atmósfera", "Litosfera"],
+        respuestaCorrecta: 1 // Atmósfera
+    },
+    {
+        pregunta: "La energía que se obtiene del sol se llama energía...",
+        opciones: ["Solar", "Eólica", "Geotérmica"],
+        respuestaCorrecta: 0 // Solar
+    },
+    {
+        pregunta: "¿Qué parte de la célula contiene la información genética (ADN)?",
+        opciones: ["Membrana", "Citoplasma", "Núcleo"],
+        respuestaCorrecta: 2 // Núcleo
+    },
+    {
+        pregunta: "Verdadero o Falso: Los imanes atraen objetos de plástico.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Atraen metales ferromagnéticos.
+    },
+     {
+        pregunta: "Un robot que está diseñado para parecerse y actuar como un humano se llama:",
+        opciones: ["Cyborg", "Androide", "Transformer"],
+        respuestaCorrecta: 1 // Androide
+    },
+    {
+        pregunta: "¿Qué invento permite comunicarnos con personas al otro lado del mundo casi instantáneamente?",
+        opciones: ["El telégrafo", "Internet", "La paloma mensajera"],
+        respuestaCorrecta: 1 // Internet
+    },
+     {
+        pregunta: "La fuerza que hace que un globo frotado se pegue a la pared es la electricidad...",
+        opciones: ["Corriente", "Estática", "Magnética"],
+        respuestaCorrecta: 1 // Estática
+    },
+    {
+        pregunta: "Verdadero o Falso: Todos los planetas de nuestro sistema solar tienen lunas.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Mercurio y Venus no tienen.
+    },
+     {
+        pregunta: "¿Cómo se llama el proceso de crear objetos capa por capa usando un diseño digital?",
+        opciones: ["Fotocopia", "Impresión 3D", "Escaneo"],
+        respuestaCorrecta: 1 // Impresión 3D
+    },
+    {
+        pregunta: "El 'combustible' principal que usan nuestras células para obtener energía viene de...",
+        opciones: ["El aire", "Los alimentos (glucosa)", "El agua"],
+        respuestaCorrecta: 1 // Los alimentos (glucosa)
+    },
+    {
+        pregunta: "¿Qué es un 'algoritmo' en informática?",
+        opciones: ["Un virus peligroso", "Un conjunto de instrucciones para resolver un problema", "Un tipo de videojuego"],
+        respuestaCorrecta: 1 // Un conjunto de instrucciones
+    },
+    {
+        pregunta: "Verdadero o Falso: La lava de un volcán es roca sólida muy caliente.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Es roca derretida (líquida).
+    },
+    {
+        pregunta: "¿Qué tipo de energía usamos al encender una linterna con pilas?",
+        opciones: ["Energía solar", "Energía química (de las pilas)", "Energía nuclear"],
+        respuestaCorrecta: 1 // Energía química
+    },
+    {
+        pregunta: "El sistema que controla nuestros pensamientos, movimientos y sentidos es el sistema...",
+        opciones: ["Digestivo", "Nervioso", "Respiratorio"],
+        respuestaCorrecta: 1 // Nervioso
+    },
+    {
+        pregunta: "Verdadero o Falso: Los ordenadores solo entienden el lenguaje de ceros y unos (binario).",
+        tipo: 'vf',
+        respuestaCorrecta: true // A nivel fundamental.
+    },
+    {
+        pregunta: "¿Qué es la 'realidad virtual' (VR)?",
+        opciones: ["Ver películas muy antiguas", "Usar unas gafas especiales para sentir que estás en otro lugar", "Hablar con robots"],
+        respuestaCorrecta: 1 // Usar unas gafas especiales...
+    },
+    {
+        pregunta: "Verdadero o Falso: Los CDs y DVDs guardan información usando pequeños agujeros leídos por un láser.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "¿Qué significa 'ADN'?",
+        opciones: ["Agua De Naranja", "Las instrucciones que dicen cómo es un ser vivo", "Asociación Deportiva Nacional"],
+        respuestaCorrecta: 1 // Las instrucciones... (Ácido Desoxirribonucleico)
+    },
+
+    // === Categoría 5: Vida Cotidiana y Curiosidades (271-290) ===
+    {
+        pregunta: "¿Qué debes hacer antes de cruzar una calle, incluso si el semáforo está en verde para ti?",
+        opciones: ["Salir corriendo", "Mirar a ambos lados", "Cerrar los ojos"],
+        respuestaCorrecta: 1 // Mirar a ambos lados
+    },
+    {
+        pregunta: "¿Cuál es la moneda oficial que se usa en España?",
+        opciones: ["Dólar", "Euro", "Libra"],
+        respuestaCorrecta: 1 // Euro
+    },
+    {
+        pregunta: "Verdadero o Falso: Es bueno comer muchas frutas y verduras todos los días.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "¿Qué significa la señal de tráfico redonda con un borde rojo y el número 50 dentro?",
+        opciones: ["Que puedes ir a 50 km/h o más", "Límite máximo de velocidad: 50 km/h", "Que faltan 50 km para llegar"],
+        respuestaCorrecta: 1 // Límite máximo de velocidad: 50 km/h
+    },
+    {
+        pregunta: "Si quieres guardar comida fría para que no se estropee, la pones en...",
+        opciones: ["El horno", "La nevera (frigorífico)", "El armario"],
+        respuestaCorrecta: 1 // Nevera (frigorífico)
+    },
+    {
+        pregunta: "Verdadero o Falso: El agua es esencial para que nuestro cuerpo funcione bien.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "¿Qué es un 'carné de identidad' (DNI)?",
+        opciones: ["Un carné para ir a la biblioteca", "Un documento oficial que dice quién eres", "Una tarjeta para jugar"],
+        respuestaCorrecta: 1 // Un documento oficial que dice quién eres
+    },
+    {
+        pregunta: "¿Qué electrodoméstico se usa para lavar la ropa?",
+        opciones: ["El microondas", "La lavadora", "La tostadora"],
+        respuestaCorrecta: 1 // La lavadora
+    },
+    {
+        pregunta: "Verdadero o Falso: Debemos tirar la basura en las papeleras o contenedores, no al suelo.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "Para saber qué hora es, miras un...",
+        opciones: ["Termómetro", "Reloj", "Calendario"],
+        respuestaCorrecta: 1 // Reloj
+    },
+    {
+        pregunta: "La Torre de Pisa en Italia es famosa porque está...",
+        opciones: ["Hecha de oro", "Inclinada", "Bajo el agua"],
+        respuestaCorrecta: 1 // Inclinada
+    },
+    {
+        pregunta: "Verdadero o Falso: Es importante decir 'gracias' cuando alguien te ayuda o te da algo.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "¿Qué profesión tiene alguien que ayuda a la gente a aprender en el colegio?",
+        opciones: ["Médico", "Profesor/a (o Maestro/a)", "Cocinero/a"],
+        respuestaCorrecta: 1 // Profesor/a (o Maestro/a)
+    },
+    {
+        pregunta: "Si quieres medir cuánta leche cabe en una botella, usas la unidad llamada...",
+        opciones: ["Metro", "Kilo", "Litro"],
+        respuestaCorrecta: 2 // Litro
+    },
+    {
+        pregunta: "Verdadero o Falso: Antes de comer, es bueno lavarse las manos.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "¿Qué recipiente usamos normalmente para beber agua o zumo?",
+        opciones: ["Un plato", "Un vaso", "Un tenedor"],
+        respuestaCorrecta: 1 // Un vaso
+    },
+    {
+        pregunta: "Si compras algo que cuesta 3 euros y pagas con un billete de 5 euros, ¿cuánto te devuelven?",
+        opciones: ["1 euro", "2 euros", "3 euros"],
+        respuestaCorrecta: 1 // 2 euros
+    },
+    {
+        pregunta: "Verdadero o Falso: Es bueno dormir las horas suficientes cada noche para descansar.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "¿Qué usas para escribir en un papel?",
+        opciones: ["Una goma de borrar", "Un lápiz o bolígrafo", "Un sacapuntas"],
+        respuestaCorrecta: 1 // Un lápiz o bolígrafo
+    },
+    {
+        pregunta: "Cuando conoces a alguien por primera vez, es educado decir...",
+        opciones: ["Adiós", "Hola / Encantado/a", "¿Qué hora es?"],
+        respuestaCorrecta: 1 // Hola / Encantado/a
+    },
+
+    // === Categoría 6: Retos Mentales (Lógica, Adivinanzas) (291-310) ===
+    {
+        pregunta: "Tiene cuello pero no cabeza, tiene brazos pero no manos. ¿Qué es?",
+        opciones: ["Una persona", "Una camisa", "Una botella"],
+        respuestaCorrecta: 1 // Una camisa
+    },
+    {
+        pregunta: "Si en una pecera hay 10 peces y 2 se ahogan (¡imposible!), ¿cuántos peces quedan?",
+        opciones: ["8", "10", "0"],
+        respuestaCorrecta: 1 // 10 (Los peces no se ahogan en agua)
+    },
+    {
+        pregunta: "Verdadero o Falso: Un avión puede volar marcha atrás.",
+        tipo: 'vf',
+        respuestaCorrecta: false
+    },
+    {
+        pregunta: "¿Qué sube pero nunca baja?",
+        opciones: ["La temperatura", "Tu edad", "Un ascensor"],
+        respuestaCorrecta: 1 // Tu edad
+    },
+    {
+        pregunta: "Entras en una habitación oscura con una cerilla. Dentro hay una vela, una lámpara de aceite y una estufa de leña. ¿Qué enciendes primero?",
+        opciones: ["La vela", "La cerilla", "La estufa"],
+        respuestaCorrecta: 1 // La cerilla
+    },
+    {
+        pregunta: "Verdadero o Falso: Puedes estar en dos sitios diferentes exactamente al mismo tiempo.",
+        tipo: 'vf',
+        respuestaCorrecta: false
+    },
+    {
+        pregunta: "Si un tren eléctrico va hacia el norte, ¿hacia dónde va el humo?",
+        opciones: ["Hacia el sur", "Hacia el norte", "Los trenes eléctricos no echan humo"],
+        respuestaCorrecta: 2 // Los trenes eléctricos no echan humo
+    },
+    {
+        pregunta: "Dos padres y dos hijos van a pescar. Solo pescan 3 peces. ¿Cómo es posible que cada uno se lleve un pez entero?",
+        opciones: ["Uno se queda sin pez", "Son 3 personas: abuelo, padre e hijo", "Comparten los peces"],
+        respuestaCorrecta: 1 // Son 3 personas
+    },
+    {
+        pregunta: "¿Qué pesa más: ¿Un kilo de plumas o un kilo de piedras?",
+        opciones: ["Las piedras", "Pesan lo mismo", "Las plumas"],
+        respuestaCorrecta: 1 // Pesan lo mismo
+    },
+    {
+        pregunta: "¿Qué mes del año tiene 28 días (normalmente)?",
+        opciones: ["Mayo", "Febrero", "Septiembre"],
+        respuestaCorrecta: 1 // Febrero
+    },
+    {
+        pregunta: "Blanco por dentro, verde por fuera. Si quieres que te lo diga, espera. ¿Qué es?",
+        opciones: ["Un coco", "Una pera", "Un aguacate"],
+        respuestaCorrecta: 1 // Una pera
+    },
+    {
+        pregunta: "Si 5 gatos cazan 5 ratones en 5 minutos, ¿cuántos minutos tarda un gato en cazar un ratón?",
+        opciones: ["1 minuto", "5 minutos", "25 minutos"],
+        respuestaCorrecta: 1 // 5 minutos (cada gato va a su ritmo)
+    },
+    {
+        pregunta: "Verdadero o Falso: Puedes adivinar el futuro mirando una bola de cristal.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Es fantasía.
+    },
+    {
+        pregunta: "¿Qué tiene ciudades pero no casas, ríos pero no agua, y bosques pero no árboles?",
+        opciones: ["Un dibujo", "Un mapa", "Un videojuego"],
+        respuestaCorrecta: 1 // Un mapa
+    },
+    {
+        pregunta: "¿Cuántos animales de cada especie subió Moisés a su arca?",
+        opciones: ["Dos", "Uno", "Moisés no tuvo arca"],
+        respuestaCorrecta: 2 // Moisés no tuvo arca, fue Noé.
+    },
+    {
+        pregunta: "Oro parece, plata no es. ¿Qué es?",
+        opciones: ["Un tesoro", "El plátano", "Un espejo"],
+        respuestaCorrecta: 1 // El plátano
+    },
+    {
+        pregunta: "Verdadero o Falso: Si das una vuelta completa sobre ti mismo, terminas mirando en la misma dirección.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "Tiene ojos y no ve, tiene agua y no la bebe, tiene carne y no la come, tiene barba y no es hombre. ¿Qué es?",
+        opciones: ["Un pez", "Un coco", "Un pirata"],
+        respuestaCorrecta: 1 // Un coco
+    },
+    {
+        pregunta: "Si estás en una carrera y adelantas al que va último, ¿en qué posición te pones?",
+        opciones: ["El penúltimo", "El último", "Eso es imposible"],
+        respuestaCorrecta: 2 // Es imposible adelantar al último.
+    },
+    {
+        pregunta: "Verdadero o Falso: Puedes hacer un nudo con los ojos cerrados.",
+        tipo: 'vf',
+        respuestaCorrecta: true // ¡Inténtalo!
     }
+
+// --- Fin Bloque Adicional ---
 // --- Fin Preguntas Policía Local de Málaga ---
 // --- Fin Preguntas Policía Nacional ---
 // --- Fin Preguntas Juventud Torremolinos ---
