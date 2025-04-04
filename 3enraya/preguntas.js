@@ -260,6 +260,262 @@ const preguntasQuiz = [
         opciones: ["La vista", "El oído", "El olfato"],
         respuestaCorrecta: 1 // El oído - Cercana: La vista (vemos al músico), Lejana: El olfato
     }
+    // --- 50 Preguntas Adicionales para preguntas.js ---
+
+    // Ciencia y Naturaleza (Continuación)
+    {
+        pregunta: "¿Qué planeta de nuestro sistema solar es famoso por sus anillos?",
+        opciones: ["Júpiter", "Saturno", "Urano"],
+        respuestaCorrecta: 1 // Saturno - Cercana: Júpiter/Urano (también tienen, pero menos famosos), Lejana: Júpiter elegido
+    },
+    {
+        pregunta: "¿Cuál es el estado del agua cuando está congelada?",
+        opciones: ["Líquido", "Sólido", "Gaseoso"],
+        respuestaCorrecta: 1 // Sólido - Cercana: Líquido/Gaseoso (otros estados), Lejana: Gaseoso elegido
+    },
+    {
+        pregunta: "Las abejas producen una sustancia dulce llamada...",
+        opciones: ["Mermelada", "Miel", "Jarabe"],
+        respuestaCorrecta: 1 // Miel - Cercana: Jarabe, Lejana: Mermelada
+    },
+    {
+        pregunta: "¿Qué órgano del cuerpo humano bombea la sangre?",
+        opciones: ["Pulmón", "Corazón", "Cerebro"],
+        respuestaCorrecta: 1 // Corazón - Cercana: Pulmón (relacionado con respiración/oxígeno), Lejana: Cerebro
+    },
+    {
+        pregunta: "¿Por qué cambian de color algunos camaleones?",
+        opciones: ["Para jugar al escondite", "Para camuflarse o comunicarse", "Porque se manchan"],
+        respuestaCorrecta: 1 // Camuflaje/Comunicación - Cercana: Jugar (idea infantil), Lejana: Mancharse
+    },
+     {
+        pregunta: "Además de en los polos, ¿dónde encontramos grandes masas de hielo?",
+        opciones: ["En los desiertos", "En las altas montañas (glaciares)", "En el fondo del mar"],
+        respuestaCorrecta: 1 // Glaciares - Cercana: Fondo del mar (agua fría, pero no masa de hielo así), Lejana: Desiertos
+    },
+    {
+        pregunta: "¿Qué necesitan los coches (la mayoría) para moverse?",
+        opciones: ["Agua", "Gasolina o electricidad", "Zumo de naranja"],
+        respuestaCorrecta: 1 // Gasolina/Electricidad - Cercana: Agua (necesaria para refrigerar), Lejana: Zumo
+    },
+     {
+        pregunta: "¿Cuál de estos animales es un reptil?",
+        opciones: ["Rana", "Serpiente", "Delfín"],
+        respuestaCorrecta: 1 // Serpiente - Cercana: Rana (anfibio), Lejana: Delfín (mamífero)
+    },
+    {
+        pregunta: "El esqueleto humano está formado por...",
+        opciones: ["Músculos", "Huesos", "Piel"],
+        respuestaCorrecta: 1 // Huesos - Cercana: Músculos (trabajan juntos), Lejana: Piel
+    },
+    {
+        pregunta: "¿Qué astro nos da luz y calor durante el día?",
+        opciones: ["La Luna", "El Sol", "Marte"],
+        respuestaCorrecta: 1 // El Sol - Cercana: La Luna (luz nocturna, reflejada), Lejana: Marte (planeta)
+    },
+    // Geografía (Continuación)
+    {
+        pregunta: "¿En qué país se encuentra la famosa Torre Eiffel?",
+        opciones: ["Italia", "Francia", "Alemania"],
+        respuestaCorrecta: 1 // Francia - Cercana: Italia/Alemania (países europeos vecinos), Lejana: Alemania elegido
+    },
+    {
+        pregunta: "¿Cuál es la capital de Australia?",
+        opciones: ["Sídney", "Canberra", "Melbourne"],
+        respuestaCorrecta: 1 // Canberra - Cercana: Sídney/Melbourne (ciudades más conocidas), Lejana: Sídney elegido
+    },
+    {
+        pregunta: "Un conjunto de islas cercanas entre sí se llama...",
+        opciones: ["Península", "Archipiélago", "Continente"],
+        respuestaCorrecta: 1 // Archipiélago - Cercana: Península (casi isla), Lejana: Continente
+    },
+    {
+        pregunta: "¿Dónde viven los pingüinos emperador?",
+        opciones: ["En el desierto del Sahara", "En la Antártida", "En el Polo Norte"],
+        respuestaCorrecta: 1 // Antártida - Cercana: Polo Norte (también frío, pero viven osos polares), Lejana: Sahara
+    },
+    {
+        pregunta: "El desierto más grande y cálido del mundo es el...",
+        opciones: ["Gobi", "Sahara", "Atacama"],
+        respuestaCorrecta: 1 // Sahara - Cercana: Atacama/Gobi (otros desiertos famosos), Lejana: Gobi elegido
+    },
+    {
+        pregunta: "¿Qué país es conocido por tener forma de chile (ají)?",
+        opciones: ["México", "Chile", "Perú"],
+        respuestaCorrecta: 1 // Chile - Cercana: Perú/México (países americanos), Lejana: México elegido
+    },
+    // Historia y Cultura (Continuación)
+    {
+        pregunta: "¿Qué civilización antigua construyó Machu Picchu?",
+        opciones: ["Los Romanos", "Los Incas", "Los Egipcios"],
+        respuestaCorrecta: 1 // Incas - Cercana: Egipcios (otra gran civilización constructora), Lejana: Romanos
+    },
+    {
+        pregunta: "¿Quién fue el primer presidente de los Estados Unidos?",
+        opciones: ["Abraham Lincoln", "George Washington", "Donald Trump"],
+        respuestaCorrecta: 1 // George Washington - Cercana: Abraham Lincoln (otro presidente muy famoso), Lejana: Donald Trump (reciente)
+    },
+    {
+        pregunta: "¿Qué instrumento tocaba Mozart cuando era niño?",
+        opciones: ["La batería", "El violín y el piano", "La flauta"],
+        respuestaCorrecta: 1 // Violín y Piano - Cercana: Flauta (instrumento común), Lejana: Batería (anacrónica)
+    },
+    {
+        pregunta: "Los jeroglíficos eran un sistema de escritura usado por los antiguos...",
+        opciones: ["Griegos", "Egipcios", "Vikingos"],
+        respuestaCorrecta: 1 // Egipcios - Cercana: Griegos (usaban alfabeto), Lejana: Vikingos (usaban runas)
+    },
+    {
+        pregunta: "¿Qué es la 'pizza margarita'?",
+        opciones: ["Una pizza con muchas flores", "Una pizza con tomate, mozzarella y albahaca", "Una pizza en forma de estrella"],
+        respuestaCorrecta: 1 // Tomate, mozzarella, albahaca - Cercana: Forma de estrella (divertido pero incorrecto), Lejana: Flores
+    },
+    {
+        pregunta: "¿Qué se celebra el 31 de octubre en muchos países, con disfraces y dulces?",
+        opciones: ["Navidad", "Halloween", "Carnaval"],
+        respuestaCorrecta: 1 // Halloween - Cercana: Carnaval (también disfraces), Lejana: Navidad
+    },
+     {
+        pregunta: "La Gran Muralla fue construida en...",
+        opciones: ["Japón", "China", "India"],
+        respuestaCorrecta: 1 // China - Cercana: Japón/India (países asiáticos grandes), Lejana: Japón elegido
+    },
+    // Lengua (Continuación)
+    {
+        pregunta: "¿Qué tipo de palabra indica una acción?",
+        opciones: ["Adjetivo", "Verbo", "Sustantivo"],
+        respuestaCorrecta: 1 // Verbo - Cercana: Adjetivo/Sustantivo (otras categorías gramaticales), Lejana: Adjetivo elegido
+    },
+    {
+        pregunta: "El plural de 'lápiz' es...",
+        opciones: ["Lápizs", "Lápices", "Lápizes"],
+        respuestaCorrecta: 1 // Lápices - Cercana: Lápizes (error común), Lejana: Lápizs
+    },
+    {
+        pregunta: "Si algo es muy, muy grande, podemos decir que es...",
+        opciones: ["Diminuto", "Enorme", "Rápido"],
+        respuestaCorrecta: 1 // Enorme - Cercana: Diminuto (antónimo), Lejana: Rápido
+    },
+    {
+        pregunta: "¿Qué signo usamos al final de una pregunta?",
+        opciones: ["Un punto (.)", "Un signo de interrogación (?)", "Una coma (,)"],
+        respuestaCorrecta: 1 // Interrogación - Cercana: Punto (fin de frase normal), Lejana: Coma
+    },
+    {
+        pregunta: "¿Cuál de estas palabras es un nombre propio?",
+        opciones: ["Ciudad", "Río", "París"],
+        respuestaCorrecta: 2 // París - Cercana: Ciudad/Río (nombres comunes), Lejana: Ciudad elegido
+    },
+    // Matemáticas (Continuación)
+    {
+        pregunta: "¿Cuántos lados iguales tiene un cuadrado?",
+        opciones: ["Dos", "Cuatro", "Tres"],
+        respuestaCorrecta: 1 // Cuatro - Cercana: Dos/Tres (otras figuras), Lejana: Tres elegido
+    },
+    {
+        pregunta: "Si tienes 10 galletas y das 3 a un amigo, ¿cuántas te quedan?",
+        opciones: ["3", "7", "13"],
+        respuestaCorrecta: 1 // 7 - Cercana: 3 (las que das), Lejana: 13 (suma)
+    },
+    {
+        pregunta: "El resultado de 100 dividido entre 10 es...",
+        opciones: ["1000", "10", "90"],
+        respuestaCorrecta: 1 // 10 - Cercana: 90 (resta), Lejana: 1000 (multiplicación)
+    },
+    {
+        pregunta: "¿Qué forma tiene una pelota de fútbol?",
+        opciones: ["Cúbica", "Esférica", "Piramidal"],
+        respuestaCorrecta: 1 // Esférica - Cercana: Cúbica/Piramidal (otras formas 3D), Lejana: Cúbica elegido
+    },
+    {
+        pregunta: "¿Cuánto es 5 + 5 x 2?",
+        opciones: ["20", "15", "25"],
+        respuestaCorrecta: 1 // 15 (Primero 5x2=10, luego 5+10=15) - Cercana: 20 (Si se suma primero 5+5=10, luego 10x2=20), Lejana: 25
+    },
+    // Deportes (Continuación)
+    {
+        pregunta: "¿Qué se usa para golpear la pelota en el béisbol?",
+        opciones: ["Una raqueta", "Un bate", "Un palo de golf"],
+        respuestaCorrecta: 1 // Un bate - Cercana: Palo de golf, Lejana: Una raqueta
+    },
+    {
+        pregunta: "En natación, ¿qué estilo consiste en mover los brazos hacia atrás por fuera del agua?",
+        opciones: ["Braza", "Mariposa", "Espalda"],
+        respuestaCorrecta: 1 // Mariposa - Cercana: Espalda (también boca arriba), Lejana: Braza
+    },
+    {
+        pregunta: "¿Cuál de estos deportes se juega sobre hielo?",
+        opciones: ["Baloncesto", "Hockey sobre hielo", "Voleibol"],
+        respuestaCorrecta: 1 // Hockey sobre hielo - Cercana: Baloncesto/Voleibol (deportes de equipo), Lejana: Voleibol elegido
+    },
+    {
+        pregunta: "¿Qué gimnasta famosa es conocida por sus increíbles saltos y medallas olímpicas?",
+        opciones: ["Serena Williams", "Simone Biles", "Megan Rapinoe"],
+        respuestaCorrecta: 1 // Simone Biles - Cercana: Serena Williams (otra gran deportista), Lejana: Megan Rapinoe (futbolista)
+    },
+    {
+        pregunta: "Para ganar un partido de voleibol, necesitas ganar varios...",
+        opciones: ["Goles", "Sets", "Puntos de partido"],
+        respuestaCorrecta: 1 // Sets - Cercana: Puntos de partido (necesarios al final), Lejana: Goles
+    },
+    // Miscelánea y Curiosidades
+    {
+        pregunta: "¿De qué están hechas principalmente las nubes?",
+        opciones: ["Algodón de azúcar", "Pequeñas gotas de agua o cristales de hielo", "Humo"],
+        respuestaCorrecta: 1 // Gotas de agua/hielo - Cercana: Humo, Lejana: Algodón de azúcar
+    },
+    {
+        pregunta: "¿Qué animal dice 'mu'?",
+        opciones: ["El perro", "La vaca", "El gato"],
+        respuestaCorrecta: 1 // La vaca - Cercana: Gato (otro animal doméstico), Lejana: Perro
+    },
+    {
+        pregunta: "¿Para qué sirve principalmente un semáforo?",
+        opciones: ["Para decorar la calle", "Para controlar el tráfico de coches y peatones", "Para dar sombra"],
+        respuestaCorrecta: 1 // Controlar tráfico - Cercana: Decorar, Lejana: Dar sombra
+    },
+    {
+        pregunta: "¿Cuál es el ingrediente principal para hacer palomitas de maíz?",
+        opciones: ["Arroz", "Maíz especial", "Trigo"],
+        respuestaCorrecta: 1 // Maíz especial - Cercana: Trigo/Arroz (otros granos), Lejana: Arroz elegido
+    },
+    {
+        pregunta: "Si tienes mucho frío, ¿qué ropa te pones?",
+        opciones: ["Un bañador", "Un abrigo", "Unas gafas de sol"],
+        respuestaCorrecta: 1 // Un abrigo - Cercana: Gafas de sol (accesorio), Lejana: Bañador
+    },
+    {
+        pregunta: "Los colores primarios son rojo, azul y...",
+        opciones: ["Verde", "Amarillo", "Naranja"],
+        respuestaCorrecta: 1 // Amarillo - Cercana: Verde/Naranja (colores secundarios), Lejana: Verde elegido
+    },
+    {
+        pregunta: "¿Qué aparato usamos para ver las estrellas y planetas lejanos?",
+        opciones: ["Microscopio", "Telescopio", "Lupa"],
+        respuestaCorrecta: 1 // Telescopio - Cercana: Lupa (aumenta, pero no para tan lejos), Lejana: Microscopio (para cosas pequeñas)
+    },
+    {
+        pregunta: "¿Qué profesional nos ayuda cuando nos duele una muela?",
+        opciones: ["El panadero", "El dentista", "El bombero"],
+        respuestaCorrecta: 1 // El dentista - Cercana: Panadero/Bombero (profesiones), Lejana: Bombero elegido
+    },
+    {
+        pregunta: "El pan se hace principalmente con agua, levadura y...",
+        opciones: ["Azúcar", "Harina", "Salchichas"],
+        respuestaCorrecta: 1 // Harina - Cercana: Azúcar (a veces se añade poco), Lejana: Salchichas
+    },
+    {
+        pregunta: "¿Qué es un 'cómic'?",
+        opciones: ["Una película de risa", "Una historia contada con dibujos y texto", "Un tipo de caramelo"],
+        respuestaCorrecta: 1 // Historia con dibujos - Cercana: Película de risa (humor), Lejana: Caramelo
+    },
+    {
+        pregunta: "¿Qué animal construye diques en los ríos?",
+        opciones: ["El oso", "El castor", "El pato"],
+        respuestaCorrecta: 1 // El castor - Cercana: Pato (vive en agua), Lejana: Oso
+    }
+
+// --- Fin de las 50 preguntas adicionales ---
 ];
 
 // Puedes añadir más preguntas siguiendo la misma estructura.
