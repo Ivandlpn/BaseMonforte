@@ -30,6 +30,12 @@ html, body {
     0%, 100% { box-shadow: 0 8px 20px rgba(255, 235, 59, 0.4); transform: scale(1); }
     50% { box-shadow: 0 8px 35px rgba(255, 167, 38, 0.7); transform: scale(1.03); }
 }
+/* Botón abrir mensaje en pantalla inicial */
+.boton-mensaje-abrir {
+    padding: 12px 25px; font-size: clamp(1rem, 4vw, 1.3rem); margin-top: 20px; background-color: #9b59b6; color: white; border: none; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); transition: transform 0.2s ease, background-color 0.3s ease; font-weight: bold;
+}
+.boton-mensaje-abrir:hover { background-color: #8e44ad; transform: translateY(-2px); }
+
 
 /* === CONTENEDOR DEL JUEGO === */
 #juego-contenedor {
@@ -45,7 +51,8 @@ html, body {
 .foto-jugador.activa { border-color: #ffeb3b; transform: scale(1.15) rotate(3deg); box-shadow: 0 0 20px rgba(255, 235, 59, 0.8); }
 .nombre-jugador { font-size: clamp(0.9rem, 2.5vw, 1.1rem); font-weight: bold; color: #eee; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.7); }
 .puntaje-jugador { font-family: 'Courier New', Courier, monospace; font-size: clamp(2.8rem, 10vw, 4rem); font-weight: bold; color: #ffeb3b; line-height: 1; background-color: #222; padding: 5px 12px; border-radius: 8px; min-width: 1.6em; text-align: center; text-shadow: 0 0 8px rgba(255, 235, 59, 0.7); transition: transform 0.3s ease; }
-.puntaje-jugador.actualizado { transform: scale(1.2); }
+.puntaje-jugador.actualizado { animation: puntajeActualizadoAnim 0.3s ease-out; }
+@keyframes puntajeActualizadoAnim { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
 .marcador-separador { font-size: clamp(2.5rem, 8vw, 3.5rem); font-weight: bold; color: #aaa; line-height: 1; padding-bottom: 5px; }
 
 /* === INFO TURNO === */
@@ -97,7 +104,6 @@ html, body {
 #titulo-pregunta { font-size: clamp(1.3rem, 5.5vw, 1.8rem); color: #ffeb3b; margin-bottom: 25px; text-shadow: 1px 1px 3px rgba(0,0,0,0.6); }
 #texto-pregunta { font-size: clamp(1.2rem, 5vw, 1.6rem); color: #fff; margin-bottom: 35px; line-height: 1.6; }
 .opciones-quiz { display: flex; flex-direction: column; gap: 18px; margin-bottom: 30px; }
-/* Estilo base para TODOS los botones de opción (generados por JS) */
 .opcion-btn { padding: 15px 25px; font-size: clamp(1.1rem, 4.5vw, 1.4rem); background-color: #fafafa; color: #555; border: 3px solid #d1c4e9; border-radius: 15px; cursor: pointer; transition: all 0.2s ease; font-weight: bold; width: 100%; }
 .opcion-btn:hover { background-color: #f5f5f5; border-color: #b39ddb; transform: scale(1.03); }
 .opcion-btn:active { transform: scale(0.97); }
@@ -118,3 +124,24 @@ html, body {
 #nombre-ejercicio { font-size: clamp(1.3rem, 6vw, 1.8rem); color: #2c3e50; margin-bottom: 30px; font-weight: bold; }
 .contador { font-size: clamp(4rem, 20vw, 7rem); font-weight: bold; color: #e74c3c; line-height: 1; padding: 10px; background-color: #ecf0f1; border-radius: 50%; width: clamp(100px, 30vw, 150px); height: clamp(100px, 30vw, 150px); display: flex; justify-content: center; align-items: center; margin: 0 auto; border: 5px solid #c0392b; box-shadow: 0 5px 10px rgba(0,0,0,0.2); animation: contadorLatido 1s infinite ease-in-out; }
 @keyframes contadorLatido { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+/* === MODAL DE MENSAJE === */
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center; z-index: 110; padding: 15px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease-in-out; }
+.modal:not(.oculto) { opacity: 1; pointer-events: auto; }
+.modal-contenido { background: linear-gradient(145deg, #e0f2f7, #b3e5fc); padding: 30px 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); width: 90%; max-width: 500px; position: relative; color: #333; animation: aparecerModal 0.4s ease-out forwards; opacity: 0; transform: scale(0.95); }
+.modal:not(.oculto) .modal-contenido { opacity: 1; transform: scale(1); }
+@keyframes aparecerModal { from { opacity: 0; transform: scale(0.95) translateY(-10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.modal-cerrar-btn { position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 2.5rem; color: #aaa; cursor: pointer; line-height: 1; padding: 0; transition: color 0.2s ease, transform 0.2s ease; }
+.modal-cerrar-btn:hover { color: #e74c3c; transform: rotate(90deg); }
+.modal-contenido h3 { font-size: clamp(1.4rem, 5vw, 1.8rem); color: #2980b9; margin-bottom: 25px; text-align: center; }
+#form-mensaje .form-grupo { margin-bottom: 20px; text-align: left; }
+#form-mensaje label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
+#form-mensaje select, #form-mensaje textarea { width: 100%; padding: 12px 15px; border: 2px solid #bdc3c7; border-radius: 8px; font-size: clamp(1rem, 4vw, 1.2rem); font-family: inherit; transition: border-color 0.3s ease; }
+#form-mensaje select:focus, #form-mensaje textarea:focus { border-color: #3498db; outline: none; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); }
+#form-mensaje textarea { resize: vertical; min-height: 100px; }
+.boton-enviar-msg { display: block; width: 100%; padding: 15px 30px; font-size: clamp(1.2rem, 5vw, 1.5rem); font-weight: bold; color: white; background: linear-gradient(45deg, #2ecc71, #27ae60); border: none; border-radius: 30px; cursor: pointer; margin-top: 10px; transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease; }
+.boton-enviar-msg:hover { background: linear-gradient(45deg, #58d68d, #52be80); transform: translateY(-2px); box-shadow: 0 4px 10px rgba(39, 174, 96, 0.4); }
+.boton-enviar-msg:active { transform: scale(0.98); box-shadow: none; }
+.mensaje-estado { margin-top: 20px; font-weight: bold; padding: 10px; border-radius: 5px; text-align: center; font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
+.mensaje-estado.exito { background-color: rgba(46, 204, 113, 0.2); color: #27ae60; }
+.mensaje-estado.error { background-color: rgba(231, 76, 60, 0.2); color: #c0392b; }
