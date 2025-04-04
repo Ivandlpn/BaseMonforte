@@ -1,450 +1,311 @@
-// --- Referencias a Elementos del DOM ---
-const botonComenzar = document.getElementById('boton-comenzar');
+// --- Refer y pasarla explícitamente.
+
+**Código Corregido (`script.js`):**
+
+Soloencias a Elementos del DOM ---
+// (Sin cambios aquí...)
+const boton necesitas modificar la función `procesarResultadoPregunta`.
+
+```javascript
+//Comenzar = document.getElementById('boton-comenzar');
 const pantallaInicial = document.getElementById('pantalla-inicial');
 const juegoContenedor = document.getElementById('juego-contenedor');
-const infoTurno = document.getElementById('info-turno');
+const infoTurno = document.getElementById('info --- Referencias a Elementos del DOM ---
+// ... (sin cambios) ...
+const botonComenzar = document.getElementById('boton-comenzar');
+const-turno');
 const botonReiniciar = document.getElementById('boton-reiniciar');
 const puntajeHugoElem = document.getElementById('puntaje-hugo');
-const puntajeSaulElem = document.getElementById('puntaje-saul');
+const puntajeSaulElem = document.getElementById('puntaje-saul'); pantallaInicial = document.getElementById('pantalla-inicial');
+const juegoContenedor = document.getElementById('juego-contenedor');
+const infoTurno = document.getElementById('info
 const fotoHugoElem = document.getElementById('foto-hugo');
 const fotoSaulElem = document.getElementById('foto-saul');
-const pantallaGanador = document.getElementById('pantalla-ganador');
+-turno');
+const botonReiniciar = document.getElementById('boton-reiniciar');
+const puntajeHugoElem = document.getElementById('puntaje-hugo');
+constconst pantallaGanador = document.getElementById('pantalla-ganador');
 const textoGanadorElem = document.getElementById('texto-ganador');
+ puntajeSaulElem = document.getElementById('puntaje-saul');
+const fotoHugoElem = document.getElementById('foto-hugo');
 const fotoGanadorElem = document.getElementById('foto-ganador');
 const nombreGanadorElem = document.getElementById('nombre-ganador');
 const botonNuevoJuego = document.getElementById('boton-nuevo-juego');
-const botonVolverAJugar = document.getElementById('boton-volver-a-jugar');
+const botonVolverAJugar = document.getElementById('boton-volverconst fotoSaulElem = document.getElementById('foto-saul');
+const pantallaGanador = document.getElementById('pantalla-ganador');
+const textoGanadorElem = document.getElementById('texto-ganador');
+const fotoGanadorElem = document.getElementById('foto-ganador');
+-a-jugar');
 const botonCerrarGanador = document.getElementById('boton-cerrar-ganador');
 const pantallaPregunta = document.getElementById('pantalla-pregunta');
 const tituloPreguntaElem = document.getElementById('titulo-pregunta');
-const textoPreguntaElem = document.getElementById('texto-pregunta');
+const textoconst nombreGanadorElem = document.getElementById('nombre-ganador');
+const botonNuevoJuego = document.getElementById('boton-nuevo-juego');
+const botonVolverAJugar = document.getElementById('boton-volver-a-jugar');
+const botonCerrarGanador = documentPreguntaElem = document.getElementById('texto-pregunta');
 const opcionesPreguntaContenedor = document.getElementById('opciones-pregunta');
-const feedbackPreguntaElem = document.getElementById('feedback-pregunta');
+const feedbackPreguntaElem = document.getElementById('feedback-pregunta');.getElementById('boton-cerrar-ganador');
+const pantallaPregunta = document.getElementById('pantalla
 const pantallaEjercicio = document.getElementById('pantalla-ejercicio');
 const nombreEjercicioElem = document.getElementById('nombre-ejercicio');
+const-pregunta');
+const tituloPreguntaElem = document.getElementById('titulo-pregunta');
+const textoPreguntaElem = document.getElementById('texto-pregunta');
+const opcionesPreguntaContenedor = document.getElementById('opciones-pregunta'); contadorEjercicioElem = document.getElementById('contador-ejercicio');
+
+
+// --- Constantes y Variables del Juego
+const feedbackPreguntaElem = document.getElementById('feedback-pregunta');
+const pantallaEjercicio = document.getElementById('pantalla-ejercicio');
+ ---
+// (Sin cambios aquí...)
+const JUGADORES = ['Hugo', 'Saúl'];
+const MARCA_HUGO = 'X';
+const MARCA_SAconst nombreEjercicioElem = document.getElementById('nombre-ejercicio');
 const contadorEjercicioElem = document.getElementById('contador-ejercicio');
 
-// --- Constantes y Variables del Juego ---
+// ---UL = 'O';
+const PUNTOS_PARA_GANAR = 3;
+let jugadorActual;
+let jugadorQueRespondioPregunta;
+let juego Constantes y Variables del Juego ---
+// ... (sin cambios) ...
 const JUGADORES = ['Hugo', 'Saúl'];
 const MARCA_HUGO = 'X';
 const MARCA_SAUL = 'O';
-const PUNTOS_PARA_GANAR = 3;
+const PUNTActivo = false;
+let estadoTablero = ['', '', '', '', '', '', '', '', ''];
+const COMBINACIONES_GANADORAS = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [OS_PARA_GANAR = 3;
 let jugadorActual;
 let jugadorQueRespondioPregunta;
 let juegoActivo = false;
 let estadoTablero = ['', '', '', '', '', '', '', '', ''];
 const COMBINACIONES_GANADORAS = [
-    [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]
+    [0, 1,1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]
 ];
 let puntajeHugo = 0;
 let puntajeSaul = 0;
+let listaPreguntasDisponibles 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]
+];
+let puntajeHugo = 0;
+let punt = [];
+let respuestaCorrectaActual = null;
+let listaEjerciciosDisponibles = [];
+let intervaloContadorEjercicio = null;
+const DURACION_EJERCICIO = 15; // Ajustado a 15 segundos
+
+// --- Funciones ---
+function cargarPreguntas() { /* ... (sin cambios) ... */ }
+functionajeSaul = 0;
 let listaPreguntasDisponibles = [];
 let respuestaCorrectaActual = null;
 let listaEjerciciosDisponibles = [];
 let intervaloContadorEjercicio = null;
-const DURACION_EJERCICIO = 15; // Segundos
+const DURACION_EJERCICIO =  cargarEjercicios() { /* ... (sin cambios) ... */ }
+function actualizarMarcadorDisplay() { /* ... (sin cambios) ... */ }
+function actualizarResaltadoFoto() { /* ... (sin cambios) ...15; // (o 10 si no lo cambiaste)
 
-// --- Funciones ---
 
-function cargarPreguntas() {
-    if (typeof preguntasQuiz !== 'undefined' && Array.isArray(preguntasQuiz)) {
-         listaPreguntasDisponibles = JSON.parse(JSON.stringify(preguntasQuiz));
-         console.log("Preguntas (re)cargadas:", listaPreguntasDisponibles.length);
-    } else {
-        console.error("Error: 'preguntasQuiz' no definido.");
-        listaPreguntasDisponibles = [];
-    }
-}
+// */ }
+function iniciarRonda() { /* ... (sin cambios) ... --- Funciones ---
+// ... (cargarPreguntas, cargarEjercicios, actualizarMarcadorDisplay */ }
+function manejarClickCelda(evento) { /* ... (sin cambios) ... */ }
+function comprobarVictoria(marca) { /* ... (sin cambios) ... */ }
+function, actualizarResaltadoFoto, iniciarRonda, manejarClickCelda, comprobar comprobarEmpate() { /* ... (sin cambios) ... */ }
+function cambiarVictoria, comprobarEmpate, cambiarTurno, finalizarJuego, mostrarEjercicioTurno() { /* ... (sin cambios) ... */ }
+function finalizarJuego(esEmpate) { /* ... (sin cambios) ... */Pausa, iniciarContadorEjercicio, mostrarPregunta, manejarRespuestaPregunta - SIN CAMBIOS) ...
 
-function cargarEjercicios() {
-     if (typeof ejerciciosPausa !== 'undefined' && Array.isArray(ejerciciosPausa)) {
-         listaEjerciciosDisponibles = JSON.parse(JSON.stringify(ejerciciosPausa));
-         console.log("Ejercicios (re)cargados:", listaEjerciciosDisponibles.length);
-    } else {
-        console.error("Error: 'ejerciciosPausa' no definido.");
-        listaEjerciciosDisponibles = [];
-    }
-}
+/**
+ * Procesa el resultado de la pregunta (correcta/incorrecta). }
+function mostrarEjercicioPausa() { /* ... (sin cambios) ... */ }
+function iniciarContadorEjercicio(segundos) { /* ... (sin cambios) ... */ }
+function mostrarPregunta() { /* ... (sin cambios) ... */
+ * Actualiza marcador, mensaje y comprueba victoria final.
+ */
+function procesarResultadoPreg }
+function manejarRespuestaPregunta(evento) { /* ... (sinunta(fueCorrecta) {
+    pantallaPregunta.classList. cambios) ... */ }
 
-function actualizarMarcadorDisplay() {
-    puntajeHugoElem.textContent = puntajeHugo;
-    puntajeSaulElem.textContent = puntajeSaul;
 
-    // Animar el número que cambió
-    if (puntajeHugo > parseInt(puntajeHugoElem.dataset.lastScore || 0)) {
-        puntajeHugoElem.classList.add('actualizado');
-        setTimeout(() => puntajeHugoElem.classList.remove('actualizado'), 300);
-    }
-     if (puntajeSaul > parseInt(puntajeSaulElem.dataset.lastScore || 0)) {
-        puntajeSaulElem.classList.add('actualizado');
-        setTimeout(() => puntajeSaulElem.classList.remove('actualizado'), 300);
-    }
-    puntajeHugoElem.dataset.lastScore = puntajeHugo;
-    puntajeSaulElem.dataset.lastScore = puntajeSaul;
-}
-
-function actualizarResaltadoFoto() {
-    if (!juegoActivo && (!pantallaPregunta.classList.contains('oculto') || !pantallaEjercicio.classList.contains('oculto'))) {
-         // Mantener resaltado al que responde pregunta o al que ganó ronda antes de ejercicio
-         const jugadorAResaltar = jugadorQueRespondioPregunta || jugadorActual; // Usa el último activo si aplica
-         if (jugadorAResaltar === 'Hugo') {
-             fotoHugoElem.classList.add('activa');
-             fotoSaulElem.classList.remove('activa');
-         } else if (jugadorAResaltar === 'Saúl') {
-             fotoSaulElem.classList.add('activa');
-             fotoHugoElem.classList.remove('activa');
-         } else { // Si no hay jugador definido (ej. empate antes de ejercicio)
-             fotoHugoElem.classList.remove('activa');
-             fotoSaulElem.classList.remove('activa');
-         }
-         return;
-    }
-    if (!juegoActivo) {
-        fotoHugoElem.classList.remove('activa');
-        fotoSaulElem.classList.remove('activa');
-        return;
-    }
-    if (jugadorActual === 'Hugo') {
-        fotoHugoElem.classList.add('activa');
-        fotoSaulElem.classList.remove('activa');
-    } else {
-        fotoSaulElem.classList.add('activa');
-        fotoHugoElem.classList.remove('activa');
-    }
-}
-
-function iniciarRonda() {
-    estadoTablero = ['', '', '', '', '', '', '', '', ''];
-    juegoActivo = true;
-    respuestaCorrectaActual = null;
-    jugadorQueRespondioPregunta = null;
-    if (intervaloContadorEjercicio) clearInterval(intervaloContadorEjercicio);
-
-    if (puntajeHugo === 0 && puntajeSaul === 0 || Math.random() < 0.5 ) {
-         const indiceAleatorio = Math.floor(Math.random() * JUGADORES.length);
-         jugadorActual = JUGADORES[indiceAleatorio];
-    } else {
-         const indiceAleatorio = Math.floor(Math.random() * JUGADORES.length);
-         jugadorActual = JUGADORES[indiceAleatorio];
-    }
-
-    // Gestionar visibilidad
-    pantallaInicial.classList.add('oculto');
-    pantallaGanador.classList.add('oculto');
-    pantallaPregunta.classList.add('oculto');
-    pantallaEjercicio.classList.add('oculto');
-    juegoContenedor.classList.remove('oculto');
-    botonReiniciar.classList.add('oculto');
-    botonNuevoJuego.classList.add('oculto');
-    botonVolverAJugar.classList.add('oculto');
-    botonCerrarGanador.classList.add('oculto');
-
-    actualizarMarcadorDisplay();
+/**
+ * Procesa el resultado de la pregunta,add('oculto');
     actualizarResaltadoFoto();
 
-    const marcaInicial = jugadorActual === 'Hugo' ? MARCA_HUGO : MARCA_SAUL;
-    infoTurno.textContent = `¡Turno de ${jugadorActual}! (${marcaInicial})`;
+ actualiza marcador y mensaje principal,
+ * comprueba victoria del juego y muestra siguiente    let mensajeResultado = "";
+    // --- CAPTURAR EL GANADOR ANTES DE RESET paso.
+ * CORREGIDO: Resetea variables solo si el juego continúa.
+ */
+EAR ---
+    const ganadorDeEstaRonda = jugadorQueRespondioPregfunction procesarResultadoPregunta(fueCorrecta) {
+    pantallaPregunta.classList.addunta;
 
-    const tablero = document.getElementById('tablero');
-    const celdasActuales = tablero.querySelectorAll('.celda');
-    celdasActuales.forEach(celda => {
-        celda.innerHTML = '';
-        celda.classList.remove('ganadora');
-        celda.style.cursor = 'pointer';
-        const celdaClonada = celda.cloneNode(true);
-        celda.replaceWith(celdaClonada);
-        celdaClonada.addEventListener('click', manejarClickCelda, { once: true });
-    });
-    console.log(`Ronda iniciada. Empieza: ${jugadorActual}. Marcador: Hugo ${puntajeHugo} - Saúl ${puntajeSaul}`);
-}
-
-function manejarClickCelda(evento) {
-    if (!juegoActivo) return;
-    const celdaClickeada = evento.target;
-    const celdaTarget = celdaClickeada.closest('.celda');
-    if (!celdaTarget || !celdaTarget.hasAttribute('data-index')) return;
-    const indiceCelda = parseInt(celdaTarget.getAttribute('data-index'));
-    if (estadoTablero[indiceCelda] !== '') return;
-
-    const marcaActual = jugadorActual === 'Hugo' ? MARCA_HUGO : MARCA_SAUL;
-    const claseMarca = (marcaActual === MARCA_HUGO) ? 'x' : 'o';
-    estadoTablero[indiceCelda] = marcaActual;
-    celdaTarget.innerHTML = `<span class="marca-animada ${claseMarca}">${marcaActual}</span>`;
-    celdaTarget.style.cursor = 'default';
-
-    console.log(`Celda ${indiceCelda} clickeada por ${jugadorActual}. Marca: ${marcaActual}`);
-
-    if (comprobarVictoria(marcaActual)) {
-        finalizarJuego(false); return;
-    }
-    if (comprobarEmpate()) {
-        finalizarJuego(true); return;
-    }
-    cambiarTurno();
-}
-
-function comprobarVictoria(marca) {
-    const celdasDOM = document.querySelectorAll('.celda');
-    for (const combinacion of COMBINACIONES_GANADORAS) {
-        const [a, b, c] = combinacion;
-        if (estadoTablero[a] === marca && estadoTablero[b] === marca && estadoTablero[c] === marca) {
-             resaltarCeldasGanadoras(combinacion, celdasDOM);
-            return true;
-        }
-    }
-    return false;
-}
-
-function comprobarEmpate() {
-    return estadoTablero.every(celda => celda !== '');
-}
-
-function cambiarTurno() {
-    jugadorActual = jugadorActual === JUGADORES[0] ? JUGADORES[1] : JUGADORES[0];
-    const marcaSiguiente = jugadorActual === 'Hugo' ? MARCA_HUGO : MARCA_SAUL;
-    infoTurno.textContent = `¡Turno de ${jugadorActual}! (${marcaSiguiente})`;
-    actualizarResaltadoFoto();
-    console.log(`Turno cambiado a: ${jugadorActual}`);
-}
-
-function finalizarJuego(esEmpate) {
-    juegoActivo = false;
-    const celdasFinalizadas = document.querySelectorAll('.celda');
-    celdasFinalizadas.forEach(celda => {
-         celda.style.cursor = 'default';
-    });
-
-    if (esEmpate) {
-        infoTurno.textContent = "¡Oh! ¡Empate! 🤝 ¡Vamos con una Pausa Activa!";
-        console.log("Ronda finalizada: Empate. Iniciando Pausa Activa.");
-        actualizarResaltadoFoto(); // Quitar resaltado
-        setTimeout(() => {
-            mostrarEjercicioPausa();
-        }, 1500);
-    } else {
-        infoTurno.textContent = `¡Bien hecho ${jugadorActual}! 👍 Responde para ganar el punto...`;
-        console.log(`Ronda finalizada: Ganador ${jugadorActual}. Esperando pregunta.`);
-        jugadorQueRespondioPregunta = jugadorActual;
-        actualizarResaltadoFoto();
-        setTimeout(() => {
-            mostrarPregunta();
-        }, 1800);
-    }
-}
-
-function mostrarEjercicioPausa() {
-    if (listaEjerciciosDisponibles.length === 0) {
-        console.log("Recargando lista de ejercicios.");
-        cargarEjercicios();
-        if(listaEjerciciosDisponibles.length === 0) {
-             console.error("No se pudieron cargar ejercicios. Saltando pausa activa.");
-             botonReiniciar.classList.remove('oculto');
-             infoTurno.textContent = "¡Empate! Algo falló con la pausa activa...";
-             return;
-        }
-    }
-
-    const indiceEjercicio = Math.floor(Math.random() * listaEjerciciosDisponibles.length);
-    const ejercicio = listaEjerciciosDisponibles.splice(indiceEjercicio, 1)[0];
-
-    nombreEjercicioElem.textContent = `${ejercicio.icono || ''} ${ejercicio.nombre}`;
-    contadorEjercicioElem.textContent = DURACION_EJERCICIO;
-
-    pantallaEjercicio.classList.remove('oculto');
-    iniciarContadorEjercicio(DURACION_EJERCICIO);
-}
-
-function iniciarContadorEjercicio(segundos) {
-    let tiempoRestante = segundos;
-    if (intervaloContadorEjercicio) clearInterval(intervaloContadorEjercicio);
-    contadorEjercicioElem.textContent = tiempoRestante;
-
-    intervaloContadorEjercicio = setInterval(() => {
-        tiempoRestante--;
-        contadorEjercicioElem.textContent = tiempoRestante;
-        if (tiempoRestante <= 0) {
-            clearInterval(intervaloContadorEjercicio);
-            intervaloContadorEjercicio = null;
-            pantallaEjercicio.classList.add('oculto');
-            infoTurno.textContent = "¡Energía recargada! 🔥 ¿Listos para la siguiente?";
-            botonReiniciar.classList.remove('oculto');
-            console.log("Pausa activa completada.");
-        }
-    }, 1000);
-}
-
-function mostrarPregunta() {
-    if (listaPreguntasDisponibles.length === 0) {
-        console.warn("No quedan preguntas disponibles en este ciclo.");
-        infoTurno.textContent = "¡Vaya! Se acabaron las preguntas. ¡Ronda de descanso!";
-        pantallaPregunta.classList.remove('oculto');
-        tituloPreguntaElem.textContent = "¡Fin de las Preguntas!";
-        textoPreguntaElem.textContent = "Se han usado todas las preguntas disponibles en esta partida.";
-        opcionesPreguntaContenedor.innerHTML = ''; // Limpiar opciones
-        feedbackPreguntaElem.classList.add('oculto');
-        setTimeout(() => {
-            pantallaPregunta.classList.add('oculto');
-            botonReiniciar.classList.remove('oculto');
-            actualizarResaltadoFoto();
-        }, 3000);
-        return;
-    }
-
-    const indicePregunta = Math.floor(Math.random() * listaPreguntasDisponibles.length);
-    const preguntaData = listaPreguntasDisponibles.splice(indicePregunta, 1)[0];
-    respuestaCorrectaActual = preguntaData.respuestaCorrecta;
-
-    tituloPreguntaElem.textContent = `🧠 ¡Pregunta para ${jugadorQueRespondioPregunta}! 🧠`;
-    textoPreguntaElem.textContent = preguntaData.pregunta;
-    feedbackPreguntaElem.classList.add('oculto');
-    opcionesPreguntaContenedor.innerHTML = `
-        <button class="opcion-btn" data-index="0">Opción A</button>
-        <button class="opcion-btn" data-index="1">Opción B</button>
-        <button class="opcion-btn" data-index="2">Opción C</button>
-    `;
-    const nuevosBotonesOpcion = opcionesPreguntaContenedor.querySelectorAll('.opcion-btn');
-    nuevosBotonesOpcion.forEach((boton, index) => {
-        boton.textContent = preguntaData.opciones[index];
-        boton.disabled = false;
-        boton.className = 'opcion-btn';
-        boton.addEventListener('click', manejarRespuestaPregunta);
-    });
-
-    pantallaPregunta.classList.remove('oculto');
-}
-
-
-function manejarRespuestaPregunta(evento) {
-    const botonClickeado = evento.target;
-    const indiceSeleccionado = parseInt(botonClickeado.getAttribute('data-index'));
-    const botonesOpcionActuales = opcionesPreguntaContenedor.querySelectorAll('.opcion-btn');
-
-    botonesOpcionActuales.forEach(boton => boton.disabled = true);
-    const esCorrecta = (indiceSeleccionado === respuestaCorrectaActual);
-
-    if (esCorrecta) {
-        botonClickeado.classList.add('correcta');
-        feedbackPreguntaElem.textContent = "✅ ¡Correctísimo! +1 Punto ✨";
-        feedbackPreguntaElem.className = 'feedback-quiz correcto';
-    } else {
-        botonClickeado.classList.add('incorrecta');
-        if (botonesOpcionActuales[respuestaCorrectaActual]) {
-             botonesOpcionActuales[respuestaCorrectaActual].classList.add('correcta');
-        }
-        feedbackPreguntaElem.textContent = `❌ ¡Ohh! La correcta era: ${botonesOpcionActuales[respuestaCorrectaActual]?.textContent || '?'}`;
-        feedbackPreguntaElem.className = 'feedback-quiz incorrecto';
-    }
-    feedbackPreguntaElem.classList.remove('oculto');
-
-    setTimeout(() => {
-        procesarResultadoPregunta(esCorrecta);
-    }, 2000);
-}
-
-function procesarResultadoPregunta(fueCorrecta) {
-    pantallaPregunta.classList.add('oculto');
-    actualizarResaltadoFoto();
+    if (fueCorrecta) {
+        // Sumar punto('oculto');
+    actualizarResaltadoFoto(); // Qu usando la variable capturada si es necesario, aunque ya está en puntaje[ita el resaltado de "respondiendo"
 
     let mensajeResultado = "";
 
-    if (fueCorrecta) {
-        if (jugadorQueRespondioPregunta === 'Hugo') {
+    if (fueCorrectaX]Elem
+        if (ganadorDeEstaRonda === 'Hugo) {
+        // Sumar punto y actualizar display
+        if (jugadorQueRespond') {
+            puntajeHugo++;
+            mensajeResultado = "¡Punto para Hugo! 💪ioPregunta === 'Hugo') {
             puntajeHugo++;
             mensajeResultado = "¡Punto para Hugo! 💪";
-        } else if (jugadorQueRespondioPregunta === 'Saúl') {
+        } else";
+        } else if (ganadorDeEstaRonda === 'Saúl') {
             puntajeSaul++;
-            mensajeResultado = "¡Punto para Saúl! 🎉";
+            mensajeResultado = "¡Punto para Saúl if (jugadorQueRespondioPregunta === 'Saúl') {
+            puntajeSaul++;
+            mensajeResultado = "¡Punto para! 🎉";
         }
         actualizarMarcadorDisplay();
-        console.log(`Respuesta correcta. Marcador: Hugo ${puntajeHugo} - Saúl ${puntajeSaul}`);
+        console.log(`Respuesta correcta. Marcador: Hugo ${puntajeHugo} - Saúl ${ Saúl! 🎉";
+        }
+        actualizarMarcadorDisplay();
+        console.log(`Respuesta correcta. Marcador: Hugo ${puntajeHugo} - Saúl ${puntajeSapuntajeSaul}`);
 
-        if (puntajeHugo === PUNTOS_PARA_GANAR || puntajeSaul === PUNTOS_PARA_GANAR) {
-            infoTurno.textContent = mensajeResultado;
-             setTimeout(() => {
-                console.log(`¡JUEGO TERMINADO POR PUNTOS! Ganador: ${jugadorQueRespondioPregunta}`);
-                mostrarGanadorDelJuego(jugadorQueRespondioPregunta);
-            }, 500);
+        // Comprueba si se ganó el JUEGO COMPLETO
+        if (puntajeHugo === PUNTOS_PARA_GANAR || puntajeul}`);
+
+        // Comprobar si se ganó el JUEGO COMPLETO
+        if (puntajeHugo === PUNTOS_PARA_GANAR || puntajeSaul === PUNTOS_Saul === PUNTOS_PARA_GANAR) {
+            infoTurno.textContent = mensajeResultado; // Mostrar último mensaje de punto
+             //PARA_GANAR) {
+            // --- Juego Terminado ---
+            infoTurno.textContent = mensajeResultado; // Mostrar último mensaje de punto
+            // ¡IMPORT --- USAR LA VARIABLE CAPTURADA EN EL TIMEOUT ---
+             setTimeout((ANTE! No resetear jugadorQueRespondioPregunta aquí
+            setTimeout(() => {
+                consoleganadorFinal) => {
+                console.log(`¡JUEGO TERMINADO POR PUNTOS.log(`¡JUEGO TERMINADO POR PUNTOS! Ganador! Ganador: ${ganadorFinal}`);
+                mostrarGanadorDelJuego(ganador: ${jugadorQueRespondioPregunta}`);
+                // Ahora jugadorQueRespondioPregunta todavíaFinal); // Pasar la variable capturada
+            }, 500, ganadorDeEstaRonda tiene el nombre del ganador
+                mostrarGanadorDelJuego(jugadorQueRespondio); // Pasar ganadorDeEstaRonda como argumento al callback
         } else {
+            //Pregunta);
+            }, 500); // Pausa breve antes de mostrar pantalla El juego continúa, muestra mensaje y luego botón
+            infoTurno.textContent final
+
+        } else {
+            // --- Juego Continúa ---
             infoTurno.textContent = mensajeResultado;
+            setTimeout(() => {
+                   = mensajeResultado;
             setTimeout(() => {
                   botonReiniciar.classList.remove('oculto');
              }, 1500);
         }
     } else {
+botonReiniciar.classList.remove('oculto');
+             }, 1500);
+        // Respuesta incorrecta
+        // Usar la variable capturada para el mensaje             // ¡Resetear variables AQUÍ porque el juego sigue!
+             respuestaCorrectaActual = null;
+             jugadorQueRespondioPregunta = null;
+        
+        mensajeResultado = `¡Ups! ${ganadorDeEstaRonda || 'Alguien'} no sumó el punto. 😅`;
+        info}
+    } else {
+        // --- Respuesta Incorrecta (Juego Continúa) ---
         mensajeResultado = `¡Ups! ${jugadorQueRespondioPregunta} no sumó el punto. 😅`;
         infoTurno.textContent = mensajeResultado;
+        Turno.textContent = mensajeResultado;
         console.log("Respuesta incorrecta. No se suma punto.");
         setTimeout(() => {
              botonReiniciar.classList.remove('oculto');
-         }, 1500);
+         }, console.log("Respuesta incorrecta. No se suma punto.");
+        setTimeout(() => {
+             botonReiniciar.classList.remove('oculto1500);
     }
 
+    // --- RESETEAR DESPUÉS DE CONFIGURAR TODO ---
     respuestaCorrectaActual = null;
-    jugadorQueRespondioPregunta = null;
+    jug');
+         }, 1500);
+         // ¡Resetear variables AQUÍ porque el juego sigue!
+         respuestaCorrectaActual = null;
+         jugadorQueRespondioPregunta = null;
+    }
+
+    adorQueRespondioPregunta = null; // Ahora sí se puede resetear
 }
 
+
+// ... (mostrarGanadorDelJuego, iniciarNuevoJuegoCompleto, cerrar// QUITAR los resets de aquí, ya están dentro de los bloques condicionales dePantallaGanador, resaltarCeldasGanadoras - SIN CAMBIOS EN "juego continúa"
+    // respuestaCorrectaActual = null;
+    // SU LÓGICA INTERNA) ...
+
+// Asegúrate que mostrarGanadorDelJuego usa jugadorQueRespondioPregunta = null;
+}
+
+
 function mostrarGanadorDelJuego(ganador) {
+    // Ahora 'ganador' debería el parámetro 'ganador' correctamente:
+function mostrarGanadorDelJuego ser 'Hugo' o 'Saúl', no null
+    juegoContenedor.classList.add(ganador) { // 'ganador' es el parámetro que recibe el valor correcto('oculto');
+    pantallaPregunta.classList.add('oculto');
+    pantallaEjercicio.classList.add('ocult
     juegoContenedor.classList.add('oculto');
     pantallaPregunta.classList.add('oculto');
-    pantallaEjercicio.classList.add('oculto');
+    pantallao');
     pantallaGanador.classList.remove('oculto');
 
-    textoGanadorElem.textContent = `🏆 ¡EL CAMPEÓN ES ${ganador.toUpperCase()}! 🏆`;
+    //Ejercicio.classList.add('oculto');
+    pantallaGanador.classList.remove('ocult Usar la variable 'ganador' que se pasó a la función
+    textoGanadorElemo');
+
+    // Usa el parámetro 'ganador' que SÍ tiene.textContent = `🏆 ¡EL CAMPEÓN ES ${ganador.toUpperCase()}! 🏆`;
     nombreGanadorElem.textContent = ganador.toUpperCase();
-    fotoGanadorElem.src = (ganador === 'Hugo') ? 'img/jugadores/hugo.png' : 'img/jugadores/saul.png';
+    fotoGanador valor
+    textoGanadorElem.textContent = `🏆 ¡EL CAMPEÓN ES ${ganElem.src = (ganador === 'Hugo') ? 'img/jugadores/hugo.png' : 'img/jugadores/saulador ? ganador.toUpperCase() : 'DESCONOCIDO'}! 🏆`;
+    nombreGanadorElem.textContent = ganador ? ganador.toUpperCase() :.png';
     fotoGanadorElem.alt = `Foto ${ganador}`;
+
+    // Gestionar botones finales
     botonNuevoJuego.classList.add('oculto');
     botonReiniciar.classList.add('oculto');
-    botonVolverAJugar.classList.remove('oculto');
+    botonVolverAJugar.classList.remove '???';
+    // Asigna la imagen basándose en el parámetro 'ganador'
+    if (ganador === 'Hugo') {
+        fotoGanadorElem.src('oculto');
     botonCerrarGanador.classList.remove('oculto');
 }
 
-function iniciarNuevoJuegoCompleto() {
-    console.log("Iniciando nuevo juego completo...");
-    puntajeHugo = 0;
-    puntajeSaul = 0;
-    cargarPreguntas();
-    cargarEjercicios();
-
-    pantallaGanador.classList.add('oculto');
-    pantallaPregunta.classList.add('oculto');
-    pantallaEjercicio.classList.add('oculto');
-    botonVolverAJugar.classList.add('oculto');
-    botonCerrarGanador.classList.add('oculto');
-
-    iniciarRonda();
-}
-
-function cerrarPantallaGanador() {
-    console.log("Cerrando pantalla de ganador y volviendo al inicio.");
-    pantallaGanador.classList.add('oculto');
-    juegoContenedor.classList.add('oculto');
-    pantallaPregunta.classList.add('oculto');
-    pantallaEjercicio.classList.add('oculto');
-    pantallaInicial.classList.remove('oculto');
-    puntajeHugo = 0;
-    puntajeSaul = 0;
-    actualizarMarcadorDisplay();
-}
-
-function resaltarCeldasGanadoras(combinacion, celdasDOM) {
-    combinacion.forEach(indice => {
-        if(celdasDOM && celdasDOM[indice]) {
-            celdasDOM[indice].classList.add('ganadora');
-        } else {
-            console.error("Índice de celda fuera de rango o celdasDOM no válido al resaltar:", indice);
-        }
-    });
-}
+function iniciarNuevoJuegoCompleto = 'img/jugadores/hugo.png';
+        fotoGanadorElem.alt = 'Foto Hugo';
+    } else if (ganador === '() { /* ... (sin cambios) ... */ }
+function cerrarPantallaGanador() { /* ... (sin cambios) ... */ }
+function resaltarCeldasGanadoras(combinacion, celdasDOM) { /* ... (sin cambios) ...Saúl') {
+        fotoGanadorElem.src = 'img/jugadores/saul.png';
+        fotoGanadorElem.alt = 'Foto Saúl';
+    } else {
+        fotoGanadorElem.src = ''; */ }
 
 // --- Event Listeners Iniciales ---
+// (Sin cambios aquí...)
 botonComenzar.addEventListener('click', () => {
     cargarPreguntas();
     cargarEjercicios();
     iniciarRonda();
 });
-botonReiniciar.addEventListener('click', iniciarRonda);
+botonRein // O una imagen por defecto
+        fotoGanadorElem.alt = 'Foto no encontrada';
+    }
+
+    botonNuevoJuego.classList.add('ociciar.addEventListener('click', iniciarRonda);
 botonVolverAJugar.addEventListener('click', iniciarNuevoJuegoCompleto);
 botonCerrarGanador.addEventListener('click', cerrarPantallaGanador);
 
-// --- Fin del script ---
+//ulto');
+    botonReiniciar.classList.add('oculto');
+    botonVolverAJugar.classList.remove('oculto');
+    botonCerrarGanador.classList.remove('oculto');
+}
+
+
+ --- Fin del script ---
