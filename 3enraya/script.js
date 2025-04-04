@@ -1,13 +1,14 @@
 // --- Referencias a Elementos del DOM ---
 const botonComenzar = document.getElementById('boton-comenzar');
 const pantallaInicial = document.getElementById('pantalla-inicial');
-const pantallaSeleccion = document.getElementById('pantalla-seleccion-fichas');
-const tituloSeleccionElem = document.getElementById('titulo-seleccion');
-const instruccionSeleccionElem = document.getElementById('instruccion-seleccion');
-const contenedorFichasElem = document.getElementById('contenedor-fichas-disponibles');
-const fichasElegidasContenedor = document.getElementById('fichas-elegidas');
-const fichaElegidaHugoImg = document.getElementById('ficha-elegida-hugo');
-const fichaElegidaSaulImg = document.getElementById('ficha-elegida-saul');
+const pantallaSeleccion = document.getElementById('pantalla-seleccion-fichas'); // Nueva pantalla
+const tituloSeleccionElem = document.getElementById('titulo-seleccion'); // Título selección
+const instruccionSeleccionElem = document.getElementById('instruccion-seleccion'); // Instrucción selección
+const contenedorFichasElem = document.getElementById('contenedor-fichas-disponibles'); // Contenedor fichas
+const fichasElegidasContenedor = document.getElementById('fichas-elegidas'); // Div para mostrar elegidas
+const fichaElegidaHugoImg = document.getElementById('ficha-elegida-hugo'); // Img elegida Hugo
+const fichaElegidaSaulImg = document.getElementById('ficha-elegida-saul'); // Img elegida Saúl
+
 const juegoContenedor = document.getElementById('juego-contenedor');
 const infoTurno = document.getElementById('info-turno');
 const celdas = document.querySelectorAll('.celda');
@@ -19,39 +20,42 @@ const fotoSaulElem = document.getElementById('foto-saul');
 
 // --- Constantes y Variables del Juego ---
 const JUGADORES = ['Hugo', 'Saúl'];
-// ===== ¡LÍNEA MODIFICADA! =====
-const FICHAS_DISPONIBLES = ['X.png', 'O.png', 'pinar.png', 'torremolinos.png', 'andalucia.png','barca.png','españa.png','local.png','madrid.png','nacional.png','sevilla.png'];
-// ==============================
-const RUTA_FICHAS = 'img/fichas/';
+// IMPORTANTE: Define aquí los nombres EXACTOS de tus archivos de fichas
+const FICHAS_DISPONIBLES = ['X.png', 'O.png', 'P_logo.png', 'escudo_torremolinos.png'];
+const RUTA_FICHAS = 'img/fichas/'; // Ruta a la carpeta de fichas
 
-let jugadorActual;
-let jugadorSeleccionando;
-let fichaHugo = null;
-let fichaSaul = null;
+let jugadorActual; // Quién tiene el turno en el juego
+let jugadorSeleccionando; // Quién está seleccionando ficha
+let fichaHugo = null; // Filename de la ficha elegida por Hugo
+let fichaSaul = null; // Filename de la ficha elegida por Saúl
 let juegoActivo = false;
+// CAMBIO IMPORTANTE: El estado ahora guarda el *nombre* del jugador ('Hugo' o 'Saúl') o null si está vacía
 let estadoTablero = [null, null, null, null, null, null, null, null, null];
 let puntajeHugo = 0;
 let puntajeSaul = 0;
-let procesandoClick = false;
 
 // --- Funciones ---
 
 /** Limpia y puebla el contenedor de selección de fichas */
 function mostrarFichasParaSeleccion() {
-    contenedorFichasElem.innerHTML = '';
+    contenedorFichasElem.innerHTML = ''; // Limpiar por si acaso
     FICHAS_DISPONIBLES.forEach(nombreFicha => {
         const imgFicha = document.createElement('img');
         imgFicha.src = RUTA_FICHAS + nombreFicha;
-        imgFicha.alt = `Ficha ${nombreFicha.split('.')[0]}`;
+        imgFicha.alt = `Ficha ${nombreFicha.split('.')[0]}`; // Alt text básico
         imgFicha.classList.add('ficha-seleccionable');
-        imgFicha.dataset.filename = nombreFicha;
+        imgFicha.dataset.filename = nombreFicha; // Guardamos el nombre del archivo
 
-        const fichaYaElegidaPorOtro = (jugadorSeleccionando === JUGADORES[1] && nombreFicha === fichaHugo);
-        if (fichaYaElegidaPorOtro) {
+        // Deshabilitar visualmente si ya fue seleccionada por el otro jugador
+        const fichaYaElegida = (jugadorSeleccionando === JUGADORES[1] && nombreFicha === fichaHugo) ||
+                                (jugadorSeleccionando === JUGADORES[0] && nombreFicha === fichaSaul); // En caso de que se reinicie la selección
+        if (fichaYaElegida) {
             imgFicha.classList.add('seleccionada');
         } else {
+             // Añadir listener SOLO si no está seleccionada
             imgFicha.addEventListener('click', manejarSeleccionFicha);
         }
+
         contenedorFichasElem.appendChild(imgFicha);
     });
 }
@@ -59,49 +63,48 @@ function mostrarFichasParaSeleccion() {
 /** Maneja el clic sobre una ficha durante la selección */
 function manejarSeleccionFicha(evento) {
     const fichaClickeada = evento.target;
-    if (fichaClickeada.classList.contains('seleccionada')) return;
     const nombreFichaSeleccionada = fichaClickeada.dataset.filename;
 
-    if (jugadorSeleccionando === JUGADORES[0]) {
+    // Asignar al jugador correspondiente
+    if (jugadorSeleccionando === JUGADORES[0]) { // Es Hugo
         fichaHugo = nombreFichaSeleccionada;
         console.log(`Hugo elige: ${fichaHugo}`);
-        fichaElegidaHugoImg.src = RUTA_FICHAS + fichaHugo;
+        fichaElegidaHugoImg.src = RUTA_FICHAS + fichaHugo; // Mostrar miniatura elegida
+        // Pasar al siguiente jugador
         jugadorSeleccionando = JUGADORES[1];
-        instruccionSeleccionElem.textContent = `Elige tu ficha, ${jugadorSeleccionando}`;
+        instruccionSeleccionElem.textContent = `Turno de ${jugadorSeleccionando}`;
+        // Actualizar visualización de fichas (deshabilitar la elegida)
         mostrarFichasParaSeleccion();
-        fichasElegidasContenedor.classList.remove('oculto');
-    } else {
+        fichasElegidasContenedor.classList.remove('oculto'); // Mostrar contenedor de elegidas
+
+    } else { // Es Saúl
         fichaSaul = nombreFichaSeleccionada;
         console.log(`Saúl elige: ${fichaSaul}`);
-        fichaElegidaSaulImg.src = RUTA_FICHAS + fichaSaul;
+        fichaElegidaSaulImg.src = RUTA_FICHAS + fichaSaul; // Mostrar miniatura elegida
+        // Ambos han elegido, iniciar juego
         console.log("Ambos jugadores han elegido. Iniciando juego...");
         pantallaSeleccion.classList.add('oculto');
-        iniciarJuego();
+        iniciarJuego(); // Ahora sí, al juego real
     }
 }
 
 /** Inicia el proceso de selección de fichas */
 function iniciarProcesoSeleccion() {
-    fichaHugo = null;
+    fichaHugo = null; // Resetear fichas elegidas
     fichaSaul = null;
-    juegoActivo = false;
-    procesandoClick = false;
-    estadoTablero = [null, null, null, null, null, null, null, null, null];
-
-    fichasElegidasContenedor.classList.add('oculto');
+    fichasElegidasContenedor.classList.add('oculto'); // Ocultar miniaturas
     fichaElegidaHugoImg.src = "";
     fichaElegidaSaulImg.src = "";
-    jugadorSeleccionando = JUGADORES[0];
+    jugadorSeleccionando = JUGADORES[0]; // Empieza Hugo a elegir
 
-    tituloSeleccionElem.textContent = `Hola Hugo y Saúl`;
+    tituloSeleccionElem.textContent = `Hola Hugo y Saúl`; // Saludo
     instruccionSeleccionElem.textContent = `Elige tu ficha, ${jugadorSeleccionando}`;
-    mostrarFichasParaSeleccion();
+    mostrarFichasParaSeleccion(); // Mostrar las fichas disponibles
 
+    // Ocultar pantalla inicial y mostrar pantalla de selección
     pantallaInicial.classList.add('oculto');
-    juegoContenedor.classList.add('oculto');
     pantallaSeleccion.classList.remove('oculto');
-    botonReiniciar.classList.add('oculto');
-    actualizarResaltadoFoto();
+    juegoContenedor.classList.add('oculto'); // Asegurarse que el juego está oculto
 }
 
 
@@ -113,7 +116,7 @@ function actualizarMarcadorDisplay() {
 
 /** Resalta la foto del jugador activo y quita el resaltado del otro. */
 function actualizarResaltadoFoto() {
-    if (!juegoActivo) {
+    if (!juegoActivo) { // Si el juego no está activo, quitar ambos resaltados
          fotoHugoElem.classList.remove('activa');
          fotoSaulElem.classList.remove('activa');
          return;
@@ -129,87 +132,82 @@ function actualizarResaltadoFoto() {
 
 /** Inicia una nueva partida del juego (tablero) */
 function iniciarJuego() {
+    // Asegurarse que la pantalla de selección está oculta y el juego visible
     pantallaSeleccion.classList.add('oculto');
     juegoContenedor.classList.remove('oculto');
+
+    // Resetear estado del tablero (ahora con null)
     estadoTablero = [null, null, null, null, null, null, null, null, null];
     juegoActivo = true;
-    procesandoClick = false;
+
+    // Elegir jugador inicial aleatoriamente para el *juego*
     const indiceAleatorio = Math.floor(Math.random() * JUGADORES.length);
     jugadorActual = JUGADORES[indiceAleatorio];
+
     botonReiniciar.classList.add('oculto');
     actualizarMarcadorDisplay();
-    actualizarResaltadoFoto();
+    actualizarResaltadoFoto(); // Resalta foto del primer jugador
+
+    // Mensaje de turno usando nombre (sin la marca X/O)
     infoTurno.textContent = `¡Empieza ${jugadorActual}! Te toca.`;
+
     celdas.forEach(celda => {
-        celda.innerHTML = '';
+        celda.innerHTML = ''; // Limpiar contenido (imágenes anteriores)
         celda.classList.remove('ganadora');
         celda.removeEventListener('click', manejarClickCelda);
         celda.addEventListener('click', manejarClickCelda, { once: true });
     });
+
     console.log(`Juego iniciado. Empieza: ${jugadorActual}. Fichas: Hugo=${fichaHugo}, Saúl=${fichaSaul}`);
 }
 
 /** Maneja el evento de clic en una celda del tablero */
 function manejarClickCelda(evento) {
-    if (!juegoActivo || procesandoClick) {
-         console.log(`DEBUG: Clic ignorado (juegoActivo=${juegoActivo}, procesandoClick=${procesandoClick})`);
-         return;
-    }
-    procesandoClick = true;
-    console.log("DEBUG: procesandoClick = true");
+    if (!juegoActivo) return;
 
     let celdaClickeada = evento.target;
+    // Si se hizo clic en la imagen dentro de la celda, subir al div.celda
     if (celdaClickeada.tagName === 'IMG' && celdaClickeada.parentElement.classList.contains('celda')) {
         celdaClickeada = celdaClickeada.parentElement;
     }
-    if (!celdaClickeada.classList.contains('celda') || !celdaClickeada.hasAttribute('data-index')) {
-        console.warn("DEBUG: Clic inválido (no es celda o sin índice)");
-        procesandoClick = false;
-        console.log("DEBUG: procesandoClick = false (clic inválido)");
-        return;
-    }
+    // Asegurarse de que es una celda válida y no está ocupada
+    if (!celdaClickeada.classList.contains('celda') || !celdaClickeada.hasAttribute('data-index')) return;
     const indiceCelda = parseInt(celdaClickeada.getAttribute('data-index'));
-    console.log(`DEBUG: Click en celda ${indiceCelda}. Jugador ACTUAL: ${jugadorActual}`);
+    if (estadoTablero[indiceCelda] !== null) return; // Ya está ocupada si no es null
 
-    if (estadoTablero[indiceCelda] !== null) {
-        console.warn(`DEBUG: Intento de clic en celda ${indiceCelda} ya ocupada por ${estadoTablero[indiceCelda]}`);
-        procesandoClick = false;
-        console.log("DEBUG: procesandoClick = false (celda ocupada)");
-        celdaClickeada.removeEventListener('click', manejarClickCelda); // Seguridad extra
-        return;
-    }
+    // 1. Actualizar estado interno con el NOMBRE del jugador
+    estadoTablero[indiceCelda] = jugadorActual;
 
-    const jugadorQueJugo = jugadorActual;
-    estadoTablero[indiceCelda] = jugadorQueJugo;
+    // 2. Determinar qué ficha (imagen) colocar
+    const fichaAColocar = jugadorActual === JUGADORES[0] ? fichaHugo : fichaSaul;
 
-    const fichaAColocar = jugadorQueJugo === JUGADORES[0] ? fichaHugo : fichaSaul;
-    celdaClickeada.innerHTML = `<img src="${RUTA_FICHAS}${fichaAColocar}" alt="Ficha ${jugadorQueJugo}" class="ficha-en-tablero">`;
-    console.log(`DEBUG: Celda ${indiceCelda} marcada por ${jugadorQueJugo}. Ficha: ${fichaAColocar}`);
+    // 3. Colocar la FICHA (imagen) visualmente CON ANIMACIÓN
+    celdaClickeada.innerHTML = `<img src="${RUTA_FICHAS}${fichaAColocar}" alt="Ficha ${jugadorActual}" class="ficha-en-tablero">`; // Clase activa animación
 
-    if (comprobarVictoria(jugadorQueJugo)) {
-        console.log(`DEBUG: Victoria detectada para ${jugadorQueJugo}. Finalizando.`);
+    console.log(`Celda ${indiceCelda} clickeada por ${jugadorActual}. Ficha: ${fichaAColocar}`);
+
+    // 4. Comprobar victoria (ahora busca el nombre del jugador)
+    if (comprobarVictoria(jugadorActual)) {
         finalizarJuego(false);
         return;
     }
+    // 5. Comprobar empate (ahora busca que no haya null)
     if (comprobarEmpate()) {
-        console.log(`DEBUG: Empate detectado. Finalizando.`);
         finalizarJuego(true);
         return;
     }
-
-    console.log(`DEBUG: No hay fin de juego. Llamando a cambiarTurno desde ${jugadorQueJugo}.`);
+    // 6. Cambiar turno
     cambiarTurno();
-
-    procesandoClick = false;
-    console.log("DEBUG: procesandoClick = false (fin de manejo de clic)");
 }
 
 /** Comprueba si el jugador dado ha ganado */
-function comprobarVictoria(jugador) {
+function comprobarVictoria(jugador) { // Recibe el nombre del jugador
     for (const combinacion of COMBINACIONES_GANADORAS) {
         const [a, b, c] = combinacion;
+        // Comprueba si las 3 celdas tienen el nombre del jugador actual
         if (estadoTablero[a] === jugador && estadoTablero[b] === jugador && estadoTablero[c] === jugador) {
-             resaltarCeldasGanadoras(combinacion);
+            console.log(`Victoria detectada para ${jugador} en combinación: ${a},${b},${c}`);
+            resaltarCeldasGanadoras(combinacion);
             return true;
         }
     }
@@ -219,29 +217,25 @@ function comprobarVictoria(jugador) {
 /** Comprueba si hay empate (ninguna celda es null) */
 function comprobarEmpate() {
     const empate = estadoTablero.every(celda => celda !== null);
+    if (empate) { console.log("Empate detectado."); }
     return empate;
 }
 
 /** Cambia el turno al otro jugador, actualiza mensaje y resalta foto */
 function cambiarTurno() {
-    console.log(`DEBUG: Entrando a cambiarTurno. Jugador actual ANTES: ${jugadorActual}`);
-    jugadorActual = (jugadorActual === JUGADORES[0]) ? JUGADORES[1] : JUGADORES[0];
-    infoTurno.textContent = `Turno de: ${jugadorActual}`;
-    actualizarResaltadoFoto();
-    console.log(`DEBUG: Saliendo de cambiarTurno. Jugador actual DESPUÉS: ${jugadorActual}`);
+    jugadorActual = jugadorActual === JUGADORES[0] ? JUGADORES[1] : JUGADORES[0];
+    infoTurno.textContent = `Turno de: ${jugadorActual}`; // Mensaje sin marca
+    actualizarResaltadoFoto(); // Actualiza foto activa
+    console.log(`Turno cambiado a: ${jugadorActual}`);
 }
 
 /** Finaliza la partida actual */
 function finalizarJuego(esEmpate) {
-    console.log(`DEBUG: Entrando a finalizarJuego. Es empate: ${esEmpate}`);
     juegoActivo = false;
-    procesandoClick = false;
-    console.log("DEBUG: juegoActivo = false, procesandoClick = false");
-
     celdas.forEach(celda => {
         celda.removeEventListener('click', manejarClickCelda);
     });
-    actualizarResaltadoFoto();
+    actualizarResaltadoFoto(); // Quita resaltado de fotos
 
     if (esEmpate) {
         infoTurno.textContent = "¡Vaya! Ha sido un empate.";
@@ -265,7 +259,9 @@ function resaltarCeldasGanadoras(combinacion) {
 }
 
 // --- Event Listeners Iniciales ---
+// El botón comenzar ahora inicia el PROCESO DE SELECCIÓN
 botonComenzar.addEventListener('click', iniciarProcesoSeleccion);
+// El botón reiniciar ahora también vuelve al PROCESO DE SELECCIÓN
 botonReiniciar.addEventListener('click', iniciarProcesoSeleccion);
 
 // --- Fin del script ---
