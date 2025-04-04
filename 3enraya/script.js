@@ -12,11 +12,15 @@ const pantallaGanador = document.getElementById('pantalla-ganador');
 const textoGanadorElem = document.getElementById('texto-ganador');
 const fotoGanadorElem = document.getElementById('foto-ganador');
 const nombreGanadorElem = document.getElementById('nombre-ganador');
-const botonNuevoJuego = document.getElementById('boton-nuevo-juego'); // El que estaba fuera
-
-// NUEVAS REFERENCIAS para botones en pantalla ganador
+const botonNuevoJuego = document.getElementById('boton-nuevo-juego'); // El que estaba fuera (ahora reutilizado)
 const botonVolverAJugar = document.getElementById('boton-volver-a-jugar');
 const botonCerrarGanador = document.getElementById('boton-cerrar-ganador');
+const pantallaPregunta = document.getElementById('pantalla-pregunta');
+const tituloPreguntaElem = document.getElementById('titulo-pregunta');
+const textoPreguntaElem = document.getElementById('texto-pregunta');
+const opcionesPreguntaContenedor = document.getElementById('opciones-pregunta');
+// Nota: botonesOpcion se obtiene dinámicamente ahora al mostrar pregunta
+const feedbackPreguntaElem = document.getElementById('feedback-pregunta');
 
 
 // --- Constantes y Variables del Juego ---
@@ -25,6 +29,7 @@ const MARCA_HUGO = 'X';
 const MARCA_SAUL = 'O';
 const PUNTOS_PARA_GANAR = 3;
 let jugadorActual;
+let jugadorQueRespondioPregunta;
 let juegoActivo = false;
 let estadoTablero = ['', '', '', '', '', '', '', '', ''];
 const COMBINACIONES_GANADORAS = [
@@ -34,15 +39,52 @@ const COMBINACIONES_GANADORAS = [
 ];
 let puntajeHugo = 0;
 let puntajeSaul = 0;
+let listaPreguntasDisponibles = [];
+let respuestaCorrectaActual = null;
+
 
 // --- Funciones ---
+
+function cargarPreguntas() {
+    if (typeof preguntasQuiz !== 'undefined' && Array.isArray(preguntasQuiz)) {
+         listaPreguntasDisponibles = JSON.parse(JSON.stringify(preguntasQuiz));
+         console.log("Preguntas cargadas:", listaPreguntasDisponibles.length);
+    } else {
+        console.error("Error: 'preguntasQuiz' no definido. Asegúrate de que preguntas.js se carga antes.");
+        listaPreguntasDisponibles = [];
+    }
+}
 
 function actualizarMarcadorDisplay() {
     puntajeHugoElem.textContent = puntajeHugo;
     puntajeSaulElem.textContent = puntajeSaul;
+
+    // Añadir clase para animación CSS breve (opcional)
+    if (puntajeHugo > parseInt(puntajeHugoElem.textContent) || puntajeSaul > parseInt(puntajeSaulElem.textContent)) {
+        puntajeHugoElem.classList.add('actualizado');
+        puntajeSaulElem.classList.add('actualizado');
+        setTimeout(() => {
+            puntajeHugoElem.classList.remove('actualizado');
+            puntajeSaulElem.classList.remove('actualizado');
+        }, 300); // Duración de la animación
+    }
 }
 
 function actualizarResaltadoFoto() {
+    // Lógica sin cambios...
+     if (!juegoActivo && !pantallaPregunta.classList.contains('oculto')) {
+         if (jugadorQueRespondioPregunta === 'Hugo') {
+             fotoHugoElem.classList.add('activa');
+             fotoSaulElem.classList.remove('activa');
+         } else if (jugadorQueRespondioPregunta === 'Saúl') {
+             fotoSaulElem.classList.add('activa');
+             fotoHugoElem.classList.remove('activa');
+         } else {
+             fotoHugoElem.classList.remove('activa');
+             fotoSaulElem.classList.remove('activa');
+         }
+         return;
+    }
     if (!juegoActivo) {
         fotoHugoElem.classList.remove('activa');
         fotoSaulElem.classList.remove('activa');
@@ -58,8 +100,11 @@ function actualizarResaltadoFoto() {
 }
 
 function iniciarRonda() {
+    // Lógica sin cambios...
     estadoTablero = ['', '', '', '', '', '', '', '', ''];
     juegoActivo = true;
+    respuestaCorrectaActual = null;
+    jugadorQueRespondioPregunta = null;
 
     if (puntajeHugo === 0 && puntajeSaul === 0 || Math.random() < 0.5 ) {
          const indiceAleatorio = Math.floor(Math.random() * JUGADORES.length);
@@ -69,21 +114,20 @@ function iniciarRonda() {
          jugadorActual = JUGADORES[indiceAleatorio];
     }
 
-    // Asegurar visibilidad correcta de elementos al iniciar ronda
     pantallaInicial.classList.add('oculto');
-    pantallaGanador.classList.add('oculto'); // Ocultar pantalla ganador si estaba visible
+    pantallaGanador.classList.add('oculto');
+    pantallaPregunta.classList.add('oculto');
     juegoContenedor.classList.remove('oculto');
-    botonReiniciar.classList.add('oculto'); // Ocultar "Siguiente Ronda"
-    botonNuevoJuego.classList.add('oculto'); // Ocultar "Nuevo Juego Completo"
-    botonVolverAJugar.classList.add('oculto'); // Ocultar botón específico de pantalla ganador
-    botonCerrarGanador.classList.add('oculto'); // Ocultar botón específico de pantalla ganador
-
+    botonReiniciar.classList.add('oculto');
+    botonNuevoJuego.classList.add('oculto');
+    botonVolverAJugar.classList.add('oculto');
+    botonCerrarGanador.classList.add('oculto');
 
     actualizarMarcadorDisplay();
     actualizarResaltadoFoto();
 
     const marcaInicial = jugadorActual === 'Hugo' ? MARCA_HUGO : MARCA_SAUL;
-    infoTurno.textContent = `Turno de: ${jugadorActual} (${marcaInicial})`;
+    infoTurno.textContent = `¡Turno de ${jugadorActual}! (${marcaInicial})`; // Mensaje más directo
 
     const tablero = document.getElementById('tablero');
     const celdasActuales = tablero.querySelectorAll('.celda');
@@ -100,8 +144,8 @@ function iniciarRonda() {
     console.log(`Ronda iniciada. Empieza: ${jugadorActual}. Marcador: Hugo ${puntajeHugo} - Saúl ${puntajeSaul}`);
 }
 
-
 function manejarClickCelda(evento) {
+    // Añadir clase para estilo específico X/O
     if (!juegoActivo) return;
     const celdaClickeada = evento.target;
     const celdaTarget = celdaClickeada.closest('.celda');
@@ -110,8 +154,10 @@ function manejarClickCelda(evento) {
     if (estadoTablero[indiceCelda] !== '') return;
 
     const marcaActual = jugadorActual === 'Hugo' ? MARCA_HUGO : MARCA_SAUL;
+    const claseMarca = (marcaActual === MARCA_HUGO) ? 'x' : 'o'; // Clase para CSS
     estadoTablero[indiceCelda] = marcaActual;
-    celdaTarget.innerHTML = `<span class="marca-animada">${marcaActual}</span>`;
+    // Aplicar clase para estilo y animación
+    celdaTarget.innerHTML = `<span class="marca-animada ${claseMarca}">${marcaActual}</span>`;
     celdaTarget.style.cursor = 'default';
 
     console.log(`Celda ${indiceCelda} clickeada por ${jugadorActual}. Marca: ${marcaActual}`);
@@ -127,8 +173,7 @@ function manejarClickCelda(evento) {
     cambiarTurno();
 }
 
-
-function comprobarVictoria(marca) {
+function comprobarVictoria(marca) { /* ... (sin cambios) ... */
     const celdasDOM = document.querySelectorAll('.celda');
     for (const combinacion of COMBINACIONES_GANADORAS) {
         const [a, b, c] = combinacion;
@@ -140,115 +185,191 @@ function comprobarVictoria(marca) {
     return false;
 }
 
-function comprobarEmpate() {
+function comprobarEmpate() { /* ... (sin cambios) ... */
     return estadoTablero.every(celda => celda !== '');
 }
 
-function cambiarTurno() {
+function cambiarTurno() { /* ... (sin cambios) ... */
     jugadorActual = jugadorActual === JUGADORES[0] ? JUGADORES[1] : JUGADORES[0];
     const marcaSiguiente = jugadorActual === 'Hugo' ? MARCA_HUGO : MARCA_SAUL;
-    infoTurno.textContent = `Turno de: ${jugadorActual} (${marcaSiguiente})`;
+    infoTurno.textContent = `¡Turno de ${jugadorActual}! (${marcaSiguiente})`;
     actualizarResaltadoFoto();
     console.log(`Turno cambiado a: ${jugadorActual}`);
 }
 
 function finalizarJuego(esEmpate) {
+    // Lógica sin cambios...
     juegoActivo = false;
-    actualizarResaltadoFoto();
-
-     const celdasFinalizadas = document.querySelectorAll('.celda');
-     celdasFinalizadas.forEach(celda => {
+    const celdasFinalizadas = document.querySelectorAll('.celda');
+    celdasFinalizadas.forEach(celda => {
          celda.style.cursor = 'default';
-     });
+    });
 
     if (esEmpate) {
-        infoTurno.textContent = "¡Empate en esta ronda!";
+        infoTurno.textContent = "¡Oh! ¡Empate en esta ronda! 🤝";
         console.log("Ronda finalizada: Empate.");
-        botonReiniciar.classList.remove('oculto'); // Mostrar "Siguiente Ronda"
+        actualizarResaltadoFoto();
+        botonReiniciar.classList.remove('oculto');
     } else {
-        infoTurno.textContent = `¡${jugadorActual} gana la ronda! 🎉`;
-        console.log(`Ronda finalizada: Ganador ${jugadorActual}.`);
-        if (jugadorActual === 'Hugo') {
+        infoTurno.textContent = `¡Bien hecho ${jugadorActual}! 👍 Responde para ganar el punto...`;
+        console.log(`Ronda finalizada: Ganador ${jugadorActual}. Esperando pregunta.`);
+        jugadorQueRespondioPregunta = jugadorActual;
+        actualizarResaltadoFoto();
+        setTimeout(() => {
+            mostrarPregunta();
+        }, 1800);
+    }
+}
+
+function mostrarPregunta() {
+     // Obtener los botones de opción *aquí*, después de que el HTML esté listo
+    const botonesOpcionActuales = opcionesPreguntaContenedor.querySelectorAll('.opcion-btn');
+
+    if (listaPreguntasDisponibles.length === 0) {
+        console.warn("No quedan preguntas disponibles.");
+        feedbackPreguntaElem.textContent = "¡Uy! Se acabaron las preguntas por ahora.";
+        feedbackPreguntaElem.className = 'feedback-quiz';
+        feedbackPreguntaElem.classList.remove('oculto');
+        setTimeout(() => {
+            feedbackPreguntaElem.classList.add('oculto');
+            botonReiniciar.classList.remove('oculto');
+            actualizarResaltadoFoto();
+        }, 2500);
+        return;
+    }
+
+    const indicePregunta = Math.floor(Math.random() * listaPreguntasDisponibles.length);
+    const preguntaData = listaPreguntasDisponibles.splice(indicePregunta, 1)[0];
+    respuestaCorrectaActual = preguntaData.respuestaCorrecta;
+
+    tituloPreguntaElem.textContent = `🧠 ¡Pregunta para ${jugadorQueRespondioPregunta}! 🧠`;
+    textoPreguntaElem.textContent = preguntaData.pregunta;
+    feedbackPreguntaElem.classList.add('oculto');
+
+    botonesOpcionActuales.forEach((boton, index) => {
+        boton.textContent = preguntaData.opciones[index];
+        boton.disabled = false;
+        boton.className = 'opcion-btn'; // Resetear clases
+
+        // Limpiar listeners y añadir nuevo (clonación)
+        const botonClonado = boton.cloneNode(true);
+        boton.replaceWith(botonClonado);
+        // Asegurarse de que la referencia es al nodo en el DOM
+        opcionesPreguntaContenedor.querySelectorAll('.opcion-btn')[index].addEventListener('click', manejarRespuestaPregunta);
+    });
+
+    pantallaPregunta.classList.remove('oculto');
+}
+
+
+function manejarRespuestaPregunta(evento) {
+    const botonClickeado = evento.target;
+    const indiceSeleccionado = parseInt(botonClickeado.getAttribute('data-index'));
+    const botonesOpcionActuales = opcionesPreguntaContenedor.querySelectorAll('.opcion-btn'); // Obtener de nuevo
+
+    botonesOpcionActuales.forEach(boton => boton.disabled = true);
+
+    const esCorrecta = (indiceSeleccionado === respuestaCorrectaActual);
+
+    if (esCorrecta) {
+        botonClickeado.classList.add('correcta');
+        feedbackPreguntaElem.textContent = "✅ ¡Correctísimo! +1 Punto ✨";
+        feedbackPreguntaElem.className = 'feedback-quiz correcto';
+    } else {
+        botonClickeado.classList.add('incorrecta');
+        if (botonesOpcionActuales[respuestaCorrectaActual]) {
+             botonesOpcionActuales[respuestaCorrectaActual].classList.add('correcta'); // Mostrar la correcta
+        }
+        feedbackPreguntaElem.textContent = `❌ ¡Ohh! La correcta era: ${botonesOpcionActuales[respuestaCorrectaActual]?.textContent || '?'}`;
+        feedbackPreguntaElem.className = 'feedback-quiz incorrecto';
+    }
+    feedbackPreguntaElem.classList.remove('oculto');
+
+    setTimeout(() => {
+        procesarResultadoPregunta(esCorrecta);
+    }, 2000); // Más tiempo para leer feedback
+}
+
+function procesarResultadoPregunta(fueCorrecta) {
+    // Lógica sin cambios...
+    pantallaPregunta.classList.add('oculto');
+    actualizarResaltadoFoto();
+
+    if (fueCorrecta) {
+        if (jugadorQueRespondioPregunta === 'Hugo') {
             puntajeHugo++;
-        } else {
+        } else if (jugadorQueRespondioPregunta === 'Saúl') {
             puntajeSaul++;
         }
         actualizarMarcadorDisplay();
-        console.log(`Marcador actualizado: Hugo ${puntajeHugo} - Saúl ${puntajeSaul}`);
+        console.log(`Respuesta correcta. Marcador: Hugo ${puntajeHugo} - Saúl ${puntajeSaul}`);
 
         if (puntajeHugo === PUNTOS_PARA_GANAR || puntajeSaul === PUNTOS_PARA_GANAR) {
-            console.log(`¡JUEGO TERMINADO! Ganador: ${jugadorActual}`);
-            setTimeout(() => {
-                 mostrarGanadorDelJuego(jugadorActual);
-            }, 1500); // Espera para mostrar pantalla ganador
-
+            console.log(`¡JUEGO TERMINADO POR PUNTOS! Ganador: ${jugadorQueRespondioPregunta}`);
+            mostrarGanadorDelJuego(jugadorQueRespondioPregunta);
         } else {
-            botonReiniciar.classList.remove('oculto'); // Mostrar "Siguiente Ronda"
+            botonReiniciar.classList.remove('oculto');
         }
-    }
-}
-
-/**
- * Muestra la pantalla de ganador del juego completo con los nuevos botones.
- */
-function mostrarGanadorDelJuego(ganador) {
-    textoGanadorElem.textContent = `¡EL CAMPEÓN ES ${ganador.toUpperCase()}!`;
-    nombreGanadorElem.textContent = ganador.toUpperCase();
-
-    if (ganador === 'Hugo') {
-        fotoGanadorElem.src = 'img/jugadores/hugo.png';
-        fotoGanadorElem.alt = 'Foto Hugo';
     } else {
-        fotoGanadorElem.src = 'img/jugadores/saul.png';
-        fotoGanadorElem.alt = 'Foto Saúl';
+        console.log("Respuesta incorrecta. No se suma punto.");
+        botonReiniciar.classList.remove('oculto');
     }
 
-    juegoContenedor.classList.add('oculto'); // Ocultar juego
-    pantallaGanador.classList.remove('oculto'); // Mostrar pantalla ganador
-
-    // Gestionar botones: Ocultar los viejos, mostrar los nuevos de esta pantalla
-    botonNuevoJuego.classList.add('oculto');
-    botonReiniciar.classList.add('oculto');
-    botonVolverAJugar.classList.remove('oculto'); // Mostrar "Volver a Jugar"
-    botonCerrarGanador.classList.remove('oculto'); // Mostrar "Cerrar"
+    respuestaCorrectaActual = null;
+    jugadorQueRespondioPregunta = null;
 }
 
-/**
- * Reinicia todo para un juego completamente nuevo.
- */
+function mostrarGanadorDelJuego(ganador) {
+    // Lógica sin cambios...
+    textoGanadorElem.textContent = `🏆 ¡EL CAMPEÓN ES ${ganador.toUpperCase()}! 🏆`; // Con Emojis
+    nombreGanadorElem.textContent = ganador.toUpperCase();
+    fotoGanadorElem.src = (ganador === 'Hugo') ? 'img/jugadores/hugo.png' : 'img/jugadores/saul.png';
+    fotoGanadorElem.alt = `Foto ${ganador}`;
+
+    juegoContenedor.classList.add('oculto');
+    pantallaPregunta.classList.add('oculto');
+    pantallaGanador.classList.remove('oculto');
+
+    botonNuevoJuego.classList.add('oculto'); // Asegurarse de ocultar este
+    botonReiniciar.classList.add('oculto');
+    botonVolverAJugar.classList.remove('oculto');
+    botonCerrarGanador.classList.remove('oculto');
+
+    // Aquí podrías iniciar animación de confeti si usas JS
+    // iniciarConfeti();
+}
+
 function iniciarNuevoJuegoCompleto() {
+    // Lógica sin cambios...
     console.log("Iniciando nuevo juego completo...");
     puntajeHugo = 0;
     puntajeSaul = 0;
-    // iniciarRonda ya actualiza display y gestiona botones/pantallas
+    cargarPreguntas();
 
-    // Asegurarse de ocultar la pantalla de ganador explícitamente
     pantallaGanador.classList.add('oculto');
-    // Asegurarse de ocultar los botones de la pantalla de ganador
+    pantallaPregunta.classList.add('oculto');
     botonVolverAJugar.classList.add('oculto');
     botonCerrarGanador.classList.add('oculto');
 
-
-    iniciarRonda(); // Iniciar la primera ronda del nuevo juego
+    iniciarRonda();
 }
 
-/**
- * NUEVA FUNCIÓN: Cierra la pantalla de ganador y vuelve a la pantalla inicial.
- */
 function cerrarPantallaGanador() {
+    // Lógica sin cambios...
     console.log("Cerrando pantalla de ganador y volviendo al inicio.");
-    pantallaGanador.classList.add('oculto'); // Ocultar pantalla ganador
-    juegoContenedor.classList.add('oculto'); // Asegurar que el juego también esté oculto
-    pantallaInicial.classList.remove('oculto'); // Mostrar pantalla inicial
+    pantallaGanador.classList.add('oculto');
+    juegoContenedor.classList.add('oculto');
+    pantallaPregunta.classList.add('oculto');
+    pantallaInicial.classList.remove('oculto');
 
-    // Resetear puntuaciones al cerrar
     puntajeHugo = 0;
     puntajeSaul = 0;
-    actualizarMarcadorDisplay(); // Mostrar 0-0 en el marcador (aunque esté oculto)
+    actualizarMarcadorDisplay();
 }
 
 
 function resaltarCeldasGanadoras(combinacion, celdasDOM) {
+    // Lógica sin cambios...
     combinacion.forEach(indice => {
         if(celdasDOM && celdasDOM[indice]) {
             celdasDOM[indice].classList.add('ganadora');
@@ -258,15 +379,13 @@ function resaltarCeldasGanadoras(combinacion, celdasDOM) {
     });
 }
 
-
 // --- Event Listeners Iniciales ---
-botonComenzar.addEventListener('click', iniciarRonda);
-botonReiniciar.addEventListener('click', iniciarRonda); // "Siguiente Ronda"
-// botonNuevoJuego ya no necesita listener aquí, se reemplaza su función
-
-// NUEVOS LISTENERS para los botones de la pantalla de ganador
+botonComenzar.addEventListener('click', () => {
+    cargarPreguntas();
+    iniciarRonda();
+});
+botonReiniciar.addEventListener('click', iniciarRonda);
 botonVolverAJugar.addEventListener('click', iniciarNuevoJuegoCompleto);
 botonCerrarGanador.addEventListener('click', cerrarPantallaGanador);
-
 
 // --- Fin del script ---
