@@ -19,7 +19,7 @@ const fotoSaulElem = document.getElementById('foto-saul');
 
 // --- Constantes y Variables del Juego ---
 const JUGADORES = ['Hugo', 'Saúl'];
-const FICHAS_DISPONIBLES = ['X.png', 'O.png', 'pinar.png', 'torremolinos.png'];
+const FICHAS_DISPONIBLES = ['X.png', 'O.png', 'pinar.png', 'torremolinos.png', 'andalucia.png','barca.png','españa.png','local.png','madrid.png','nacional.png','sevilla.png'];
 const RUTA_FICHAS = 'img/fichas/';
 
 let jugadorActual; // Quién tiene el turno AHORA ('Hugo' o 'Saúl')
