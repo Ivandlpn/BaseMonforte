@@ -76,44 +76,44 @@ function manejarSeleccionFicha(evento) {
         fichaElegidaSaulImg.src = RUTA_FICHAS + fichaSaul;
         console.log("Ambos jugadores han elegido. Iniciando juego...");
         pantallaSeleccion.classList.add('oculto');
-        iniciarJuego();
+        iniciarJuego(); // Llama a iniciar la partida individual
     }
 }
 
 /** Inicia el proceso de selección de fichas (y resetea puntajes si se indica) */
 function iniciarProcesoSeleccion(reiniciarPuntajes = false) {
-    console.log(`Iniciando proceso de selección. Reiniciar puntajes: ${reiniciarPuntajes}`);
+    console.log(`Iniciando selección. Reiniciar puntajes: ${reiniciarPuntajes}`);
     if (reiniciarPuntajes) {
         puntajeHugo = 0;
         puntajeSaul = 0;
         console.log("Puntajes del partido reseteados a 0.");
     }
 
-    // Resetear variables de estado
+    // Resetear variables de estado de juego y selección
     fichaHugo = null;
     fichaSaul = null;
     juegoActivo = false;
     procesandoClick = false;
     estadoTablero = [null, null, null, null, null, null, null, null, null];
 
-    // Actualizar UI para selección
+    // UI: Resetear selección
     fichasElegidasContenedor.classList.add('oculto');
     fichaElegidaHugoImg.src = "";
     fichaElegidaSaulImg.src = "";
-    jugadorSeleccionando = JUGADORES[0];
+    jugadorSeleccionando = JUGADORES[0]; // Siempre empieza Hugo a elegir
     tituloSeleccionElem.textContent = `Hola Hugo y Saúl`;
     instruccionSeleccionElem.textContent = `Elige tu ficha, ${jugadorSeleccionando}`;
-    mostrarFichasParaSeleccion();
+    mostrarFichasParaSeleccion(); // Mostrar fichas actualizadas
 
-    // Gestionar visibilidad de pantallas
+    // UI: Gestionar pantallas y botón
     pantallaInicial.classList.add('oculto');
     juegoContenedor.classList.add('oculto');
     pantallaSeleccion.classList.remove('oculto');
-    botonReiniciar.classList.add('oculto'); // Ocultar botón reiniciar siempre al empezar selección
-    infoTurno.classList.remove('partido-ganado'); // Quitar estilo especial si lo tenía
+    botonReiniciar.classList.add('oculto');
+    infoTurno.classList.remove('partido-ganado'); // Quitar estilo especial
 
     actualizarMarcadorDisplay(); // Mostrar puntajes (reseteados o no)
-    actualizarResaltadoFoto(); // Quitar resaltado de fotos
+    actualizarResaltadoFoto(); // Quitar resaltado fotos
 }
 
 /** Actualiza la visualización del marcador (puntajes). */
@@ -124,12 +124,12 @@ function actualizarMarcadorDisplay() {
 
 /** Resalta la foto del jugador activo y quita el resaltado del otro. */
 function actualizarResaltadoFoto() {
-    if (!juegoActivo) { // Si juego NO está activo, quitar ambos
+    if (!juegoActivo) { // Si el juego NO está activo, quitar ambos
          fotoHugoElem.classList.remove('activa');
          fotoSaulElem.classList.remove('activa');
          return;
     }
-    // Si juego activo, resaltar el actual
+    // Si el juego SÍ está activo, resaltar el actual
     if (jugadorActual === JUGADORES[0]) {
         fotoHugoElem.classList.add('activa');
         fotoSaulElem.classList.remove('activa');
@@ -152,11 +152,11 @@ function iniciarJuego() {
     const indiceAleatorio = Math.floor(Math.random() * JUGADORES.length);
     jugadorActual = JUGADORES[indiceAleatorio];
 
-    botonReiniciar.classList.add('oculto'); // Ocultar botón al inicio de partida
-    infoTurno.classList.remove('partido-ganado'); // Asegurar quitar estilo de victoria de partido
+    botonReiniciar.classList.add('oculto');
+    infoTurno.classList.remove('partido-ganado'); // Asegurar quitar estilo
 
-    actualizarMarcadorDisplay(); // Mostrar puntajes actuales
-    actualizarResaltadoFoto(); // Resaltar foto del primer jugador
+    actualizarMarcadorDisplay();
+    actualizarResaltadoFoto(); // Resaltar al que empieza
 
     infoTurno.textContent = `¡Empieza ${jugadorActual}! Te toca.`;
 
@@ -164,11 +164,10 @@ function iniciarJuego() {
     celdas.forEach(celda => {
         celda.innerHTML = '';
         celda.classList.remove('ganadora');
-        celda.removeEventListener('click', manejarClickCelda); // Limpiar listener viejo
-        celda.addEventListener('click', manejarClickCelda, { once: true }); // Añadir nuevo con once:true
+        celda.removeEventListener('click', manejarClickCelda); // Limpiar siempre por seguridad
+        celda.addEventListener('click', manejarClickCelda, { once: true }); // Re-añadir con once
     });
-
-    console.log(`Partida iniciada. Empieza: ${jugadorActual}. Fichas: Hugo=${fichaHugo}, Saúl=${fichaSaul}`);
+    console.log(`Partida iniciada. Empieza: ${jugadorActual}.`);
 }
 
 /** Maneja el evento de clic en una celda del tablero */
@@ -177,14 +176,13 @@ function manejarClickCelda(evento) {
         console.log(`Clic ignorado: juegoActivo=${juegoActivo}, procesandoClick=${procesandoClick}`);
         return;
     }
-    procesandoClick = true; // Bloquear clics
+    procesandoClick = true;
 
     let celdaClickeada = evento.target;
     if (celdaClickeada.tagName === 'IMG' && celdaClickeada.parentElement.classList.contains('celda')) {
         celdaClickeada = celdaClickeada.parentElement;
     }
     if (!celdaClickeada.classList.contains('celda') || !celdaClickeada.hasAttribute('data-index')) {
-        console.warn("Clic inválido.");
         procesandoClick = false; return;
     }
     const indiceCelda = parseInt(celdaClickeada.getAttribute('data-index'));
@@ -192,8 +190,7 @@ function manejarClickCelda(evento) {
     if (estadoTablero[indiceCelda] !== null) {
         console.warn(`Celda ${indiceCelda} ya ocupada.`);
         procesandoClick = false;
-        // Listener ya se quitó con {once: true}, no es necesario quitarlo de nuevo
-        return;
+        return; // {once:true} debería prevenir esto, pero por si acaso
     }
 
     const jugadorQueJugo = jugadorActual;
@@ -247,9 +244,9 @@ function cambiarTurno() {
 function finalizarJuego(esEmpate) {
     console.log(`Finalizando juego. Empate: ${esEmpate}`);
     juegoActivo = false;
-    procesandoClick = false; // Asegurar desbloqueo al finalizar
+    procesandoClick = false; // Asegurar desbloqueo
 
-    // Quitar listeners restantes (aunque {once: true} debería haberlos quitado)
+    // Quitar listeners restantes (como doble seguridad a {once: true})
     celdas.forEach(celda => {
         celda.removeEventListener('click', manejarClickCelda);
     });
@@ -262,7 +259,7 @@ function finalizarJuego(esEmpate) {
         mensajeFinal = "¡Vaya! Partida en empate.";
         console.log("Partida finalizada: Empate.");
     } else {
-        // Ganador de la PARTIDA individual (el que acaba de jugar)
+        // Ganador de la PARTIDA individual (el que hizo el último movimiento)
         const ganadorPartida = jugadorActual;
         mensajeFinal = `¡${ganadorPartida} gana la partida!`;
         console.log(`Partida finalizada: Ganador ${ganadorPartida}.`);
@@ -287,10 +284,9 @@ function finalizarJuego(esEmpate) {
 
     infoTurno.textContent = mensajeFinal;
     botonReiniciar.classList.remove('oculto'); // Mostrar botón "Jugar de Nuevo"
-    // El listener del botón reiniciar ya está añadido globalmente y llamará a manejarClickReiniciar
 }
 
-// Wrapper para el clic de reinicio que decide si resetear puntajes
+// Función que se ejecuta al hacer clic en "Jugar de Nuevo"
 function manejarClickReiniciar() {
     console.log("Botón Reiniciar presionado.");
     // Comprobar si el partido había terminado (puntaje llegó al límite)
@@ -307,10 +303,10 @@ function resaltarCeldasGanadoras(combinacion) {
     });
 }
 
-// --- Event Listeners Iniciales ---
+// --- Event Listeners Iniciales (Se añaden una sola vez) ---
 // Al empezar desde portada, SIEMPRE resetear puntajes
 botonComenzar.addEventListener('click', () => iniciarProcesoSeleccion(true));
-// El botón reiniciar ahora SIEMPRE llama a manejarClickReiniciar
+// El botón reiniciar SIEMPRE llama a manejarClickReiniciar
 botonReiniciar.addEventListener('click', manejarClickReiniciar);
 
 // --- Fin del script ---
