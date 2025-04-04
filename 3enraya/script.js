@@ -19,8 +19,9 @@ const fotoSaulElem = document.getElementById('foto-saul');
 
 // --- Constantes y Variables del Juego ---
 const JUGADORES = ['Hugo', 'Saúl'];
-// Lista actualizada de fichas
-const FICHAS_DISPONIBLES = ['X.png', 'O.png', 'pinar.png', 'torremolinos.png','malaga.png','andalucia.png','barca.png','españa.png','local.png','madrid.png','nacional.png','sevilla.png'];
+// ===== ¡LÍNEA MODIFICADA! =====
+const FICHAS_DISPONIBLES = ['X.png', 'O.png', 'pinar.png', 'torremolinos.png', 'andalucia.png','barca.png','españa.png','local.png','madrid.png','nacional.png','sevilla.png'];
+// ==============================
 const RUTA_FICHAS = 'img/fichas/';
 
 let jugadorActual;
@@ -31,7 +32,7 @@ let juegoActivo = false;
 let estadoTablero = [null, null, null, null, null, null, null, null, null];
 let puntajeHugo = 0;
 let puntajeSaul = 0;
-let procesandoClick = false; // Dejamos esto como estaba en tu versión
+let procesandoClick = false;
 
 // --- Funciones ---
 
@@ -81,11 +82,10 @@ function manejarSeleccionFicha(evento) {
 
 /** Inicia el proceso de selección de fichas */
 function iniciarProcesoSeleccion() {
-    // NO se resetean puntajes aquí en esta versión
     fichaHugo = null;
     fichaSaul = null;
     juegoActivo = false;
-    procesandoClick = false; // Resetear flag
+    procesandoClick = false;
     estadoTablero = [null, null, null, null, null, null, null, null, null];
 
     fichasElegidasContenedor.classList.add('oculto');
@@ -101,10 +101,7 @@ function iniciarProcesoSeleccion() {
     juegoContenedor.classList.add('oculto');
     pantallaSeleccion.classList.remove('oculto');
     botonReiniciar.classList.add('oculto');
-    // infoTurno.classList.remove('partido-ganado'); // No existe esta clase aquí
-    actualizarResaltadoFoto(); // Quitar resaltado
-    // Se muestran los puntajes que hubiera de antes
-    actualizarMarcadorDisplay();
+    actualizarResaltadoFoto();
 }
 
 
@@ -116,14 +113,17 @@ function actualizarMarcadorDisplay() {
 
 /** Resalta la foto del jugador activo y quita el resaltado del otro. */
 function actualizarResaltadoFoto() {
-    fotoHugoElem.classList.remove('activa');
-    fotoSaulElem.classList.remove('activa');
-    if (juegoActivo) {
-        if (jugadorActual === JUGADORES[0]) {
-            fotoHugoElem.classList.add('activa');
-        } else {
-            fotoSaulElem.classList.add('activa');
-        }
+    if (!juegoActivo) {
+         fotoHugoElem.classList.remove('activa');
+         fotoSaulElem.classList.remove('activa');
+         return;
+    }
+    if (jugadorActual === JUGADORES[0]) {
+        fotoHugoElem.classList.add('activa');
+        fotoSaulElem.classList.remove('activa');
+    } else {
+        fotoSaulElem.classList.add('activa');
+        fotoHugoElem.classList.remove('activa');
     }
 }
 
@@ -133,11 +133,10 @@ function iniciarJuego() {
     juegoContenedor.classList.remove('oculto');
     estadoTablero = [null, null, null, null, null, null, null, null, null];
     juegoActivo = true;
-    procesandoClick = false; // Resetear flag
+    procesandoClick = false;
     const indiceAleatorio = Math.floor(Math.random() * JUGADORES.length);
     jugadorActual = JUGADORES[indiceAleatorio];
     botonReiniciar.classList.add('oculto');
-    // infoTurno.classList.remove('partido-ganado'); // No existe esta clase aquí
     actualizarMarcadorDisplay();
     actualizarResaltadoFoto();
     infoTurno.textContent = `¡Empieza ${jugadorActual}! Te toca.`;
@@ -170,7 +169,7 @@ function manejarClickCelda(evento) {
         return;
     }
     const indiceCelda = parseInt(celdaClickeada.getAttribute('data-index'));
-    // console.log(`DEBUG: Click en celda ${indiceCelda}. Jugador ACTUAL: ${jugadorActual}`);
+    console.log(`DEBUG: Click en celda ${indiceCelda}. Jugador ACTUAL: ${jugadorActual}`);
 
     if (estadoTablero[indiceCelda] !== null) {
         console.warn(`DEBUG: Intento de clic en celda ${indiceCelda} ya ocupada por ${estadoTablero[indiceCelda]}`);
@@ -185,23 +184,23 @@ function manejarClickCelda(evento) {
 
     const fichaAColocar = jugadorQueJugo === JUGADORES[0] ? fichaHugo : fichaSaul;
     celdaClickeada.innerHTML = `<img src="${RUTA_FICHAS}${fichaAColocar}" alt="Ficha ${jugadorQueJugo}" class="ficha-en-tablero">`;
-    // console.log(`DEBUG: Celda ${indiceCelda} marcada por ${jugadorQueJugo}. Ficha: ${fichaAColocar}`);
+    console.log(`DEBUG: Celda ${indiceCelda} marcada por ${jugadorQueJugo}. Ficha: ${fichaAColocar}`);
 
     if (comprobarVictoria(jugadorQueJugo)) {
-        // console.log(`DEBUG: Victoria detectada para ${jugadorQueJugo}. Finalizando.`);
+        console.log(`DEBUG: Victoria detectada para ${jugadorQueJugo}. Finalizando.`);
         finalizarJuego(false);
-        return; // Salir después de finalizar
+        return;
     }
     if (comprobarEmpate()) {
-        // console.log(`DEBUG: Empate detectado. Finalizando.`);
+        console.log(`DEBUG: Empate detectado. Finalizando.`);
         finalizarJuego(true);
-        return; // Salir después de finalizar
+        return;
     }
 
-    // console.log(`DEBUG: No hay fin de juego. Llamando a cambiarTurno desde ${jugadorQueJugo}.`);
-    cambiarTurno(); // Cambiar turno SOLO si no hay fin
+    console.log(`DEBUG: No hay fin de juego. Llamando a cambiarTurno desde ${jugadorQueJugo}.`);
+    cambiarTurno();
 
-    procesandoClick = false; // Liberar al final
+    procesandoClick = false;
     console.log("DEBUG: procesandoClick = false (fin de manejo de clic)");
 }
 
@@ -225,38 +224,36 @@ function comprobarEmpate() {
 
 /** Cambia el turno al otro jugador, actualiza mensaje y resalta foto */
 function cambiarTurno() {
-    // console.log(`DEBUG: Entrando a cambiarTurno. Jugador actual ANTES: ${jugadorActual}`);
+    console.log(`DEBUG: Entrando a cambiarTurno. Jugador actual ANTES: ${jugadorActual}`);
     jugadorActual = (jugadorActual === JUGADORES[0]) ? JUGADORES[1] : JUGADORES[0];
     infoTurno.textContent = `Turno de: ${jugadorActual}`;
     actualizarResaltadoFoto();
-    // console.log(`DEBUG: Saliendo de cambiarTurno. Jugador actual DESPUÉS: ${jugadorActual}`);
+    console.log(`DEBUG: Saliendo de cambiarTurno. Jugador actual DESPUÉS: ${jugadorActual}`);
 }
 
 /** Finaliza la partida actual */
 function finalizarJuego(esEmpate) {
-    // console.log(`DEBUG: Entrando a finalizarJuego. Es empate: ${esEmpate}`);
+    console.log(`DEBUG: Entrando a finalizarJuego. Es empate: ${esEmpate}`);
     juegoActivo = false;
-    procesandoClick = false; // Liberar flag
-    // console.log("DEBUG: juegoActivo = false, procesandoClick = false");
+    procesandoClick = false;
+    console.log("DEBUG: juegoActivo = false, procesandoClick = false");
 
     celdas.forEach(celda => {
-        celda.removeEventListener('click', manejarClickCelda); // Quitar listeners
+        celda.removeEventListener('click', manejarClickCelda);
     });
-    actualizarResaltadoFoto(); // Quitar resaltado
+    actualizarResaltadoFoto();
 
     if (esEmpate) {
         infoTurno.textContent = "¡Vaya! Ha sido un empate.";
         console.log("Juego finalizado: Empate.");
     } else {
-        // Mantiene el mensaje original de partida ganada
         infoTurno.textContent = `¡Felicidades ${jugadorActual}! ¡Has ganado! 🎉`;
         console.log(`Juego finalizado: Ganador ${jugadorActual}.`);
-        // Actualiza puntajes como antes
         if (jugadorActual === JUGADORES[0]) { puntajeHugo++; } else { puntajeSaul++; }
         actualizarMarcadorDisplay();
         console.log(`Marcador actualizado: Hugo ${puntajeHugo} - Saúl ${puntajeSaul}`);
     }
-    botonReiniciar.classList.remove('oculto'); // Mostrar botón
+    botonReiniciar.classList.remove('oculto');
 }
 
 /** Añade clase ganadora a las celdas */
@@ -268,7 +265,6 @@ function resaltarCeldasGanadoras(combinacion) {
 }
 
 // --- Event Listeners Iniciales ---
-// Vuelven a la versión original que funcionaba
 botonComenzar.addEventListener('click', iniciarProcesoSeleccion);
 botonReiniciar.addEventListener('click', iniciarProcesoSeleccion);
 
