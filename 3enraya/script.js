@@ -23,6 +23,11 @@ const feedbackPreguntaElem = document.getElementById('feedback-pregunta');
 const pantallaEjercicio = document.getElementById('pantalla-ejercicio');
 const nombreEjercicioElem = document.getElementById('nombre-ejercicio');
 const contadorEjercicioElem = document.getElementById('contador-ejercicio');
+const botonAbrirMensaje = document.getElementById('boton-abrir-mensaje');
+const modalMensaje = document.getElementById('modal-mensaje');
+const botonCerrarMensaje = document.getElementById('boton-cerrar-mensaje');
+const formMensaje = document.getElementById('form-mensaje');
+const mensajeFeedback = document.getElementById('mensaje-feedback');
 
 // --- Constantes y Variables del Juego ---
 const JUGADORES = ['Hugo', 'Saúl'];
@@ -39,8 +44,8 @@ const COMBINACIONES_GANADORAS = [
 let puntajeHugo = 0;
 let puntajeSaul = 0;
 let listaPreguntasDisponibles = [];
-let respuestaCorrectaActual = null; // Puede ser índice (número) o booleano
-let tipoPreguntaActual = null; // 'multiple' o 'vf'
+let respuestaCorrectaActual = null;
+let tipoPreguntaActual = null;
 let listaEjerciciosDisponibles = [];
 let intervaloContadorEjercicio = null;
 const DURACION_EJERCICIO = 15; // O 10
@@ -86,6 +91,7 @@ function actualizarResaltadoFoto() {
     const pantallaPreguntaVisible = !pantallaPregunta.classList.contains('oculto');
     const pantallaEjercicioVisible = !pantallaEjercicio.classList.contains('oculto');
 
+    // Mantener resaltado si está en pantalla de pregunta o ejercicio
     if (!juegoActivo && (pantallaPreguntaVisible || pantallaEjercicioVisible)) {
          const jugadorAResaltar = jugadorQueRespondioPregunta || jugadorActual;
          if (jugadorAResaltar === 'Hugo') {
@@ -94,17 +100,19 @@ function actualizarResaltadoFoto() {
          } else if (jugadorAResaltar === 'Saúl') {
              fotoSaulElem.classList.add('activa');
              fotoHugoElem.classList.remove('activa');
-         } else {
+         } else { // Si no hay jugador definido (ej. empate antes de ejercicio)
              fotoHugoElem.classList.remove('activa');
              fotoSaulElem.classList.remove('activa');
          }
          return;
     }
+    // Quitar resaltado si el juego no está activo y no hay modal activo
     if (!juegoActivo) {
         fotoHugoElem.classList.remove('activa');
         fotoSaulElem.classList.remove('activa');
         return;
     }
+    // Resaltar jugador activo durante el juego
     if (jugadorActual === 'Hugo') {
         fotoHugoElem.classList.add('activa');
         fotoSaulElem.classList.remove('activa');
@@ -118,7 +126,7 @@ function iniciarRonda() {
     estadoTablero = ['', '', '', '', '', '', '', '', ''];
     juegoActivo = true;
     respuestaCorrectaActual = null;
-    tipoPreguntaActual = null; // Resetear tipo
+    tipoPreguntaActual = null;
     jugadorQueRespondioPregunta = null;
     if (intervaloContadorEjercicio) clearInterval(intervaloContadorEjercicio);
 
@@ -130,12 +138,15 @@ function iniciarRonda() {
          jugadorActual = JUGADORES[indiceAleatorio];
     }
 
-    // Gestionar visibilidad
+    // Ocultar todas las pantallas superpuestas
     pantallaInicial.classList.add('oculto');
     pantallaGanador.classList.add('oculto');
     pantallaPregunta.classList.add('oculto');
     pantallaEjercicio.classList.add('oculto');
-    juegoContenedor.classList.remove('oculto');
+    modalMensaje.classList.add('oculto'); // Asegurarse de ocultar el modal de mensaje también
+    juegoContenedor.classList.remove('oculto'); // Mostrar contenedor del juego
+
+    // Ocultar botones que no aplican al inicio de ronda
     botonReiniciar.classList.add('oculto');
     botonNuevoJuego.classList.add('oculto');
     botonVolverAJugar.classList.add('oculto');
@@ -147,6 +158,7 @@ function iniciarRonda() {
     const marcaInicial = jugadorActual === 'Hugo' ? MARCA_HUGO : MARCA_SAUL;
     infoTurno.textContent = `¡Turno de ${jugadorActual}! (${marcaInicial})`;
 
+    // Limpiar y preparar tablero
     const tablero = document.getElementById('tablero');
     const celdasActuales = tablero.querySelectorAll('.celda');
     celdasActuales.forEach(celda => {
@@ -162,17 +174,17 @@ function iniciarRonda() {
 
 function manejarClickCelda(evento) {
     if (!juegoActivo) return;
-    const celdaClickeada = evento.target;
-    const celdaTarget = celdaClickeada.closest('.celda');
-    if (!celdaTarget || !celdaTarget.hasAttribute('data-index')) return;
-    const indiceCelda = parseInt(celdaTarget.getAttribute('data-index'));
-    if (estadoTablero[indiceCelda] !== '') return;
+    const celdaTarget = evento.target.closest('.celda'); // Más robusto
+    if (!celdaTarget || !celdaTarget.hasAttribute('data-index') || estadoTablero[parseInt(celdaTarget.dataset.index)] !== '') {
+        return; // Salir si no es una celda válida o ya está ocupada
+    }
+    const indiceCelda = parseInt(celdaTarget.dataset.index);
 
     const marcaActual = jugadorActual === 'Hugo' ? MARCA_HUGO : MARCA_SAUL;
     const claseMarca = (marcaActual === MARCA_HUGO) ? 'x' : 'o';
     estadoTablero[indiceCelda] = marcaActual;
     celdaTarget.innerHTML = `<span class="marca-animada ${claseMarca}">${marcaActual}</span>`;
-    celdaTarget.style.cursor = 'default';
+    celdaTarget.style.cursor = 'default'; // Ya no es clicable esta ronda
 
     console.log(`Celda ${indiceCelda} clickeada por ${jugadorActual}. Marca: ${marcaActual}`);
 
@@ -242,7 +254,7 @@ function mostrarEjercicioPausa() {
              console.error("No se pudieron cargar ejercicios. Saltando pausa activa.");
              botonReiniciar.classList.remove('oculto');
              infoTurno.textContent = "¡Empate! Algo falló con la pausa activa...";
-             actualizarResaltadoFoto(); // Quitar resaltado si falla
+             actualizarResaltadoFoto();
              return;
         }
     }
@@ -272,14 +284,11 @@ function iniciarContadorEjercicio(segundos) {
             infoTurno.textContent = "¡Energía recargada! 🔥 ¿Listos para la siguiente?";
             botonReiniciar.classList.remove('oculto');
             console.log("Pausa activa completada.");
-            actualizarResaltadoFoto(); // Quitar resaltado después de la pausa
+            actualizarResaltadoFoto();
         }
     }, 1000);
 }
 
-/**
- * Muestra la pantalla de pregunta, adaptándose al tipo (Múltiple o V/F).
- */
 function mostrarPregunta() {
     if (listaPreguntasDisponibles.length === 0) {
         console.warn("No quedan preguntas disponibles en este ciclo.");
@@ -299,21 +308,19 @@ function mostrarPregunta() {
 
     const indicePregunta = Math.floor(Math.random() * listaPreguntasDisponibles.length);
     const preguntaData = listaPreguntasDisponibles.splice(indicePregunta, 1)[0];
-    respuestaCorrectaActual = preguntaData.respuestaCorrecta; // Puede ser índice o booleano
-    tipoPreguntaActual = preguntaData.tipo || 'multiple'; // Asume 'multiple' si no se especifica
+    respuestaCorrectaActual = preguntaData.respuestaCorrecta;
+    tipoPreguntaActual = preguntaData.tipo || 'multiple';
 
     tituloPreguntaElem.textContent = `🧠 ¡Pregunta para ${jugadorQueRespondioPregunta}! 🧠`;
     textoPreguntaElem.textContent = preguntaData.pregunta;
     feedbackPreguntaElem.classList.add('oculto');
-    opcionesPreguntaContenedor.innerHTML = ''; // Limpiar opciones anteriores
+    opcionesPreguntaContenedor.innerHTML = '';
 
-    // --- Crear botones según el tipo de pregunta ---
     if (tipoPreguntaActual === 'vf') {
-        // Crear botones Verdadero / Falso
         const botonVerdadero = document.createElement('button');
         botonVerdadero.textContent = 'Verdadero 👍';
         botonVerdadero.className = 'opcion-btn opcion-vf';
-        botonVerdadero.dataset.valor = 'true'; // Guardar valor booleano como string
+        botonVerdadero.dataset.valor = 'true';
         botonVerdadero.addEventListener('click', manejarRespuestaPregunta);
         opcionesPreguntaContenedor.appendChild(botonVerdadero);
 
@@ -323,25 +330,21 @@ function mostrarPregunta() {
         botonFalso.dataset.valor = 'false';
         botonFalso.addEventListener('click', manejarRespuestaPregunta);
         opcionesPreguntaContenedor.appendChild(botonFalso);
-
-    } else { // Tipo 'multiple' (o por defecto)
+    } else {
         preguntaData.opciones.forEach((opcionTexto, index) => {
             const botonOpcion = document.createElement('button');
             botonOpcion.textContent = opcionTexto;
             botonOpcion.className = 'opcion-btn opcion-multiple';
-            botonOpcion.dataset.index = index; // Guardar índice
+            botonOpcion.dataset.index = index;
             botonOpcion.addEventListener('click', manejarRespuestaPregunta);
             opcionesPreguntaContenedor.appendChild(botonOpcion);
         });
     }
-    // --------------------------------------------
 
     pantallaPregunta.classList.remove('oculto');
 }
 
-/**
- * Maneja la respuesta a una pregunta (Múltiple o V/F).
- */
+
 function manejarRespuestaPregunta(evento) {
     const botonClickeado = evento.target;
     const botonesOpcionActuales = Array.from(opcionesPreguntaContenedor.querySelectorAll('.opcion-btn'));
@@ -351,24 +354,20 @@ function manejarRespuestaPregunta(evento) {
     let esCorrecta = false;
     let valorSeleccionado;
 
-    // Determinar si la respuesta es correcta según el tipo de pregunta
     if (tipoPreguntaActual === 'vf') {
-        // Comparar booleano (convertido desde string 'true'/'false')
         valorSeleccionado = (botonClickeado.dataset.valor === 'true');
         esCorrecta = (valorSeleccionado === respuestaCorrectaActual);
-    } else { // Múltiple
+    } else {
         valorSeleccionado = parseInt(botonClickeado.dataset.index);
         esCorrecta = (valorSeleccionado === respuestaCorrectaActual);
     }
 
-    // Feedback visual
     if (esCorrecta) {
         botonClickeado.classList.add('correcta');
         feedbackPreguntaElem.textContent = "✅ ¡Correctísimo! +1 Punto ✨";
         feedbackPreguntaElem.className = 'feedback-quiz correcto';
     } else {
         botonClickeado.classList.add('incorrecta');
-        // Resaltar la respuesta correcta también
         let botonCorrecto;
         if (tipoPreguntaActual === 'vf') {
             botonCorrecto = botonesOpcionActuales.find(btn => (btn.dataset.valor === 'true') === respuestaCorrectaActual);
@@ -383,19 +382,16 @@ function manejarRespuestaPregunta(evento) {
     }
     feedbackPreguntaElem.classList.remove('oculto');
 
-    // Procesar resultado después de pausa
     setTimeout(() => {
         procesarResultadoPregunta(esCorrecta);
     }, 2000);
 }
 
-
 function procesarResultadoPregunta(fueCorrecta) {
     pantallaPregunta.classList.add('oculto');
-    // No quitar resaltado hasta saber si sigue el juego
 
     let mensajeResultado = "";
-    const ganadorDeRonda = jugadorQueRespondioPregunta; // Capturar antes de posible reset
+    const ganadorDeRonda = jugadorQueRespondioPregunta; // Capturar antes de resetear
 
     if (fueCorrecta) {
         if (ganadorDeRonda === 'Hugo') {
@@ -409,32 +405,35 @@ function procesarResultadoPregunta(fueCorrecta) {
         console.log(`Respuesta correcta. Marcador: Hugo ${puntajeHugo} - Saúl ${puntajeSaul}`);
 
         if (puntajeHugo === PUNTOS_PARA_GANAR || puntajeSaul === PUNTOS_PARA_GANAR) {
+            // Juego Terminado
             infoTurno.textContent = mensajeResultado;
              setTimeout(() => {
                 console.log(`¡JUEGO TERMINADO POR PUNTOS! Ganador: ${ganadorDeRonda}`);
-                mostrarGanadorDelJuego(ganadorDeRonda);
+                mostrarGanadorDelJuego(ganadorDeRonda); // Pasar el ganador capturado
             }, 500);
-            // No resetear variables aquí
+            // NO resetear variables aquí
         } else {
+            // Juego Continúa
             infoTurno.textContent = mensajeResultado;
             setTimeout(() => {
                   botonReiniciar.classList.remove('oculto');
                   actualizarResaltadoFoto(); // Quitar resaltado ahora
              }, 1500);
-            // Resetear variables aquí
+            // Resetear variables AQUÍ porque el juego sigue
             respuestaCorrectaActual = null;
             tipoPreguntaActual = null;
             jugadorQueRespondioPregunta = null;
         }
     } else {
-        mensajeResultado = `¡Ups! ${ganadorDeRonda || 'Alguien'} no sumó el punto. 😅`; // Usar ganadorDeRonda
+        // Respuesta Incorrecta (Juego Continúa)
+        mensajeResultado = `¡Ups! ${ganadorDeRonda || 'Alguien'} no sumó el punto. 😅`;
         infoTurno.textContent = mensajeResultado;
         console.log("Respuesta incorrecta. No se suma punto.");
         setTimeout(() => {
              botonReiniciar.classList.remove('oculto');
              actualizarResaltadoFoto(); // Quitar resaltado ahora
          }, 1500);
-         // Resetear variables aquí
+         // Resetear variables AQUÍ porque el juego sigue
          respuestaCorrectaActual = null;
          tipoPreguntaActual = null;
          jugadorQueRespondioPregunta = null;
@@ -491,6 +490,7 @@ function cerrarPantallaGanador() {
     juegoContenedor.classList.add('oculto');
     pantallaPregunta.classList.add('oculto');
     pantallaEjercicio.classList.add('oculto');
+    modalMensaje.classList.add('oculto'); // Asegurar cerrar modal mensaje
     pantallaInicial.classList.remove('oculto');
     puntajeHugo = 0;
     puntajeSaul = 0;
@@ -509,6 +509,67 @@ function resaltarCeldasGanadoras(combinacion, celdasDOM) {
     });
 }
 
+// --- Funciones y Listeners para Modal de Mensaje ---
+
+function abrirModalMensaje() {
+    pantallaGanador.classList.add('oculto');
+    pantallaPregunta.classList.add('oculto');
+    pantallaEjercicio.classList.add('oculto');
+    juegoContenedor.classList.add('oculto');
+    pantallaInicial.classList.add('oculto');
+
+    formMensaje.reset();
+    mensajeFeedback.classList.add('oculto');
+    modalMensaje.classList.remove('oculto');
+}
+
+function cerrarModalMensaje() {
+    modalMensaje.classList.add('oculto');
+    // Volver a mostrar la pantalla inicial por defecto
+    pantallaInicial.classList.remove('oculto');
+}
+
+async function manejarEnvioMensaje(event) {
+    event.preventDefault();
+    const form = event.target;
+    const submitButton = form.querySelector('button[type="submit"]');
+    const formData = new FormData(form);
+
+    mensajeFeedback.textContent = 'Enviando mensaje... ⏳';
+    mensajeFeedback.className = 'mensaje-estado';
+    mensajeFeedback.classList.remove('oculto');
+    submitButton.disabled = true;
+
+    try {
+        const response = await fetch(form.action, {
+            method: form.method,
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+            mensajeFeedback.textContent = '¡Mensaje enviado con éxito! 😊';
+            mensajeFeedback.classList.add('exito');
+            form.reset();
+            setTimeout(cerrarModalMensaje, 2500);
+        } else {
+            const data = await response.json();
+            if (data && data.errors) {
+                mensajeFeedback.textContent = 'Error: ' + data.errors.map(error => error.message).join(', ');
+            } else {
+                mensajeFeedback.textContent = '¡Uy! Hubo un problema al enviar el mensaje.';
+            }
+            mensajeFeedback.classList.add('error');
+            submitButton.disabled = false;
+        }
+    } catch (error) {
+        console.error('Error de red al enviar mensaje:', error);
+        mensajeFeedback.textContent = 'Error de red. Revisa tu conexión e intenta de nuevo.';
+        mensajeFeedback.classList.add('error');
+        submitButton.disabled = false;
+    }
+}
+
 // --- Event Listeners Iniciales ---
 botonComenzar.addEventListener('click', () => {
     cargarPreguntas();
@@ -518,5 +579,8 @@ botonComenzar.addEventListener('click', () => {
 botonReiniciar.addEventListener('click', iniciarRonda);
 botonVolverAJugar.addEventListener('click', iniciarNuevoJuegoCompleto);
 botonCerrarGanador.addEventListener('click', cerrarPantallaGanador);
+botonAbrirMensaje.addEventListener('click', abrirModalMensaje);
+botonCerrarMensaje.addEventListener('click', cerrarModalMensaje);
+formMensaje.addEventListener('submit', manejarEnvioMensaje);
 
 // --- Fin del script ---
