@@ -18,7 +18,115 @@
         <!-- Marcador -->
         <div id="marcador">
              <div class="marcador-jugador">
+                <img src="img/jugadores/hugo.png" alt="Foto Hugo" class="foto-jugador" id="foto-hugo"><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3 en Raya</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet"> -->
+</head>
+<body>
+    <!-- Pantalla Inicial -->
+    <div id="pantalla-inicial">
+        <button id="boton-comenzar">🚀 ¡Comenzar Juego! 🚀</button>
+        <!-- NUEVO: Botón para abrir el modal de mensaje -->
+        <button id="boton-abrir-mensaje" class="boton-mensaje-abrir">✉️ Enviar Mensaje al Tío/Tía</button>
+    </div>
+
+    <!-- Contenedor del Juego (inicialmente oculto) -->
+    <div id="juego-contenedor" class="oculto">
+        <!-- ... (marcador, info-turno, tablero, botones de ronda sin cambios) ... -->
+        <div id="marcador">
+             <div class="marcador-jugador">
                 <img src="img/jugadores/hugo.png" alt="Foto Hugo" class="foto-jugador" id="foto-hugo">
+                <span class="nombre-jugador">HUGO</span>
+                <span class="puntaje-jugador" id="puntaje-hugo" data-last-score="0">0</span>
+            </div>
+            <span class="marcador-separador">:</span>
+            <div class="marcador-jugador">
+                <img src="img/jugadores/saul.png" alt="Foto Saúl" class="foto-jugador" id="foto-saul">
+                <span class="nombre-jugador">SAÚL</span>
+                <span class="puntaje-jugador" id="puntaje-saul" data-last-score="0">0</span>
+            </div>
+        </div>
+        <p id="info-turno">Turno de:</p>
+        <div id="tablero">
+            <div class="celda" data-index="0"></div> <div class="celda" data-index="1"></div> <div class="celda" data-index="2"></div>
+            <div class="celda" data-index="3"></div> <div class="celda" data-index="4"></div> <div class="celda" data-index="5"></div>
+            <div class="celda" data-index="6"></div> <div class="celda" data-index="7"></div> <div class="celda" data-index="8"></div>
+        </div>
+        <button id="boton-reiniciar" class="oculto">🔄 Siguiente Ronda 🔄</button>
+        <button id="boton-nuevo-juego" class="oculto">🌟 Nuevo Juego Completo 🌟</button>
+    </div>
+
+    <!-- PANTALLA: Ganador del Juego -->
+    <div id="pantalla-ganador" class="oculto">
+        <!-- ... (contenido sin cambios) ... -->
+        <div class="confeti-contenedor"></div>
+        <h2 id="texto-ganador">¡EL GANADOR ES...!</h2>
+        <img src="" alt="Foto del Ganador" id="foto-ganador" class="foto-ganador">
+        <p id="nombre-ganador" class="nombre-ganador"></p>
+        <div class="botones-ganador">
+            <button id="boton-volver-a-jugar" class="boton-ganador boton-jugar oculto">🎉 ¡Otra vez! 🎉</button>
+            <button id="boton-cerrar-ganador" class="boton-ganador boton-cerrar oculto">🏠 Salir</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA: Pregunta tipo Test -->
+    <div id="pantalla-pregunta" class="oculto">
+        <!-- ... (contenido sin cambios) ... -->
+         <div class="pregunta-contenido">
+            <h3 id="titulo-pregunta">¡Pregunta para ganar el punto!</h3>
+            <p id="texto-pregunta">Aquí va la pregunta...</p>
+            <div id="opciones-pregunta" class="opciones-quiz"></div>
+            <p id="feedback-pregunta" class="feedback-quiz oculto"></p>
+        </div>
+    </div>
+
+    <!-- PANTALLA: Ejercicio Pausa Activa -->
+    <div id="pantalla-ejercicio" class="oculto">
+        <!-- ... (contenido sin cambios) ... -->
+         <div class="ejercicio-contenido">
+            <h2>¡Pausa Activa! 🤸‍♀️💨</h2>
+            <p id="nombre-ejercicio">¡A moverse!</p>
+            <div id="contador-ejercicio" class="contador">15</div>
+        </div>
+    </div>
+
+    <!-- NUEVO: Modal para Enviar Mensaje -->
+    <div id="modal-mensaje" class="modal oculto">
+        <div class="modal-contenido">
+            <button id="boton-cerrar-mensaje" class="modal-cerrar-btn">×</button>
+            <h3>Escribe tu mensaje para el Tío/Tía</h3>
+            <!-- ¡IMPORTANTE! Cambia la URL en 'action' por tu URL de Formspree -->
+            <form id="form-mensaje" action="https://formspree.io/f/xqapynwb" method="POST">
+                <div class="form-grupo">
+                    <label for="remitente">¿Quién eres?:</label>
+                    <select name="remitente" id="remitente" required>
+                        <option value="">--Selecciona--</option>
+                        <option value="Hugo">Hugo</option>
+                        <option value="Saul">Saúl</option>
+                    </select>
+                </div>
+                <div class="form-grupo">
+                    <label for="mensaje-texto">Tu mensaje:</label>
+                    <textarea name="mensaje" id="mensaje-texto" rows="5" required placeholder="Escribe aquí lo que quieras decir..."></textarea>
+                </div>
+                <button type="submit" class="boton-enviar-msg">🚀 ¡Enviar Mensaje!</button>
+            </form>
+            <p id="mensaje-feedback" class="mensaje-estado oculto"></p>
+        </div>
+    </div>
+
+
+    <!-- Scripts (IMPORTANTE EL ORDEN) -->
+    <script src="preguntas.js"></script>
+    <script src="ejercicios.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
                 <span class="nombre-jugador">HUGO</span>
                 <span class="puntaje-jugador" id="puntaje-hugo" data-last-score="0">0</span>
             </div>
