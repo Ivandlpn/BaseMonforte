@@ -28,9 +28,6 @@ const modalMensaje = document.getElementById('modal-mensaje');
 const botonCerrarMensaje = document.getElementById('boton-cerrar-mensaje');
 const formMensaje = document.getElementById('form-mensaje');
 const mensajeFeedback = document.getElementById('mensaje-feedback');
-const botonMostrarReglas = document.getElementById('boton-mostrar-reglas');
-const modalReglas = document.getElementById('modal-reglas');
-const botonCerrarReglas = document.getElementById('boton-cerrar-reglas');
 
 // --- Constantes y Variables del Juego ---
 const JUGADORES = ['Hugo', 'Saúl'];
@@ -41,7 +38,9 @@ let jugadorActual;
 let jugadorQueRespondioPregunta;
 let juegoActivo = false;
 let estadoTablero = ['', '', '', '', '', '', '', '', ''];
-const COMBINACIONES_GANADORAS = [ [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6] ];
+const COMBINACIONES_GANADORAS = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]
+];
 let puntajeHugo = 0;
 let puntajeSaul = 0;
 let listaPreguntasDisponibles = [];
@@ -92,6 +91,7 @@ function actualizarResaltadoFoto() {
     const pantallaPreguntaVisible = !pantallaPregunta.classList.contains('oculto');
     const pantallaEjercicioVisible = !pantallaEjercicio.classList.contains('oculto');
 
+    // Mantener resaltado si está en pantalla de pregunta o ejercicio
     if (!juegoActivo && (pantallaPreguntaVisible || pantallaEjercicioVisible)) {
          const jugadorAResaltar = jugadorQueRespondioPregunta || jugadorActual;
          if (jugadorAResaltar === 'Hugo') {
@@ -100,17 +100,19 @@ function actualizarResaltadoFoto() {
          } else if (jugadorAResaltar === 'Saúl') {
              fotoSaulElem.classList.add('activa');
              fotoHugoElem.classList.remove('activa');
-         } else {
+         } else { // Si no hay jugador definido (ej. empate antes de ejercicio)
              fotoHugoElem.classList.remove('activa');
              fotoSaulElem.classList.remove('activa');
          }
          return;
     }
+    // Quitar resaltado si el juego no está activo y no hay modal activo
     if (!juegoActivo) {
         fotoHugoElem.classList.remove('activa');
         fotoSaulElem.classList.remove('activa');
         return;
     }
+    // Resaltar jugador activo durante el juego
     if (jugadorActual === 'Hugo') {
         fotoHugoElem.classList.add('activa');
         fotoSaulElem.classList.remove('activa');
@@ -141,11 +143,10 @@ function iniciarRonda() {
     pantallaGanador.classList.add('oculto');
     pantallaPregunta.classList.add('oculto');
     pantallaEjercicio.classList.add('oculto');
-    modalMensaje.classList.add('oculto');
-    modalReglas.classList.add('oculto');
-    juegoContenedor.classList.remove('oculto');
+    modalMensaje.classList.add('oculto'); // Asegurarse de ocultar el modal de mensaje también
+    juegoContenedor.classList.remove('oculto'); // Mostrar contenedor del juego
 
-    // Ocultar botones que no aplican
+    // Ocultar botones que no aplican al inicio de ronda
     botonReiniciar.classList.add('oculto');
     botonNuevoJuego.classList.add('oculto');
     botonVolverAJugar.classList.add('oculto');
@@ -173,9 +174,9 @@ function iniciarRonda() {
 
 function manejarClickCelda(evento) {
     if (!juegoActivo) return;
-    const celdaTarget = evento.target.closest('.celda');
+    const celdaTarget = evento.target.closest('.celda'); // Más robusto
     if (!celdaTarget || !celdaTarget.hasAttribute('data-index') || estadoTablero[parseInt(celdaTarget.dataset.index)] !== '') {
-        return;
+        return; // Salir si no es una celda válida o ya está ocupada
     }
     const indiceCelda = parseInt(celdaTarget.dataset.index);
 
@@ -183,7 +184,7 @@ function manejarClickCelda(evento) {
     const claseMarca = (marcaActual === MARCA_HUGO) ? 'x' : 'o';
     estadoTablero[indiceCelda] = marcaActual;
     celdaTarget.innerHTML = `<span class="marca-animada ${claseMarca}">${marcaActual}</span>`;
-    celdaTarget.style.cursor = 'default';
+    celdaTarget.style.cursor = 'default'; // Ya no es clicable esta ronda
 
     console.log(`Celda ${indiceCelda} clickeada por ${jugadorActual}. Marca: ${marcaActual}`);
 
@@ -230,7 +231,7 @@ function finalizarJuego(esEmpate) {
     if (esEmpate) {
         infoTurno.textContent = "¡Oh! ¡Empate! 🤝 ¡Vamos con una Pausa Activa!";
         console.log("Ronda finalizada: Empate. Iniciando Pausa Activa.");
-        actualizarResaltadoFoto(); // Quita resaltado para empate
+        actualizarResaltadoFoto();
         setTimeout(() => {
             mostrarEjercicioPausa();
         }, 1500);
@@ -238,7 +239,7 @@ function finalizarJuego(esEmpate) {
         infoTurno.textContent = `¡Bien hecho ${jugadorActual}! 👍 Responde para ganar el punto...`;
         console.log(`Ronda finalizada: Ganador ${jugadorActual}. Esperando pregunta.`);
         jugadorQueRespondioPregunta = jugadorActual;
-        actualizarResaltadoFoto(); // Mantiene resaltado al ganador de ronda
+        actualizarResaltadoFoto();
         setTimeout(() => {
             mostrarPregunta();
         }, 1800);
@@ -283,7 +284,7 @@ function iniciarContadorEjercicio(segundos) {
             infoTurno.textContent = "¡Energía recargada! 🔥 ¿Listos para la siguiente?";
             botonReiniciar.classList.remove('oculto');
             console.log("Pausa activa completada.");
-            actualizarResaltadoFoto(); // Quita resaltado después de pausa
+            actualizarResaltadoFoto();
         }
     }, 1000);
 }
@@ -443,9 +444,7 @@ function mostrarGanadorDelJuego(ganador) {
     juegoContenedor.classList.add('oculto');
     pantallaPregunta.classList.add('oculto');
     pantallaEjercicio.classList.add('oculto');
-    modalMensaje.classList.add('oculto'); // Ocultar otros modales
-    modalReglas.classList.add('oculto');
-    pantallaGanador.classList.remove('oculto'); // Mostrar pantalla ganador
+    pantallaGanador.classList.remove('oculto');
 
     textoGanadorElem.textContent = `🏆 ¡EL CAMPEÓN ES ${ganador ? ganador.toUpperCase() : '???'}! 🏆`;
     nombreGanadorElem.textContent = ganador ? ganador.toUpperCase() : '???';
@@ -479,12 +478,10 @@ function iniciarNuevoJuegoCompleto() {
     pantallaGanador.classList.add('oculto');
     pantallaPregunta.classList.add('oculto');
     pantallaEjercicio.classList.add('oculto');
-    modalMensaje.classList.add('oculto');
-    modalReglas.classList.add('oculto');
     botonVolverAJugar.classList.add('oculto');
     botonCerrarGanador.classList.add('oculto');
 
-    iniciarRonda(); // Inicia la primera ronda
+    iniciarRonda();
 }
 
 function cerrarPantallaGanador() {
@@ -493,9 +490,8 @@ function cerrarPantallaGanador() {
     juegoContenedor.classList.add('oculto');
     pantallaPregunta.classList.add('oculto');
     pantallaEjercicio.classList.add('oculto');
-    modalMensaje.classList.add('oculto');
-    modalReglas.classList.add('oculto');
-    pantallaInicial.classList.remove('oculto'); // Mostrar inicio
+    modalMensaje.classList.add('oculto'); // Asegurar cerrar modal mensaje
+    pantallaInicial.classList.remove('oculto');
     puntajeHugo = 0;
     puntajeSaul = 0;
     // No es necesario actualizar display aquí
@@ -513,15 +509,14 @@ function resaltarCeldasGanadoras(combinacion, celdasDOM) {
     });
 }
 
-// --- Funciones y Listeners para Modales (Mensaje y Reglas) ---
+// --- Funciones y Listeners para Modal de Mensaje ---
 
 function abrirModalMensaje() {
-    pantallaInicial.classList.add('oculto');
-    juegoContenedor.classList.add('oculto');
     pantallaGanador.classList.add('oculto');
     pantallaPregunta.classList.add('oculto');
     pantallaEjercicio.classList.add('oculto');
-    modalReglas.classList.add('oculto');
+    juegoContenedor.classList.add('oculto');
+    pantallaInicial.classList.add('oculto');
 
     formMensaje.reset();
     mensajeFeedback.classList.add('oculto');
@@ -530,13 +525,8 @@ function abrirModalMensaje() {
 
 function cerrarModalMensaje() {
     modalMensaje.classList.add('oculto');
-    // Volver a mostrar la pantalla inicial solo si no hay otra pantalla activa
-    if (juegoContenedor.classList.contains('oculto') &&
-        pantallaGanador.classList.contains('oculto') &&
-        pantallaPregunta.classList.contains('oculto') &&
-        pantallaEjercicio.classList.contains('oculto')) {
-        pantallaInicial.classList.remove('oculto');
-    }
+    // Volver a mostrar la pantalla inicial por defecto
+    pantallaInicial.classList.remove('oculto');
 }
 
 async function manejarEnvioMensaje(event) {
@@ -580,16 +570,6 @@ async function manejarEnvioMensaje(event) {
     }
 }
 
-function abrirModalReglas() {
-    modalMensaje.classList.add('oculto'); // Ocultar otros modales
-    modalReglas.classList.remove('oculto');
-}
-
-function cerrarModalReglas() {
-    modalReglas.classList.add('oculto');
-}
-
-
 // --- Event Listeners Iniciales ---
 botonComenzar.addEventListener('click', () => {
     cargarPreguntas();
@@ -602,14 +582,5 @@ botonCerrarGanador.addEventListener('click', cerrarPantallaGanador);
 botonAbrirMensaje.addEventListener('click', abrirModalMensaje);
 botonCerrarMensaje.addEventListener('click', cerrarModalMensaje);
 formMensaje.addEventListener('submit', manejarEnvioMensaje);
-botonMostrarReglas.addEventListener('click', abrirModalReglas);
-botonCerrarReglas.addEventListener('click', cerrarModalReglas);
-modalReglas.addEventListener('click', (event) => { // Cerrar al hacer clic fuera
-    if (event.target === modalReglas) { cerrarModalReglas(); }
-});
-modalMensaje.addEventListener('click', (event) => { // Cerrar al hacer clic fuera
-    if (event.target === modalMensaje) { cerrarModalMensaje(); }
-});
-
 
 // --- Fin del script ---
