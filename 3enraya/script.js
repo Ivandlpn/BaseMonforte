@@ -42,7 +42,7 @@ let listaPreguntasDisponibles = [];
 let respuestaCorrectaActual = null;
 let listaEjerciciosDisponibles = [];
 let intervaloContadorEjercicio = null;
-const DURACION_EJERCICIO = 10; // Segundos
+const DURACION_EJERCICIO = 15; // Segundos
 
 // --- Funciones ---
 
