@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3 en Raya</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Opcional: Fuente divertida (descomentar si se usa y se enlaza en CSS) -->
     <!-- <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet"> -->
 </head>
 <body>
@@ -55,7 +54,7 @@
 
     <!-- PANTALLA: Ganador del Juego -->
     <div id="pantalla-ganador" class="oculto">
-        <div class="confeti-contenedor"></div> <!-- Para efectos visuales -->
+        <div class="confeti-contenedor"></div>
         <h2 id="texto-ganador">¡EL GANADOR ES...!</h2>
         <img src="" alt="Foto del Ganador" id="foto-ganador" class="foto-ganador">
         <p id="nombre-ganador" class="nombre-ganador"></p>
@@ -70,11 +69,9 @@
         <div class="pregunta-contenido">
             <h3 id="titulo-pregunta">¡Pregunta para ganar el punto!</h3>
             <p id="texto-pregunta">Aquí va la pregunta...</p>
+            <!-- Contenedor de opciones vacío: los botones se añadirán con JS -->
             <div id="opciones-pregunta" class="opciones-quiz">
-                <!-- Botones se generan dinámicamente -->
-                <button class="opcion-btn" data-index="0">Opción A</button>
-                <button class="opcion-btn" data-index="1">Opción B</button>
-                <button class="opcion-btn" data-index="2">Opción C</button>
+                <!-- Ya no hay botones aquí -->
             </div>
             <p id="feedback-pregunta" class="feedback-quiz oculto"></p>
         </div>
@@ -90,8 +87,8 @@
     </div>
 
     <!-- Scripts (IMPORTANTE EL ORDEN) -->
-    <script src="preguntas.js"></script> <!-- Carga las preguntas primero -->
-    <script src="ejercicios.js"></script> <!-- Carga los ejercicios después -->
-    <script src="script.js"></script>    <!-- Carga la lógica principal al final -->
+    <script src="preguntas.js"></script> <!-- Carga las preguntas (incluyendo V/F) -->
+    <script src="ejercicios.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
