@@ -19,9 +19,9 @@ const fotoSaulElem = document.getElementById('foto-saul');
 
 // --- Constantes y Variables del Juego ---
 const JUGADORES = ['Hugo', 'Saúl'];
-const PUNTOS_PARA_GANAR_PARTIDO = 3; // <--- NUEVA CONSTANTE
-// **Lista actualizada de fichas**
-const FICHAS_DISPONIBLES = ['X.png', 'O.png', 'pinar.png', 'torremolinos.png','malaga.png','andalucia.png','barca.png','españa.png','local.png','madrid.png','nacional.png','sevilla.png'];
+// ===== ¡LÍNEA MODIFICADA! =====
+const FICHAS_DISPONIBLES = ['X.png', 'O.png', 'pinar.png', 'torremolinos.png', 'andalucia.png','barca.png','españa.png','local.png','madrid.png','nacional.png','sevilla.png'];
+// ==============================
 const RUTA_FICHAS = 'img/fichas/';
 
 let jugadorActual;
@@ -32,7 +32,8 @@ let juegoActivo = false;
 let estadoTablero = [null, null, null, null, null, null, null, null, null];
 let puntajeHugo = 0;
 let puntajeSaul = 0;
-// let procesandoClick = false; // Mantenemos esto como en tu versión funcional
+// Dejamos procesandoClick si estaba en tu versión funcional
+let procesandoClick = false;
 
 // --- Funciones ---
 
@@ -82,16 +83,11 @@ function manejarSeleccionFicha(evento) {
 
 /** Inicia el proceso de selección de fichas */
 function iniciarProcesoSeleccion() {
-    // ***** CAMBIO: Resetear puntajes SIEMPRE *****
-    puntajeHugo = 0;
-    puntajeSaul = 0;
-    console.log("Puntajes del partido reseteados a 0.");
-    // ***** FIN CAMBIO *****
-
+    // ***** NO TOCAMOS LOS PUNTAJES AQUÍ TODAVÍA *****
     fichaHugo = null;
     fichaSaul = null;
     juegoActivo = false;
-    // procesandoClick = false; // Mantenemos como en tu versión
+    procesandoClick = false; // Asegurarse de resetearlo si lo usas
     estadoTablero = [null, null, null, null, null, null, null, null, null];
 
     fichasElegidasContenedor.classList.add('oculto');
@@ -107,11 +103,9 @@ function iniciarProcesoSeleccion() {
     juegoContenedor.classList.add('oculto');
     pantallaSeleccion.classList.remove('oculto');
     botonReiniciar.classList.add('oculto');
-    // ***** CAMBIO: Quitar clase de victoria de partido *****
-    infoTurno.classList.remove('partido-ganado');
-    // ***** FIN CAMBIO *****
-    actualizarMarcadorDisplay(); // Mostrar 0-0
+    infoTurno.classList.remove('partido-ganado'); // Quitar estilo por si acaso
     actualizarResaltadoFoto(); // Quitar resaltado
+    // Los puntajes NO se resetean aquí explícitamente aún
 }
 
 
@@ -123,11 +117,9 @@ function actualizarMarcadorDisplay() {
 
 /** Resalta la foto del jugador activo y quita el resaltado del otro. */
 function actualizarResaltadoFoto() {
-    // Quitar ambos primero
     fotoHugoElem.classList.remove('activa');
     fotoSaulElem.classList.remove('activa');
-    // Aplicar solo si el juego está activo
-    if (juegoActivo) {
+    if (juegoActivo) { // Solo si juego está activo
         if (jugadorActual === JUGADORES[0]) {
             fotoHugoElem.classList.add('activa');
         } else {
@@ -142,13 +134,13 @@ function iniciarJuego() {
     juegoContenedor.classList.remove('oculto');
     estadoTablero = [null, null, null, null, null, null, null, null, null];
     juegoActivo = true;
-    // procesandoClick = false; // Mantenemos como en tu versión
+    procesandoClick = false; // Asegurar reset si lo usas
     const indiceAleatorio = Math.floor(Math.random() * JUGADORES.length);
     jugadorActual = JUGADORES[indiceAleatorio];
     botonReiniciar.classList.add('oculto');
-    infoTurno.classList.remove('partido-ganado'); // Asegurar quitar estilo
-    actualizarMarcadorDisplay();
-    actualizarResaltadoFoto();
+    infoTurno.classList.remove('partido-ganado'); // Quitar estilo
+    actualizarMarcadorDisplay(); // Mostrar puntajes actuales
+    actualizarResaltadoFoto(); // Resaltar al que empieza
     infoTurno.textContent = `¡Empieza ${jugadorActual}! Te toca.`;
     celdas.forEach(celda => {
         celda.innerHTML = '';
@@ -161,34 +153,33 @@ function iniciarJuego() {
 
 /** Maneja el evento de clic en una celda del tablero */
 function manejarClickCelda(evento) {
-    // Mantenemos la comprobación de juegoActivo (no tocamos procesandoClick si no estaba antes)
-    if (!juegoActivo) {
-         console.log(`DEBUG: Clic ignorado (juegoActivo=${juegoActivo})`);
+    // Usamos la comprobación que tenías
+    if (!juegoActivo || procesandoClick) {
+         console.log(`DEBUG: Clic ignorado (juegoActivo=${juegoActivo}, procesandoClick=${procesandoClick})`);
          return;
     }
-    // Si tu versión funcional tenía procesandoClick, descomenta las líneas relevantes
-    // procesandoClick = true;
-    // console.log("DEBUG: procesandoClick = true");
+    procesandoClick = true;
+    console.log("DEBUG: procesandoClick = true");
 
     let celdaClickeada = evento.target;
     if (celdaClickeada.tagName === 'IMG' && celdaClickeada.parentElement.classList.contains('celda')) {
         celdaClickeada = celdaClickeada.parentElement;
     }
     if (!celdaClickeada.classList.contains('celda') || !celdaClickeada.hasAttribute('data-index')) {
-        // Si tu versión funcional tenía procesandoClick, descomenta:
-        // procesandoClick = false;
-        // console.log("DEBUG: procesandoClick = false (clic inválido)");
+        console.warn("DEBUG: Clic inválido (no es celda o sin índice)");
+        procesandoClick = false; // Liberar si es inválido
+        console.log("DEBUG: procesandoClick = false (clic inválido)");
         return;
     }
     const indiceCelda = parseInt(celdaClickeada.getAttribute('data-index'));
-    // console.log(`DEBUG: Click en celda ${indiceCelda}. Jugador ACTUAL: ${jugadorActual}`);
+    // console.log(`DEBUG: Click en celda ${indiceCelda}. Jugador ACTUAL: ${jugadorActual}`); // Descomentar si necesitas depurar
 
     if (estadoTablero[indiceCelda] !== null) {
-        // console.warn(`DEBUG: Intento de clic en celda ${indiceCelda} ya ocupada por ${estadoTablero[indiceCelda]}`);
-        // Si tu versión funcional tenía procesandoClick, descomenta:
-        // procesandoClick = false;
-        // console.log("DEBUG: procesandoClick = false (celda ocupada)");
-        // celdaClickeada.removeEventListener('click', manejarClickCelda); // Seguridad extra
+        console.warn(`DEBUG: Intento de clic en celda ${indiceCelda} ya ocupada por ${estadoTablero[indiceCelda]}`);
+        procesandoClick = false; // Liberar si está ocupada
+        console.log("DEBUG: procesandoClick = false (celda ocupada)");
+        // {once: true} debería haber quitado el listener, pero por seguridad:
+        celdaClickeada.removeEventListener('click', manejarClickCelda);
         return;
     }
 
@@ -197,25 +188,24 @@ function manejarClickCelda(evento) {
 
     const fichaAColocar = jugadorQueJugo === JUGADORES[0] ? fichaHugo : fichaSaul;
     celdaClickeada.innerHTML = `<img src="${RUTA_FICHAS}${fichaAColocar}" alt="Ficha ${jugadorQueJugo}" class="ficha-en-tablero">`;
-    // console.log(`DEBUG: Celda ${indiceCelda} marcada por ${jugadorQueJugo}. Ficha: ${fichaAColocar}`);
+    // console.log(`DEBUG: Celda ${indiceCelda} marcada por ${jugadorQueJugo}. Ficha: ${fichaAColocar}`); // Descomentar si necesitas depurar
 
     if (comprobarVictoria(jugadorQueJugo)) {
-        // console.log(`DEBUG: Victoria detectada para ${jugadorQueJugo}. Finalizando.`);
+        // console.log(`DEBUG: Victoria detectada para ${jugadorQueJugo}. Finalizando.`); // Descomentar si necesitas depurar
         finalizarJuego(false);
-        return;
+        return; // Salir aquí
     }
     if (comprobarEmpate()) {
-        // console.log(`DEBUG: Empate detectado. Finalizando.`);
+        // console.log(`DEBUG: Empate detectado. Finalizando.`); // Descomentar si necesitas depurar
         finalizarJuego(true);
-        return;
+        return; // Salir aquí
     }
 
-    // console.log(`DEBUG: No hay fin de juego. Llamando a cambiarTurno desde ${jugadorQueJugo}.`);
-    cambiarTurno();
+    // console.log(`DEBUG: No hay fin de juego. Llamando a cambiarTurno desde ${jugadorQueJugo}.`); // Descomentar si necesitas depurar
+    cambiarTurno(); // Solo se llama si no hay victoria ni empate
 
-    // Si tu versión funcional tenía procesandoClick, descomenta:
-    // procesandoClick = false;
-    // console.log("DEBUG: procesandoClick = false (fin de manejo de clic)");
+    procesandoClick = false; // Liberar al final del procesamiento exitoso
+    console.log("DEBUG: procesandoClick = false (fin de manejo de clic)");
 }
 
 /** Comprueba si el jugador dado ha ganado */
@@ -238,35 +228,33 @@ function comprobarEmpate() {
 
 /** Cambia el turno al otro jugador, actualiza mensaje y resalta foto */
 function cambiarTurno() {
-    // console.log(`DEBUG: Entrando a cambiarTurno. Jugador actual ANTES: ${jugadorActual}`);
+    // console.log(`DEBUG: Entrando a cambiarTurno. Jugador actual ANTES: ${jugadorActual}`); // Descomentar si necesitas depurar
     jugadorActual = (jugadorActual === JUGADORES[0]) ? JUGADORES[1] : JUGADORES[0];
     infoTurno.textContent = `Turno de: ${jugadorActual}`;
     actualizarResaltadoFoto();
-    // console.log(`DEBUG: Saliendo de cambiarTurno. Jugador actual DESPUÉS: ${jugadorActual}`);
+    // console.log(`DEBUG: Saliendo de cambiarTurno. Jugador actual DESPUÉS: ${jugadorActual}`); // Descomentar si necesitas depurar
 }
 
 /** Finaliza la partida actual */
 function finalizarJuego(esEmpate) {
-    // console.log(`DEBUG: Entrando a finalizarJuego. Es empate: ${esEmpate}`);
+    // console.log(`DEBUG: Entrando a finalizarJuego. Es empate: ${esEmpate}`); // Descomentar si necesitas depurar
     juegoActivo = false;
-    // Si tu versión funcional tenía procesandoClick, descomenta:
-    // procesandoClick = false;
-    // console.log("DEBUG: juegoActivo = false, procesandoClick = false");
+    procesandoClick = false; // Asegurarse de liberar
+    // console.log("DEBUG: juegoActivo = false, procesandoClick = false"); // Descomentar si necesitas depurar
 
     celdas.forEach(celda => {
-        celda.removeEventListener('click', manejarClickCelda);
+        celda.removeEventListener('click', manejarClickCelda); // Quitar listeners restantes
     });
     actualizarResaltadoFoto(); // Quitar resaltado
 
-    let mensajeFinal = ""; // Variable para construir el mensaje
+    let mensajeFinal = ""; // Variable para el mensaje final
 
     if (esEmpate) {
         mensajeFinal = "¡Vaya! Ha sido un empate.";
         console.log("Juego finalizado: Empate.");
     } else {
-        // Ganador de la partida individual
-        const ganadorPartida = jugadorActual; // jugadorActual es el que acaba de ganar
-        mensajeFinal = `¡Felicidades ${ganadorPartida}! ¡Has ganado! 🎉`; // Mensaje por defecto
+        const ganadorPartida = jugadorActual; // El jugador que hizo el último movimiento ganador
+        mensajeFinal = `¡Felicidades ${ganadorPartida}! ¡Has ganado! 🎉`; // Mensaje de partida ganada
         console.log(`Juego finalizado: Ganador ${ganadorPartida}.`);
 
         // Actualizar puntaje
@@ -278,16 +266,17 @@ function finalizarJuego(esEmpate) {
         actualizarMarcadorDisplay();
         console.log(`Marcador actualizado: Hugo ${puntajeHugo} - Saúl ${puntajeSaul}`);
 
-        // ***** CAMBIO: Comprobar si se ganó el PARTIDO *****
+        // ----- INICIO: MODIFICACIÓN MÍNIMA -----
+        // Comprobar si se ganó el PARTIDO después de actualizar puntajes
         if (puntajeHugo === PUNTOS_PARA_GANAR_PARTIDO || puntajeSaul === PUNTOS_PARA_GANAR_PARTIDO) {
-            // Sobrescribir mensaje y añadir clase si se ganó el partido
+            // Sobrescribir el mensaje SÓLO si se ganó el partido
             mensajeFinal = `¡¡${ganadorPartida} HA GANADO EL PARTIDO ${puntajeHugo} - ${puntajeSaul}!! 🏆🎉`;
-            infoTurno.classList.add('partido-ganado');
+            infoTurno.classList.add('partido-ganado'); // Añadir clase para estilo
             console.log(`¡PARTIDO TERMINADO! Ganador: ${ganadorPartida}`);
         }
-        // ***** FIN CAMBIO *****
+        // ----- FIN: MODIFICACIÓN MÍNIMA -----
     }
-    // Establecer el mensaje final (sea de partida o partido)
+    // Establecer el mensaje (sea de partida o partido) y mostrar botón
     infoTurno.textContent = mensajeFinal;
     botonReiniciar.classList.remove('oculto');
 }
@@ -301,7 +290,8 @@ function resaltarCeldasGanadoras(combinacion) {
 }
 
 // --- Event Listeners Iniciales ---
-// Usamos la misma función para ambos botones, iniciarProcesoSeleccion SIEMPRE resetea puntajes
+// Los listeners originales que funcionaban: llaman a iniciarProcesoSeleccion
+// (y ahora iniciarProcesoSeleccion SIEMPRE resetea los puntajes)
 botonComenzar.addEventListener('click', iniciarProcesoSeleccion);
 botonReiniciar.addEventListener('click', iniciarProcesoSeleccion);
 
