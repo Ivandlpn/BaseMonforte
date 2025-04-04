@@ -863,8 +863,314 @@ const preguntasQuiz = [
         pregunta: "Las arañas son insectos.",
         tipo: 'vf',
         respuestaCorrecta: false // Son arácnidos (8 patas)
+    },
+    // --- Preguntas sobre Málaga (151-200) ---
+    // === Lugares Emblemáticos ===
+    {
+        pregunta: "¿Cómo se llama el castillo árabe que está en una colina junto a la Alcazaba?",
+        opciones: ["Castillo de Colomares", "Castillo de Gibralfaro", "Castillo de Sohail"],
+        respuestaCorrecta: 1 // Gibralfaro - Cercana: Sohail (Fuengirola), Lejana: Colomares (Benalmádena)
+    },
+    {
+        pregunta: "A la Catedral de Málaga le falta una torre, por eso la llaman...",
+        opciones: ["La Chata", "La Manquita", "La Coja"],
+        respuestaCorrecta: 1 // La Manquita - Cercana: La Coja, Lejana: La Chata
+    },
+    {
+        pregunta: "¿Qué famoso pintor malagueño tiene un museo muy importante cerca de la Catedral?",
+        opciones: ["Velázquez", "Picasso", "Dalí"],
+        respuestaCorrecta: 1 // Picasso - Cercana: Dalí (otro gran pintor español), Lejana: Velázquez
+    },
+    {
+        pregunta: "La calle más famosa y elegante para pasear en el centro de Málaga se llama:",
+        opciones: ["Calle Granada", "Calle Marqués de Larios", "Paseo del Parque"],
+        respuestaCorrecta: 1 // Calle Larios - Cercana: Calle Granada (también céntrica), Lejana: Paseo del Parque
+    },
+    {
+        pregunta: "¿Qué antiguo teatro se descubrió cerca de la Alcazaba?",
+        opciones: ["Teatro Griego", "Teatro Romano", "Teatro Egipcio"],
+        respuestaCorrecta: 1 // Teatro Romano - Cercana: Griego (relacionado), Lejana: Egipcio
+    },
+    {
+        pregunta: "¿Cómo se llama el gran parque con muchas plantas y árboles que está junto al puerto?",
+        opciones: ["Parque de Huelin", "Parque de Málaga (o Paseo del Parque)", "Jardín Botánico La Concepción"],
+        respuestaCorrecta: 1 // Parque de Málaga - Cercana: Jardín Botánico (otro jardín importante), Lejana: Parque de Huelin
+    },
+    {
+        pregunta: "El edificio moderno y colorido con forma de cubo en el Muelle Uno es una sede del museo...",
+        opciones: ["Museo Ruso", "Centro Pompidou", "Museo del Automóvil"],
+        respuestaCorrecta: 1 // Centro Pompidou - Cercana: Museo Ruso (otro museo internacional en Málaga), Lejana: Museo del Automóvil
+    },
+    {
+        pregunta: "¿Dónde puedes ver muchos coches y vestidos antiguos en Málaga?",
+        opciones: ["Museo Carmen Thyssen", "Museo Automovilístico y de la Moda", "CAC Málaga"],
+        respuestaCorrecta: 1 // Museo Automovilístico - Cercana: Carmen Thyssen (arte), Lejana: CAC (arte contemporáneo)
+    },
+     {
+        pregunta: "¿Cómo se llama el mercado principal del centro, con una gran puerta de estilo árabe?",
+        opciones: ["Mercado de Salamanca", "Mercado de Atarazanas", "Mercado de Huelin"],
+        respuestaCorrecta: 1 // Atarazanas - Cercana: Salamanca/Huelin (otros mercados), Lejana: Salamanca elegido
+    },
+    {
+        pregunta: "Verdadero o Falso: La Alcazaba de Málaga es más antigua que la Alhambra de Granada.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Su construcción principal empezó antes.
+    },
+    // === Geografía y Naturaleza Local ===
+    {
+        pregunta: "¿Cómo se llama el río principal que pasa por Málaga?",
+        opciones: ["Guadalquivir", "Guadalhorce", "Guadiana"],
+        respuestaCorrecta: 1 // Guadalhorce - Cercana: Guadalquivir/Guadiana (ríos andaluces), Lejana: Guadiana elegido
+    },
+    {
+        pregunta: "Málaga es la capital de la famosa costa llamada:",
+        opciones: ["Costa Brava", "Costa del Sol", "Costa Blanca"],
+        respuestaCorrecta: 1 // Costa del Sol - Cercana: Costa Blanca (Alicante) / Costa Brava (Girona)
+    },
+    {
+        pregunta: "La playa más famosa y céntrica de Málaga se llama:",
+        opciones: ["Playa de Pedregalejo", "Playa de la Malagueta", "Playa de los Álamos"],
+        respuestaCorrecta: 1 // Malagueta - Cercana: Pedregalejo (cercana y popular), Lejana: Los Álamos (Torremolinos)
+    },
+    {
+        pregunta: "Verdadero o Falso: Málaga tiene montañas muy cerca de la ciudad.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Los Montes de Málaga
+    },
+    {
+        pregunta: "En verano, en Málaga es típico ver vendedores de una flor hecha con jazmines pinchados, llamada:",
+        opciones: ["Farola", "Biznaga", "Espeto"],
+        respuestaCorrecta: 1 // Biznaga - Cercana: Farola (símbolo cercano), Lejana: Espeto (comida)
+    },
+     {
+        pregunta: "¿Qué parque natural importante se encuentra en los montes cercanos a Málaga?",
+        opciones: ["Parque Nacional de Doñana", "Parque Natural Montes de Málaga", "Parque Natural Sierra Nevada"],
+        respuestaCorrecta: 1 // Montes de Málaga - Cercana: Sierra Nevada (relativamente cerca), Lejana: Doñana (Huelva)
+    },
+    // === Comida Típica ===
+    {
+        pregunta: "¿Qué pescado pequeño, frito o en vinagre, es tan típico de Málaga que a los malagueños les llaman así?",
+        opciones: ["Sardinas", "Boquerones", "Gambas"],
+        respuestaCorrecta: 1 // Boquerones - Cercana: Sardinas (también típicas), Lejana: Gambas
+    },
+    {
+        pregunta: "La forma más tradicional de cocinar sardinas en la playa en Málaga es en un...",
+        opciones: ["Horno de leña", "Espeto (caña en la arena)", "Sartén gigante"],
+        respuestaCorrecta: 1 // Espeto - Cercana: Sartén, Lejana: Horno
+    },
+    {
+        pregunta: "Verdadero o Falso: La 'Porra Antequerana' es una sopa caliente típica de invierno en Málaga.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Es una sopa fría, similar al salmorejo.
+    },
+    {
+        pregunta: "Un vino dulce muy famoso de Málaga se hace con uva...",
+        opciones: ["Tempranillo", "Moscatel", "Verdejo"],
+        respuestaCorrecta: 1 // Moscatel - Cercana: Verdejo (uva blanca), Lejana: Tempranillo (uva tinta)
+    },
+    // === Historia y Curiosidades ===
+    {
+        pregunta: "¿Qué pueblo antiguo fundó Málaga y le dio el nombre de 'Malaka'?",
+        opciones: ["Romanos", "Fenicios", "Griegos"],
+        respuestaCorrecta: 1 // Fenicios - Cercana: Griegos/Romanos (también estuvieron), Lejana: Griegos elegido
+    },
+    {
+        pregunta: "Verdadero o Falso: El famoso pintor Picasso nació en la ciudad de Málaga.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "¿Quién conquistó Málaga a los musulmanes en 1487?",
+        opciones: ["Napoleón Bonaparte", "Los Reyes Católicos", "Julio César"],
+        respuestaCorrecta: 1 // Reyes Católicos - Cercana: Julio César (época romana), Lejana: Napoleón
+    },
+    {
+        pregunta: "El aeropuerto de Málaga lleva el nombre de Málaga y también de...",
+        opciones: ["Picasso", "Costa del Sol", "Antonio Banderas"],
+        respuestaCorrecta: 1 // Costa del Sol (Aeropuerto de Málaga-Costa del Sol) - Cercana: Picasso, Lejana: Antonio Banderas
+    },
+     {
+        pregunta: "Un actor muy famoso de Hollywood que nació en Málaga es:",
+        opciones: ["Javier Bardem", "Antonio Banderas", "Penélope Cruz"],
+        respuestaCorrecta: 1 // Antonio Banderas - Cercana: Javier Bardem (actor español famoso), Lejana: Penélope Cruz (actriz)
+    },
+     {
+        pregunta: "Verdadero o Falso: Málaga fue una ciudad muy importante durante la época romana.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Tuvo teatro, puerto, factorías de salazón...
+    },
+    {
+        pregunta: "¿Qué eran las 'Atarazanas', donde ahora está el mercado?",
+        opciones: ["Un palacio árabe", "Unos astilleros (donde se hacían barcos)", "Unas termas romanas"],
+        respuestaCorrecta: 1 // Astilleros nazaríes - Cercana: Palacio árabe, Lejana: Termas romanas
+    },
+    // === Fiestas y Tradiciones ===
+    {
+        pregunta: "¿En qué mes se celebra la Feria de Málaga?",
+        opciones: ["Abril", "Agosto", "Diciembre"],
+        respuestaCorrecta: 1 // Agosto - Cercana: Abril (feria de Sevilla), Lejana: Diciembre
+    },
+    {
+        pregunta: "Durante la Semana Santa de Málaga, las imágenes religiosas se llevan en grandes estructuras llamadas...",
+        opciones: ["Carrozas", "Tronos", "Pasos"],
+        respuestaCorrecta: 1 // Tronos (característica diferencial de Málaga) - Cercana: Pasos (nombre más común en otras ciudades), Lejana: Carrozas
+    },
+    {
+        pregunta: "Verdadero o Falso: En la Feria de Málaga, es típico beber vino Cartojal.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "Los 'Verdiales' son un tipo de...",
+        opciones: ["Comida típica de Navidad", "Música y baile folclórico de los Montes de Málaga", "Juego de cartas antiguo"],
+        respuestaCorrecta: 1 // Música y baile - Cercana: Comida, Lejana: Juego de cartas
+    },
+     {
+        pregunta: "¿Qué día especial se celebra en Málaga la noche del 23 de junio con hogueras en la playa?",
+        opciones: ["Nochevieja", "Noche de San Juan", "Día de Andalucía"],
+        respuestaCorrecta: 1 // San Juan - Cercana: Día de Andalucía, Lejana: Nochevieja
+    },
+    // === Deportes Locales ===
+    {
+        pregunta: "¿Cómo se llama el principal equipo de fútbol de Málaga?",
+        opciones: ["Sevilla FC", "Málaga CF", "Real Betis"],
+        respuestaCorrecta: 1 // Málaga CF - Cercana: Sevilla/Betis (equipos andaluces), Lejana: Sevilla FC elegido
+    },
+    {
+        pregunta: "El equipo de baloncesto más importante de Málaga, que juega en un pabellón llamado Carpena, es el...",
+        opciones: ["Real Madrid Baloncesto", "Unicaja Baloncesto", "FC Barcelona Bàsquet"],
+        respuestaCorrecta: 1 // Unicaja - Cercana: Real Madrid/Barcelona (grandes equipos ACB), Lejana: FC Barcelona elegido
+    },
+    {
+        pregunta: "Verdadero o Falso: El estadio de fútbol del Málaga CF se llama La Rosaleda.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+     {
+        pregunta: "¿Qué deporte acuático es muy popular en las playas de Málaga en verano?",
+        opciones: ["Esquí alpino", "Surf de remo (Paddle Surf)", "Patinaje sobre hielo"],
+        respuestaCorrecta: 1 // Paddle Surf - Cercana: Esquí (si piensan en acuático), Lejana: Patinaje sobre hielo
+    },
+    // === Más Curiosidades y General ===
+    {
+        pregunta: "El gentilicio (cómo se llama a la gente) de Málaga es 'malagueño' o también...",
+        opciones: ["Malaguita", "Boquerón / Boquerona", "Malagueño del sur"],
+        respuestaCorrecta: 1 // Boquerón / Boquerona - Cercana: Malaguita, Lejana: Malagueño del sur
+    },
+    {
+        pregunta: "¿Qué mar baña la costa de Málaga?",
+        opciones: ["Mar Cantábrico", "Mar Mediterráneo", "Océano Atlántico"],
+        respuestaCorrecta: 1 // Mediterráneo - Cercana: Atlántico (cerca, pasado Gibraltar), Lejana: Cantábrico
+    },
+    {
+        pregunta: "Verdadero o Falso: El Jardín Botánico La Concepción tiene plantas de todo el mundo.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "¿Qué famoso dulce navideño se dice que tiene origen en la zona de Málaga (Antequera)?",
+        opciones: ["Turrón", "Mantecado", "Roscón de Reyes"],
+        respuestaCorrecta: 1 // Mantecado - Cercana: Turrón, Lejana: Roscón
+    },
+    {
+        pregunta: "El clima de Málaga, con inviernos suaves y veranos cálidos, es de tipo...",
+        opciones: ["Polar", "Mediterráneo", "Tropical lluvioso"],
+        respuestaCorrecta: 1 // Mediterráneo - Cercana: Tropical (por el calor), Lejana: Polar
+    },
+    {
+        pregunta: "¿Qué número de teléfono se usa en España para emergencias (policía, bomberos, ambulancia)?",
+        opciones: ["091", "112", "080"],
+        respuestaCorrecta: 1 // 112 (europeo) - Cercana: 091 (Policía Nacional) / 080 (Bomberos, puede variar), Lejana: 091 elegido
+    },
+     {
+        pregunta: "Verdadero o Falso: En Málaga hay un museo dedicado solo a la música.",
+        tipo: 'vf',
+        respuestaCorrecta: true // El MIMMA (Museo Interactivo de la Música Málaga)
+    },
+     {
+        pregunta: "¿Cómo se llama el paseo marítimo principal junto a la playa de la Malagueta?",
+        opciones: ["Paseo de la Farola", "Paseo Marítimo Pablo Ruiz Picasso", "Muelle Uno"],
+        respuestaCorrecta: 1 // Pablo Ruiz Picasso - Cercana: Muelle Uno (está al lado) / Paseo de la Farola (también cercano)
+    },
+    {
+        pregunta: "La noria gigante que a veces instalan cerca del puerto ofrece buenas...",
+        opciones: ["Comidas", "Vistas de la ciudad", "Clases de historia"],
+        respuestaCorrecta: 1 // Vistas - Cercana: Comidas (puede haber puestos cerca), Lejana: Clases
+    },
+    {
+        pregunta: "Si quieres ir de Málaga a Marruecos en barco, ¿desde qué parte de la ciudad sale el ferry?",
+        opciones: ["Desde el aeropuerto", "Desde el Puerto de Málaga", "Desde la estación de tren"],
+        respuestaCorrecta: 1 // Puerto - Cercana: Aeropuerto (viajes), Lejana: Estación de tren
+    },
+    {
+        pregunta: "Verdadero o Falso: El Caminito del Rey es un sendero peligroso NO apto para niños.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Antes era muy peligroso, ahora está rehabilitado y es seguro (con edad mínima, eso sí). Para 9-12 años es apto.
+    },
+    {
+        pregunta: "¿Qué museo malagueño tiene muchas pinturas de artistas andaluces del siglo XIX?",
+        opciones: ["Museo Picasso", "Museo Carmen Thyssen", "CAC Málaga"],
+        respuestaCorrecta: 1 // Carmen Thyssen - Cercana: Picasso (otro museo de arte), Lejana: CAC (contemporáneo)
+    },
+    {
+        pregunta: "El barrio de pescadores junto a la Malagueta, famoso por sus restaurantes de pescado, se llama:",
+        opciones: ["El Palo", "Pedregalejo", "Huelin"],
+        respuestaCorrecta: 1 // Pedregalejo - Cercana: El Palo (barrio vecino similar), Lejana: Huelin
+    },
+    // --- Preguntas Juventud Torremolinos (201-210) ---
+    {
+        pregunta: "¿Cuál es el color principal de la camiseta del Juventud de Torremolinos?",
+        opciones: ["Rojo", "Verde", "Azul"],
+        respuestaCorrecta: 1 // Verde
+    },
+    {
+        pregunta: "¿En qué ciudad juega el Juventud de Torremolinos?",
+        opciones: ["Málaga", "Benalmádena", "Torremolinos"],
+        respuestaCorrecta: 2 // Torremolinos
+    },
+    {
+        pregunta: "¿Cómo se llama el campo de fútbol donde juega el Juventud de Torremolinos?",
+        opciones: ["La Rosaleda", "El Pozuelo", "Ciudad de Málaga"],
+        respuestaCorrecta: 1 // Estadio Municipal El Pozuelo
+    },
+    {
+        pregunta: "El principal deporte del Juventud de Torremolinos es el...",
+        opciones: ["Baloncesto", "Fútbol", "Balonmano"],
+        respuestaCorrecta: 1 // Fútbol
+    },
+    {
+        pregunta: "Verdadero o Falso: El Juventud de Torremolinos se fundó hace más de 50 años.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Se fundó en 1958.
+    },
+    {
+        pregunta: "Verdadero o Falso: El escudo del Juventud de Torremolinos tiene una torre.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Sí, incluye la Torre de Pimentel o de los Molinos.
+    },
+    {
+        pregunta: "¿Contra qué equipo famoso de Primera División jugó el Juventud de Torremolinos en la Copa del Rey en diciembre de 2022?",
+        opciones: ["Real Madrid", "FC Barcelona", "Sevilla FC"],
+        respuestaCorrecta: 2 // Sevilla FC
+    },
+    {
+        pregunta: "El Juventud de Torremolinos juega normalmente en categorías como Tercera o Segunda...",
+        opciones: ["Champions League", "Federación (RFEF)", "División de Honor Juvenil"],
+        respuestaCorrecta: 1 // Tercera Federación / Segunda Federación (RFEF)
+    },
+    {
+        pregunta: "Verdadero o Falso: El Juventud de Torremolinos nunca ha jugado contra el Málaga CF en partido oficial.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Han coincidido en categorías inferiores o Copa Federación en el pasado.
+    },
+    {
+        pregunta: "Las letras 'CF' en Juventud de Torremolinos CF significan:",
+        opciones: ["Campo de Fútbol", "Club de Fútbol", "Ciudad Famosa"],
+        respuestaCorrecta: 1 // Club de Fútbol
     }
-    // Puedes añadir más preguntas V/F aquí
+// --- Fin Preguntas Juventud Torremolinos ---
+
+
 
 ]; // Fin del array preguntasQuiz
 
