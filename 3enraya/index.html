@@ -45,16 +45,23 @@
             <div class="celda" data-index="7"></div>
             <div class="celda" data-index="8"></div>
         </div>
-        <button id="boton-reiniciar" class="oculto">Siguiente Ronda</button> <!-- Texto cambiado -->
-        <button id="boton-nuevo-juego" class="oculto">Nuevo Juego Completo</button> <!-- NUEVO BOTÓN -->
+        <button id="boton-reiniciar" class="oculto">Siguiente Ronda</button>
+        <button id="boton-nuevo-juego" class="oculto">Nuevo Juego Completo</button> <!-- Este se ocultará con JS en pantalla ganador -->
     </div>
 
-    <!-- NUEVA PANTALLA: Ganador del Juego (inicialmente oculta) -->
+    <!-- PANTALLA: Ganador del Juego (inicialmente oculta) -->
     <div id="pantalla-ganador" class="oculto">
         <h2 id="texto-ganador">¡EL GANADOR ES...!</h2>
         <img src="" alt="Foto del Ganador" id="foto-ganador" class="foto-ganador">
         <p id="nombre-ganador" class="nombre-ganador"></p>
-        <!-- Aquí podrías añadir más elementos de animación si quieres -->
+
+        <!-- NUEVO: Contenedor para los botones de la pantalla de ganador -->
+        <div class="botones-ganador">
+            <button id="boton-volver-a-jugar" class="boton-ganador boton-jugar oculto">🎉 Volver a Jugar 🎉</button>
+            <button id="boton-cerrar-ganador" class="boton-ganador boton-cerrar oculto">🚪 Cerrar</button>
+        </div>
+        <!-- Fin del contenedor de botones -->
+
     </div>
 
     <script src="script.js"></script>
