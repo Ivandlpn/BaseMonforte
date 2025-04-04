@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3 en Raya</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Opcional: Fuente divertida -->
     <!-- <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet"> -->
 </head>
 <body>
     <!-- Pantalla Inicial -->
     <div id="pantalla-inicial">
         <button id="boton-comenzar">🚀 ¡Comenzar Juego! 🚀</button>
-        <!-- Botón para abrir el modal de mensaje -->
         <button id="boton-abrir-mensaje" class="boton-mensaje-abrir">✉️ Enviar Mensaje al Tito Iván</button>
+        <!-- NUEVO: Botón para mostrar las reglas -->
+        <button id="boton-mostrar-reglas" class="boton-reglas-abrir">❓ Reglas del Juego</button>
     </div>
 
     <!-- Contenedor del Juego (inicialmente oculto) -->
     <div id="juego-contenedor" class="oculto">
-        <!-- Marcador -->
+        <!-- ... (marcador, info-turno, tablero, botones de ronda sin cambios) ... -->
         <div id="marcador">
              <div class="marcador-jugador">
                 <img src="img/jugadores/hugo.png" alt="Foto Hugo" class="foto-jugador" id="foto-hugo">
@@ -32,25 +32,19 @@
                 <span class="puntaje-jugador" id="puntaje-saul" data-last-score="0">0</span>
             </div>
         </div>
-
-        <!-- Info Turno/Resultado -->
         <p id="info-turno">Turno de:</p>
-
-        <!-- Tablero -->
         <div id="tablero">
             <div class="celda" data-index="0"></div> <div class="celda" data-index="1"></div> <div class="celda" data-index="2"></div>
             <div class="celda" data-index="3"></div> <div class="celda" data-index="4"></div> <div class="celda" data-index="5"></div>
             <div class="celda" data-index="6"></div> <div class="celda" data-index="7"></div> <div class="celda" data-index="8"></div>
         </div>
-
-        <!-- Botón Siguiente Ronda -->
         <button id="boton-reiniciar" class="oculto">🔄 Siguiente Ronda 🔄</button>
-        <!-- Botón Nuevo Juego Completo (controlado por JS) -->
         <button id="boton-nuevo-juego" class="oculto">🌟 Nuevo Juego Completo 🌟</button>
     </div>
 
     <!-- PANTALLA: Ganador del Juego -->
     <div id="pantalla-ganador" class="oculto">
+        <!-- ... (contenido sin cambios) ... -->
         <div class="confeti-contenedor"></div>
         <h2 id="texto-ganador">¡EL GANADOR ES...!</h2>
         <img src="" alt="Foto del Ganador" id="foto-ganador" class="foto-ganador">
@@ -63,59 +57,77 @@
 
     <!-- PANTALLA: Pregunta tipo Test -->
     <div id="pantalla-pregunta" class="oculto">
+        <!-- ... (contenido sin cambios) ... -->
          <div class="pregunta-contenido">
             <h3 id="titulo-pregunta">¡Pregunta para ganar el punto!</h3>
             <p id="texto-pregunta">Aquí va la pregunta...</p>
-            <div id="opciones-pregunta" class="opciones-quiz">
-                <!-- Botones generados por JS -->
-            </div>
+            <div id="opciones-pregunta" class="opciones-quiz"></div>
             <p id="feedback-pregunta" class="feedback-quiz oculto"></p>
         </div>
     </div>
 
     <!-- PANTALLA: Ejercicio Pausa Activa -->
     <div id="pantalla-ejercicio" class="oculto">
+        <!-- ... (contenido sin cambios) ... -->
          <div class="ejercicio-contenido">
             <h2>¡Pausa Activa! 🤸‍♀️💨</h2>
             <p id="nombre-ejercicio">¡A moverse!</p>
-            <div id="contador-ejercicio" class="contador">15</div> <!-- Puedes cambiar a 10 si prefieres -->
+            <div id="contador-ejercicio" class="contador">15</div>
         </div>
     </div>
 
     <!-- Modal para Enviar Mensaje -->
     <div id="modal-mensaje" class="modal oculto">
+        <!-- ... (contenido sin cambios) ... -->
         <div class="modal-contenido">
             <button id="boton-cerrar-mensaje" class="modal-cerrar-btn">×</button>
             <h3>Escribe tu mensaje para el Tito Iván</h3>
-            <!-- ¡¡¡ REEMPLAZA ESTA URL !!! -->
-            <form id="form-mensaje" action="https://formspree.io/f/xqapynwb" method="POST">
-                <div class="form-grupo">
-                    <label for="remitente">¿Quién eres?:</label>
-                    <select name="remitente" id="remitente" required>
-                        <option value="">--Selecciona--</option>
-                        <option value="Hugo">Hugo</option>
-                        <option value="Saul">Saúl</option>
-                    </select>
-                </div>
-                <div class="form-grupo">
-                    <label for="mensaje-texto">Tu mensaje:</label>
-                    <textarea name="mensaje" id="mensaje-texto" rows="5" required placeholder="Escribe aquí lo que quieras decir..."></textarea>
-                </div>
-                <!-- Añadir campo oculto para el asunto (opcional pero útil) -->
-                 <input type="hidden" name="_subject" value="¡Mensaje desde el 3 en Raya!">
-                 <!-- Para evitar el reCAPTCHA de Formspree (opcional, puede que necesites configurar tu cuenta) -->
-                 <input type="hidden" name="_captcha" value="false">
-                 <!-- Página de agradecimiento personalizada (opcional) -->
-                 <!-- <input type="hidden" name="_next" value="URL_DE_TU_PAGINA_DE_GRACIAS"> -->
-
+            <form id="form-mensaje" action="https://formspree.io/f/TU_CODIGO_UNICO" method="POST">
+                <div class="form-grupo"> <label for="remitente">¿Quién eres?:</label> <select name="remitente" id="remitente" required><option value="">--Selecciona--</option><option value="Hugo">Hugo</option><option value="Saul">Saúl</option></select> </div>
+                <div class="form-grupo"> <label for="mensaje-texto">Tu mensaje:</label> <textarea name="mensaje" id="mensaje-texto" rows="5" required placeholder="Escribe aquí lo que quieras decir..."></textarea> </div>
+                <input type="hidden" name="_subject" value="¡Mensaje desde el 3 en Raya!"><input type="hidden" name="_captcha" value="false">
                 <button type="submit" class="boton-enviar-msg">🚀 ¡Enviar Mensaje!</button>
             </form>
             <p id="mensaje-feedback" class="mensaje-estado oculto"></p>
         </div>
     </div>
 
+    <!-- NUEVO: Modal para las Reglas del Juego -->
+    <div id="modal-reglas" class="modal oculto">
+        <div class="modal-contenido-reglas">
+            <button id="boton-cerrar-reglas" class="modal-cerrar-btn">×</button>
+            <h2>📜 ¡Reglas del Juego! 📜</h2>
+            <ul>
+                <li><strong>Objetivo:</strong> ¡Ser el primero en conseguir <strong>3 puntos</strong>!</li>
+                <li><strong>Cómo jugar al 3 en Raya:</strong>
+                    <ul>
+                        <li>Cada jugador (Hugo 'X', Saúl 'O') pone su ficha en una casilla vacía por turnos.</li>
+                        <li>Gana la ronda el primero que consiga <strong>3 fichas en línea</strong> (horizontal, vertical o diagonal).</li>
+                    </ul>
+                </li>
+                <li><strong>¡Pregunta para el Punto!:</strong>
+                    <ul>
+                        <li>Si ganas una ronda, ¡aún no tienes el punto!</li>
+                        <li>Aparecerá una pregunta sorpresa (de elegir o Verdadero/Falso).</li>
+                        <li>Si respondes <strong>correctamente</strong>, ¡sumas <strong>1 punto</strong> al marcador!</li>
+                        <li>Si fallas, ¡no pasa nada!, pero no sumas el punto.</li>
+                    </ul>
+                </li>
+                <li><strong>¡Empate = Pausa Activa!:</strong>
+                    <ul>
+                        <li>Si nadie gana la ronda (empate), ¡toca moverse!</li>
+                        <li>Aparecerá un <strong>ejercicio divertido</strong> con un contador de 15 segundos. ¡Hazlo para recargar energía!</li>
+                        <li>Después del ejercicio, se pasa a la siguiente ronda.</li>
+                    </ul>
+                </li>
+                <li><strong>El Campeón:</strong> El primero que llegue a <strong>3 puntos</strong> en el marcador, ¡gana el juego completo! 🏆</li>
+            </ul>
+            <p><strong>¡Mucha suerte y a divertirse!</strong> 😉</p>
+        </div>
+    </div>
 
-    <!-- Scripts (IMPORTANTE EL ORDEN) -->
+
+    <!-- Scripts -->
     <script src="preguntas.js"></script>
     <script src="ejercicios.js"></script>
     <script src="script.js"></script>
