@@ -1167,7 +1167,59 @@ const preguntasQuiz = [
         pregunta: "Las letras 'CF' en Juventud de Torremolinos CF significan:",
         opciones: ["Campo de Fútbol", "Club de Fútbol", "Ciudad Famosa"],
         respuestaCorrecta: 1 // Club de Fútbol
+    },
+    // --- Preguntas Policía Nacional (211-220) ---
+    {
+        pregunta: "¿Cuál es el color principal del uniforme de la Policía Nacional?",
+        opciones: ["Verde oscuro", "Azul marino", "Negro"],
+        respuestaCorrecta: 1 // Azul marino - Cercana: Negro, Lejana: Verde (Guardia Civil)
+    },
+    {
+        pregunta: "Si necesitas ayuda URGENTE de la Policía Nacional, ¿qué número corto puedes marcar?",
+        opciones: ["112", "091", "062"],
+        respuestaCorrecta: 1 // 091 - Cercana: 112 (Emergencias generales), Lejana: 062 (Guardia Civil)
+    },
+    {
+        pregunta: "¿Cuál es una de las tareas más importantes de la Policía Nacional?",
+        opciones: ["Apagar incendios", "Proteger a los ciudadanos y detener delincuentes", "Enseñar en los colegios"],
+        respuestaCorrecta: 1 // Proteger ciudadanos... - Cercana: Enseñar (a veces dan charlas), Lejana: Apagar incendios (Bomberos)
+    },
+    {
+        pregunta: "Además de coches y motos, ¿qué vehículo aéreo utiliza a veces la Policía Nacional?",
+        opciones: ["Globos aerostáticos", "Helicópteros", "Aviones caza"],
+        respuestaCorrecta: 1 // Helicópteros - Cercana: Aviones (menos común para patrulla), Lejana: Globos
+    },
+    {
+        pregunta: "Verdadero o Falso: La Policía Nacional trabaja principalmente en las ciudades grandes.",
+        tipo: 'vf',
+        respuestaCorrecta: true // La Guardia Civil suele cubrir más zonas rurales.
+    },
+    {
+        pregunta: "¿Cómo se llama oficialmente el cuerpo de la Policía Nacional?",
+        opciones: ["Policía Española", "Cuerpo Nacional de Policía", "Guardia Urbana"],
+        respuestaCorrecta: 1 // Cuerpo Nacional de Policía - Cercana: Policía Española (genérico), Lejana: Guardia Urbana (Policía Local)
+    },
+    {
+        pregunta: "¿Qué llevan los policías nacionales en el uniforme para que sepamos quiénes son?",
+        opciones: ["Una pegatina de estrella", "Su escudo oficial", "Un dibujo de un coche"],
+        respuestaCorrecta: 1 // Escudo oficial - Cercana: Estrella (símbolo policial genérico), Lejana: Dibujo coche
+    },
+    {
+        pregunta: "Verdadero o Falso: La Policía Nacional y la Guardia Civil son exactamente el mismo cuerpo policial.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Son cuerpos diferentes con funciones a veces distintas.
+    },
+    {
+        pregunta: "¿En qué ciudad está la escuela principal donde se forman los futuros policías nacionales?",
+        opciones: ["Madrid", "Ávila", "Sevilla"],
+        respuestaCorrecta: 1 // Ávila - Cercana: Madrid (capital), Lejana: Sevilla
+    },
+    {
+        pregunta: "Si ves a la Policía Nacional investigando algo con perros especiales, ¿qué podrían estar buscando?",
+        opciones: ["Huellas dactilares", "Drogas o explosivos", "Micrófonos ocultos"],
+        respuestaCorrecta: 1 // Drogas o explosivos - Cercana: Huellas (lo hacen personas), Lejana: Micrófonos
     }
+// --- Fin Preguntas Policía Nacional ---
 // --- Fin Preguntas Juventud Torremolinos ---
 
 
