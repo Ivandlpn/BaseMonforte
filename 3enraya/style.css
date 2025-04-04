@@ -17,6 +17,8 @@ html, body {
     color: #fff;
     text-align: center;
     padding: 0;
+    position: relative; /* Añadido para posicionar la pantalla de ganador */
+    overflow-x: hidden; /* Evitar scroll horizontal si la animación se sale */
 }
 
 /* === CLASE UTILITARIA PARA OCULTAR ELEMENTOS === */
@@ -34,6 +36,9 @@ html, body {
     align-items: center;
     padding: 20px;
     padding-bottom: 5vh;
+    background-color: rgba(0,0,0, 0.3); /* Ligero oscurecimiento para mejorar contraste botón */
+    position: relative; /* Asegura que esté por defecto por encima */
+    z-index: 10;
 }
 
 #boton-comenzar {
@@ -65,6 +70,8 @@ html, body {
     padding: 20px;
     background-color: rgba(30, 106, 140, 0.5);
     backdrop-filter: blur(3px);
+    position: relative; /* Para controlar apilamiento si es necesario */
+    z-index: 5;
 }
 
 /* === MARCADOR ESTILO ESTADIO CON FOTOS === */
@@ -90,7 +97,6 @@ html, body {
     gap: 8px; /* Espacio entre foto, nombre y puntaje */
 }
 
-/* NUEVO: Estilos para la foto del jugador */
 .foto-jugador {
     width: clamp(50px, 15vw, 70px); /* Tamaño adaptable */
     height: clamp(50px, 15vw, 70px); /* Tamaño adaptable */
@@ -102,7 +108,6 @@ html, body {
     transition: border-color 0.3s ease, transform 0.3s ease; /* Transición para el resaltado */
 }
 
-/* NUEVO: Estilo para resaltar la foto del jugador activo */
 .foto-jugador.activa {
     border-color: #f0e68c; /* Borde amarillo pálido, como los números */
     transform: scale(1.1); /* Ligeramente más grande */
@@ -114,7 +119,6 @@ html, body {
     font-weight: bold;
     color: #bbb;
     text-transform: uppercase;
-    /* Eliminamos el margin-bottom, usamos 'gap' en el contenedor */
     letter-spacing: 1px;
 }
 
@@ -142,7 +146,7 @@ html, body {
 /* === FIN ESTILOS MARCADOR === */
 
 
-/* === TEXTO INFORMATIVO (Turno/Resultado) === */
+/* === TEXTO INFORMATIVO (Turno/Resultado Ronda) === */
 #info-turno {
     font-size: clamp(1.3rem, 5.5vw, 1.8rem);
     margin-bottom: 25px;
@@ -193,7 +197,7 @@ html, body {
 @keyframes aparecerMarca { from { opacity: 0; transform: scale(0.3); } to { opacity: 1; transform: scale(1); } }
 .marca-animada { display: inline-block; animation-name: aparecerMarca; animation-duration: 0.3s; animation-timing-function: ease-out; }
 
-/* === BOTÓN DE REINICIO === */
+/* === BOTÓN DE REINICIO (Siguiente Ronda) === */
 #boton-reiniciar {
     margin-top: 30px;
     padding: 12px 25px;
@@ -210,4 +214,99 @@ html, body {
 }
 #boton-reiniciar:hover { transform: scale(1.05); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); background: linear-gradient(45deg, #6dd5ed, #2aabd1); }
 #boton-reiniciar:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
-#juego-contenedor.oculto #boton-reiniciar { display: none; }
+/* Oculta el botón si el contenedor del juego está oculto O si la pantalla de ganador está visible */
+#juego-contenedor.oculto #boton-reiniciar,
+#pantalla-ganador:not(.oculto) ~ #juego-contenedor #boton-reiniciar {
+    display: none;
+}
+
+
+/* === NUEVO: BOTÓN NUEVO JUEGO COMPLETO === */
+#boton-nuevo-juego {
+    margin-top: 20px; /* Menos margen que el de reiniciar */
+    padding: 15px 30px;
+    font-size: clamp(1.1rem, 4.5vw, 1.6rem);
+    font-weight: bold;
+    color: #1f7a8c;
+    background: linear-gradient(45deg, #9eff8a, #38ef7d); /* Verde brillante */
+    border: 2px solid #fff;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease;
+    max-width: 90%;
+}
+#boton-nuevo-juego:hover { transform: scale(1.05); box-shadow: 0 6px 18px rgba(56, 239, 125, 0.5); background: linear-gradient(45deg, #c1ffb6, #64f39b); }
+#boton-nuevo-juego:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
+/* Se mostrará sólo con JavaScript, así que por defecto está oculto con .oculto */
+
+
+/* === NUEVO: PANTALLA GANADOR DEL JUEGO === */
+#pantalla-ganador {
+    position: fixed; /* Se superpone a todo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Fondo oscuro semitransparente */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100; /* Por encima de todo lo demás */
+    padding: 20px;
+    opacity: 0; /* Inicialmente invisible para animación */
+    pointer-events: none; /* No interactuable hasta que sea visible */
+    transition: opacity 0.5s ease-in-out;
+}
+
+#pantalla-ganador:not(.oculto) { /* Cuando SÍ está visible */
+    opacity: 1;
+    pointer-events: auto; /* Se vuelve interactuable */
+}
+
+#texto-ganador {
+    font-size: clamp(1.8rem, 8vw, 3rem);
+    color: #ffd700; /* Dorado */
+    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffb700;
+    margin-bottom: 25px;
+    animation: animacion-ganador-texto 1s ease-out forwards; /* Animación texto */
+    opacity: 0; /* Inicia oculto para la animación */
+}
+
+.foto-ganador {
+    width: clamp(150px, 40vw, 250px); /* Foto grande */
+    height: clamp(150px, 40vw, 250px);
+    border-radius: 50%;
+    border: 5px solid #ffd700; /* Borde dorado */
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.7); /* Brillo dorado */
+    object-fit: cover;
+    margin-bottom: 20px;
+    animation: animacion-ganador-foto 1s ease-out 0.3s forwards; /* Animación foto con retraso */
+    transform: scale(0.5); /* Inicia pequeña para la animación */
+    opacity: 0; /* Inicia oculta para la animación */
+}
+
+.nombre-ganador {
+    font-size: clamp(1.5rem, 7vw, 2.5rem);
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 10px;
+    animation: animacion-ganador-texto 1s ease-out 0.6s forwards; /* Animación nombre con más retraso */
+    opacity: 0; /* Inicia oculto para la animación */
+}
+
+/* === NUEVO: ANIMACIONES PARA PANTALLA GANADOR === */
+@keyframes animacion-ganador-foto {
+    0% { transform: scale(0.5) rotate(-15deg); opacity: 0; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes animacion-ganador-texto {
+    0% { transform: translateY(30px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Podrías añadir aquí @keyframes para confeti u otros efectos */
