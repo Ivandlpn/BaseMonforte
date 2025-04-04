@@ -784,6 +784,88 @@ const preguntasQuiz = [
        pregunta: "¿Qué es un 'delta' en geografía?",
        opciones: ["Una letra griega", "La desembocadura de un río con forma de triángulo", "Una montaña muy alta"],
        respuestaCorrecta: 1 // Desembocadura de río
+    },
+    // ... (tus 150 preguntas anteriores aquí) ...
+// Asegúrate de que la última pregunta anterior tenga una coma al final
+
+// --- Bloque de Preguntas Verdadero/Falso ---
+    {
+        pregunta: "El Sol es una estrella.",
+        tipo: 'vf', // Indica que es Verdadero/Falso
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "Los pingüinos pueden volar.",
+        tipo: 'vf',
+        respuestaCorrecta: false
+    },
+    {
+        pregunta: "El agua hierve a 100 grados Celsius al nivel del mar.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "Los tiburones son mamíferos.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Son peces cartilaginosos
+    },
+    {
+        pregunta: "La capital de España es Barcelona.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Es Madrid
+    },
+    {
+        pregunta: "Los humanos tenemos 5 sentidos principales.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "El río Amazonas es más largo que el Nilo.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Según mediciones más recientes
+    },
+    {
+        pregunta: "Los plátanos crecen en árboles.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Crecen en plantas herbáceas gigantes
+    },
+    {
+        pregunta: "Júpiter es el planeta más grande de nuestro Sistema Solar.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "Los murciélagos son ciegos.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Usan ecolocalización, pero no son ciegos
+    },
+    {
+        pregunta: "La Gran Muralla China se puede ver desde la Luna.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Es un mito popular
+    },
+    {
+        pregunta: "El corazón humano tiene cuatro cámaras.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "Los dinosaurios se extinguieron por un meteorito.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Es la teoría más aceptada
+    },
+    {
+        pregunta: "El desierto del Sahara está en América del Sur.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Está en África
+    },
+    {
+        pregunta: "Las arañas son insectos.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Son arácnidos (8 patas)
     }
+    // Puedes añadir más preguntas V/F aquí
 
 ]; // Fin del array preguntasQuiz
+
+
