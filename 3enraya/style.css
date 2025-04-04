@@ -38,38 +38,16 @@ html, body { height: 100%; font-family: 'Arial', sans-serif; background-image: u
 .marcador-separador { font-size: clamp(2rem, 7vw, 3rem); font-weight: bold; color: #777; line-height: 1; padding-bottom: 5px; }
 
 /* === TEXTO INFORMATIVO (Turno/Resultado) === */
-#info-turno {
-    font-size: clamp(1.3rem, 5.5vw, 1.8rem);
-    margin-bottom: 25px;
-    font-weight: bold;
-    background-color: rgba(0, 0, 0, 0.4);
-    padding: 15px 25px; /* Más padding */
-    border-radius: 15px;
-    min-height: 1.5em;
-    line-height: 1.4;
-    color: #fff;
-    transition: background-color 0.5s ease, transform 0.5s ease; /* Transición suave */
-}
-
-/* NUEVO: Estilo para el mensaje de fin de PARTIDO */
-#info-turno.partido-ganado {
-    background-color: #ffc107; /* Fondo amarillo/dorado */
-    color: #333; /* Texto oscuro para contraste */
-    font-size: clamp(1.5rem, 7vw, 2.5rem); /* Más grande */
-    font-weight: bolder; /* Más negrita */
-    padding: 25px 30px; /* Más padding */
-    border: 3px solid #fff; /* Borde blanco */
-    transform: scale(1.05); /* Ligeramente más grande */
-    box-shadow: 0 0 20px rgba(255, 193, 7, 0.7); /* Brillo exterior */
-}
+#info-turno { font-size: clamp(1.3rem, 5.5vw, 1.8rem); margin-bottom: 25px; font-weight: bold; background-color: rgba(0, 0, 0, 0.4); padding: 10px 20px; border-radius: 15px; min-height: 1.5em; line-height: 1.4; color: #fff; }
 
 /* === TABLERO 3x3 === */
 #tablero { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 8px; width: 90%; max-width: 350px; aspect-ratio: 1 / 1; background-color: rgba(255, 255, 255, 0.15); padding: 8px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
 /* === CELDAS INDIVIDUALES === */
-.celda { background-color: rgba(255, 255, 255, 0.85); border-radius: 5px; display: flex; justify-content: center; align-items: center; font-size: clamp(3rem, 15vw, 5rem); font-weight: bold; color: #333; cursor: pointer; transition: background-color 0.2s ease; user-select: none; -webkit-tap-highlight-color: transparent; overflow: hidden; }
+.celda { background-color: rgba(255, 255, 255, 0.85); border-radius: 5px; display: flex; justify-content: center; align-items: center; /* font-size etc. se mantienen por si falla imagen */ font-size: clamp(3rem, 15vw, 5rem); font-weight: bold; color: #333; cursor: pointer; transition: background-color 0.2s ease; user-select: none; -webkit-tap-highlight-color: transparent; overflow: hidden; }
 .celda:hover { background-color: rgba(255, 255, 255, 1); }
 .celda.ganadora { background-color: #ffd700; }
+/* @keyframes parpadeoGanador { from { opacity: 1; } to { opacity: 0.7; } } */
 
 /* === ANIMACIÓN Y ESTILO DE LA FICHA EN EL TABLERO === */
 .ficha-en-tablero { width: 85%; height: 85%; object-fit: contain; animation-name: aparecerMarca; animation-duration: 0.3s; animation-timing-function: ease-out; }
