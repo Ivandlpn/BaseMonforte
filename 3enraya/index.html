@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3 en Raya</title> <!-- Título Correcto -->
+    <title>3 en Raya</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Opcional: Podrías añadir aquí un enlace a Google Fonts si quieres una fuente más divertida -->
     <!-- <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet"> -->
 </head>
 <body>
@@ -43,15 +42,12 @@
             <div class="celda" data-index="8"></div>
         </div>
         <button id="boton-reiniciar" class="oculto">🔄 Siguiente Ronda 🔄</button>
-        <!-- Este botón se gestiona con JS -->
         <button id="boton-nuevo-juego" class="oculto">🌟 Nuevo Juego Completo 🌟</button>
     </div>
 
     <!-- PANTALLA: Ganador del Juego -->
     <div id="pantalla-ganador" class="oculto">
-        <!-- NUEVO: Div para Confeti (si usamos JS) o como contenedor si usamos CSS puro -->
         <div class="confeti-contenedor"></div>
-
         <h2 id="texto-ganador">¡EL GANADOR ES...!</h2>
         <img src="" alt="Foto del Ganador" id="foto-ganador" class="foto-ganador">
         <p id="nombre-ganador" class="nombre-ganador"></p>
@@ -75,8 +71,19 @@
         </div>
     </div>
 
+    <!-- NUEVA PANTALLA: Ejercicio Pausa Activa (inicialmente oculta) -->
+    <div id="pantalla-ejercicio" class="oculto">
+        <div class="ejercicio-contenido">
+            <h2>¡Pausa Activa! 🤸‍♀️💨</h2>
+            <p id="nombre-ejercicio">¡A moverse!</p>
+            <div id="contador-ejercicio" class="contador">10</div>
+        </div>
+    </div>
+
+
     <!-- Scripts -->
-    <script src="preguntas.js"></script> <!-- Carga las preguntas PRIMERO -->
-    <script src="script.js"></script>    <!-- Carga la lógica del juego DESPUÉS -->
+    <script src="preguntas.js"></script> <!-- Carga las preguntas -->
+    <script src="ejercicios.js"></script> <!-- Carga los ejercicios -->
+    <script src="script.js"></script>    <!-- Carga la lógica del juego -->
 </body>
 </html>
