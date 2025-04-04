@@ -1,5 +1,6 @@
 // --- Archivo: preguntas.js ---
 // Contiene las preguntas para el quiz del juego 3 en Raya.
+// Total: 150 preguntas de dificultad variada para niños de 9-12 años.
 // Estructura de cada pregunta:
 // {
 //   pregunta: "Texto de la pregunta",
@@ -8,7 +9,7 @@
 // }
 
 const preguntasQuiz = [
-    // --- Batch 1: Preguntas 1-50 ---
+    // --- Batch 1: Preguntas 1-50 (Dificultad Base) ---
     // Geografía (1-7)
     {
         pregunta: "¿Cuál es el río más largo de España?",
@@ -262,12 +263,12 @@ const preguntasQuiz = [
         respuestaCorrecta: 1 // El oído
     },
     {
-        pregunta: "¿En qué año llegó el hombre a la Luna?", // (Repetida de un ejemplo anterior, ajustada aquí)
+        pregunta: "¿En qué año llegó el hombre a la Luna?",
         opciones: ["1965", "1969", "1972"],
         respuestaCorrecta: 1 // 1969
      },
 
-    // --- Batch 2: Preguntas 51-100 ---
+    // --- Batch 2: Preguntas 51-100 (Dificultad similar/ligeramente mayor) ---
     // Ciencia y Naturaleza (Continuación) (51-60)
     {
         pregunta: "¿Qué planeta de nuestro sistema solar es famoso por sus anillos?",
@@ -521,10 +522,268 @@ const preguntasQuiz = [
         respuestaCorrecta: 1 // El castor
     },
     {
-        pregunta: "¿Qué animal es el logo de Ferrari?", // (Repetida de ejemplo anterior)
+        pregunta: "¿Qué animal es el logo de Ferrari?",
         opciones: ["León", "Toro", "Caballo"],
         respuestaCorrecta: 2 // Caballo
-     }
-];
+     },
 
-// Fin del array preguntasQuiz
+    // --- Batch 3: Preguntas 101-150 (Mayor Dificultad) ---
+    // Ciencia y Naturaleza (Más específico) (101-110)
+    {
+        pregunta: "¿Qué gas compone la mayor parte del aire que respiramos?",
+        opciones: ["Oxígeno", "Nitrógeno", "Dióxido de Carbono"],
+        respuestaCorrecta: 1 // Nitrógeno
+    },
+    {
+        pregunta: "Las plantas absorben agua principalmente a través de sus...",
+        opciones: ["Hojas", "Raíces", "Flores"],
+        respuestaCorrecta: 1 // Raíces
+    },
+    {
+        pregunta: "¿Qué tipo de animal es un murciélago?",
+        opciones: ["Ave", "Mamífero", "Insecto"],
+        respuestaCorrecta: 1 // Mamífero
+    },
+    {
+        pregunta: "La fuerza que atrae los objetos hacia el centro de la Tierra se llama:",
+        opciones: ["Magnetismo", "Gravedad", "Electricidad"],
+        respuestaCorrecta: 1 // Gravedad
+    },
+    {
+        pregunta: "¿Cuál de estos NO es un planeta de nuestro Sistema Solar?",
+        opciones: ["Venus", "Sirio", "Neptuno"],
+        respuestaCorrecta: 1 // Sirio (es una estrella)
+    },
+    {
+        pregunta: "El proceso por el cual una oruga se convierte en mariposa se llama:",
+        opciones: ["Evolución", "Metamorfosis", "Nacimiento"],
+        respuestaCorrecta: 1 // Metamorfosis
+    },
+    {
+        pregunta: "¿Qué animales tienen sangre fría (su temperatura depende del ambiente)?",
+        opciones: ["Perros y gatos", "Reptiles y anfibios", "Pájaros y peces"],
+        respuestaCorrecta: 1 // Reptiles y anfibios
+    },
+    {
+        pregunta: "¿Qué parte del ojo controla cuánta luz entra?",
+        opciones: ["La retina", "La pupila", "El párpado"],
+        respuestaCorrecta: 1 // La pupila
+    },
+    {
+        pregunta: "¿Qué metal es líquido a temperatura ambiente?",
+        opciones: ["Hierro", "Mercurio", "Aluminio"],
+        respuestaCorrecta: 1 // Mercurio
+    },
+    {
+        pregunta: "Un animal que come solo plantas se llama:",
+        opciones: ["Carnívoro", "Herbívoro", "Omnívoro"],
+        respuestaCorrecta: 1 // Herbívoro
+    },
+    // Geografía (Más específico) (111-115)
+    {
+        pregunta: "¿Cuál es el desierto más grande del mundo (incluyendo fríos)?",
+        opciones: ["Sahara", "Antártida", "Gobi"],
+        respuestaCorrecta: 1 // Antártida
+    },
+    {
+        pregunta: "¿Qué estrecho separa España de África?",
+        opciones: ["Canal de la Mancha", "Estrecho de Gibraltar", "Canal de Suez"],
+        respuestaCorrecta: 1 // Estrecho de Gibraltar
+    },
+    {
+        pregunta: "¿Qué país ocupa la mayor parte de la Península Ibérica?",
+        opciones: ["Portugal", "España", "Andorra"],
+        respuestaCorrecta: 1 // España
+    },
+    {
+        pregunta: "El Monte Everest se encuentra en la cordillera del...",
+        opciones: ["Himalaya", "Alpes", "Cáucaso"],
+        respuestaCorrecta: 0 // Himalaya
+    },
+    {
+        pregunta: "¿Cuál es la capital de Canadá?",
+        opciones: ["Toronto", "Ottawa", "Vancouver"],
+        respuestaCorrecta: 1 // Ottawa
+    },
+    // Historia y Cultura (Más específico) (116-122)
+    {
+        pregunta: "¿Quién escribió la obra de teatro 'Romeo y Julieta'?",
+        opciones: ["Cervantes", "Shakespeare", "Lope de Vega"],
+        respuestaCorrecta: 1 // Shakespeare
+    },
+    {
+        pregunta: "¿Qué imperio construyó el Coliseo de Roma?",
+        opciones: ["El Imperio Griego", "El Imperio Romano", "El Imperio Egipcio"],
+        respuestaCorrecta: 1 // El Imperio Romano
+    },
+    {
+        pregunta: "¿Qué evento marcó el inicio de la Revolución Francesa en 1789?",
+        opciones: ["La coronación del rey", "La toma de la Bastilla", "La invención de la guillotina"],
+        respuestaCorrecta: 1 // La toma de la Bastilla
+    },
+    {
+        pregunta: "Leonardo da Vinci es famoso por pintar la Mona Lisa y también por diseñar...",
+        opciones: ["Edificios modernos", "Máquinas voladoras y otros inventos", "Esculturas de animales"],
+        respuestaCorrecta: 1 // Máquinas voladoras y otros inventos
+    },
+    {
+        pregunta: "¿Qué significa la palabra 'Democracia'?",
+        opciones: ["Gobierno de los ricos", "Gobierno del pueblo", "Gobierno de un rey"],
+        respuestaCorrecta: 1 // Gobierno del pueblo
+    },
+    {
+        pregunta: "¿Qué instrumento musical es el símbolo de Irlanda?",
+        opciones: ["La gaita", "El arpa", "El violín"],
+        respuestaCorrecta: 1 // El arpa
+    },
+    {
+        pregunta: "¿Qué es el 'origami'?",
+        opciones: ["Un tipo de comida japonesa", "El arte japonés de doblar papel", "Un arte marcial"],
+        respuestaCorrecta: 1 // El arte japonés de doblar papel
+    },
+    // Lengua (Más específico) (123-127)
+    {
+        pregunta: "Una palabra que suena igual que otra pero significa algo diferente se llama:",
+        opciones: ["Sinónimo", "Homófona", "Antónimo"],
+        respuestaCorrecta: 1 // Homófona
+    },
+    {
+        pregunta: "¿Qué es un palíndromo?",
+        opciones: ["Una palabra muy larga", "Una palabra o frase que se lee igual al revés", "Un tipo de rima"],
+        respuestaCorrecta: 1 // Una palabra o frase que se lee igual al revés
+    },
+    {
+        pregunta: "El conjunto de letras de un idioma ordenadas se llama:",
+        opciones: ["Diccionario", "Alfabeto (o Abecedario)", "Gramática"],
+        respuestaCorrecta: 1 // Alfabeto (o Abecedario)
+    },
+    {
+        pregunta: "¿Qué significa el prefijo 'sub-' en palabras como 'submarino'?",
+        opciones: ["Encima", "Debajo", "Al lado"],
+        respuestaCorrecta: 1 // Debajo
+    },
+    {
+        pregunta: "En la frase 'Cantamos alegremente', ¿qué tipo de palabra es 'alegremente'?",
+        opciones: ["Adjetivo", "Adverbio", "Verbo"],
+        respuestaCorrecta: 1 // Adverbio
+    },
+    // Matemáticas (Más específico) (128-132)
+    {
+        pregunta: "¿Cuántos grados tiene un ángulo recto?",
+        opciones: ["45 grados", "90 grados", "180 grados"],
+        respuestaCorrecta: 1 // 90 grados
+    },
+    {
+        pregunta: "El número romano 'C' representa el número...",
+        opciones: ["50", "100", "1000"],
+        respuestaCorrecta: 1 // 100
+    },
+    {
+        pregunta: "Si un reloj marca las 3:15 PM, ¿cuántos minutos faltan para las 4:00 PM?",
+        opciones: ["15 minutos", "45 minutos", "60 minutos"],
+        respuestaCorrecta: 1 // 45 minutos
+    },
+    {
+        pregunta: "¿Qué es un número primo?",
+        opciones: ["Un número que es par", "Un número solo divisible por 1 y por sí mismo", "Un número que termina en 5"],
+        respuestaCorrecta: 1 // Un número solo divisible por 1 y por sí mismo
+    },
+    {
+        pregunta: "¿Cuál es el perímetro de un cuadrado cuyo lado mide 5 cm?",
+        opciones: ["10 cm", "20 cm", "25 cm"],
+        respuestaCorrecta: 1 // 20 cm
+    },
+    // Deportes (Más específico) (133-137)
+    {
+        pregunta: "En tenis, si el marcador está 40-40, se dice que es...",
+        opciones: ["Punto de partido", "Deuce (Iguales)", "Ventaja"],
+        respuestaCorrecta: 1 // Deuce (Iguales)
+    },
+    {
+        pregunta: "¿Qué país es famoso por inventar el Judo?",
+        opciones: ["China", "Japón", "Corea"],
+        respuestaCorrecta: 1 // Japón
+    },
+    {
+        pregunta: "¿Cuántos hoyos tiene un recorrido estándar de golf?",
+        opciones: ["9", "18", "27"],
+        respuestaCorrecta: 1 // 18
+    },
+    {
+        pregunta: "¿Qué significan las siglas 'NBA' en baloncesto?",
+        opciones: ["National Ball Association", "National Basketball Association", "New Basketball Aspirants"],
+        respuestaCorrecta: 1 // National Basketball Association
+    },
+    {
+        pregunta: "El 'maillot amarillo' en el Tour de Francia lo lleva...",
+        opciones: ["El ciclista más joven", "El líder de la clasificación general", "El ganador de la etapa anterior"],
+        respuestaCorrecta: 1 // El líder de la clasificación general
+    },
+    // Miscelánea y Curiosidades (Más específico) (138-150)
+    {
+        pregunta: "¿Qué es la 'Vía Láctea'?",
+        opciones: ["Una marca de chocolate", "Nuestra galaxia", "Una carretera espacial"],
+        respuestaCorrecta: 1 // Nuestra galaxia
+    },
+    {
+        pregunta: "¿Qué significan las siglas 'CPU' en un ordenador?",
+        opciones: ["Control Panel Unit", "Central Processing Unit", "Computer Power Unit"],
+        respuestaCorrecta: 1 // Central Processing Unit
+    },
+    {
+        pregunta: "¿Qué se mide con un termómetro?",
+        opciones: ["La distancia", "La temperatura", "El peso"],
+        respuestaCorrecta: 1 // La temperatura
+    },
+    {
+        pregunta: "Un grupo de lobos se llama...",
+        opciones: ["Rebaño", "Manada", "Piara"],
+        respuestaCorrecta: 1 // Manada
+    },
+    {
+        pregunta: "¿Cuál de estos NO es un instrumento de viento?",
+        opciones: ["Flauta", "Trompeta", "Violonchelo"],
+        respuestaCorrecta: 2 // Violonchelo
+    },
+    {
+        pregunta: "¿Qué país regaló la Estatua de la Libertad a Estados Unidos?",
+        opciones: ["Reino Unido", "Francia", "España"],
+        respuestaCorrecta: 1 // Francia
+    },
+    {
+        pregunta: "¿Qué significan las siglas 'SOS' en código Morse?",
+        opciones: ["Save Our Ship (Salven nuestro barco)", "Es una señal de auxilio internacional", "Save Our Souls (Salven nuestras almas)"],
+        respuestaCorrecta: 1 // Es una señal de auxilio internacional
+    },
+    {
+        pregunta: "¿Cuántos colores tiene el arcoíris tradicionalmente?",
+        opciones: ["Cinco", "Siete", "Nueve"],
+        respuestaCorrecta: 1 // Siete
+    },
+    {
+        pregunta: "¿Qué es un 'lustro'?",
+        opciones: ["Un periodo de 10 años", "Un periodo de 5 años", "Un objeto brillante"],
+        respuestaCorrecta: 1 // Un periodo de 5 años
+    },
+    {
+        pregunta: "¿De qué personaje de ficción es la frase 'Elemental, mi querido Watson'?",
+        opciones: ["Hercules Poirot", "Sherlock Holmes", "Batman"],
+        respuestaCorrecta: 1 // Sherlock Holmes
+    },
+    {
+       pregunta: "¿A qué temperatura en grados Celsius se congela el agua?",
+       opciones: ["100 grados", "0 grados", "-10 grados"],
+       respuestaCorrecta: 1 // 0 grados
+    },
+    {
+       pregunta: "La parte roja dentro de nuestra sangre que transporta oxígeno se llama:",
+       opciones: ["Plasma", "Glóbulos rojos (Hemoglobina)", "Glóbulos blancos"],
+       respuestaCorrecta: 1 // Glóbulos rojos
+    },
+    {
+       pregunta: "¿Qué es un 'delta' en geografía?",
+       opciones: ["Una letra griega", "La desembocadura de un río con forma de triángulo", "Una montaña muy alta"],
+       respuestaCorrecta: 1 // Desembocadura de río
+    }
+
+]; // Fin del array preguntasQuiz
