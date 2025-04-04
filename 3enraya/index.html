@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3 en Raya</title>
+    <title>3 en Raya De la Paz Perez</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,33 +12,20 @@
         <button id="boton-comenzar">Comenzar Juego</button>
     </div>
 
-    <!-- NUEVA PANTALLA: Selección de Fichas (inicialmente oculta) -->
-    <div id="pantalla-seleccion-fichas" class="oculto">
-        <h2 id="titulo-seleccion">Elige tu ficha</h2>
-        <p id="instruccion-seleccion">Turno de Hugo</p>
-        <div id="contenedor-fichas-disponibles">
-            <!-- Las fichas se cargarán aquí dinámicamente con JS -->
-        </div>
-        <p id="fichas-elegidas" class="oculto">
-            Hugo: <img id="ficha-elegida-hugo" src="" alt="Ficha Hugo"> |
-            Saúl: <img id="ficha-elegida-saul" src="" alt="Ficha Saúl">
-        </p>
-        <!-- Podríamos añadir un botón "Listo" o hacer que el juego empiece automáticamente -->
-    </div>
-    <!-- Fin Pantalla Selección -->
-
-
     <!-- Contenedor del Juego (inicialmente oculto) -->
     <div id="juego-contenedor" class="oculto">
+
         <!-- Marcador Estilo Estadio con Fotos -->
         <div id="marcador">
             <div class="marcador-jugador">
+                <!-- FOTO JUGADOR 1 -->
                 <img src="img/jugadores/hugo.png" alt="Foto Hugo" class="foto-jugador" id="foto-hugo">
                 <span class="nombre-jugador">HUGO</span>
                 <span class="puntaje-jugador" id="puntaje-hugo">0</span>
             </div>
             <span class="marcador-separador">:</span>
             <div class="marcador-jugador">
+                <!-- FOTO JUGADOR 2 -->
                 <img src="img/jugadores/saul.png" alt="Foto Saúl" class="foto-jugador" id="foto-saul">
                 <span class="nombre-jugador">SAÚL</span>
                 <span class="puntaje-jugador" id="puntaje-saul">0</span>
