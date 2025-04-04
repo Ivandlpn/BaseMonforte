@@ -3,7 +3,8 @@ const botonComenzar = document.getElementById('boton-comenzar');
 const pantallaInicial = document.getElementById('pantalla-inicial');
 const juegoContenedor = document.getElementById('juego-contenedor');
 const infoTurno = document.getElementById('info-turno');
-const celdas = document.querySelectorAll('.celda');
+// Eliminamos la referencia global 'celdas' ya que la obtendremos dinámicamente
+// const celdas = document.querySelectorAll('.celda'); // Ya no es necesaria aquí
 const botonReiniciar = document.getElementById('boton-reiniciar'); // Ahora es "Siguiente Ronda"
 const puntajeHugoElem = document.getElementById('puntaje-hugo');
 const puntajeSaulElem = document.getElementById('puntaje-saul');
@@ -63,84 +64,89 @@ function actualizarResaltadoFoto() {
 
 /**
  * Inicia una nueva ronda (o la primera).
+ * Limpia el tablero visualmente, resetea el estado interno y asigna listeners.
  * No resetea los puntajes globales.
  */
 function iniciarRonda() {
-    estadoTablero = ['', '', '', '', '', '', '', '', ''];
+    estadoTablero = ['', '', '', '', '', '', '', '', '']; // Resetea estado interno
     juegoActivo = true;
-    // Si es la primera ronda del juego completo, elige al azar, sino, podría empezar el que perdió la anterior (opcional, mantenemos al azar por ahora)
-    if (puntajeHugo === 0 && puntajeSaul === 0) {
-       const indiceAleatorio = Math.floor(Math.random() * JUGADORES.length);
-       jugadorActual = JUGADORES[indiceAleatorio];
-    } else {
-        // Para simplificar, sigue eligiendo al azar o podría alternar
+
+    // Lógica para decidir quién empieza (ej. al azar)
+    if (puntajeHugo === 0 && puntajeSaul === 0 || Math.random() < 0.5 ) { // Empieza al azar en la 1ra o 50% de las veces
          const indiceAleatorio = Math.floor(Math.random() * JUGADORES.length);
          jugadorActual = JUGADORES[indiceAleatorio];
-         // Alternativa: Empieza el que no ganó la última ronda (si hubo ganador)
-         // O simplemente alterna: jugadorActual = jugadorActual === JUGADORES[0] ? JUGADORES[1] : JUGADORES[0];
+    } else {
+        // Podría alternar o empezar el que perdió la anterior, mantenemos al azar por simplicidad
+         const indiceAleatorio = Math.floor(Math.random() * JUGADORES.length);
+         jugadorActual = JUGADORES[indiceAleatorio];
     }
 
-
-    pantallaInicial.classList.add('oculto'); // Asegura que la pantalla inicial esté oculta
-    pantallaGanador.classList.add('oculto'); // Asegura que la pantalla de ganador esté oculta
+    // Gestionar visibilidad de pantallas y botones
+    pantallaInicial.classList.add('oculto');
+    pantallaGanador.classList.add('oculto');
     juegoContenedor.classList.remove('oculto');
-    botonReiniciar.classList.add('oculto'); // Oculta botón "Siguiente Ronda" al inicio de la ronda
-    botonNuevoJuego.classList.add('oculto'); // Oculta botón "Nuevo Juego" al inicio de la ronda
+    botonReiniciar.classList.add('oculto');
+    botonNuevoJuego.classList.add('oculto');
 
-
-    // Actualiza el display del marcador
-    actualizarMarcadorDisplay();
-    // Resalta la foto del jugador que empieza
-    actualizarResaltadoFoto();
+    actualizarMarcadorDisplay(); // Actualizar 0-0 al principio o puntajes actuales
+    actualizarResaltadoFoto(); // Resaltar foto del que empieza
 
     const marcaInicial = jugadorActual === 'Hugo' ? MARCA_HUGO : MARCA_SAUL;
-    infoTurno.textContent = `Turno de: ${jugadorActual} (${marcaInicial})`; // Mensaje de turno normal
+    infoTurno.textContent = `Turno de: ${jugadorActual} (${marcaInicial})`;
 
-    celdas.forEach(celda => {
+    // --- CORRECTO: Limpiar tablero y añadir listeners ---
+    // 1. Obtener TODAS las celdas actuales en el DOM dentro del tablero
+    const tablero = document.getElementById('tablero');
+    const celdasActuales = tablero.querySelectorAll('.celda');
+
+    // 2. Iterar sobre ellas para limpiarlas y preparar listeners
+    celdasActuales.forEach(celda => {
+        // a. Limpiar contenido visual y clases de estado
         celda.innerHTML = '';
         celda.classList.remove('ganadora');
-        // Asegurarse de limpiar listeners viejos y añadir nuevos
-        celda.replaceWith(celda.cloneNode(true)); // Clonar nodo es una forma fácil de quitar listeners
-    });
-    // Volver a obtener referencias a las celdas clonadas y añadir listeners
-    const nuevasCeldas = document.querySelectorAll('.celda');
-    nuevasCeldas.forEach(celda => {
-        celda.addEventListener('click', manejarClickCelda, { once: true });
-    });
+        celda.style.cursor = 'pointer'; // Asegurar cursor correcto
 
+        // b. Reemplazar la celda con un clon para eliminar listeners antiguos de forma segura
+        const celdaClonada = celda.cloneNode(true); // Clon profundo
+        celda.replaceWith(celdaClonada);
+
+        // c. Añadir el nuevo listener a la celda clonada (que ahora está en el DOM)
+        celdaClonada.addEventListener('click', manejarClickCelda, { once: true });
+    });
+    // --- Fin de la limpieza y configuración de listeners ---
 
     console.log(`Ronda iniciada. Empieza: ${jugadorActual}. Marcador: Hugo ${puntajeHugo} - Saúl ${puntajeSaul}`);
 }
+
 
 /**
  * Maneja el evento de clic en una celda.
  */
 function manejarClickCelda(evento) {
-    if (!juegoActivo) return; // Si la ronda no está activa, no hacer nada
+    if (!juegoActivo) return;
 
     const celdaClickeada = evento.target;
-    // Asegurarse de que se obtiene el div.celda incluso si se hace clic en el span interior
-     const celdaTarget = celdaClickeada.closest('.celda');
-     if (!celdaTarget || !celdaTarget.hasAttribute('data-index')) return;
+    const celdaTarget = celdaClickeada.closest('.celda'); // Asegura obtener el DIV .celda
 
+    if (!celdaTarget || !celdaTarget.hasAttribute('data-index')) return;
 
     const indiceCelda = parseInt(celdaTarget.getAttribute('data-index'));
 
-    // Comprobar si la celda ya está ocupada (aunque {once: true} debería prevenirlo)
-    if (estadoTablero[indiceCelda] !== '') return;
+    if (estadoTablero[indiceCelda] !== '') return; // Doble chequeo por si acaso
 
     const marcaActual = jugadorActual === 'Hugo' ? MARCA_HUGO : MARCA_SAUL;
     estadoTablero[indiceCelda] = marcaActual;
     celdaTarget.innerHTML = `<span class="marca-animada">${marcaActual}</span>`;
+    celdaTarget.style.cursor = 'default'; // Ya no se puede clicar en esta celda en esta ronda
 
     console.log(`Celda ${indiceCelda} clickeada por ${jugadorActual}. Marca: ${marcaActual}`);
 
     if (comprobarVictoria(marcaActual)) {
-        finalizarJuego(false); // Finalizar, no es empate
+        finalizarJuego(false);
         return;
     }
     if (comprobarEmpate()) {
-        finalizarJuego(true); // Finalizar, sí es empate
+        finalizarJuego(true);
         return;
     }
     cambiarTurno();
@@ -151,12 +157,12 @@ function manejarClickCelda(evento) {
  * Comprueba si el jugador con la marca dada ha ganado la ronda.
  */
 function comprobarVictoria(marca) {
+    // Obtener las celdas *actuales* del DOM cada vez que se comprueba
+    const celdasDOM = document.querySelectorAll('.celda');
     for (const combinacion of COMBINACIONES_GANADORAS) {
         const [a, b, c] = combinacion;
         if (estadoTablero[a] === marca && estadoTablero[b] === marca && estadoTablero[c] === marca) {
-            // Necesitamos obtener las celdas actuales del DOM para resaltarlas
-             const celdasActuales = document.querySelectorAll('.celda');
-             resaltarCeldasGanadoras(combinacion, celdasActuales);
+             resaltarCeldasGanadoras(combinacion, celdasDOM); // Pasa las celdas actuales
             return true;
         }
     }
@@ -187,15 +193,15 @@ function cambiarTurno() {
  * Muestra resultado de la ronda y botón para siguiente ronda o pantalla de ganador final.
  */
 function finalizarJuego(esEmpate) {
-    juegoActivo = false; // La ronda ya no está activa
-    actualizarResaltadoFoto(); // Quitar resaltado de fotos
+    juegoActivo = false;
+    actualizarResaltadoFoto(); // Quitar resaltado
 
-     // Quitar listeners de las celdas actuales para evitar clics accidentales
-     const celdasActuales = document.querySelectorAll('.celda');
-     celdasActuales.forEach(celda => {
-         celda.removeEventListener('click', manejarClickCelda);
-         // Opcional: Cambiar cursor para indicar que no se puede clickear
+     // Deshabilitar clics en todas las celdas (cambiando cursor)
+     const celdasFinalizadas = document.querySelectorAll('.celda');
+     celdasFinalizadas.forEach(celda => {
          celda.style.cursor = 'default';
+         // Opcional: Remover listeners explícitamente aunque 'once' ayuda
+         // celda.removeEventListener('click', manejarClickCelda);
      });
 
 
@@ -217,7 +223,11 @@ function finalizarJuego(esEmpate) {
         // --- ¡NUEVA LÓGICA: COMPROBAR GANADOR DEL JUEGO! ---
         if (puntajeHugo === PUNTOS_PARA_GANAR || puntajeSaul === PUNTOS_PARA_GANAR) {
             console.log(`¡JUEGO TERMINADO! Ganador: ${jugadorActual}`);
-            mostrarGanadorDelJuego(jugadorActual);
+            // Esperar un poco para que se vea el tablero final antes de la pantalla de ganador
+            setTimeout(() => {
+                 mostrarGanadorDelJuego(jugadorActual);
+            }, 1500); // Espera 1.5 segundos (ajusta si quieres)
+
         } else {
             // Si nadie ha ganado el juego aún, mostrar botón para la siguiente ronda
             botonReiniciar.classList.remove('oculto');
@@ -232,7 +242,6 @@ function mostrarGanadorDelJuego(ganador) {
     textoGanadorElem.textContent = `¡EL CAMPEÓN ES ${ganador.toUpperCase()}!`;
     nombreGanadorElem.textContent = ganador.toUpperCase();
 
-    // Establecer la foto correcta
     if (ganador === 'Hugo') {
         fotoGanadorElem.src = 'img/jugadores/hugo.png';
         fotoGanadorElem.alt = 'Foto Hugo';
@@ -241,14 +250,10 @@ function mostrarGanadorDelJuego(ganador) {
         fotoGanadorElem.alt = 'Foto Saúl';
     }
 
-    // Ocultar contenedor del juego y mostrar pantalla de ganador
     juegoContenedor.classList.add('oculto');
     pantallaGanador.classList.remove('oculto');
-
-    // Mostrar el botón para empezar un nuevo juego completo
-    botonNuevoJuego.classList.remove('oculto');
-     // Ocultar explícitamente el botón de siguiente ronda por si acaso
-     botonReiniciar.classList.add('oculto');
+    botonNuevoJuego.classList.remove('oculto'); // Mostrar botón Nuevo Juego
+    botonReiniciar.classList.add('oculto'); // Ocultar Siguiente Ronda
 }
 
 /**
@@ -256,39 +261,38 @@ function mostrarGanadorDelJuego(ganador) {
  */
 function iniciarNuevoJuegoCompleto() {
     console.log("Iniciando nuevo juego completo...");
-    // Resetear puntuaciones
     puntajeHugo = 0;
     puntajeSaul = 0;
-    actualizarMarcadorDisplay(); // Actualizar display a 0-0
+    // No es necesario actualizar display aquí, iniciarRonda lo hará
 
-    // Ocultar pantalla de ganador y botón de nuevo juego
     pantallaGanador.classList.add('oculto');
     botonNuevoJuego.classList.add('oculto');
-
-    // Mostrar el contenedor del juego e iniciar la primera ronda
+    // Asegurarse de que el contenedor del juego sea visible si estaba oculto
     juegoContenedor.classList.remove('oculto');
+
     iniciarRonda(); // Iniciar la primera ronda del nuevo juego
 }
 
 
 /**
  * Añade una clase a las celdas ganadoras para resaltarlas.
- * Acepta la lista de celdas actuales como argumento.
+ * Acepta la lista de celdas actuales (nodos DOM) como argumento.
  */
  function resaltarCeldasGanadoras(combinacion, celdasDOM) {
     combinacion.forEach(indice => {
-        if(celdasDOM[indice]) {
+        // Validar que el índice exista en la colección de nodos DOM pasada
+        if(celdasDOM && celdasDOM[indice]) {
             celdasDOM[indice].classList.add('ganadora');
         } else {
-            console.error("Índice de celda fuera de rango al resaltar:", indice);
+            console.error("Índice de celda fuera de rango o celdasDOM no válido al resaltar:", indice);
         }
     });
 }
 
 
 // --- Event Listeners Iniciales ---
-botonComenzar.addEventListener('click', iniciarRonda); // Ahora inicia la primera ronda
+botonComenzar.addEventListener('click', iniciarRonda);
 botonReiniciar.addEventListener('click', iniciarRonda); // Botón entre rondas
-botonNuevoJuego.addEventListener('click', iniciarNuevoJuegoCompleto); // NUEVO listener para el juego completo
+botonNuevoJuego.addEventListener('click', iniciarNuevoJuegoCompleto);
 
 // --- Fin del script ---
