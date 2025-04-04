@@ -17,8 +17,8 @@ html, body {
     color: #fff;
     text-align: center;
     padding: 0;
-    position: relative; /* Añadido para posicionar la pantalla de ganador */
-    overflow-x: hidden; /* Evitar scroll horizontal si la animación se sale */
+    position: relative;
+    overflow-x: hidden;
 }
 
 /* === CLASE UTILITARIA PARA OCULTAR ELEMENTOS === */
@@ -36,8 +36,8 @@ html, body {
     align-items: center;
     padding: 20px;
     padding-bottom: 5vh;
-    background-color: rgba(0,0,0, 0.3); /* Ligero oscurecimiento para mejorar contraste botón */
-    position: relative; /* Asegura que esté por defecto por encima */
+    background-color: rgba(0,0,0, 0.3);
+    position: relative;
     z-index: 10;
 }
 
@@ -64,13 +64,13 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: center; /* Centra verticalmente si el contenido es menor a la altura */
     width: 100%;
-    min-height: 100vh;
+    min-height: 100vh; /* Asegura que ocupe al menos toda la altura */
     padding: 20px;
     background-color: rgba(30, 106, 140, 0.5);
     backdrop-filter: blur(3px);
-    position: relative; /* Para controlar apilamiento si es necesario */
+    position: relative;
     z-index: 5;
 }
 
@@ -79,77 +79,29 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px; /* Espacio entre secciones de jugador y separador */
+    gap: 15px;
     background-color: #1a1a1a;
     border: 4px solid #444;
-    border-radius: 15px; /* Un poco más redondeado */
-    padding: 15px 25px; /* Más padding vertical */
-    margin-bottom: 30px;
+    border-radius: 15px;
+    padding: 15px 25px;
+    margin-bottom: 30px; /* Espacio antes del texto de turno */
     width: 90%;
-    max-width: 420px; /* Un poco más ancho para las fotos */
+    max-width: 420px;
     box-shadow: 0 5px 10px rgba(0,0,0,0.5), inset 0 0 8px rgba(0,0,0,0.4);
+    flex-shrink: 0; /* Evita que se encoja si hay poco espacio */
 }
 
-.marcador-jugador {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px; /* Espacio entre foto, nombre y puntaje */
-}
-
-.foto-jugador {
-    width: clamp(50px, 15vw, 70px); /* Tamaño adaptable */
-    height: clamp(50px, 15vw, 70px); /* Tamaño adaptable */
-    border-radius: 50%; /* Círculo perfecto */
-    border: 3px solid #555; /* Borde gris oscuro por defecto */
-    object-fit: cover; /* Asegura que la imagen cubra sin distorsionarse */
-    background-color: #333; /* Color de fondo por si la imagen tarda o falla */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    transition: border-color 0.3s ease, transform 0.3s ease; /* Transición para el resaltado */
-}
-
-.foto-jugador.activa {
-    border-color: #f0e68c; /* Borde amarillo pálido, como los números */
-    transform: scale(1.1); /* Ligeramente más grande */
-    box-shadow: 0 0 15px rgba(240, 230, 140, 0.6); /* Brillo alrededor */
-}
-
-.nombre-jugador {
-    font-size: clamp(0.8rem, 2.2vw, 1rem); /* Ligeramente más pequeño */
-    font-weight: bold;
-    color: #bbb;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.puntaje-jugador {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: clamp(2.5rem, 9vw, 3.5rem); /* Un poco más pequeño para dejar espacio */
-    font-weight: bold;
-    color: #f0e68c;
-    line-height: 1;
-    background-color: #111;
-    padding: 5px 10px;
-    border-radius: 5px;
-    min-width: 1.5em;
-    text-align: center;
-    text-shadow: 0 0 5px rgba(240, 230, 140, 0.5);
-}
-
-.marcador-separador {
-    font-size: clamp(2rem, 7vw, 3rem);
-    font-weight: bold;
-    color: #777;
-    line-height: 1;
-    padding-bottom: 5px;
-}
-/* === FIN ESTILOS MARCADOR === */
-
+.marcador-jugador { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.foto-jugador { width: clamp(50px, 15vw, 70px); height: clamp(50px, 15vw, 70px); border-radius: 50%; border: 3px solid #555; object-fit: cover; background-color: #333; box-shadow: 0 2px 4px rgba(0,0,0,0.3); transition: border-color 0.3s ease, transform 0.3s ease; }
+.foto-jugador.activa { border-color: #f0e68c; transform: scale(1.1); box-shadow: 0 0 15px rgba(240, 230, 140, 0.6); }
+.nombre-jugador { font-size: clamp(0.8rem, 2.2vw, 1rem); font-weight: bold; color: #bbb; text-transform: uppercase; letter-spacing: 1px; }
+.puntaje-jugador { font-family: 'Courier New', Courier, monospace; font-size: clamp(2.5rem, 9vw, 3.5rem); font-weight: bold; color: #f0e68c; line-height: 1; background-color: #111; padding: 5px 10px; border-radius: 5px; min-width: 1.5em; text-align: center; text-shadow: 0 0 5px rgba(240, 230, 140, 0.5); }
+.marcador-separador { font-size: clamp(2rem, 7vw, 3rem); font-weight: bold; color: #777; line-height: 1; padding-bottom: 5px; }
 
 /* === TEXTO INFORMATIVO (Turno/Resultado Ronda) === */
 #info-turno {
     font-size: clamp(1.3rem, 5.5vw, 1.8rem);
-    margin-bottom: 25px;
+    margin-bottom: 25px; /* Espacio antes del tablero */
     font-weight: bold;
     background-color: rgba(0, 0, 0, 0.4);
     padding: 10px 20px;
@@ -157,6 +109,7 @@ html, body {
     min-height: 1.5em;
     line-height: 1.4;
     color: #fff;
+    flex-shrink: 0;
 }
 
 /* === TABLERO 3x3 === */
@@ -172,23 +125,12 @@ html, body {
     padding: 8px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    margin-bottom: 30px; /* Espacio antes de los botones de abajo */
+    flex-shrink: 0;
 }
 
 /* === CELDAS INDIVIDUALES === */
-.celda {
-    background-color: rgba(255, 255, 255, 0.85);
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: clamp(3rem, 15vw, 5rem);
-    font-weight: bold;
-    color: #333;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-}
+.celda { background-color: rgba(255, 255, 255, 0.85); border-radius: 5px; display: flex; justify-content: center; align-items: center; font-size: clamp(3rem, 15vw, 5rem); font-weight: bold; color: #333; cursor: pointer; transition: background-color 0.2s ease; user-select: none; -webkit-tap-highlight-color: transparent; }
 .celda:hover { background-color: rgba(255, 255, 255, 1); }
 .celda.ganadora { background-color: #ffd700; color: #333; animation: parpadeoGanador 0.8s infinite alternate; }
 @keyframes parpadeoGanador { from { opacity: 1; } to { opacity: 0.7; } }
@@ -199,7 +141,6 @@ html, body {
 
 /* === BOTÓN DE REINICIO (Siguiente Ronda) === */
 #boton-reiniciar {
-    margin-top: 30px;
     padding: 12px 25px;
     font-size: clamp(1rem, 4vw, 1.5rem);
     font-weight: bold;
@@ -211,19 +152,16 @@ html, body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease;
     max-width: 90%;
+    flex-shrink: 0;
+    margin-top: auto; /* Empuja hacia abajo si hay espacio extra */
+    margin-bottom: 10px; /* Espacio respecto al borde inferior o al siguiente botón */
+
 }
 #boton-reiniciar:hover { transform: scale(1.05); box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); background: linear-gradient(45deg, #6dd5ed, #2aabd1); }
 #boton-reiniciar:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
-/* Oculta el botón si el contenedor del juego está oculto O si la pantalla de ganador está visible */
-#juego-contenedor.oculto #boton-reiniciar,
-#pantalla-ganador:not(.oculto) ~ #juego-contenedor #boton-reiniciar {
-    display: none;
-}
 
-
-/* === NUEVO: BOTÓN NUEVO JUEGO COMPLETO === */
+/* === BOTÓN NUEVO JUEGO COMPLETO (usado principalmente por JS) === */
 #boton-nuevo-juego {
-    margin-top: 20px; /* Menos margen que el de reiniciar */
     padding: 15px 30px;
     font-size: clamp(1.1rem, 4.5vw, 1.6rem);
     font-weight: bold;
@@ -235,78 +173,95 @@ html, body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background 0.3s ease;
     max-width: 90%;
+    flex-shrink: 0;
+    margin-top: 10px; /* Espacio respecto al botón anterior */
 }
 #boton-nuevo-juego:hover { transform: scale(1.05); box-shadow: 0 6px 18px rgba(56, 239, 125, 0.5); background: linear-gradient(45deg, #c1ffb6, #64f39b); }
 #boton-nuevo-juego:active { transform: scale(0.98); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
-/* Se mostrará sólo con JavaScript, así que por defecto está oculto con .oculto */
 
 
-/* === NUEVO: PANTALLA GANADOR DEL JUEGO === */
+/* === PANTALLA GANADOR DEL JUEGO === */
 #pantalla-ganador {
-    position: fixed; /* Se superpone a todo */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.85); /* Fondo oscuro semitransparente */
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.95)); /* Fondo oscuro degradado */
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: center; /* Centra verticalmente */
     align-items: center;
-    z-index: 100; /* Por encima de todo lo demás */
+    z-index: 100;
     padding: 20px;
-    opacity: 0; /* Inicialmente invisible para animación */
-    pointer-events: none; /* No interactuable hasta que sea visible */
-    transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease-in-out;
 }
 
-#pantalla-ganador:not(.oculto) { /* Cuando SÍ está visible */
-    opacity: 1;
-    pointer-events: auto; /* Se vuelve interactuable */
+#pantalla-ganador:not(.oculto) { opacity: 1; pointer-events: auto; }
+
+#texto-ganador { font-size: clamp(1.8rem, 8vw, 3rem); color: #ffd700; text-shadow: 0 0 10px #ffd700, 0 0 20px #ffb700; margin-bottom: 20px; animation: animacion-ganador-texto 1s ease-out forwards; opacity: 0; }
+.foto-ganador { width: clamp(150px, 40vw, 250px); height: clamp(150px, 40vw, 250px); border-radius: 50%; border: 5px solid #ffd700; box-shadow: 0 0 25px rgba(255, 215, 0, 0.7); object-fit: cover; margin-bottom: 15px; animation: animacion-ganador-foto 1s ease-out 0.3s forwards; transform: scale(0.5); opacity: 0; }
+.nombre-ganador { font-size: clamp(1.5rem, 7vw, 2.5rem); font-weight: bold; color: #fff; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 35px; /* Más espacio antes de los botones */ animation: animacion-ganador-texto 1s ease-out 0.6s forwards; opacity: 0; }
+
+/* === NUEVO: CONTENEDOR Y BOTONES PANTALLA GANADOR === */
+.botones-ganador {
+    display: flex;
+    flex-direction: column; /* Apilados verticalmente en móvil */
+    align-items: center; /* Centrados horizontalmente */
+    gap: 15px; /* Espacio entre botones */
+    width: 100%;
+    max-width: 350px; /* Ancho máximo para los botones */
+    animation: animacion-ganador-texto 1s ease-out 0.9s forwards; /* Animar aparición botones */
+    opacity: 0; /* Inician ocultos para animación */
 }
 
-#texto-ganador {
-    font-size: clamp(1.8rem, 8vw, 3rem);
-    color: #ffd700; /* Dorado */
-    text-shadow: 0 0 10px #ffd700, 0 0 20px #ffb700;
-    margin-bottom: 25px;
-    animation: animacion-ganador-texto 1s ease-out forwards; /* Animación texto */
-    opacity: 0; /* Inicia oculto para la animación */
+/* En pantallas más anchas, ponerlos en fila */
+@media (min-width: 480px) {
+    .botones-ganador {
+        flex-direction: row; /* En fila */
+        justify-content: center; /* Centrados */
+        gap: 25px; /* Más espacio horizontal */
+    }
 }
 
-.foto-ganador {
-    width: clamp(150px, 40vw, 250px); /* Foto grande */
-    height: clamp(150px, 40vw, 250px);
-    border-radius: 50%;
-    border: 5px solid #ffd700; /* Borde dorado */
-    box-shadow: 0 0 25px rgba(255, 215, 0, 0.7); /* Brillo dorado */
-    object-fit: cover;
-    margin-bottom: 20px;
-    animation: animacion-ganador-foto 1s ease-out 0.3s forwards; /* Animación foto con retraso */
-    transform: scale(0.5); /* Inicia pequeña para la animación */
-    opacity: 0; /* Inicia oculta para la animación */
-}
-
-.nombre-ganador {
-    font-size: clamp(1.5rem, 7vw, 2.5rem);
+.boton-ganador {
+    padding: 15px 30px;
+    font-size: clamp(1.1rem, 4vw, 1.4rem);
     font-weight: bold;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-top: 10px;
-    animation: animacion-ganador-texto 1s ease-out 0.6s forwards; /* Animación nombre con más retraso */
-    opacity: 0; /* Inicia oculto para la animación */
+    border: none;
+    border-radius: 50px; /* Muy redondeados */
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease-out, box-shadow 0.3s ease-out, background 0.3s ease;
+    min-width: 180px; /* Ancho mínimo para que no queden muy pequeños */
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+}
+.boton-ganador:hover {
+    transform: translateY(-3px) scale(1.03); /* Efecto levantar y agrandar */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+.boton-ganador:active {
+    transform: translateY(1px) scale(0.98); /* Efecto presionar */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* === NUEVO: ANIMACIONES PARA PANTALLA GANADOR === */
-@keyframes animacion-ganador-foto {
-    0% { transform: scale(0.5) rotate(-15deg); opacity: 0; }
-    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+.boton-jugar {
+    background: linear-gradient(45deg, #4caf50, #81c784); /* Verde */
+    color: white;
 }
+.boton-jugar:hover { background: linear-gradient(45deg, #66bb6a, #a5d6a7); }
 
-@keyframes animacion-ganador-texto {
-    0% { transform: translateY(30px); opacity: 0; }
-    100% { transform: translateY(0); opacity: 1; }
+.boton-cerrar {
+    background: linear-gradient(45deg, #f44336, #e57373); /* Rojo */
+    color: white;
 }
+.boton-cerrar:hover { background: linear-gradient(45deg, #ef5350, #ef9a9a); }
+/* Fin estilos botones pantalla ganador */
 
-/* Podrías añadir aquí @keyframes para confeti u otros efectos */
+
+/* === ANIMACIONES === */
+@keyframes animacion-ganador-foto { 0% { transform: scale(0.5) rotate(-15deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
+@keyframes animacion-ganador-texto { 0% { transform: translateY(30px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
