@@ -1218,7 +1218,59 @@ const preguntasQuiz = [
         pregunta: "Si ves a la Policía Nacional investigando algo con perros especiales, ¿qué podrían estar buscando?",
         opciones: ["Huellas dactilares", "Drogas o explosivos", "Micrófonos ocultos"],
         respuestaCorrecta: 1 // Drogas o explosivos - Cercana: Huellas (lo hacen personas), Lejana: Micrófonos
+    },
+    // --- Preguntas Policía Local de Málaga (221-230) ---
+    {
+        pregunta: "¿Cuál es el color predominante en los coches y uniformes de la Policía Local de Málaga?",
+        opciones: ["Verde", "Azul (con blanco)", "Amarillo reflectante"],
+        respuestaCorrecta: 1 // Azul y blanco son sus colores característicos. Cercana: Amarillo (chalecos), Lejana: Verde (Guardia Civil)
+    },
+    {
+        pregunta: "Si ves un coche patrulla que pone 'Policía Local' y tiene el escudo de Málaga, ¿quiénes son?",
+        opciones: ["La Guardia Civil", "La Policía Local de Málaga", "La Policía Nacional"],
+        respuestaCorrecta: 1 // Policía Local - Cercana: Nacional (también policía), Lejana: Guardia Civil
+    },
+    {
+        pregunta: "Una de las tareas MÁS visibles de la Policía Local en Málaga es:",
+        opciones: ["Investigar crímenes muy graves", "Dirigir el tráfico y poner multas de aparcamiento", "Controlar los pasaportes en el aeropuerto"],
+        respuestaCorrecta: 1 // Tráfico y ordenanzas - Cercana: Investigar (pero Nacional/GC más), Lejana: Pasaportes (Nacional)
+    },
+    {
+        pregunta: "¿A qué número de teléfono corto puedes llamar si necesitas *específicamente* a la Policía Local (en muchas ciudades de España)?",
+        opciones: ["091", "092", "112"],
+        respuestaCorrecta: 1 // 092 (Número corto tradicional Local) - Cercana: 112 (Emergencias generales, incluye Local), Lejana: 091 (Nacional)
+    },
+    {
+        pregunta: "Verdadero o Falso: La Policía Local de Málaga se encarga principalmente de la seguridad DENTRO de la ciudad de Málaga.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Su ámbito es municipal.
+    },
+    {
+        pregunta: "¿Qué suelen llevar los Policías Locales en el brazo de su uniforme?",
+        opciones: ["Un reloj muy grande", "El escudo de Málaga", "Una linterna"],
+        respuestaCorrecta: 1 // Escudo de Málaga - Cercana: Reloj, Lejana: Linterna
+    },
+    {
+        pregunta: "Si hay un problema con el ruido de un vecino por la noche, ¿a quién es más probable que llames?",
+        opciones: ["A los Bomberos", "A la Policía Local", "Al Ejército"],
+        respuestaCorrecta: 1 // Policía Local (ordenanzas municipales) - Cercana: Bomberos (otro servicio), Lejana: Ejército
+    },
+    {
+        pregunta: "Verdadero o Falso: La Policía Local de Málaga también ayuda a organizar el tráfico durante la Feria o Semana Santa.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Es una de sus funciones importantes en eventos.
+    },
+    {
+        pregunta: "La oficina principal (Jefatura) de la Policía Local de Málaga está cerca de:",
+        opciones: ["La playa de la Malagueta", "El estadio de La Rosaleda", "El aeropuerto"],
+        respuestaCorrecta: 1 // Cerca de La Rosaleda (Av. de la Rosaleda) - Cercana: Malagueta, Lejana: Aeropuerto
+    },
+    {
+        pregunta: "Si encuentras una cartera perdida en la calle en Málaga, ¿dónde la podrías llevar?",
+        opciones: ["A una tienda de ropa", "A la oficina de objetos perdidos de la Policía Local", "A la estación de autobuses"],
+        respuestaCorrecta: 1 // Policía Local (Objetos Perdidos) - Cercana: Estación de autobuses (a veces tienen), Lejana: Tienda
     }
+// --- Fin Preguntas Policía Local de Málaga ---
 // --- Fin Preguntas Policía Nacional ---
 // --- Fin Preguntas Juventud Torremolinos ---
 
