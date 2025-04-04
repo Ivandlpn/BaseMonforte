@@ -3,35 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3 en Raya De la Paz Perez</title>
+    <title>3 en Raya</title> <!-- Título Correcto -->
     <link rel="stylesheet" href="style.css">
+    <!-- Opcional: Podrías añadir aquí un enlace a Google Fonts si quieres una fuente más divertida -->
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet"> -->
 </head>
 <body>
     <!-- Pantalla Inicial -->
     <div id="pantalla-inicial">
-        <button id="boton-comenzar">Comenzar Juego</button>
+        <button id="boton-comenzar">🚀 ¡Comenzar Juego! 🚀</button>
     </div>
 
     <!-- Contenedor del Juego (inicialmente oculto) -->
     <div id="juego-contenedor" class="oculto">
-
-        <!-- Marcador Estilo Estadio con Fotos -->
         <div id="marcador">
-            <div class="marcador-jugador">
-                <!-- FOTO JUGADOR 1 -->
+             <div class="marcador-jugador">
                 <img src="img/jugadores/hugo.png" alt="Foto Hugo" class="foto-jugador" id="foto-hugo">
                 <span class="nombre-jugador">HUGO</span>
                 <span class="puntaje-jugador" id="puntaje-hugo">0</span>
             </div>
             <span class="marcador-separador">:</span>
             <div class="marcador-jugador">
-                <!-- FOTO JUGADOR 2 -->
                 <img src="img/jugadores/saul.png" alt="Foto Saúl" class="foto-jugador" id="foto-saul">
                 <span class="nombre-jugador">SAÚL</span>
                 <span class="puntaje-jugador" id="puntaje-saul">0</span>
             </div>
         </div>
-        <!-- Fin del Marcador -->
 
         <p id="info-turno">Turno de:</p>
         <div id="tablero">
@@ -45,25 +42,41 @@
             <div class="celda" data-index="7"></div>
             <div class="celda" data-index="8"></div>
         </div>
-        <button id="boton-reiniciar" class="oculto">Siguiente Ronda</button>
-        <button id="boton-nuevo-juego" class="oculto">Nuevo Juego Completo</button> <!-- Este se ocultará con JS en pantalla ganador -->
+        <button id="boton-reiniciar" class="oculto">🔄 Siguiente Ronda 🔄</button>
+        <!-- Este botón se gestiona con JS -->
+        <button id="boton-nuevo-juego" class="oculto">🌟 Nuevo Juego Completo 🌟</button>
     </div>
 
-    <!-- PANTALLA: Ganador del Juego (inicialmente oculta) -->
+    <!-- PANTALLA: Ganador del Juego -->
     <div id="pantalla-ganador" class="oculto">
+        <!-- NUEVO: Div para Confeti (si usamos JS) o como contenedor si usamos CSS puro -->
+        <div class="confeti-contenedor"></div>
+
         <h2 id="texto-ganador">¡EL GANADOR ES...!</h2>
         <img src="" alt="Foto del Ganador" id="foto-ganador" class="foto-ganador">
         <p id="nombre-ganador" class="nombre-ganador"></p>
-
-        <!-- NUEVO: Contenedor para los botones de la pantalla de ganador -->
         <div class="botones-ganador">
-            <button id="boton-volver-a-jugar" class="boton-ganador boton-jugar oculto">🎉 Volver a Jugar 🎉</button>
-            <button id="boton-cerrar-ganador" class="boton-ganador boton-cerrar oculto">🚪 Cerrar</button>
+            <button id="boton-volver-a-jugar" class="boton-ganador boton-jugar oculto">🎉 ¡Otra vez! 🎉</button>
+            <button id="boton-cerrar-ganador" class="boton-ganador boton-cerrar oculto">🏠 Salir</button>
         </div>
-        <!-- Fin del contenedor de botones -->
-
     </div>
 
-    <script src="script.js"></script>
+    <!-- PANTALLA: Pregunta tipo Test -->
+    <div id="pantalla-pregunta" class="oculto">
+        <div class="pregunta-contenido">
+            <h3 id="titulo-pregunta">¡Pregunta para ganar el punto!</h3>
+            <p id="texto-pregunta">Aquí va la pregunta...</p>
+            <div id="opciones-pregunta" class="opciones-quiz">
+                <button class="opcion-btn" data-index="0">Opción A</button>
+                <button class="opcion-btn" data-index="1">Opción B</button>
+                <button class="opcion-btn" data-index="2">Opción C</button>
+            </div>
+            <p id="feedback-pregunta" class="feedback-quiz oculto"></p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="preguntas.js"></script> <!-- Carga las preguntas PRIMERO -->
+    <script src="script.js"></script>    <!-- Carga la lógica del juego DESPUÉS -->
 </body>
 </html>
