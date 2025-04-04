@@ -85,7 +85,7 @@ html, body {
 #boton-reiniciar { color: #fff; background: linear-gradient(45deg, #00bcd4, #009688); box-shadow: 0 5px 12px rgba(0, 188, 212, 0.4); }
 #boton-reiniciar:hover { transform: scale(1.06) rotate(-2deg); box-shadow: 0 7px 18px rgba(0, 150, 136, 0.5); background: linear-gradient(45deg, #4dd0e1, #26a69a); }
 #boton-reiniciar:active { transform: scale(0.96); box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4); }
-#boton-nuevo-juego { /* Este ya no se usa directamente aquí */ }
+#boton-nuevo-juego { /* Estilo no relevante aquí, se usa el de pantalla ganador */ }
 
 
 /* === PANTALLA GANADOR DEL JUEGO === */
