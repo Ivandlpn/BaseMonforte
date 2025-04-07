@@ -29,7 +29,7 @@ const JUGADORES_DISPONIBLES = [
     { nombre: 'Papá', imagen: 'img/jugadores/papa.png' },
     { nombre: 'Mamá', imagen: 'img/jugadores/mama.png' },
     { nombre: 'Yoyo', imagen: 'img/jugadores/yoyo.png' },
-    { nombre: 'Yayá', imagen: 'img/jugadores/yaya.png' },
+    { nombre: 'Yaya', imagen: 'img/jugadores/yaya.png' },
     { nombre: 'Tito Samu', imagen: 'img/jugadores/titosamu.png' },
 ];
 
