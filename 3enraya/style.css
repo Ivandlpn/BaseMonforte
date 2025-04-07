@@ -3,7 +3,7 @@
 html, body {
     height: 100%;
     /* font-family: ... */
-    /* background-image: url('img/portada/portada.png'); */ /* <-- Fondo aleatorio ahora en JS */
+    /* background-image: url('img/portada/portada.png'); */ /* <-- ELIMINADA O COMENTADA */
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -13,89 +13,96 @@ html, body {
     text-align: center;
     padding: 0;
     position: relative;
-    overflow-x: hidden; /* Previene scroll horizontal */
+    overflow-x: hidden;
 }
 
 /* === CLASE UTILITARIA === */
 .oculto { display: none !important; }
 
-/* === PANTALLA INICIAL (MODIFICADA PARA ADAPTARSE SIN SCROLL) === */
+/* === PANTALLA INICIAL === */
 #pantalla-inicial {
     width: 100%;
-    height: 100vh; /* Altura fija para forzar contenido dentro */
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centrado vertical */
+    justify-content: flex-end; /* Alinea contenido abajo */
     align-items: center;
-    padding: 15px; /* Padding base reducido */
-    background-color: rgba(0,0,0, 0.2);
-    position: relative;
-    z-index: 10;
-    overflow: hidden; /* MUY IMPORTANTE: Previene cualquier scroll */
+    padding: 20px;
+    padding-bottom: 5vh; /* Espacio inferior */
+    background-color: rgba(0,0,0, 0.2); /* Ligero oscurecimiento */
+    position: relative; /* Para controlar apilamiento */
+    z-index: 10; /* Por defecto encima */
 }
-
 #boton-comenzar {
-    padding: 20px 45px;
-    font-size: clamp(1.5rem, 6vw, 2.2rem);
+    padding: 20px 45px; /* Más grande */
+    font-size: clamp(1.5rem, 6vw, 2.2rem); /* Más grande */
     font-weight: bold;
-    color: #1a5a7d;
-    background: linear-gradient(45deg, #faff00, #ffc107);
+    color: #1a5a7d; /* Azul oscuro */
+    background: linear-gradient(45deg, #faff00, #ffc107); /* Amarillo a naranja */
     border: none;
-    border-radius: 60px;
+    border-radius: 60px; /* Muy redondeado */
     cursor: pointer;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease-out, background 0.3s ease, padding 0.2s ease, font-size 0.2s ease; /* Transición para tamaño */
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease-out, background 0.3s ease; /* Transición con rebote */
     animation: pulsoColorido 2.5s infinite ease-in-out;
     max-width: 90%;
-    will-change: transform;
-    margin-bottom: 15px; /* Margen inferior base */
+    will-change: transform; /* Optimización para animación */
 }
 #boton-comenzar:hover {
-    transform: scale(1.08) rotate(-2deg);
+    transform: scale(1.08) rotate(-2deg); /* Agrandar y rotar ligeramente */
     box-shadow: 0 10px 25px rgba(255, 193, 7, 0.6);
     background: linear-gradient(45deg, #fff8a0, #ffd54f);
 }
 #boton-comenzar:active {
-    transform: scale(0.95);
+    transform: scale(0.95); /* Encoger al pulsar */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
-/* Animación botón comenzar */
+/* Animación más divertida para el botón de comenzar */
 @keyframes pulsoColorido {
     0%, 100% { box-shadow: 0 8px 20px rgba(255, 235, 59, 0.4); transform: scale(1); }
     50% { box-shadow: 0 8px 35px rgba(255, 167, 38, 0.7); transform: scale(1.03); }
 }
-/* Botones secundarios pantalla inicial */
-.boton-mensaje-abrir,
-.boton-reglas-abrir {
+/* Botón abrir mensaje en pantalla inicial */
+.boton-mensaje-abrir {
     padding: 12px 25px;
     font-size: clamp(1rem, 4vw, 1.3rem);
-    margin-top: 15px; /* Espacio base entre botones */
-    background-color: #9b59b6; /* Morado (mensaje) */
+    margin-top: 20px; /* Espacio respecto al botón de comenzar */
+    background-color: #9b59b6; /* Morado */
     color: white;
     border: none;
     border-radius: 30px;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s ease, background-color 0.3s ease, padding 0.2s ease, font-size 0.2s ease, margin-top 0.2s ease; /* Transición para tamaño/espacio */
+    transition: transform 0.2s ease, background-color 0.3s ease;
     font-weight: bold;
-    max-width: 90%;
-}
-.boton-reglas-abrir {
-    background-color: #3498db; /* Azul (reglas) */
 }
 .boton-mensaje-abrir:hover {
     background-color: #8e44ad;
     transform: translateY(-2px);
+}
+/* Botón abrir reglas en pantalla inicial */
+.boton-reglas-abrir {
+    padding: 12px 25px;
+    font-size: clamp(1rem, 4vw, 1.3rem);
+    margin-top: 15px; /* Espacio respecto al botón de mensaje */
+    background-color: #3498db; /* Azul */
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, background-color 0.3s ease;
+    font-weight: bold;
 }
 .boton-reglas-abrir:hover {
     background-color: #2980b9;
     transform: translateY(-2px);
 }
 
-
 /* === CONTENEDOR DEL JUEGO === */
 #juego-contenedor {
     display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; min-height: 100vh; padding: 20px;
+    /* Fondo con gradiente suave */
     background: linear-gradient(160deg, rgba(46, 170, 210, 0.7), rgba(20, 110, 150, 0.85));
     backdrop-filter: blur(4px); position: relative; z-index: 5;
 }
@@ -184,7 +191,7 @@ html, body {
 /* === MODAL DE MENSAJE === */
 .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center; z-index: 110; padding: 15px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease-in-out; }
 .modal:not(.oculto) { opacity: 1; pointer-events: auto; }
-.modal-contenido { background: linear-gradient(145deg, #e0f2f7, #b3e5fc); padding: 30px 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); width: 90%; max-width: 500px; position: relative; color: #333; animation: aparecerModal 0.4s ease-out forwards; opacity: 0; transform: scale(0.95); max-height: 90vh; overflow-y: auto; /* Permitir scroll interno si formulario es muy largo */ }
+.modal-contenido { background: linear-gradient(145deg, #e0f2f7, #b3e5fc); padding: 30px 40px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3); width: 90%; max-width: 500px; position: relative; color: #333; animation: aparecerModal 0.4s ease-out forwards; opacity: 0; transform: scale(0.95); }
 .modal:not(.oculto) .modal-contenido { opacity: 1; transform: scale(1); }
 @keyframes aparecerModal { from { opacity: 0; transform: scale(0.95) translateY(-10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 .modal-cerrar-btn { position: absolute; top: 8px; right: 12px; background: none; border: none; font-size: 2.2rem; color: #999; cursor: pointer; line-height: 1; padding: 0; transition: color 0.2s ease, transform 0.2s ease; z-index: 115; }
@@ -203,7 +210,7 @@ html, body {
 .mensaje-estado.error { background-color: rgba(231, 76, 60, 0.2); color: #c0392b; }
 
 /* === MODAL DE REGLAS === */
-#modal-reglas .modal-contenido-reglas {
+#modal-reglas .modal-contenido-reglas { /* Hereda animación de .modal-contenido pero con estilos propios */
     background: white; padding: 25px 35px 35px 35px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4); width: 90%; max-width: 600px; max-height: 80vh; overflow-y: auto; position: relative; color: #333; text-align: left; animation: aparecerModal 0.4s ease-out forwards; opacity: 0; transform: scale(0.95);
 }
 #modal-reglas:not(.oculto) .modal-contenido-reglas { opacity: 1; transform: scale(1); }
@@ -214,108 +221,3 @@ html, body {
 .modal-contenido-reglas ul ul li { margin-bottom: 8px; font-size: clamp(0.9rem, 3.8vw, 1rem); }
 .modal-contenido-reglas strong { color: #2980b9; }
 .modal-contenido-reglas p { text-align: center; margin-top: 25px; font-size: clamp(1rem, 4.2vw, 1.2rem); }
-
-
-/* === AJUSTES RESPONSIVOS (SIN SCROLL en pantalla inicial) === */
-/* Colócalas al final del archivo CSS */
-
-/* Para pantallas moderadamente pequeñas (vertical) */
-@media (max-width: 600px) {
-    #pantalla-inicial {
-        padding: 15px 10px; /* Menos padding horizontal */
-    }
-    #pantalla-inicial #boton-comenzar {
-        padding: 15px 30px;
-        font-size: clamp(1.3rem, 5vw, 1.9rem);
-        margin-bottom: 12px; /* Menos margen inferior */
-    }
-    #pantalla-inicial .boton-mensaje-abrir,
-    #pantalla-inicial .boton-reglas-abrir {
-        padding: 9px 18px;
-        font-size: clamp(0.9rem, 3.5vw, 1.15rem);
-        margin-top: 12px; /* Menos espacio entre botones */
-    }
-
-    /* Ajustes generales para juego en pantallas pequeñas */
-    #marcador { padding: 10px 15px; gap: 10px; }
-    .foto-jugador { width: clamp(45px, 14vw, 65px); height: clamp(45px, 14vw, 65px); border-width: 3px; }
-    .puntaje-jugador { font-size: clamp(2.2rem, 8vw, 3.5rem); padding: 3px 8px; }
-    .marcador-separador { font-size: clamp(2rem, 7vw, 3rem); }
-    #tablero { gap: 8px; padding: 8px; }
-    .celda { font-size: clamp(3rem, 16vw, 5rem); border-radius: 8px; }
-    #boton-reiniciar, #boton-nuevo-juego { padding: 12px 25px; font-size: clamp(1rem, 4vw, 1.4rem); }
-    .modal-contenido, #modal-reglas .modal-contenido-reglas { padding: 20px 25px; }
-    #modal-reglas .modal-contenido-reglas { padding: 20px 25px 25px 25px; }
-    .pregunta-contenido { padding: 25px 30px; }
-    .ejercicio-contenido { padding: 30px 35px; }
-}
-
-/* Para pantallas MUY estrechas o BAJAS (ej. móvil horizontal o pequeño vertical) */
-@media (max-width: 480px), (max-height: 600px) {
-    #pantalla-inicial {
-        padding: 10px; /* Aún menos padding general */
-    }
-    #pantalla-inicial #boton-comenzar {
-        padding: 12px 20px; /* Botón principal más pequeño */
-        font-size: clamp(1.2rem, 4.5vw, 1.7rem);
-        margin-bottom: 10px;
-    }
-    #pantalla-inicial .boton-mensaje-abrir,
-    #pantalla-inicial .boton-reglas-abrir {
-        padding: 8px 15px; /* Botones secundarios más pequeños */
-        font-size: clamp(0.8rem, 3.2vw, 1.05rem);
-        margin-top: 10px; /* Espacio mínimo entre botones */
-    }
-
-    /* Ajustes más agresivos para juego */
-     #marcador { padding: 8px 12px; margin-bottom: 20px; max-width: 95%; }
-     #info-turno { font-size: clamp(1.2rem, 5vw, 1.6rem); padding: 10px 20px; margin-bottom: 20px; }
-     #tablero { gap: 6px; padding: 6px; max-width: 95%; margin-bottom: 20px; }
-     .celda { font-size: clamp(2.8rem, 15vw, 4.5rem); }
-     #boton-reiniciar, #boton-nuevo-juego { padding: 10px 20px; font-size: clamp(0.9rem, 3.8vw, 1.3rem); }
-     .modal-contenido, #modal-reglas .modal-contenido-reglas { padding: 15px 20px; max-height: 85vh; }
-     #modal-reglas .modal-contenido-reglas { padding: 15px 20px 20px 20px; }
-     .modal-contenido h3, #modal-reglas .modal-contenido-reglas h2 { font-size: clamp(1.2rem, 4.5vw, 1.6rem); margin-bottom: 15px; }
-     #form-mensaje label { font-size: clamp(0.8rem, 3vw, 1rem); margin-bottom: 5px;}
-     #form-mensaje select, #form-mensaje textarea { padding: 10px 12px; font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
-     .boton-enviar-msg { padding: 12px 25px; font-size: clamp(1rem, 4vw, 1.3rem);}
-     .pregunta-contenido { padding: 20px 25px; }
-     #titulo-pregunta {font-size: clamp(1.1rem, 5vw, 1.6rem);}
-     #texto-pregunta {font-size: clamp(1rem, 4.5vw, 1.4rem); margin-bottom: 25px;}
-     .opciones-quiz { gap: 12px; margin-bottom: 20px; }
-     .opcion-btn { padding: 12px 20px; font-size: clamp(1rem, 4vw, 1.3rem); }
-     .feedback-quiz { font-size: clamp(1rem, 4vw, 1.3rem); padding: 8px 15px; }
-     .ejercicio-contenido { padding: 25px 30px; }
-     .ejercicio-contenido h2 { font-size: clamp(1.4rem, 6vw, 2rem); margin-bottom: 15px; }
-     #nombre-ejercicio { font-size: clamp(1.1rem, 5vw, 1.6rem); margin-bottom: 20px;}
-     .contador { font-size: clamp(3.5rem, 18vw, 6rem); width: clamp(80px, 25vw, 120px); height: clamp(80px, 25vw, 120px); border-width: 4px;}
-}
-
-/* Caso extremo: pantallas EXTREMADAMENTE bajas */
-@media (max-height: 450px) {
-    #pantalla-inicial {
-        padding: 5px;
-        justify-content: center; /* Asegurar centrado si hay poco espacio */
-    }
-    #pantalla-inicial #boton-comenzar {
-        padding: 10px 15px;
-        font-size: clamp(1.1rem, 4vw, 1.5rem);
-        margin-bottom: 8px; /* Aún menos margen */
-        border-radius: 40px; /* Menos redondez si ayuda */
-    }
-    #pantalla-inicial .boton-mensaje-abrir,
-    #pantalla-inicial .boton-reglas-abrir {
-        padding: 6px 12px;
-        font-size: clamp(0.75rem, 3vw, 1rem);
-        margin-top: 8px; /* Mínimo espacio posible */
-        border-radius: 20px; /* Menos redondez si ayuda */
-    }
-
-    /* Podrías añadir aquí ajustes EXTRA pequeños para el juego si es necesario */
-     #marcador { padding: 5px 8px; gap: 5px;}
-     .foto-jugador { width: clamp(35px, 12vw, 50px); height: clamp(35px, 12vw, 50px); border-width: 2px; }
-     .puntaje-jugador { font-size: clamp(1.8rem, 7vw, 2.8rem); }
-     #info-turno { font-size: clamp(1rem, 4vw, 1.4rem); padding: 8px 15px; margin-bottom: 15px; }
-     #tablero { gap: 4px; padding: 4px; margin-bottom: 15px;}
-     .celda { font-size: clamp(2.5rem, 14vw, 4rem); }
-}
