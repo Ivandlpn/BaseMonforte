@@ -6,7 +6,7 @@ const JUGADORES_DISPONIBLES = [
     { id: 'papa', nombre: 'Papá', foto: 'img/jugadores/papa.png' }, // Ejemplo
     { id: 'mama', nombre: 'Mamá', foto: 'img/jugadores/mama.png' }, // Ejemplo
     { id: 'yoyo', nombre: 'Yoyo', foto: 'img/jugadores/yoyo.png' }, // Ejemplo
-     { id: 'yoyo', nombre: 'Yaya', foto: 'img/jugadores/yaya.png' }, // Ejemplo
+     { id: 'yaya', nombre: 'Yaya', foto: 'img/jugadores/yaya.png' }, // Ejemplo
     // { id: 'abuela', nombre: 'Abuela', foto: 'img/jugadores/abuela.png' }, // Otro ejemplo
     // Asegúrate de que las rutas 'img/jugadores/...' coincidan con tus archivos reales
 ];
