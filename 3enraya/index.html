@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3 en Raya Familiar</title>
+    <title>3 en Raya</title>
     <link rel="stylesheet" href="style.css">
     <!-- <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet"> -->
 </head>
@@ -12,42 +12,26 @@
     <div id="pantalla-inicial">
         <button id="boton-comenzar">🚀 ¡Comenzar Juego! 🚀</button>
         <button id="boton-abrir-mensaje" class="boton-mensaje-abrir">✉️ Enviar Mensaje al Tito Iván</button>
+        <!-- NUEVO: Botón para mostrar las reglas -->
         <button id="boton-mostrar-reglas" class="boton-reglas-abrir">❓ Reglas del Juego</button>
     </div>
 
-    <!-- NUEVA PANTALLA: Selección de Jugadores -->
-    <div id="pantalla-seleccion" class="oculto seleccion-contenedor">
-        <h2 id="titulo-seleccion">Selecciona a los Jugadores</h2>
-        <div id="lista-jugadores-seleccion" class="grid-jugadores-seleccion">
-            <!-- Los jugadores se cargarán aquí con JavaScript -->
-        </div>
-        <div class="seleccion-info">
-            <p>Jugador 1 (X): <span id="nombre-seleccionado-j1">Nadie</span></p>
-            <p>Jugador 2 (O): <span id="nombre-seleccionado-j2">Nadie</span></p>
-        </div>
-        <button id="boton-confirmar-jugadores" disabled>¡Confirmar y Jugar!</button>
-        <button id="boton-volver-inicio">Volver</button> <!-- Botón para cancelar -->
-    </div>
-    <!-- FIN NUEVA PANTALLA -->
-
-
     <!-- Contenedor del Juego (inicialmente oculto) -->
     <div id="juego-contenedor" class="oculto">
-        <!-- Marcador Modificado -->
+        <!-- ... (marcador, info-turno, tablero, botones de ronda sin cambios) ... -->
         <div id="marcador">
              <div class="marcador-jugador">
-                <img src="" alt="Foto Jugador 1" class="foto-jugador" id="foto-j1">
-                <span class="nombre-jugador" id="nombre-j1">J1</span>
-                <span class="puntaje-jugador" id="puntaje-j1" data-last-score="0">0</span>
+                <img src="img/jugadores/hugo.png" alt="Foto Hugo" class="foto-jugador" id="foto-hugo">
+                <span class="nombre-jugador">HUGO</span>
+                <span class="puntaje-jugador" id="puntaje-hugo" data-last-score="0">0</span>
             </div>
             <span class="marcador-separador">:</span>
             <div class="marcador-jugador">
-                <img src="" alt="Foto Jugador 2" class="foto-jugador" id="foto-j2">
-                <span class="nombre-jugador" id="nombre-j2">J2</span>
-                <span class="puntaje-jugador" id="puntaje-j2" data-last-score="0">0</span>
+                <img src="img/jugadores/saul.png" alt="Foto Saúl" class="foto-jugador" id="foto-saul">
+                <span class="nombre-jugador">SAÚL</span>
+                <span class="puntaje-jugador" id="puntaje-saul" data-last-score="0">0</span>
             </div>
         </div>
-        <!-- Fin Marcador Modificado -->
         <p id="info-turno">Turno de:</p>
         <div id="tablero">
             <div class="celda" data-index="0"></div> <div class="celda" data-index="1"></div> <div class="celda" data-index="2"></div>
@@ -55,12 +39,13 @@
             <div class="celda" data-index="6"></div> <div class="celda" data-index="7"></div> <div class="celda" data-index="8"></div>
         </div>
         <button id="boton-reiniciar" class="oculto">🔄 Siguiente Ronda 🔄</button>
-        <!-- <button id="boton-nuevo-juego" class="oculto">🌟 Nuevo Juego Completo 🌟</button> --> <!-- Opcional, ahora "Otra vez" va a selección -->
+        <button id="boton-nuevo-juego" class="oculto">🌟 Nuevo Juego Completo 🌟</button>
     </div>
 
     <!-- PANTALLA: Ganador del Juego -->
     <div id="pantalla-ganador" class="oculto">
-        <div class="confeti-contenedor"></div> <!-- Para posibles efectos futuros -->
+        <!-- ... (contenido sin cambios) ... -->
+        <div class="confeti-contenedor"></div>
         <h2 id="texto-ganador">¡EL GANADOR ES...!</h2>
         <img src="" alt="Foto del Ganador" id="foto-ganador" class="foto-ganador">
         <p id="nombre-ganador" class="nombre-ganador"></p>
@@ -72,6 +57,7 @@
 
     <!-- PANTALLA: Pregunta tipo Test -->
     <div id="pantalla-pregunta" class="oculto">
+        <!-- ... (contenido sin cambios) ... -->
          <div class="pregunta-contenido">
             <h3 id="titulo-pregunta">¡Pregunta para ganar el punto!</h3>
             <p id="texto-pregunta">Aquí va la pregunta...</p>
@@ -82,6 +68,7 @@
 
     <!-- PANTALLA: Ejercicio Pausa Activa -->
     <div id="pantalla-ejercicio" class="oculto">
+        <!-- ... (contenido sin cambios) ... -->
          <div class="ejercicio-contenido">
             <h2>¡Pausa Activa! 🤸‍♀️💨</h2>
             <p id="nombre-ejercicio">¡A moverse!</p>
@@ -91,37 +78,21 @@
 
     <!-- Modal para Enviar Mensaje -->
     <div id="modal-mensaje" class="modal oculto">
+        <!-- ... (contenido sin cambios) ... -->
         <div class="modal-contenido">
             <button id="boton-cerrar-mensaje" class="modal-cerrar-btn">×</button>
             <h3>Escribe tu mensaje para el Tito Iván</h3>
-            <!-- Asegúrate de poner tu código único de Formspree -->
             <form id="form-mensaje" action="https://formspree.io/f/TU_CODIGO_UNICO" method="POST">
-                <div class="form-grupo">
-                    <label for="remitente">¿Quién eres?:</label>
-                    <!-- Este select podría llenarse dinámicamente o dejarse así si es solo para Hugo/Saúl -->
-                    <select name="remitente" id="remitente" required>
-                        <option value="">--Selecciona--</option>
-                        <option value="Hugo">Hugo</option>
-                        <option value="Saul">Saúl</option>
-                         <!-- Podrías añadir más opciones manualmente si quieres -->
-                         <option value="Papa">Papá</option>
-                         <option value="Mama">Mamá</option>
-                         <option value="Otro">Otro familiar</option>
-                    </select>
-                </div>
-                <div class="form-grupo">
-                    <label for="mensaje-texto">Tu mensaje:</label>
-                    <textarea name="mensaje" id="mensaje-texto" rows="5" required placeholder="Escribe aquí lo que quieras decir..."></textarea>
-                </div>
-                <input type="hidden" name="_subject" value="¡Mensaje desde el 3 en Raya!">
-                <input type="hidden" name="_captcha" value="false"> <!-- O configúralo en Formspree -->
+                <div class="form-grupo"> <label for="remitente">¿Quién eres?:</label> <select name="remitente" id="remitente" required><option value="">--Selecciona--</option><option value="Hugo">Hugo</option><option value="Saul">Saúl</option></select> </div>
+                <div class="form-grupo"> <label for="mensaje-texto">Tu mensaje:</label> <textarea name="mensaje" id="mensaje-texto" rows="5" required placeholder="Escribe aquí lo que quieras decir..."></textarea> </div>
+                <input type="hidden" name="_subject" value="¡Mensaje desde el 3 en Raya!"><input type="hidden" name="_captcha" value="false">
                 <button type="submit" class="boton-enviar-msg">🚀 ¡Enviar Mensaje!</button>
             </form>
             <p id="mensaje-feedback" class="mensaje-estado oculto"></p>
         </div>
     </div>
 
-    <!-- Modal para las Reglas del Juego -->
+    <!-- NUEVO: Modal para las Reglas del Juego -->
     <div id="modal-reglas" class="modal oculto">
         <div class="modal-contenido-reglas">
             <button id="boton-cerrar-reglas" class="modal-cerrar-btn">×</button>
@@ -130,8 +101,7 @@
                 <li><strong>Objetivo:</strong> ¡Ser el primero en conseguir <strong>3 puntos</strong>!</li>
                 <li><strong>Cómo jugar al 3 en Raya:</strong>
                     <ul>
-                        <li>Se eligen 2 jugadores al principio. El Jugador 1 usa 'X', el Jugador 2 usa 'O'.</li>
-                        <li>Cada jugador pone su ficha en una casilla vacía por turnos.</li>
+                        <li>Cada jugador (Hugo 'X', Saúl 'O') pone su ficha en una casilla vacía por turnos.</li>
                         <li>Gana la ronda el primero que consiga <strong>3 fichas en línea</strong> (horizontal, vertical o diagonal).</li>
                     </ul>
                 </li>
@@ -158,8 +128,8 @@
 
 
     <!-- Scripts -->
-    <script src="preguntas.js"></script> <!-- Asegúrate que estos archivos existen -->
-    <script src="ejercicios.js"></script> <!-- Asegúrate que estos archivos existen -->
+    <script src="preguntas.js"></script>
+    <script src="ejercicios.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
