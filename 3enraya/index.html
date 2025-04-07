@@ -3,33 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3 en Raya</title>
+    <title>3 en Raya Familiar</title>
     <link rel="stylesheet" href="style.css">
-    <!-- <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet"> -->
 </head>
 <body>
-    <!-- Pantalla Inicial -->
-    <div id="pantalla-inicial">
+    <!-- NUEVA PANTALLA: Selección de Jugadores (Inicio por defecto) -->
+    <div id="pantalla-seleccion-jugador">
+        <h2>¡Elige 2 Jugadores!</h2>
+        <div id="seleccion-contenedor">
+            <!-- Las tarjetas de jugador se generarán aquí por JS -->
+        </div>
+        <p id="seleccion-feedback" class="oculto">¡Selecciona 2 jugadores diferentes!</p>
+        <button id="boton-confirmar-seleccion" disabled>Confirmar y Jugar</button>
+        <div class="botones-extra-seleccion">
+             <button id="boton-abrir-mensaje" class="boton-mensaje-abrir">✉️ Enviar Mensaje</button>
+             <button id="boton-mostrar-reglas" class="boton-reglas-abrir">❓ Reglas</button>
+        </div>
+    </div>
+
+    <!-- Pantalla Inicial Original (Ahora Oculta por defecto) -->
+    <div id="pantalla-inicial" class="oculto">
+        <!-- Este contenido ya no se usa principalmente, pero lo dejamos por si acaso -->
         <button id="boton-comenzar">🚀 ¡Comenzar Juego! 🚀</button>
-        <button id="boton-abrir-mensaje" class="boton-mensaje-abrir">✉️ Enviar Mensaje al Tito Iván</button>
-        <!-- NUEVO: Botón para mostrar las reglas -->
-        <button id="boton-mostrar-reglas" class="boton-reglas-abrir">❓ Reglas del Juego</button>
+        <!-- Botones movidos a pantalla-seleccion-jugador -->
     </div>
 
     <!-- Contenedor del Juego (inicialmente oculto) -->
     <div id="juego-contenedor" class="oculto">
-        <!-- ... (marcador, info-turno, tablero, botones de ronda sin cambios) ... -->
         <div id="marcador">
              <div class="marcador-jugador">
-                <img src="img/jugadores/hugo.png" alt="Foto Hugo" class="foto-jugador" id="foto-hugo">
-                <span class="nombre-jugador">HUGO</span>
-                <span class="puntaje-jugador" id="puntaje-hugo" data-last-score="0">0</span>
+                <!-- IDs cambiados -->
+                <img src="" alt="Foto Jugador 1" class="foto-jugador" id="foto-jugador1">
+                <span class="nombre-jugador" id="nombre-jugador1">Jugador 1</span>
+                <span class="puntaje-jugador" id="puntaje-jugador1" data-last-score="0">0</span>
             </div>
             <span class="marcador-separador">:</span>
             <div class="marcador-jugador">
-                <img src="img/jugadores/saul.png" alt="Foto Saúl" class="foto-jugador" id="foto-saul">
-                <span class="nombre-jugador">SAÚL</span>
-                <span class="puntaje-jugador" id="puntaje-saul" data-last-score="0">0</span>
+                 <!-- IDs cambiados -->
+                <img src="" alt="Foto Jugador 2" class="foto-jugador" id="foto-jugador2">
+                <span class="nombre-jugador" id="nombre-jugador2">Jugador 2</span>
+                <span class="puntaje-jugador" id="puntaje-jugador2" data-last-score="0">0</span>
             </div>
         </div>
         <p id="info-turno">Turno de:</p>
@@ -39,25 +52,24 @@
             <div class="celda" data-index="6"></div> <div class="celda" data-index="7"></div> <div class="celda" data-index="8"></div>
         </div>
         <button id="boton-reiniciar" class="oculto">🔄 Siguiente Ronda 🔄</button>
-        <button id="boton-nuevo-juego" class="oculto">🌟 Nuevo Juego Completo 🌟</button>
+        <!-- <button id="boton-nuevo-juego" class="oculto">🌟 Nuevo Juego Completo 🌟</button> --> <!-- Botón obsoleto, se usa el de ganador -->
     </div>
 
     <!-- PANTALLA: Ganador del Juego -->
     <div id="pantalla-ganador" class="oculto">
-        <!-- ... (contenido sin cambios) ... -->
         <div class="confeti-contenedor"></div>
-        <h2 id="texto-ganador">¡EL GANADOR ES...!</h2>
+        <h2 id="texto-ganador">¡EL CAMPEÓN ES...!</h2>
         <img src="" alt="Foto del Ganador" id="foto-ganador" class="foto-ganador">
         <p id="nombre-ganador" class="nombre-ganador"></p>
         <div class="botones-ganador">
-            <button id="boton-volver-a-jugar" class="boton-ganador boton-jugar oculto">🎉 ¡Otra vez! 🎉</button>
-            <button id="boton-cerrar-ganador" class="boton-ganador boton-cerrar oculto">🏠 Salir</button>
+            <!-- Cambiado ID para claridad -->
+            <button id="boton-volver-a-elegir" class="boton-ganador boton-jugar oculto">🎉 ¡Jugar Otra Vez! 🎉</button>
+            <button id="boton-salir-a-seleccion" class="boton-ganador boton-cerrar oculto">🏠 Elegir Jugadores</button>
         </div>
     </div>
 
     <!-- PANTALLA: Pregunta tipo Test -->
     <div id="pantalla-pregunta" class="oculto">
-        <!-- ... (contenido sin cambios) ... -->
          <div class="pregunta-contenido">
             <h3 id="titulo-pregunta">¡Pregunta para ganar el punto!</h3>
             <p id="texto-pregunta">Aquí va la pregunta...</p>
@@ -68,7 +80,6 @@
 
     <!-- PANTALLA: Ejercicio Pausa Activa -->
     <div id="pantalla-ejercicio" class="oculto">
-        <!-- ... (contenido sin cambios) ... -->
          <div class="ejercicio-contenido">
             <h2>¡Pausa Activa! 🤸‍♀️💨</h2>
             <p id="nombre-ejercicio">¡A moverse!</p>
@@ -78,12 +89,12 @@
 
     <!-- Modal para Enviar Mensaje -->
     <div id="modal-mensaje" class="modal oculto">
-        <!-- ... (contenido sin cambios) ... -->
         <div class="modal-contenido">
             <button id="boton-cerrar-mensaje" class="modal-cerrar-btn">×</button>
             <h3>Escribe tu mensaje para el Tito Iván</h3>
+            <!-- Adaptar el select si quieres que el remitente sea uno de los jugadores disponibles -->
             <form id="form-mensaje" action="https://formspree.io/f/TU_CODIGO_UNICO" method="POST">
-                <div class="form-grupo"> <label for="remitente">¿Quién eres?:</label> <select name="remitente" id="remitente" required><option value="">--Selecciona--</option><option value="Hugo">Hugo</option><option value="Saul">Saúl</option></select> </div>
+                 <div class="form-grupo"> <label for="remitente">¿Quién eres?:</label> <select name="remitente" id="remitente" required><option value="">--Selecciona--</option><option value="Hugo">Hugo</option><option value="Saul">Saúl</option><!-- Añadir más opciones si se desea --></select> </div>
                 <div class="form-grupo"> <label for="mensaje-texto">Tu mensaje:</label> <textarea name="mensaje" id="mensaje-texto" rows="5" required placeholder="Escribe aquí lo que quieras decir..."></textarea> </div>
                 <input type="hidden" name="_subject" value="¡Mensaje desde el 3 en Raya!"><input type="hidden" name="_captcha" value="false">
                 <button type="submit" class="boton-enviar-msg">🚀 ¡Enviar Mensaje!</button>
@@ -92,16 +103,17 @@
         </div>
     </div>
 
-    <!-- NUEVO: Modal para las Reglas del Juego -->
+    <!-- Modal para las Reglas del Juego -->
     <div id="modal-reglas" class="modal oculto">
         <div class="modal-contenido-reglas">
             <button id="boton-cerrar-reglas" class="modal-cerrar-btn">×</button>
             <h2>📜 ¡Reglas del Juego! 📜</h2>
+            <!-- Contenido de las reglas sin cambios -->
             <ul>
                 <li><strong>Objetivo:</strong> ¡Ser el primero en conseguir <strong>3 puntos</strong>!</li>
                 <li><strong>Cómo jugar al 3 en Raya:</strong>
                     <ul>
-                        <li>Cada jugador (Hugo 'X', Saúl 'O') pone su ficha en una casilla vacía por turnos.</li>
+                        <li>Cada jugador ('X' y 'O') pone su ficha en una casilla vacía por turnos.</li>
                         <li>Gana la ronda el primero que consiga <strong>3 fichas en línea</strong> (horizontal, vertical o diagonal).</li>
                     </ul>
                 </li>
@@ -130,6 +142,6 @@
     <!-- Scripts -->
     <script src="preguntas.js"></script>
     <script src="ejercicios.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js"></script> <!-- Modificado JS a continuación -->
 </body>
 </html>
