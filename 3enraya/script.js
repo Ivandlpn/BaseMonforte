@@ -24,16 +24,18 @@ function establecerFondoAleatorio() {
 const JUGADORES_DISPONIBLES = [
     { nombre: 'Hugo', imagen: 'img/jugadores/hugo.png' },
     { nombre: 'Saúl', imagen: 'img/jugadores/saul.png' },
-    // !!! AÑADE AQUÍ MÁS JUGADORES !!!
-    // Ejemplo:
     { nombre: 'Papá', imagen: 'img/jugadores/papa.png' },
     { nombre: 'Mamá', imagen: 'img/jugadores/mama.png' },
     { nombre: 'Yoyo', imagen: 'img/jugadores/yoyo.png' },
     { nombre: 'Yaya', imagen: 'img/jugadores/yaya.png' },
-    { nombre: 'Tito Samu', imagen: 'img/jugadores/titosamu.png' },
-     { nombre: 'Tita Lidia', imagen: 'img/jugadores/titalidia.png' },
      { nombre: 'Abuelo Quiri', imagen: 'img/jugadores/abueloquiri.png' },
+    { nombre: 'Abuela Ana', imagen: 'img/jugadores/abuelaana.png' },
+       { nombre: 'Tito Samu', imagen: 'img/jugadores/titosamu.png' },
+     { nombre: 'Tita Lidia', imagen: 'img/jugadores/titalidia.png' },
     { nombre: 'Prima Gema', imagen: 'img/jugadores/primagema.png' },
+    { nombre: 'Tita Tere', imagen: 'img/jugadores/titatere.png' },
+    { nombre: 'Tito Freek', imagen: 'img/jugadores/titofreek.png' },
+    { nombre: 'Primo Oliver', imagen: 'img/jugadores/primooliver.png' },
 ];
 
 // --- Referencias a Elementos del DOM ---
