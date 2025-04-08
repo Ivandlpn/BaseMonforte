@@ -30,6 +30,7 @@ const JUGADORES_DISPONIBLES = [
     { nombre: 'Yaya', imagen: 'img/jugadores/yaya.png' },
      { nombre: 'Abuelo Quiri', imagen: 'img/jugadores/abueloquiri.png' },
     { nombre: 'Abuela Ana', imagen: 'img/jugadores/abuelaana.png' },
+    { nombre: 'Tito Iván', imagen: 'img/jugadores/titoivan.png' },
        { nombre: 'Tito Samu', imagen: 'img/jugadores/titosamu.png' },
      { nombre: 'Tita Lidia', imagen: 'img/jugadores/titalidia.png' },
     { nombre: 'Prima Gema', imagen: 'img/jugadores/primagema.png' },
