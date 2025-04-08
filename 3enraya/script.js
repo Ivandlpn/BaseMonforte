@@ -31,6 +31,9 @@ const JUGADORES_DISPONIBLES = [
     { nombre: 'Yoyo', imagen: 'img/jugadores/yoyo.png' },
     { nombre: 'Yaya', imagen: 'img/jugadores/yaya.png' },
     { nombre: 'Tito Samu', imagen: 'img/jugadores/titosamu.png' },
+     { nombre: 'Tita Lidia', imagen: 'img/jugadores/titalidia.png' },
+     { nombre: 'Abuelo Quiri', imagen: 'img/jugadores/abueloquiri.png' },
+    { nombre: 'Prima Gema', imagen: 'img/jugadores/primagema.png' },
 ];
 
 // --- Referencias a Elementos del DOM ---
