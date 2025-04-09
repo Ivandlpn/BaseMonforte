@@ -1,175 +1,283 @@
-/* --- Variables de Color (sin cambios) --- */
+/* --- Variables CSS --- */
 :root {
-  --color-bg-light: #f0f8ff;
-  --color-bg-card: #ffffff;
-  --color-primary-dark: #003366;
-  --color-primary-medium: #007bff;
-  --color-primary-light-accent: #e7f3ff;
-  --color-text-dark: #333333;
-  --color-text-medium: #555555;
-  --color-text-light: #ffffff;
-  --color-accent-action: #ff8c42; /* Ya no se usa para botones principales */
-  --color-accent-success: #28a745;
-  --color-accent-danger: #dc3545; /* Ya no se usa para botones */
-  --color-border: #dee2e6;
-  --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --primary-color: #2c3e50; /* Azul oscuro */
+    --secondary-color: #3498db; /* Azul brillante */
+    --accent-color: #e74c3c; /* Rojo/Naranja para alertas o destacar */
+    --background-color: #ecf0f1; /* Gris claro */
+    --card-background: #ffffff; /* Blanco */
+    --text-color: #34495e; /* Gris oscuro */
+    --text-light: #ffffff;
+    --border-color: #bdc3c7; /* Gris medio */
+    --hover-color: #f8f9f9;
+    --success-color: #2ecc71; /* Verde */
+    --loss-color: #e74c3c;   /* Rojo */
+    --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --border-radius: 8px;
+    --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* --- Estilos Generales (sin cambios) --- */
+/* --- Reset Básico y Estilos Globales --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: var(--color-bg-light);
-  color: var(--color-text-dark);
-  margin: 0;
-  line-height: 1.6;
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 header {
-  background-color: var(--color-primary-dark);
-  color: var(--color-text-light);
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 1rem 2rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-  margin: 0;
-  font-size: 1.8rem;
-  text-align: center;
+    font-size: 1.8rem;
+    font-weight: 600;
 }
 
-/* --- Layout Principal Ajustado --- */
-main {
-  padding: 2rem;
-  display: grid;
-  gap: 1.5rem;
-  /* Más simple ahora, el portfolio ocupará más espacio naturalmente */
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  max-width: 1600px;
-  margin: 0 auto;
+header h1 i {
+    margin-right: 10px;
+    color: var(--secondary-color);
 }
 
-/* El layout responsive debería funcionar bien, pero ajusta si es necesario */
-@media (min-width: 992px) {
-   /* Podrías querer que el resumen y dividendos estén lado a lado */
-   /* y el portfolio debajo ocupando todo, o dejarlo auto-fit */
-   #portfolio {
-       grid-column: 1 / -1; /* Asegura que el portfolio ocupe todo el ancho si hay otras tarjetas arriba */
-   }
-   #dividends {
-        grid-column: 1 / -1;
-   }
+main.dashboard-container {
+    flex-grow: 1;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
 }
 
+footer {
+    background-color: var(--primary-color);
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+    margin-top: auto; /* Empuja el footer hacia abajo */
+}
 
-/* --- Estilo de Tarjetas (sin cambios) --- */
+/* --- Estilos de Tarjetas --- */
 .dashboard-card {
-  background-color: var(--color-bg-card);
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: var(--shadow-card);
-  border: 1px solid var(--color-border);
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    overflow: hidden; /* Para contener elementos internos */
 }
 
 .dashboard-card h2 {
-  color: var(--color-primary-dark);
-  margin-top: 0;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid var(--color-primary-medium);
-  padding-bottom: 0.5rem;
-  font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--secondary-color);
+    font-size: 1.4rem;
+    font-weight: 600;
 }
 
-/* --- ESTILOS DE FORMULARIO ELIMINADOS --- */
+.dashboard-card h2 i {
+    margin-right: 8px;
+    color: var(--secondary-color);
+}
 
-/* --- Estilos de Tabla (ajustados) --- */
-#portfolio .dashboard-card div[style*="overflow-x: auto"] {
-    margin-top: 1rem;
+
+/* --- Resumen General --- */
+.summary-card .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    text-align: center;
+}
+
+.summary-item {
+    background-color: #fdfefe;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.summary-label {
+    font-size: 0.9rem;
+    color: #7f8c8d; /* Gris más suave */
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.summary-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+.summary-item small {
+    font-size: 0.75rem;
+    color: #95a5a6;
+    margin-top: 0.3rem;
+}
+.summary-value.positive { color: var(--success-color); }
+.summary-value.negative { color: var(--loss-color); }
+
+
+/* --- Tabla del Portfolio --- */
+.table-container {
+    overflow-x: auto; /* Scroll horizontal necesario */
+    width: 100%;
 }
 
 #portfolio-table {
     width: 100%;
-    min-width: 900px; /* Ajusta según veas necesario */
-    border-collapse: collapse;
-    white-space: nowrap;
+    border-collapse: collapse; /* Bordes más limpios */
+    min-width: 1000px; /* Evita que la tabla se comprima demasiado */
 }
 
 #portfolio-table th,
 #portfolio-table td {
-    border: 1px solid var(--color-border);
-    padding: 0.8rem 1rem;
+    padding: 12px 15px;
     text-align: left;
-    vertical-align: middle;
-    font-size: 0.9rem;
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap; /* Evita saltos de línea en celdas */
 }
 
-#portfolio-table thead {
-    background-color: var(--color-primary-light-accent);
+#portfolio-table thead th {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    position: sticky; /* Cabecera fija */
+    top: 0; /* Pegada arriba dentro del contenedor */
+    z-index: 10;
+    cursor: default; /* Cursor por defecto */
 }
 
-#portfolio-table th {
-    color: var(--color-primary-dark);
-    font-weight: 600;
-    position: sticky;
-    top: 0;
-    background-color: var(--color-primary-light-accent);
-    z-index: 1;
+#portfolio-table thead th[data-sortable="true"] {
+    cursor: pointer; /* Cursor de puntero para ordenables */
+    transition: background-color 0.2s ease;
+}
+
+#portfolio-table thead th[data-sortable="true"]:hover {
+    background-color: var(--secondary-color);
+}
+
+#portfolio-table thead th i.fa-sort,
+#portfolio-table thead th i.fa-sort-up,
+#portfolio-table thead th i.fa-sort-down {
+    margin-left: 5px;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.8em;
+}
+
+#portfolio-table thead th.sorted-asc i.fa-sort,
+#portfolio-table thead th.sorted-desc i.fa-sort {
+    display: none; /* Oculta el icono genérico al ordenar */
+}
+#portfolio-table thead th.sorted-asc i.fa-sort-up,
+#portfolio-table thead th.sorted-desc i.fa-sort-down {
+    display: inline-block; /* Muestra el icono correcto */
+    color: var(--text-light);
 }
 
 #portfolio-table tbody tr:nth-child(even) {
-    background-color: #f8f9fa;
+    background-color: #f8f9f9; /* Zebra striping */
 }
 
 #portfolio-table tbody tr:hover {
-    background-color: var(--color-primary-light-accent);
+    background-color: #e8f4fd; /* Tono azulado suave en hover */
 }
 
-/* --- Alineación de columnas numéricas (ajustados índices si es necesario) --- */
-/* Índices ahora son:
-   5: Acciones, 6: Coste Medio, 7: Coste Base, 8: Precio Club,
-   9: Valor Actual, 10: Dividendo/Acción */
-#portfolio-table th:nth-child(5),
-#portfolio-table td:nth-child(5),
-#portfolio-table th:nth-child(6),
-#portfolio-table td:nth-child(6),
-#portfolio-table th:nth-child(7),
-#portfolio-table td:nth-child(7),
-#portfolio-table th:nth-child(8),
-#portfolio-table td:nth-child(8),
-#portfolio-table th:nth-child(9),
-#portfolio-table td:nth-child(9),
-#portfolio-table th:nth-child(10),
-#portfolio-table td:nth-child(10) {
-    text-align: right;
+#portfolio-table td {
+    font-size: 0.95rem;
 }
 
-/* --- ESTILOS DE BOTONES DE ACCIÓN EN TABLA ELIMINADOS --- */
+/* Clases para colorear G/P */
+.gain { color: var(--success-color); }
+.loss { color: var(--loss-color); }
+.neutral { color: var(--text-color); }
 
-/* Mensaje de 'No hay datos' (sin cambios) */
-.no-data-message {
-    color: var(--color-text-medium);
+/* Estilos para N/A o valores nulos */
+.na-value {
+    color: #95a5a6;
+    font-style: italic;
+}
+
+/* --- Indicador de Carga --- */
+.loading {
+    display: none; /* Oculto por defecto */
     text-align: center;
-    margin-top: 1rem;
-    padding: 1rem;
-    background-color: #f8f9fa;
-    border: 1px dashed var(--color-border);
-    border-radius: 4px;
+    padding: 2rem;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+.loading.active {
+    display: flex; /* Visible cuando está activo */
+}
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: var(--secondary-color);
+    animation: spin 1s ease infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
+/* --- Mensaje de Error --- */
+.error-message {
+    display: none; /* Oculto por defecto */
+    background-color: #fdeded;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    margin: 1rem auto;
+    text-align: center;
+    max-width: 600px;
+}
+.error-message.active {
+    display: block; /* Visible cuando hay error */
+}
 
-/* --- Responsividad Básica (ajustar si es necesario) --- */
+/* --- Responsividad Básica --- */
 @media (max-width: 768px) {
-    main {
-        padding: 1rem;
-    }
-    header {
-        padding: 1rem;
-    }
     header h1 {
         font-size: 1.5rem;
     }
+    main.dashboard-container {
+        padding: 1rem;
+    }
+    .dashboard-card h2 {
+        font-size: 1.2rem;
+    }
+    .summary-grid {
+        grid-template-columns: 1fr; /* Una columna en móviles */
+        gap: 1rem;
+    }
+    .summary-value {
+        font-size: 1.4rem;
+    }
     #portfolio-table th,
     #portfolio-table td {
-       font-size: 0.85rem;
-       padding: 0.6rem 0.8rem;
+        padding: 10px 8px; /* Menos padding en celdas */
+        font-size: 0.9rem;
     }
+     /* Podrías añadir estilos más complejos para tablas en móvil si fuera necesario */
 }
