@@ -1,139 +1,270 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Referencias a Elementos del DOM ---
-    const portfolioBody = document.getElementById('portfolio-body');
+    const portfolioTableBody = document.getElementById('portfolio-table-body');
+    const totalValueElement = document.getElementById('total-value');
+    const totalBaseCostElement = document.getElementById('total-base-cost');
+    const totalUnrealizedGainElement = document.getElementById('total-unrealized-gain');
+    const totalDividendElement = document.getElementById('total-dividend');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    const errorMessageElement = document.getElementById('error-message');
+    const summarySection = document.getElementById('summary-section');
+    const portfolioSection = document.getElementById('portfolio-section');
     const portfolioTable = document.getElementById('portfolio-table');
-    const tableContainer = document.querySelector('#portfolio div[style*="overflow-x: auto"]');
-    const noDataMsg = document.querySelector('#portfolio .no-data-message');
-    const totalValueEl = document.getElementById('total-value');
-    const estimatedYieldEl = document.getElementById('estimated-yield');
 
-    // --- Estado de la Aplicación ---
-    let portfolio = []; // Se llenará desde cartera.json
+    let portfolioData = []; // Almacenará los datos procesados
+    let currentSort = { column: null, direction: 'asc' };
 
-    // --- Funciones Auxiliares ---
-
-    /**
-     * Formatea un número o devuelve '-'.
-     */
-    const formatNumber = (num, decimals = 2) => {
-        const number = parseFloat(num);
-        if (num === null || num === undefined || isNaN(number)) {
-            return '-';
+    // --- Helper: Formato de Moneda ---
+    // Nota: Esto formatea en la moneda original. Sumar totales mixtos requiere tipos de cambio.
+    const formatCurrency = (value, currencyCode, maximumFractionDigits = 2) => {
+        if (value === null || value === undefined || isNaN(value)) {
+            return '<span class="na-value">-</span>';
         }
-        return number.toFixed(decimals);
+        try {
+            return new Intl.NumberFormat(undefined, { // Usa el locale del navegador
+                style: 'currency',
+                currency: currencyCode,
+                minimumFractionDigits: 2,
+                maximumFractionDigits: maximumFractionDigits,
+            }).format(value);
+        } catch (error) {
+            // Si el código de moneda no es válido, formatea como número normal
+            console.warn(`Invalid currency code: ${currencyCode}. Formatting as number.`);
+            return `${formatNumber(value)} <span class="na-value">${currencyCode || ''}</span>`;
+        }
     };
 
-     /**
-     * Devuelve el símbolo de la moneda.
-     */
-     function currencySymbol(currencyCode) {
-        switch (currencyCode?.toUpperCase()) {
-            case 'USD': return '$';
-            case 'EUR': return '€';
-            case 'CAD': return 'C$';
-            case 'NOK': return 'kr';
-            default: return currencyCode || '';
+    // --- Helper: Formato de Número ---
+    const formatNumber = (value, maximumFractionDigits = 2) => {
+        if (value === null || value === undefined || isNaN(value)) {
+            return '<span class="na-value">-</span>';
         }
+        return new Intl.NumberFormat(undefined, {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: maximumFractionDigits,
+        }).format(value);
+    };
+
+    // --- Helper: Formato de Porcentaje con Color ---
+    const formatPercentageGainLoss = (gainLossPercent) => {
+         if (gainLossPercent === null || gainLossPercent === undefined || isNaN(gainLossPercent)) {
+            return '<span class="na-value">-</span>';
+        }
+        const formattedPercent = `${gainLossPercent.toFixed(2)}%`;
+        let className = 'neutral';
+        if (gainLossPercent > 0.1) className = 'gain'; // Umbral pequeño para evitar verde en 0.01%
+        if (gainLossPercent < -0.1) className = 'loss';
+
+        return `<span class="${className}">${formattedPercent}</span>`;
     }
 
+    // --- Procesar Datos del Portfolio (Añadir Cálculos) ---
+    const processPortfolioData = (data) => {
+        return data.map(stock => {
+            const shares = stock.shares || 0;
+            const purchasePrice = stock.purchasePrice; // Puede ser null
+            const clubPrice = stock.clubPrice; // Puede ser null
 
-    /**
-     * Actualiza la sección de resumen (placeholders).
-     */
-    function updateSummary() {
-        // TODO: Calcular cuando tengamos datos de API
-        let currentTotalValue = 0;
-        let estimatedAnnualDividend = 0;
+            const costeBase = purchasePrice !== null ? shares * purchasePrice : null;
+            const valorActualClub = clubPrice !== null ? shares * clubPrice : null;
 
-        totalValueEl.textContent = formatNumber(currentTotalValue) + ' €'; // Ajustar moneda base si es necesario
-        estimatedYieldEl.textContent = formatNumber(estimatedAnnualDividend) + ' €';
-    }
+            let gainLossPercent = null;
+            if (costeBase !== null && costeBase !== 0 && valorActualClub !== null) {
+                 gainLossPercent = ((valorActualClub - costeBase) / costeBase) * 100;
+            }
 
-    /**
-     * Renderiza la tabla del portfolio en el HTML.
-     */
-    function renderPortfolio() {
-        portfolioBody.innerHTML = ''; // Limpiar tabla anterior
 
-        if (!portfolio || portfolio.length === 0) {
-            if (tableContainer) tableContainer.style.display = 'none';
-            if (noDataMsg) noDataMsg.style.display = 'block';
-        } else {
-            if (tableContainer) tableContainer.style.display = 'block';
-            if (noDataMsg) noDataMsg.style.display = 'none';
+            return {
+                ...stock, // Copia todas las propiedades originales
+                costeBase,
+                valorActualClub,
+                gainLossPercent
+            };
+        });
+    };
 
-            portfolio.forEach((stock) => { // No necesitamos el índice ahora
-                const row = portfolioBody.insertRow();
+    // --- Renderizar la Tabla del Portfolio ---
+    const renderPortfolioTable = (dataToRender) => {
+        portfolioTableBody.innerHTML = ''; // Limpiar tabla anterior
 
-                const name = stock.name || '-';
-                const ticker = stock.ticker?.toUpperCase() || '-';
-                const country = stock.country || '-';
-                const currency = stock.currency || '-';
-                const shares = parseFloat(stock.shares) || 0;
-                const purchasePrice = parseFloat(stock.purchasePrice) || 0;
-                const clubPrice = parseFloat(stock.clubPrice) ?? null;
-                const costBase = (shares && purchasePrice) ? (shares * purchasePrice) : null;
-                const displayCurrency = currencySymbol(currency);
+        if (!dataToRender || dataToRender.length === 0) {
+            portfolioTableBody.innerHTML = '<tr><td colspan="12" style="text-align:center; padding: 2rem;">No hay datos en el portfolio.</td></tr>';
+            return;
+        }
 
-                // Se eliminó la última celda (<td>) que contenía los botones
-                row.innerHTML = `
-                    <td>${name}</td>
-                    <td>${ticker}</td>
-                    <td>${country}</td>
-                    <td>${currency}</td>
-                    <td style="text-align: right;">${formatNumber(shares, 0)}</td>
-                    <td style="text-align: right;">${formatNumber(purchasePrice)} ${displayCurrency}</td>
-                    <td style="text-align: right;">${formatNumber(costBase)} ${displayCurrency}</td>
-                    <td style="text-align: right;">${formatNumber(clubPrice)} ${displayCurrency}</td>
-                    <td style="text-align: right;" class="current-value" data-ticker="${ticker}">Cargando...</td>
-                    <td style="text-align: right;" class="dividend-per-share" data-ticker="${ticker}">-</td>
-                    <td class="ex-dividend-date" data-ticker="${ticker}">-</td>
-                `;
+        dataToRender.forEach(stock => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${stock.name}</td>
+                <td>${stock.ticker}</td>
+                <td>${stock.country}</td>
+                <td>${stock.currency}</td>
+                <td style="text-align: right;">${formatNumber(stock.shares, 0)}</td>
+                <td style="text-align: right;">${formatCurrency(stock.purchasePrice, stock.currency)}</td>
+                <td style="text-align: right;">${formatCurrency(stock.costeBase, stock.currency)}</td>
+                <td style="text-align: right;">${formatCurrency(stock.clubPrice, stock.currency)}</td>
+                <td style="text-align: right;">${formatCurrency(stock.valorActualClub, stock.currency)}</td>
+                <td style="text-align: right;">${formatPercentageGainLoss(stock.gainLossPercent)}</td>
+                <td class="na-value" style="text-align: center;">N/A</td>
+                <td class="na-value" style="text-align: center;">N/A</td>
+            `;
+            portfolioTableBody.appendChild(row);
+        });
+    };
+
+    // --- Calcular y Renderizar el Resumen ---
+    const renderSummary = (processedData) => {
+        // ¡IMPORTANTE! Estas sumas mezclan monedas. No son financieramente precisas sin conversión.
+        let totalValue = 0;
+        let totalCost = 0;
+        let hasMixedCurrencies = false;
+        let firstCurrency = null;
+
+        processedData.forEach(stock => {
+            if (stock.valorActualClub !== null) {
+                totalValue += stock.valorActualClub;
+            }
+            if (stock.costeBase !== null) {
+                totalCost += stock.costeBase;
+            }
+            // Comprobar si hay monedas mixtas
+             if (firstCurrency === null && stock.currency) {
+                firstCurrency = stock.currency;
+            } else if (stock.currency && stock.currency !== firstCurrency) {
+                hasMixedCurrencies = true;
+            }
+        });
+
+        const totalGainLoss = totalValue - totalCost;
+
+        // Mostrar N/A si no hay datos válidos para sumar
+        totalValueElement.innerHTML = totalValue > 0 || processedData.some(s=> s.valorActualClub !== null) ? formatNumber(totalValue) : '<span class="na-value">--</span>';
+        totalBaseCostElement.innerHTML = totalCost > 0 || processedData.some(s=> s.costeBase !== null) ? formatNumber(totalCost) : '<span class="na-value">--</span>';
+
+        // Colorear Ganancia/Pérdida Total
+        let gainLossClass = 'neutral';
+         if (totalValue > 0 || totalCost > 0) { // Solo calcular si hay valores
+            if (totalGainLoss > 0.1) gainLossClass = 'positive';
+            if (totalGainLoss < -0.1) gainLossClass = 'negative';
+             totalUnrealizedGainElement.innerHTML = formatNumber(totalGainLoss);
+             totalUnrealizedGainElement.className = `summary-value ${gainLossClass}`;
+         } else {
+             totalUnrealizedGainElement.innerHTML = '<span class="na-value">--</span>';
+             totalUnrealizedGainElement.className = 'summary-value'; // Reset class
+         }
+
+
+        // Añadir indicación de monedas mixtas si es necesario
+        const currencyWarningElements = document.querySelectorAll('.summary-item small');
+        currencyWarningElements.forEach(el => {
+            if(el.textContent.includes("Monedas Mixtas")) {
+                el.style.display = hasMixedCurrencies ? 'inline' : 'none';
+            }
+        });
+
+
+        // Dividendo total sigue siendo N/A
+        totalDividendElement.textContent = 'N/A';
+
+        summarySection.style.display = 'block'; // Mostrar sección
+    };
+
+     // --- Lógica de Ordenación ---
+     const sortData = (column, type = 'string') => {
+        const direction = currentSort.column === column && currentSort.direction === 'asc' ? 'desc' : 'asc';
+        currentSort = { column, direction };
+
+        portfolioData.sort((a, b) => {
+            let valA = a[column];
+            let valB = b[column];
+
+             // Manejo de nulos o undefined: ponerlos al final
+            if (valA === null || valA === undefined) return 1;
+            if (valB === null || valB === undefined) return -1;
+
+            if (type === 'number') {
+                valA = Number(valA);
+                valB = Number(valB);
+                 if (isNaN(valA)) return 1; // NaN al final
+                 if (isNaN(valB)) return -1; // NaN al final
+            } else { // string (case-insensitive)
+                valA = String(valA).toLowerCase();
+                valB = String(valB).toLowerCase();
+            }
+
+            if (valA < valB) {
+                return direction === 'asc' ? -1 : 1;
+            }
+            if (valA > valB) {
+                return direction === 'asc' ? 1 : -1;
+            }
+            return 0; // Son iguales
+        });
+
+        renderPortfolioTable(portfolioData); // Re-renderizar con datos ordenados
+        updateSortIndicators(); // Actualizar iconos de las cabeceras
+    };
+
+    // --- Actualizar Indicadores Visuales de Ordenación ---
+    const updateSortIndicators = () => {
+        portfolioTable.querySelectorAll('thead th[data-sortable="true"]').forEach(th => {
+            th.classList.remove('sorted-asc', 'sorted-desc');
+            const icon = th.querySelector('i');
+            icon.className = 'fas fa-sort'; // Reset icon
+
+            if (th.dataset.column === currentSort.column) {
+                th.classList.add(currentSort.direction === 'asc' ? 'sorted-asc' : 'sorted-desc');
+                icon.className = currentSort.direction === 'asc' ? 'fas fa-sort-up' : 'fas fa-sort-down';
+            }
+        });
+    };
+
+    // --- Añadir Event Listeners para Ordenación ---
+    const addSortFunctionality = () => {
+        portfolioTable.querySelectorAll('thead th[data-sortable="true"]').forEach(th => {
+            th.addEventListener('click', () => {
+                const column = th.dataset.column;
+                const type = th.dataset.type || 'string'; // Default a string si no se especifica data-type="number"
+                sortData(column, type);
             });
+        });
+    };
 
-             // TODO: Llamar a función para buscar datos de API después de renderizar
-             // fetchApiDataForPortfolio();
-        }
-        updateSummary(); // Actualizar resumen
-    }
 
-    // --- FUNCIONES DE GUARDAR, EDITAR, ELIMINAR ELIMINADAS ---
+    // --- Cargar Datos del Portfolio ---
+    const loadPortfolioData = async () => {
+        loadingIndicator.classList.add('active');
+        errorMessageElement.classList.remove('active');
+        summarySection.style.display = 'none';
+        portfolioSection.style.display = 'none';
 
-    // --- Inicialización ---
-
-    /**
-     * Carga los datos iniciales del portfolio SIEMPRE desde cartera.json.
-     */
-    async function loadInitialData() {
         try {
-            console.log("Intentando cargar portfolio desde cartera.json...");
-            const response = await fetch('cartera.json'); // Siempre lee de aquí
+            const response = await fetch('cartera.json');
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
+                throw new Error(`Error HTTP: ${response.status} ${response.statusText}`);
             }
-            const jsonData = await response.json();
-            if (!Array.isArray(jsonData)) {
-               throw new Error("El archivo cartera.json no contiene un array válido.");
+            const rawData = await response.json();
+
+            if (!Array.isArray(rawData)) {
+                 throw new Error("El archivo JSON no contiene un array válido.");
             }
-            portfolio = jsonData; // Asigna los datos cargados
-            console.log("Portfolio cargado correctamente desde cartera.json.");
+
+            portfolioData = processPortfolioData(rawData); // Procesar y guardar
+            renderPortfolioTable(portfolioData);
+            renderSummary(portfolioData);
+
+            addSortFunctionality(); // Añadir listeners de ordenación DESPUÉS de cargar datos
+
+            portfolioSection.style.display = 'block'; // Mostrar tabla
 
         } catch (error) {
-            console.error("Error al cargar o procesar cartera.json:", error);
-            portfolio = []; // Asegura que el portfolio esté vacío en caso de error
-            if (noDataMsg) {
-                // Muestra el error en el mensaje de "no hay datos"
-                noDataMsg.textContent = `Error al cargar cartera.json: ${error.message}. Verifica el archivo y la consola.`;
-                noDataMsg.style.display = 'block'; // Asegura que sea visible
-            }
-             if (tableContainer) tableContainer.style.display = 'none'; // Oculta la tabla si hay error
+            console.error('Error al cargar o procesar el portfolio:', error);
+            errorMessageElement.textContent = `No se pudieron cargar los datos del portfolio: ${error.message}. Asegúrate de que 'cartera.json' existe y es válido.`;
+            errorMessageElement.classList.add('active');
         } finally {
-             // Renderiza el portfolio (vacío o con datos) después del intento de carga
-             renderPortfolio();
+            loadingIndicator.classList.remove('active'); // Ocultar indicador siempre
         }
-    }
+    };
 
-    // --- Ejecución Inicial ---
-    loadInitialData(); // Cargar datos al iniciar
-
+    // --- Inicializar la Aplicación ---
+    loadPortfolioData();
 });
