@@ -1,24 +1,21 @@
-/* --- Variables de Color --- */
+/* --- Variables de Color (sin cambios) --- */
 :root {
-  --color-bg-light: #f0f8ff;         /* Azul muy claro (AliceBlue) para el fondo general */
-  --color-bg-card: #ffffff;         /* Blanco para las tarjetas */
-  --color-primary-dark: #003366;    /* Azul marino oscuro para cabeceras, títulos */
-  --color-primary-medium: #007bff;   /* Azul brillante para enlaces, interactividad */
-  --color-primary-light-accent: #e7f3ff; /* Azul muy pálido para fondos sutiles o hovers */
-
-  --color-text-dark: #333333;       /* Texto principal oscuro */
-  --color-text-medium: #555555;     /* Texto secundario */
-  --color-text-light: #ffffff;      /* Texto sobre fondos oscuros */
-
-  --color-accent-action: #ff8c42;   /* Naranja para botones principales (Añadir) */
-  --color-accent-success: #28a745;  /* Verde para éxito */
-  --color-accent-danger: #dc3545;   /* Rojo para peligro/eliminar */
-  --color-border: #dee2e6;         /* Gris claro para bordes */
-
+  --color-bg-light: #f0f8ff;
+  --color-bg-card: #ffffff;
+  --color-primary-dark: #003366;
+  --color-primary-medium: #007bff;
+  --color-primary-light-accent: #e7f3ff;
+  --color-text-dark: #333333;
+  --color-text-medium: #555555;
+  --color-text-light: #ffffff;
+  --color-accent-action: #ff8c42; /* Ya no se usa para botones principales */
+  --color-accent-success: #28a745;
+  --color-accent-danger: #dc3545; /* Ya no se usa para botones */
+  --color-border: #dee2e6;
   --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* --- Estilos Generales --- */
+/* --- Estilos Generales (sin cambios) --- */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   background-color: var(--color-bg-light);
@@ -40,33 +37,31 @@ header h1 {
   text-align: center;
 }
 
+/* --- Layout Principal Ajustado --- */
 main {
   padding: 2rem;
   display: grid;
   gap: 1.5rem;
-  /* Define dos columnas principales, la segunda más ancha */
+  /* Más simple ahora, el portfolio ocupará más espacio naturalmente */
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  /* Ajusta según necesites la distribución */
-  max-width: 1600px; /* Ancho máximo para el contenido */
-  margin: 0 auto; /* Centrar el main */
+  max-width: 1600px;
+  margin: 0 auto;
 }
 
-/* Ajuste específico para que Portfolio ocupe más si es necesario */
+/* El layout responsive debería funcionar bien, pero ajusta si es necesario */
 @media (min-width: 992px) {
-  main {
-    /* 1fr para las primeras dos tarjetas (Resumen, Añadir), 2fr para la tabla (Portfolio) */
-    grid-template-columns: 1fr 1fr;
-  }
-  #portfolio {
-    grid-column: 1 / -1; /* Hacer que la tabla ocupe todo el ancho */
-  }
+   /* Podrías querer que el resumen y dividendos estén lado a lado */
+   /* y el portfolio debajo ocupando todo, o dejarlo auto-fit */
+   #portfolio {
+       grid-column: 1 / -1; /* Asegura que el portfolio ocupe todo el ancho si hay otras tarjetas arriba */
+   }
    #dividends {
-      grid-column: 1 / -1; /* Ocupar todo el ancho también */
+        grid-column: 1 / -1;
    }
 }
 
 
-/* --- Estilo de Tarjetas --- */
+/* --- Estilo de Tarjetas (sin cambios) --- */
 .dashboard-card {
   background-color: var(--color-bg-card);
   border-radius: 8px;
@@ -84,72 +79,18 @@ main {
   font-size: 1.3rem;
 }
 
-/* --- Estilos de Formularios --- */
-#add-stock-form div {
-  margin-bottom: 1rem;
-}
+/* --- ESTILOS DE FORMULARIO ELIMINADOS --- */
 
-#add-stock-form label {
-  display: block;
-  margin-bottom: 0.3rem;
-  font-weight: bold;
-  color: var(--color-text-medium);
-  font-size: 0.9rem;
-}
-
-#add-stock-form input[type="text"],
-#add-stock-form input[type="number"] {
-  width: calc(100% - 22px); /* Ajustar para padding y borde */
-  padding: 0.7rem 0.9rem;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.2s ease;
-}
-#add-stock-form input:focus {
-    outline: none;
-    border-color: var(--color-primary-medium);
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-}
-
-
-#add-stock-form button[type="submit"] {
-  background-color: var(--color-accent-action);
-  color: var(--color-text-light);
-  border: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-}
-
-#add-stock-form button[type="submit"]:hover {
-  filter: brightness(0.9);
-}
-#add-stock-form button[type="submit"]:active {
-    transform: translateY(1px);
-}
-#add-stock-form small {
-    display: block;
-    margin-top: 0.5rem;
-    color: var(--color-text-medium);
-}
-
-
-/* --- Estilos de Tabla --- */
-/* Contenedor para scroll horizontal */
+/* --- Estilos de Tabla (ajustados) --- */
 #portfolio .dashboard-card div[style*="overflow-x: auto"] {
     margin-top: 1rem;
 }
 
 #portfolio-table {
     width: 100%;
-    /* Ancho mínimo recomendado para ver columnas clave sin scroll */
-    min-width: 1000px;
+    min-width: 900px; /* Ajusta según veas necesario */
     border-collapse: collapse;
-    white-space: nowrap; /* Evita que el texto largo en celdas salte de línea */
+    white-space: nowrap;
 }
 
 #portfolio-table th,
@@ -158,7 +99,7 @@ main {
     padding: 0.8rem 1rem;
     text-align: left;
     vertical-align: middle;
-    font-size: 0.9rem; /* Ligeramente más pequeño para caber más */
+    font-size: 0.9rem;
 }
 
 #portfolio-table thead {
@@ -167,10 +108,10 @@ main {
 
 #portfolio-table th {
     color: var(--color-primary-dark);
-    font-weight: 600; /* Un poco más grueso */
+    font-weight: 600;
     position: sticky;
     top: 0;
-    background-color: var(--color-primary-light-accent); /* Fondo consistente */
+    background-color: var(--color-primary-light-accent);
     z-index: 1;
 }
 
@@ -182,8 +123,8 @@ main {
     background-color: var(--color-primary-light-accent);
 }
 
-/* --- Alineación de columnas numéricas --- */
-/* Índices basados en el orden de las columnas en HTML:
+/* --- Alineación de columnas numéricas (ajustados índices si es necesario) --- */
+/* Índices ahora son:
    5: Acciones, 6: Coste Medio, 7: Coste Base, 8: Precio Club,
    9: Valor Actual, 10: Dividendo/Acción */
 #portfolio-table th:nth-child(5),
@@ -201,31 +142,9 @@ main {
     text-align: right;
 }
 
-/* Estilo botones de acción en tabla */
-#portfolio-table td:last-child {
-    text-align: center; /* Centrar botones */
-}
-#portfolio-table .edit-btn,
-#portfolio-table .delete-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.1rem;
-    padding: 0.2rem 0.4rem;
-    margin: 0 0.2rem;
-    transition: transform 0.1s ease;
-}
-#portfolio-table .edit-btn:hover {
-    color: var(--color-primary-medium);
-    transform: scale(1.2);
-}
-#portfolio-table .delete-btn:hover {
-    color: var(--color-accent-danger);
-     transform: scale(1.2);
-}
+/* --- ESTILOS DE BOTONES DE ACCIÓN EN TABLA ELIMINADOS --- */
 
-
-/* Mensaje de 'No hay datos' */
+/* Mensaje de 'No hay datos' (sin cambios) */
 .no-data-message {
     color: var(--color-text-medium);
     text-align: center;
@@ -237,12 +156,10 @@ main {
 }
 
 
-/* --- Responsividad Básica --- */
+/* --- Responsividad Básica (ajustar si es necesario) --- */
 @media (max-width: 768px) {
     main {
         padding: 1rem;
-        /* Ya se maneja con auto-fit, pero podemos forzar una columna si queremos */
-        /* grid-template-columns: 1fr; */
     }
     header {
         padding: 1rem;
@@ -252,7 +169,7 @@ main {
     }
     #portfolio-table th,
     #portfolio-table td {
-       font-size: 0.85rem; /* Reducir más en móvil */
+       font-size: 0.85rem;
        padding: 0.6rem 0.8rem;
     }
 }
