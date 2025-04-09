@@ -1,191 +1,191 @@
 [
-    {
-      "name": "Archer-Daniels-Midland",
-      "ticker": "ADM",
-      "currency": "USD",
-      "country": "EEUU",
-      "shares": 22,
-      "purchasePrice": 59.36,
-      "clubPrice": 60.10
-    },
-    {
-      "name": "AMCOR PLC",
-      "ticker": "AMCR",
-      "currency": "USD",
-      "country": "EEUU",
-      "shares": 164,
-      "purchasePrice": 9.53,
-      "clubPrice": 9.70
-    },
-    {
-      "name": "BASF SE NA O.N.",
-      "ticker": "BAS",
-      "currency": "EUR",
-      "country": "Alemania",
-      "shares": 36,
-      "purchasePrice": 44.51,
-      "clubPrice": 52.00
-    },
-    {
-      "name": "Best Buy Co Inc",
-      "ticker": "BBY",
-      "currency": "USD",
-      "country": "EEUU",
-      "shares": 24,
-      "purchasePrice": 76.60,
-      "clubPrice": 83.00
-    },
-    {
-      "name": "Franklin Resources Inc",
-      "ticker": "BEN",
-      "currency": "USD",
-      "country": "EEUU",
-      "shares": 65,
-      "purchasePrice": 26.02,
-      "clubPrice": 24.30
-    },
-    {
-      "name": "Bristol Myers Squibb",
-      "ticker": "BMY",
-      "currency": "USD",
-      "country": "EEUU",
-      "shares": 31,
-      "purchasePrice": 50.05,
-      "clubPrice": 50.20
-    },
-    {
-      "name": "CAREFOUR",
-      "ticker": "CA",
-      "currency": "EUR",
-      "country": "Francia",
-      "shares": 136,
-      "purchasePrice": 14.41,
-      "clubPrice": 15.00
-    },
-    {
-      "name": "Ennis",
-      "ticker": "EBF",
-      "currency": "USD",
-      "country": "EEUU",
-      "shares": 72,
-      "purchasePrice": 20.98,
-      "clubPrice": 20.83
-    },
-    {
-      "name": "Enbridge Inc",
-      "ticker": "ENB",
-      "currency": "CAD",
-      "country": "Canadá",
-      "shares": 30,
-      "purchasePrice": 49.27,
-      "clubPrice": 39.00
-    },
-    {
-      "name": "International Business Machines",
-      "ticker": "IBM",
-      "currency": "USD",
-      "country": "EEUU",
-      "shares": 5,
-      "purchasePrice": 170.67,
-      "clubPrice": 134.00
-    },
-    {
-      "name": "Johnson & Johnson",
-      "ticker": "JNJ",
-      "currency": "USD",
-      "country": "EEUU",
-      "shares": 11,
-      "purchasePrice": 147.12,
-      "clubPrice": 147.10
-    },
-    {
-      "name": "MCAN Mortgage Corporation",
-      "ticker": "MKP",
-      "currency": "CAD",
-      "country": "Canadá",
-      "shares": 145,
-      "purchasePrice": 15.97,
-      "clubPrice": 16.80
-    },
-    {
-      "name": "PINNACLE WEST CAPITAL",
-      "ticker": "PNW",
-      "currency": "USD",
-      "country": "EEUU",
-      "shares": 18,
-      "purchasePrice": 70.78,
-      "clubPrice": 73.80
-    },
-    {
-      "name": "SALMAR ASA",
-      "ticker": "SALM",
-      "currency": "NOK",
-      "country": "Noruega",
-      "shares": 25,
-      "purchasePrice": 500.00,
-      "clubPrice": 494.00
-    },
-    {
-      "name": "Pernod Ricard",
-      "ticker": "RI",
-      "currency": "EUR",
-      "country": "Francia",
-      "shares": 3,
-      "purchasePrice": 151.05,
-      "clubPrice": null // Precio Club faltante
-    },
-    {
-      "name": "Royal Bank of Canada",
-      "ticker": "RY",
-      "currency": "CAD",
-      "country": "Canadá",
-      "shares": 7,
-      "purchasePrice": 125.15,
-      "clubPrice": 97.00
-    },
-    {
-      "name": "AT&T Inc",
-      "ticker": "T",
-      "currency": "USD",
-      "country": "EEUU",
-      "shares": 88,
-      "purchasePrice": 15.89,
-      "clubPrice": 27.00
-    },
-    {
-      "name": "T. Rowe Price Group Inc",
-      "ticker": "TROW",
-      "currency": "USD",
-      "country": "EEUU",
-      "shares": 17,
-      "purchasePrice": 110.97,
-      "clubPrice": 123.00
-    },
-    {
-      "name": "TotalEnergies",
-      "ticker": "TTE",
-      "currency": "EUR",
-      "country": "Francia",
-      "shares": 30,
-      "purchasePrice": 60.90,
-      "clubPrice": 63.30
-    },
-    {
-      "name": "UNITED PARCEL SERVICE",
-      "ticker": "UPS",
-      "currency": "USD",
-      "country": "EEUU",
-      "shares": 15,
-      "purchasePrice": 142.35,
-      "clubPrice": 148.60
-    },
-    {
-      "name": "VOLKSWAGEN",
-      "ticker": "VOW",
-      "currency": "EUR",
-      "country": "Alemania",
-      "shares": 15,
-      "purchasePrice": 103.50,
-      "clubPrice": 103.00
-    }
-  ]
+  {
+    "name": "Archer-Daniels-Midland",
+    "ticker": "ADM",
+    "currency": "USD",
+    "country": "EEUU",
+    "shares": 22,
+    "purchasePrice": 59.36,
+    "clubPrice": 60.10
+  },
+  {
+    "name": "AMCOR PLC",
+    "ticker": "AMCR",
+    "currency": "USD",
+    "country": "EEUU",
+    "shares": 164,
+    "purchasePrice": 9.53,
+    "clubPrice": 9.70
+  },
+  {
+    "name": "BASF SE NA O.N.",
+    "ticker": "BAS",
+    "currency": "EUR",
+    "country": "Alemania",
+    "shares": 36,
+    "purchasePrice": 44.51,
+    "clubPrice": 52.00
+  },
+  {
+    "name": "Best Buy Co Inc",
+    "ticker": "BBY",
+    "currency": "USD",
+    "country": "EEUU",
+    "shares": 24,
+    "purchasePrice": 76.60,
+    "clubPrice": 83.00
+  },
+  {
+    "name": "Franklin Resources Inc",
+    "ticker": "BEN",
+    "currency": "USD",
+    "country": "EEUU",
+    "shares": 65,
+    "purchasePrice": 26.02,
+    "clubPrice": 24.30
+  },
+  {
+    "name": "Bristol Myers Squibb",
+    "ticker": "BMY",
+    "currency": "USD",
+    "country": "EEUU",
+    "shares": 31,
+    "purchasePrice": 50.05,
+    "clubPrice": 50.20
+  },
+  {
+    "name": "CAREFOUR",
+    "ticker": "CA",
+    "currency": "EUR",
+    "country": "Francia",
+    "shares": 136,
+    "purchasePrice": 14.41,
+    "clubPrice": 15.00
+  },
+  {
+    "name": "Ennis",
+    "ticker": "EBF",
+    "currency": "USD",
+    "country": "EEUU",
+    "shares": 72,
+    "purchasePrice": 20.98,
+    "clubPrice": 20.83
+  },
+  {
+    "name": "Enbridge Inc",
+    "ticker": "ENB",
+    "currency": "CAD",
+    "country": "Canadá",
+    "shares": 30,
+    "purchasePrice": 49.27,
+    "clubPrice": 39.00
+  },
+  {
+    "name": "International Business Machines",
+    "ticker": "IBM",
+    "currency": "USD",
+    "country": "EEUU",
+    "shares": 5,
+    "purchasePrice": 170.67,
+    "clubPrice": 134.00
+  },
+  {
+    "name": "Johnson & Johnson",
+    "ticker": "JNJ",
+    "currency": "USD",
+    "country": "EEUU",
+    "shares": 11,
+    "purchasePrice": 147.12,
+    "clubPrice": 147.10
+  },
+  {
+    "name": "MCAN Mortgage Corporation",
+    "ticker": "MKP",
+    "currency": "CAD",
+    "country": "Canadá",
+    "shares": 145,
+    "purchasePrice": 15.97,
+    "clubPrice": 16.80
+  },
+  {
+    "name": "PINNACLE WEST CAPITAL",
+    "ticker": "PNW",
+    "currency": "USD",
+    "country": "EEUU",
+    "shares": 18,
+    "purchasePrice": 70.78,
+    "clubPrice": 73.80
+  },
+  {
+    "name": "SALMAR ASA",
+    "ticker": "SALM",
+    "currency": "NOK",
+    "country": "Noruega",
+    "shares": 25,
+    "purchasePrice": 500.00,
+    "clubPrice": 494.00
+  },
+  {
+    "name": "Pernod Ricard",
+    "ticker": "RI",
+    "currency": "EUR",
+    "country": "Francia",
+    "shares": 3,
+    "purchasePrice": 151.05,
+    "clubPrice": null
+  },
+  {
+    "name": "Royal Bank of Canada",
+    "ticker": "RY",
+    "currency": "CAD",
+    "country": "Canadá",
+    "shares": 7,
+    "purchasePrice": 125.15,
+    "clubPrice": 97.00
+  },
+  {
+    "name": "AT&T Inc",
+    "ticker": "T",
+    "currency": "USD",
+    "country": "EEUU",
+    "shares": 88,
+    "purchasePrice": 15.89,
+    "clubPrice": 27.00
+  },
+  {
+    "name": "T. Rowe Price Group Inc",
+    "ticker": "TROW",
+    "currency": "USD",
+    "country": "EEUU",
+    "shares": 17,
+    "purchasePrice": 110.97,
+    "clubPrice": 123.00
+  },
+  {
+    "name": "TotalEnergies",
+    "ticker": "TTE",
+    "currency": "EUR",
+    "country": "Francia",
+    "shares": 30,
+    "purchasePrice": 60.90,
+    "clubPrice": 63.30
+  },
+  {
+    "name": "UNITED PARCEL SERVICE",
+    "ticker": "UPS",
+    "currency": "USD",
+    "country": "EEUU",
+    "shares": 15,
+    "purchasePrice": 142.35,
+    "clubPrice": 148.60
+  },
+  {
+    "name": "VOLKSWAGEN",
+    "ticker": "VOW",
+    "currency": "EUR",
+    "country": "Alemania",
+    "shares": 15,
+    "purchasePrice": 103.50,
+    "clubPrice": 103.00
+  }
+]
