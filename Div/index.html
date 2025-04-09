@@ -3,64 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Dividendos (Solo Lectura)</title>
+    <title>Dashboard de Dividendos</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     <header>
-        <h1>Mi Dashboard de Dividendos</h1>
+        <h1><i class="fas fa-chart-line"></i> Dashboard de Seguimiento de Dividendos</h1>
     </header>
 
-    <main>
-        <section id="summary" class="dashboard-card">
-            <h2>Resumen General</h2>
-            <p>Valor Total Portfolio: <span id="total-value">Calculando...</span></p>
-            <p>Dividendo Anual Estimado: <span id="estimated-yield">Calculando...</span></p>
-            <!-- Más métricas aquí -->
+    <main class="dashboard-container">
+        <!-- Indicador de Carga -->
+        <div id="loading-indicator" class="loading active">
+            <div class="spinner"></div>
+            Cargando datos del portfolio...
+        </div>
+
+        <!-- Mensaje de Error -->
+        <div id="error-message" class="error-message"></div>
+
+        <!-- Resumen General -->
+        <section class="dashboard-card summary-card" id="summary-section" style="display: none;">
+            <h2><i class="fas fa-wallet"></i> Resumen General</h2>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <span class="summary-label">Valor Total (Precio Club)</span>
+                    <span class="summary-value" id="total-value">--</span>
+                    <small>(Monedas Mixtas)</small>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Coste Total Base</span>
+                    <span class="summary-value" id="total-base-cost">--</span>
+                     <small>(Monedas Mixtas)</small>
+                </div>
+                 <div class="summary-item">
+                    <span class="summary-label">Ganancia/Pérdida No Realizada</span>
+                    <span class="summary-value" id="total-unrealized-gain">--</span>
+                     <small>(Monedas Mixtas)</small>
+                </div>
+                <div class="summary-item">
+                    <span class="summary-label">Dividendo Anual Estimado</span>
+                    <span class="summary-value" id="total-dividend">N/A</span>
+                    <small>(Datos no disponibles)</small>
+                </div>
+            </div>
         </section>
 
-        <!-- SECCIÓN DE AÑADIR ACCIÓN ELIMINADA -->
-
-        <section id="portfolio" class="dashboard-card">
-            <h2>Mi Portfolio (desde cartera.json)</h2>
-            <div style="overflow-x: auto;">
+        <!-- Tabla del Portfolio -->
+        <section class="dashboard-card portfolio-card" id="portfolio-section" style="display: none;">
+            <h2><i class="fas fa-list-alt"></i> Mi Portfolio</h2>
+            <div class="table-container">
                 <table id="portfolio-table">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Ticker</th>
-                            <th>País</th>
-                            <th>Moneda</th>
-                            <th>Acciones</th>
-                            <th>Coste Medio</th>
-                            <th>Coste Base</th>
-                            <th>Precio Club</th>
-                            <th>Valor Actual</th> <!-- Datos de API -->
-                            <th>Dividendo/Acción</th> <!-- Datos de API -->
-                            <th>Próx. Fecha Ex-Div</th> <!-- Datos de API -->
-                            <!-- COLUMNA DE ACCIONES (BOTONES) ELIMINADA -->
+                            <!-- Añadimos data-column para la ordenación -->
+                            <th data-column="name" data-sortable="true">Nombre <i class="fas fa-sort"></i></th>
+                            <th data-column="ticker" data-sortable="true">Ticker <i class="fas fa-sort"></i></th>
+                            <th data-column="country" data-sortable="true">País <i class="fas fa-sort"></i></th>
+                            <th data-column="currency" data-sortable="true">Moneda <i class="fas fa-sort"></i></th>
+                            <th data-column="shares" data-sortable="true" data-type="number">Acciones <i class="fas fa-sort"></i></th>
+                            <th data-column="purchasePrice" data-sortable="true" data-type="number">Coste Medio <i class="fas fa-sort"></i></th>
+                            <th data-column="costeBase" data-sortable="true" data-type="number">Coste Base <i class="fas fa-sort"></i></th>
+                            <th data-column="clubPrice" data-sortable="true" data-type="number">Precio Club <i class="fas fa-sort"></i></th>
+                            <th data-column="valorActualClub" data-sortable="true" data-type="number">Valor (Precio Club) <i class="fas fa-sort"></i></th>
+                            <th data-column="gainLoss" data-sortable="true" data-type="number">G/P (%) <i class="fas fa-sort"></i></th>
+                            <!-- Columnas de dividendos como placeholders o N/A -->
+                            <th>Dividendo/Acción</th>
+                            <th>Próx. Fecha Ex-Div</th>
                         </tr>
                     </thead>
-                    <tbody id="portfolio-body">
-                        <!-- Las filas se añadirán con JS -->
+                    <tbody id="portfolio-table-body">
+                        <!-- Las filas se insertarán aquí dinámicamente -->
                     </tbody>
                 </table>
             </div>
-            <p class="no-data-message" style="display: none;">Cargando datos o cartera.json vacío...</p>
-        </section>
-
-        <section id="dividends" class="dashboard-card">
-             <h2>Registro de Dividendos (Próximamente)</h2>
-             <ul id="dividend-log">
-                 <!-- Entradas de dividendos -->
-             </ul>
         </section>
     </main>
 
     <footer>
-        <p style="text-align: center; margin-top: 2rem; color: #666;">
-            Dividend Dashboard v0.2 (Solo Lectura)
-        </p>
+        <p>Dashboard v1.0 - Solo Lectura</p>
     </footer>
 
     <script src="script.js"></script>
