@@ -1,6 +1,6 @@
 // --- Archivo: preguntas.js ---
 // Contiene las preguntas para el quiz del juego 3 en Raya.
-// Total: 150 preguntas de dificultad variada para niños de 9-12 años.
+// preguntas de dificultad variada para niños de 9-12 años.
 // Estructura de cada pregunta:
 // {
 //   pregunta: "Texto de la pregunta",
