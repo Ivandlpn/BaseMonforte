@@ -23,6 +23,10 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: var(--font-family);
     background-color: var(--background-color);
@@ -39,6 +43,9 @@ header {
     padding: 1rem 2rem;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky; /* Puede ser útil si la página es muy larga */
+    top: 0;
+    z-index: 100;
 }
 
 header h1 {
@@ -54,7 +61,7 @@ header h1 i {
 main.dashboard-container {
     flex-grow: 1;
     padding: 2rem;
-    max-width: 1400px;
+    max-width: 1600px; /* Un poco más ancho para tablas grandes */
     margin: 0 auto;
     width: 100%;
 }
@@ -96,21 +103,27 @@ footer {
 /* --- Resumen General --- */
 .summary-card .summary-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Ajuste minmax */
     gap: 1.5rem;
     text-align: center;
 }
 
 .summary-item {
     background-color: #fdfefe;
-    padding: 1rem;
+    padding: 1rem 1.2rem;
     border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
+.summary-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
 
 .summary-label {
     font-size: 0.9rem;
@@ -123,6 +136,7 @@ footer {
     font-size: 1.6rem;
     font-weight: 700;
     color: var(--primary-color);
+    word-break: break-all; /* Evitar overflow si el número es muy grande */
 }
 .summary-item small {
     font-size: 0.75rem;
@@ -137,12 +151,14 @@ footer {
 .table-container {
     overflow-x: auto; /* Scroll horizontal necesario */
     width: 100%;
+    border: 1px solid var(--border-color); /* Borde alrededor del contenedor */
+    border-radius: var(--border-radius);
 }
 
 #portfolio-table {
     width: 100%;
     border-collapse: collapse; /* Bordes más limpios */
-    min-width: 1000px; /* Evita que la tabla se comprima demasiado */
+    min-width: 1200px; /* Evita que la tabla se comprima demasiado */
 }
 
 #portfolio-table th,
@@ -151,15 +167,22 @@ footer {
     text-align: left;
     border-bottom: 1px solid var(--border-color);
     white-space: nowrap; /* Evita saltos de línea en celdas */
+    vertical-align: middle; /* Alinear contenido verticalmente */
 }
+/* Quitar borde inferior de la última fila */
+#portfolio-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
 
 #portfolio-table thead th {
     background-color: var(--primary-color);
     color: var(--text-light);
     position: sticky; /* Cabecera fija */
-    top: 0; /* Pegada arriba dentro del contenedor */
+    top: 0; /* Pegada arriba dentro del contenedor .table-container */
     z-index: 10;
     cursor: default; /* Cursor por defecto */
+    border-bottom: 2px solid var(--primary-color); /* Borde más grueso bajo la cabecera */
 }
 
 #portfolio-table thead th[data-sortable="true"] {
@@ -174,20 +197,29 @@ footer {
 #portfolio-table thead th i.fa-sort,
 #portfolio-table thead th i.fa-sort-up,
 #portfolio-table thead th i.fa-sort-down {
-    margin-left: 5px;
+    margin-left: 8px; /* Más espacio */
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.8em;
+    transition: color 0.2s ease;
 }
+#portfolio-table thead th[data-sortable="true"]:hover i {
+    color: var(--text-light);
+}
+
 
 #portfolio-table thead th.sorted-asc i.fa-sort,
 #portfolio-table thead th.sorted-desc i.fa-sort {
     display: none; /* Oculta el icono genérico al ordenar */
 }
-#portfolio-table thead th.sorted-asc i.fa-sort-up,
-#portfolio-table thead th.sorted-desc i.fa-sort-down {
+#portfolio-table thead th.sorted-asc i.fa-sort-up {
     display: inline-block; /* Muestra el icono correcto */
     color: var(--text-light);
 }
+#portfolio-table thead th.sorted-desc i.fa-sort-down {
+     display: inline-block; /* Muestra el icono correcto */
+     color: var(--text-light);
+ }
+
 
 #portfolio-table tbody tr:nth-child(even) {
     background-color: #f8f9f9; /* Zebra striping */
@@ -201,36 +233,56 @@ footer {
     font-size: 0.95rem;
 }
 
-/* Clases para colorear G/P */
-.gain { color: var(--success-color); }
-.loss { color: var(--loss-color); }
+/* Clases para colorear G/P en celdas */
+.gain { color: var(--success-color); font-weight: 500; }
+.loss { color: var(--loss-color); font-weight: 500; }
 .neutral { color: var(--text-color); }
 
 /* Estilos para N/A o valores nulos */
 .na-value {
     color: #95a5a6;
     font-style: italic;
+    font-size: 0.9em;
 }
 
-/* --- Indicador de Carga --- */
+/* --- Estilos de Celdas de Precios --- */
+.price-loading .fas {
+    font-size: 0.8em;
+    color: var(--secondary-color);
+    animation: spin 1.5s linear infinite; /* Reutiliza la animación del spinner */
+}
+
+.price-error {
+    color: var(--accent-color);
+    font-style: italic;
+    font-size: 0.9em;
+    cursor: help; /* Indica que hay un tooltip (título) */
+}
+.price-error i {
+    margin-left: 4px;
+}
+
+
+/* --- Indicador de Carga Principal --- */
 .loading {
     display: none; /* Oculto por defecto */
     text-align: center;
-    padding: 2rem;
-    font-size: 1.1rem;
+    padding: 3rem 1rem; /* Más padding */
+    font-size: 1.2rem; /* Más grande */
     color: var(--primary-color);
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem; /* Más espacio */
+    min-height: 150px; /* Altura mínima */
 }
 .loading.active {
     display: flex; /* Visible cuando está activo */
 }
 .spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    width: 36px;
-    height: 36px;
+    border: 5px solid rgba(0, 0, 0, 0.1); /* Más grueso */
+    width: 48px; /* Más grande */
+    height: 48px; /* Más grande */
     border-radius: 50%;
     border-left-color: var(--secondary-color);
     animation: spin 1s ease infinite;
@@ -240,44 +292,122 @@ footer {
     100% { transform: rotate(360deg); }
 }
 
-/* --- Mensaje de Error --- */
+/* --- Mensaje de Error Principal --- */
 .error-message {
     display: none; /* Oculto por defecto */
     background-color: #fdeded;
     color: var(--accent-color);
     border: 1px solid var(--accent-color);
-    padding: 1rem;
+    padding: 1.5rem; /* Más padding */
     border-radius: var(--border-radius);
     margin: 1rem auto;
     text-align: center;
-    max-width: 600px;
+    max-width: 700px; /* Más ancho */
+    box-shadow: 0 2px 5px rgba(231, 76, 60, 0.2);
 }
 .error-message.active {
     display: block; /* Visible cuando hay error */
 }
 
+/* --- Mensaje de estado de precios --- */
+.price-status {
+    background-color: #eaf2f8; /* Azul muy claro */
+    color: var(--primary-color);
+    border: 1px solid var(--secondary-color);
+    padding: 0.8rem 1rem;
+    border-radius: var(--border-radius);
+    margin: 0 auto 1.5rem auto; /* Centrado debajo del loader/error principal */
+    text-align: center;
+    max-width: 800px;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 4px rgba(44, 62, 80, 0.1);
+    display: none; /* Oculto por defecto, JS lo muestra */
+}
+.price-status i {
+    margin-right: 8px;
+    /* Color se establece dinámicamente en el mensaje */
+}
+.price-status i.fa-sync {
+    animation: spin 1.5s linear infinite; /* Animación para el icono de carga */
+}
+
+
 /* --- Responsividad Básica --- */
+@media (max-width: 992px) {
+    .summary-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Ajuste para tablets */
+    }
+     #portfolio-table {
+        min-width: 900px; /* Reducir min-width */
+    }
+}
+
+
 @media (max-width: 768px) {
+    header {
+        padding: 0.8rem 1rem;
+        position: static; /* Quitar sticky en móvil si causa problemas */
+    }
     header h1 {
         font-size: 1.5rem;
     }
     main.dashboard-container {
         padding: 1rem;
     }
+    .dashboard-card {
+        padding: 1rem;
+    }
     .dashboard-card h2 {
         font-size: 1.2rem;
+        margin-bottom: 1rem;
     }
     .summary-grid {
-        grid-template-columns: 1fr; /* Una columna en móviles */
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Ajuste minmax */
         gap: 1rem;
+    }
+    .summary-item {
+        padding: 0.8rem;
     }
     .summary-value {
         font-size: 1.4rem;
+    }
+    #portfolio-table {
+        min-width: 800px; /* Reducir más */
     }
     #portfolio-table th,
     #portfolio-table td {
         padding: 10px 8px; /* Menos padding en celdas */
         font-size: 0.9rem;
     }
-     /* Podrías añadir estilos más complejos para tablas en móvil si fuera necesario */
+    .loading {
+        font-size: 1rem;
+        padding: 2rem 1rem;
+    }
+    .spinner {
+        width: 36px;
+        height: 36px;
+        border-width: 4px;
+    }
+    .error-message, .price-status {
+        max-width: 95%;
+        font-size: 0.9rem;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+     header h1 {
+        font-size: 1.3rem;
+    }
+     .summary-grid {
+        grid-template-columns: 1fr; /* Una columna en móviles pequeños */
+    }
+     #portfolio-table {
+        min-width: 600px; /* Reducir aún más, el scroll será más necesario */
+        font-size: 0.85rem; /* Letra un poco más pequeña en tabla */
+    }
+    #portfolio-table th,
+    #portfolio-table td {
+        padding: 8px 6px;
+    }
 }
