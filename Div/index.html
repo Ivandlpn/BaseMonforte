@@ -22,13 +22,17 @@
         <!-- Mensaje de Error -->
         <div id="error-message" class="error-message"></div>
 
+         <!-- Mensaje de estado de precios -->
+        <div id="price-status" class="price-status" style="display: none;"></div>
+
+
         <!-- Resumen General -->
         <section class="dashboard-card summary-card" id="summary-section" style="display: none;">
             <h2><i class="fas fa-wallet"></i> Resumen General</h2>
             <div class="summary-grid">
                 <div class="summary-item">
-                    <span class="summary-label">Valor Total (Precio Club)</span>
-                    <span class="summary-value" id="total-value">--</span>
+                    <span class="summary-label">Valor Total Mercado</span>
+                    <span class="summary-value" id="total-market-value">--</span>
                     <small>(Monedas Mixtas)</small>
                 </div>
                 <div class="summary-item">
@@ -64,9 +68,10 @@
                             <th data-column="shares" data-sortable="true" data-type="number">Acciones <i class="fas fa-sort"></i></th>
                             <th data-column="purchasePrice" data-sortable="true" data-type="number">Coste Medio <i class="fas fa-sort"></i></th>
                             <th data-column="costeBase" data-sortable="true" data-type="number">Coste Base <i class="fas fa-sort"></i></th>
-                            <th data-column="clubPrice" data-sortable="true" data-type="number">Precio Club <i class="fas fa-sort"></i></th>
-                            <th data-column="valorActualClub" data-sortable="true" data-type="number">Valor (Precio Club) <i class="fas fa-sort"></i></th>
-                            <th data-column="gainLoss" data-sortable="true" data-type="number">G/P (%) <i class="fas fa-sort"></i></th>
+                            <!-- Cambiamos Club por Mercado -->
+                            <th data-column="currentPrice" data-sortable="true" data-type="number">Precio Mercado <i class="fas fa-sort"></i></th>
+                            <th data-column="valorActualMercado" data-sortable="true" data-type="number">Valor Mercado <i class="fas fa-sort"></i></th>
+                            <th data-column="gainLossMarketPercent" data-sortable="true" data-type="number">G/P Mercado (%) <i class="fas fa-sort"></i></th>
                             <!-- Columnas de dividendos como placeholders o N/A -->
                             <th>Dividendo/Acción</th>
                             <th>Próx. Fecha Ex-Div</th>
@@ -81,7 +86,7 @@
     </main>
 
     <footer>
-        <p>Dashboard v1.0 - Solo Lectura</p>
+        <p>Dashboard v1.1 - Precios de Mercado (Alpha Vantage)</p>
     </footer>
 
     <script src="script.js"></script>
