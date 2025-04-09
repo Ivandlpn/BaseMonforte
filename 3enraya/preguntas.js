@@ -1678,13 +1678,70 @@ const preguntasQuiz = [
         pregunta: "Verdadero o Falso: Puedes hacer un nudo con los ojos cerrados.",
         tipo: 'vf',
         respuestaCorrecta: true // ¡Inténtalo!
-    }
+    },
 
-// --- Fin Bloque Adicional ---
-// --- Fin Preguntas Policía Local de Málaga ---
-// --- Fin Preguntas Policía Nacional ---
-// --- Fin Preguntas Juventud Torremolinos ---
-
+    // --- Bloque Valores y Comunicación Positiva (311-322) ---
+// Preguntas inspiradas en valores universales para ser mejores personas.
+{
+    pregunta: "Si ves a un compañero/a triste en el patio, ¿qué es lo más amable que puedes hacer?",
+    opciones: ["Reírte", "Preguntarle qué le pasa y escucharle", "Ignorarle"],
+    respuestaCorrecta: 1 // Escucharle
+},
+{
+    pregunta: "Verdadero o Falso: Decir la verdad, aunque a veces sea difícil, ayuda a que los demás confíen en ti.",
+    tipo: 'vf',
+    respuestaCorrecta: true // Fomenta la honestidad y la confianza.
+},
+{
+    pregunta: "¿Qué significa 'perdonar' a alguien que te ha hecho daño?",
+    opciones: ["Seguir enfadado para siempre", "Dejar de sentir rencor y tratar de seguir adelante", "Hacerle tú algo peor"],
+    respuestaCorrecta: 1 // Concepto básico de perdón como liberación.
+},
+{
+    pregunta: "Si tienes muchos lápices de colores y un amigo no tiene, ¿qué demuestra generosidad?",
+    opciones: ["Esconder los tuyos", "Compartir algunos con él/ella", "Decirle que se compre los suyos"],
+    respuestaCorrecta: 1 // Fomenta el compartir.
+},
+{
+    pregunta: "Cuando hablas con alguien que piensa diferente a ti, ¿qué es importante?",
+    opciones: ["Gritar para que te escuche", "Escuchar su opinión con respeto, aunque no estés de acuerdo", "No dejarle hablar"],
+    respuestaCorrecta: 1 // Fomenta la comunicación respetuosa.
+},
+{
+    pregunta: "Verdadero o Falso: Dar las gracias por las cosas buenas que tenemos o que nos dan es una forma de ser agradecido.",
+    tipo: 'vf',
+    respuestaCorrecta: true // Fomenta la gratitud.
+},
+{
+    pregunta: "¿Cuál de estas acciones ayuda a construir un ambiente mejor en clase o con amigos?",
+    opciones: ["Criticar a los demás", "Ayudar y animar a los compañeros", "Crear rumores"],
+    respuestaCorrecta: 1 // Fomenta el apoyo mutuo y la positividad.
+},
+{
+    pregunta: "Para entender bien a alguien cuando habla, lo mejor es...",
+    opciones: ["Interrumpirle mucho para dar tu opinión", "Mirarle y escuchar atentamente lo que dice", "Estar pensando en lo que vas a decir tú después"],
+    respuestaCorrecta: 1 // Fomenta la escucha activa.
+},
+{
+    pregunta: "Verdadero o Falso: Ser paciente significa saber esperar tu turno o esperar a que algo suceda sin enfadarte enseguida.",
+    tipo: 'vf',
+    respuestaCorrecta: true // Explica la paciencia de forma simple.
+},
+{
+    pregunta: "Intentar ponerte en el lugar de otra persona para comprender cómo se siente se llama:",
+    opciones: ["Egoísmo", "Antipatía", "Empatía"],
+    respuestaCorrecta: 2 // Introduce el concepto de empatía.
+},
+{
+    pregunta: "Cuidar tus cosas, hacer tus deberes y ayudar en casa son ejemplos de ser...",
+    opciones: ["Despistado/a", "Responsable", "Aburrido/a"],
+    respuestaCorrecta: 1 // Fomenta la responsabilidad.
+},
+{
+    pregunta: "Si hay un conflicto o una discusión, ¿qué es mejor intentar hacer?",
+    opciones: ["Echar más leña al fuego", "Buscar una solución hablando tranquilamente y en paz", "No volver a hablar nunca más"],
+    respuestaCorrecta: 1 // Fomenta la resolución pacífica de conflictos.
+}
 
 
 ]; // Fin del array preguntasQuiz
