@@ -89,7 +89,7 @@
   },
   {
     "Ubicación": "BM Villarrubia",
-    "Nombre": "Rubén Antón Rodríguez",
+    "Nombre": "Felix Pestana",
     "Puesto": "Técnico De Infra y Vía",
     "Correo": "ruben.anton@ineco.com",
     "Teléfonos Interior": 743002,
@@ -111,15 +111,6 @@
     "Teléfonos Interior": "",
     "Teléfono Exterior": 683656405
   },
-    {
-    "Ubicación": "BM Villarrubia",
-    "Nombre": "Jesús Fernández Aviles de la Rosa",
-    "Puesto": "Técnico Proyectos y Explanaciones",
-    "Correo": "jesus.garciadelarosa@ineco.com",
-    "Teléfonos Interior": "",
-    "Teléfono Exterior": 690110855
-  },
-
   {
     "Ubicación": "BM Villarrubia",
     "Nombre": "Manuel García Díaz",
@@ -135,14 +126,6 @@
     "Correo": "victor.solana@ineco.com",
     "Teléfonos Interior": 743005,
     "Teléfono Exterior": 676655220
-  },
-  {
-    "Ubicación": "BM Villarrubia",
-    "Nombre": "Antonio Maria Millan Seco",
-    "Puesto": "Técnico De Infra y Vía",
-    "Correo": "antonio.millan@ineco.com",
-    "Teléfonos Interior": 743008,
-    "Teléfono Exterior": 629156891
   },
   {
     "Ubicación": "BM Villarrubia",
@@ -167,6 +150,14 @@
     "Correo": "alvaro.barahona@ineco.com",
     "Teléfonos Interior": "",
     "Teléfono Exterior": 647985585
+  },
+    {
+    "Ubicación": "BM Villarrubia",
+    "Nombre": "José A. De la Casa",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "jose.delacasa@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 661242679
   },
   {
     "Ubicación": "BM Requena",
