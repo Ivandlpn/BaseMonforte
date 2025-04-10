@@ -1,4 +1,4 @@
---- START OF FILE style.css ---
+
 
 /* === RESET Y ESTILOS BASE === */
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -215,4 +215,4 @@ html, body { /* ... (sin cambios) ... */ }
     #texto-curiosidad { font-size: clamp(1rem, 4.2vw, 1.4rem); }
 }
 
---- END OF FILE style.css ---
+
