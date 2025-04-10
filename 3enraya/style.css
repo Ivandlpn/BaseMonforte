@@ -1,3 +1,5 @@
+--- START OF FILE style.css ---
+
 /* === RESET Y ESTILOS BASE === */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body {
@@ -18,7 +20,7 @@ html, body {
 /* === CLASE UTILITARIA === */
 .oculto { display: none !important; }
 
-/* === PANTALLA SELECCIÓN JUGADOR (NUEVA PANTALLA INICIAL) === */
+/* === PANTALLA SELECCIÓN JUGADOR === */
 #pantalla-seleccion-jugador {
     width: 100%;
     min-height: 100vh; /* Para permitir scroll si hay MUCHOS jugadores */
@@ -83,17 +85,12 @@ html, body {
     box-shadow: 0 0 15px rgba(255, 235, 59, 0.7);
     transform: scale(1.03); /* Ligero escalado al seleccionar */
 }
-/* Estilo opcional para las no seleccionadas cuando hay selección */
-/* #pantalla-seleccion-jugador.seleccion-activa .seleccion-card:not(.seleccionado) {
-    opacity: 0.7;
-    filter: grayscale(50%);
-} */
 #seleccion-feedback {
     color: #ffc107;
     font-weight: bold;
     margin-bottom: 15px;
     min-height: 1.2em; /* Para evitar saltos de layout */
-    animation: aparecerFeedback 0.4s ease-out; /* Reutilizar animación */
+    animation: aparecerFeedback 0.4s ease-out;
 }
 #boton-confirmar-seleccion {
     padding: 15px 40px;
@@ -126,65 +123,31 @@ html, body {
 }
 .botones-extra-seleccion .boton-mensaje-abrir,
 .botones-extra-seleccion .boton-reglas-abrir {
-     margin-top: 0; /* Quitar margen superior original */
+     margin-top: 0;
      padding: 10px 20px;
      font-size: clamp(0.9rem, 3.5vw, 1.1rem);
 }
 
-/* === PANTALLA INICIAL ORIGINAL (Ahora Oculta) === */
+/* === PANTALLA INICIAL ORIGINAL (Oculta) === */
 #pantalla-inicial {
-    /* Mantenemos estilos originales por si se reutiliza, pero añadimos .oculto en HTML */
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 20px;
-    padding-bottom: 5vh;
-    background-color: rgba(0,0,0, 0.2);
-    position: relative;
-    z-index: 10;
-    overflow-y: auto;
+    width: 100%; height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 20px; padding-bottom: 5vh; background-color: rgba(0,0,0, 0.2); position: relative; z-index: 10; overflow-y: auto;
 }
-#pantalla-inicial #boton-comenzar { /* Referencia al botón original */
-    padding: 20px 45px;
-    font-size: clamp(1.5rem, 6vw, 2.2rem);
-    font-weight: bold;
-    color: #1a5a7d;
-    background: linear-gradient(45deg, #faff00, #ffc107);
-    border: none;
-    border-radius: 60px;
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease-out, background 0.3s ease;
-    animation: pulsoColorido 2.5s infinite ease-in-out;
-    max-width: 90%;
-    will-change: transform;
-    flex-shrink: 0;
+#pantalla-inicial #boton-comenzar {
+    padding: 20px 45px; font-size: clamp(1.5rem, 6vw, 2.2rem); font-weight: bold; color: #1a5a7d; background: linear-gradient(45deg, #faff00, #ffc107); border: none; border-radius: 60px; cursor: pointer; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease-out, background 0.3s ease; animation: pulsoColorido 2.5s infinite ease-in-out; max-width: 90%; will-change: transform; flex-shrink: 0;
 }
-/* ... (hover, active, keyframes pulsoColorido como estaban) ... */
-@keyframes pulsoColorido {
-    0%, 100% { box-shadow: 0 8px 20px rgba(255, 235, 59, 0.4); transform: scale(1); }
-    50% { box-shadow: 0 8px 35px rgba(255, 167, 38, 0.7); transform: scale(1.03); }
-}
+@keyframes pulsoColorido { 0%, 100% { box-shadow: 0 8px 20px rgba(255, 235, 59, 0.4); transform: scale(1); } 50% { box-shadow: 0 8px 35px rgba(255, 167, 38, 0.7); transform: scale(1.03); } }
 
 /* === CONTENEDOR DEL JUEGO === */
 #juego-contenedor {
-    display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; min-height: 100vh; padding: 20px;
-    background: linear-gradient(160deg, rgba(46, 170, 210, 0.7), rgba(20, 110, 150, 0.85));
-    backdrop-filter: blur(4px); position: relative; z-index: 5;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; min-height: 100vh; padding: 20px; background: linear-gradient(160deg, rgba(46, 170, 210, 0.7), rgba(20, 110, 150, 0.85)); backdrop-filter: blur(4px); position: relative; z-index: 5;
 }
 
-/* === MARCADOR (IDs modificados en HTML) === */
+/* === MARCADOR === */
 #marcador { display: flex; align-items: center; justify-content: center; gap: 15px; background-color: rgba(20, 20, 20, 0.8); border: 5px solid #f0e68c; border-radius: 25px; padding: 15px 25px; margin-bottom: 30px; width: 90%; max-width: 450px; box-shadow: 0 6px 15px rgba(0,0,0,0.4), inset 0 0 10px rgba(0,0,0,0.5); flex-shrink: 0; }
 .marcador-jugador { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-/* .foto-jugador aplica a #foto-jugador1 y #foto-jugador2 */
 .foto-jugador { width: clamp(55px, 16vw, 75px); height: clamp(55px, 16vw, 75px); border-radius: 50%; border: 4px solid #777; object-fit: cover; background-color: #444; box-shadow: 0 3px 6px rgba(0,0,0,0.3); transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; }
 .foto-jugador.activa { border-color: #ffeb3b; transform: scale(1.15) rotate(3deg); box-shadow: 0 0 20px rgba(255, 235, 59, 0.8); }
-/* .nombre-jugador aplica a #nombre-jugador1 y #nombre-jugador2 */
-.nombre-jugador { font-size: clamp(0.9rem, 2.5vw, 1.1rem); font-weight: bold; color: #eee; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.7); min-height: 1.2em; /* Para evitar saltos al cargar */ }
-/* .puntaje-jugador aplica a #puntaje-jugador1 y #puntaje-jugador2 */
+.nombre-jugador { font-size: clamp(0.9rem, 2.5vw, 1.1rem); font-weight: bold; color: #eee; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 1px 1px 2px rgba(0,0,0,0.7); min-height: 1.2em; }
 .puntaje-jugador { font-family: 'Courier New', Courier, monospace; font-size: clamp(2.8rem, 10vw, 4rem); font-weight: bold; color: #ffeb3b; line-height: 1; background-color: #222; padding: 5px 12px; border-radius: 8px; min-width: 1.6em; text-align: center; text-shadow: 0 0 8px rgba(255, 235, 59, 0.7); transition: transform 0.3s ease; }
 .puntaje-jugador.actualizado { animation: puntajeActualizadoAnim 0.3s ease-out; }
 @keyframes puntajeActualizadoAnim { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
@@ -205,12 +168,12 @@ html, body {
 .marca-animada.o { color: #2196f3; } /* O siempre será Jugador 2 */
 
 /* === BOTONES DEBAJO DEL TABLERO === */
-#boton-reiniciar /* , #boton-nuevo-juego (obsoleto) */ { flex-shrink: 0; max-width: 90%; margin-top: auto; margin-bottom: 10px; padding: 15px 30px; font-size: clamp(1.1rem, 4.5vw, 1.6rem); font-weight: bold; border-radius: 40px; cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease-out, background 0.3s ease; border: none; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
+#boton-reiniciar { flex-shrink: 0; max-width: 90%; margin-top: auto; margin-bottom: 10px; padding: 15px 30px; font-size: clamp(1.1rem, 4.5vw, 1.6rem); font-weight: bold; border-radius: 40px; cursor: pointer; transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease-out, background 0.3s ease; border: none; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
 #boton-reiniciar { color: #fff; background: linear-gradient(45deg, #00bcd4, #009688); box-shadow: 0 5px 12px rgba(0, 188, 212, 0.4); }
 #boton-reiniciar:hover { transform: scale(1.06) rotate(-2deg); box-shadow: 0 7px 18px rgba(0, 150, 136, 0.5); background: linear-gradient(45deg, #4dd0e1, #26a69a); }
 #boton-reiniciar:active { transform: scale(0.96); box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4); }
 
-/* === PANTALLA GANADOR DEL JUEGO (IDs de botones modificados en HTML) === */
+/* === PANTALLA GANADOR DEL JUEGO === */
 #pantalla-ganador { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(180deg, rgba(255, 193, 7, 0.8), rgba(255, 87, 34, 0.95)); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 100; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.8s ease-in-out; overflow: hidden; }
 #pantalla-ganador:not(.oculto) { opacity: 1; pointer-events: auto; animation: aparecerPantallaGanador 0.8s ease-out forwards; }
 @keyframes aparecerPantallaGanador { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
@@ -223,10 +186,8 @@ html, body {
 .boton-ganador { padding: 18px 35px; font-size: clamp(1.2rem, 4.5vw, 1.6rem); font-weight: bold; border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25); transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease-out, background 0.3s ease; min-width: 200px; text-align: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); color: white; }
 .boton-ganador:hover { transform: translateY(-4px) scale(1.05) rotate(-3deg); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35); }
 .boton-ganador:active { transform: translateY(1px) scale(0.97); box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3); }
-/* .boton-jugar aplica a #boton-volver-a-elegir */
 .boton-jugar { background: linear-gradient(45deg, #4caf50, #8bc34a); }
 .boton-jugar:hover { background: linear-gradient(45deg, #66bb6a, #9ccc65); }
-/* .boton-cerrar aplica a #boton-salir-a-seleccion */
 .boton-cerrar { background: linear-gradient(45deg, #f44336, #ff7043); }
 .boton-cerrar:hover { background: linear-gradient(45deg, #ef5350, #ff8a65); }
 @keyframes animacion-ganador-foto-giratoria { 0% { transform: scale(0.5) rotate(-180deg); opacity: 0; } 100% { transform: scale(1) rotate(0deg); opacity: 1; } }
@@ -235,7 +196,7 @@ html, body {
 /* === PANTALLA PREGUNTA === */
 #pantalla-pregunta { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); display: flex; justify-content: center; align-items: center; z-index: 90; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out; transform: scale(0.9); }
 #pantalla-pregunta:not(.oculto) { opacity: 1; pointer-events: auto; transform: scale(1); }
-.pregunta-contenido { background: linear-gradient(135deg, #6a1b9a, #ab47bc); padding: 35px 45px; border-radius: 20px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4); width: 90%; max-width: 550px; text-align: center; border: 4px solid #ce93d8; transition: transform 0.5s ease; }
+.pregunta-contenido { background: linear-gradient(135deg, #6a1b9a, #ab47bc); padding: 35px 45px; border-radius: 20px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4); width: 90%; max-width: 550px; text-align: center; border: 4px solid #ce93d8; transition: transform 0.5s ease; max-height: 90vh; overflow-y: auto; }
 #titulo-pregunta { font-size: clamp(1.3rem, 5.5vw, 1.8rem); color: #ffeb3b; margin-bottom: 25px; text-shadow: 1px 1px 3px rgba(0,0,0,0.6); }
 #texto-pregunta { font-size: clamp(1.2rem, 5vw, 1.6rem); color: #fff; margin-bottom: 35px; line-height: 1.6; }
 .opciones-quiz { display: flex; flex-direction: column; gap: 18px; margin-bottom: 30px; }
@@ -251,14 +212,81 @@ html, body {
 .feedback-quiz.correcto { color: #66bb6a; background-color: rgba(102, 187, 106, 0.2); }
 .feedback-quiz.incorrecto { color: #ef5350; background-color: rgba(239, 83, 80, 0.2); }
 
-/* === PANTALLA EJERCICIO PAUSA ACTIVA === */
-#pantalla-ejercicio { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, rgba(26, 188, 156, 0.85), rgba(22, 160, 133, 0.95)); display: flex; justify-content: center; align-items: center; z-index: 85; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.5s ease-in-out, transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); transform: translateY(100%); }
-#pantalla-ejercicio:not(.oculto) { opacity: 1; pointer-events: auto; transform: translateY(0); }
-.ejercicio-contenido { background-color: rgba(255, 255, 255, 0.95); padding: 40px 50px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); width: 90%; max-width: 480px; text-align: center; color: #333; border: 5px solid #f1c40f; }
-.ejercicio-contenido h2 { font-size: clamp(1.6rem, 7vw, 2.4rem); color: #e67e22; margin-bottom: 20px; text-shadow: 1px 1px 2px rgba(0,0,0,0.1); }
-#nombre-ejercicio { font-size: clamp(1.3rem, 6vw, 1.8rem); color: #2c3e50; margin-bottom: 30px; font-weight: bold; }
-.contador { font-size: clamp(4rem, 20vw, 7rem); font-weight: bold; color: #e74c3c; line-height: 1; padding: 10px; background-color: #ecf0f1; border-radius: 50%; width: clamp(100px, 30vw, 150px); height: clamp(100px, 30vw, 150px); display: flex; justify-content: center; align-items: center; margin: 0 auto; border: 5px solid #c0392b; box-shadow: 0 5px 10px rgba(0,0,0,0.2); animation: contadorLatido 1s infinite ease-in-out; }
-@keyframes contadorLatido { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+/* === PANTALLA CURIOSIDAD (NUEVA) === */
+#pantalla-curiosidad {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(60deg, rgba(33, 150, 243, 0.9), rgba(0, 188, 212, 0.95)); /* Tonos azules/cyan */
+    display: flex; justify-content: center; align-items: center;
+    z-index: 85; padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.5s ease-in-out, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: scale(0.9) rotate(-5deg);
+}
+#pantalla-curiosidad:not(.oculto) {
+    opacity: 1; pointer-events: auto;
+    transform: scale(1) rotate(0deg);
+}
+.curiosidad-contenido {
+    background-color: rgba(255, 255, 255, 0.97);
+    padding: 35px 45px; border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 90%; max-width: 520px;
+    text-align: center; color: #333;
+    border: 5px solid #81d4fa; /* Borde azul claro */
+    max-height: 85vh; /* Permitir scroll si el texto es muy largo */
+    overflow-y: auto;
+}
+.curiosidad-contenido h2 {
+    font-size: clamp(1.6rem, 7vw, 2.4rem);
+    color: #0288d1; /* Azul más oscuro */
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+}
+#texto-curiosidad {
+    font-size: clamp(1.2rem, 5vw, 1.6rem);
+    color: #455a64; /* Gris azulado */
+    margin-bottom: 30px;
+    line-height: 1.7;
+}
+#texto-curiosidad strong { /* Estilo para texto en negrita dentro de la curiosidad */
+    color: #0277bd;
+}
+.categoria-curiosidad { /* Estilo opcional para la categoría */
+    font-size: clamp(0.8rem, 3vw, 1rem);
+    color: #78909c;
+    margin-bottom: 25px;
+    font-style: italic;
+}
+#boton-continuar-tras-curiosidad {
+    padding: 14px 35px;
+    font-size: clamp(1.1rem, 4.5vw, 1.5rem);
+    font-weight: bold; color: white;
+    background: linear-gradient(45deg, #ff9800, #ffb74d); /* Naranja */
+    border: none; border-radius: 30px;
+    cursor: pointer; margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+    transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+#boton-continuar-tras-curiosidad:hover {
+    background: linear-gradient(45deg, #ffa726, #ffcc80);
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 152, 0, 0.5);
+}
+#boton-continuar-tras-curiosidad:active {
+    transform: scale(0.98);
+    box-shadow: none;
+}
+
+
+/* === ESTILOS EJERCICIO PAUSA ACTIVA (ELIMINADOS o Comentados) === */
+/*
+#pantalla-ejercicio { ... }
+.ejercicio-contenido { ... }
+.ejercicio-contenido h2 { ... }
+#nombre-ejercicio { ... }
+.contador { ... }
+@keyframes contadorLatido { ... }
+*/
 
 /* === MODAL DE MENSAJE === */
 .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center; z-index: 110; padding: 15px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease-in-out; }
@@ -295,7 +323,7 @@ html, body {
 .modal-contenido-reglas p { text-align: center; margin-top: 25px; font-size: clamp(1rem, 4.2vw, 1.2rem); }
 
 /* === AJUSTES RESPONSIVOS === */
-/* Manteniendo los ajustes previos para #pantalla-inicial original si se necesitara */
+/* Manteniendo los ajustes previos para #pantalla-inicial original */
 @media (max-height: 750px) {
      #pantalla-inicial { padding-top: 10px; padding-bottom: max(15px, 3vh); }
     #pantalla-inicial #boton-comenzar { padding: 18px 35px; font-size: clamp(1.4rem, 5.5vw, 2rem); }
@@ -310,18 +338,18 @@ html, body {
 }
 /* Ajustes generales para ancho pequeño */
 @media (max-width: 480px) {
-     #pantalla-inicial #boton-comenzar, #pantalla-inicial .boton-mensaje-abrir, #pantalla-inicial .boton-reglas-abrir { max-width: 95%; }
+    #pantalla-inicial #boton-comenzar, #pantalla-inicial .boton-mensaje-abrir, #pantalla-inicial .boton-reglas-abrir { max-width: 95%; }
     #marcador { padding: 10px 15px; gap: 10px; }
     .foto-jugador { width: clamp(45px, 14vw, 65px); height: clamp(45px, 14vw, 65px); border-width: 3px; }
     .puntaje-jugador { font-size: clamp(2.2rem, 8vw, 3.5rem); padding: 3px 8px; }
     .marcador-separador { font-size: clamp(2rem, 7vw, 3rem); }
     #tablero { gap: 8px; padding: 8px; }
     .celda { font-size: clamp(3rem, 16vw, 5rem); border-radius: 8px; }
-    #boton-reiniciar /* , #boton-nuevo-juego */ { padding: 12px 25px; font-size: clamp(1rem, 4vw, 1.4rem); }
+    #boton-reiniciar { padding: 12px 25px; font-size: clamp(1rem, 4vw, 1.4rem); }
     .modal-contenido, #modal-reglas .modal-contenido-reglas { padding: 20px 25px; }
     #modal-reglas .modal-contenido-reglas { padding: 20px 25px 25px 25px; }
     .pregunta-contenido { padding: 25px 30px; }
-    .ejercicio-contenido { padding: 30px 35px; }
+    .curiosidad-contenido { padding: 30px 35px; } /* Ajuste curiosidad */
     /* Ajustes para pantalla selección en ancho pequeño */
     #seleccion-contenedor { gap: 15px; }
     .seleccion-card { width: clamp(100px, 25vw, 140px); padding: 10px; }
@@ -343,4 +371,10 @@ html, body {
     #boton-confirmar-seleccion { padding: 10px 25px; font-size: clamp(1rem, 4vw, 1.5rem); margin-bottom: 15px;}
     .botones-extra-seleccion { gap: 8px; }
     .botones-extra-seleccion .boton-mensaje-abrir, .botones-extra-seleccion .boton-reglas-abrir { padding: 8px 15px; font-size: clamp(0.8rem, 3vw, 1rem); }
+    /* Ajuste pantalla curiosidad para pantallas muy pequeñas */
+    .curiosidad-contenido h2 { font-size: clamp(1.4rem, 6vw, 2rem); margin-bottom: 15px;}
+    #texto-curiosidad { font-size: clamp(1rem, 4vw, 1.4rem); margin-bottom: 20px; }
+    #boton-continuar-tras-curiosidad { padding: 10px 25px; font-size: clamp(1rem, 4vw, 1.3rem); }
 }
+
+--- END OF FILE style.css ---
