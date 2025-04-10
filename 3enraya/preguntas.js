@@ -1741,7 +1741,525 @@ const preguntasQuiz = [
     pregunta: "Si hay un conflicto o una discusión, ¿qué es mejor intentar hacer?",
     opciones: ["Echar más leña al fuego", "Buscar una solución hablando tranquilamente y en paz", "No volver a hablar nunca más"],
     respuestaCorrecta: 1 // Fomenta la resolución pacífica de conflictos.
-}
+},
+        // --- Batch 4: Preguntas 323-422 (Nuevas, Variadas y Divertidas) ---
+
+    // === Ciencia y Naturaleza Curiosa (323-337) ===
+    {
+        pregunta: "¿Qué animal puede regenerar (volver a crecer) partes de su cuerpo, como patas o incluso su corazón?",
+        opciones: ["El perro Salchicha", "El Ajolote (Axolotl)", "El Canario"],
+        respuestaCorrecta: 1 // Ajolote
+    },
+    {
+        pregunta: "Si un camaleón está enfadado o quiere impresionar, ¿qué suele hacer con su color?",
+        opciones: ["Se vuelve invisible", "Se pone de colores muy brillantes", "Se queda gris aburrido"],
+        respuestaCorrecta: 1 // Colores brillantes (comunicación)
+    },
+    {
+        pregunta: "¿Qué parte de tu cuerpo NUNCA deja de crecer durante toda tu vida?",
+        opciones: ["Los pies", "Las orejas y la nariz", "Las uñas de los meñiques"],
+        respuestaCorrecta: 1 // Orejas y nariz (cartílago)
+    },
+    {
+        pregunta: "Verdadero o Falso: Los pulpos tienen la sangre azul porque usan cobre en lugar de hierro para transportar oxígeno.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Curiosidad científica real.
+    },
+    {
+        pregunta: "¿Qué gas, que a veces huele a huevos podridos, expulsan los volcanes?",
+        opciones: ["Oxígeno puro", "Azufre (compuestos de)", "Gas de la risa"],
+        respuestaCorrecta: 1 // Azufre
+    },
+    {
+        pregunta: "El 'hueso de la risa' en el codo no es un hueso, es un...",
+        opciones: ["Músculo secreto", "Nervio muy sensible", "Cartílago cantante"],
+        respuestaCorrecta: 1 // Nervio cubital
+    },
+    {
+        pregunta: "¿Por qué los flamencos son rosas?",
+        opciones: ["Porque beben batido de fresa", "Por los pigmentos de los crustáceos que comen", "Porque toman mucho el sol"],
+        respuestaCorrecta: 1 // Alimentación (carotenoides)
+    },
+    {
+        pregunta: "Verdadero o Falso: Los astronautas en el espacio son un poco más altos que en la Tierra porque la gravedad no les comprime la columna.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "¿Qué animal diminuto puede sobrevivir en el espacio exterior, a radiación extrema y temperaturas heladas?",
+        opciones: ["La hormiga atómica", "El tardígrado (oso de agua)", "El mosquito espacial"],
+        respuestaCorrecta: 1 // Tardígrado
+    },
+    {
+        pregunta: "Si mezclas bicarbonato de sodio con vinagre, ¿qué pasa que parece magia?",
+        opciones: ["Se convierte en oro", "Produce burbujas (dióxido de carbono)", "Empieza a cantar ópera"],
+        respuestaCorrecta: 1 // Reacción química básica
+    },
+     {
+        pregunta: "¿Qué planta carnívora cierra sus 'bocas' de golpe para atrapar insectos?",
+        opciones: ["El Girasol hambriento", "La Venus Atrapamoscas", "El Cactus pinchudo"],
+        respuestaCorrecta: 1 // Venus Atrapamoscas
+    },
+    {
+        pregunta: "Verdadero o Falso: Los koalas duermen unas 20 horas al día porque su dieta de eucalipto les da poca energía.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "¿Qué es un 'géiser'?",
+        opciones: ["Un tipo de galleta islandesa", "Una fuente de agua caliente que sale disparada de la tierra", "Un primo lejano del dinosaurio"],
+        respuestaCorrecta: 1 // Fenómeno geotérmico
+    },
+    {
+        pregunta: "El fenómeno que hace que veamos los colores separados (como un arcoíris) al pasar la luz por un prisma se llama:",
+        opciones: ["Fotosíntesis", "Dispersión de la luz", "Magia potagia"],
+        respuestaCorrecta: 1 // Dispersión
+    },
+     {
+        pregunta: "¿Qué animal produce el sonido más fuerte del planeta?",
+        opciones: ["El león rugiendo", "El mono aullador", "La ballena azul"],
+        respuestaCorrecta: 2 // Ballena azul
+    },
+
+    // === Geografía Curiosa y Mundo (338-350) ===
+    {
+        pregunta: "¿Qué país está completamente DENTRO de Sudáfrica?",
+        opciones: ["Madagascar", "Lesoto", "Egipto"],
+        respuestaCorrecta: 1 // Lesoto (Enclave)
+    },
+    {
+        pregunta: "Verdadero o Falso: Existe un lago en Australia que es de color rosa chicle.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Lago Hillier
+    },
+    {
+        pregunta: "¿Cómo se llama la línea imaginaria que divide la Tierra en Hemisferio Norte y Hemisferio Sur?",
+        opciones: ["El Trópico de Cáncer", "El Ecuador", "La Línea Discontinua"],
+        respuestaCorrecta: 1 // Ecuador
+    },
+    {
+        pregunta: "En qué país encontrarías canguros saltando y koalas durmiendo en los árboles?",
+        opciones: ["Canadá", "Australia", "Brasil"],
+        respuestaCorrecta: 1 // Australia
+    },
+    {
+        pregunta: "El punto más profundo de todos los océanos se llama:",
+        opciones: ["El Triángulo de las Bermudas", "La Fosa de las Marianas", "El Agujero Azul"],
+        respuestaCorrecta: 1 // Fosa de las Marianas
+    },
+    {
+        pregunta: "Verdadero o Falso: Islandia es un país con muchos volcanes y glaciares activos.",
+        tipo: 'vf',
+        respuestaCorrecta: true // La tierra de hielo y fuego
+    },
+    {
+        pregunta: "¿Qué famoso desierto cubre gran parte del norte de África?",
+        opciones: ["El Desierto de Atacama", "El Desierto del Sahara", "El Desierto de Gobi"],
+        respuestaCorrecta: 1 // Sahara (Repaso, pero enfoque distinto)
+    },
+    {
+        pregunta: "¿Qué país es famoso por sus fiordos (entradas de mar estrechas y profundas entre montañas)?",
+        opciones: ["Suiza", "Noruega", "México"],
+        respuestaCorrecta: 1 // Noruega
+    },
+    {
+        pregunta: "La Gran Barrera de Coral, el ser vivo más grande del mundo visible desde el espacio, está cerca de la costa de...",
+        opciones: ["Japón", "Australia", "Chile"],
+        respuestaCorrecta: 1 // Australia
+    },
+    {
+        pregunta: "Verdadero o Falso: Hay más gente viviendo en la ciudad de Tokio que en todo el país de Canadá.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Curiosidad demográfica.
+    },
+    {
+        pregunta: "¿Qué canal artificial conecta el Mar Mediterráneo con el Mar Rojo, ahorrando un largo viaje alrededor de África?",
+        opciones: ["El Canal de Panamá", "El Canal de Suez", "El Canalillo de mi Barrio"],
+        respuestaCorrecta: 1 // Canal de Suez
+    },
+     {
+        pregunta: "¿Qué país sudamericano NO tiene costa ni en el Océano Pacífico ni en el Atlántico?",
+        opciones: ["Chile", "Paraguay", "Brasil"],
+        respuestaCorrecta: 1 // Paraguay (y Bolivia ya estaba)
+    },
+     {
+        pregunta: "El Monte Rushmore en EE.UU. tiene las caras gigantes de cuatro...",
+        opciones: ["Estrellas de rock", "Presidentes famosos", "Osos grizzly"],
+        respuestaCorrecta: 1 // Presidentes
+    },
+
+    // === Matemáticas Divertidas y Lógica (351-362) ===
+    {
+        pregunta: "Si tienes una pizza gigante con 8 porciones y te comes 3, ¿qué fracción de pizza queda?",
+        opciones: ["La mitad", "5/8 (cinco octavos)", "Un triángulo triste"],
+        respuestaCorrecta: 1 // Fracciones básicas
+    },
+    {
+        pregunta: "Un caracol quiere subir una pared de 10 metros. Cada día sube 3 metros, pero por la noche resbala y baja 2 metros. ¿Cuántos días tarda en llegar arriba?",
+        opciones: ["10 días", "7 días", "8 días"],
+        respuestaCorrecta: 2 // Lógica (El día 8 llega arriba y ya no resbala)
+    },
+    {
+        pregunta: "¿Qué número sigue en esta serie: 1, 4, 9, 16, 25...?",
+        opciones: ["30", "36", "40"],
+        respuestaCorrecta: 1 // Cuadrados perfectos (1x1, 2x2, 3x3...)
+    },
+    {
+        pregunta: "Verdadero o Falso: Un 'googol' es un número real, y es un 1 seguido de 100 ceros.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Origen del nombre de Google.
+    },
+    {
+        pregunta: "Si lanzas un dado normal de 6 caras, ¿qué es más probable?",
+        opciones: ["Que salga un 6", "Que salga un número par (2, 4 o 6)", "Que el dado se convierta en chocolate"],
+        respuestaCorrecta: 1 // Probabilidad básica (3/6 vs 1/6)
+    },
+    {
+        pregunta: "¿Cuántos grados suman los ángulos interiores de CUALQUIER triángulo?",
+        opciones: ["Depende del triángulo", "Siempre 180 grados", "360 grados"],
+        respuestaCorrecta: 1 // Propiedad fundamental de los triángulos.
+    },
+    {
+        pregunta: "Tengo 3 manzanas. Si me das otras 2, pero luego me quitas 4, ¿cuántas manzanas tengo?",
+        opciones: ["1 manzana", "Ninguna manzana", "Un lío de manzanas"],
+        respuestaCorrecta: 0 // (3+2)-4 = 1
+    },
+    {
+        pregunta: "El número romano 'L' representa el...",
+        opciones: ["500", "50", "1000"],
+        respuestaCorrecta: 1 // 50
+    },
+    {
+        pregunta: "Verdadero o Falso: Cero es un número par.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Definición matemática.
+    },
+    {
+        pregunta: "¿Qué forma geométrica tiene una lata de refresco vista desde arriba?",
+        opciones: ["Un cuadrado", "Un círculo", "Un triángulo"],
+        respuestaCorrecta: 1 // Círculo
+    },
+    {
+        pregunta: "Si necesitas medir algo muy pequeño y preciso, como el grosor de un pelo, usarías...",
+        opciones: ["Una regla de clase", "Un metro de costura", "Un micrómetro o calibre (¡herramienta de precisión!)"],
+        respuestaCorrecta: 2 // Introduce instrumentos de medida más precisos.
+    },
+    {
+        pregunta: "Hay 7 pájaros en un árbol. Un cazador dispara y caza uno. ¿Cuántos pájaros quedan en el árbol?",
+        opciones: ["6 pájaros", "Ninguno (los demás se asustan y vuelan)", "El pájaro cazado, pero triste"],
+        respuestaCorrecta: 1 // Lógica/Adivinanza clásica.
+    },
+
+    // === Lengua y Palabras Curiosas (363-374) ===
+    {
+        pregunta: "¿Qué palabra significa 'miedo irracional a las arañas'?",
+        opciones: ["Aracnofobia", "Claustrofobia", "Pelofobia (miedo al pelo)"],
+        respuestaCorrecta: 0 // Aracnofobia
+    },
+    {
+        pregunta: "Una palabra que se lee igual de izquierda a derecha que de derecha a izquierda (como 'oso' o 'reconocer') se llama:",
+        opciones: [" trabalenguas", "Palíndromo", "Anagrama"],
+        respuestaCorrecta: 1 // Palíndromo (Repaso conceptual, no ejemplo)
+    },
+    {
+        pregunta: "'Supercalifragilisticoespialidoso' es una palabra famosa de la película...",
+        opciones: ["El Rey León", "Mary Poppins", "Shrek"],
+        respuestaCorrecta: 1 // Mary Poppins
+    },
+    {
+        pregunta: "Verdadero o Falso: La palabra 'murciélago' es la única en español que contiene las cinco vocales (a, e, i, o, u) una sola vez.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Hay otras, como 'auténtico', pero es un mito común con 'murciélago'. ¡Aprendizaje!
+    },
+    {
+        pregunta: "Si alguien dice 'Estoy hecho polvo', ¿qué quiere decir?",
+        opciones: ["Que se ha caído y ensuciado", "Que está muy cansado", "Que se ha convertido en arena"],
+        respuestaCorrecta: 1 // Significado de una frase hecha (idiom).
+    },
+    {
+        pregunta: "¿Qué signo de puntuación usamos para indicar sorpresa o emoción fuerte al final de una frase?",
+        opciones: ["El punto final (.)", "El signo de exclamación (!)", "La coma (,)"],
+        respuestaCorrecta: 1 // Signo de exclamación
+    },
+    {
+        pregunta: "El prefijo 're-' en palabras como 'rehacer' o 'releer' suele significar:",
+        opciones: ["Hacerlo mal", "Volver a hacer", "Hacerlo rápido"],
+        respuestaCorrecta: 1 // Significado de prefijo común.
+    },
+    {
+        pregunta: "Verdadero o Falso: Un 'haiku' es un tipo de poema japonés muy corto, con una estructura de sílabas específica (5-7-5).",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "¿Qué es un 'onomatopeya'?",
+        opciones: ["Una palabra inventada sin sentido", "Una palabra que imita un sonido real (ej: 'guau', 'miau', 'tic-tac')", "Un tipo de baile japonés"],
+        respuestaCorrecta: 1 // Onomatopeya
+    },
+    {
+        pregunta: "Si juntas las palabras 'agua' y 'fiestas', ¿qué palabra compuesta formas?",
+        opciones: ["Aguafuerte", "Aguafiestas", "Fiestagua"],
+        respuestaCorrecta: 1 // Palabra compuesta.
+    },
+    {
+        pregunta: "¿Qué palabra está escrita INCORRECTAMENTE?",
+        opciones: ["Avión", "Hebilla", "Escrivir"],
+        respuestaCorrecta: 2 // Escrivir (es Escribir)
+    },
+    {
+        pregunta: "El conjunto de todas las palabras que existen en un idioma se llama:",
+        opciones: ["Gramática", "Vocabulario (o léxico)", "Alfabeto"],
+        respuestaCorrecta: 1 // Vocabulario/Léxico
+    },
+
+    // === Deportes y Juegos (375-385) ===
+    {
+        pregunta: "En fútbol, si un jugador marca tres goles en el mismo partido, se dice que ha hecho un...",
+        opciones: ["Triple salto mortal", "Hat-trick", "Golazo supremo"],
+        respuestaCorrecta: 1 // Hat-trick
+    },
+    {
+        pregunta: "Verdadero o Falso: El surf es un deporte que consiste en deslizarse sobre las olas con una tabla.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "¿Qué deporte se juega con un disco volador (frisbee) e intentando marcar en la zona del equipo contrario?",
+        opciones: ["Rugby playa", "Ultimate Frisbee", "Lanzamiento de plato"],
+        respuestaCorrecta: 1 // Ultimate
+    },
+    {
+        pregunta: "¿Cuál de estos NO es un estilo de natación olímpico?",
+        opciones: ["Mariposa", "Crol (Libre)", "Estilo perrito"],
+        respuestaCorrecta: 2 // Estilo perrito
+    },
+    {
+        pregunta: "Los Juegos Paralímpicos son para atletas con...",
+        opciones: ["Superpoderes", "Discapacidades físicas, visuales o intelectuales", "Mucho dinero"],
+        respuestaCorrecta: 1 // Definición básica Juegos Paralímpicos.
+    },
+    {
+        pregunta: "Verdadero o Falso: En ajedrez, el Rey es la pieza más importante pero también una de las más débiles para atacar.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "¿Qué arte marcial japonés es famoso por sus llaves, proyecciones y por usar la fuerza del oponente?",
+        opciones: ["Boxeo", "Aikido o Judo", "Esgrima"],
+        respuestaCorrecta: 1 // Aikido/Judo (similar concepto para niños)
+    },
+    {
+        pregunta: "En béisbol, si el bateador golpea la pelota fuera del campo y recorre todas las bases, marca un...",
+        opciones: ["Strike", "Home Run (Jonrón)", "Foul Ball"],
+        respuestaCorrecta: 1 // Home Run
+    },
+     {
+        pregunta: "¿Qué necesitas SÍ o SÍ para jugar al escondite?",
+        opciones: ["Una linterna", "Alguien que cuente y lugares para esconderse", "Un mapa del tesoro"],
+        respuestaCorrecta: 1 // Lógica de juego.
+    },
+     {
+        pregunta: "Verdadero o Falso: El skateboarding (montar en monopatín) será deporte olímpico.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Ya lo es.
+    },
+     {
+        pregunta: "El deporte de deslizarse por la nieve sobre una tabla, similar al surf pero en la montaña, se llama:",
+        opciones: ["Esquí acuático", "Snowboard", "Patinaje artístico"],
+        respuestaCorrecta: 1 // Snowboard
+    },
+
+    // === Historia, Cultura y Arte (386-398) ===
+    {
+        pregunta: "¿Quién fue el famoso científico que desarrolló la teoría de la relatividad (E=mc²)?",
+        opciones: ["Isaac Newton", "Albert Einstein", "Galileo Galilei"],
+        respuestaCorrecta: 1 // Albert Einstein
+    },
+    {
+        pregunta: "Verdadero o Falso: Los vikingos llevaban cascos con cuernos.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Es un mito popular, no hay evidencia histórica sólida.
+    },
+    {
+        pregunta: "¿Qué civilización antigua inventó la escritura cuneiforme (marcas en tablillas de arcilla)?",
+        opciones: ["Los Griegos", "Los Sumerios (Mesopotamia)", "Los Aztecas"],
+        respuestaCorrecta: 1 // Sumerios
+    },
+    {
+        pregunta: "La famosa pintura 'El Grito', con una figura angustiada bajo un cielo rojo, fue pintada por:",
+        opciones: ["Vincent van Gogh", "Edvard Munch", "Bob Ross"],
+        respuestaCorrecta: 1 // Munch
+    },
+    {
+        pregunta: "¿Qué instrumento musical es típico de Escocia y se toca soplando aire en una bolsa?",
+        opciones: ["La flauta travesera", "La Gaita", "El Trombón"],
+        respuestaCorrecta: 1 // Gaita
+    },
+    {
+        pregunta: "Verdadero o Falso: El chocolate tiene su origen en América, donde los aztecas y mayas lo tomaban como bebida.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "¿Qué famoso festival de música rock se celebró en 1969 y fue un símbolo de paz y amor?",
+        opciones: ["Eurovisión", "Woodstock", "El festival de la canción del verano"],
+        respuestaCorrecta: 1 // Woodstock
+    },
+    {
+        pregunta: "¿Cómo se llaman las famosas estatuas gigantes de piedra con grandes cabezas en la Isla de Pascua?",
+        opciones: ["Gárgolas", "Moáis", "Menhires"],
+        respuestaCorrecta: 1 // Moáis
+    },
+    {
+        pregunta: "El 'Manga' es un estilo de cómic o novela gráfica originario de...",
+        opciones: ["Estados Unidos", "Japón", "Francia"],
+        respuestaCorrecta: 1 // Japón
+    },
+    {
+        pregunta: "Verdadero o Falso: Los caballeros medievales llevaban pesadas armaduras de metal para protegerse en batalla.",
+        tipo: 'vf',
+        respuestaCorrecta: true
+    },
+    {
+        pregunta: "¿Qué tipo de arte consiste en hacer dibujos que parecen moverse cuando se proyectan rápido?",
+        opciones: ["Fotografía", "Animación (Dibujos animados)", "Escultura de hielo"],
+        respuestaCorrecta: 1 // Animación
+    },
+    {
+        pregunta: "¿Qué famoso compositor se quedó sordo pero siguió componiendo obras maestras como la Novena Sinfonía?",
+        opciones: ["Mozart", "Bach", "Beethoven"],
+        respuestaCorrecta: 2 // Beethoven (Repaso, enfocando en la sordera)
+    },
+    {
+        pregunta: "¿Qué es el 'Taj Mahal' en la India?",
+        opciones: ["Un palacio real", "Un mausoleo (tumba) de mármol blanco construido por amor", "Un parque de atracciones antiguo"],
+        respuestaCorrecta: 1 // Mausoleo
+    },
+
+
+    // === Tecnología y Mundo Digital (399-408) ===
+    {
+        pregunta: "¿Qué significan las siglas 'Wi-Fi' (aproximadamente)?",
+        opciones: ["Windows Fidelity", "Wireless Fidelity (Fidelidad Inalámbrica)", "Why Fly?"],
+        respuestaCorrecta: 1 // Wireless Fidelity
+    },
+    {
+        pregunta: "Verdadero o Falso: Un 'bug' en informática es un insecto real que se ha metido dentro del ordenador.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Es un error en el código o programa.
+    },
+    {
+        pregunta: "¿Qué es 'la nube' en internet?",
+        opciones: ["Una nube de verdad donde llueven datos", "Servidores remotos donde guardamos información online", "Un programa para dibujar nubes"],
+        respuestaCorrecta: 1 // Concepto de Cloud Computing.
+    },
+    {
+        pregunta: "Un código QR (esos cuadrados con puntos negros) sirve para...",
+        opciones: ["Decorar las cajas de cereales", "Almacenar información que lees con la cámara del móvil", "Jugar al tres en raya"],
+        respuestaCorrecta: 1 // Función del QR code.
+    },
+    {
+        pregunta: "¿Qué tipo de robot está diseñado para realizar tareas domésticas como aspirar el suelo?",
+        opciones: ["Un Transformer", "Un robot aspirador", "Un cyborg cocinero"],
+        respuestaCorrecta: 1 // Robot aspirador
+    },
+    {
+        pregunta: "Verdadero o Falso: Las 'cookies' de internet son galletas digitales que te puedes comer.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Son pequeños archivos de seguimiento.
+    },
+    {
+        pregunta: "Si tu móvil se queda sin batería, necesitas...",
+        opciones: ["Gritarle muy fuerte", "Conectarlo a un cargador", "Meterlo en el congelador"],
+        respuestaCorrecta: 1 // Solución obvia pero fundamental.
+    },
+    {
+        pregunta: "Los emojis (caritas y símbolos del móvil) se usan para...",
+        opciones: ["Resolver ecuaciones matemáticas", "Expresar emociones o ideas de forma rápida y visual", "Pedir pizza automáticamente"],
+        respuestaCorrecta: 1 // Función de los emojis.
+    },
+     {
+        pregunta: "¿Qué es un 'avatar' en un videojuego o perfil online?",
+        opciones: ["Un poder especial secreto", "La representación gráfica (el personaje) que te representa", "El jefe final del juego"],
+        respuestaCorrecta: 1 // Avatar
+    },
+     {
+        pregunta: "Verdadero o Falso: Es seguro compartir tu contraseña secreta con desconocidos en internet.",
+        tipo: 'vf',
+        respuestaCorrecta: false // Seguridad online básica.
+    },
+
+    // === Vida Cotidiana, Valores y Curiosidades (409-422) ===
+    {
+        pregunta: "¿Qué símbolo suelen tener los productos que se pueden reciclar?",
+        opciones: ["Una cara sonriente", "Un triángulo hecho con flechas", "Una estrella fugaz"],
+        respuestaCorrecta: 1 // Símbolo de reciclaje (Mobius loop).
+    },
+    {
+        pregunta: "Verdadero o Falso: Bostezar es contagioso, si ves a alguien bostezar es probable que tú también lo hagas.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Curiosidad humana.
+    },
+    {
+        pregunta: "Si quieres enviar una carta por correo tradicional, ¿qué necesitas pegar en el sobre?",
+        opciones: ["Una pegatina de tu personaje favorito", "Un sello postal", "Un chicle"],
+        respuestaCorrecta: 1 // Sello postal.
+    },
+    {
+        pregunta: "¿Por qué es importante lavarse los dientes después de comer?",
+        opciones: ["Para que brillen en la oscuridad", "Para eliminar restos de comida y prevenir caries", "Para entrenar los músculos de la boca"],
+        respuestaCorrecta: 1 // Higiene dental.
+    },
+    {
+        pregunta: "Si un amigo te cuenta un secreto y te pide que no lo cuentes, ¿qué demuestras si guardas el secreto?",
+        opciones: ["Que eres muy olvidadizo", "Lealtad y que eres de confianza", "Que no te importa tu amigo"],
+        respuestaCorrecta: 1 // Valor: Lealtad/Confianza.
+    },
+    {
+        pregunta: "Verdadero o Falso: Aplaudir es una forma común de mostrar que algo te ha gustado o para felicitar a alguien.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Costumbre social.
+    },
+    {
+        pregunta: "Trabajar juntos en equipo para conseguir algo, como en un deporte o un trabajo de clase, se llama:",
+        opciones: ["Competir", "Colaborar", "Ignorarse"],
+        respuestaCorrecta: 1 // Valor: Colaboración/Trabajo en equipo.
+    },
+    {
+        pregunta: "¿Qué usas para proteger tus ojos del sol fuerte?",
+        opciones: ["Un sombrero en los pies", "Gafas de sol", "Una bufanda en los ojos"],
+        respuestaCorrecta: 1 // Gafas de sol.
+    },
+    {
+        pregunta: "Verdadero o Falso: Es importante pedir perdón si has hecho algo mal o has herido a alguien sin querer.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Valor: Responsabilidad/Disculpa.
+    },
+     {
+        pregunta: "¿Qué palabra es más amable para pedir algo?",
+        opciones: ["¡Dámelo ahora!", "Por favor, ¿me lo das?", "¡Quiero eso!"],
+        respuestaCorrecta: 1 // Valor: Educación/Cortesía.
+    },
+    {
+        pregunta: "Cuando ves una señal de STOP octogonal roja en la carretera, ¿qué deben hacer los coches?",
+        opciones: ["Acelerar mucho", "Detenerse completamente", "Tocar el claxon tres veces"],
+        respuestaCorrecta: 1 // Señal de tráfico básica.
+    },
+    {
+        pregunta: "Si ves a alguien intentando llevar muchas cosas y se le caen, ¿qué es una acción amable?",
+        opciones: ["Reírte a carcajadas", "Ayudarle a recogerlas", "Hacerle una foto"],
+        respuestaCorrecta: 1 // Valor: Ayuda/Empatía.
+    },
+     {
+        pregunta: "¿Qué gets wetter the more it dries? (¿Qué se moja más mientras más seca?)",
+        opciones: ["Un charco", "Una toalla", "El desierto"],
+        respuestaCorrecta: 1 // Adivinanza clásica en inglés/español.
+    },
+     {
+        pregunta: "Verdadero o Falso: Ser valiente no significa no tener miedo, sino hacer lo correcto aunque tengas miedo.",
+        tipo: 'vf',
+        respuestaCorrecta: true // Concepto de valentía.
+    } // <-- Asegúrate de que la última pregunta que añadas TENGA una coma si vas a añadir más después o si la pegas antes del cierre `];`
 
 
 ]; // Fin del array preguntasQuiz
