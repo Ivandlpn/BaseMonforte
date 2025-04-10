@@ -89,14 +89,6 @@
   },
   {
     "Ubicación": "BM Villarrubia",
-    "Nombre": "Felix Pestana",
-    "Puesto": "Técnico De Infra y Vía",
-    "Correo": "ruben.anton@ineco.com",
-    "Teléfonos Interior": 743002,
-    "Teléfono Exterior": 628715029
-  },
-  {
-    "Ubicación": "BM Villarrubia",
     "Nombre": "Juan José Recio Lanchas",
     "Puesto": "Jefe de Unidad",
     "Correo": "juan.recio@ineco.com",
@@ -118,6 +110,14 @@
     "Correo": "mgarcia.diaz@ineco.com",
     "Teléfonos Interior": "",
     "Teléfono Exterior": 610670612
+  },
+  {
+    "Ubicación": "BM Villarrubia",
+    "Nombre": "Felix Pestana",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "ruben.anton@ineco.com",
+    "Teléfonos Interior": 743002,
+    "Teléfono Exterior": 628715029
   },
   {
     "Ubicación": "BM Villarrubia",
@@ -150,6 +150,14 @@
     "Correo": "alvaro.barahona@ineco.com",
     "Teléfonos Interior": "",
     "Teléfono Exterior": 647985585
+  },
+      {
+    "Ubicación": "BM Villarrubia",
+    "Nombre": "Luis Martín del Valle",
+    "Puesto": "Técnico De Infra y Vía",
+    "Correo": "luis.martin@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 660722020
   },
     {
     "Ubicación": "BM Villarrubia",
@@ -217,11 +225,11 @@
   },
   {
     "Ubicación": "BM Requena",
-    "Nombre": "Jorge Losa Robledo",
+    "Nombre": "Jose Rafael Rodríguez Álvarez",
     "Puesto": "Técnico De Infra y Vía",
-    "Correo": "jorge.losa@ineco.com",
-    "Teléfonos Interior": 748212,
-    "Teléfono Exterior": 630894109
+    "Correo": "jrafael.rodriguez@ineco.com",
+    "Teléfonos Interior": "",
+    "Teléfono Exterior": 661214168
   },
   {
     "Ubicación": "BM Requena",
