@@ -1,3 +1,5 @@
+--- START OF FILE index.html ---
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,7 +9,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- NUEVA PANTALLA: Selección de Jugadores (Inicio por defecto) -->
+    <!-- Pantalla de Selección de Jugadores (Inicio por defecto) -->
     <div id="pantalla-seleccion-jugador">
         <h2>¡Elige 2 Jugadores!</h2>
         <div id="seleccion-contenedor">
@@ -23,23 +25,19 @@
 
     <!-- Pantalla Inicial Original (Ahora Oculta por defecto) -->
     <div id="pantalla-inicial" class="oculto">
-        <!-- Este contenido ya no se usa principalmente, pero lo dejamos por si acaso -->
-        <button id="boton-comenzar">🚀 ¡Comenzar Juego! 🚀</button>
-        <!-- Botones movidos a pantalla-seleccion-jugador -->
+        <!-- Contenido no usado activamente -->
     </div>
 
     <!-- Contenedor del Juego (inicialmente oculto) -->
     <div id="juego-contenedor" class="oculto">
         <div id="marcador">
              <div class="marcador-jugador">
-                <!-- IDs cambiados -->
                 <img src="" alt="Foto Jugador 1" class="foto-jugador" id="foto-jugador1">
                 <span class="nombre-jugador" id="nombre-jugador1">Jugador 1</span>
                 <span class="puntaje-jugador" id="puntaje-jugador1" data-last-score="0">0</span>
             </div>
             <span class="marcador-separador">:</span>
             <div class="marcador-jugador">
-                 <!-- IDs cambiados -->
                 <img src="" alt="Foto Jugador 2" class="foto-jugador" id="foto-jugador2">
                 <span class="nombre-jugador" id="nombre-jugador2">Jugador 2</span>
                 <span class="puntaje-jugador" id="puntaje-jugador2" data-last-score="0">0</span>
@@ -52,7 +50,6 @@
             <div class="celda" data-index="6"></div> <div class="celda" data-index="7"></div> <div class="celda" data-index="8"></div>
         </div>
         <button id="boton-reiniciar" class="oculto">🔄 Siguiente Ronda 🔄</button>
-        <!-- <button id="boton-nuevo-juego" class="oculto">🌟 Nuevo Juego Completo 🌟</button> --> <!-- Botón obsoleto, se usa el de ganador -->
     </div>
 
     <!-- PANTALLA: Ganador del Juego -->
@@ -62,7 +59,6 @@
         <img src="" alt="Foto del Ganador" id="foto-ganador" class="foto-ganador">
         <p id="nombre-ganador" class="nombre-ganador"></p>
         <div class="botones-ganador">
-            <!-- Cambiado ID para claridad -->
             <button id="boton-volver-a-elegir" class="boton-ganador boton-jugar oculto">🎉 ¡Jugar Otra Vez! 🎉</button>
             <button id="boton-salir-a-seleccion" class="boton-ganador boton-cerrar oculto">🏠 Elegir Jugadores</button>
         </div>
@@ -78,12 +74,14 @@
         </div>
     </div>
 
-    <!-- PANTALLA: Ejercicio Pausa Activa -->
-    <div id="pantalla-ejercicio" class="oculto">
-         <div class="ejercicio-contenido">
-            <h2>¡Pausa Activa! 🤸‍♀️💨</h2>
-            <p id="nombre-ejercicio">¡A moverse!</p>
-            <div id="contador-ejercicio" class="contador">15</div>
+    <!-- PANTALLA: Dato Curioso (Antes Ejercicio Pausa Activa) -->
+    <div id="pantalla-curiosidad" class="oculto"> <!-- ID y propósito cambiados -->
+         <div class="curiosidad-contenido"> <!-- Clase cambiada -->
+            <h2>🤓 ¡Dato Curioso!</h2> <!-- Título cambiado -->
+            <p id="texto-curiosidad">Aquí aparecerá una curiosidad...</p> <!-- ID cambiado, propósito cambiado -->
+            <!-- Botón para cerrar añadido -->
+            <button id="boton-cerrar-curiosidad" class="boton-siguiente-curiosidad">¡Entendido! 👍</button>
+            <!-- Eliminado el div del contador -->
         </div>
     </div>
 
@@ -92,8 +90,7 @@
         <div class="modal-contenido">
             <button id="boton-cerrar-mensaje" class="modal-cerrar-btn">×</button>
             <h3>Escribe tu mensaje para el Tito Iván</h3>
-            <!-- Adaptar el select si quieres que el remitente sea uno de los jugadores disponibles -->
-            <form id="form-mensaje" action="https://formspree.io/f/TU_CODIGO_UNICO" method="POST">
+             <form id="form-mensaje" action="https://formspree.io/f/TU_CODIGO_UNICO" method="POST">
                  <div class="form-grupo"> <label for="remitente">¿Quién eres?:</label> <select name="remitente" id="remitente" required><option value="">--Selecciona--</option><option value="Hugo">Hugo</option><option value="Saul">Saúl</option><!-- Añadir más opciones si se desea --></select> </div>
                 <div class="form-grupo"> <label for="mensaje-texto">Tu mensaje:</label> <textarea name="mensaje" id="mensaje-texto" rows="5" required placeholder="Escribe aquí lo que quieras decir..."></textarea> </div>
                 <input type="hidden" name="_subject" value="¡Mensaje desde el 3 en Raya!"><input type="hidden" name="_captcha" value="false">
@@ -108,7 +105,6 @@
         <div class="modal-contenido-reglas">
             <button id="boton-cerrar-reglas" class="modal-cerrar-btn">×</button>
             <h2>📜 ¡Reglas del Juego! 📜</h2>
-            <!-- Contenido de las reglas sin cambios -->
             <ul>
                 <li><strong>Objetivo:</strong> ¡Ser el primero en conseguir <strong>3 puntos</strong>!</li>
                 <li><strong>Cómo jugar al 3 en Raya:</strong>
@@ -125,11 +121,13 @@
                         <li>Si fallas, ¡no pasa nada!, pero no sumas el punto.</li>
                     </ul>
                 </li>
-                <li><strong>¡Empate = Pausa Activa!:</strong>
+                <!-- Regla del empate modificada -->
+                <li><strong>¡Empate = Dato Curioso!:</strong>
                     <ul>
-                        <li>Si nadie gana la ronda (empate), ¡toca moverse!</li>
-                        <li>Aparecerá un <strong>ejercicio divertido</strong> con un contador de 15 segundos. ¡Hazlo para recargar energía!</li>
-                        <li>Después del ejercicio, se pasa a la siguiente ronda.</li>
+                        <li>Si nadie gana la ronda (empate), ¡toca aprender algo nuevo!</li>
+                        <li>Aparecerá una <strong>tarjeta con un dato curioso</strong> sobre ciencia, tecnología, geografía, lengua u otros temas.</li>
+                        <li>Léela y pulsa "¡Entendido!".</li>
+                        <li>Después de la curiosidad, se pasa a la siguiente ronda.</li>
                     </ul>
                 </li>
                 <li><strong>El Campeón:</strong> El primero que llegue a <strong>3 puntos</strong> en el marcador, ¡gana el juego completo! 🏆</li>
@@ -141,7 +139,9 @@
 
     <!-- Scripts -->
     <script src="preguntas.js"></script>
-    <script src="ejercicios.js"></script>
-    <script src="script.js"></script> <!-- Modificado JS a continuación -->
+    <!-- <script src="ejercicios.js"></script> --> <!-- Eliminado o comentado script de ejercicios -->
+    <script src="curiosidades.js"></script>   <!-- Añadido script de curiosidades -->
+    <script src="script.js"></script>         <!-- Script principal modificado -->
 </body>
 </html>
+--- END OF FILE index.html ---
