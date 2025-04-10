@@ -1,4 +1,4 @@
---- START OF FILE script.js ---
+
 
 // --- Configuración Inicial: Fondo de Portada Aleatorio ---
 const imagenesPortadaDisponibles = [ 'portada1.png', 'portada2.png', 'portada3.png' ];
@@ -331,4 +331,4 @@ botonCerrarCuriosidad.addEventListener('click', cerrarCuriosidad);
 
 // --- Fin del script ---
 console.log("Script del juego (con curiosidades) cargado y listo.");
---- END OF FILE script.js ---
+
