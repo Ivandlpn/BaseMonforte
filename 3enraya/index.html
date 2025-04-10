@@ -1,3 +1,5 @@
+--- START OF FILE index.html ---
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,7 +9,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- NUEVA PANTALLA: Selección de Jugadores (Inicio por defecto) -->
+    <!-- PANTALLA: Selección de Jugadores (Inicio por defecto) -->
     <div id="pantalla-seleccion-jugador">
         <h2>¡Elige 2 Jugadores!</h2>
         <div id="seleccion-contenedor">
@@ -25,21 +27,18 @@
     <div id="pantalla-inicial" class="oculto">
         <!-- Este contenido ya no se usa principalmente, pero lo dejamos por si acaso -->
         <button id="boton-comenzar">🚀 ¡Comenzar Juego! 🚀</button>
-        <!-- Botones movidos a pantalla-seleccion-jugador -->
     </div>
 
     <!-- Contenedor del Juego (inicialmente oculto) -->
     <div id="juego-contenedor" class="oculto">
         <div id="marcador">
              <div class="marcador-jugador">
-                <!-- IDs cambiados -->
                 <img src="" alt="Foto Jugador 1" class="foto-jugador" id="foto-jugador1">
                 <span class="nombre-jugador" id="nombre-jugador1">Jugador 1</span>
                 <span class="puntaje-jugador" id="puntaje-jugador1" data-last-score="0">0</span>
             </div>
             <span class="marcador-separador">:</span>
             <div class="marcador-jugador">
-                 <!-- IDs cambiados -->
                 <img src="" alt="Foto Jugador 2" class="foto-jugador" id="foto-jugador2">
                 <span class="nombre-jugador" id="nombre-jugador2">Jugador 2</span>
                 <span class="puntaje-jugador" id="puntaje-jugador2" data-last-score="0">0</span>
@@ -52,7 +51,6 @@
             <div class="celda" data-index="6"></div> <div class="celda" data-index="7"></div> <div class="celda" data-index="8"></div>
         </div>
         <button id="boton-reiniciar" class="oculto">🔄 Siguiente Ronda 🔄</button>
-        <!-- <button id="boton-nuevo-juego" class="oculto">🌟 Nuevo Juego Completo 🌟</button> --> <!-- Botón obsoleto, se usa el de ganador -->
     </div>
 
     <!-- PANTALLA: Ganador del Juego -->
@@ -62,7 +60,6 @@
         <img src="" alt="Foto del Ganador" id="foto-ganador" class="foto-ganador">
         <p id="nombre-ganador" class="nombre-ganador"></p>
         <div class="botones-ganador">
-            <!-- Cambiado ID para claridad -->
             <button id="boton-volver-a-elegir" class="boton-ganador boton-jugar oculto">🎉 ¡Jugar Otra Vez! 🎉</button>
             <button id="boton-salir-a-seleccion" class="boton-ganador boton-cerrar oculto">🏠 Elegir Jugadores</button>
         </div>
@@ -78,7 +75,19 @@
         </div>
     </div>
 
-    <!-- PANTALLA: Ejercicio Pausa Activa -->
+    <!-- PANTALLA: Curiosidad por Empate (NUEVA) -->
+    <div id="pantalla-curiosidad" class="oculto">
+         <div class="curiosidad-contenido">
+            <h2>💡 ¡Dato Curioso! 🤓</h2>
+            <p id="texto-curiosidad">Aquí aparecerá una curiosidad interesante...</p>
+            <!-- Opcional: Mostrar categoría -->
+            <!-- <p id="categoria-curiosidad" class="categoria-curiosidad"></p> -->
+            <button id="boton-continuar-tras-curiosidad">¡Entendido! 👍</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA: Ejercicio Pausa Activa (ELIMINADA o Comentada) -->
+    <!--
     <div id="pantalla-ejercicio" class="oculto">
          <div class="ejercicio-contenido">
             <h2>¡Pausa Activa! 🤸‍♀️💨</h2>
@@ -86,13 +95,13 @@
             <div id="contador-ejercicio" class="contador">15</div>
         </div>
     </div>
+    -->
 
     <!-- Modal para Enviar Mensaje -->
     <div id="modal-mensaje" class="modal oculto">
         <div class="modal-contenido">
             <button id="boton-cerrar-mensaje" class="modal-cerrar-btn">×</button>
             <h3>Escribe tu mensaje para el Tito Iván</h3>
-            <!-- Adaptar el select si quieres que el remitente sea uno de los jugadores disponibles -->
             <form id="form-mensaje" action="https://formspree.io/f/TU_CODIGO_UNICO" method="POST">
                  <div class="form-grupo"> <label for="remitente">¿Quién eres?:</label> <select name="remitente" id="remitente" required><option value="">--Selecciona--</option><option value="Hugo">Hugo</option><option value="Saul">Saúl</option><!-- Añadir más opciones si se desea --></select> </div>
                 <div class="form-grupo"> <label for="mensaje-texto">Tu mensaje:</label> <textarea name="mensaje" id="mensaje-texto" rows="5" required placeholder="Escribe aquí lo que quieras decir..."></textarea> </div>
@@ -125,11 +134,11 @@
                         <li>Si fallas, ¡no pasa nada!, pero no sumas el punto.</li>
                     </ul>
                 </li>
-                <li><strong>¡Empate = Pausa Activa!:</strong>
+                <li><strong>¡Empate = Dato Curioso!:</strong> <!-- CAMBIO EN REGLAS -->
                     <ul>
-                        <li>Si nadie gana la ronda (empate), ¡toca moverse!</li>
-                        <li>Aparecerá un <strong>ejercicio divertido</strong> con un contador de 15 segundos. ¡Hazlo para recargar energía!</li>
-                        <li>Después del ejercicio, se pasa a la siguiente ronda.</li>
+                        <li>Si nadie gana la ronda (empate), ¡toca aprender algo nuevo!</li>
+                        <li>Aparecerá un <strong>dato curioso</strong> interesante. ¡Léelo para sorprenderte!</li>
+                        <li>Después de leerlo, pulsa el botón para pasar a la siguiente ronda.</li>
                     </ul>
                 </li>
                 <li><strong>El Campeón:</strong> El primero que llegue a <strong>3 puntos</strong> en el marcador, ¡gana el juego completo! 🏆</li>
@@ -141,7 +150,9 @@
 
     <!-- Scripts -->
     <script src="preguntas.js"></script>
-    <script src="ejercicios.js"></script>
-    <script src="script.js"></script> <!-- Modificado JS a continuación -->
+    <!-- <script src="ejercicios.js"></script> --> <!-- ELIMINADO o Comentado -->
+    <script src="curiosidades.js"></script> <!-- AÑADIDO -->
+    <script src="script.js"></script>
 </body>
 </html>
+--- END OF FILE index.html ---
