@@ -1,94 +1,61 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Dividendos</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracker de Dividendos</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="container">
     <header>
-        <h1><i class="fas fa-chart-line"></i> Dashboard de Seguimiento de Dividendos</h1>
+      <h1>Mi Cartera de Dividendos</h1>
+      <button id="addStock">+ Añadir Acción</button>
     </header>
 
-    <main class="dashboard-container">
-        <!-- Indicador de Carga -->
-        <div id="loading-indicator" class="loading active">
-            <div class="spinner"></div>
-            Cargando datos del portfolio...
-        </div>
+    <div class="summary-cards">
+      <div class="card">
+        <h3>Dividendos Anuales</h3>
+        <p id="annualDividends">$0.00</p>
+      </div>
+      <div class="card">
+        <h3>Valor de Cartera</h3>
+        <p id="portfolioValue">$0.00</p>
+      </div>
+    </div>
 
-        <!-- Mensaje de Error -->
-        <div id="error-message" class="error-message"></div>
+    <table id="stocksTable">
+      <thead>
+        <tr>
+          <th>Acción</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+          <th>Dividendo/anual</th>
+          <th>Yield</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody id="stocksBody">
+        <!-- Las acciones se añadirán aquí con JS -->
+      </tbody>
+    </table>
+  </div>
 
-         <!-- Mensaje de estado de precios -->
-        <div id="price-status" class="price-status" style="display: none;"></div>
+  <!-- Modal para añadir acciones (oculto por defecto) -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Añadir Acción</h2>
+      <form id="stockForm">
+        <input type="text" id="ticker" placeholder="Ej: AAPL" required>
+        <input type="number" id="shares" placeholder="Cantidad" required>
+        <input type="number" id="buyPrice" placeholder="Precio de compra" step="0.01" required>
+        <input type="number" id="dividend" placeholder="Dividendo anual por acción" step="0.01" required>
+        <button type="submit">Guardar</button>
+      </form>
+    </div>
+  </div>
 
-
-        <!-- Resumen General -->
-        <section class="dashboard-card summary-card" id="summary-section" style="display: none;">
-            <h2><i class="fas fa-wallet"></i> Resumen General</h2>
-            <div class="summary-grid">
-                <div class="summary-item">
-                    <span class="summary-label">Valor Total Mercado</span>
-                    <span class="summary-value" id="total-market-value">--</span>
-                    <small>(Monedas Mixtas)</small>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Coste Total Base</span>
-                    <span class="summary-value" id="total-base-cost">--</span>
-                     <small>(Monedas Mixtas)</small>
-                </div>
-                 <div class="summary-item">
-                    <span class="summary-label">Ganancia/Pérdida No Realizada</span>
-                    <span class="summary-value" id="total-unrealized-gain">--</span>
-                     <small>(Monedas Mixtas)</small>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Dividendo Anual Estimado</span>
-                    <span class="summary-value" id="total-dividend">N/A</span>
-                    <small>(Datos no disponibles)</small>
-                </div>
-            </div>
-        </section>
-
-        <!-- Tabla del Portfolio -->
-        <section class="dashboard-card portfolio-card" id="portfolio-section" style="display: none;">
-            <h2><i class="fas fa-list-alt"></i> Mi Portfolio</h2>
-            <div class="table-container">
-                <table id="portfolio-table">
-                    <thead>
-                        <tr>
-                            <!-- Añadimos data-column para la ordenación -->
-                            <th data-column="name" data-sortable="true">Nombre <i class="fas fa-sort"></i></th>
-                            <th data-column="ticker" data-sortable="true">Ticker <i class="fas fa-sort"></i></th>
-                            <th data-column="country" data-sortable="true">País <i class="fas fa-sort"></i></th>
-                            <th data-column="currency" data-sortable="true">Moneda <i class="fas fa-sort"></i></th>
-                            <th data-column="shares" data-sortable="true" data-type="number">Acciones <i class="fas fa-sort"></i></th>
-                            <th data-column="purchasePrice" data-sortable="true" data-type="number">Coste Medio <i class="fas fa-sort"></i></th>
-                            <th data-column="costeBase" data-sortable="true" data-type="number">Coste Base <i class="fas fa-sort"></i></th>
-                            <!-- Cambiamos Club por Mercado -->
-                            <th data-column="currentPrice" data-sortable="true" data-type="number">Precio Mercado <i class="fas fa-sort"></i></th>
-                            <th data-column="valorActualMercado" data-sortable="true" data-type="number">Valor Mercado <i class="fas fa-sort"></i></th>
-                            <th data-column="gainLossMarketPercent" data-sortable="true" data-type="number">G/P Mercado (%) <i class="fas fa-sort"></i></th>
-                            <!-- Columnas de dividendos como placeholders o N/A -->
-                            <th>Dividendo/Acción</th>
-                            <th>Próx. Fecha Ex-Div</th>
-                        </tr>
-                    </thead>
-                    <tbody id="portfolio-table-body">
-                        <!-- Las filas se insertarán aquí dinámicamente -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>Dashboard v1.1 - Precios de Mercado (Alpha Vantage)</p>
-    </footer>
-
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
