@@ -52,7 +52,6 @@
             <div class="celda" data-index="6"></div> <div class="celda" data-index="7"></div> <div class="celda" data-index="8"></div>
         </div>
         <button id="boton-reiniciar" class="oculto">🔄 Siguiente Ronda 🔄</button>
-        <!-- <button id="boton-nuevo-juego" class="oculto">🌟 Nuevo Juego Completo 🌟</button> --> <!-- Botón obsoleto, se usa el de ganador -->
     </div>
 
     <!-- PANTALLA: Ganador del Juego -->
@@ -62,7 +61,6 @@
         <img src="" alt="Foto del Ganador" id="foto-ganador" class="foto-ganador">
         <p id="nombre-ganador" class="nombre-ganador"></p>
         <div class="botones-ganador">
-            <!-- Cambiado ID para claridad -->
             <button id="boton-volver-a-elegir" class="boton-ganador boton-jugar oculto">🎉 ¡Jugar Otra Vez! 🎉</button>
             <button id="boton-salir-a-seleccion" class="boton-ganador boton-cerrar oculto">🏠 Elegir Jugadores</button>
         </div>
@@ -78,12 +76,13 @@
         </div>
     </div>
 
-    <!-- PANTALLA: Ejercicio Pausa Activa -->
+    <!-- PANTALLA: Curiosidad (modificada desde ejercicio) -->
     <div id="pantalla-ejercicio" class="oculto">
-         <div class="ejercicio-contenido">
-            <h2>¡Pausa Activa! 🤸‍♀️💨</h2>
-            <p id="nombre-ejercicio">¡A moverse!</p>
-            <div id="contador-ejercicio" class="contador">15</div>
+         <div class="ejercicio-contenido curiosidad">
+            <h2>¡Curiosidad Divertida! 🤔</h2>
+            <p id="nombre-ejercicio">¡Dato curioso aquí!</p>
+            <div id="contador-ejercicio" class="contador">8</div>
+            <p id="categoria-curiosidad" class="categoria-curiosidad"></p>
         </div>
     </div>
 
@@ -92,9 +91,8 @@
         <div class="modal-contenido">
             <button id="boton-cerrar-mensaje" class="modal-cerrar-btn">×</button>
             <h3>Escribe tu mensaje para el Tito Iván</h3>
-            <!-- Adaptar el select si quieres que el remitente sea uno de los jugadores disponibles -->
             <form id="form-mensaje" action="https://formspree.io/f/TU_CODIGO_UNICO" method="POST">
-                 <div class="form-grupo"> <label for="remitente">¿Quién eres?:</label> <select name="remitente" id="remitente" required><option value="">--Selecciona--</option><option value="Hugo">Hugo</option><option value="Saul">Saúl</option><!-- Añadir más opciones si se desea --></select> </div>
+                 <div class="form-grupo"> <label for="remitente">¿Quién eres?:</label> <select name="remitente" id="remitente" required><option value="">--Selecciona--</option><option value="Hugo">Hugo</option><option value="Saul">Saúl</option></select> </div>
                 <div class="form-grupo"> <label for="mensaje-texto">Tu mensaje:</label> <textarea name="mensaje" id="mensaje-texto" rows="5" required placeholder="Escribe aquí lo que quieras decir..."></textarea> </div>
                 <input type="hidden" name="_subject" value="¡Mensaje desde el 3 en Raya!"><input type="hidden" name="_captcha" value="false">
                 <button type="submit" class="boton-enviar-msg">🚀 ¡Enviar Mensaje!</button>
@@ -108,7 +106,6 @@
         <div class="modal-contenido-reglas">
             <button id="boton-cerrar-reglas" class="modal-cerrar-btn">×</button>
             <h2>📜 ¡Reglas del Juego! 📜</h2>
-            <!-- Contenido de las reglas sin cambios -->
             <ul>
                 <li><strong>Objetivo:</strong> ¡Ser el primero en conseguir <strong>3 puntos</strong>!</li>
                 <li><strong>Cómo jugar al 3 en Raya:</strong>
@@ -125,11 +122,11 @@
                         <li>Si fallas, ¡no pasa nada!, pero no sumas el punto.</li>
                     </ul>
                 </li>
-                <li><strong>¡Empate = Pausa Activa!:</strong>
+                <li><strong>¡Empate = Curiosidad Divertida!:</strong>
                     <ul>
-                        <li>Si nadie gana la ronda (empate), ¡toca moverse!</li>
-                        <li>Aparecerá un <strong>ejercicio divertido</strong> con un contador de 15 segundos. ¡Hazlo para recargar energía!</li>
-                        <li>Después del ejercicio, se pasa a la siguiente ronda.</li>
+                        <li>Si nadie gana la ronda (empate), ¡disfruta de una curiosidad interesante!</li>
+                        <li>Aparecerá un <strong>dato curioso</strong> con un contador de 8 segundos.</li>
+                        <li>Después de la curiosidad, se pasa a la siguiente ronda.</li>
                     </ul>
                 </li>
                 <li><strong>El Campeón:</strong> El primero que llegue a <strong>3 puntos</strong> en el marcador, ¡gana el juego completo! 🏆</li>
@@ -138,10 +135,9 @@
         </div>
     </div>
 
-
     <!-- Scripts -->
+    <script src="curiosidades.js"></script>
     <script src="preguntas.js"></script>
-    <script src="ejercicios.js"></script>
-    <script src="script.js"></script> <!-- Modificado JS a continuación -->
+    <script src="script.js"></script>
 </body>
 </html>
