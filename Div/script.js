@@ -1,61 +1,64 @@
-// Variables globales
-let stocks = [];
-
-// Cargar datos desde data.json
-async function loadStocksData() {
+async function loadAndRenderStocks() {
   try {
     const response = await fetch('data.json');
+    if (!response.ok) throw new Error("Error al cargar datos");
     const data = await response.json();
-    stocks = data.stocks;
-    renderStocks();
+    renderStocks(data.stocks);
   } catch (error) {
-    console.error("Error cargando datos:", error);
-    // Datos de respaldo (opcional)
-    stocks = [
-      { name: "Ejemplo", ticker: "AAPL", currency: "USD", shares: 10, buyPrice: 150, dividend: 2.00 }
-    ];
-    renderStocks();
+    console.error("Error:", error);
+    document.getElementById("stocksBody").innerHTML = `
+      <tr>
+        <td colspan="6" style="text-align: center; color: #e74c3c;">
+          Error al cargar los datos. Verifica el archivo data.json
+        </td>
+      </tr>
+    `;
   }
 }
 
-// Mostrar acciones en la tabla (igual que antes)
-function renderStocks() {
-  stocksBody.innerHTML = "";
+function renderStocks(stocks) {
+  const stocksBody = document.getElementById("stocksBody");
   let totalDividends = 0;
   let totalPortfolioValue = 0;
+  let totalDividendYield = 0;
 
-  stocks.forEach(stock => {
+  stocksBody.innerHTML = stocks.map(stock => {
     const annualDividend = stock.shares * stock.dividend;
     const positionValue = stock.shares * stock.buyPrice;
-    const dividendYield = (stock.dividend / stock.buyPrice * 100).toFixed(2);
+    const dividendYield = (stock.dividend / stock.buyPrice * 100);
     const currencySymbol = getCurrencySymbol(stock.currency);
 
     totalDividends += annualDividend;
     totalPortfolioValue += positionValue;
+    totalDividendYield += dividendYield;
 
-    const row = document.createElement("tr");
-    row.setAttribute("data-country", stock.country);
-    row.setAttribute("data-currency", stock.currency);
-    row.innerHTML = `
-      <td>${stock.name} (${stock.ticker})</td>
-      <td>${stock.shares}</td>
-      <td>${currencySymbol}${stock.buyPrice.toFixed(2)}</td>
-      <td>${currencySymbol}${annualDividend.toFixed(2)}</td>
-      <td>${dividendYield}%</td>
-      <td><button class="delete-btn" data-ticker="${stock.ticker}">Eliminar</button></td>
+    return `
+      <tr data-country="${stock.country}" data-currency="${stock.currency}">
+        <td>${stock.name} (${stock.ticker})</td>
+        <td>${stock.country}</td>
+        <td>${stock.shares}</td>
+        <td>${currencySymbol}${stock.buyPrice.toFixed(2)}</td>
+        <td>${currencySymbol}${annualDividend.toFixed(2)}</td>
+        <td>${dividendYield.toFixed(2)}%</td>
+      </tr>
     `;
-    stocksBody.appendChild(row);
-  });
+  }).join("");
 
-  annualDividendsEl.textContent = `$${totalDividends.toFixed(2)}`;
-  portfolioValueEl.textContent = `$${totalPortfolioValue.toFixed(2)}`;
+  // Actualizar resumen
+  document.getElementById("annualDividends").textContent = `$${totalDividends.toFixed(2)}`;
+  document.getElementById("portfolioValue").textContent = `$${totalPortfolioValue.toFixed(2)}`;
+  document.getElementById("averageYield").textContent = `${(totalDividendYield / stocks.length).toFixed(2)}%`;
 }
 
-// Helper para símbolos de moneda
 function getCurrencySymbol(currency) {
-  const symbols = { USD: "$", EUR: "€", CAD: "CA$", NOK: "kr" };
+  const symbols = { 
+    USD: "$", 
+    EUR: "€", 
+    CAD: "CA$", 
+    NOK: "kr" 
+  };
   return symbols[currency] || currency;
 }
 
-// Inicializar (cargar datos al iniciar)
-loadStocksData();
+// Iniciar al cargar la página
+document.addEventListener("DOMContentLoaded", loadAndRenderStocks);
