@@ -365,7 +365,7 @@
                         document.getElementById('nextStationsInput').value = data.next.stations || '';
                     }
                     
-                    syncStatus.textContent = "Datos sincronizados: " + new Date().toLocaleTimeString();
+                    syncStatus.textContent = "Última actualización: " + new Date().toLocaleTimeString();
                     syncStatus.style.color = "#2ecc71";
                 } else {
                     syncStatus.textContent = "No hay datos guardados aún";
