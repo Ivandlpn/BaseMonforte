@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Semanas</title>
+    <title>Control de Semanas - Versión Cloud</title>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    
     <style>
         :root {
             --primary-color: #3498db;
@@ -20,7 +24,6 @@
             padding: 20px;
             color: var(--dark-color);
         }
-
         
         .container {
             max-width: 1000px;
@@ -159,23 +162,18 @@
         .next-week {
             border-top: 4px solid var(--success-color);
         }
+        
+        .sync-status {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
     </style>
 </head>
 <body>
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyD034fyj8J0vxxwaU5X5TTPtZK8W2jeKKw",
-  authDomain: "actas-36978.firebaseapp.com",
-  databaseURL: "https://actas-36978-default-rtdb.firebaseio.com",
-  projectId: "actas-36978",
-  storageBucket: "actas-36978.firebasestorage.app",
-  messagingSenderId: "219077840369",
-  appId: "1:219077840369:web:c228979e27253f53608850",
-  measurementId: "G-E7MZV5X0D5"
-};
-    
     <div class="container">
-        <h1>Control de Semanas</h1>
+        <h1>Control de Semanas <small>(Versión Cloud)</small></h1>
         
         <div class="week-cards">
             <!-- Tarjeta Semana Actual -->
@@ -187,19 +185,19 @@ const firebaseConfig = {
                 
                 <div class="data-item">
                     <span class="data-label">Nº Acta ILT</span>
-                    <span class="data-value" id="currentIlt">125</span>
-                    <input type="text" class="data-input" id="currentIltInput" value="125">
+                    <span class="data-value" id="currentIlt">Cargando...</span>
+                    <input type="text" class="data-input" id="currentIltInput">
                 </div>
                 
                 <div class="data-item">
                     <span class="data-label">Nº Acta Estaciones</span>
-                    <span class="data-value" id="currentStations">87</span>
-                    <input type="text" class="data-input" id="currentStationsInput" value="87">
+                    <span class="data-value" id="currentStations">Cargando...</span>
+                    <input type="text" class="data-input" id="currentStationsInput">
                 </div>
                 
                 <div class="data-item">
                     <span class="data-label">Guardia</span>
-                    <span class="data-value" id="currentGuard">Juan Pérez</span>
+                    <span class="data-value" id="currentGuard">Cargando...</span>
                     <select class="data-select" id="currentGuardSelect">
                         <option value="Ana">Ana</option>
                         <option value="Ernesto">Ernesto</option>
@@ -226,19 +224,19 @@ const firebaseConfig = {
                 
                 <div class="data-item">
                     <span class="data-label">Nº Acta ILT</span>
-                    <span class="data-value" id="nextIlt">-</span>
-                    <input type="text" class="data-input" id="nextIltInput" value="">
+                    <span class="data-value" id="nextIlt">Cargando...</span>
+                    <input type="text" class="data-input" id="nextIltInput">
                 </div>
                 
                 <div class="data-item">
                     <span class="data-label">Nº Acta Estaciones</span>
-                    <span class="data-value" id="nextStations">-</span>
-                    <input type="text" class="data-input" id="nextStationsInput" value="">
+                    <span class="data-value" id="nextStations">Cargando...</span>
+                    <input type="text" class="data-input" id="nextStationsInput">
                 </div>
                 
                 <div class="data-item">
                     <span class="data-label">Guardia</span>
-                    <span class="data-value" id="nextGuard">-</span>
+                    <span class="data-value" id="nextGuard">Cargando...</span>
                     <select class="data-select" id="nextGuardSelect">
                         <option value="">Seleccionar...</option>
                         <option value="Ana">Ana</option>
@@ -257,11 +255,28 @@ const firebaseConfig = {
                 </div>
             </div>
         </div>
+        
+        <div class="sync-status" id="syncStatus">
+            Sincronizando datos...
+        </div>
     </div>
 
     <script>
-        // Lista de personas de guardia
-        const guardias = ['Ana', 'Ernesto', 'Raúl', 'Edu', 'Manuel', 'Pepe', 'Iván'];
+        // Configuración de Firebase (YA INCLUYE TUS DATOS)
+        const firebaseConfig = {
+            apiKey: "AIzaSyD034fyj8J0vxxwaU5X5TTPtZK8W2jeKKw",
+            authDomain: "actas-36978.firebaseapp.com",
+            databaseURL: "https://actas-36978-default-rtdb.firebaseio.com",
+            projectId: "actas-36978",
+            storageBucket: "actas-36978.firebasestorage.app",
+            messagingSenderId: "219077840369",
+            appId: "1:219077840369:web:c228979e27253f53608850",
+            measurementId: "G-E7MZV5X0D5"
+        };
+        
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
         
         // Función para obtener el número de semana actual y rango de fechas
         function getWeekInfo(weekOffset = 0) {
@@ -275,7 +290,7 @@ const firebaseConfig = {
             
             // Calcular el lunes de la semana
             const day = date.getDay();
-            const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Ajuste cuando es domingo
+            const diff = date.getDate() - day + (day === 0 ? -6 : 1);
             const monday = new Date(date.setDate(diff));
             
             // Calcular el domingo de la semana
@@ -311,9 +326,56 @@ const firebaseConfig = {
             document.getElementById('nextWeekNumber').textContent = nextWeek.weekNumber;
             document.getElementById('nextWeekRange').textContent = nextWeek.range;
             
-            // Aquí podrías cargar datos guardados de localStorage
-            loadSavedData();
+            // Cargar datos desde Firebase
+            loadDataFromFirebase();
         });
+        
+        // Cargar datos desde Firebase
+        function loadDataFromFirebase() {
+            const syncStatus = document.getElementById('syncStatus');
+            
+            syncStatus.textContent = "Sincronizando datos...";
+            syncStatus.style.color = "#7f8c8d";
+            
+            // Obtener referencia a los datos en Firebase
+            const weeksRef = database.ref('weeks');
+            
+            // Escuchar cambios en los datos
+            weeksRef.on('value', (snapshot) => {
+                const data = snapshot.val();
+                
+                if (data) {
+                    // Actualizar semana actual
+                    if (data.current) {
+                        document.getElementById('currentIlt').textContent = data.current.ilt || '-';
+                        document.getElementById('currentStations').textContent = data.current.stations || '-';
+                        document.getElementById('currentGuard').textContent = data.current.guard || '-';
+                        
+                        document.getElementById('currentIltInput').value = data.current.ilt || '';
+                        document.getElementById('currentStationsInput').value = data.current.stations || '';
+                    }
+                    
+                    // Actualizar próxima semana
+                    if (data.next) {
+                        document.getElementById('nextIlt').textContent = data.next.ilt || '-';
+                        document.getElementById('nextStations').textContent = data.next.stations || '-';
+                        document.getElementById('nextGuard').textContent = data.next.guard || '-';
+                        
+                        document.getElementById('nextIltInput').value = data.next.ilt || '';
+                        document.getElementById('nextStationsInput').value = data.next.stations || '';
+                    }
+                    
+                    syncStatus.textContent = "Datos sincronizados: " + new Date().toLocaleTimeString();
+                    syncStatus.style.color = "#2ecc71";
+                } else {
+                    syncStatus.textContent = "No hay datos guardados aún";
+                    syncStatus.style.color = "#e74c3c";
+                }
+            }, (error) => {
+                syncStatus.textContent = "Error al sincronizar: " + error.message;
+                syncStatus.style.color = "#e74c3c";
+            });
+        }
         
         // Alternar modo edición
         function toggleEdit(cardId) {
@@ -335,70 +397,65 @@ const firebaseConfig = {
             }
         }
         
-        // Guardar datos
+        // Guardar datos en Firebase
         function saveData(cardId) {
             const card = document.getElementById(cardId);
             const isCurrentWeek = cardId === 'currentWeekCard';
+            const syncStatus = document.getElementById('syncStatus');
+            
+            syncStatus.textContent = "Guardando cambios...";
+            syncStatus.style.color = "#f39c12";
             
             if (isCurrentWeek) {
-                // Guardar datos semana actual
-                const ilt = document.getElementById('currentIltInput').value;
-                const stations = document.getElementById('currentStationsInput').value;
-                const guard = document.getElementById('currentGuardSelect').value;
+                // Preparar datos semana actual
+                const weekData = {
+                    ilt: document.getElementById('currentIltInput').value,
+                    stations: document.getElementById('currentStationsInput').value,
+                    guard: document.getElementById('currentGuardSelect').value
+                };
                 
-                document.getElementById('currentIlt').textContent = ilt;
-                document.getElementById('currentStations').textContent = stations;
-                document.getElementById('currentGuard').textContent = guard;
+                // Actualizar interfaz
+                document.getElementById('currentIlt').textContent = weekData.ilt;
+                document.getElementById('currentStations').textContent = weekData.stations;
+                document.getElementById('currentGuard').textContent = weekData.guard;
                 
-                // Guardar en localStorage
-                localStorage.setItem('currentWeekData', JSON.stringify({
-                    ilt, stations, guard
-                }));
+                // Guardar en Firebase
+                database.ref('weeks/current').set(weekData)
+                    .then(() => {
+                        syncStatus.textContent = "Cambios guardados: " + new Date().toLocaleTimeString();
+                        syncStatus.style.color = "#2ecc71";
+                    })
+                    .catch((error) => {
+                        syncStatus.textContent = "Error al guardar: " + error.message;
+                        syncStatus.style.color = "#e74c3c";
+                    });
             } else {
-                // Guardar datos próxima semana
-                const ilt = document.getElementById('nextIltInput').value;
-                const stations = document.getElementById('nextStationsInput').value;
-                const guard = document.getElementById('nextGuardSelect').value;
+                // Preparar datos próxima semana
+                const weekData = {
+                    ilt: document.getElementById('nextIltInput').value,
+                    stations: document.getElementById('nextStationsInput').value,
+                    guard: document.getElementById('nextGuardSelect').value
+                };
                 
-                document.getElementById('nextIlt').textContent = ilt;
-                document.getElementById('nextStations').textContent = stations;
-                document.getElementById('nextGuard').textContent = guard;
+                // Actualizar interfaz
+                document.getElementById('nextIlt').textContent = weekData.ilt;
+                document.getElementById('nextStations').textContent = weekData.stations;
+                document.getElementById('nextGuard').textContent = weekData.guard;
                 
-                // Guardar en localStorage
-                localStorage.setItem('nextWeekData', JSON.stringify({
-                    ilt, stations, guard
-                }));
+                // Guardar en Firebase
+                database.ref('weeks/next').set(weekData)
+                    .then(() => {
+                        syncStatus.textContent = "Cambios guardados: " + new Date().toLocaleTimeString();
+                        syncStatus.style.color = "#2ecc71";
+                    })
+                    .catch((error) => {
+                        syncStatus.textContent = "Error al guardar: " + error.message;
+                        syncStatus.style.color = "#e74c3c";
+                    });
             }
             
             // Salir del modo edición
             card.classList.remove('editing');
-        }
-        
-        // Cargar datos guardados
-        function loadSavedData() {
-            // Cargar datos semana actual
-            const currentData = localStorage.getItem('currentWeekData');
-            if (currentData) {
-                const { ilt, stations, guard } = JSON.parse(currentData);
-                document.getElementById('currentIlt').textContent = ilt;
-                document.getElementById('currentStations').textContent = stations;
-                document.getElementById('currentGuard').textContent = guard;
-                document.getElementById('currentIltInput').value = ilt;
-                document.getElementById('currentStationsInput').value = stations;
-                document.getElementById('currentGuardSelect').value = guard;
-            }
-            
-            // Cargar datos próxima semana
-            const nextData = localStorage.getItem('nextWeekData');
-            if (nextData) {
-                const { ilt, stations, guard } = JSON.parse(nextData);
-                document.getElementById('nextIlt').textContent = ilt;
-                document.getElementById('nextStations').textContent = stations;
-                document.getElementById('nextGuard').textContent = guard;
-                document.getElementById('nextIltInput').value = ilt;
-                document.getElementById('nextStationsInput').value = stations;
-                document.getElementById('nextGuardSelect').value = guard;
-            }
         }
     </script>
 </body>
