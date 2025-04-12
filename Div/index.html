@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tracker de Dividendos</title>
+  <title>Cartera de Dividendos</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>Mi Cartera de Dividendos</h1>
-      <button id="addStock">+ Añadir Acción</button>
+      <h1>📊 Cartera de Dividendos</h1>
     </header>
 
     <div class="summary-cards">
@@ -22,38 +21,27 @@
         <h3>Valor de Cartera</h3>
         <p id="portfolioValue">$0.00</p>
       </div>
+      <div class="card">
+        <h3>Yield Promedio</h3>
+        <p id="averageYield">0.00%</p>
+      </div>
     </div>
 
     <table id="stocksTable">
       <thead>
         <tr>
           <th>Acción</th>
+          <th>País</th>
           <th>Cantidad</th>
-          <th>Precio</th>
-          <th>Dividendo/anual</th>
+          <th>Precio Medio</th>
+          <th>Dividendo/Anual</th>
           <th>Yield</th>
-          <th>Acciones</th>
         </tr>
       </thead>
       <tbody id="stocksBody">
-        <!-- Las acciones se añadirán aquí con JS -->
+        <!-- Datos cargados desde data.json -->
       </tbody>
     </table>
-  </div>
-
-  <!-- Modal para añadir acciones (oculto por defecto) -->
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>Añadir Acción</h2>
-      <form id="stockForm">
-        <input type="text" id="ticker" placeholder="Ej: AAPL" required>
-        <input type="number" id="shares" placeholder="Cantidad" required>
-        <input type="number" id="buyPrice" placeholder="Precio de compra" step="0.01" required>
-        <input type="number" id="dividend" placeholder="Dividendo anual por acción" step="0.01" required>
-        <button type="submit">Guardar</button>
-      </form>
-    </div>
   </div>
 
   <script src="script.js"></script>
