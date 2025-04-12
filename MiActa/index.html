@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Control de Semanas - Versión Cloud</title>
+    <title>GuardiActas - BM Monforte</title>
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     
     <style>
         :root {
-            --primary-color: #3498db;
-            --secondary-color: #2980b9;
-            --light-color: #ecf0f1;
+            --primary-color: #4B6C9B; /* PANTONE 7687 C */
+            --secondary-color: #DA291C; /* PANTONE 485 C */
+            --light-color: #f8f9fa;
             --dark-color: #2c3e50;
-            --success-color: #2ecc71;
+            --success-color: #28a745;
+            --text-color: #495057;
+            --border-color: #dee2e6;
         }
         
         body {
@@ -22,78 +24,98 @@
             background-color: #f5f7fa;
             margin: 0;
             padding: 20px;
-            color: var(--dark-color);
+            color: var(--text-color);
+            line-height: 1.6;
         }
         
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
+            padding: 20px;
         }
         
         h1 {
             text-align: center;
-            color: var(--dark-color);
+            color: var(--primary-color);
             margin-bottom: 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        h1 small {
+            display: block;
+            font-size: 0.6em;
+            color: var(--secondary-color);
+            margin-top: 8px;
+            font-weight: 400;
         }
         
         .week-cards {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 30px;
             justify-content: center;
         }
         
         .card {
             background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            padding: 30px;
             width: 100%;
-            max-width: 400px;
-            transition: transform 0.3s ease;
+            max-width: 450px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
         }
         
         .card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
         }
         
         .card-header {
             border-bottom: 2px solid var(--light-color);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
         }
         
         .card-title {
             margin: 0;
             color: var(--primary-color);
             font-size: 1.5rem;
+            font-weight: 600;
         }
         
         .week-range {
-            color: #7f8c8d;
+            color: #6c757d;
             font-size: 0.9rem;
-            margin-top: 5px;
+            margin-top: 8px;
+            font-style: italic;
         }
         
         .card-actions {
             display: flex;
             justify-content: flex-end;
-            margin-top: 15px;
+            margin-top: 25px;
+            gap: 10px;
         }
         
         .edit-btn {
             background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 5px;
-            padding: 8px 15px;
+            border-radius: 6px;
+            padding: 10px 20px;
             cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            font-weight: 500;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
         }
         
         .edit-btn:hover {
-            background-color: var(--secondary-color);
+            background-color: #3a5a80;
+            transform: translateY(-2px);
         }
         
         .save-btn {
@@ -101,42 +123,67 @@
             display: none;
         }
         
+        .save-btn:hover {
+            background-color: #218838;
+        }
+        
         .data-item {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .data-label {
-            font-weight: bold;
+            font-weight: 600;
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             color: var(--dark-color);
+            font-size: 0.95rem;
         }
         
         .data-value {
-            padding: 8px;
+            padding: 12px;
             background-color: var(--light-color);
-            border-radius: 5px;
+            border-radius: 6px;
             width: 100%;
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            min-height: 20px;
         }
         
         .data-input {
             display: none;
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
             font-family: inherit;
+            font-size: 1rem;
+            margin-top: 5px;
+            transition: border 0.3s;
+        }
+        
+        .data-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(75, 108, 155, 0.2);
         }
         
         .data-select {
             display: none;
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
             font-family: inherit;
             background-color: white;
+            font-size: 1rem;
+            margin-top: 5px;
+            transition: border 0.3s;
+        }
+        
+        .data-select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(75, 108, 155, 0.2);
         }
         
         .editing .data-value {
@@ -156,30 +203,72 @@
         }
         
         .current-week {
-            border-top: 4px solid var(--primary-color);
+            border-top: 5px solid var(--primary-color);
         }
         
         .next-week {
-            border-top: 4px solid var(--success-color);
+            border-top: 5px solid var(--secondary-color);
         }
         
         .sync-status {
             text-align: center;
-            margin-top: 20px;
-            font-size: 0.8rem;
-            color: #7f8c8d;
+            margin-top: 30px;
+            font-size: 0.85rem;
+            color: #6c757d;
+            background-color: var(--light-color);
+            padding: 12px;
+            border-radius: 6px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px solid var(--border-color);
         }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .week-cards {
+                gap: 20px;
+            }
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-logo {
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .footer-text {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+
+
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>GuadiActas <small>(BM Monforte)</small></h1>
+        <h1>GuardiActas <small>BM Monforte</small></h1>
         
         <div class="week-cards">
             <!-- Tarjeta Semana Actual -->
             <div class="card current-week" id="currentWeekCard">
                 <div class="card-header">
-                    <h2 class="card-title">Semana <span id="currentWeekNumber">16</span></h2>
+                    <h2 class="card-title">Semana <span id="currentWeekNumber">16 - Semana Actual</span></h2>
                     <div class="week-range" id="currentWeekRange"></div>
                 </div>
                 
@@ -218,7 +307,7 @@
             <!-- Tarjeta Próxima Semana -->
             <div class="card next-week" id="nextWeekCard">
                 <div class="card-header">
-                    <h2 class="card-title">Semana <span id="nextWeekNumber">17</span></h2>
+                    <h2 class="card-title">Semana <span id="nextWeekNumber">17 - Próxima Semana</span></h2>
                     <div class="week-range" id="nextWeekRange"></div>
                 </div>
                 
@@ -259,10 +348,18 @@
         <div class="sync-status" id="syncStatus">
             Sincronizando datos...
         </div>
+
+        <footer class="footer">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Logo-Ineco.png" 
+                 alt="Logo INECO" 
+                 class="footer-logo">
+            <div class="footer-text">Sistema de gestión de guardias</div>
+        </footer>
+
     </div>
 
     <script>
-        // Configuración de Firebase (YA INCLUYE TUS DATOS)
+        // Configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyD034fyj8J0vxxwaU5X5TTPtZK8W2jeKKw",
             authDomain: "actas-36978.firebaseapp.com",
@@ -278,31 +375,39 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
         
+        // Función para formatear fecha completa
+        function formatFullDate(date) {
+            const options = { 
+                weekday: 'long',
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            return date.toLocaleDateString('es-ES', options);
+        }
+        
         // Función para obtener el número de semana actual y rango de fechas
         function getWeekInfo(weekOffset = 0) {
             const now = new Date();
             const date = new Date(now);
             
-            // Ajustar para la semana actual o próxima
             if (weekOffset > 0) {
                 date.setDate(date.getDate() + 7 * weekOffset);
             }
             
-            // Calcular el lunes de la semana
             const day = date.getDay();
             const diff = date.getDate() - day + (day === 0 ? -6 : 1);
             const monday = new Date(date.setDate(diff));
             
-            // Calcular el domingo de la semana
             const sunday = new Date(monday);
             sunday.setDate(monday.getDate() + 6);
             
-            // Formatear fechas
             const options = { day: 'numeric', month: 'long', year: 'numeric' };
             const mondayStr = monday.toLocaleDateString('es-ES', options);
             const sundayStr = sunday.toLocaleDateString('es-ES', options);
             
-            // Calcular número de semana ISO
             const jan1 = new Date(monday.getFullYear(), 0, 1);
             const days = Math.floor((monday - jan1) / (24 * 60 * 60 * 1000));
             const weekNumber = Math.ceil((days + jan1.getDay() + 1) / 7);
@@ -320,13 +425,12 @@
             const currentWeek = getWeekInfo();
             const nextWeek = getWeekInfo(1);
             
-            document.getElementById('currentWeekNumber').textContent = currentWeek.weekNumber;
+            document.getElementById('currentWeekNumber').textContent = `${currentWeek.weekNumber} - Semana Actual`;
             document.getElementById('currentWeekRange').textContent = currentWeek.range;
             
-            document.getElementById('nextWeekNumber').textContent = nextWeek.weekNumber;
+            document.getElementById('nextWeekNumber').textContent = `${nextWeek.weekNumber} - Próxima Semana`;
             document.getElementById('nextWeekRange').textContent = nextWeek.range;
             
-            // Cargar datos desde Firebase
             loadDataFromFirebase();
         });
         
@@ -335,17 +439,15 @@
             const syncStatus = document.getElementById('syncStatus');
             
             syncStatus.textContent = "Sincronizando datos...";
-            syncStatus.style.color = "#7f8c8d";
+            syncStatus.style.color = "#6c757d";
             
-            // Obtener referencia a los datos en Firebase
             const weeksRef = database.ref('weeks');
             
-            // Escuchar cambios en los datos
             weeksRef.on('value', (snapshot) => {
                 const data = snapshot.val();
+                const now = new Date();
                 
                 if (data) {
-                    // Actualizar semana actual
                     if (data.current) {
                         document.getElementById('currentIlt').textContent = data.current.ilt || '-';
                         document.getElementById('currentStations').textContent = data.current.stations || '-';
@@ -355,7 +457,6 @@
                         document.getElementById('currentStationsInput').value = data.current.stations || '';
                     }
                     
-                    // Actualizar próxima semana
                     if (data.next) {
                         document.getElementById('nextIlt').textContent = data.next.ilt || '-';
                         document.getElementById('nextStations').textContent = data.next.stations || '-';
@@ -365,15 +466,15 @@
                         document.getElementById('nextStationsInput').value = data.next.stations || '';
                     }
                     
-                    syncStatus.textContent = "Última actualización: " + new Date().toLocaleTimeString();
-                    syncStatus.style.color = "#2ecc71";
+                    syncStatus.innerHTML = `Última actualización: <strong>${formatFullDate(now)}</strong>`;
+                    syncStatus.style.color = "#28a745";
                 } else {
                     syncStatus.textContent = "No hay datos guardados aún";
-                    syncStatus.style.color = "#e74c3c";
+                    syncStatus.style.color = "#dc3545";
                 }
             }, (error) => {
                 syncStatus.textContent = "Error al sincronizar: " + error.message;
-                syncStatus.style.color = "#e74c3c";
+                syncStatus.style.color = "#dc3545";
             });
         }
         
@@ -382,14 +483,12 @@
             const card = document.getElementById(cardId);
             card.classList.toggle('editing');
             
-            // Si estamos editando la tarjeta actual, seleccionar el valor actual en el select
             if (cardId === 'currentWeekCard' && card.classList.contains('editing')) {
                 const currentGuard = document.getElementById('currentGuard').textContent;
                 const select = document.getElementById('currentGuardSelect');
                 select.value = currentGuard;
             }
             
-            // Lo mismo para la próxima semana
             if (cardId === 'nextWeekCard' && card.classList.contains('editing')) {
                 const nextGuard = document.getElementById('nextGuard').textContent;
                 const select = document.getElementById('nextGuardSelect');
@@ -404,57 +503,52 @@
             const syncStatus = document.getElementById('syncStatus');
             
             syncStatus.textContent = "Guardando cambios...";
-            syncStatus.style.color = "#f39c12";
+            syncStatus.style.color = "#fd7e14";
             
             if (isCurrentWeek) {
-                // Preparar datos semana actual
                 const weekData = {
                     ilt: document.getElementById('currentIltInput').value,
                     stations: document.getElementById('currentStationsInput').value,
                     guard: document.getElementById('currentGuardSelect').value
                 };
                 
-                // Actualizar interfaz
                 document.getElementById('currentIlt').textContent = weekData.ilt;
                 document.getElementById('currentStations').textContent = weekData.stations;
                 document.getElementById('currentGuard').textContent = weekData.guard;
                 
-                // Guardar en Firebase
                 database.ref('weeks/current').set(weekData)
                     .then(() => {
-                        syncStatus.textContent = "Cambios guardados: " + new Date().toLocaleTimeString();
-                        syncStatus.style.color = "#2ecc71";
+                        const now = new Date();
+                        syncStatus.innerHTML = `Última actualización: <strong>${formatFullDate(now)}</strong>`;
+                        syncStatus.style.color = "#28a745";
                     })
                     .catch((error) => {
                         syncStatus.textContent = "Error al guardar: " + error.message;
-                        syncStatus.style.color = "#e74c3c";
+                        syncStatus.style.color = "#dc3545";
                     });
             } else {
-                // Preparar datos próxima semana
                 const weekData = {
                     ilt: document.getElementById('nextIltInput').value,
                     stations: document.getElementById('nextStationsInput').value,
                     guard: document.getElementById('nextGuardSelect').value
                 };
                 
-                // Actualizar interfaz
                 document.getElementById('nextIlt').textContent = weekData.ilt;
                 document.getElementById('nextStations').textContent = weekData.stations;
                 document.getElementById('nextGuard').textContent = weekData.guard;
                 
-                // Guardar en Firebase
                 database.ref('weeks/next').set(weekData)
                     .then(() => {
-                        syncStatus.textContent = "Última actualización: " + new Date().toLocaleTimeString();
-                        syncStatus.style.color = "#2ecc71";
+                        const now = new Date();
+                        syncStatus.innerHTML = `Última actualización: <strong>${formatFullDate(now)}</strong>`;
+                        syncStatus.style.color = "#28a745";
                     })
                     .catch((error) => {
                         syncStatus.textContent = "Error al guardar: " + error.message;
-                        syncStatus.style.color = "#e74c3c";
+                        syncStatus.style.color = "#dc3545";
                     });
             }
             
-            // Salir del modo edición
             card.classList.remove('editing');
         }
     </script>
