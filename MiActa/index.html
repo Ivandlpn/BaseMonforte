@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Semanas</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #2ecc71;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 20px;
+            color: var(--dark-color);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--dark-color);
+            margin-bottom: 30px;
+        }
+        
+        .week-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            width: 100%;
+            max-width: 400px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            margin: 0;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        .week-range {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .card-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+        }
+        
+        .edit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .edit-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .save-btn {
+            background-color: var(--success-color);
+            display: none;
+        }
+        
+        .data-item {
+            margin-bottom: 15px;
+        }
+        
+        .data-label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .data-value {
+            padding: 8px;
+            background-color: var(--light-color);
+            border-radius: 5px;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+        
+        .data-input {
+            display: none;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+        
+        .data-select {
+            display: none;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            background-color: white;
+        }
+        
+        .editing .data-value {
+            display: none;
+        }
+        
+        .editing .data-input, .editing .data-select {
+            display: block;
+        }
+        
+        .editing .edit-btn {
+            display: none;
+        }
+        
+        .editing .save-btn {
+            display: block;
+        }
+        
+        .current-week {
+            border-top: 4px solid var(--primary-color);
+        }
+        
+        .next-week {
+            border-top: 4px solid var(--success-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Control de Semanas</h1>
+        
+        <div class="week-cards">
+            <!-- Tarjeta Semana Actual -->
+            <div class="card current-week" id="currentWeekCard">
+                <div class="card-header">
+                    <h2 class="card-title">Semana <span id="currentWeekNumber">16</span></h2>
+                    <div class="week-range" id="currentWeekRange"></div>
+                </div>
+                
+                <div class="data-item">
+                    <span class="data-label">Nº Acta ILT</span>
+                    <span class="data-value" id="currentIlt">125</span>
+                    <input type="text" class="data-input" id="currentIltInput" value="125">
+                </div>
+                
+                <div class="data-item">
+                    <span class="data-label">Nº Acta Estaciones</span>
+                    <span class="data-value" id="currentStations">87</span>
+                    <input type="text" class="data-input" id="currentStationsInput" value="87">
+                </div>
+                
+                <div class="data-item">
+                    <span class="data-label">Guardia</span>
+                    <span class="data-value" id="currentGuard">Juan Pérez</span>
+                    <select class="data-select" id="currentGuardSelect">
+                        <option value="Ana">Ana</option>
+                        <option value="Ernesto">Ernesto</option>
+                        <option value="Raúl">Raúl</option>
+                        <option value="Edu">Edu</option>
+                        <option value="Manuel">Manuel</option>
+                        <option value="Pepe">Pepe</option>
+                        <option value="Iván">Iván</option>
+                    </select>
+                </div>
+                
+                <div class="card-actions">
+                    <button class="edit-btn" onclick="toggleEdit('currentWeekCard')">Editar</button>
+                    <button class="edit-btn save-btn" onclick="saveData('currentWeekCard')">Guardar</button>
+                </div>
+            </div>
+            
+            <!-- Tarjeta Próxima Semana -->
+            <div class="card next-week" id="nextWeekCard">
+                <div class="card-header">
+                    <h2 class="card-title">Semana <span id="nextWeekNumber">17</span></h2>
+                    <div class="week-range" id="nextWeekRange"></div>
+                </div>
+                
+                <div class="data-item">
+                    <span class="data-label">Nº Acta ILT</span>
+                    <span class="data-value" id="nextIlt">-</span>
+                    <input type="text" class="data-input" id="nextIltInput" value="">
+                </div>
+                
+                <div class="data-item">
+                    <span class="data-label">Nº Acta Estaciones</span>
+                    <span class="data-value" id="nextStations">-</span>
+                    <input type="text" class="data-input" id="nextStationsInput" value="">
+                </div>
+                
+                <div class="data-item">
+                    <span class="data-label">Guardia</span>
+                    <span class="data-value" id="nextGuard">-</span>
+                    <select class="data-select" id="nextGuardSelect">
+                        <option value="">Seleccionar...</option>
+                        <option value="Ana">Ana</option>
+                        <option value="Ernesto">Ernesto</option>
+                        <option value="Raúl">Raúl</option>
+                        <option value="Edu">Edu</option>
+                        <option value="Manuel">Manuel</option>
+                        <option value="Pepe">Pepe</option>
+                        <option value="Iván">Iván</option>
+                    </select>
+                </div>
+                
+                <div class="card-actions">
+                    <button class="edit-btn" onclick="toggleEdit('nextWeekCard')">Editar</button>
+                    <button class="edit-btn save-btn" onclick="saveData('nextWeekCard')">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lista de personas de guardia
+        const guardias = ['Ana', 'Ernesto', 'Raúl', 'Edu', 'Manuel', 'Pepe', 'Iván'];
+        
+        // Función para obtener el número de semana actual y rango de fechas
+        function getWeekInfo(weekOffset = 0) {
+            const now = new Date();
+            const date = new Date(now);
+            
+            // Ajustar para la semana actual o próxima
+            if (weekOffset > 0) {
+                date.setDate(date.getDate() + 7 * weekOffset);
+            }
+            
+            // Calcular el lunes de la semana
+            const day = date.getDay();
+            const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Ajuste cuando es domingo
+            const monday = new Date(date.setDate(diff));
+            
+            // Calcular el domingo de la semana
+            const sunday = new Date(monday);
+            sunday.setDate(monday.getDate() + 6);
+            
+            // Formatear fechas
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            const mondayStr = monday.toLocaleDateString('es-ES', options);
+            const sundayStr = sunday.toLocaleDateString('es-ES', options);
+            
+            // Calcular número de semana ISO
+            const jan1 = new Date(monday.getFullYear(), 0, 1);
+            const days = Math.floor((monday - jan1) / (24 * 60 * 60 * 1000));
+            const weekNumber = Math.ceil((days + jan1.getDay() + 1) / 7);
+            
+            return {
+                weekNumber,
+                range: `Del ${mondayStr} al ${sundayStr}`,
+                monday,
+                sunday
+            };
+        }
+        
+        // Actualizar números de semana y rangos al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentWeek = getWeekInfo();
+            const nextWeek = getWeekInfo(1);
+            
+            document.getElementById('currentWeekNumber').textContent = currentWeek.weekNumber;
+            document.getElementById('currentWeekRange').textContent = currentWeek.range;
+            
+            document.getElementById('nextWeekNumber').textContent = nextWeek.weekNumber;
+            document.getElementById('nextWeekRange').textContent = nextWeek.range;
+            
+            // Aquí podrías cargar datos guardados de localStorage
+            loadSavedData();
+        });
+        
+        // Alternar modo edición
+        function toggleEdit(cardId) {
+            const card = document.getElementById(cardId);
+            card.classList.toggle('editing');
+            
+            // Si estamos editando la tarjeta actual, seleccionar el valor actual en el select
+            if (cardId === 'currentWeekCard' && card.classList.contains('editing')) {
+                const currentGuard = document.getElementById('currentGuard').textContent;
+                const select = document.getElementById('currentGuardSelect');
+                select.value = currentGuard;
+            }
+            
+            // Lo mismo para la próxima semana
+            if (cardId === 'nextWeekCard' && card.classList.contains('editing')) {
+                const nextGuard = document.getElementById('nextGuard').textContent;
+                const select = document.getElementById('nextGuardSelect');
+                select.value = nextGuard;
+            }
+        }
+        
+        // Guardar datos
+        function saveData(cardId) {
+            const card = document.getElementById(cardId);
+            const isCurrentWeek = cardId === 'currentWeekCard';
+            
+            if (isCurrentWeek) {
+                // Guardar datos semana actual
+                const ilt = document.getElementById('currentIltInput').value;
+                const stations = document.getElementById('currentStationsInput').value;
+                const guard = document.getElementById('currentGuardSelect').value;
+                
+                document.getElementById('currentIlt').textContent = ilt;
+                document.getElementById('currentStations').textContent = stations;
+                document.getElementById('currentGuard').textContent = guard;
+                
+                // Guardar en localStorage
+                localStorage.setItem('currentWeekData', JSON.stringify({
+                    ilt, stations, guard
+                }));
+            } else {
+                // Guardar datos próxima semana
+                const ilt = document.getElementById('nextIltInput').value;
+                const stations = document.getElementById('nextStationsInput').value;
+                const guard = document.getElementById('nextGuardSelect').value;
+                
+                document.getElementById('nextIlt').textContent = ilt;
+                document.getElementById('nextStations').textContent = stations;
+                document.getElementById('nextGuard').textContent = guard;
+                
+                // Guardar en localStorage
+                localStorage.setItem('nextWeekData', JSON.stringify({
+                    ilt, stations, guard
+                }));
+            }
+            
+            // Salir del modo edición
+            card.classList.remove('editing');
+        }
+        
+        // Cargar datos guardados
+        function loadSavedData() {
+            // Cargar datos semana actual
+            const currentData = localStorage.getItem('currentWeekData');
+            if (currentData) {
+                const { ilt, stations, guard } = JSON.parse(currentData);
+                document.getElementById('currentIlt').textContent = ilt;
+                document.getElementById('currentStations').textContent = stations;
+                document.getElementById('currentGuard').textContent = guard;
+                document.getElementById('currentIltInput').value = ilt;
+                document.getElementById('currentStationsInput').value = stations;
+                document.getElementById('currentGuardSelect').value = guard;
+            }
+            
+            // Cargar datos próxima semana
+            const nextData = localStorage.getItem('nextWeekData');
+            if (nextData) {
+                const { ilt, stations, guard } = JSON.parse(nextData);
+                document.getElementById('nextIlt').textContent = ilt;
+                document.getElementById('nextStations').textContent = stations;
+                document.getElementById('nextGuard').textContent = guard;
+                document.getElementById('nextIltInput').value = ilt;
+                document.getElementById('nextStationsInput').value = stations;
+                document.getElementById('nextGuardSelect').value = guard;
+            }
+        }
+    </script>
+</body>
+</html>
