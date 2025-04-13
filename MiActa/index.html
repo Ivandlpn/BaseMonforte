@@ -278,12 +278,13 @@
             display: none;
         }
 
+        /* Estas clases ya no son tan relevantes para el color, pero se pueden mantener para estilos generales */
         .current-week {
-            border-top: 5px solid var(--primary-color);
+            /* border-top: 5px solid var(--primary-color); */
         }
 
         .next-week {
-            border-top: 5px solid var(--secondary-color);
+             /* border-top: 5px solid var(--secondary-color); */
         }
 
         .sync-status {
@@ -378,6 +379,7 @@
 
         <div class="week-cards">
             <!-- Tarjeta Semana Actual -->
+            <!-- Los atributos data-year y data-week se añadirán dinámicamente con JS -->
             <div class="card current-week" id="currentWeekCard">
                 <div class="card-header">
                     <h2 class="card-title">Semana Actual
@@ -413,6 +415,7 @@
                                 <option value="Manuel">Manuel</option>
                                 <option value="Pepe">Pepe</option>
                                 <option value="Iván">Iván</option>
+                                <!-- Puedes añadir más técnicos aquí si es necesario -->
                             </select>
                         </div>
                     </div>
@@ -440,6 +443,7 @@
                 </div>
             </div>
             <!-- Tarjeta Próxima Semana -->
+            <!-- Los atributos data-year y data-week se añadirán dinámicamente con JS -->
             <div class="card next-week" id="nextWeekCard">
                  <div class="card-header">
                     <h2 class="card-title">Próxima Semana
@@ -475,6 +479,7 @@
                                 <option value="Manuel">Manuel</option>
                                 <option value="Pepe">Pepe</option>
                                 <option value="Iván">Iván</option>
+                                <!-- Puedes añadir más técnicos aquí si es necesario -->
                             </select>
                         </div>
                     </div>
@@ -516,7 +521,7 @@
     <script>
         // Configuración de Firebase
         const firebaseConfig = {
-            apiKey: "AIzaSyD034fyj8J0vxxwaU5X5TTPtZK8W2jeKKw", // ¡Considera proteger esto!
+            apiKey: "AIzaSyD034fyj8J0vxxwaU5X5TTPtZK8W2jeKKw", // ¡Considera proteger esto! ¡ASEGURA TUS REGLAS DE FIREBASE!
             authDomain: "actas-36978.firebaseapp.com",
             databaseURL: "https://actas-36978-default-rtdb.firebaseio.com",
             projectId: "actas-36978",
@@ -529,6 +534,7 @@
         // Inicializar Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+        const db = firebase.database(); // Alias para conveniencia
 
         // --- FUNCIONES HELPER ---
         function formatFullDate(date) {
@@ -539,42 +545,37 @@
             return new Intl.DateTimeFormat('es-ES', options).format(date);
         }
 
-        // --- VERSIÓN CORREGIDA DEFINITIVA ---
-        // Función para obtener el número de semana y rango de fechas (ISO 8601)
-        function getWeekInfo(weekOffset = 0) {
+        // Función para obtener año, número de semana y rango (ISO 8601)
+        function getWeekInfoWithYear(weekOffset = 0) {
             const now = new Date();
             const date = new Date(now); // Usar una copia
-
-            // Ajustar a la fecha base según el offset
             date.setDate(date.getDate() + (weekOffset * 7));
 
-            // --- Calcular Lunes y Domingo de la semana ---
+            // Calcular Lunes y Domingo de la semana (para el rango)
             const currentDayOfWeek = date.getDay(); // 0=Domingo, 1=Lunes,... 6=Sábado
             const diffToMonday = date.getDate() - currentDayOfWeek + (currentDayOfWeek === 0 ? -6 : 1);
             const monday = new Date(date.getFullYear(), date.getMonth(), diffToMonday);
             const sunday = new Date(monday);
             sunday.setDate(monday.getDate() + 6);
 
-            // --- Calcular Número de Semana ISO 8601 (Método Fiable) ---
-            // Crea una copia de la fecha para el cálculo de la semana (importante usar UTC para evitar DST)
+            // Calcular Número de Semana ISO 8601 y Año ISO (Método Fiable usando UTC)
             const targetDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-            // Encuentra el Jueves más cercano (ISO 8601 se basa en el Jueves)
             // Día de la semana ISO (Lunes=1, ..., Domingo=7)
             const dayOfWeekISO = targetDate.getUTCDay() === 0 ? 7 : targetDate.getUTCDay();
-            // Retrocede al Lunes y avanza 3 días para llegar al Jueves
+            // Ir al Jueves de esa semana
             targetDate.setUTCDate(targetDate.getUTCDate() + 4 - dayOfWeekISO);
-            // Obtiene el primer día del año
+            // Obtener el primer día del año ISO (puede ser del año anterior)
             const yearStart = new Date(Date.UTC(targetDate.getUTCFullYear(), 0, 1));
-            // Calcula la diferencia en días y divide por 7. Suma 1.
+            // Calcular la diferencia en días y dividir por 7. Suma 1.
             const weekNumber = Math.ceil((((targetDate - yearStart) / 86400000) + 1) / 7);
+            const year = targetDate.getUTCFullYear(); // Este es el año ISO correcto para la semana
 
-
-            // --- Formatear el Rango ---
+            // Formatear el Rango
             let rangeStr;
             const optionsDayMonth = { day: 'numeric', month: 'long' };
             const mondayStr = monday.toLocaleDateString('es-ES', optionsDayMonth);
             const sundayStr = sunday.toLocaleDateString('es-ES', optionsDayMonth);
-            const yearStr = monday.getFullYear();
+            const yearStr = monday.getFullYear(); // Usar año del lunes para el string de rango
 
             if (monday.getMonth() === sunday.getMonth()) {
                 rangeStr = `Del ${monday.getDate()} al ${sundayStr} de ${yearStr}`;
@@ -586,110 +587,163 @@
                 }
             }
 
-            return { weekNumber, range: rangeStr };
+            return { year, weekNumber, range: rangeStr };
         }
-        // --- FIN VERSIÓN CORREGIDA DEFINITIVA ---
 
-        // --- LÓGICA DE LA APLICACIÓN ---
-        function loadDataFromFirebaseOriginal() {
+
+        // --- LÓGICA DE LA APLICACIÓN (MODIFICADA) ---
+
+        // Nueva función para cargar datos por semana específica
+        function loadWeekData() {
             const syncStatus = document.getElementById('syncStatus');
-            const weeksRef = database.ref('weeks');
+            syncStatus.textContent = "Sincronizando datos...";
+            syncStatus.style.color = "#6c757d"; // Reset color
 
-            weeksRef.on('value', (snapshot) => {
-                const data = snapshot.val();
-                const now = new Date();
+            const currentWeekInfo = getWeekInfoWithYear(0);
+            const nextWeekInfo = getWeekInfoWithYear(1);
 
-                if (data) {
-                    ['current', 'next'].forEach(prefix => {
-                        const weekData = data[prefix] || {};
-                        document.getElementById(`${prefix}Ilt`).textContent = weekData.ilt || '-';
-                        document.getElementById(`${prefix}Stations`).textContent = weekData.stations || '-';
-                        document.getElementById(`${prefix}Guard`).textContent = weekData.guard || '-';
-                        document.getElementById(`${prefix}IltInput`).value = weekData.ilt || '';
-                        document.getElementById(`${prefix}StationsInput`).value = weekData.stations || '';
-                        document.getElementById(`${prefix}GuardSelect`).value = weekData.guard || '';
-                    });
+            // Guardar info de semana en las tarjetas para usarla al guardar
+            const currentCard = document.getElementById('currentWeekCard');
+            const nextCard = document.getElementById('nextWeekCard');
+            currentCard.dataset.year = currentWeekInfo.year;
+            currentCard.dataset.week = currentWeekInfo.weekNumber;
+            nextCard.dataset.year = nextWeekInfo.year;
+            nextCard.dataset.week = nextWeekInfo.weekNumber;
 
-                    syncStatus.innerHTML = `Última sincronización: <strong>${formatFullDate(now)}</strong>`;
-                    syncStatus.style.color = "#28a745";
-                } else {
-                    syncStatus.textContent = "No hay datos guardados en 'weeks'";
-                    syncStatus.style.color = "#dc3545";
-                     ['current', 'next'].forEach(prefix => {
-                        document.getElementById(`${prefix}Ilt`).textContent = '-';
-                        document.getElementById(`${prefix}Stations`).textContent = '-';
-                        document.getElementById(`${prefix}Guard`).textContent = '-';
-                        document.getElementById(`${prefix}IltInput`).value = '';
-                        document.getElementById(`${prefix}StationsInput`).value = '';
-                        document.getElementById(`${prefix}GuardSelect`).value = '';
-                    });
-                }
+            // Actualizar UI con números/rangos de semana
+            document.getElementById('currentWeekNumber').textContent = `Semana ${currentWeekInfo.weekNumber}`;
+            document.getElementById('currentWeekRange').textContent = currentWeekInfo.range;
+            document.getElementById('nextWeekNumber').textContent = `Semana ${nextWeekInfo.weekNumber}`;
+            document.getElementById('nextWeekRange').textContent = nextWeekInfo.range;
+
+            // Rutas dinámicas en Firebase
+            const currentWeekPath = `weekData/${currentWeekInfo.year}/${currentWeekInfo.weekNumber}`;
+            const nextWeekPath = `weekData/${nextWeekInfo.year}/${nextWeekInfo.weekNumber}`;
+
+            // Usar Promise.all para cargar ambas semanas de forma asíncrona
+            Promise.all([
+                db.ref(currentWeekPath).get(),
+                db.ref(nextWeekPath).get()
+            ]).then(([currentSnapshot, nextSnapshot]) => {
+                const currentData = currentSnapshot.val() || {}; // Usar objeto vacío si no existe
+                const nextData = nextSnapshot.val() || {};
+
+                // Actualizar UI Semana Actual
+                updateUICard('current', currentData);
+
+                // Actualizar UI Próxima Semana
+                updateUICard('next', nextData);
+
+                syncStatus.innerHTML = `Datos cargados correctamente. Última sinc: <strong>${formatFullDate(new Date())}</strong>`;
+                syncStatus.style.color = "#28a745";
                 document.querySelectorAll('.share-btn').forEach(btn => btn.disabled = false);
 
-            }, (error) => {
-                console.error("Error al leer datos de Firebase:", error);
+            }).catch((error) => {
+                console.error("Error al leer datos específicos de semana:", error);
                 syncStatus.textContent = "Error al sincronizar: " + error.message;
                 syncStatus.style.color = "#dc3545";
-                 document.querySelectorAll('.share-btn').forEach(btn => btn.disabled = true);
+                // Limpiar UI si hay error
+                updateUICard('current', {});
+                updateUICard('next', {});
+                document.querySelectorAll('.share-btn').forEach(btn => btn.disabled = true);
             });
         }
+
+        // Función auxiliar para actualizar la UI de una tarjeta
+        function updateUICard(prefix, weekData) {
+            document.getElementById(`${prefix}Ilt`).textContent = weekData.ilt || '-';
+            document.getElementById(`${prefix}Stations`).textContent = weekData.stations || '-';
+            document.getElementById(`${prefix}Guard`).textContent = weekData.guard || '-';
+            // Actualizar también los inputs/selects para cuando se edite
+            document.getElementById(`${prefix}IltInput`).value = weekData.ilt || '';
+            document.getElementById(`${prefix}StationsInput`).value = weekData.stations || '';
+            // Asegurarse de que el valor exista en el select o ponerlo vacío
+            const selectElement = document.getElementById(`${prefix}GuardSelect`);
+            const guardValue = weekData.guard || '';
+            selectElement.value = Array.from(selectElement.options).some(opt => opt.value === guardValue) ? guardValue : "";
+        }
+
 
         function toggleEdit(cardId) {
             const card = document.getElementById(cardId);
             const isEditing = card.classList.contains('editing');
 
             if (!isEditing) {
+                 // Pre-rellenar select al entrar en modo edición (si hay valor)
                  const isCurrentWeek = cardId === 'currentWeekCard';
                  const guardValueId = isCurrentWeek ? 'currentGuard' : 'nextGuard';
                  const guardSelectId = isCurrentWeek ? 'currentGuardSelect' : 'nextGuardSelect';
                  const currentGuardValue = document.getElementById(guardValueId).textContent;
                  const selectElement = document.getElementById(guardSelectId);
-                 let valueExists = Array.from(selectElement.options).some(opt => opt.value === currentGuardValue);
-                 selectElement.value = (valueExists && currentGuardValue !== '-') ? currentGuardValue : "";
+                 // Usar el valor actual si existe en las opciones y no es '-'
+                 selectElement.value = (currentGuardValue !== '-' && Array.from(selectElement.options).some(opt => opt.value === currentGuardValue))
+                                       ? currentGuardValue
+                                       : "";
+                 // Pre-rellenar inputs también
+                 document.getElementById(isCurrentWeek ? 'currentIltInput' : 'nextIltInput').value = document.getElementById(isCurrentWeek ? 'currentIlt' : 'nextIlt').textContent.replace('-', '').trim();
+                 document.getElementById(isCurrentWeek ? 'currentStationsInput' : 'nextStationsInput').value = document.getElementById(isCurrentWeek ? 'currentStations' : 'nextStations').textContent.replace('-', '').trim();
+
             }
             card.classList.toggle('editing');
         }
 
+        // Función de guardado modificada
         function saveData(cardId) {
             const card = document.getElementById(cardId);
-            const isCurrentWeek = cardId === 'currentWeekCard';
+            const year = card.dataset.year;
+            const week = card.dataset.week;
+
+            if (!year || !week) {
+                console.error("Error: No se pudo determinar el año/semana para guardar.");
+                alert("Error interno: No se pudo identificar la semana para guardar los datos.");
+                return;
+            }
+
             const syncStatus = document.getElementById('syncStatus');
-
             syncStatus.textContent = "Guardando cambios...";
-            syncStatus.style.color = "#fd7e14";
+            syncStatus.style.color = "#fd7e14"; // Naranja indicando proceso
 
+            const isCurrentWeek = cardId === 'currentWeekCard';
             const prefix = isCurrentWeek ? 'current' : 'next';
-            const iltInput = document.getElementById(`${prefix}IltInput`);
-            const stationsInput = document.getElementById(`${prefix}StationsInput`);
-            const guardSelect = document.getElementById(`${prefix}GuardSelect`);
-            const iltValueSpan = document.getElementById(`${prefix}Ilt`);
-            const stationsValueSpan = document.getElementById(`${prefix}Stations`);
-            const guardValueSpan = document.getElementById(`${prefix}Guard`);
 
+            // Obtener datos de los inputs/select
+            const iltValue = document.getElementById(`${prefix}IltInput`).value.trim();
+            const stationsValue = document.getElementById(`${prefix}StationsInput`).value.trim();
+            const guardValue = document.getElementById(`${prefix}GuardSelect`).value;
+
+            // Crear objeto de datos a guardar
             const weekData = {
-                ilt: iltInput.value.trim(),
-                stations: stationsInput.value.trim(),
-                guard: guardSelect.value
+                ilt: iltValue,
+                stations: stationsValue,
+                guard: guardValue
+                // Opcional: puedes volver a guardar el rango si quieres
+                // range: document.getElementById(`${prefix}WeekRange`).textContent
             };
 
-            iltValueSpan.textContent = weekData.ilt || '-';
-            stationsValueSpan.textContent = weekData.stations || '-';
-            guardValueSpan.textContent = weekData.guard || '-';
+            // Actualizar UI inmediatamente (optimista)
+            document.getElementById(`${prefix}Ilt`).textContent = iltValue || '-';
+            document.getElementById(`${prefix}Stations`).textContent = stationsValue || '-';
+            document.getElementById(`${prefix}Guard`).textContent = guardValue || '-';
 
-            const firebasePath = `weeks/${prefix}`;
-            database.ref(firebasePath).set(weekData)
+            // Ruta dinámica para guardar en Firebase
+            const firebasePath = `weekData/${year}/${week}`;
+            db.ref(firebasePath).set(weekData) // Usar set para sobrescribir/crear
                 .then(() => {
                     syncStatus.textContent = "Cambios guardados correctamente.";
-                    syncStatus.style.color = "#28a745";
+                    syncStatus.style.color = "#28a745"; // Verde éxito
+                    console.log(`Datos guardados en ${firebasePath}:`, weekData);
                 })
                 .catch((error) => {
-                    console.error("Error al guardar datos:", error);
+                    console.error(`Error al guardar datos en ${firebasePath}:`, error);
                     syncStatus.textContent = "Error al guardar: " + error.message;
-                    syncStatus.style.color = "#dc3545";
+                    syncStatus.style.color = "#dc3545"; // Rojo error
+                    // Considerar revertir la UI si falla el guardado
+                    // loadWeekData(); // Podrías recargar los datos desde FB para asegurar consistencia
                 });
 
             card.classList.remove('editing');
         }
+
 
         async function shareWeekData(cardId) {
             const isCurrentWeek = cardId === 'currentWeekCard';
@@ -697,8 +751,8 @@
             const shareButton = cardElement.querySelector('.share-btn');
 
             const prefix = isCurrentWeek ? 'current' : 'next';
-            const weekNumberText = document.getElementById(`${prefix}WeekNumber`).textContent.trim();
-            const weekRangeText = document.getElementById(`${prefix}WeekRange`).textContent.trim();
+            const weekNumberText = document.getElementById(`${prefix}WeekNumber`).textContent.trim(); // Ej: "Semana 15"
+            const weekRangeText = document.getElementById(`${prefix}WeekRange`).textContent.trim(); // Ej: "Del 7 al 13 de abril..."
             const iltValue = document.getElementById(`${prefix}Ilt`).textContent.trim();
             const stationsValue = document.getElementById(`${prefix}Stations`).textContent.trim();
             const guardValue = document.getElementById(`${prefix}Guard`).textContent.trim();
@@ -731,11 +785,11 @@
                 try {
                     await navigator.clipboard.writeText(formattedText);
                     console.log('Texto copiado al portapapeles');
-                    const originalHTML = shareButton.innerHTML;
+                    const originalHTML = shareButton.innerHTML; // Guardar el contenido original (con icono)
                     shareButton.textContent = '¡Copiado!';
                     shareButton.classList.add('copied-feedback');
                     setTimeout(() => {
-                        shareButton.innerHTML = originalHTML;
+                        shareButton.innerHTML = originalHTML; // Restaurar contenido original
                         shareButton.classList.remove('copied-feedback');
                     }, 2000);
                 } catch (err) {
@@ -750,19 +804,14 @@
 
         // --- INICIALIZACIÓN ---
         document.addEventListener('DOMContentLoaded', function() {
-            // Calcular y mostrar info de semanas
-            const currentWeekInfo = getWeekInfo();
-            const nextWeekInfo = getWeekInfo(1);
-            document.getElementById('currentWeekNumber').textContent = `Semana ${currentWeekInfo.weekNumber}`;
-            document.getElementById('currentWeekRange').textContent = currentWeekInfo.range;
-            document.getElementById('nextWeekNumber').textContent = `Semana ${nextWeekInfo.weekNumber}`;
-            document.getElementById('nextWeekRange').textContent = nextWeekInfo.range;
-
-            // Deshabilitar botones de compartir inicialmente
+            // Deshabilitar botones de compartir inicialmente hasta que carguen los datos
             document.querySelectorAll('.share-btn').forEach(btn => btn.disabled = true);
 
-            // Cargar datos iniciales de Firebase
-            loadDataFromFirebaseOriginal();
+            // Cargar datos iniciales de Firebase usando la nueva lógica por semana
+            loadWeekData();
+
+            // Ya no se necesita calcular/mostrar semana/rango aquí,
+            // loadWeekData() lo hace al inicio.
         });
 
     </script>
