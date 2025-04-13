@@ -548,6 +548,7 @@
         // Función para obtener año, número de semana y rango (ISO 8601)
         function getWeekInfoWithYear(weekOffset = 0) {
             const now = new Date();
+            //const now = new Date('2025-04-14T10:00:00'); // ¡Fuerza la fecha a Lunes 14 de Abril!
             const date = new Date(now); // Usar una copia
             date.setDate(date.getDate() + (weekOffset * 7));
 
