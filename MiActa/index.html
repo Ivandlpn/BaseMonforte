@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GuardiActas - BM Monforte</title>
+    <title>GuardiActas</title>
     <link rel="icon" href="favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="favicon.png">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -763,8 +763,8 @@
             const guardValue = document.getElementById(`${prefix}Guard`).textContent.trim();
             const weekTitleText = isCurrentWeek ? "Semana Actual" : "Próxima Semana";
 
-            const formattedText = `*GuardiActas - ${weekTitleText} (${weekNumberText})*
-🗓️ Rango: ${weekRangeText}
+            const formattedText = `*- ${weekTitleText} (${weekNumberText})*
+🗓️ Fecha: ${weekRangeText}
 🚄 Nº Acta ILT: ${iltValue}
 🚆 Nº Acta Estaciones: ${stationsValue}
 📞 Técnico Guardia: ${guardValue}`;
