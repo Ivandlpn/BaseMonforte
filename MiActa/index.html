@@ -511,9 +511,7 @@
                 </div>
             </div>
         </div>
-        <div class="sync-status" id="syncStatus">
-            Sincronizando datos...
-        </div>
+        <div class="sync-status" id="syncStatus"></div>
         <footer class="footer">
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/Logo-Ineco.png"
                  alt="Logo INECO"
@@ -601,7 +599,7 @@
         // Nueva función para cargar datos por semana específica
         function loadWeekData() {
             const syncStatus = document.getElementById('syncStatus');
-            syncStatus.textContent = "Sincronizando datos...";
+            // No mostrar mensaje inicial al cargar
             syncStatus.style.color = "#6c757d"; // Reset color
 
             const currentWeekInfo = getWeekInfoWithYear(0);
@@ -630,7 +628,7 @@
                 db.ref(currentWeekPath).get(),
                 db.ref(nextWeekPath).get()
             ]).then(([currentSnapshot, nextSnapshot]) => {
-                const currentData = currentSnapshot.val() || {}; // Usar objeto vacío si no existe
+                const currentData = currentSnapshot.val() || {};
                 const nextData = nextSnapshot.val() || {};
 
                 // Actualizar UI Semana Actual
@@ -639,8 +637,14 @@
                 // Actualizar UI Próxima Semana
                 updateUICard('next', nextData);
 
-                syncStatus.innerHTML = `Datos cargados correctamente. Última sinc: <strong>${formatFullDate(new Date())}</strong>`;
-                syncStatus.style.color = "#28a745";
+                // Mostrar fecha de última actualización al cargar (priorizando semana actual)
+                if (currentData.lastUpdated) {
+                    const lastUpdateDate = new Date(currentData.lastUpdated);
+                    syncStatus.innerHTML = `Últimos datos cargados el ${formatFullDate(lastUpdateDate)}`;
+                    syncStatus.style.color = "#6c757d"; // Color gris estándar
+                } else {
+                     syncStatus.textContent = ''; // Vacío si no hay fecha guardada
+                }
                 document.querySelectorAll('.share-btn').forEach(btn => btn.disabled = false);
 
             }).catch((error) => {
@@ -720,9 +724,8 @@
             const weekData = {
                 ilt: iltValue,
                 stations: stationsValue,
-                guard: guardValue
-                // Opcional: puedes volver a guardar el rango si quieres
-                // range: document.getElementById(`${prefix}WeekRange`).textContent
+                guard: guardValue,
+                lastUpdated: firebase.database.ServerValue.TIMESTAMP // Añadir marca de tiempo del servidor
             };
 
             // Actualizar UI inmediatamente (optimista)
@@ -734,7 +737,7 @@
             const firebasePath = `weekData/${year}/${week}`;
             db.ref(firebasePath).set(weekData) // Usar set para sobrescribir/crear
                 .then(() => {
-                    syncStatus.textContent = "Cambios guardados correctamente.";
+                    syncStatus.textContent = "Datos cargados correctamente."; // Mensaje solicitado por el usuario al guardar
                     syncStatus.style.color = "#28a745"; // Verde éxito
                     console.log(`Datos guardados en ${firebasePath}:`, weekData);
                 })
