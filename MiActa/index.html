@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GuardiActas - BM Monforte</title>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -78,12 +82,12 @@
         .card {
             background-color: white; /* Fondo blanco sólido para las tarjetas */
             border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
             padding: 30px;
             width: 100%;
             max-width: 480px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid var(--border-color);
+            border: 2px solid var(--primary-color); /* Borde más visible */
             display: flex;
             flex-direction: column;
         }
@@ -280,11 +284,11 @@
 
         /* Estas clases ya no son tan relevantes para el color, pero se pueden mantener para estilos generales */
         .current-week {
-            /* border-top: 5px solid var(--primary-color); */
+            background-color: rgb(200, 220, 255); /* Azul tenue */
         }
 
         .next-week {
-             /* border-top: 5px solid var(--secondary-color); */
+             background-color: rgb(255, 200, 200); /* Rojo tenue */
         }
 
         .sync-status {
