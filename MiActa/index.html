@@ -362,8 +362,11 @@
             padding: 20px 0;
             border-top: 1px solid var(--border-color);
              /* Fondo para el footer para mejor legibilidad */
-            background-color: rgba(248, 249, 250, 0.9); /* Igual que el sync status o un poco más opaco */
-            border-radius: 0 0 8px 8px; /* Redondear esquinas inferiores si el contenedor está redondeado */
+            background-color: rgba(248, 249, 250, 0.9);
+            border-radius: 0 0 8px 8px;
+            display: flex; /* Usar flexbox para alinear items */
+            flex-direction: column; /* Apilar elementos verticalmente */
+            align-items: center; /* Centrar elementos horizontalmente */
         }
         .footer-logo {
             height: 50px;
@@ -373,13 +376,31 @@
             color: var(--text-color);
             font-size: 0.9rem;
             margin-top: 10px;
+            margin-bottom: 15px; /* Añadir espacio antes del botón */
+        }
+        .pidame-btn {
+             background-color: #066337; /* Verde especificado */
+             margin-top: 10px;
+        }
+        .pidame-btn:hover {
+            background-color: #044a27; /* Verde más oscuro para hover */
+        }
+
+        .header-image {
+            display: block; /* Para poder centrar con margin auto */
+            width: 100%; /* Ocupa el ancho disponible */
+            max-width: 990px; /* Ancho máximo similar a dos tarjetas + gap (480*2 + 30) */
+            height: auto; /* Mantiene la proporción */
+            margin: 20px auto 30px; /* Centrado horizontal, margen superior e inferior */
+            border-radius: 8px; /* Opcional: redondear esquinas */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- ENCABEZADO DE TEXTO -->
-        <h1>GuardiActas <small>BM Monforte</small></h1>
+        <!-- ENCABEZADO CON IMAGEN -->
+        <img src="cabecera.png" alt="GuardiActas BM Monforte - Cabecera" class="header-image">
 
         <div class="week-cards">
             <!-- Tarjeta Semana Actual -->
@@ -517,6 +538,7 @@
                  alt="Logo INECO"
                  class="footer-logo">
             <div class="footer-text">Gestión de Actas y Guardias Semanales de la Técnica e IyV de la BM Monforte del Cid</div>
+            <button id="pidameBtn" class="edit-btn pidame-btn" title="Abrir PIDAME (start.php)">PIDAME</button>
         </footer>
     </div>
 
@@ -820,6 +842,17 @@
 
             // Ya no se necesita calcular/mostrar semana/rango aquí,
             // loadWeekData() lo hace al inicio.
+
+            // --- Funcionalidad Botón PIDAME ---
+            const pidameButton = document.getElementById('pidameBtn');
+            if (pidameButton) {
+                pidameButton.addEventListener('click', function() {
+                    // URL fija simple
+                    const pidameStartURL = 'http://pidame.adif/start.php?';
+                    console.log("Redirigiendo a PIDAME (start.php):", pidameStartURL); // Para depuración
+                    window.location.href = pidameStartURL;
+                });
+            }
         });
 
     </script>
