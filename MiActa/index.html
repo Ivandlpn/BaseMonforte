@@ -151,6 +151,9 @@
         .data-value-container {
             flex: 1;
             position: relative;
+            display: flex; /* Para alinear el valor/select y el botón */
+            align-items: center; /* Centrar verticalmente */
+            gap: 8px; /* Espacio entre valor/select y botón */
         }
 
         .data-value {
@@ -158,7 +161,8 @@
             padding: 8px 12px;
             background-color: var(--light-color);
             border-radius: 6px;
-            width: 100%;
+            /* width: 100%; */ /* Quitar width 100% para que el flex funcione */
+            flex-grow: 1; /* Hacer que ocupe el espacio disponible */
             border: 1px solid var(--border-color);
             font-size: 1.1rem;
             min-height: 24px;
@@ -170,7 +174,8 @@
         .data-input,
         .data-select {
             display: none;
-            width: 100%;
+            /* width: 100%; */ /* Quitar width 100% para que el flex funcione */
+            flex-grow: 1; /* Hacer que ocupe el espacio disponible */
             padding: 8px 12px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
@@ -280,6 +285,40 @@
         }
         .copied-feedback svg {
             display: none;
+        }
+
+        .share-guard-btn {
+            padding: 4px 6px; /* Más pequeño */
+            background-color: var(--share-btn-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex; /* Para alinear icono */
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0; /* Evitar que se encoja */
+            transition: background-color 0.3s;
+            line-height: 1; /* Ajustar altura */
+        }
+        .share-guard-btn svg {
+            width: 0.9em; /* Icono más pequeño */
+            height: 0.9em;
+            margin-right: 0; /* Sin margen si no hay texto */
+        }
+        .share-guard-btn:hover {
+            background-color: var(--share-btn-hover-color);
+        }
+        .share-guard-btn:disabled {
+            background-color: #adb5bd;
+            cursor: not-allowed;
+        }
+        .editing .share-guard-btn {
+            display: none; /* Ocultar en modo edición */
+        }
+        .share-guard-btn.copied-feedback {
+             background-color: var(--success-color) !important;
+             cursor: default !important;
         }
 
         /* Estas clases ya no son tan relevantes para el color, pero se pueden mantener para estilos generales */
@@ -506,6 +545,12 @@
                                 <option value="Iván">Iván</option>
                                 <!-- Puedes añadir más técnicos aquí si es necesario -->
                             </select>
+                            <!-- Nuevo botón de compartir para Técnico Guardia Próxima Semana -->
+                            <button class="share-guard-btn" id="shareNextGuardBtn" onclick="shareNextGuard(event)" title="Compartir Técnico Guardia Próxima Semana" disabled>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -538,7 +583,7 @@
                  alt="Logo INECO"
                  class="footer-logo">
             <div class="footer-text">Gestión de Actas y Guardias Semanales de la Técnica e IyV de la BM Monforte del Cid</div>
-            <button id="pidameBtn" class="edit-btn pidame-btn" title="Abrir PIDAME">PIDAME</button>
+            <button id="pidameBtn" class="edit-btn pidame-btn" title="Abrir PIDAME (start.php)">PIDAME</button>
         </footer>
     </div>
 
@@ -668,6 +713,7 @@
                      syncStatus.textContent = ''; // Vacío si no hay fecha guardada
                 }
                 document.querySelectorAll('.share-btn').forEach(btn => btn.disabled = false);
+                document.getElementById('shareNextGuardBtn').disabled = false; // Habilitar botón específico
 
             }).catch((error) => {
                 console.error("Error al leer datos específicos de semana:", error);
@@ -677,6 +723,7 @@
                 updateUICard('current', {});
                 updateUICard('next', {});
                 document.querySelectorAll('.share-btn').forEach(btn => btn.disabled = true);
+                document.getElementById('shareNextGuardBtn').disabled = true; // Deshabilitar botón específico
             });
         }
 
@@ -788,8 +835,8 @@
             const guardValue = document.getElementById(`${prefix}Guard`).textContent.trim();
             const weekTitleText = isCurrentWeek ? "Semana Actual" : "Próxima Semana";
 
-            const formattedText = `*${weekTitleText} (${weekNumberText})*
- _${weekRangeText}_
+            const formattedText = `*- ${weekTitleText} (${weekNumberText})*
+🗓️ Fecha: ${weekRangeText}
 🚄 Nº Acta ILT: ${iltValue}
 🚆 Nº Acta Estaciones: ${stationsValue}
 📞 Técnico Guardia: ${guardValue}`;
@@ -832,10 +879,68 @@
             }
         }
 
+        // Nueva función para compartir solo el técnico de guardia de la próxima semana
+        async function shareNextGuard(event) {
+            event.stopPropagation(); // Evitar que se active el toggleEdit si está cerca
+            const shareButton = document.getElementById('shareNextGuardBtn');
+            const guardValueElement = document.getElementById('nextGuard');
+            const guardValue = guardValueElement.textContent.trim();
+
+            if (!guardValue || guardValue === '-' || guardValue === 'Cargando...') {
+                alert("Aún no se ha cargado o asignado el técnico de guardia para la próxima semana.");
+                return;
+            }
+
+            // Obtener el número de semana del elemento HTML
+            const weekNumberElement = document.getElementById('nextWeekNumber');
+            const weekNumberText = weekNumberElement.textContent.trim(); // Ej: "Semana 16"
+
+            // Formatear el texto para compartir con negrita usando Markdown
+            const shareText = `Próxima Semana - *${weekNumberText}*\n📞 Técnico Guardia: ${guardValue}`;
+
+            const shareData = {
+                title: `GuardiActas - Técnico Guardia Próxima Semana`,
+                text: shareText,
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                    console.log('Técnico de guardia compartido exitosamente');
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                         console.error('Error al compartir técnico:', err);
+                         alert(`Error al compartir: ${err.message}`);
+                    } else {
+                         console.log('Compartir técnico cancelado');
+                    }
+                }
+            } else if (navigator.clipboard && navigator.clipboard.writeText) {
+                try {
+                    await navigator.clipboard.writeText(shareText);
+                    console.log('Técnico copiado al portapapeles');
+                    const originalHTML = shareButton.innerHTML;
+                    shareButton.innerHTML = '✓'; // Icono de check simple
+                    shareButton.classList.add('copied-feedback');
+                    setTimeout(() => {
+                        shareButton.innerHTML = originalHTML;
+                        shareButton.classList.remove('copied-feedback');
+                    }, 1500); // Menos tiempo para el feedback
+                } catch (err) {
+                    console.error('Error al copiar técnico:', err);
+                    alert(`No se pudo copiar al portapapeles. Error: ${err.message}\n\nIntenta seleccionar y copiar el texto manualmente.`);
+                }
+            } else {
+                console.warn('Ni Web Share API ni Clipboard API están disponibles.');
+                alert('Tu navegador no soporta la función de compartir o copiar al portapapeles.\n\nPuedes seleccionar y copiar el texto manualmente:\n\n' + shareText);
+            }
+        }
+
         // --- INICIALIZACIÓN ---
         document.addEventListener('DOMContentLoaded', function() {
             // Deshabilitar botones de compartir inicialmente hasta que carguen los datos
             document.querySelectorAll('.share-btn').forEach(btn => btn.disabled = true);
+            document.getElementById('shareNextGuardBtn').disabled = true; // Deshabilitar también el nuevo botón
 
             // Cargar datos iniciales de Firebase usando la nueva lógica por semana
             loadWeekData();
