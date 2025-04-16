@@ -2342,12 +2342,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (trenesButton) {
         trenesButton.addEventListener('click', function() {
-            trenesCardContainer.style.display = 'flex';
-            mostrarTrenesCercanosInterpolado(); // Carga inicial de la tabla
-            // *** INICIO: CONFIGURAR INTERVALO PARA ACTUALIZACIÓN CADA MINUTO ***
-            if (!trenesInterval) { // Verifica si el intervalo ya existe para evitar duplicados
-                trenesInterval = setInterval(mostrarTrenesCercanosInterpolado, 60000); // 60000 ms = 1 minuto
-            }
+            const horariosAvisoCardContainer = document.getElementById('horarios-aviso-card-container');
+            horariosAvisoCardContainer.style.display = 'flex';
+
+            const cerrarHorariosAvisoCard = document.getElementById('cerrar-horarios-aviso-card');
+            cerrarHorariosAvisoCard.addEventListener('click', function() {
+                horariosAvisoCardContainer.style.display = 'none';
+                trenesCardContainer.style.display = 'flex';
+                mostrarTrenesCercanosInterpolado(); // Carga inicial de la tabla
+                    // *** INICIO: CONFIGURAR INTERVALO PARA ACTUALIZACIÓN CADA MINUTO ***
+                    if (!trenesInterval) { // Verifica si el intervalo ya existe para evitar duplicados
+                        trenesInterval = setInterval(mostrarTrenesCercanosInterpolado, 60000); // 60000 ms = 1 minuto
+                    }
+                });
             // *** FIN: CONFIGURAR INTERVALO ***
         });
     } else {
