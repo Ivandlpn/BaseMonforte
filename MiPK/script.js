@@ -2398,7 +2398,7 @@ async function mostrarTrenesCercanosInterpolado() {
     advertenciaDiv.style.animation = 'pulse 1s infinite alternate';
     advertenciaDiv.style.zIndex = '10000'; // Asegurar que esté en primer plano
     advertenciaDiv.style.position = 'fixed'; // Añadir posición fixed
-    advertenciaDiv.innerHTML = '⚠️ ¡Advertencia! ⚠️<br>Los horarios son orientativos.<br>Verifique siempre el horario real.';
+    advertenciaDiv.innerHTML = '⚠️ ¡Advertencia! ⚠️<br>Los horarios son orientativos.<br>Verifique siempre con el Puesto de Mando.';
 
     // Agregar animación (se debe definir en CSS)
     const styleSheet = document.createElement("style");
