@@ -35,6 +35,18 @@
         "TIPO": "ET",
         "NOMBRE": "CANAL MANZANARES"
     },
+       {
+        "LINEA": "40",
+        "PK": "017875",
+        "TIPO": "TUNEL",
+        "NOMBRE": "Túnel Perales del Río"
+    },
+    {
+        "LINEA": "40",
+        "PK": "018265",
+        "TIPO": "TUNEL",
+        "NOMBRE": "Túnel Perales del Río"
+    },
     {
         "LINEA": "40",
         "PK": "024034",
@@ -411,13 +423,13 @@
         "LINEA": "40",
         "PK": "071620",
         "TIPO": "TUNEL",
-        "NOMBRE": "Túnel bajo futura A–40"
+        "NOMBRE": "Túnel Hoya de los Carboneros "
     },
     {
         "LINEA": "40",
         "PK": "072420",
         "TIPO": "TUNEL",
-        "NOMBRE": "Túnel bajo futura A–40"
+        "NOMBRE": "Túnel Hoya de los Carboneros "
     },
     {
         "LINEA": "40",
