@@ -2370,22 +2370,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 async function mostrarTrenesCercanosInterpolado() {
+    // Crear la superposición
+    const overlayDiv = document.createElement('div');
+    overlayDiv.style.position = 'fixed';
+    overlayDiv.style.top = '0';
+    overlayDiv.style.left = '0';
+    overlayDiv.style.width = '100%';
+    overlayDiv.style.height = '100%';
+    overlayDiv.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    overlayDiv.style.display = 'flex';
+    overlayDiv.style.justifyContent = 'center';
+    overlayDiv.style.alignItems = 'center';
+    overlayDiv.style.zIndex = '1000';
+
     // Crear la tarjeta de advertencia
     const advertenciaDiv = document.createElement('div');
-    advertenciaDiv.style.backgroundColor = '#ffc107';
-    advertenciaDiv.style.color = '#000';
-    advertenciaDiv.style.padding = '10px';
+    advertenciaDiv.style.backgroundColor = 'red';
+    advertenciaDiv.style.color = 'white';
+    advertenciaDiv.style.padding = '20px';
     advertenciaDiv.style.textAlign = 'center';
-    advertenciaDiv.style.marginBottom = '10px';
-    advertenciaDiv.textContent = 'Advertencia: Los horarios mostrados son orientativos y no oficiales. Es responsabilidad del trabajador asegurarse del horario real del paso de trenes.';
+    advertenciaDiv.style.fontWeight = 'bold';
+    advertenciaDiv.style.fontSize = '1.5em';
+    advertenciaDiv.style.border = '2px solid black';
+    advertenciaDiv.textContent = '¡Advertencia! Los horarios son orientativos. Verifique siempre el horario real.';
 
-    // Insertar la tarjeta de advertencia al principio del contenedor de trenes
-    const trenesContainer = document.getElementById('trenes-container');
-    trenesContainer.insertBefore(advertenciaDiv, trenesContainer.firstChild);
+    // Insertar la tarjeta de advertencia dentro de la superposición
+    overlayDiv.appendChild(advertenciaDiv);
+    document.body.appendChild(overlayDiv);
 
-    // Ocultar la tarjeta de advertencia después de 5 segundos
+    // Ocultar la superposición después de 5 segundos
     setTimeout(() => {
-        advertenciaDiv.style.display = 'none';
+        overlayDiv.style.display = 'none';
     }, 5000);
 
     // Obtener el tbody de la tabla (ya existente)
