@@ -2370,6 +2370,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 async function mostrarTrenesCercanosInterpolado() {
+    // Crear la tarjeta de advertencia
+    const advertenciaDiv = document.createElement('div');
+    advertenciaDiv.style.backgroundColor = '#ffc107';
+    advertenciaDiv.style.color = '#000';
+    advertenciaDiv.style.padding = '10px';
+    advertenciaDiv.style.textAlign = 'center';
+    advertenciaDiv.style.marginBottom = '10px';
+    advertenciaDiv.textContent = 'Advertencia: Los horarios mostrados son orientativos y no oficiales. Es responsabilidad del trabajador asegurarse del horario real del paso de trenes.';
+
+    // Insertar la tarjeta de advertencia al principio del contenedor de trenes
+    const trenesContainer = document.getElementById('trenes-container');
+    trenesContainer.insertBefore(advertenciaDiv, trenesContainer.firstChild);
+
+    // Ocultar la tarjeta de advertencia después de 5 segundos
+    setTimeout(() => {
+        advertenciaDiv.style.display = 'none';
+    }, 5000);
+
     // Obtener el tbody de la tabla (ya existente)
     const tbody = document.querySelector('#trenes-container tbody');
     if (!tbody) {
