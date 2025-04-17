@@ -707,10 +707,10 @@
                 // Mostrar fecha de última actualización al cargar (priorizando semana actual)
                 if (currentData.lastUpdated) {
                     const lastUpdateDate = new Date(currentData.lastUpdated);
-                    syncStatus.innerHTML = `Últimos datos cargados el ${formatFullDate(lastUpdateDate)}`;
+                    syncStatus.innerHTML = `Últimos datos cargados el ${formatFullDate(new Date(lastUpdateDate))}`;
                     syncStatus.style.color = "#6c757d"; // Color gris estándar
                 } else {
-                     syncStatus.textContent = ''; // Vacío si no hay fecha guardada
+                     syncStatus.textContent = 'Últimos datos cargados el .....';
                 }
                 document.querySelectorAll('.share-btn').forEach(btn => btn.disabled = false);
                 document.getElementById('shareNextGuardBtn').disabled = false; // Habilitar botón específico
@@ -804,11 +804,13 @@
 
             // Ruta dinámica para guardar en Firebase
             const firebasePath = `weekData/${year}/${week}`;
+            weekData.lastUpdated = new Date().getTime();
             db.ref(firebasePath).set(weekData) // Usar set para sobrescribir/crear
                 .then(() => {
                     syncStatus.textContent = "Datos cargados correctamente."; // Mensaje solicitado por el usuario al guardar
                     syncStatus.style.color = "#28a745"; // Verde éxito
                     console.log(`Datos guardados en ${firebasePath}:`, weekData);
+                    syncStatus.textContent = `Datos guardados el ${formatFullDate(new Date())}`;
                 })
                 .catch((error) => {
                     console.error(`Error al guardar datos en ${firebasePath}:`, error);
