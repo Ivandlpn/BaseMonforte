@@ -422,6 +422,90 @@ function toggleMenuCapas() {
 botonCapas.addEventListener('click', toggleMenuCapas);
 
 // Event listener para cerrar el menú al hacer clic fuera de él
+
+// Función para obtener coordenadas basadas en línea y PK
+async function obtenerCoordenadas(linea, pk) {
+    try {
+        const archivos = ['L40Ar.json', 'L40Br.json', 'L40Cr.json', 'L40Z.json', 'L42.json', 'L42A.json', 'L42Ar.json', 'L42B.json', 'L46.json', 'L48.json'];
+        for (const archivo of archivos) {
+            const response = await fetch(`doc/traza/${archivo}`);
+        const data = await response.json();
+            console.log('Datos cargados de', archivo, ':', data);
+            console.log('Buscando PK:', pk);
+            const punto = data.find(p => p.PK === pk);
+            if (punto) {
+                console.log('Punto encontrado en', archivo, ':', punto);
+                return { latitud: punto.Latitud, longitud: punto.Longitud };
+            }
+        }
+        return null;
+    } catch (error) {
+        console.error("Error al cargar los datos de trazado:", error);
+        return null;
+    }
+}
+
+// Inicializar botones como deshabilitados y en color gris
+function inicializarBotones() {
+    const botones = document.querySelectorAll('.simulador-option-button');
+    botones.forEach(boton => {
+        boton.disabled = true;
+        boton.style.backgroundColor = 'gray';
+    });
+}
+
+// Función para habilitar/deshabilitar botones
+function actualizarEstadoBotones() {
+    const linea = document.getElementById('linea-input').value.trim();
+    let pk = document.getElementById('pk-input').value.trim();
+    pk = pk.replace(/[+,.]/g, ''); // Eliminar caracteres + , . para un formato numérico continuo
+    const botones = document.querySelectorAll('.simulador-option-button');
+
+    if (linea && pk) {
+        botones.forEach(boton => {
+            boton.disabled = false;
+            boton.style.backgroundColor = boton.id === 'ver-mipk-button' ? '#28a745' : '#dc3545';
+        });
+    } else {
+        botones.forEach(boton => {
+            boton.disabled = true;
+            boton.style.backgroundColor = 'gray';
+        });
+    }
+}
+
+// Eventos para actualizar el estado de los botones
+const lineaInput = document.getElementById('linea-input');
+const pkInput = document.getElementById('pk-input');
+lineaInput.addEventListener('input', actualizarEstadoBotones);
+pkInput.addEventListener('input', actualizarEstadoBotones);
+
+// Evento para el botón Ver en Maps
+const verMapsButton = document.getElementById('ver-maps-button');
+verMapsButton.addEventListener('click', async function() {
+    const linea = document.getElementById('linea-input').value;
+    let pk = document.getElementById('pk-input').value;
+    
+    pk = pk.replace(/[+,.]/g, ''); // Asegurar transformación antes de la búsqueda
+    const coordenadas = await obtenerCoordenadas(linea, pk);
+
+    if (coordenadas) {
+        const url = `https://www.google.com/maps?q=${coordenadas.latitud},${coordenadas.longitud}`;
+        window.open(url, '_blank');
+    } else {
+        alert('No se pudieron obtener las coordenadas para la línea y PK especificados.');
+    }
+});
+
+// Evento para el botón VIAJAR
+const viajarButton = document.querySelector('.plus-option-button[aria-label="VIAJAR"]');
+viajarButton.addEventListener('click', function() {
+    document.getElementById('viajar-card-container').style.display = 'flex';
+});
+
+document.getElementById('cerrar-viajar-card').addEventListener('click', function() {
+    document.getElementById('viajar-card-container').style.display = 'none';
+});
 document.addEventListener('click', function(event) {
     if (!botonCapas.contains(event.target) && !menuCapas.contains(event.target)) {
         menuCapas.style.display = 'none';
