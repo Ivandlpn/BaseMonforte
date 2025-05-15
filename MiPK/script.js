@@ -145,7 +145,7 @@ function mostrarMensaje(mensaje) {
     mensajeDiv.style.bottom = "300px";
     mensajeDiv.style.left = "50%";
     mensajeDiv.style.transform = "translateX(-50%)";
-    mensajeDiv.style.backgroundColor = "#28a745"; // Verde de confirmación
+    mensajeDiv.style.backgroundColor = "#007bff"; // Azul para mensaje de carga
     mensajeDiv.style.color = "white";
     mensajeDiv.style.padding = "10px 20px";
     mensajeDiv.style.borderRadius = "5px";
@@ -463,8 +463,12 @@ function actualizarEstadoBotones() {
 
     if (linea && pk) {
         botones.forEach(boton => {
-            boton.disabled = false;
-            boton.style.backgroundColor = boton.id === 'ver-mipk-button' ? '#28a745' : '#dc3545';
+            boton.disabled = false; // Habilitar ambos botones
+            if (boton.id === 'ver-maps-button') {
+                 boton.style.backgroundColor = 'initial'; // Usar el estilo definido en CSS para el gradiente
+            } else { // Botón de MiPK
+                 boton.style.backgroundColor = '#28a745'; // Color verde para MiPK
+            }
         });
     } else {
         botones.forEach(boton => {
@@ -483,6 +487,7 @@ pkInput.addEventListener('input', actualizarEstadoBotones);
 // Evento para el botón Ver en Maps
 const verMapsButton = document.getElementById('ver-maps-button');
 verMapsButton.addEventListener('click', async function() {
+    mostrarMensaje("Abriendo Google Maps..."); // Mostrar mensaje inmediatamente
     const linea = document.getElementById('linea-input').value;
     let pk = document.getElementById('pk-input').value;
     
@@ -492,9 +497,16 @@ verMapsButton.addEventListener('click', async function() {
     if (coordenadas) {
         const url = `https://www.google.com/maps?q=${coordenadas.latitud},${coordenadas.longitud}`;
         window.open(url, '_blank');
+        // El mensaje se ocultará automáticamente después de un tiempo definido en mostrarMensaje
     } else {
         alert('No se pudieron obtener las coordenadas para la línea y PK especificados.');
     }
+});
+
+// Evento para el botón Ver en MiPK
+const verMiPKButton = document.getElementById('ver-mipk-button');
+verMiPKButton.addEventListener('click', function() {
+    mostrarMensaje("PROXIMAMENTE..."); // Mostrar mensaje "PROXIMAMENTE"
 });
 
 // Evento para el botón VIAJAR

@@ -741,19 +741,27 @@
 
         <!-- Contenido del contenedor VIAJAR -->
         <div id="viajar-content" style="text-align: center; padding: 20px; background-color: #f9f9f9; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            <form id="viajar-form" style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
-                <select id="linea-input" style="width: 80%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-    <option value="">Seleccionar Línea</option>
-    <option value="40">40</option>
-    <option value="42">42</option>
-    <option value="46">46</option>
-    <option value="48">48</option>
-</select>
-                <input type="text" id="pk-input" placeholder="PK" style="width: 80%; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-<div style="display: flex; justify-content: center; gap: 10px; margin-top: 15px;">
-    <button type="button" id="ver-mipk-button" class="simulador-option-button" style="padding: 10px 20px; border-radius: 5px; background-color: #28a745; color: white; border: none;">MiPK📍</button>
-    <button type="button" id="ver-maps-button" class="simulador-option-button" style="padding: 10px 20px; border-radius: 5px; background-color: #dc3545; color: white; border: none;">Google Maps</button>
-</div>
+            <form id="viajar-form">
+                <div class="form-inputs">
+                    <div class="form-group">
+                        <label for="linea-input">Línea:</label>
+                        <select id="linea-input">
+                            <option value="">Seleccionar</option>
+                            <option value="40">40</option>
+                            <option value="42">42</option>
+                            <option value="46">46</option>
+                            <option value="48">48</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pk-input">PK:</label>
+                        <input type="text" id="pk-input" placeholder="456+987 o 456987">
+                    </div>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" id="ver-maps-button" class="simulador-option-button">Ver en Google Maps</button>
+                    <button type="button" id="ver-mipk-button" class="simulador-option-button">Ver en MiPK📍</button>
+                </div>
             </form>
         </div>
     </div>

@@ -210,7 +210,7 @@ header img {
     height: 100%; /* Ocupar toda la altura del contenedor */
     font-size: 0.8em; /* Ajusta el tamaño del texto */
     color: #ffffff; /* Opcional: Color del texto */
-    //font-weight: bold; /* Opcional: Negrita para destacar */
+    /*font-weight: bold; /* Opcional: Negrita para destacar */
     text-align: center; /* Asegura el centrado del texto */
 }
 
@@ -221,7 +221,7 @@ header img {
     height: 100%; /* Ocupar toda la altura del contenedor */
     font-size: 0.7em; /* Ajusta el tamaño del texto */
     color: #ffffff; /* Opcional: Color del texto */
-    //font-weight: bold; /* Opcional: Negrita para destacar */
+    /*font-weight: bold; /* Opcional: Negrita para destacar */
     text-align: center; /* Asegura el centrado del texto */
 }
 
@@ -391,7 +391,7 @@ footer img {
 
 /* Texto "LAV ESTE" */
 .texto-laveste {
-    //text-align: center;
+    /*text-align: center;*/
     font-size: 15px;
     font-weight: bold;
     margin: 10px 0;
@@ -637,7 +637,7 @@ footer img {
 /* Estilos para el botón de buscar del formulario del directorio*/
 #directorio-buscar-container {
     margin-top: 10px; /* Espacio superior para separar el botón del formulario */
-    margin-bottom: 20px
+    margin-bottom: 20px;
     display: flex;
     justify-content: center;
 }
@@ -822,11 +822,6 @@ footer img {
     max-height: 30px; /* Ajusta este valor según sea necesario */
     vertical-align: middle; /*Alinea las imágenes verticalmente en el centro de la celda*/
 }
-
-    if (trenResultado.pasado) {
-        claseFila = "tren-pasado";
-    }
-
 
 /* Estilos específicos para la tarjeta de trenes */
 #trenes-card {
@@ -1329,4 +1324,275 @@ header img {
     padding: 10px;
     font-size: 1em;
     min-width: 0;
+}
+
+/* =====================================================================
+|  ESTILOS ESPECÍFICOS PARA LA TARJETA DE VIAJAR                      |
+===================================================================== */
+#viajar-card .overlay-card {
+    /* Ya tiene estilos generales de overlay-card */
+}
+
+#viajar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Espacio entre los grupos de inputs y botones */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo sutil */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#viajar-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Espacio entre los elementos del formulario */
+    width: 100%; /* Asegura que el formulario ocupe el ancho disponible */
+}
+
+.form-inputs {
+    display: flex;
+    gap: 15px; /* Espacio entre select e input */
+    width: 100%; /* Ocupa todo el ancho del formulario */
+    justify-content: center; /* Centra los inputs horizontalmente */
+}
+
+.form-group {
+    display: flex; /* Usar flexbox para alinear etiqueta e input */
+    align-items: center; /* Alinear verticalmente al centro */
+    gap: 10px; /* Espacio entre etiqueta e input */
+    width: 100%; /* Ocupa todo el ancho del contenedor padre */
+    justify-content: center; /* Centrar el grupo horizontalmente */
+}
+
+.form-group label {
+    font-size: 1.1em; /* Tamaño de fuente similar al input */
+    color: black; /* Color de texto negro */
+    width: 80px; /* Ancho fijo para las etiquetas para alineación */
+    text-align: right; /* Alinear texto de la etiqueta a la derecha */
+}
+
+.form-group select,
+.form-group input[type="text"] {
+    width: 150px; /* Ancho fijo para los campos de entrada */
+    padding: 12px; /* Mayor padding */
+    border-radius: 8px; /* Bordes más redondeados */
+    border: 1px solid #ccc;
+    font-size: 1.1em; /* Tamaño de fuente ligeramente mayor */
+    box-sizing: border-box;
+    background-color: #f0f0f0; /* Fondo claro */
+    color: #333; /* Color de texto oscuro */
+}
+
+
+.form-buttons {
+    display: flex;
+    gap: 15px; /* Espacio entre botones */
+    justify-content: center; /* Centra los botones horizontalmente */
+    width: 100%; /* Ocupa todo el ancho del formulario */
+}
+
+.form-buttons .simulador-option-button {
+    padding: 12px 25px; /* Mayor padding */
+    border-radius: 8px; /* Bordes más redondeados */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em; /* Tamaño de fuente ligeramente mayor */
+    transition: background-color 0.3s ease, transform 0.1s ease; /* Añadir transición a transform */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+.form-buttons .simulador-option-button:hover {
+    transform: translateY(-2px); /* Efecto hover: mover ligeramente hacia arriba */
+}
+
+.form-buttons .simulador-option-button:active {
+    transform: translateY(0); /* Efecto active: volver a la posición original */
+}
+
+#viajar-form #ver-mipk-button {
+    background-color: #28a745; /* Verde */
+}
+
+#viajar-form #ver-mipk-button:hover {
+    background-color: #218838; /* Verde más oscuro */
+}
+
+#viajar-form #ver-maps-button {
+    background: linear-gradient(to right, blue, red); /* Degradado azul a rojo */
+    background-size: 200% auto; /* Para el efecto hover */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    transition: background-position 0.5s ease; /* Transición suave para el hover */
+}
+
+#viajar-form #ver-maps-button:hover {
+    background-position: right center; /* Mueve el degradado al pasar el ratón */
+    background-color: initial; /* Asegura que el degradado se muestre en hover */
+}
+
+/* Estilos para los botones deshabilitados en la tarjeta VIAJAR */
+#viajar-form .simulador-option-button:disabled {
+    background-color: gray !important; /* Fondo gris */
+    cursor: not-allowed; /* Cursor de no permitido */
+    opacity: 0.6; /* Ligera transparencia */
+    transform: none; /* Eliminar transformación en estado deshabilitado */
+    box-shadow: none; /* Eliminar sombra en estado deshabilitado */
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 600px) {
+    .form-inputs {
+        flex-direction: column; /* Apilar inputs verticalmente en pantallas pequeñas */
+        align-items: center; /* Centrar inputs apilados */
+        gap: 10px; /* Reducir espacio */
+    }
+
+    .form-inputs select,
+    .form-inputs input[type="text"] {
+        width: 90%; /* Ancho casi completo en pantallas pequeñas */
+    }
+
+    .form-buttons {
+        flex-direction: column; /* Apilar botones verticalmente en pantallas pequeñas */
+        align-items: center; /* Centrar botones apilados */
+        gap: 10px; /* Reducir espacio */
+    }
+
+    .form-buttons .simulador-option-button {
+        width: 90%; /* Ancho casi completo en pantallas pequeñas */
+        padding: 10px 20px; /* Ajustar padding */
+    }
+}
+
+/* Estilos para el título de la tarjeta VIAJAR */
+#viajar-card h2 {
+    font-size: 1.8em; /* Aumentar tamaño de fuente */
+    font-family: Arial, sans-serif; /* Asegurar la fuente */
+    text-align: center; /* Mantener centrado */
+    margin-bottom: 25px; /* Mantener margen inferior */
+}
+
+/* =====================================================================
+|  ESTILOS ESPECÍFICOS PARA LA TARJETA DE VIAJAR                      |
+===================================================================== */
+#viajar-card .overlay-card {
+    /* Ya tiene estilos generales de overlay-card */
+}
+
+#viajar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Espacio entre los grupos de inputs y botones */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo sutil */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#viajar-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* Espacio entre los elementos del formulario */
+    width: 100%; /* Asegura que el formulario ocupe el ancho disponible */
+}
+
+.form-inputs {
+    display: flex;
+    gap: 15px; /* Espacio entre select e input */
+    width: 100%; /* Ocupa todo el ancho del formulario */
+    justify-content: center; /* Centra los inputs horizontalmente */
+}
+
+.form-inputs select,
+.form-inputs input[type="text"] {
+    width: 45%; /* Ancho para cada input/select */
+    padding: 12px; /* Mayor padding */
+    border-radius: 8px; /* Bordes más redondeados */
+    border: 1px solid #ccc;
+    font-size: 1.1em; /* Tamaño de fuente ligeramente mayor */
+    box-sizing: border-box;
+    background-color: #f0f0f0; /* Fondo claro */
+    color: #333; /* Color de texto oscuro */
+}
+
+.form-buttons {
+    display: flex;
+    gap: 15px; /* Espacio entre botones */
+    justify-content: center; /* Centra los botones horizontalmente */
+    width: 100%; /* Ocupa todo el ancho del formulario */
+}
+
+.form-buttons .simulador-option-button {
+    padding: 12px 25px; /* Mayor padding */
+    border-radius: 8px; /* Bordes más redondeados */
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em; /* Tamaño de fuente ligeramente mayor */
+    transition: background-color 0.3s ease, transform 0.1s ease; /* Añadir transición a transform */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra */
+}
+
+.form-buttons .simulador-option-button:hover {
+    transform: translateY(-2px); /* Efecto hover: mover ligeramente hacia arriba */
+}
+
+.form-buttons .simulador-option-button:active {
+    transform: translateY(0); /* Efecto active: volver a la posición original */
+}
+
+#viajar-form #ver-mipk-button {
+    background-color: #28a745; /* Verde */
+}
+
+#viajar-form #ver-mipk-button:hover {
+    background-color: #218838; /* Verde más oscuro */
+}
+
+#viajar-form #ver-maps-button {
+    background-color: #dc3545; /* Rojo */
+}
+
+#viajar-form #ver-maps-button:hover {
+    background-color: #c82333; /* Rojo más oscuro */
+}
+
+/* Estilos para los botones deshabilitados en la tarjeta VIAJAR */
+#viajar-form .simulador-option-button:disabled {
+    background-color: gray !important; /* Fondo gris */
+    cursor: not-allowed; /* Cursor de no permitido */
+    opacity: 0.6; /* Ligera transparencia */
+    transform: none; /* Eliminar transformación en estado deshabilitado */
+    box-shadow: none; /* Eliminar sombra en estado deshabilitado */
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 600px) {
+    .form-inputs {
+        flex-direction: column; /* Apilar inputs verticalmente en pantallas pequeñas */
+        align-items: center; /* Centrar inputs apilados */
+        gap: 10px; /* Reducir espacio */
+    }
+
+    .form-inputs select,
+    .form-inputs input[type="text"] {
+        width: 90%; /* Ancho casi completo en pantallas pequeñas */
+    }
+
+    .form-buttons {
+        flex-direction: column; /* Apilar botones verticalmente en pantallas pequeñas */
+        align-items: center; /* Centrar botones apilados */
+        gap: 10px; /* Reducir espacio */
+    }
+
+    .form-buttons .simulador-option-button {
+        width: 90%; /* Ancho casi completo en pantallas pequeñas */
+        padding: 10px 20px; /* Ajustar padding */
+    }
 }
