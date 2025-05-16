@@ -24,21 +24,56 @@ const apiKeyOpenWeatherMap = "14225e48c44f9d35291e12867b7f32cf"; // API Meteo
         "./doc/traza/L48.json"
     ];
 
+// Rutas a los archivos de puertas
+const rutasPuertas = [
+    "./doc/puertas/PL42.json",
+    "./doc/puertas/PL46.json",
+    "./doc/puertas/PL48.json",
+    "./doc/puertas/PL40.json"
+];
+
  // Cargar puertas al iniciar la app
 cargarPuertas();
 
+// Función para agregar capa de puertas al mapa
+function agregarCapaPuertas() {
+    if (!mapa) {
+        console.error("No se ha inicializado el mapa.");
+        return;
+    }
+
+    // Crear capa de grupo para las puertas
+    const puertasLayerGroup = L.layerGroup().addTo(mapa);
+
+    // Agregar puertas a la capa de grupo
+    puertasData.forEach(puerta => {
+        const marker = L.marker([puerta.lat, puerta.lon]).addTo(puertasLayerGroup);
+        marker.bindPopup(`Puerta ${puerta.nombre}`);
+    });
+}
+
+// Función para eliminar capa de puertas del mapa
+function eliminarCapaPuertas() {
+    if (!mapa) {
+        console.error("No se ha inicializado el mapa.");
+        return;
+    }
+
+    // Eliminar capa de grupo de puertas
+    mapa.eachLayer(layer => {
+        if (layer instanceof L.LayerGroup) {
+            mapa.removeLayer(layer);
+        }
+    });
+}
 
 async function cargarPuertas() {
     try {
         console.log("Cargando datos de puertas...");
-        const responses = await Promise.all([
-            fetch("./doc/puertas/PL42.json"),
-            fetch("./doc/puertas/PL46.json"),
-             fetch("./doc/puertas/PL48.json"),
-            fetch("./doc/puertas/PL40.json")
-        ]);
+        const responses = await Promise.all(rutasPuertas.map(ruta => fetch(ruta)));
         puertasData = (await Promise.all(responses.map(res => res.json()))).flat();
         console.log("Datos de puertas cargados:", puertasData);
+        agregarCapaPuertas(); // Agregar capa de puertas después de cargar datos
     } catch (error) {
         console.error("Error al cargar los datos de puertas:", error);
         alert("Error al cargar los datos de las puertas.");
@@ -801,9 +836,6 @@ function desactivarCapaTiempo() {
 
 
 
-/////  INICIO CAPA EDIFICIOS /////---------------------------------------------------------------------------------------
-
-
 const iconosEdificios = {
     "SE": 'img/edificios/se_icon.png',
     "ATI": 'img/edificios/energia_icon.png',
@@ -814,7 +846,8 @@ const iconosEdificios = {
     "ET": 'img/edificios/iiss_icon.png',
     "ESTACIÓN": 'img/edificios/estaciones_icon.png',
     "TUNEL": 'img/edificios/tunel_icon.png',
-    "BM": 'img/edificios/bm_icon.png'
+    "BM": 'img/edificios/bm_icon.png',
+    "PUERTA": 'img/iconopuerta.png'
 };
 
 function crearIconoEdificio(tipo) {
@@ -848,71 +881,54 @@ function compartirUbicacionEdificio(lat, lon, nombreEdificio) {
 }
 
 
-async function activarCapaEdificios(layerGroup, tipos) {
+async function activarCapaPuertas(layerGroup) {
     try {
-        // Cargar y combinar datos de ambos archivos
-        const rutasEdificios = ["./doc/edificios/ALBALI.json", "./doc/edificios/TOVAL.json"];
-        const dataEdificiosArrays = await Promise.all(rutasEdificios.map(ruta =>
-            fetch(ruta).then(response => {
-                if (!response.ok) {
-                    throw new Error(`Error al cargar ${ruta}: ${response.statusText}`);
-                }
-                return response.json();
-            }).catch(error => {
-                console.error(`Error al cargar ${ruta}:`, error);
-                return [];
-            })
-        ));
-        const dataEdificios = dataEdificiosArrays.flat();
+        const sistemaCoordenadas = await crearMapaCoordenadas();
 
-        // Mapear coordenadas a un objeto para mejor búsqueda
-        const coordenadasPorPKLinea = await crearMapaCoordenadas();
+        puertasData.forEach(puerta => {
+            const pkPuerta = puerta.PK;
+            const lineaPuerta = puerta.Linea;
+            
+            // Buscar las coordenadas usando el nuevo sistema
+            const puntoCoordenadas = sistemaCoordenadas.buscar(pkPuerta, lineaPuerta);
+            
+            if (!puntoCoordenadas) {
+                console.warn(`No se encontraron coordenadas para el PK ${pkPuerta} en la línea ${lineaPuerta}`);
+                return;
+            }
 
-        // Filtrar elementos por tipo
-        const elementosFiltrados = dataEdificios.filter(item => tipos.includes(item.TIPO));
-
-        elementosFiltrados.forEach(elemento => {
-            const pkElemento = elemento.PK;
-            const lineaElemento = elemento.LINEA;
-            const key = `${pkElemento}-${lineaElemento}`;
-
-            // Buscar las coordenadas correspondientes al PK y la línea
-            const puntoCoordenadas = coordenadasPorPKLinea.get(key);
-            const icono = crearIconoEdificio(elemento.TIPO);
+            const icono = crearIconoEdificio("PUERTA");
 
             if (puntoCoordenadas && icono) {
-                const pkFormateado = formatearPK(pkElemento);
+                const pkFormateado = formatearPK(pkPuerta);
                 const marker = L.marker([puntoCoordenadas.Latitud, puntoCoordenadas.Longitud], { icon: icono })
                     .bindPopup(`
                         <div style="text-align: center;">
-                            <b style="font-size: 1.1em;">${elemento.NOMBRE}</b><br>
-                            ${pkFormateado} (L${lineaElemento})<br><br>
+                            <b style="font-size: 1.1em;">Puerta Vía ${puerta.Via}</b><br>
+                            ${pkFormateado} (L${lineaPuerta})<br><br>
                             <button
                                 style="padding: 0; border: none; border-radius: 5px; background-color: transparent; cursor: pointer; display:flex; align-items: center; justify-content: center; margin: 0 auto;"
-                                onclick="compartirUbicacionEdificio(${puntoCoordenadas.Latitud}, ${puntoCoordenadas.Longitud}, '${elemento.NOMBRE.replace(/'/g, "\\'")}');"
-                                aria-label="Compartir ubicación de ${elemento.NOMBRE}"
+                                onclick="compartirUbicacionEdificio(${puntoCoordenadas.Latitud}, ${puntoCoordenadas.Longitud}, 'Puerta Vía ${puerta.Via}');"
+                                aria-label="Compartir ubicación de puerta"
                             >
                                 <img src="img/edificios/compartirubi.png" alt="Compartir Ubicación" style="width: 77px; height: 35px;">
                             </button>
                         </div>
                     `);
                 layerGroup.addLayer(marker);
-
-            } else {
-                console.warn(`No se encontraron coordenadas para el PK ${pkElemento} en la línea ${lineaElemento} (Tipo: ${elemento.TIPO})`);
             }
         });
         mapa.addLayer(layerGroup);
-          mapa.setZoom(7); // Nivel de zoom fijo (puedes ajustarlo)
+        mapa.setZoom(7);
 
     } catch (error) {
-        console.error("Error al activar la capa de edificios:", error);
+        console.error("Error al activar la capa de puertas:", error);
     }
 }
 
 async function crearMapaCoordenadas() {
-
     try {
+        // Primero obtener todos los datos de los archivos
         const dataCoordenadasArrays = await Promise.all(rutasArchivos.map(ruta =>
             fetch(ruta).then(response => {
                 if (!response.ok) {
@@ -925,19 +941,60 @@ async function crearMapaCoordenadas() {
             })
         ));
 
-        const dataCoordenadas = dataCoordenadasArrays.flat();
-        const mapaCoordenadas = new Map();
-
-        dataCoordenadas.forEach(punto => {
-            const key = `${punto.PK}-${punto.Linea}`;
-            mapaCoordenadas.set(key, punto);
+        // Crear un mapa por cada archivo
+        const mapasPorArchivo = dataCoordenadasArrays.map(data => {
+            const mapa = new Map();
+            data.forEach(punto => {
+                const key = `${punto.PK}-${punto.Linea}`;
+                mapa.set(key, punto);
+            });
+            return mapa;
         });
 
-        return mapaCoordenadas;
+        // Función para buscar en todos los mapas en orden
+        function buscarCoordenadasEnTodosMapas(pk, linea) {
+            const key = `${pk}-${linea}`;
+            
+            // Primero intentar con el PK exacto
+            for (const mapa of mapasPorArchivo) {
+                const coordenadas = mapa.get(key);
+                if (coordenadas) return coordenadas;
+            }
+
+            // Si no se encontró el PK exacto, buscar el más cercano
+            const pkNumero = parseInt(pk);
+            let coordenadasMasCercanas = null;
+            let distanciaMinima = Infinity;
+
+            // Para cada archivo, buscar el punto más cercano
+            for (const mapa of mapasPorArchivo) {
+                // Obtener todos los puntos del archivo
+                const puntos = Array.from(mapa.values());
+                
+                // Para cada punto, calcular la distancia al PK buscado
+                for (const punto of puntos) {
+                    const pkPunto = parseInt(punto.PK);
+                    const distancia = Math.abs(pkPunto - pkNumero);
+                    
+                    // Si encontramos un punto más cercano
+                    if (distancia < distanciaMinima) {
+                        distanciaMinima = distancia;
+                        coordenadasMasCercanas = punto;
+                    }
+                }
+            }
+
+            return coordenadasMasCercanas;
+        }
+
+        // Devolver una función que busca en todos los mapas
+        return {
+            buscar: buscarCoordenadasEnTodosMapas
+        };
 
     } catch (error) {
         console.error("Error al crear el mapa de coordenadas:", error);
-        return new Map();
+        return { buscar: () => null };
     }
 }
 
@@ -956,6 +1013,12 @@ const checkBts = document.getElementById('check-bts');
 const btsLayer = L.layerGroup();
 checkBts.addEventListener('change', function () {
     this.checked ? activarCapaEdificios(btsLayer, ["BTS"]) : desactivarCapaEdificios(btsLayer);
+});
+
+const checkPuertas = document.getElementById('check-puertas');
+const puertasLayer = L.layerGroup();
+checkPuertas.addEventListener('change', function () {
+    this.checked ? activarCapaPuertas(puertasLayer) : desactivarCapaEdificios(puertasLayer);
 });
 
 const checkIiss = document.getElementById('check-iiss');
