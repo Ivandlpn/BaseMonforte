@@ -3797,3 +3797,9 @@ botonOperadores.addEventListener('click', () => {
 cerrarOperadoresCardButton.addEventListener('click', () => {
     operadoresCardContainer.style.display = 'none'; // Ocultar la tarjeta
 });
+
+// Evento para el botón WikiRail
+document.getElementById('boton-wikirail').addEventListener('click', function() {
+    window.open('https://ivandlpn.github.io/Aplicaciones/WikiRail/', '_blank');
+    document.getElementById('plus-card-container').style.display = 'none';
+});
