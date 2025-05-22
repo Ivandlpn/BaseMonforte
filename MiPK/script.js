@@ -5,9 +5,28 @@ let lat, lon; // Coordenadas del usuario
 let primeraEjecucion = true; // Bandera para controlar la primera actualización
 
 let puertasData = []; // Variable para guardar datos de las puertas
+let edificiosData = []; // Variable para guardar datos de los edificios
 const puertasContainer = document.getElementById("puertas-card-container");
 const puertasInfoDiv = document.getElementById("puertas-info");
 const cerrarPuertasCard = document.getElementById("cerrar-puertas-card");
+
+// Función para cargar los datos de los edificios
+async function cargarEdificios() {
+    if (edificiosData.length > 0) return edificiosData; // Ya están cargados
+    
+    try {
+        const [albaniData, tovalData] = await Promise.all([
+            fetch('doc/edificios/ALBALI.json').then(r => r.json()),
+            fetch('doc/edificios/TOVAL.json').then(r => r.json())
+        ]);
+        
+        edificiosData = [...albaniData, ...tovalData];
+        return edificiosData;
+    } catch (error) {
+        console.error('Error al cargar los datos de edificios:', error);
+        return [];
+    }
+}
 
 const DATA_URL = 'https://api.jsonbin.io/v3/b/67adf787acd3cb34a8e087a4'; // **REEMPLAZA ESTO con la URL pública de tu archivo guardiactas_data.json**
 
@@ -32,24 +51,75 @@ const rutasPuertas = [
     "./doc/puertas/PL40.json"
 ];
 
- // Cargar puertas al iniciar la app
-cargarPuertas();
+// Función para obtener una propiedad de un objeto sin importar mayúsculas/minúsculas
+function obtenerPropiedadInsensible(objeto, propiedad) {
+    const clave = Object.keys(objeto).find(
+        key => key.toLowerCase() === propiedad.toLowerCase()
+    );
+    return objeto[clave];
+}
 
 // Función para agregar capa de puertas al mapa
 function agregarCapaPuertas() {
     if (!mapa) {
         console.error("No se ha inicializado el mapa.");
-        return;
+        return 0; // Retorna 0 puertas procesadas
     }
 
     // Crear capa de grupo para las puertas
     const puertasLayerGroup = L.layerGroup().addTo(mapa);
+    let puertasProcesadas = 0;
+    let puertasConError = 0;
+    let puertasSinCoordenadas = 0;
+    let erroresMostrados = 0;
+    const MAX_ERRORES_MOSTRADOS = 5;
 
-    // Agregar puertas a la capa de grupo
-    puertasData.forEach(puerta => {
-        const marker = L.marker([puerta.lat, puerta.lon]).addTo(puertasLayerGroup);
-        marker.bindPopup(`Puerta ${puerta.nombre}`);
+
+
+    // Agregar puertas a la capa de grupo con validación
+    puertasData.forEach((puerta, index) => {
+        try {
+            // Obtener coordenadas sin importar mayúsculas/minúsculas
+            const latRaw = obtenerPropiedadInsensible(puerta, 'lat') || obtenerPropiedadInsensible(puerta, 'latitude');
+            const lonRaw = obtenerPropiedadInsensible(puerta, 'lon') || 
+                          obtenerPropiedadInsensible(puerta, 'lng') || 
+                          obtenerPropiedadInsensible(puerta, 'longitude');
+            
+            const lat = parseFloat(latRaw);
+            const lon = parseFloat(lonRaw);
+            
+            const coordenadasValidas = !isNaN(lat) && !isNaN(lon) && 
+                                     Math.abs(lat) <= 90 && 
+                                     Math.abs(lon) <= 180;
+
+            if (coordenadasValidas) {
+                const marker = L.marker([lat, lon]);
+                marker.addTo(puertasLayerGroup);
+                marker.bindPopup(`Puerta ${puerta.nombre || 'sin nombre'}`);
+                puertasProcesadas++;
+                
+
+            } else if (puerta.lat !== undefined || puerta.lon !== undefined) {
+                // Solo contar como error si la puerta tiene algún valor en lat o lon pero no son válidos
+                puertasConError++;
+                erroresMostrados++;
+            } else {
+                // No tiene coordenadas definidas
+                puertasSinCoordenadas++;
+            }
+        } catch (error) {
+            puertasConError++;
+            if (erroresMostrados < MAX_ERRORES_MOSTRADOS) {
+                console.error(`Error al procesar puerta en índice ${index}:`, error);
+                erroresMostrados++;
+            }
+        }
     });
+    
+    // Verificar si hay discrepancias
+    const totalContado = puertasProcesadas + puertasConError + puertasSinCoordenadas;
+    
+    return puertasProcesadas;
 }
 
 // Función para eliminar capa de puertas del mapa
@@ -69,14 +139,64 @@ function eliminarCapaPuertas() {
 
 async function cargarPuertas() {
     try {
-        console.log("Cargando datos de puertas...");
-        const responses = await Promise.all(rutasPuertas.map(ruta => fetch(ruta)));
-        puertasData = (await Promise.all(responses.map(res => res.json()))).flat();
-        console.log("Datos de puertas cargados:", puertasData);
-        agregarCapaPuertas(); // Agregar capa de puertas después de cargar datos
+
+        const responses = await Promise.all(rutasPuertas.map(ruta => 
+            fetch(ruta).then(res => {
+                if (!res.ok) {
+                    throw new Error(`Error ${res.status} al cargar ${ruta}`);
+                }
+                return res.json();
+            })
+        ));
+        
+        // Aplanar datos
+        const puertasCargadas = responses.flat();
+        
+
+        
+        // Mapear los datos normalizando los nombres de las propiedades
+        puertasData = puertasCargadas.map((puerta, index) => {
+            // Crear un nuevo objeto con las propiedades normalizadas
+            const puertaNormalizada = { ...puerta };
+            
+            // Mapear propiedades de coordenadas a minúsculas
+            const propiedadesCoordenadas = [
+                { src: ['lat', 'latitude', 'y'], dest: 'lat' },
+                { src: ['lon', 'lng', 'longitude', 'x'], dest: 'lon' }
+            ];
+            
+            // Para cada tipo de coordenada (lat/lon)
+            propiedadesCoordenadas.forEach(({ src, dest }) => {
+                // Buscar la primera propiedad que exista en el objeto
+                const propiedadCoordenada = src.find(prop => 
+                    Object.keys(puerta).some(key => key.toLowerCase() === prop.toLowerCase())
+                );
+                
+                if (propiedadCoordenada) {
+                    // Obtener el valor real (sin importar mayúsculas/minúsculas)
+                    const valor = obtenerPropiedadInsensible(puerta, propiedadCoordenada);
+                    if (valor !== undefined && valor !== null) {
+                        // Convertir a número si es posible
+                        const num = parseFloat(valor);
+                        puertaNormalizada[dest] = isNaN(num) ? valor : num;
+                    }
+                }
+            });
+            
+
+            
+            return puertaNormalizada;
+        });
+        
+        const puertasProcesadas = agregarCapaPuertas();
+        
+        return puertasProcesadas;
     } catch (error) {
         console.error("Error al cargar los datos de puertas:", error);
-        alert("Error al cargar los datos de las puertas.");
+        // Mostrar mensaje de error más descriptivo
+        const mensaje = `Error al cargar los datos de las puertas: ${error.message || 'Error desconocido'}`;
+        mostrarMensaje(mensaje);
+        throw error; // Relanzar para que el código que llama pueda manejarlo si es necesario
     }
 }
 
@@ -268,6 +388,9 @@ function inicializarMapa(lat, lon) {
     mapa.on('zoomstart', () => {
         centradoAutomaticamente = false;
     });
+    
+    // Cargar puertas después de inicializar el mapa
+    cargarPuertas();
 }
 
 
@@ -919,7 +1042,6 @@ async function activarCapaPuertas(layerGroup) {
             }
         });
         mapa.addLayer(layerGroup);
-        mapa.setZoom(7);
 
     } catch (error) {
         console.error("Error al activar la capa de puertas:", error);
@@ -998,45 +1120,294 @@ async function crearMapaCoordenadas() {
     }
 }
 
+async function activarCapaEdificios(layerGroup, tiposEdificios) {
+    try {
+        // Limpiar la capa
+        layerGroup.clearLayers();
+        
+        // Cargar datos de edificios si no están cargados
+        const edificios = await cargarEdificios();
+        
+        // Filtrar edificios por los tipos solicitados
+        const edificiosFiltrados = edificios.filter(edificio => 
+            tiposEdificios.includes(edificio.TIPO)
+        );
+        
+        if (edificiosFiltrados.length === 0) {
+            console.warn('No se encontraron edificios de los tipos:', tiposEdificios);
+            return;
+        }
+        
+        // Obtener el sistema de coordenadas
+        const sistemaCoordenadas = await crearMapaCoordenadas();
+        
+        // Procesar cada edificio
+        for (const edificio of edificiosFiltrados) {
+            try {
+                const pk = edificio.PK;
+                const linea = edificio.LINEA;
+                
+                // Buscar coordenadas
+                const puntoCoordenadas = sistemaCoordenadas.buscar(pk, linea);
+                
+                if (!puntoCoordenadas) {
+                    console.warn(`No se encontraron coordenadas para el PK ${pk} en la línea ${linea}`);
+                    continue;
+                }
+                
+                // Crear marcador
+                const icono = crearIconoEdificio(edificio.TIPO);
+                if (!icono) continue;
+                
+                const pkFormateado = formatearPK(pk);
+                const popupContent = `
+                    <div style="text-align: center;">
+                        <b>${edificio.NOMBRE || edificio.TIPO}</b><br>
+                        ${pkFormateado} (L${linea})<br><br>
+                        <button
+                            style="padding: 0; border: none; border-radius: 5px; background-color: transparent; cursor: pointer; display:flex; align-items: center; justify-content: center; margin: 0 auto;"
+                            onclick="compartirUbicacionEdificio(${puntoCoordenadas.Latitud}, ${puntoCoordenadas.Longitud}, '${edificio.NOMBRE || edificio.TIPO}');"
+                            aria-label="Compartir ubicación de ${edificio.NOMBRE || edificio.TIPO}"
+                        >
+                            <img src="img/edificios/compartirubi.png" alt="Compartir Ubicación" style="width: 77px; height: 35px;">
+                        </button>
+                    </div>
+                `;
+                
+                const marker = L.marker(
+                    [puntoCoordenadas.Latitud, puntoCoordenadas.Longitud], 
+                    { icon: icono }
+                ).bindPopup(popupContent);
+                
+                layerGroup.addLayer(marker);
+                
+            } catch (error) {
+                console.error('Error al procesar edificio:', edificio, error);
+            }
+        }
+        
+        // Añadir la capa al mapa si no está ya añadida
+        if (!mapa.hasLayer(layerGroup)) {
+            mapa.addLayer(layerGroup);
+        }
+        
+    } catch (error) {
+        console.error('Error en activarCapaEdificios:', error);
+        throw error; // Relanzar el error para que pueda ser manejado por el llamador
+    }
+}
+
 function desactivarCapaEdificios(layerGroup) {
-    mapa.removeLayer(layerGroup);
+    if (mapa.hasLayer(layerGroup)) {
+        mapa.removeLayer(layerGroup);
+    }
+}
+
+// Función para crear iconos según el tipo de edificio
+function crearIconoEdificio(tipo) {
+    let iconName;
+    
+    // Mapear tipos de edificios a sus iconos correspondientes
+    switch(tipo) {
+        case 'PUERTA':
+            iconName = 'iconopuerta.png';
+            break;
+        case 'BTS':
+            iconName = 'bts_icon.png';
+            break;
+        case 'SE':
+            iconName = 'se_icon.png';
+            break;
+        case 'ATI':
+        case 'ATF':
+            iconName = 'energia_icon.png';
+            break;
+        case 'CS':
+        case 'PICV':
+        case 'ET':
+            iconName = 'iiss_icon.png';
+            break;
+        case 'ESTACIÓN':
+        case 'BM':
+            iconName = 'estaciones_icon.png'; // Asegúrate de que este archivo exista
+            break;
+        case 'TUNEL':
+            iconName = 'tunel_icon.png'; // Asegúrate de que este archivo exista
+            break;
+        default:
+            console.warn(`Tipo de edificio no reconocido: ${tipo}`);
+            iconName = 'default_icon.png';
+    }
+    
+    const iconUrl = `img/edificios/${iconName}`;
+    
+    return L.icon({
+        iconUrl: iconUrl,
+        iconSize: [25, 25],
+        iconAnchor: [12, 12],
+        popupAnchor: [0, -12]
+    });
 }
 
 // Event listeners para las capas de edificios
 const checkEnergia = document.getElementById('check-energia');
 const energiaLayer = L.layerGroup();
-checkEnergia.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(energiaLayer, ["SE", "ATI", "ATF"]) : desactivarCapaEdificios(energiaLayer);
+checkEnergia.addEventListener('change', async function() {
+    if (this.checked) {
+        const ocultarMensaje = mostrarMensajeCarga('🔄 Cargando capa de Energía...');
+        try {
+            await activarCapaEdificios(energiaLayer, ["SE", "ATI", "ATF"]);
+            setTimeout(ocultarMensaje, 500);
+        } catch (error) {
+            console.error('Error al cargar capa de Energía:', error);
+            mostrarMensajeCarga('❌ Error al cargar la capa de Energía');
+            this.checked = false;
+            setTimeout(ocultarMensaje, 3000);
+        }
+    } else {
+        desactivarCapaEdificios(energiaLayer);
+    }
 });
 
 const checkBts = document.getElementById('check-bts');
 const btsLayer = L.layerGroup();
-checkBts.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(btsLayer, ["BTS"]) : desactivarCapaEdificios(btsLayer);
+checkBts.addEventListener('change', async function() {
+    if (this.checked) {
+        const ocultarMensaje = mostrarMensajeCarga('🔄 Cargando capa de BTS...');
+        try {
+            await activarCapaEdificios(btsLayer, ["BTS"]);
+            setTimeout(ocultarMensaje, 500);
+        } catch (error) {
+            console.error('Error al cargar capa de BTS:', error);
+            mostrarMensajeCarga('❌ Error al cargar la capa de BTS');
+            this.checked = false;
+            setTimeout(ocultarMensaje, 3000);
+        }
+    } else {
+        desactivarCapaEdificios(btsLayer);
+    }
 });
+
+// Función para mostrar un mensaje de carga
+function mostrarMensajeCarga(mensaje) {
+    // Crear el contenedor del mensaje si no existe
+    let mensajeContainer = document.getElementById('mensaje-carga');
+    
+    if (!mensajeContainer) {
+        mensajeContainer = document.createElement('div');
+        mensajeContainer.id = 'mensaje-carga';
+        mensajeContainer.style.position = 'fixed';
+        mensajeContainer.style.top = '50%';
+        mensajeContainer.style.left = '50%';
+        mensajeContainer.style.transform = 'translate(-50%, -50%)';
+        mensajeContainer.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        mensajeContainer.style.color = 'white';
+        mensajeContainer.style.padding = '15px 30px';
+        mensajeContainer.style.borderRadius = '10px';
+        mensajeContainer.style.zIndex = '10000';
+        mensajeContainer.style.fontSize = '16px';
+        mensajeContainer.style.fontWeight = 'bold';
+        mensajeContainer.style.textAlign = 'center';
+        mensajeContainer.style.boxShadow = '0 4px 8px rgba(0,0,0,0.3)';
+        mensajeContainer.style.display = 'none';
+        document.body.appendChild(mensajeContainer);
+    }
+
+    // Mostrar el mensaje
+    mensajeContainer.textContent = mensaje;
+    mensajeContainer.style.display = 'block';
+
+    // Devolver función para ocultar el mensaje
+    return function() {
+        mensajeContainer.style.display = 'none';
+    };
+}
 
 const checkPuertas = document.getElementById('check-puertas');
 const puertasLayer = L.layerGroup();
-checkPuertas.addEventListener('change', function () {
-    this.checked ? activarCapaPuertas(puertasLayer) : desactivarCapaEdificios(puertasLayer);
+checkPuertas.addEventListener('change', async function() {
+    if (this.checked) {
+        // Mostrar mensaje de carga
+        const ocultarMensaje = mostrarMensajeCarga('🔄 Cargando capa de Puertas...');
+        
+        try {
+            // Esperar un pequeño retraso para asegurar que el mensaje se muestre
+            await new Promise(resolve => setTimeout(resolve, 50));
+            
+            // Activar la capa
+            await activarCapaPuertas(puertasLayer);
+            
+            // Ocultar mensaje después de un breve retraso
+            setTimeout(ocultarMensaje, 500);
+        } catch (error) {
+            console.error('Error al cargar la capa de puertas:', error);
+            // Mostrar mensaje de error
+            mostrarMensajeCarga('❌ Error al cargar la capa de Puertas');
+            // Desmarcar el checkbox en caso de error
+            checkPuertas.checked = false;
+            // Ocultar mensaje después de 3 segundos
+            setTimeout(ocultarMensaje, 3000);
+        }
+    } else {
+        desactivarCapaEdificios(puertasLayer);
+    }
 });
 
 const checkIiss = document.getElementById('check-iiss');
 const iissLayer = L.layerGroup();
-checkIiss.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(iissLayer, ["CS","PICV","ET"]) : desactivarCapaEdificios(iissLayer);
+checkIiss.addEventListener('change', async function() {
+    if (this.checked) {
+        const ocultarMensaje = mostrarMensajeCarga('🔄 Cargando capa de IISS...');
+        try {
+            await activarCapaEdificios(iissLayer, ["CS", "PICV", "ET"]);
+            setTimeout(ocultarMensaje, 500);
+        } catch (error) {
+            console.error('Error al cargar capa de IISS:', error);
+            mostrarMensajeCarga('❌ Error al cargar la capa de IISS');
+            this.checked = false;
+            setTimeout(ocultarMensaje, 3000);
+        }
+    } else {
+        desactivarCapaEdificios(iissLayer);
+    }
 });
 
 const checkEstaciones = document.getElementById('check-estaciones');
 const estacionesLayer = L.layerGroup();
-checkEstaciones.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(estacionesLayer, ["ESTACIÓN", "BM"]) : desactivarCapaEdificios(estacionesLayer);
+checkEstaciones.addEventListener('change', async function() {
+    if (this.checked) {
+        const ocultarMensaje = mostrarMensajeCarga('🔄 Cargando capa de Estaciones/BM...');
+        try {
+            await activarCapaEdificios(estacionesLayer, ["ESTACIÓN", "BM"]);
+            setTimeout(ocultarMensaje, 500);
+        } catch (error) {
+            console.error('Error al cargar capa de Estaciones/BM:', error);
+            mostrarMensajeCarga('❌ Error al cargar la capa de Estaciones/BM');
+            this.checked = false;
+            setTimeout(ocultarMensaje, 3000);
+        }
+    } else {
+        desactivarCapaEdificios(estacionesLayer);
+    }
 });
 
 const checkTuneles = document.getElementById('check-tuneles');
 const tunelesLayer = L.layerGroup();
-checkTuneles.addEventListener('change', function () {
-    this.checked ? activarCapaEdificios(tunelesLayer, ["TUNEL"]) : desactivarCapaEdificios(tunelesLayer);
+checkTuneles.addEventListener('change', async function() {
+    if (this.checked) {
+        const ocultarMensaje = mostrarMensajeCarga('🔄 Cargando capa de Túneles...');
+        try {
+            await activarCapaEdificios(tunelesLayer, ["TUNEL"]);
+            setTimeout(ocultarMensaje, 500);
+        } catch (error) {
+            console.error('Error al cargar capa de Túneles:', error);
+            mostrarMensajeCarga('❌ Error al cargar la capa de Túneles');
+            this.checked = false;
+            setTimeout(ocultarMensaje, 3000);
+        }
+    } else {
+        desactivarCapaEdificios(tunelesLayer);
+    }
 });
 
 /////  FIN CAPA EDIFICIOS /////---------------------------------------------------------------------------------------
@@ -2268,126 +2639,7 @@ function mostrarResultadosEnTabla(resultados) {
 
 
 
- // ----- INICIO FUNCIONALIDAD BOTÓN SIMULADOR -----
-
-        const simuladorButton = document.querySelector('.plus-option-button[aria-label="SIMULADOR"]');
-        const simuladorCardContainer = document.getElementById('simulador-card-container');
-         const cerrarSimuladorCardButton = document.getElementById('cerrar-simulador-card');
-          const simuladorOpciones = document.getElementById('simulador-opciones');
-        const simuladorPkForm = document.getElementById('simulador-pk-form');
-       let usarSimulacion = false;
-    let latSimulada, lonSimulada;
-
-    if (simuladorButton) {
-        simuladorButton.addEventListener('click', async function() {
-            simuladorCardContainer.style.display = 'flex';
-            });
-        } else {
-            console.error('No se encontró el botón SIMULADOR');
-        }
-
-      if (cerrarSimuladorCardButton) {
-            cerrarSimuladorCardButton.addEventListener('click', function() {
-                simuladorCardContainer.style.display = 'none';
-                 simuladorPkForm.style.display = 'none';
-                  usarSimulacion = false; // Desactiva la simulación al cerrar la tarjeta
-                   calcularYActualizarPK();
-                     if (marcadorActual) {
-                         const { lat, lng } = marcadorActual.getLatLng();
-                        mapa.setView([lat, lng], 18);
-                         centradoAutomaticamente = true;
-                    }
-            });
-        } else {
-            console.error('No se encontró el botón de cerrar de la tarjeta de SIMULADOR');
-        }
-          const simularPkBtn = document.getElementById('simular-pk-btn');
-           if (simularPkBtn) {
-               simularPkBtn.addEventListener('click', function(){
-                 simuladorOpciones.style.display = 'none';
-                 simuladorPkForm.style.display = 'flex';
-                generarSelectSimuladorLinea();
-            });
-        } else {
-             console.error('No se encontró el botón simular pk');
-         }
-
-          const aplicarSimulacionBtn = document.getElementById('aplicar-simulacion-btn');
-       if (aplicarSimulacionBtn) {
-            aplicarSimulacionBtn.addEventListener('click', async function() {
-                 const linea = document.getElementById('simulador-linea-select').value;
-                const pk = document.getElementById('simulador-pk-input').value;
-                 simularPK(linea, pk);
-           });
-        } else {
-            console.error('No se encontró el botón aplicar simulación');
-        }
-         
-
-          function generarSelectSimuladorLinea(){
-
-       const lineas = ["40", "42", "46", "48"]; // Array con las líneas permitidas
-         const simuladorLineaSelect = document.getElementById("simulador-linea-select");
-        // Añadir la opción "Ubicación" por defecto
-         const optionLineaLabel = document.createElement('option');
-         optionLineaLabel.value = "";
-         optionLineaLabel.text = "Línea";
-         optionLineaLabel.disabled = true; // Deshabilitar la opción "Línea"
-         optionLineaLabel.selected = true; // Seleccionar la opción "Línea" por defecto
-         simuladorLineaSelect.appendChild(optionLineaLabel);
-        
-        lineas.forEach(linea => {
-           const option = document.createElement('option');
-           option.value = linea;
-           option.text = linea;
-             simuladorLineaSelect.appendChild(option);
-            });
-    }
-
-   async function simularPK(linea, pk) {
-    if (!linea || linea === "") {
-          alert("Debes seleccionar una línea.");
-          return;
-    }
-    if (!pk || isNaN(pkToNumber(pk))) {
-        alert("Debes introducir un PK válido.");
-        return;
-    }
-
-    // Mostrar mensaje "Buscando PK..."
-    const pkElement = document.getElementById("pkCercano");
-    const textoOriginalPK = pkElement.innerHTML; // Guarda el texto original para restaurar
-    pkElement.innerHTML = `<span class="texto-buscando-pk">Buscando PK simulado...</span>`;
-   
-  
-    try {
-        const datosTrazado = await cargarArchivosJSON(rutasArchivos);
-         const puntoSimulado = datosTrazado.find(punto => pkToNumber(punto.PK) === pkToNumber(pk) && punto.Linea === linea);
-         if (puntoSimulado)
-           {
-                latSimulada = parseFloat(puntoSimulado.Latitud);
-                lonSimulada = parseFloat(puntoSimulado.Longitud);
-                usarSimulacion = true;
-                 mapa.setView([latSimulada, lonSimulada], 18);
-                  const pkSimulado = calcularPKMasCercano(latSimulada, lonSimulada, datosTrazado)[0]
-                  mostrarPKMasCercano(pkSimulado);
-                  actualizarPosicionPK(pkSimulado);
-                 
-               
-                mostrarMensaje("✅ Simulación Aplicada")
-           }
-         else {
-                alert("No se ha encontrado el PK o linea simulada.");
-           }
-                pkElement.innerHTML = textoOriginalPK; // Restaura el texto original
-    } catch (error) {
-        console.error("Error al simular PK:", error);
-         alert("Error al realizar la simulación del PK.");
-         pkElement.innerHTML = textoOriginalPK; // Restaura el texto original
-    }
-}
- // ----- FIN FUNCIONALIDAD BOTÓN SIMULADOR -----
-
+ // ----- INICIO FUNCIONALIDAD BOTÓN ACCIDENTE -----
     // ----- INICIO FUNCIONALIDAD BOTÓN ACCIDENTE -----
     const accidenteButton = document.querySelector('.plus-option-button[aria-label="ACCIDENTE"]');
     const accidenteCardContainer = document.getElementById('accidente-card-container');

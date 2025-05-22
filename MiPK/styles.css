@@ -244,6 +244,34 @@ footer img {
 }
 
 /* =====================================================================
+|  OVERLAY DE CARGA                                                    |
+===================================================================== */
+.loading-overlay {
+    position: fixed; /* Fijo en la ventana */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* Asegura que esté por encima de todo lo demás */
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    display: none; /* Oculto por defecto */
+}
+
+.loading-message {
+    padding: 20px;
+    background-color: var(--primary-color); /* Azul principal */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* =====================================================================
 |  TARJETAS SUPERPUESTAS (OVERLAY CARDS) - ESTILOS GENERALES           |
 ===================================================================== */
 .overlay-card-container {

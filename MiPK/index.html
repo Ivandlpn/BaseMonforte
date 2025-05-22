@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <!-- Leaflet Touch Rotation -->
-    <script src="https://bernardocs.me/leaflet-touch-rotation/Leaflet.TouchRotation.js"></script>
+    <script src="https://unpkg.com/leaflet-touch-rotation@1.0.0/leaflet-touch-rotation.min.js"></script>
 
     <!-- Leaflet JavaScript (Funcionalidad del mapa) -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -57,6 +57,11 @@
 </head>
 
 <body>
+    <!-- Overlay de carga -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-message">Cargando capa Puertas...</div>
+    </div>
+
     <!-- =====================================================================
     |  CONTENEDOR PRINCIPAL DE LA APLICACIÓN                                  |
     ===================================================================== -->
@@ -116,7 +121,7 @@
                             <input type="checkbox" id="check-tuneles"> ⛰️ Túneles
                         </label>
                         <label>
-                            <input type="checkbox" id="check-puertas"> 🔐 Puertas
+                            <input type="checkbox" id="check-puertas"> 🚪 Puertas
                         </label>
    
                     </div>
