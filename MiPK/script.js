@@ -16,7 +16,7 @@ async function cargarEdificios() {
     
     try {
         const [albaniData, tovalData] = await Promise.all([
-            fetch('doc/edificios/ALBALI.json').then(r => r.json()),
+            fetch('doc/edificios/ALBALIv1.json').then(r => r.json()),
             fetch('doc/edificios/TOVAL.json').then(r => r.json())
         ]);
         
@@ -964,6 +964,7 @@ const iconosEdificios = {
     "ATI": 'img/edificios/energia_icon.png',
     "ATF": 'img/edificios/energia_icon.png',
     "BTS": 'img/edificios/bts_icon.png',
+    "5G": 'img/edificios/5g_icon.png',
     "CS": 'img/edificios/iiss_icon.png',
     "PICV": 'img/edificios/iiss_icon.png',
     "ET": 'img/edificios/iiss_icon.png',
@@ -1215,6 +1216,9 @@ function crearIconoEdificio(tipo) {
         case 'BTS':
             iconName = 'bts_icon.png';
             break;
+        case '5G':
+            iconName = '5g_icon.png';
+            break;
         case 'SE':
             iconName = 'se_icon.png';
             break;
@@ -1275,7 +1279,7 @@ checkBts.addEventListener('change', async function() {
     if (this.checked) {
         const ocultarMensaje = mostrarMensajeCarga('🔄 Cargando capa de BTS...');
         try {
-            await activarCapaEdificios(btsLayer, ["BTS"]);
+            await activarCapaEdificios(btsLayer, ["BTS","5G"]);
             setTimeout(ocultarMensaje, 500);
         } catch (error) {
             console.error('Error al cargar capa de BTS:', error);
