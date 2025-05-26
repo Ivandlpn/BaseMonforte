@@ -1,0 +1,704 @@
+[
+    {
+        "LINEA": "42",
+        "PK": "323340",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS01A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "327918",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS01B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "329138",
+        "TIPO": "CS",
+        "NOMBRE": "PICV 329"
+    },
+    {
+        "LINEA": "42",
+        "PK": "330036",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 311.5"
+    },
+    {
+        "LINEA": "42",
+        "PK": "332665",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS02A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "336566",
+        "TIPO": "ET",
+        "NOMBRE": "ET PAET Chinchilla AV"
+    },
+    {
+        "LINEA": "42",
+        "PK": "337647",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS02B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "342828",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS03A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "342890",
+        "TIPO": "ATF",
+        "NOMBRE": "ATF 312.1"
+    },
+    {
+        "LINEA": "42",
+        "PK": "343856",
+        "TIPO": "CS",
+        "NOMBRE": "PICV 343"
+    },
+    {
+        "LINEA": "42",
+        "PK": "347556",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 03B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "348862",
+        "TIPO": "CS",
+        "NOMBRE": "PCA Hoya Gonzalo"
+    },
+    {
+        "LINEA": "42",
+        "PK": "351720",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 04A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "355160",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 04B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "355696",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 312.2"
+    },
+    {
+        "LINEA": "42",
+        "PK": "358916",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 05A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "361500",
+        "TIPO": "CS",
+        "NOMBRE": "PCA El Salobrejo"
+    },
+    {
+        "LINEA": "42",
+        "PK": "363923",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 05B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "365625",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 312.3"
+    },
+    {
+        "LINEA": "42",
+        "PK": "367700",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 06A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "371095",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 06B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "373493",
+        "TIPO": "ET",
+        "NOMBRE": "ET Bonete"
+    },
+    {
+        "LINEA": "42",
+        "PK": "374756",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 07A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "376881",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 07B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "378076",
+        "TIPO": "SE",
+        "NOMBRE": "SE 312 - SSEE CAMPANARIO"
+    },
+    {
+        "LINEA": "42",
+        "PK": "383493",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 08A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "384772",
+        "TIPO": "CS",
+        "NOMBRE": "PCA El Mugrón"
+    },
+    {
+        "LINEA": "42",
+        "PK": "385743",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 08B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "387772",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 312.4"
+    },
+    {
+        "LINEA": "42",
+        "PK": "388527",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 09A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "392925",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 09B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "395700",
+        "TIPO": "CS",
+        "NOMBRE": "PCA Atalaya"
+    },
+    {
+        "LINEA": "42",
+        "PK": "398047",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 10A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "398537",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 312.5"
+    },
+    {
+        "LINEA": "42",
+        "PK": "401577",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 10B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "405200",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 11A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "405999",
+        "TIPO": "ATF",
+        "NOMBRE": "ATF 321.1"
+    },
+    {
+        "LINEA": "42",
+        "PK": "407496",
+        "TIPO": "CS",
+        "NOMBRE": "PB Las Chozas"
+    },
+    {
+        "LINEA": "42",
+        "PK": "410070",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 11B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "410500",
+        "TIPO": "ET",
+        "NOMBRE": "ET Bifurcación La Oliva"
+    },
+    {
+        "LINEA": "42",
+        "PK": "413835",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 12A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "417468",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 12B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "418357",
+        "TIPO": "CS",
+        "NOMBRE": "Bifurcación Aguaverde"
+    },
+    {
+        "LINEA": "42",
+        "PK": "420421",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 321.2"
+    },
+    {
+        "LINEA": "42",
+        "PK": "421704",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 13A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "425227",
+        "TIPO": "CS",
+        "NOMBRE": "PB Caudete AV"
+    },
+    {
+        "LINEA": "42",
+        "PK": "426207",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 13B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "429607",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 321.3"
+    },
+    {
+        "LINEA": "42",
+        "PK": "429835",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 14A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "433760",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 14B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "435487",
+        "TIPO": "ESTACIÓN",
+        "NOMBRE": "Estación Villena"
+    },
+    {
+        "LINEA": "42",
+        "PK": "435487",
+        "TIPO": "ET",
+        "NOMBRE": "ET PAET Villena AV"
+    },
+    {
+        "LINEA": "42",
+        "PK": "437951",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 15A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "438478",
+        "TIPO": "SE",
+        "NOMBRE": "SE 321 - SSEE SAX"
+    },
+    {
+        "LINEA": "42",
+        "PK": "440640",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 15B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "442266",
+        "TIPO": "CS",
+        "NOMBRE": "PICV 442"
+    },
+    {
+        "LINEA": "42",
+        "PK": "444821",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 16A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "444821",
+        "TIPO": "TUNEL",
+        "NOMBRE": "TUNEL BARRANCADAS"
+    },
+    {
+        "LINEA": "42",
+        "PK": "448927",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 16B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "449554",
+        "TIPO": "CS",
+        "NOMBRE": "PCA Elda"
+    },
+    {
+        "LINEA": "42",
+        "PK": "450640",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 17A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "450660",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 321.4"
+    },
+    {
+        "LINEA": "42",
+        "PK": "455432",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 17B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "459390",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 18A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "460006",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 321.5"
+    },
+    {
+        "LINEA": "42",
+        "PK": "461719",
+        "TIPO": "CS",
+        "NOMBRE": "Bifurcación Murcia"
+    },
+    {
+        "LINEA": "42",
+        "PK": "463781",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 18B"
+    },
+    {
+        "LINEA": "46",
+        "PK": "464480",
+        "TIPO": "CS",
+        "NOMBRE": "Bifurcación Vinalopo"
+    },
+    {
+        "LINEA": "42",
+        "PK": "464685",
+        "TIPO": "ET",
+        "NOMBRE": "ET Monforte"
+    },
+    {
+        "LINEA": "42",
+        "PK": "465134",
+        "TIPO": "BM",
+        "NOMBRE": "BM MONFORTE DEL CID"
+    },
+    {
+        "LINEA": "42",
+        "PK": "468144",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 19A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "470416",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 19B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "470928",
+        "TIPO": "TUNEL",
+        "NOMBRE": "TUNEL SIERRA DE LAS AGUILAS"
+    },
+    {
+        "LINEA": "42",
+        "PK": "472389",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 20A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "474060",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 321.6"
+    },
+    {
+        "LINEA": "42",
+        "PK": "476032",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 20B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "476931",
+        "TIPO": "CS",
+        "NOMBRE": "PCA Alcoraya"
+    },
+    {
+        "LINEA": "42",
+        "PK": "477939",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 21A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "480320",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 21B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "480323",
+        "TIPO": "TUNEL",
+        "NOMBRE": "TUNEL SERRETA"
+    },
+    {
+        "LINEA": "42",
+        "PK": "481640",
+        "TIPO": "ATI",
+        "NOMBRE": "ATI 321.7"
+    },
+    {
+        "LINEA": "42",
+        "PK": "481682",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 22A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "482308",
+        "TIPO": "BTS",
+        "NOMBRE": "BTS 22B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "483925",
+        "TIPO": "ET",
+        "NOMBRE": "ET Alacant-Terminal"
+    },
+    {
+        "LINEA": "42",
+        "PK": "483956",
+        "TIPO": "TUNEL",
+        "NOMBRE": "TUNEL ALICANTE LADO ALB"
+    },
+    {
+        "LINEA": "42",
+        "PK": "484520",
+        "TIPO": "SAL EM",
+        "NOMBRE": "SALIDA EMERGENCIA"
+    },
+    {
+        "LINEA": "42",
+        "PK": "484920",
+        "TIPO": "POZO",
+        "NOMBRE": "POZO DE BOMBEO"
+    },
+    {
+        "LINEA": "42",
+        "PK": "485023",
+        "TIPO": "TUNEL",
+        "NOMBRE": "TUNEL ALICANTE LADO ALI"
+    },
+    {
+        "LINEA": "42",
+        "PK": "485999",
+        "TIPO": "ESTACIÓN",
+        "NOMBRE": "Estación  Alicante"
+    },
+    {
+        "LINEA": "42",
+        "PK": "325647",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR011A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "330512",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR011B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "335246",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR021A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "340100",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR021B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "345220",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR031A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "349563",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR031B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "353490",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR041A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "357640",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR041B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "365310",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR051B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "378760",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR071B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "391000",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR091A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "395284",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR091B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "399720",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR101A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "408200",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR111A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "415762",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR121A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "419760",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR121B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "428044",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR131B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "431520",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR141A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "436200",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR141B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "439500",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR151A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "442895",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR151B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "452700",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR171A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "457500",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR171B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "461600",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR181A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "466030",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR181B"
+    },
+    {
+        "LINEA": "42",
+        "PK": "474300",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR201A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "483500",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR221A"
+    },
+    {
+        "LINEA": "42",
+        "PK": "485400",
+        "TIPO": "5G",
+        "NOMBRE": "5GALBALIR222A"
+    }
+]
