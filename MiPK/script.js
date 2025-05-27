@@ -275,8 +275,19 @@ function calcularYActualizarPK() {
         .then(datosCombinados => {
             window.pkMasCercano = calcularPKMasCercano(lat, lon, datosCombinados)[0];
             if(window.pkMasCercano && pkElement){ //Añadimos la comprobación de pkElement
+               // Eliminar la clase de PK simulado si existe (cuando se actualiza la ubicación real)
+               const tarjetaPK = document.querySelector('#calculoPK .tarjeta');
+               if (tarjetaPK) {
+                   tarjetaPK.classList.remove('pk-simulado');
+               }
+               
                mostrarPKMasCercano(window.pkMasCercano);
                actualizarPosicionPK(window.pkMasCercano);
+               
+               // Marcar como no simulado
+               if (window.pkMasCercano) {
+                   window.pkMasCercano.esSimulado = false;
+               }
             }
             // mostrarMensaje("   🔄 PK Actualizado");
         })
@@ -293,22 +304,26 @@ async function cargarJSON(rutaArchivo) {
 
 
 // Propiedades Mensaje: PK Actualizado
-function mostrarMensaje(mensaje) {
+function mostrarMensaje(mensaje, esError = false) {
     const mensajeDiv = document.createElement("div");
     mensajeDiv.textContent = mensaje;
     mensajeDiv.style.position = "fixed";
     mensajeDiv.style.bottom = "300px";
     mensajeDiv.style.left = "50%";
     mensajeDiv.style.transform = "translateX(-50%)";
-    mensajeDiv.style.backgroundColor = "#007bff"; // Azul para mensaje de carga
+    mensajeDiv.style.backgroundColor = esError ? "#dc3545" : "#007bff"; // Rojo para error, azul para mensajes normales
     mensajeDiv.style.color = "white";
-    mensajeDiv.style.padding = "10px 20px";
+    mensajeDiv.style.padding = "12px 24px";
     mensajeDiv.style.borderRadius = "5px";
     mensajeDiv.style.boxShadow = "0px 4px 6px rgba(0, 0, 0, 0.1)";
     mensajeDiv.style.zIndex = "9999"; // Alto z-index
     mensajeDiv.style.fontSize = "1.2em";
     mensajeDiv.style.border = "1px solid #ffffff"; // Borde blanco para visibilidad
     mensajeDiv.style.opacity = "0.9"; // Ligera opacidad
+    mensajeDiv.style.textAlign = "center"; // Centrar texto
+    mensajeDiv.style.display = "flex"; // Usar flex para centrar
+    mensajeDiv.style.alignItems = "center"; // Centrar verticalmente
+    mensajeDiv.style.justifyContent = "center"; // Centrar horizontalmente
 
     // Ajuste del ancho
     mensajeDiv.style.minWidth = "200px"; // Ancho mínimo
@@ -394,10 +409,25 @@ function inicializarMapa(lat, lon) {
 }
 
 
-function actualizarPosicionUsuario(lat, lon) {
-    marcadorActual.setLatLng([lat, lon]);
-    if (centradoAutomaticamente) {
-        mapa.setView([lat, lon], 18);
+function actualizarPosicionUsuario(lat, lon, esSimulado = false) {
+    if (marcadorActual) {
+        if (esSimulado) {
+            // Si es simulado, ocultar el marcador
+            if (mapa.hasLayer(marcadorActual)) {
+                mapa.removeLayer(marcadorActual);
+            }
+        } else {
+            // Si no es simulado, mostrar el marcador y actualizar posición
+            if (!mapa.hasLayer(marcadorActual)) {
+                marcadorActual.addTo(mapa);
+            }
+            marcadorActual.setLatLng([lat, lon]);
+        }
+    }
+    
+    // Mover la cámara a la nueva posición (siempre que haya un mapa)
+    if (mapa) {
+        mapa.setView([lat, lon], 18); // Zoom 18 para una vista cercana
     }
 }
 
@@ -437,10 +467,18 @@ function determinarLadoVia(latUsuario, lonUsuario, pkActual, pkSiguiente, linea)
 
 // icono para el PK más cercano
 const iconoPK = L.icon({
-    iconUrl: 'img/MiPKubi.png', // Ruta de la imagen del icono
+    iconUrl: 'img/MiPKubi.png', // Ruta de la imagen del icono normal
     iconSize: [30, 40], // Tamaño del icono (ajusta según sea necesario)
     iconAnchor: [20, 40], // Punto del icono que apunta a la ubicación
     popupAnchor: [0, -40] // Punto desde donde se abrirá el popup
+});
+
+// icono para el PK simulado
+const iconoPKSimulado = L.icon({
+    iconUrl: 'img/MiPKubisimu.png', // Ruta de la imagen del icono simulado
+    iconSize: [30, 40], // Mismo tamaño que el icono normal
+    iconAnchor: [20, 40], // Mismo anclaje que el icono normal
+    popupAnchor: [0, -40] // Mismo popup que el icono normal
 });
 
 function calcularPKMasCercano(lat, lon, data) {
@@ -515,26 +553,49 @@ function mostrarPKMasCercano(pk) {
      if(pkElement) // <-- Comprobación IMPORTANTE
      {
          const pkFormateado = formatearPK(pk.pk); // Formatea el PK
+         const ladoViaTexto = pk.esSimulado ? '' : pk.ladoVia; // No mostrar nada si es simulado
+         const textoLinea = `L${pk.linea}`; // Texto de la línea
+         
          pkElement.innerHTML = `
              <div style="font-size: 1em; margin-bottom: 3px;">${pkFormateado}</div>
-              <div style="font-size: 0.6em;"> ${pk.ladoVia}  (L${pk.linea})</div>
+             <div style="font-size: 0.6em;">${textoLinea}${ladoViaTexto ? ' - ' + ladoViaTexto : ''}</div>
         `;
     } else{
          console.error("No se ha encontrado el elemento con id pkCercano en mostrarPKMasCercano.")
     }
+    
+    // Actualizar el estado de los iconos según si el PK es simulado o no
+    actualizarEstadoIconos(pk.esSimulado || false);
 }
 
-
+// Función para actualizar el estado de los iconos según si el PK es simulado o no
+function actualizarEstadoIconos(esSimulado) {
+    const iconoCamara = document.getElementById('iconoCamara');
+    const iconoPuerta = document.getElementById('iconoPuerta');
+    
+    if (iconoCamara && iconoPuerta) {
+        if (esSimulado) {
+            iconoCamara.classList.add('deshabilitado');
+            iconoPuerta.classList.add('deshabilitado');
+        } else {
+            iconoCamara.classList.remove('deshabilitado');
+            iconoPuerta.classList.remove('deshabilitado');
+        }
+    }
+}
 
 function actualizarPosicionPK(pk) {
+    const iconoActual = pk.esSimulado ? iconoPKSimulado : iconoPK;
+    
     if (!marcadorPK) {
-        marcadorPK = L.marker([pk.latitud, pk.longitud], { icon: iconoPK }).addTo(mapa)
-            //.bindPopup('PK cercano')
-            //.openPopup();
+        marcadorPK = L.marker([pk.latitud, pk.longitud], { icon: iconoActual }).addTo(mapa);
     } else {
         marcadorPK.setLatLng([pk.latitud, pk.longitud]);
-        marcadorPK.setIcon(iconoPK); // Asegura que el icono se actualice si ya existe el marcador
+        marcadorPK.setIcon(iconoActual);
     }
+    
+    // Actualizar el estado de los iconos según si el PK es simulado o no
+    actualizarEstadoIconos(pk.esSimulado || false);
 }
 
 function formatearPK(pk) {
@@ -663,8 +724,84 @@ verMapsButton.addEventListener('click', async function() {
 
 // Evento para el botón Ver en MiPK
 const verMiPKButton = document.getElementById('ver-mipk-button');
-verMiPKButton.addEventListener('click', function() {
-    mostrarMensaje("PROXIMAMENTE..."); // Mostrar mensaje "PROXIMAMENTE"
+// Función para cerrar todas las tarjetas y menús
+function cerrarTodasLasTarjetas() {
+    // Cerrar menú de capas si está abierto
+    const menuCapas = document.getElementById('menu-capas');
+    if (menuCapas) menuCapas.style.display = 'none';
+    
+    // Cerrar todas las tarjetas de overlay
+    const overlayContainers = document.querySelectorAll('.overlay-card-container');
+    overlayContainers.forEach(container => {
+        container.style.display = 'none';
+    });
+    
+    // Cerrar menú plus si está abierto
+    const plusCard = document.getElementById('plus-card-container');
+    if (plusCard) plusCard.style.display = 'none';
+    
+    // Cerrar cualquier otro menú que pueda estar abierto
+    const menusAbiertos = document.querySelectorAll('[style*="display: flex"], [style*="display:block"]');
+    menusAbiertos.forEach(menu => {
+        if (menu.id && menu.id.includes('menu') || menu.className.includes('menu')) {
+            menu.style.display = 'none';
+        }
+    });
+}
+
+verMiPKButton.addEventListener('click', async function() {
+    // Cerrar todas las tarjetas y menús antes de continuar
+    cerrarTodasLasTarjetas();
+    
+    const linea = document.getElementById('linea-input').value;
+    let pk = document.getElementById('pk-input').value;
+    
+    if (!linea || !pk) {
+        mostrarMensaje("Por favor, selecciona una línea y un PK");
+        return;
+    }
+    
+    // Formatear el PK si es necesario
+    pk = pk.replace(/[+.]/g, ''); // Eliminar caracteres especiales
+    
+    // Obtener las coordenadas para el PK seleccionado
+    const coordenadas = await obtenerCoordenadas(linea, pk);
+    
+    if (coordenadas) {
+        // Actualizar la ubicación del usuario con las coordenadas del PK seleccionado
+        lat = coordenadas.latitud;
+        lon = coordenadas.longitud;
+        
+        // Actualizar la posición del usuario (ocultando el marcador ya que es simulado)
+        actualizarPosicionUsuario(lat, lon, true);
+        
+        // Crear un objeto pkMasCercano simulado
+        window.pkMasCercano = {
+            pk: pk,
+            latitud: lat,
+            longitud: lon,
+            linea: linea,
+            ladoVia: 'derecha', // Valor por defecto, se actualizará en calcularPKMasCercano
+            esSimulado: true // Marcar como PK simulado
+        };
+        
+        // Actualizar la interfaz con el nuevo PK
+        mostrarPKMasCercano(window.pkMasCercano);
+        actualizarPosicionPK(window.pkMasCercano);
+        
+        // Agregar clase para indicar que es un PK simulado
+        const tarjetaPK = document.querySelector('#calculoPK .tarjeta');
+        if (tarjetaPK) {
+            tarjetaPK.classList.add('pk-simulado');
+        }
+        
+        // Cerrar la tarjeta de viajar
+        document.getElementById('viajar-card-container').style.display = 'none';
+        
+        mostrarMensaje("Ubicación Simulada", true); // true para mostrar en rojo
+    } else {
+        mostrarMensaje('No se pudieron obtener las coordenadas para la línea y PK especificados.');
+    }
 });
 
 // Evento para el botón VIAJAR
