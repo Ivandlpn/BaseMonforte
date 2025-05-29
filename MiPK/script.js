@@ -2991,7 +2991,7 @@ async function mostrarTrenesCercanosInterpolado() {
     // Ocultar la superposición después de 5 segundos
     setTimeout(() => {
         overlayDiv.style.display = 'none';
-    }, 5000);
+    }, 3000);
 
     // Obtener el tbody de la tabla (ya existente)
     const tbody = document.querySelector('#trenes-container tbody');
