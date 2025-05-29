@@ -645,18 +645,42 @@ botonCapas.addEventListener('click', toggleMenuCapas);
 // Función para obtener coordenadas basadas en línea y PK
 async function obtenerCoordenadas(linea, pk) {
     try {
-        const archivos = ['L40Ar.json', 'L40Br.json', 'L40Cr.json', 'L40Z.json', 'L42.json', 'L42A.json', 'L42Ar.json', 'L42B.json', 'L46.json', 'L48.json'];
-        for (const archivo of archivos) {
+        // Filtrar archivos según la línea seleccionada
+        const archivosFiltrados = [
+            'L40Ar.json', 'L40Br.json', 'L40Cr.json', 'L40Z.json', 
+            'L42.json', 'L42A.json', 'L42Ar.json', 'L42B.json', 
+            'L46.json', 'L48.json'
+        ].filter(archivo => {
+            if (linea === '40') return archivo.startsWith('L40');
+            if (linea === '42') return archivo.startsWith('L42');
+            if (linea === '46') return archivo.startsWith('L46');
+            if (linea === '48') return archivo.startsWith('L48');
+            return false;
+        });
+
+        // Si no hay archivos para la línea, devolver null
+        if (archivosFiltrados.length === 0) {
+            console.error(`No se encontraron archivos para la línea ${linea}`);
+            return null;
+        }
+
+        // Buscar en los archivos filtrados
+        for (const archivo of archivosFiltrados) {
             const response = await fetch(`doc/traza/${archivo}`);
-        const data = await response.json();
+            const data = await response.json();
             console.log('Datos cargados de', archivo, ':', data);
-            console.log('Buscando PK:', pk);
+            console.log('Buscando PK:', pk, 'en línea', linea);
+            
             const punto = data.find(p => p.PK === pk);
             if (punto) {
                 console.log('Punto encontrado en', archivo, ':', punto);
-                return { latitud: punto.Latitud, longitud: punto.Longitud };
+                return { 
+                    latitud: punto.Latitud, 
+                    longitud: punto.Longitud 
+                };
             }
         }
+        console.log(`PK ${pk} no encontrado en la línea ${linea}`);
         return null;
     } catch (error) {
         console.error("Error al cargar los datos de trazado:", error);
