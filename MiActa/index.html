@@ -27,29 +27,26 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* --- ESTILOS DE FONDO CON IMAGEN --- */
-            background-image: url('fondo.png'); /* Ruta a tu imagen */
-            background-size: cover;             /* Cubrir todo el fondo */
-            background-position: center center; /* Centrar la imagen */
-            background-repeat: no-repeat;       /* No repetir la imagen */
-            background-attachment: fixed;       /* Fondo fijo al hacer scroll */
-            background-color: #f5f7fa;          /* Color de respaldo si la imagen no carga */
-            /* --- FIN ESTILOS DE FONDO --- */
+            background-image: url('fondo.png');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: #f5f7fa;
             margin: 0;
-            padding: 20px; /* Mantenemos padding para el contenido */
+            padding: 20px;
             color: var(--text-color);
             line-height: 1.6;
-            min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la pantalla */
+            min-height: 100vh;
         }
 
         .container {
             max-width: 1100px;
             margin: 0 auto;
             padding: 10px 20px 20px;
-             /* Añadir un fondo semi-transparente al contenedor para mejorar legibilidad sobre imagen */
-             background-color: rgba(255, 255, 255, 0.9); /* Blanco con 90% opacidad */
-             border-radius: 8px; /* Opcional: redondear esquinas del contenedor */
-             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra para destacar el contenedor */
+             background-color: rgba(255, 255, 255, 0.9);
+             border-radius: 8px;
+             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         h1 {
@@ -80,14 +77,14 @@
         }
 
         .card {
-            background-color: white; /* Fondo blanco sólido para las tarjetas */
+            background-color: white;
             border-radius: 12px;
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
             padding: 30px;
             width: 100%;
             max-width: 480px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 2px solid var(--primary-color); /* Borde más visible */
+            border: 2px solid var(--primary-color);
             display: flex;
             flex-direction: column;
         }
@@ -151,9 +148,9 @@
         .data-value-container {
             flex: 1;
             position: relative;
-            display: flex; /* Para alinear el valor/select y el botón */
-            align-items: center; /* Centrar verticalmente */
-            gap: 8px; /* Espacio entre valor/select y botón */
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .data-value {
@@ -161,8 +158,7 @@
             padding: 8px 12px;
             background-color: var(--light-color);
             border-radius: 6px;
-            /* width: 100%; */ /* Quitar width 100% para que el flex funcione */
-            flex-grow: 1; /* Hacer que ocupe el espacio disponible */
+            flex-grow: 1;
             border: 1px solid var(--border-color);
             font-size: 1.1rem;
             min-height: 24px;
@@ -174,8 +170,7 @@
         .data-input,
         .data-select {
             display: none;
-            /* width: 100%; */ /* Quitar width 100% para que el flex funcione */
-            flex-grow: 1; /* Hacer que ocupe el espacio disponible */
+            flex-grow: 1;
             padding: 8px 12px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
@@ -192,24 +187,12 @@
             box-shadow: 0 0 0 3px rgba(75, 108, 155, 0.2);
         }
 
-        .editing .data-value {
-            display: none;
-        }
-
-        .editing .data-input, .editing .data-select {
-            display: block;
-        }
-
-        .editing .edit-btn:not(.save-btn):not(.share-btn) {
-            display: none;
-        }
-         .editing .share-btn {
-             display: none;
-         }
-
-        .editing .save-btn {
-            display: block;
-        }
+        .editing .data-value { display: none; }
+        .editing .data-input, .editing .data-select { display: block; }
+        .editing .edit-btn:not(.save-btn):not(.share-btn) { display: none; }
+        .editing .share-btn { display: none; }
+        .editing .save-btn { display: block; }
+        .editing .share-guard-btn { display: none; }
 
         .card-actions {
             display: flex;
@@ -244,168 +227,73 @@
             flex-shrink: 0;
         }
 
-         .edit-btn:hover {
-            transform: translateY(-2px);
+        .edit-btn:hover { transform: translateY(-2px); }
+        .edit-btn:not(.save-btn):not(.share-btn) { background-color: var(--primary-color); }
+        .edit-btn:not(.save-btn):not(.share-btn):hover { background-color: #3a5a80; }
+        .save-btn { background-color: var(--success-color); display: none; }
+        .save-btn:hover { background-color: #218838; }
+        .share-btn { background-color: var(--share-btn-color); }
+        .share-btn:hover { background-color: var(--share-btn-hover-color); }
+        .share-btn:disabled, .share-guard-btn:disabled {
+            background-color: #adb5bd;
+            cursor: not-allowed;
+            transform: none;
         }
-
-        .edit-btn:not(.save-btn):not(.share-btn) {
-            background-color: var(--primary-color);
-        }
-        .edit-btn:not(.save-btn):not(.share-btn):hover {
-            background-color: #3a5a80;
-        }
-
-        .save-btn {
-            background-color: var(--success-color);
-            display: none;
-        }
-        .save-btn:hover {
-            background-color: #218838;
-        }
-
-        .share-btn {
-            background-color: var(--share-btn-color);
-        }
-        .share-btn:hover {
-            background-color: var(--share-btn-hover-color);
-        }
-        .share-btn:disabled {
-             background-color: #adb5bd;
-             cursor: not-allowed;
-             transform: none;
-         }
-        .share-btn:disabled:hover {
-             background-color: #adb5bd;
-         }
 
         .copied-feedback {
             background-color: var(--success-color) !important;
             color: white !important;
             cursor: default !important;
         }
-        .copied-feedback svg {
-            display: none;
-        }
+        .copied-feedback svg { display: none; }
 
         .share-guard-btn {
-            padding: 4px 6px; /* Más pequeño */
+            padding: 4px 6px;
             background-color: var(--share-btn-color);
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            display: inline-flex; /* Para alinear icono */
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0; /* Evitar que se encoja */
+            flex-shrink: 0;
             transition: background-color 0.3s;
-            line-height: 1; /* Ajustar altura */
+            line-height: 1;
         }
-        .share-guard-btn svg {
-            width: 0.9em; /* Icono más pequeño */
-            height: 0.9em;
-            margin-right: 0; /* Sin margen si no hay texto */
-        }
-        .share-guard-btn:hover {
-            background-color: var(--share-btn-hover-color);
-        }
-        .share-guard-btn:disabled {
-            background-color: #adb5bd;
-            cursor: not-allowed;
-        }
-        .editing .share-guard-btn {
-            display: none; /* Ocultar en modo edición */
-        }
-        .share-guard-btn.copied-feedback {
-             background-color: var(--success-color) !important;
-             cursor: default !important;
-        }
+        .share-guard-btn svg { width: 0.9em; height: 0.9em; margin-right: 0; }
+        .share-guard-btn:hover { background-color: var(--share-btn-hover-color); }
+        .share-guard-btn.copied-feedback { background-color: var(--success-color) !important; cursor: default !important; }
 
-        /* Estas clases ya no son tan relevantes para el color, pero se pueden mantener para estilos generales */
-        .current-week {
-            background-color: rgb(200, 220, 255); /* Azul tenue */
-        }
-
-        .next-week {
-             background-color: rgb(255, 200, 200); /* Rojo tenue */
-        }
+        .current-week { background-color: rgb(200, 220, 255); }
+        .next-week { background-color: rgb(255, 200, 200); }
 
         .sync-status {
             text-align: center;
             margin-top: 30px;
             font-size: 0.85rem;
-            color: #6c757d; /* Color original */
-            /* Ajuste para legibilidad sobre fondo de imagen */
-            background-color: rgba(248, 249, 250, 0.85); /* Fondo claro con opacidad */
+            color: #6c757d;
+            background-color: rgba(248, 249, 250, 0.85);
             padding: 12px;
             border-radius: 6px;
             max-width: 500px;
             margin-left: auto;
             margin-right: auto;
             border: 1px solid var(--border-color);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra ligera */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-
-         /* Ajuste para que el texto del sync-status sea más oscuro si es necesario */
-        .sync-status strong {
-            color: var(--dark-color);
-        }
-
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px; /* Menos padding en móvil */
-                 background-color: rgba(255, 255, 255, 0.95); /* Más opaco en móvil */
-            }
-            h1 {
-                font-size: 2.8rem;
-            }
-            .card {
-                padding: 20px;
-                max-width: 100%;
-            }
-            .week-cards {
-                gap: 20px;
-            }
-            .data-item {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 5px;
-            }
-            .data-label {
-                flex-basis: auto;
-                width: 100%;
-                text-align: left;
-                padding-top: 0;
-            }
-            .data-value-container {
-                width: 100%;
-            }
-             .card-actions {
-                flex-wrap: wrap;
-                 justify-content: center;
-                 gap: 8px;
-            }
-            .edit-btn {
-                padding: 8px 12px;
-                font-size: 0.9rem;
-            }
-            .sync-status {
-                 max-width: 95%;
-            }
-        }
+        .sync-status strong { color: var(--dark-color); }
 
         .footer {
             text-align: center;
             margin-top: 40px;
             padding: 20px 0;
             border-top: 1px solid var(--border-color);
-             /* Fondo para el footer para mejor legibilidad */
             background-color: rgba(248, 249, 250, 0.9);
             border-radius: 0 0 8px 8px;
-            display: flex; /* Usar flexbox para alinear items */
-            flex-direction: column; /* Apilar elementos verticalmente */
-            align-items: center; /* Centrar elementos horizontalmente */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .footer-logo {
             height: 50px;
@@ -415,24 +303,92 @@
             color: var(--text-color);
             font-size: 0.9rem;
             margin-top: 10px;
-            margin-bottom: 15px; /* Añadir espacio antes del botón */
+            margin-bottom: 15px;
         }
-        .pidame-btn {
-             background-color: #066337; /* Verde especificado */
-             margin-top: 10px;
-        }
-        .pidame-btn:hover {
-            background-color: #044a27; /* Verde más oscuro para hover */
+        
+        /* --- ESTILO PARA EL CONTENEDOR DE BOTONES DEL FOOTER --- */
+        .footer-actions {
+            display: flex;
+            gap: 15px; /* Espacio entre los botones */
+            margin-top: 10px; /* Espacio sobre el grupo de botones */
         }
 
+        .pidame-btn { background-color: #066337; }
+        .pidame-btn:hover { background-color: #044a27; }
+        #historyBtn { background-color: #6c757d; }
+        #historyBtn:hover { background-color: #5a6268; }
+
         .header-image {
-            display: block; /* Para poder centrar con margin auto */
-            width: 100%; /* Ocupa el ancho disponible */
-            max-width: 990px; /* Ancho máximo similar a dos tarjetas + gap (480*2 + 30) */
-            height: auto; /* Mantiene la proporción */
-            margin: 20px auto 30px; /* Centrado horizontal, margen superior e inferior */
-            border-radius: 8px; /* Opcional: redondear esquinas */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+            display: block;
+            width: 100%;
+            max-width: 990px;
+            height: auto;
+            margin: 20px auto 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+        .modal-hidden { opacity: 0; pointer-events: none; }
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .modal-close:hover { color: #333; }
+        #historyListContainer ul { list-style-type: none; padding: 0; margin-top: 20px; }
+        #historyListContainer li {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+        #historyListContainer li:last-child { border-bottom: none; }
+        #historyListContainer li span { color: var(--dark-color); font-weight: 500; }
+        #historyListContainer li strong { color: var(--primary-color); }
+
+        @media (max-width: 768px) {
+            .container { padding: 10px; background-color: rgba(255, 255, 255, 0.95); }
+            h1 { font-size: 2.8rem; }
+            .card { padding: 20px; max-width: 100%; }
+            .week-cards { gap: 20px; }
+            .data-item { flex-direction: column; align-items: stretch; gap: 5px; }
+            .data-label { flex-basis: auto; width: 100%; text-align: left; padding-top: 0; }
+            .data-value-container { width: 100%; }
+            .card-actions { flex-wrap: wrap; justify-content: center; gap: 8px; }
+            .edit-btn { padding: 8px 12px; font-size: 0.9rem; }
+            .sync-status { max-width: 95%; }
+            .footer-actions { flex-wrap: wrap; justify-content: center; } /* Para que en móvil se puedan apilar si no caben */
         }
     </style>
 </head>
@@ -443,7 +399,6 @@
 
         <div class="week-cards">
             <!-- Tarjeta Semana Actual -->
-            <!-- Los atributos data-year y data-week se añadirán dinámicamente con JS -->
             <div class="card current-week" id="currentWeekCard">
                 <div class="card-header">
                     <h2 class="card-title">Semana Actual
@@ -479,35 +434,26 @@
                                 <option value="Manuel">Manuel</option>
                                 <option value="Pepe">Pepe</option>
                                 <option value="Iván">Iván</option>
-                                <!-- Puedes añadir más técnicos aquí si es necesario -->
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="card-actions">
                      <button class="edit-btn share-btn" onclick="shareWeekData('currentWeekCard')" title="Compartir datos de la semana actual">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>
                         Compartir
                     </button>
                     <button class="edit-btn" onclick="toggleEdit('currentWeekCard')" title="Editar datos">
-                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                           <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                           <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                         </svg>
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg>
                         Editar
                     </button>
                     <button class="edit-btn save-btn" onclick="saveData('currentWeekCard')" title="Guardar cambios">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
-                           <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022z"/>
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022z"/></svg>
                         Guardar
                     </button>
                 </div>
             </div>
             <!-- Tarjeta Próxima Semana -->
-            <!-- Los atributos data-year y data-week se añadirán dinámicamente con JS -->
             <div class="card next-week" id="nextWeekCard">
                  <div class="card-header">
                     <h2 class="card-title">Próxima Semana
@@ -543,35 +489,24 @@
                                 <option value="Manuel">Manuel</option>
                                 <option value="Pepe">Pepe</option>
                                 <option value="Iván">Iván</option>
-                                <!-- Puedes añadir más técnicos aquí si es necesario -->
                             </select>
-                            <!-- Nuevo botón de compartir para Técnico Guardia Próxima Semana -->
                             <button class="share-guard-btn" id="shareNextGuardBtn" onclick="shareNextGuard(event)" title="Compartir Técnico Guardia Próxima Semana" disabled>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                                    <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
-                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>
                             </button>
                         </div>
                     </div>
                 </div>
                 <div class="card-actions">
                     <button class="edit-btn share-btn" onclick="shareWeekData('nextWeekCard')" title="Compartir datos de la próxima semana">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                           <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/>
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"><path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>
                         Compartir
                     </button>
                     <button class="edit-btn" onclick="toggleEdit('nextWeekCard')" title="Editar datos">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
-                           <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-                           <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-                         </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg>
                         Editar
                     </button>
                     <button class="edit-btn save-btn" onclick="saveData('nextWeekCard')" title="Guardar cambios">
-                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
-                           <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022z"/>
-                        </svg>
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16"><path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022z"/></svg>
                         Guardar
                     </button>
                 </div>
@@ -583,14 +518,30 @@
                  alt="Logo INECO"
                  class="footer-logo">
             <div class="footer-text">Gestión de Actas y Guardias Semanales de la Técnica e IyV de la BM Monforte del Cid</div>
-            <button id="pidameBtn" class="edit-btn pidame-btn" title="Abrir PIDAME">PIDAME</button>
+            
+            <!-- CONTENEDOR PARA LOS BOTONES -->
+            <div class="footer-actions">
+                <button id="pidameBtn" class="edit-btn pidame-btn" title="Abrir PIDAME">🟢 PIDAME</button>
+                <button id="historyBtn" class="edit-btn" title="Ver historial de guardias">📅 Histórico</button>
+            </div>
         </footer>
+    </div>
+    
+    <!-- Modal para el Histórico -->
+    <div id="historyModal" class="modal-overlay modal-hidden">
+        <div class="modal-content">
+            <span class="modal-close" id="historyModalClose">×</span>
+            <h2>Historial de Guardias (Últimas 10 Semanas)</h2>
+            <div id="historyListContainer">
+                <p>Cargando historial...</p>
+            </div>
+        </div>
     </div>
 
     <script>
         // Configuración de Firebase
         const firebaseConfig = {
-            apiKey: "AIzaSyD034fyj8J0vxxwaU5X5TTPtZK8W2jeKKw", // ¡Considera proteger esto! ¡ASEGURA TUS REGLAS DE FIREBASE!
+            apiKey: "AIzaSyD034fyj8J0vxxwaU5X5TTPtZK8W2jeKKw", // ¡Recuerda asegurar tus reglas de Firebase!
             authDomain: "actas-36978.firebaseapp.com",
             databaseURL: "https://actas-36978-default-rtdb.firebaseio.com",
             projectId: "actas-36978",
@@ -602,366 +553,210 @@
 
         // Inicializar Firebase
         firebase.initializeApp(firebaseConfig);
-        const database = firebase.database();
-        const db = firebase.database(); // Alias para conveniencia
+        const db = firebase.database();
 
         // --- FUNCIONES HELPER ---
         function formatFullDate(date) {
-            const options = {
-                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
-                hour: '2-digit', minute: '2-digit'
-            };
+            const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' };
             return new Intl.DateTimeFormat('es-ES', options).format(date);
         }
 
-        // Función para obtener año, número de semana y rango (ISO 8601)
         function getWeekInfoWithYear(weekOffset = 0) {
             const now = new Date();
-            //const now = new Date('2025-04-14T10:00:00'); // ¡Fuerza la fecha a Lunes 14 de Abril!
-            const date = new Date(now); // Usar una copia
+            const date = new Date(now);
             date.setDate(date.getDate() + (weekOffset * 7));
-
-            // Calcular Lunes y Domingo de la semana (para el rango)
-            const currentDayOfWeek = date.getDay(); // 0=Domingo, 1=Lunes,... 6=Sábado
+            const currentDayOfWeek = date.getDay();
             const diffToMonday = date.getDate() - currentDayOfWeek + (currentDayOfWeek === 0 ? -6 : 1);
             const monday = new Date(date.getFullYear(), date.getMonth(), diffToMonday);
             const sunday = new Date(monday);
             sunday.setDate(monday.getDate() + 6);
-
-            // Calcular Número de Semana ISO 8601 y Año ISO (Método Fiable usando UTC)
             const targetDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-            // Día de la semana ISO (Lunes=1, ..., Domingo=7)
             const dayOfWeekISO = targetDate.getUTCDay() === 0 ? 7 : targetDate.getUTCDay();
-            // Ir al Jueves de esa semana
             targetDate.setUTCDate(targetDate.getUTCDate() + 4 - dayOfWeekISO);
-            // Obtener el primer día del año ISO (puede ser del año anterior)
             const yearStart = new Date(Date.UTC(targetDate.getUTCFullYear(), 0, 1));
-            // Calcular la diferencia en días y dividir por 7. Suma 1.
             const weekNumber = Math.ceil((((targetDate - yearStart) / 86400000) + 1) / 7);
-            const year = targetDate.getUTCFullYear(); // Este es el año ISO correcto para la semana
-
-            // Formatear el Rango
-            let rangeStr;
+            const year = targetDate.getUTCFullYear();
             const optionsDayMonth = { day: 'numeric', month: 'long' };
             const mondayStr = monday.toLocaleDateString('es-ES', optionsDayMonth);
             const sundayStr = sunday.toLocaleDateString('es-ES', optionsDayMonth);
-            const yearStr = monday.getFullYear(); // Usar año del lunes para el string de rango
-
-            if (monday.getMonth() === sunday.getMonth()) {
-                rangeStr = `Del ${monday.getDate()} al ${sundayStr} de ${yearStr}`;
-            } else {
-                 if(monday.getFullYear() !== sunday.getFullYear()) {
-                     rangeStr = `Del ${monday.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric'})} al ${sunday.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric'})}`;
-                } else {
-                    rangeStr = `Del ${mondayStr} al ${sundayStr} de ${yearStr}`;
-                }
-            }
-
+            const yearStr = monday.getFullYear();
+            let rangeStr = (monday.getMonth() === sunday.getMonth()) ? `Del ${monday.getDate()} al ${sundayStr} de ${yearStr}` :
+                (monday.getFullYear() !== sunday.getFullYear()) ? `Del ${monday.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric'})} al ${sunday.toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric'})}` :
+                `Del ${mondayStr} al ${sundayStr} de ${yearStr}`;
             return { year, weekNumber, range: rangeStr };
         }
 
-
-        // --- LÓGICA DE LA APLICACIÓN (MODIFICADA) ---
-
-        // Nueva función para cargar datos por semana específica
+        // --- LÓGICA DE LA APLICACIÓN ---
         function loadWeekData() {
             const syncStatus = document.getElementById('syncStatus');
-            // No mostrar mensaje inicial al cargar
-            syncStatus.style.color = "#6c757d"; // Reset color
-
+            syncStatus.style.color = "#6c757d";
             const currentWeekInfo = getWeekInfoWithYear(0);
             const nextWeekInfo = getWeekInfoWithYear(1);
-
-            // Guardar info de semana en las tarjetas para usarla al guardar
             const currentCard = document.getElementById('currentWeekCard');
-            const nextCard = document.getElementById('nextWeekCard');
             currentCard.dataset.year = currentWeekInfo.year;
             currentCard.dataset.week = currentWeekInfo.weekNumber;
+            const nextCard = document.getElementById('nextWeekCard');
             nextCard.dataset.year = nextWeekInfo.year;
             nextCard.dataset.week = nextWeekInfo.weekNumber;
-
-            // Actualizar UI con números/rangos de semana
             document.getElementById('currentWeekNumber').textContent = `Semana ${currentWeekInfo.weekNumber}`;
             document.getElementById('currentWeekRange').textContent = currentWeekInfo.range;
             document.getElementById('nextWeekNumber').textContent = `Semana ${nextWeekInfo.weekNumber}`;
             document.getElementById('nextWeekRange').textContent = nextWeekInfo.range;
-
-            // Rutas dinámicas en Firebase
             const currentWeekPath = `weekData/${currentWeekInfo.year}/${currentWeekInfo.weekNumber}`;
             const nextWeekPath = `weekData/${nextWeekInfo.year}/${nextWeekInfo.weekNumber}`;
-
-            // Usar Promise.all para cargar ambas semanas de forma asíncrona
-            Promise.all([
-                db.ref(currentWeekPath).get(),
-                db.ref(nextWeekPath).get()
-            ]).then(([currentSnapshot, nextSnapshot]) => {
-                const currentData = currentSnapshot.val() || {};
-                const nextData = nextSnapshot.val() || {};
-
-                // Actualizar UI Semana Actual
-                updateUICard('current', currentData);
-
-                // Actualizar UI Próxima Semana
-                updateUICard('next', nextData);
-
-                // Mostrar fecha de última actualización al cargar (priorizando semana actual)
-                if (currentData.lastUpdated) {
-                    const lastUpdateDate = new Date(currentData.lastUpdated);
-                    syncStatus.innerHTML = `Últimos datos cargados el ${formatFullDate(new Date(lastUpdateDate))}`;
-                    syncStatus.style.color = "#6c757d"; // Color gris estándar
-                } else {
-                     syncStatus.textContent = 'Últimos datos cargados el .....';
-                }
-                document.querySelectorAll('.share-btn').forEach(btn => btn.disabled = false);
-                document.getElementById('shareNextGuardBtn').disabled = false; // Habilitar botón específico
-
-            }).catch((error) => {
-                console.error("Error al leer datos específicos de semana:", error);
-                syncStatus.textContent = "Error al sincronizar: " + error.message;
-                syncStatus.style.color = "#dc3545";
-                // Limpiar UI si hay error
-                updateUICard('current', {});
-                updateUICard('next', {});
-                document.querySelectorAll('.share-btn').forEach(btn => btn.disabled = true);
-                document.getElementById('shareNextGuardBtn').disabled = true; // Deshabilitar botón específico
-            });
+            Promise.all([db.ref(currentWeekPath).get(), db.ref(nextWeekPath).get()])
+                .then(([currentSnapshot, nextSnapshot]) => {
+                    const currentData = currentSnapshot.val() || {};
+                    const nextData = nextSnapshot.val() || {};
+                    updateUICard('current', currentData);
+                    updateUICard('next', nextData);
+                    syncStatus.innerHTML = currentData.lastUpdated ? `Últimos datos cargados el ${formatFullDate(new Date(currentData.lastUpdated))}` : 'Últimos datos cargados el .....';
+                    document.querySelectorAll('.share-btn, .share-guard-btn').forEach(btn => btn.disabled = false);
+                }).catch((error) => {
+                    console.error("Error al leer datos:", error);
+                    syncStatus.textContent = "Error al sincronizar: " + error.message;
+                    syncStatus.style.color = "#dc3545";
+                    updateUICard('current', {});
+                    updateUICard('next', {});
+                    document.querySelectorAll('.share-btn, .share-guard-btn').forEach(btn => btn.disabled = true);
+                });
         }
-
-        // Función auxiliar para actualizar la UI de una tarjeta
+        
         function updateUICard(prefix, weekData) {
             document.getElementById(`${prefix}Ilt`).textContent = weekData.ilt || '-';
             document.getElementById(`${prefix}Stations`).textContent = weekData.stations || '-';
             document.getElementById(`${prefix}Guard`).textContent = weekData.guard || '-';
-            // Actualizar también los inputs/selects para cuando se edite
             document.getElementById(`${prefix}IltInput`).value = weekData.ilt || '';
             document.getElementById(`${prefix}StationsInput`).value = weekData.stations || '';
-            // Asegurarse de que el valor exista en el select o ponerlo vacío
             const selectElement = document.getElementById(`${prefix}GuardSelect`);
             const guardValue = weekData.guard || '';
             selectElement.value = Array.from(selectElement.options).some(opt => opt.value === guardValue) ? guardValue : "";
         }
 
-
         function toggleEdit(cardId) {
             const card = document.getElementById(cardId);
-            const isEditing = card.classList.contains('editing');
-
-            if (!isEditing) {
-                 // Pre-rellenar select al entrar en modo edición (si hay valor)
-                 const isCurrentWeek = cardId === 'currentWeekCard';
-                 const guardValueId = isCurrentWeek ? 'currentGuard' : 'nextGuard';
-                 const guardSelectId = isCurrentWeek ? 'currentGuardSelect' : 'nextGuardSelect';
-                 const currentGuardValue = document.getElementById(guardValueId).textContent;
-                 const selectElement = document.getElementById(guardSelectId);
-                 // Usar el valor actual si existe en las opciones y no es '-'
-                 selectElement.value = (currentGuardValue !== '-' && Array.from(selectElement.options).some(opt => opt.value === currentGuardValue))
-                                       ? currentGuardValue
-                                       : "";
-                 // Pre-rellenar inputs también
-                 document.getElementById(isCurrentWeek ? 'currentIltInput' : 'nextIltInput').value = document.getElementById(isCurrentWeek ? 'currentIlt' : 'nextIlt').textContent.replace('-', '').trim();
-                 document.getElementById(isCurrentWeek ? 'currentStationsInput' : 'nextStationsInput').value = document.getElementById(isCurrentWeek ? 'currentStations' : 'nextStations').textContent.replace('-', '').trim();
-
+            const isEditing = card.classList.toggle('editing');
+            if (isEditing) {
+                 const prefix = cardId === 'currentWeekCard' ? 'current' : 'next';
+                 document.getElementById(`${prefix}IltInput`).value = document.getElementById(`${prefix}Ilt`).textContent.replace('-', '').trim();
+                 document.getElementById(`${prefix}StationsInput`).value = document.getElementById(`${prefix}Stations`).textContent.replace('-', '').trim();
+                 const guardValue = document.getElementById(`${prefix}Guard`).textContent;
+                 const selectElement = document.getElementById(`${prefix}GuardSelect`);
+                 selectElement.value = (guardValue !== '-' && Array.from(selectElement.options).some(opt => opt.value === guardValue)) ? guardValue : "";
             }
-            card.classList.toggle('editing');
         }
-
-        // Función de guardado modificada
+        
         function saveData(cardId) {
             const card = document.getElementById(cardId);
-            const year = card.dataset.year;
-            const week = card.dataset.week;
-
-            if (!year || !week) {
-                console.error("Error: No se pudo determinar el año/semana para guardar.");
-                alert("Error interno: No se pudo identificar la semana para guardar los datos.");
-                return;
-            }
-
+            const { year, week } = card.dataset;
+            if (!year || !week) return;
             const syncStatus = document.getElementById('syncStatus');
             syncStatus.textContent = "Guardando cambios...";
-            syncStatus.style.color = "#fd7e14"; // Naranja indicando proceso
-
-            const isCurrentWeek = cardId === 'currentWeekCard';
-            const prefix = isCurrentWeek ? 'current' : 'next';
-
-            // Obtener datos de los inputs/select
-            const iltValue = document.getElementById(`${prefix}IltInput`).value.trim();
-            const stationsValue = document.getElementById(`${prefix}StationsInput`).value.trim();
-            const guardValue = document.getElementById(`${prefix}GuardSelect`).value;
-
-            // Crear objeto de datos a guardar
+            syncStatus.style.color = "#fd7e14";
+            const prefix = cardId === 'currentWeekCard' ? 'current' : 'next';
             const weekData = {
-                ilt: iltValue,
-                stations: stationsValue,
-                guard: guardValue,
-                lastUpdated: firebase.database.ServerValue.TIMESTAMP // Añadir marca de tiempo del servidor
+                ilt: document.getElementById(`${prefix}IltInput`).value.trim(),
+                stations: document.getElementById(`${prefix}StationsInput`).value.trim(),
+                guard: document.getElementById(`${prefix}GuardSelect`).value,
+                lastUpdated: firebase.database.ServerValue.TIMESTAMP
             };
-
-            // Actualizar UI inmediatamente (optimista)
-            document.getElementById(`${prefix}Ilt`).textContent = iltValue || '-';
-            document.getElementById(`${prefix}Stations`).textContent = stationsValue || '-';
-            document.getElementById(`${prefix}Guard`).textContent = guardValue || '-';
-
-            // Ruta dinámica para guardar en Firebase
+            updateUICard(prefix, weekData);
             const firebasePath = `weekData/${year}/${week}`;
-            weekData.lastUpdated = new Date().getTime();
-            db.ref(firebasePath).set(weekData) // Usar set para sobrescribir/crear
+            db.ref(firebasePath).set(weekData)
                 .then(() => {
-                    syncStatus.textContent = "Datos cargados correctamente."; // Mensaje solicitado por el usuario al guardar
-                    syncStatus.style.color = "#28a745"; // Verde éxito
-                    console.log(`Datos guardados en ${firebasePath}:`, weekData);
                     syncStatus.textContent = `Datos guardados el ${formatFullDate(new Date())}`;
+                    syncStatus.style.color = "#28a745";
                 })
                 .catch((error) => {
-                    console.error(`Error al guardar datos en ${firebasePath}:`, error);
+                    console.error(`Error al guardar datos:`, error);
                     syncStatus.textContent = "Error al guardar: " + error.message;
-                    syncStatus.style.color = "#dc3545"; // Rojo error
-                    // Considerar revertir la UI si falla el guardado
-                    // loadWeekData(); // Podrías recargar los datos desde FB para asegurar consistencia
+                    syncStatus.style.color = "#dc3545";
                 });
-
             card.classList.remove('editing');
         }
 
-
-        async function shareWeekData(cardId) {
-            const isCurrentWeek = cardId === 'currentWeekCard';
-            const cardElement = document.getElementById(cardId);
-            const shareButton = cardElement.querySelector('.share-btn');
-
-            const prefix = isCurrentWeek ? 'current' : 'next';
-            const weekNumberText = document.getElementById(`${prefix}WeekNumber`).textContent.trim(); // Ej: "Semana 15"
-            const weekRangeText = document.getElementById(`${prefix}WeekRange`).textContent.trim(); // Ej: "Del 7 al 13 de abril..."
-            const iltValue = document.getElementById(`${prefix}Ilt`).textContent.trim();
-            const stationsValue = document.getElementById(`${prefix}Stations`).textContent.trim();
-            const guardValue = document.getElementById(`${prefix}Guard`).textContent.trim();
-            const weekTitleText = isCurrentWeek ? "Semana Actual" : "Próxima Semana";
-
-            const formattedText = `*${weekTitleText} (${weekNumberText})*
-_${weekRangeText}_
-🚄 Nº Acta ILT: ${iltValue}
-🚆 Nº Acta Estaciones: ${stationsValue}
-📞 Técnico Guardia: ${guardValue}`;
-
-            const shareData = {
-                title: `GuardiActas - ${weekTitleText}`,
-                text: formattedText,
-            };
-
+        async function shareOperation(shareButton, shareText, shareTitle) {
+            const shareData = { title: shareTitle, text: shareText };
             if (navigator.share) {
+                try { await navigator.share(shareData); } catch (err) { if (err.name !== 'AbortError') console.error('Error al compartir:', err); }
+            } else if (navigator.clipboard?.writeText) {
                 try {
-                    await navigator.share(shareData);
-                    console.log('Datos compartidos exitosamente');
-                } catch (err) {
-                    if (err.name !== 'AbortError') {
-                         console.error('Error al compartir:', err);
-                         alert(`Error al compartir: ${err.message}`);
-                    } else {
-                         console.log('Compartir cancelado por el usuario');
-                    }
-                }
-            } else if (navigator.clipboard && navigator.clipboard.writeText) {
-                try {
-                    await navigator.clipboard.writeText(formattedText);
-                    console.log('Texto copiado al portapapeles');
-                    const originalHTML = shareButton.innerHTML; // Guardar el contenido original (con icono)
-                    shareButton.textContent = '¡Copiado!';
+                    await navigator.clipboard.writeText(shareText);
+                    const originalHTML = shareButton.innerHTML;
+                    const feedbackText = shareButton.classList.contains('share-guard-btn') ? '✓' : '¡Copiado!';
+                    shareButton.innerHTML = feedbackText;
                     shareButton.classList.add('copied-feedback');
-                    setTimeout(() => {
-                        shareButton.innerHTML = originalHTML; // Restaurar contenido original
-                        shareButton.classList.remove('copied-feedback');
-                    }, 2000);
-                } catch (err) {
-                    console.error('Error al copiar al portapapeles:', err);
-                    alert(`No se pudo copiar al portapapeles. Error: ${err.message}\n\nIntenta seleccionar y copiar el texto manualmente.`);
-                }
+                    setTimeout(() => { shareButton.innerHTML = originalHTML; shareButton.classList.remove('copied-feedback'); }, 1500);
+                } catch (err) { console.error('Error al copiar:', err); }
             } else {
-                console.warn('Ni Web Share API ni Clipboard API están disponibles.');
-                alert('Tu navegador no soporta la función de compartir o copiar al portapapeles.\n\nPuedes seleccionar y copiar el texto manualmente:\n\n' + formattedText);
+                alert('Tu navegador no soporta compartir. Copia el texto:\n\n' + shareText);
             }
         }
 
-        // Nueva función para compartir solo el técnico de guardia de la próxima semana
+        async function shareWeekData(cardId) {
+            const cardElement = document.getElementById(cardId);
+            const shareButton = cardElement.querySelector('.share-btn');
+            const prefix = cardId === 'currentWeekCard' ? 'current' : 'next';
+            const weekTitleText = cardId === 'currentWeekCard' ? "Semana Actual" : "Próxima Semana";
+            const formattedText = `*${weekTitleText} (${document.getElementById(`${prefix}WeekNumber`).textContent.trim()})*\n_${document.getElementById(`${prefix}WeekRange`).textContent.trim()}_\n🚄 Nº Acta ILT: ${document.getElementById(`${prefix}Ilt`).textContent.trim()}\n🚆 Nº Acta Estaciones: ${document.getElementById(`${prefix}Stations`).textContent.trim()}\n📞 Técnico Guardia: ${document.getElementById(`${prefix}Guard`).textContent.trim()}`;
+            await shareOperation(shareButton, formattedText, `GuardiActas - ${weekTitleText}`);
+        }
+
         async function shareNextGuard(event) {
-            event.stopPropagation(); // Evitar que se active el toggleEdit si está cerca
+            event.stopPropagation();
             const shareButton = document.getElementById('shareNextGuardBtn');
-            const guardValueElement = document.getElementById('nextGuard');
-            const guardValue = guardValueElement.textContent.trim();
-
-            if (!guardValue || guardValue === '-' || guardValue === 'Cargando...') {
-                alert("Aún no se ha cargado o asignado el técnico de guardia para la próxima semana.");
-                return;
-            }
-
-            // Obtener el número de semana del elemento HTML
-            const weekNumberElement = document.getElementById('nextWeekNumber');
-            const weekNumberText = weekNumberElement.textContent.trim(); // Ej: "Semana 16"
-
-            // Formatear el texto para compartir con negrita usando Markdown
-            const shareText = `Próxima Semana - *${weekNumberText}*\n📞 Técnico Guardia: ${guardValue}`;
-
-            const shareData = {
-                title: `GuardiActas - Técnico Guardia Próxima Semana`,
-                text: shareText,
-            };
-
-            if (navigator.share) {
-                try {
-                    await navigator.share(shareData);
-                    console.log('Técnico de guardia compartido exitosamente');
-                } catch (err) {
-                    if (err.name !== 'AbortError') {
-                         console.error('Error al compartir técnico:', err);
-                         alert(`Error al compartir: ${err.message}`);
-                    } else {
-                         console.log('Compartir técnico cancelado');
-                    }
-                }
-            } else if (navigator.clipboard && navigator.clipboard.writeText) {
-                try {
-                    await navigator.clipboard.writeText(shareText);
-                    console.log('Técnico copiado al portapapeles');
-                    const originalHTML = shareButton.innerHTML;
-                    shareButton.innerHTML = '✓'; // Icono de check simple
-                    shareButton.classList.add('copied-feedback');
-                    setTimeout(() => {
-                        shareButton.innerHTML = originalHTML;
-                        shareButton.classList.remove('copied-feedback');
-                    }, 1500); // Menos tiempo para el feedback
-                } catch (err) {
-                    console.error('Error al copiar técnico:', err);
-                    alert(`No se pudo copiar al portapapeles. Error: ${err.message}\n\nIntenta seleccionar y copiar el texto manualmente.`);
-                }
-            } else {
-                console.warn('Ni Web Share API ni Clipboard API están disponibles.');
-                alert('Tu navegador no soporta la función de compartir o copiar al portapapeles.\n\nPuedes seleccionar y copiar el texto manualmente:\n\n' + shareText);
-            }
+            const guardValue = document.getElementById('nextGuard').textContent.trim();
+            if (!guardValue || guardValue === '-' || guardValue === 'Cargando...') return;
+            const shareText = `Próxima Semana - *${document.getElementById('nextWeekNumber').textContent.trim()}*\n📞 Técnico Guardia: ${guardValue}`;
+            await shareOperation(shareButton, shareText, `GuardiActas - Técnico Guardia Próxima Semana`);
         }
 
         // --- INICIALIZACIÓN ---
         document.addEventListener('DOMContentLoaded', function() {
-            // Deshabilitar botones de compartir inicialmente hasta que carguen los datos
-            document.querySelectorAll('.share-btn').forEach(btn => btn.disabled = true);
-            document.getElementById('shareNextGuardBtn').disabled = true; // Deshabilitar también el nuevo botón
+            const historyModal = document.getElementById('historyModal');
+            const historyBtn = document.getElementById('historyBtn');
+            const historyCloseBtn = document.getElementById('historyModalClose');
+            const historyListContainer = document.getElementById('historyListContainer');
 
-            // Cargar datos iniciales de Firebase usando la nueva lógica por semana
-            loadWeekData();
+            const showHistoryModal = () => {
+                historyModal.classList.remove('modal-hidden');
+                fetchAndShowHistory();
+            };
+            const hideHistoryModal = () => historyModal.classList.add('modal-hidden');
+            
+            historyBtn.addEventListener('click', showHistoryModal);
+            historyCloseBtn.addEventListener('click', hideHistoryModal);
+            historyModal.addEventListener('click', (event) => { if (event.target === historyModal) hideHistoryModal(); });
 
-            // Ya no se necesita calcular/mostrar semana/rango aquí,
-            // loadWeekData() lo hace al inicio.
-
-            // --- Funcionalidad Botón PIDAME ---
-            const pidameButton = document.getElementById('pidameBtn');
-            if (pidameButton) {
-                pidameButton.addEventListener('click', function() {
-                    // URL fija simple
-                    const pidameStartURL = 'http://pidame.adif/start.php?';
-                    console.log("Redirigiendo a PIDAME (start.php):", pidameStartURL); // Para depuración
-                    window.location.href = pidameStartURL;
-                });
+            async function fetchAndShowHistory() {
+                historyListContainer.innerHTML = '<p>Cargando historial...</p>';
+                const promises = [];
+                const weekInfos = [];
+                for (let i = 0; i < 10; i++) {
+                    const weekInfo = getWeekInfoWithYear(-i);
+                    weekInfos.push(weekInfo);
+                    promises.push(db.ref(`weekData/${weekInfo.year}/${weekInfo.weekNumber}`).get());
+                }
+                try {
+                    const snapshots = await Promise.all(promises);
+                    let html = '<ul>';
+                    snapshots.forEach((snapshot, index) => {
+                        const data = snapshot.val();
+                        const guard = data?.guard || '<em>No asignado</em>';
+                        const weekInfo = weekInfos[index];
+                        html += `<li><span>Semana ${weekInfo.weekNumber} (${weekInfo.year})</span><strong>${guard}</strong></li>`;
+                    });
+                    historyListContainer.innerHTML = html + '</ul>';
+                } catch (error) {
+                    console.error("Error al cargar el historial:", error);
+                    historyListContainer.innerHTML = '<p style="color: red;">Error al cargar el historial.</p>';
+                }
             }
-        });
 
+            document.querySelectorAll('.share-btn, .share-guard-btn').forEach(btn => btn.disabled = true);
+            loadWeekData();
+            document.getElementById('pidameBtn').addEventListener('click', () => window.location.href = 'http://pidame.adif/start.php?');
+        });
     </script>
 </body>
 </html>
